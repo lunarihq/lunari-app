@@ -29,7 +29,13 @@ export function PeriodCalendarModal({ visible, onClose, onSave, selectedDates, s
           markingType="dot"
         />
         <View style={styles.modalButtons}>
-          <Pressable style={[styles.button, styles.modalButton]} onPress={onClose}>
+          <Pressable 
+            style={[styles.button, styles.modalButton]} 
+            onPress={() => {
+              setSelectedDates({}); // Clear selected dates on cancel
+              onClose();
+            }}
+          >
             <Text style={styles.buttonText}>Cancel</Text>
           </Pressable>
           <Pressable 
