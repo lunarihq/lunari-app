@@ -6,10 +6,23 @@ import { PeriodCalendarModal } from '../../components/PeriodCalendar';
 import { db } from '../../db';
 import { PeriodDate, periodDates } from '../../db/schema';
 
+const getPregnancyChance = (cycleDay: number): string => {
+  if (cycleDay >= 11 && cycleDay <= 17) return 'High';
+  if (cycleDay >= 8 && cycleDay <= 20) return 'Medium';
+  return 'Low';
+};
+
+const getOvulationDay = (startDate: string): string => {
+  const date = new Date(startDate);
+  date.setDate(date.getDate() + 14);
+  return date.toLocaleDateString();
+};
+
 export default function Index() {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedDates, setSelectedDates] = useState<{ [date: string]: any }>({});
   const [firstPeriodDate, setFirstPeriodDate] = useState<string | null>(null);
+  const [currentCycleDay, setCurrentCycleDay] = useState<number | null>(null);
 
   useEffect(() => {
     const setup = async () => {
@@ -17,6 +30,19 @@ export default function Index() {
     };
     setup();
   }, []);
+
+  const calculateCurrentCycleDay = (dates: string[]) => {
+    if (dates.length === 0) return null;
+    
+    const sortedDates = dates.sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
+    const mostRecentStart = new Date(sortedDates[0]);
+    const today = new Date();
+    
+    const diffTime = today.getTime() - mostRecentStart.getTime();
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
+    
+    return diffDays;
+  };
 
   const loadSavedDates = async () => {
     const saved = await db.select().from(periodDates);
@@ -29,8 +55,9 @@ export default function Index() {
     setSelectedDates(dates);
     
     if (saved.length > 0) {
-      const sortedDates = saved.map(s => s.date).sort();
+      const sortedDates = saved.map(s => s.date).sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
       setFirstPeriodDate(sortedDates[0]);
+      setCurrentCycleDay(calculateCurrentCycleDay(sortedDates));
     }
   };
 
@@ -51,7 +78,9 @@ export default function Index() {
       }
       
       setSelectedDates(dates);
-      setFirstPeriodDate(dateInserts.length > 0 ? Object.keys(dates).sort()[0] : null);
+      const sortedDates = Object.keys(dates).sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
+      setFirstPeriodDate(dateInserts.length > 0 ? sortedDates[0] : null);
+      setCurrentCycleDay(dateInserts.length > 0 ? calculateCurrentCycleDay(sortedDates) : null);
       setModalVisible(false);
     } catch (error) {
       console.error('Error saving dates:', error);
@@ -73,9 +102,31 @@ export default function Index() {
 
       <View style={styles.insightsCard}>
         <Text style={styles.insightsTitle}>Today insights</Text>
-        <Text style={styles.insightsText}>
-          Once you have log in your first period cycle we'll display the insights.
-        </Text>
+        {currentCycleDay ? (
+          <>
+            <View style={styles.cycleInfo}>
+              <Text style={styles.cycleLabel}>Current cycle</Text>
+              <Text style={styles.cycleDay}>Day {currentCycleDay}</Text>
+            </View>
+            <View style={[styles.cycleInfo, styles.mt8]}>
+              <Text style={styles.cycleLabel}>Pregnancy chance</Text>
+              <Text style={[
+                styles.cycleDay,
+                styles[`chance${getPregnancyChance(currentCycleDay)}` as keyof typeof styles]
+              ]}>
+                {getPregnancyChance(currentCycleDay)}
+              </Text>
+            </View>
+            <View style={[styles.cycleInfo, styles.mt8]}>
+              <Text style={styles.cycleLabel}>Predicted ovulation</Text>
+              <Text style={styles.cycleDay}>{getOvulationDay(firstPeriodDate!)}</Text>
+            </View>
+          </>
+        ) : (
+          <Text style={styles.insightsText}>
+            Once you have log in your first period cycle we'll display the insights.
+          </Text>
+        )}
       </View>
 
       <PeriodCalendarModal
@@ -148,5 +199,34 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     textAlign: 'center',
+  },
+  cycleInfo: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    padding: 16,
+    borderRadius: 8,
+  },
+  cycleLabel: {
+    fontSize: 16,
+    color: '#000',
+  },
+  cycleDay: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#000',
+  },
+  mt8: {
+    marginTop: 8,
+  },
+  chanceHigh: {
+    color: '#FF597B',
+  },
+  chanceMedium: {
+    color: '#FFA07A',
+  },
+  chanceLow: {
+    color: '#90EE90',
   },
 });

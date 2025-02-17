@@ -1,6 +1,5 @@
 import { View, Modal, Pressable, Text, StyleSheet } from 'react-native';
 import { Calendar, DateData } from 'react-native-calendars';
-import { useState, useEffect } from 'react';
 
 type Props = {
   visible: boolean;
@@ -11,20 +10,14 @@ type Props = {
 };
 
 export function PeriodCalendarModal({ visible, onClose, onSave, selectedDates, setSelectedDates }: Props) {
-  const [tempDates, setTempDates] = useState(selectedDates);
-
-  useEffect(() => {
-    setTempDates(selectedDates);
-  }, [visible]); // Reset temp dates when modal opens
-
   const onDayPress = (day: DateData) => {
-    const updatedDates = { ...tempDates };
+    const updatedDates = { ...selectedDates };
     if (updatedDates[day.dateString]) {
       delete updatedDates[day.dateString];
     } else {
       updatedDates[day.dateString] = { selected: true, selectedColor: '#FF597B' };
     }
-    setTempDates(updatedDates);
+    setSelectedDates(updatedDates);
   };
 
   return (
@@ -32,21 +25,22 @@ export function PeriodCalendarModal({ visible, onClose, onSave, selectedDates, s
       <View style={styles.modalContainer}>
         <Calendar
           onDayPress={onDayPress}
-          markedDates={tempDates}
+          markedDates={selectedDates}
           markingType="dot"
         />
         <View style={styles.modalButtons}>
           <Pressable 
             style={[styles.button, styles.modalButton]} 
-            onPress={onClose}
+            onPress={() => {
+              setSelectedDates({}); // Clear selected dates on cancel
+              onClose();
+            }}
           >
             <Text style={styles.buttonText}>Cancel</Text>
           </Pressable>
           <Pressable 
             style={[styles.button, styles.modalButton]}
-            onPress={() => {
-              onSave(tempDates);
-            }}
+            onPress={() => onSave(selectedDates)}
           >
             <Text style={styles.buttonText}>Save</Text>
           </Pressable>
