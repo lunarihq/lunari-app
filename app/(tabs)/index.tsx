@@ -5,6 +5,8 @@ import { useState, useEffect } from 'react';
 import { PeriodCalendarModal } from '../../components/PeriodCalendar';
 import { db } from '../../db';
 import { PeriodDate, periodDates } from '../../db/schema';
+import { PeriodPredictionService } from '../../services/periodPredictions';
+import { validatePeriodDate } from '../../validation/periodData';
 
 const getPregnancyChance = (cycleDay: number): string => {
   if (cycleDay >= 11 && cycleDay <= 17) return 'High';
@@ -144,6 +146,12 @@ export default function Index() {
 
   const savePeriodDates = async (dates: { [date: string]: any }) => {
     try {
+      // Validate dates before saving
+      if (!Object.keys(dates).every(date => validatePeriodDate(date))) {
+        console.error('Invalid dates detected');
+        return;
+      }
+      
       console.log('Saving dates:', dates);
       
       await db.delete(periodDates);
@@ -193,12 +201,16 @@ export default function Index() {
     }
   };
 
+  const prediction = firstPeriodDate 
+    ? PeriodPredictionService.getPrediction(firstPeriodDate, Object.keys(selectedDates))
+    : null;
+
   return (
     <View style={styles.container}>
       <View style={styles.card}>
         <Text style={styles.title}>
-          {firstPeriodDate 
-            ? `Your next period is likely to start in ${getNextPeriodPrediction(firstPeriodDate, Object.keys(selectedDates)).days} days`
+          {prediction 
+            ? `Your next period is likely to start in ${prediction.days} days`
             : 'Log in your period dates to get started'}
         </Text>
         <Pressable onPress={() => setModalVisible(true)} style={styles.button}>
