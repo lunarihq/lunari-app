@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, Modal, Pressable } from 'react-native';
+import { Text, View, StyleSheet, Modal, Pressable, TouchableOpacity } from 'react-native';
 import { Link } from 'expo-router';
 import { Calendar, DateData } from 'react-native-calendars';
 import { useState, useEffect } from 'react';
@@ -81,12 +81,38 @@ const getNextPeriodPrediction = (startDate: string, allDates: string[]): { days:
   return { days: daysUntil, date: nextPeriod.toLocaleDateString() };
 };
 
+const getCyclePhase = (cycleDay: number): string => {
+  if (cycleDay <= 5) return 'Menstrual';
+  if (cycleDay <= 10) return 'Follicular';
+  if (cycleDay <= 14) return 'Ovulatory';
+  if (cycleDay <= 28) return 'Luteal';
+  return 'Extended';
+};
+
+const getPhaseDescription = (phase: string): string => {
+  switch (phase) {
+    case 'Menstrual':
+      return 'Your period is happening. You might experience cramps, fatigue, and mood changes. Focus on rest and self-care.';
+    case 'Follicular':
+      return 'Energy levels start to rise with increasing estrogen. Good time for starting new projects and physical activity.';
+    case 'Ovulatory':
+      return 'Peak fertility window. You might notice increased energy, better mood, and heightened sex drive.';
+    case 'Luteal':
+      return 'Progesterone rises. You might experience PMS symptoms like bloating or mood changes. Focus on gentle exercise and comfort.';
+    case 'Extended':
+      return 'Your cycle has gone longer than typical. Consider tracking any symptoms and consulting your healthcare provider if this persists.';
+    default:
+      return '';
+  }
+};
+
 export default function Index() {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedDates, setSelectedDates] = useState<{ [date: string]: any }>({});
   const [firstPeriodDate, setFirstPeriodDate] = useState<string | null>(null);
   const [currentCycleDay, setCurrentCycleDay] = useState<number | null>(null);
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [expandedPhase, setExpandedPhase] = useState<string | null>(null);
 
   useEffect(() => {
     const setup = async () => {
@@ -217,39 +243,78 @@ export default function Index() {
   return (
     <View style={styles.container}>
       <View style={styles.predictionCard}>
-        <Text style={styles.title}>
-          {prediction 
-            ? `Your next period is likely to start in ${prediction.days} days`
-            : 'Log in your period dates to get started'}
-        </Text>
+        <View style={styles.predictionCircle}>
+          {prediction ? (
+            <>
+              <Text style={styles.predictionLabel}>Period in</Text>
+              <Text style={styles.predictionDays}>{prediction.days} days</Text>
+            </>
+          ) : (
+            // Empty state  
+            <Text style={styles.emptyStateText}>Log in your period dates to get started</Text>
+          )}
+        </View>
         <Pressable onPress={() => setModalVisible(true)} style={styles.button}>
           <Text style={styles.buttonText}>Log your period</Text>
         </Pressable>
       </View>
 
       <View style={styles.insightsCard}>
-        <Text style={styles.insightsTitle}>Today insights</Text>
+        <Text style={styles.insightsTitle}>
+          {currentCycleDay 
+            ? `Your cycle - Day ${currentCycleDay}`
+            : "Your cycle"}
+        </Text>
         {currentCycleDay ? (
           <>
-            <View style={styles.cycleInfo}>
-              <Text style={styles.cycleLabel}>Current cycle</Text>
-              <Text style={styles.cycleDay}>Day {currentCycleDay}</Text>
+            <View style={[styles.cycleInfo, styles.mt8]}>
+              <View style={styles.labelWithIcon}>
+                <Ionicons name="heart" size={20} color="#666" />
+                <Text style={styles.cycleLabel}>Pregnancy chance</Text>
+              </View>
+              <Text style={styles.cycleDay}>{getPregnancyChance(currentCycleDay)}</Text>
             </View>
             <View style={[styles.cycleInfo, styles.mt8]}>
-              <Text style={styles.cycleLabel}>Pregnancy chance</Text>
-              <Text style={[
-                styles.cycleDay,
-                styles[`chance${getPregnancyChance(currentCycleDay)}` as keyof typeof styles]
-              ]}>
-                {getPregnancyChance(currentCycleDay)}
-              </Text>
+              <View style={styles.labelWithIcon}>
+                <Ionicons name="sync" size={20} color="#666" />
+                <Text style={styles.cycleLabel}>Cycle phase</Text>
+              </View>
+              <View>
+                <TouchableOpacity 
+                  style={styles.phaseContainer}
+                  onPress={() => {
+                    const phase = getCyclePhase(currentCycleDay!);
+                    setExpandedPhase(expandedPhase === phase ? null : phase);
+                  }}
+                >
+                  <Text style={styles.cycleDay}>
+                    {currentCycleDay ? getCyclePhase(currentCycleDay) : '-'}
+                  </Text>
+                  <Ionicons 
+                    name={expandedPhase ? "chevron-up" : "chevron-down"} 
+                    size={16} 
+                    color="#666" 
+                  />
+                </TouchableOpacity>
+                {expandedPhase && (
+                  <Text style={styles.phaseDescription}>
+                    {getPhaseDescription(expandedPhase)}
+                  </Text>
+                )}
+              </View>
             </View>
             <View style={[styles.cycleInfo, styles.mt8]}>
-              <Text style={styles.cycleLabel}>Predicted ovulation</Text>
+              <View style={styles.labelWithIcon}>
+                <Ionicons name="star" size={20} color="#666" />
+                <Text style={styles.cycleLabel}>Predicted ovulation</Text>
+              </View>
               <Text style={styles.cycleDay}>{getOvulationDay(firstPeriodDate!)}</Text>
             </View>
             <View style={[styles.cycleInfo, styles.mt8]}>
-              <Text style={styles.cycleLabel}>Period started on</Text>
+              <View style={styles.labelWithIcon}>
+                <Ionicons name="water" size={20} color="#666" />
+                <Text style={styles.cycleLabel}>Period started on</Text>
+              </View>
               <Text style={styles.cycleDay}>{new Date(firstPeriodDate!).toLocaleDateString()}</Text>
             </View>
           </>
@@ -279,32 +344,40 @@ const styles = StyleSheet.create({
     gap: 16,
   },
   predictionCard: {
-    backgroundColor: '#e8e8e8',
-    borderRadius: 12,
-    padding: 24,
     alignItems: 'center',
-    gap: 16,
+    gap: 24,
   },
-  title: {
-    fontSize: 24,
-    textAlign: 'center',
-    fontWeight: '600',
+  predictionCircle: {
+    width: 250,
+    height: 250,
+    borderRadius: 125,
+    backgroundColor: '#e8e8e8',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  predictionLabel: {
+    fontSize: 18,
+    color: '#000',
+  },
+  predictionDays: {
+    fontSize: 36,
+    fontWeight: 'bold',
+    color: '#000',
   },
   button: {
     backgroundColor: '#000',
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 24,
-    color: '#fff',
-    fontSize: 16,
   },
   insightsCard: {
     backgroundColor: '#fff',
     borderRadius: 12,
     padding: 16,
+    marginTop: 16,
   },
   insightsTitle: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: '600',
     marginBottom: 8,
   },
@@ -336,7 +409,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: '#fff',
-    padding: 16,
+    paddingVertical: 16,
+    paddingRight: 16,
     borderRadius: 8,
   },
   cycleLabel: {
@@ -352,25 +426,34 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   chanceHigh: {
-    color: '#FF597B',
+    // removed color
   },
   chanceMedium: {
-    color: '#FFA07A',
+    // removed color
   },
   chanceLow: {
-    color: '#90EE90',
+    // removed color
   },
-  dateContainer: {
+  emptyStateText: {
+    fontSize: 16,
+    color: '#000',
+    textAlign: 'center',
+    paddingHorizontal: 20,
+  },
+  labelWithIcon: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
     gap: 8,
-    marginBottom: 16,
-    marginTop: 16,
   },
-  dateText: {
-    fontSize: 17,
-    fontWeight: '600',
-    color: '#000',
+  phaseContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+  },
+  phaseDescription: {
+    fontSize: 12,
+    color: '#666',
+    marginTop: 4,
+    maxWidth: 200,
   },
 });
