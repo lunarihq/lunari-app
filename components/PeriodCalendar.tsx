@@ -19,11 +19,29 @@ export function PeriodCalendarModal({ visible, onClose, onSave, selectedDates, s
 
   const onDayPress = (day: DateData) => {
     const updatedDates = { ...tempDates };
+    
     if (updatedDates[day.dateString]) {
       delete updatedDates[day.dateString];
     } else {
-      updatedDates[day.dateString] = { selected: true, selectedColor: '#FF597B' };
+      // Check if this is a new period start (no adjacent dates before it)
+      const prevDay = new Date(day.dateString);
+      prevDay.setDate(prevDay.getDate() - 1);
+      const prevDayString = prevDay.toISOString().split('T')[0];
+      
+      if (!updatedDates[prevDayString]) {
+        // Auto-select 5 days
+        for (let i = 0; i < 5; i++) {
+          const date = new Date(day.dateString);
+          date.setDate(date.getDate() + i);
+          const dateString = date.toISOString().split('T')[0];
+          updatedDates[dateString] = { selected: true, selectedColor: '#FF597B' };
+        }
+      } else {
+        // Normal single day selection
+        updatedDates[day.dateString] = { selected: true, selectedColor: '#FF597B' };
+      }
     }
+    
     setTempDates(updatedDates);
   };
 

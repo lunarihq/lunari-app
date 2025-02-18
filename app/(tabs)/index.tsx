@@ -55,9 +55,28 @@ export default function Index() {
     setSelectedDates(dates);
     
     if (saved.length > 0) {
-      const sortedDates = saved.map(s => s.date).sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
-      setFirstPeriodDate(sortedDates[0]);
-      setCurrentCycleDay(calculateCurrentCycleDay(sortedDates));
+      // Group dates that are close together (within 7 days) into periods
+      const sortedDates = saved.map(s => s.date).sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
+      const periods: string[][] = [];
+      let currentPeriod: string[] = [sortedDates[0]];
+
+      for (let i = 1; i < sortedDates.length; i++) {
+        const dayDiff = (new Date(sortedDates[i]).getTime() - new Date(sortedDates[i-1]).getTime()) / (1000 * 60 * 60 * 24);
+        if (dayDiff <= 7) {
+          currentPeriod.push(sortedDates[i]);
+        } else {
+          periods.push(currentPeriod);
+          currentPeriod = [sortedDates[i]];
+        }
+      }
+      periods.push(currentPeriod);
+
+      // Get the start date of the most recent period
+      const mostRecentPeriod = periods[periods.length - 1];
+      const mostRecentStart = mostRecentPeriod[0];
+      
+      setFirstPeriodDate(mostRecentStart);
+      setCurrentCycleDay(calculateCurrentCycleDay([mostRecentStart]));
     }
   };
 
@@ -78,7 +97,7 @@ export default function Index() {
       }
       
       setSelectedDates(dates);
-      const sortedDates = Object.keys(dates).sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
+      const sortedDates = Object.keys(dates).sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
       setFirstPeriodDate(dateInserts.length > 0 ? sortedDates[0] : null);
       setCurrentCycleDay(dateInserts.length > 0 ? calculateCurrentCycleDay(sortedDates) : null);
       setModalVisible(false);
