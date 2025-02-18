@@ -52,6 +52,7 @@ export function PeriodCalendarModal({ visible, onClose, onSave, selectedDates, s
           onDayPress={onDayPress}
           markedDates={tempDates}
           markingType="dot"
+          maxDate={new Date().toISOString().split('T')[0]}
         />
         <View style={styles.modalButtons}>
           <Pressable 
