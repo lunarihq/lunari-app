@@ -7,6 +7,7 @@ import { db } from '../../db';
 import { PeriodDate, periodDates } from '../../db/schema';
 import { PeriodPredictionService } from '../../services/periodPredictions';
 import { validatePeriodDate } from '../../validation/periodData';
+import { Ionicons } from '@expo/vector-icons';
 
 const getPregnancyChance = (cycleDay: number): string => {
   if (cycleDay >= 11 && cycleDay <= 17) return 'High';
@@ -85,12 +86,20 @@ export default function Index() {
   const [selectedDates, setSelectedDates] = useState<{ [date: string]: any }>({});
   const [firstPeriodDate, setFirstPeriodDate] = useState<string | null>(null);
   const [currentCycleDay, setCurrentCycleDay] = useState<number | null>(null);
+  const [currentDate, setCurrentDate] = useState(new Date());
 
   useEffect(() => {
     const setup = async () => {
       await loadSavedDates();
     };
     setup();
+
+    // Update date every day at midnight
+    const timer = setInterval(() => {
+      setCurrentDate(new Date());
+    }, 1000 * 60 * 60 * 24);
+
+    return () => clearInterval(timer);
   }, []);
 
   const calculateCurrentCycleDay = (dates: string[]) => {
@@ -207,7 +216,7 @@ export default function Index() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.card}>
+      <View style={styles.predictionCard}>
         <Text style={styles.title}>
           {prediction 
             ? `Your next period is likely to start in ${prediction.days} days`
@@ -269,7 +278,7 @@ const styles = StyleSheet.create({
     padding: 16,
     gap: 16,
   },
-  card: {
+  predictionCard: {
     backgroundColor: '#e8e8e8',
     borderRadius: 12,
     padding: 24,
@@ -350,5 +359,18 @@ const styles = StyleSheet.create({
   },
   chanceLow: {
     color: '#90EE90',
+  },
+  dateContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    marginBottom: 16,
+    marginTop: 16,
+  },
+  dateText: {
+    fontSize: 17,
+    fontWeight: '600',
+    color: '#000',
   },
 });
