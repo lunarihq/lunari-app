@@ -55,13 +55,15 @@ export default function Index() {
     setSelectedDates(dates);
     
     if (saved.length > 0) {
-      // Group dates that are close together (within 7 days) into periods
-      const sortedDates = saved.map(s => s.date).sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
+      // Sort dates in ascending order for grouping
+      const sortedDates = saved.map(s => s.date)
+        .sort((a, b) => new Date(b).getTime() - new Date(a).getTime()); // Changed to descending order
+      
       const periods: string[][] = [];
       let currentPeriod: string[] = [sortedDates[0]];
 
       for (let i = 1; i < sortedDates.length; i++) {
-        const dayDiff = (new Date(sortedDates[i]).getTime() - new Date(sortedDates[i-1]).getTime()) / (1000 * 60 * 60 * 24);
+        const dayDiff = Math.abs((new Date(sortedDates[i]).getTime() - new Date(sortedDates[i-1]).getTime()) / (1000 * 60 * 60 * 24));
         if (dayDiff <= 7) {
           currentPeriod.push(sortedDates[i]);
         } else {
@@ -72,8 +74,8 @@ export default function Index() {
       periods.push(currentPeriod);
 
       // Get the start date of the most recent period
-      const mostRecentPeriod = periods[periods.length - 1];
-      const mostRecentStart = mostRecentPeriod[0];
+      const mostRecentPeriod = periods[0]; // Changed to first period since we sorted in descending order
+      const mostRecentStart = mostRecentPeriod[mostRecentPeriod.length - 1]; // Get the earliest date in the period
       
       setFirstPeriodDate(mostRecentStart);
       setCurrentCycleDay(calculateCurrentCycleDay([mostRecentStart]));
@@ -94,12 +96,37 @@ export default function Index() {
       if (dateInserts.length > 0) {
         await db.insert(periodDates).values(dateInserts);
         console.log('Inserted new dates:', dateInserts);
+        
+        // Use the same logic as loadSavedDates to find the most recent period
+        const sortedDates = Object.keys(dates)
+          .sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
+        
+        const periods: string[][] = [];
+        let currentPeriod: string[] = [sortedDates[0]];
+
+        for (let i = 1; i < sortedDates.length; i++) {
+          const dayDiff = Math.abs((new Date(sortedDates[i]).getTime() - new Date(sortedDates[i-1]).getTime()) / (1000 * 60 * 60 * 24));
+          if (dayDiff <= 7) {
+            currentPeriod.push(sortedDates[i]);
+          } else {
+            periods.push(currentPeriod);
+            currentPeriod = [sortedDates[i]];
+          }
+        }
+        periods.push(currentPeriod);
+
+        const mostRecentPeriod = periods[0];
+        const mostRecentStart = mostRecentPeriod[mostRecentPeriod.length - 1];
+        
+        setSelectedDates(dates);
+        setFirstPeriodDate(mostRecentStart);
+        setCurrentCycleDay(calculateCurrentCycleDay([mostRecentStart]));
+      } else {
+        setSelectedDates({});
+        setFirstPeriodDate(null);
+        setCurrentCycleDay(null);
       }
       
-      setSelectedDates(dates);
-      const sortedDates = Object.keys(dates).sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
-      setFirstPeriodDate(dateInserts.length > 0 ? sortedDates[0] : null);
-      setCurrentCycleDay(dateInserts.length > 0 ? calculateCurrentCycleDay(sortedDates) : null);
       setModalVisible(false);
     } catch (error) {
       console.error('Error saving dates:', error);
