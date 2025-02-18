@@ -167,6 +167,10 @@ export default function Index() {
               <Text style={styles.cycleLabel}>Predicted ovulation</Text>
               <Text style={styles.cycleDay}>{getOvulationDay(firstPeriodDate!)}</Text>
             </View>
+            <View style={[styles.cycleInfo, styles.mt8]}>
+              <Text style={styles.cycleLabel}>Period started on</Text>
+              <Text style={styles.cycleDay}>{new Date(firstPeriodDate!).toLocaleDateString()}</Text>
+            </View>
           </>
         ) : (
           <Text style={styles.insightsText}>
