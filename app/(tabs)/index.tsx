@@ -351,9 +351,11 @@ const styles = StyleSheet.create({
     width: 250,
     height: 250,
     borderRadius: 125,
-    backgroundColor: '#FBB1D5',
+    backgroundColor: '#FFEAEE',
     justifyContent: 'center',
     alignItems: 'center',
+    borderWidth: 8,
+    borderColor: '#FFADBD',
   },
   predictionLabel: {
     fontSize: 20,
