@@ -5,32 +5,37 @@ export default function TabLayout() {
   return (
     <Tabs
   screenOptions={{
-    tabBarActiveTintColor: '#ffd33d',
+    tabBarActiveTintColor: '#4561D2',
     headerStyle: {
-      backgroundColor: '#25292e',
+      backgroundColor: '#F3F2F7',
+    },
+    headerTitleStyle: {
+      color: '#332F49',
     },
     headerShadowVisible: false,
     headerTintColor: '#fff',
     tabBarStyle: {
-    backgroundColor: '#25292e',
+    backgroundColor: '#fff',
+    height: 60,
     },
   }}
 >
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Today',
+          headerTitle: "Lunari",
+          tabBarLabel: "Today",
           tabBarIcon: ({ color, focused }) => (
-            <Ionicons name={focused ? 'home-sharp' : 'home-outline'} color={color} size={24} />
+            <Ionicons name={focused ? 'calendar' : 'calendar-outline'} color={color} size={24}/>
           ),
         }}
       />
       <Tabs.Screen
-        name="about"
+        name="stats"
         options={{
-          title: 'About',
+          tabBarLabel: "Stats",
           tabBarIcon: ({ color, focused }) => (
-            <Ionicons name={focused ? 'information-circle' : 'information-circle-outline'} color={color} size={24}/>
+            <Ionicons name={focused ? 'stats-chart' : 'stats-chart-outline'} color={color} size={24}/>
           ),
         }}
       />

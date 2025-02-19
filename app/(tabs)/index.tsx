@@ -250,12 +250,15 @@ export default function Index() {
               <Text style={styles.predictionDays}>{prediction.days} days</Text>
             </>
           ) : (
-            // Empty state  
-            <Text style={styles.emptyStateText}>Log the first day of your period to get started.</Text>
+            <Text style={styles.emptyStateText}>Log the first day of your period for next prediction.</Text>
           )}
         </View>
         <Pressable onPress={() => setModalVisible(true)} style={styles.button}>
-          <Text style={styles.buttonText}>Log your period</Text>
+          <Text style={styles.buttonText}>
+            {Object.keys(selectedDates).length > 0 
+              ? "Log or edit period dates"
+              : "Log your period"}
+          </Text>
         </Pressable>
       </View>
 
@@ -431,9 +434,9 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   emptyStateText: {
-    fontSize: 19,
+    fontSize: 22,
     fontWeight: '500',
-    lineHeight: 24,
+    lineHeight: 26,
     color: '#000',
     textAlign: 'center',
     paddingHorizontal: 20,
