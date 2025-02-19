@@ -251,7 +251,7 @@ export default function Index() {
             </>
           ) : (
             // Empty state  
-            <Text style={styles.emptyStateText}>Log in your period dates to get started</Text>
+            <Text style={styles.emptyStateText}>Log the first day of your period to get started.</Text>
           )}
         </View>
         <Pressable onPress={() => setModalVisible(true)} style={styles.button}>
@@ -262,7 +262,7 @@ export default function Index() {
       <View style={styles.insightsCard}>
         <Text style={styles.insightsTitle}>
           {currentCycleDay 
-            ? `Your cycle - Day ${currentCycleDay}`
+            ? `Your cycle • Day ${currentCycleDay}`
             : "Your cycle"}
         </Text>
         {currentCycleDay ? (
@@ -270,7 +270,7 @@ export default function Index() {
             <View style={[styles.cycleInfo, styles.mt8]}>
               <View style={styles.labelWithIcon}>
                 <Ionicons name="heart" size={20} color="#666" />
-                <Text style={styles.cycleLabel}>Pregnancy chance</Text>
+                <Text style={styles.cycleLabel}>Chance to conceive</Text>
               </View>
               <Text style={styles.cycleDay}>{getPregnancyChance(currentCycleDay)}</Text>
             </View>
@@ -320,7 +320,7 @@ export default function Index() {
           </>
         ) : (
           <Text style={styles.insightsText}>
-            Once you have log in your first period cycle we'll display the insights.
+            Please log at least one finished period to view your cycle insights.
           </Text>
         )}
       </View>
@@ -339,7 +339,7 @@ export default function Index() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f4f4f4',
+    backgroundColor: '#F3F2F7',
     padding: 16,
     gap: 16,
   },
@@ -351,21 +351,22 @@ const styles = StyleSheet.create({
     width: 250,
     height: 250,
     borderRadius: 125,
-    backgroundColor: '#e8e8e8',
+    backgroundColor: '#FBB1D5',
     justifyContent: 'center',
     alignItems: 'center',
   },
   predictionLabel: {
-    fontSize: 18,
+    fontSize: 20,
+    fontWeight: '500',
     color: '#000',
   },
   predictionDays: {
-    fontSize: 36,
+    fontSize: 44,
     fontWeight: 'bold',
     color: '#000',
   },
   button: {
-    backgroundColor: '#000',
+    backgroundColor: '#4561D2',
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 24,
@@ -377,13 +378,15 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   insightsTitle: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: '600',
     marginBottom: 8,
+    color: '#332F49',
   },
   insightsText: {
-    color: '#666',
+    color: '#332F49',
     fontSize: 16,
+    lineHeight: 22,
   },
   modalContainer: {
     flex: 1,
@@ -402,6 +405,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#fff',
     fontSize: 16,
+    fontWeight: '500',
     textAlign: 'center',
   },
   cycleInfo: {
@@ -410,32 +414,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#fff',
     paddingVertical: 16,
-    paddingRight: 16,
     borderRadius: 8,
   },
   cycleLabel: {
     fontSize: 16,
-    color: '#000',
+    color: '#332F49',
   },
   cycleDay: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#000',
+    color: '#332F49',
   },
   mt8: {
-    marginTop: 8,
-  },
-  chanceHigh: {
-    // removed color
-  },
-  chanceMedium: {
-    // removed color
-  },
-  chanceLow: {
-    // removed color
+    marginTop: 2,
   },
   emptyStateText: {
-    fontSize: 16,
+    fontSize: 19,
+    fontWeight: '500',
+    lineHeight: 24,
     color: '#000',
     textAlign: 'center',
     paddingHorizontal: 20,

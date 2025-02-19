@@ -53,21 +53,28 @@ export function PeriodCalendarModal({ visible, onClose, onSave, selectedDates, s
           markedDates={tempDates}
           markingType="dot"
           maxDate={new Date().toISOString().split('T')[0]}
+          theme={{
+            todayTextColor: '#FF597B',
+            todayBackgroundColor: '#FFE5EA',
+            todayFontWeight: '800',
+            textSectionTitleColor: '#332F49',
+            arrowColor: '#332F49',
+          }}
         />
         <View style={styles.modalButtons}>
           <Pressable 
-            style={[styles.button, styles.modalButton]} 
+            style={[styles.button, styles.modalButton, styles.cancelButton]} 
             onPress={onClose}
           >
-            <Text style={styles.buttonText}>Cancel</Text>
+            <Text style={[styles.buttonText, styles.cancelButtonText]}>Cancel</Text>
           </Pressable>
           <Pressable 
-            style={[styles.button, styles.modalButton]}
+            style={[styles.button, styles.modalButton, styles.saveButton]}
             onPress={() => {
               onSave(tempDates);
             }}
           >
-            <Text style={styles.buttonText}>Save</Text>
+            <Text style={[styles.buttonText, styles.saveButtonText]}>Save</Text>
           </Pressable>
         </View>
       </View>
@@ -87,7 +94,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   button: {
-    backgroundColor: '#000',
+    backgroundColor: '#4561D2',
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 24,
@@ -97,8 +104,20 @@ const styles = StyleSheet.create({
     marginHorizontal: 8,
   },
   buttonText: {
-    color: '#fff',
     fontSize: 16,
+    fontWeight: '500',
     textAlign: 'center',
+  },
+  cancelButton: {
+    backgroundColor: '#D9D8E1',
+  },
+  cancelButtonText: {
+    color: '#332F49',
+  },
+  saveButton: {
+    backgroundColor: '#4561D2',
+  },
+  saveButtonText: {
+    color: '#fff',
   },
 });
