@@ -31,7 +31,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="stats"
+        name="about"
         options={{
           tabBarLabel: "Stats",
           tabBarIcon: ({ color, focused }) => (
