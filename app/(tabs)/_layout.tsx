@@ -26,16 +26,16 @@ export default function TabLayout() {
           headerTitle: "Lunari",
           tabBarLabel: "Today",
           tabBarIcon: ({ color, focused }) => (
-            <Ionicons name={focused ? 'calendar' : 'calendar-outline'} color={color} size={24}/>
+            <Ionicons name={focused ? 'time' : 'time-outline'} color={color} size={24}/>
           ),
         }}
       />
       <Tabs.Screen
         name="about"
         options={{
-          tabBarLabel: "Stats",
+          tabBarLabel: "Calendar",
           tabBarIcon: ({ color, focused }) => (
-            <Ionicons name={focused ? 'stats-chart' : 'stats-chart-outline'} color={color} size={24}/>
+            <Ionicons name={focused ? 'calendar' : 'calendar-outline'} color={color} size={24}/>
           ),
         }}
       />
