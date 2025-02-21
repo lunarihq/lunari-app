@@ -18,6 +18,14 @@ export function PeriodCalendarModal({ visible, onClose, onSave, selectedDates, s
   }, [visible]); // Reset temp dates when modal opens
 
   const onDayPress = (day: DateData) => {
+    const selectedDate = new Date(day.dateString);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);  // Reset time part for accurate comparison
+
+    if (selectedDate > today) {
+      return;  // Ignore selections of future dates
+    }
+
     const updatedDates = { ...tempDates };
     
     if (updatedDates[day.dateString]) {
@@ -52,12 +60,18 @@ export function PeriodCalendarModal({ visible, onClose, onSave, selectedDates, s
           onDayPress={onDayPress}
           markedDates={tempDates}
           markingType="dot"
-          maxDate={new Date().toISOString().split('T')[0]}
           theme={{
             todayTextColor: '#000',
             todayBackgroundColor: '#E4E4E4',
             textSectionTitleColor: '#332F49',
             arrowColor: '#332F49',
+            textDisabledColor: 'transparent',
+            'stylesheet.calendar.main': {
+              dayContainer: {
+                flex: 1,
+                alignItems: 'center',
+              },
+            }
           }}
         />
         <View style={styles.modalButtons}>
