@@ -250,7 +250,7 @@ export default function Index() {
               <Text style={styles.predictionDays}>{prediction.days} days</Text>
             </>
           ) : (
-            <Text style={styles.emptyStateText}>Log the first day of your period for next prediction.</Text>
+            <Text style={styles.emptyStateText}>Log the first day of your last period for next prediction.</Text>
           )}
         </View>
         <Pressable onPress={() => setModalVisible(true)} style={styles.button}>
@@ -272,53 +272,42 @@ export default function Index() {
           <>
             <View style={[styles.cycleInfo, styles.mt8]}>
               <View style={styles.labelWithIcon}>
-                <Ionicons name="heart" size={20} color="#666" />
-                <Text style={styles.cycleLabel}>Chance to conceive</Text>
-              </View>
-              <Text style={styles.cycleDay}>{getPregnancyChance(currentCycleDay)}</Text>
-            </View>
-            <View style={[styles.cycleInfo, styles.mt8]}>
-              <View style={styles.labelWithIcon}>
                 <Ionicons name="sync" size={20} color="#666" />
                 <Text style={styles.cycleLabel}>Cycle phase</Text>
               </View>
               <View>
-                <TouchableOpacity 
-                  style={styles.phaseContainer}
-                  onPress={() => {
-                    const phase = getCyclePhase(currentCycleDay!);
-                    setExpandedPhase(expandedPhase === phase ? null : phase);
-                  }}
-                >
+                <View style={styles.phaseContainer}>
                   <Text style={styles.cycleDay}>
                     {currentCycleDay ? getCyclePhase(currentCycleDay) : '-'}
                   </Text>
-                  <Ionicons 
-                    name={expandedPhase ? "chevron-up" : "chevron-down"} 
-                    size={16} 
-                    color="#666" 
-                  />
-                </TouchableOpacity>
+                  <TouchableOpacity 
+                    onPress={() => {
+                      const phase = getCyclePhase(currentCycleDay!);
+                      setExpandedPhase(expandedPhase === phase ? null : phase);
+                    }}
+                  >
+                    <Ionicons 
+                      name={expandedPhase ? "close-circle" : "information-circle"} 
+                      size={16} 
+                      color="#666" 
+                    />
+                  </TouchableOpacity>
+                </View>
                 {expandedPhase && (
-                  <Text style={styles.phaseDescription}>
-                    {getPhaseDescription(expandedPhase)}
-                  </Text>
+                  <View style={styles.tooltip}>
+                    <Text style={styles.phaseDescription}>
+                      {getPhaseDescription(expandedPhase)}
+                    </Text>
+                  </View>
                 )}
               </View>
             </View>
             <View style={[styles.cycleInfo, styles.mt8]}>
               <View style={styles.labelWithIcon}>
-                <Ionicons name="star" size={20} color="#666" />
-                <Text style={styles.cycleLabel}>Predicted ovulation</Text>
+                <Ionicons name="heart" size={20} color="#666" />
+                <Text style={styles.cycleLabel}>Chance to conceive</Text>
               </View>
-              <Text style={styles.cycleDay}>{getOvulationDay(firstPeriodDate!)}</Text>
-            </View>
-            <View style={[styles.cycleInfo, styles.mt8]}>
-              <View style={styles.labelWithIcon}>
-                <Ionicons name="water" size={20} color="#666" />
-                <Text style={styles.cycleLabel}>Period started on</Text>
-              </View>
-              <Text style={styles.cycleDay}>{new Date(firstPeriodDate!).toLocaleDateString()}</Text>
+              <Text style={styles.cycleDay}>{getPregnancyChance(currentCycleDay)}</Text>
             </View>
           </>
         ) : (
@@ -451,10 +440,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 4,
   },
+  tooltip: {
+    position: 'absolute',
+    right: 0,
+    top: 25,
+    backgroundColor: '#332F49',
+    padding: 12,
+    borderRadius: 8,
+    width: 200,
+    zIndex: 1,
+  },
   phaseDescription: {
     fontSize: 12,
-    color: '#666',
-    marginTop: 4,
-    maxWidth: 200,
+    color: '#fff',
+    lineHeight: 18,
   },
 });

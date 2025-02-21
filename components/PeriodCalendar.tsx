@@ -54,9 +54,8 @@ export function PeriodCalendarModal({ visible, onClose, onSave, selectedDates, s
           markingType="dot"
           maxDate={new Date().toISOString().split('T')[0]}
           theme={{
-            todayTextColor: '#FF597B',
-            todayBackgroundColor: '#FFE5EA',
-            todayFontWeight: '800',
+            todayTextColor: '#000',
+            todayBackgroundColor: '#E4E4E4',
             textSectionTitleColor: '#332F49',
             arrowColor: '#332F49',
           }}
