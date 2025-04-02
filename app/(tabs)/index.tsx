@@ -1,3 +1,4 @@
+import React from 'react';
 import { Text, View, StyleSheet, Modal, Pressable, TouchableOpacity } from 'react-native';
 import { Link } from 'expo-router';
 import { Calendar, DateData } from 'react-native-calendars';
@@ -176,6 +177,10 @@ export default function Index() {
       
       setFirstPeriodDate(mostRecentStart);
       setCurrentCycleDay(calculateCurrentCycleDay([mostRecentStart]));
+    } else {
+      // Explicitly set to null when no data exists
+      setFirstPeriodDate(null);
+      setCurrentCycleDay(null);
     }
   };
 
@@ -272,7 +277,7 @@ export default function Index() {
           <>
             <View style={[styles.cycleInfo, styles.mt8]}>
               <View style={styles.labelWithIcon}>
-                <Ionicons name="sync" size={20} color="#666" />
+                <Ionicons name="sync" size={20} color="#878595" />
                 <Text style={styles.cycleLabel}>Cycle phase</Text>
               </View>
               <View>
@@ -288,8 +293,8 @@ export default function Index() {
                   >
                     <Ionicons 
                       name={expandedPhase ? "close-circle" : "information-circle"} 
-                      size={16} 
-                      color="#666" 
+                      size={18} 
+                      color="#878595"
                     />
                   </TouchableOpacity>
                 </View>
@@ -304,7 +309,7 @@ export default function Index() {
             </View>
             <View style={[styles.cycleInfo, styles.mt8]}>
               <View style={styles.labelWithIcon}>
-                <Ionicons name="heart" size={20} color="#666" />
+                <Ionicons name="heart" size={20} color="#878595" />
                 <Text style={styles.cycleLabel}>Chance to conceive</Text>
               </View>
               <Text style={styles.cycleDay}>{getPregnancyChance(currentCycleDay)}</Text>
