@@ -1,6 +1,6 @@
 import { View, Modal, Pressable, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { useState, useEffect, useRef } from 'react';
-import { CalendarList, DateData } from 'react-native-calendars';
+import { useState, useEffect } from 'react';
+import { Calendar, DateData } from 'react-native-calendars';
 import { Ionicons } from '@expo/vector-icons';
 
 type Props = {
@@ -24,7 +24,10 @@ type CustomMarking = {
 
 export function PeriodCalendarModal({ visible, onClose, onSave, selectedDates, setSelectedDates }: Props) {
   const [tempDates, setTempDates] = useState<{[date: string]: CustomMarking}>(selectedDates);
-  const calendarRef = useRef(null);
+  // Get current date for today marker
+  const today = new Date().toISOString().split('T')[0];
+  const [currentMonth, setCurrentMonth] = useState(today);
+  const [calendarKey, setCalendarKey] = useState(Date.now().toString());
 
   useEffect(() => {
     setTempDates(selectedDates);
@@ -32,10 +35,10 @@ export function PeriodCalendarModal({ visible, onClose, onSave, selectedDates, s
 
   const onDayPress = (day: DateData) => {
     const selectedDate = new Date(day.dateString);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);  // Reset time part for accurate comparison
+    const todayDate = new Date();
+    todayDate.setHours(0, 0, 0, 0);  // Reset time part for accurate comparison
 
-    if (selectedDate > today) {
+    if (selectedDate > todayDate) {
       return;  // Ignore selections of future dates
     }
 
@@ -55,19 +58,38 @@ export function PeriodCalendarModal({ visible, onClose, onSave, selectedDates, s
           const date = new Date(day.dateString);
           date.setDate(date.getDate() + i);
           const dateString = date.toISOString().split('T')[0];
-          updatedDates[dateString] = { selected: true, selectedColor: '#FF597B', customContainerStyle: { borderWidth: 1.5, borderColor: '#FF597B', backgroundColor: 'transparent' } };
+          updatedDates[dateString] = { 
+            selected: true, 
+            selectedColor: '#FF597B', 
+            customContainerStyle: { 
+              borderWidth: 2, 
+              borderColor: '#FF597B', 
+              backgroundColor: '#FFEAEE' 
+            } 
+          };
         }
       } else {
         // Normal single day selection
-        updatedDates[day.dateString] = { selected: true, selectedColor: '#FF597B', customContainerStyle: { borderWidth: 1.5, borderColor: '#FF597B', backgroundColor: 'transparent' } };
+        updatedDates[day.dateString] = { 
+          selected: true, 
+          selectedColor: '#FF597B', 
+          customContainerStyle: { 
+            borderWidth: 2, 
+            borderColor: '#FF597B', 
+            backgroundColor: '#FFEAEE' 
+          } 
+        };
       }
     }
     
     setTempDates(updatedDates);
   };
 
-  // Get current date for today marker
-  const today = new Date().toISOString().split('T')[0];
+  const goToToday = () => {
+    setCurrentMonth(today);
+    // Force calendar to re-render with new current prop
+    setCalendarKey(Date.now().toString());
+  };
   
   // Create modified markedDates with TODAY text
   const markedDatesWithToday = { ...tempDates };
@@ -84,14 +106,6 @@ export function PeriodCalendarModal({ visible, onClose, onSave, selectedDates, s
     };
   }
 
-  // Function to scroll to today's date
-  const scrollToToday = () => {
-    if (calendarRef.current) {
-      // @ts-ignore - scrollToDay might not be in the type definitions
-      calendarRef.current.scrollToDay(new Date(), true, true);
-    }
-  };
-
   return (
     <Modal visible={visible} animationType="slide">
       <View style={styles.modalContainer}>
@@ -101,33 +115,29 @@ export function PeriodCalendarModal({ visible, onClose, onSave, selectedDates, s
             <Ionicons name="chevron-back" size={24} color="black" />
             <Text style={styles.headerTitle}>Edit period</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={scrollToToday} style={styles.todayButton}>
+          <TouchableOpacity onPress={goToToday} style={styles.todayButton}>
             <Text style={styles.todayButtonText}>Today</Text>
           </TouchableOpacity>
         </View>
         
         <View style={styles.calendarContainer}>
-          <CalendarList
-            ref={calendarRef}
-            current={today}
-            calendarHeight={320}
-            pastScrollRange={24}
-            futureScrollRange={1}
-            scrollEnabled={true}
-            showScrollIndicator={false}
-            horizontal={false}
-            pagingEnabled={false}
+          <Calendar
+            key={calendarKey}
+            current={currentMonth}
             onDayPress={onDayPress}
             markedDates={markedDatesWithToday}
             markingType="custom"
             hideExtraDays={true}
             dayComponent={({date, state, marking}: any) => {
               const customMarking = marking as CustomMarking;
+              const isSelected = customMarking?.selected;
+              
               return (
                 <View style={styles.dayContainer}>
                   <TouchableOpacity
                     style={[
                       styles.dayButton,
+                      isSelected ? styles.selectedDay : null,
                       customMarking?.customContainerStyle,
                       state === 'today' ? styles.todayDayButton : null,
                       state === 'today' ? customMarking?.todayStyle : null,
@@ -138,6 +148,7 @@ export function PeriodCalendarModal({ visible, onClose, onSave, selectedDates, s
                   >
                     <Text style={[
                       styles.dayText,
+                      isSelected ? styles.selectedDayText : null,
                       state === 'disabled' ? styles.disabledDayText : null,
                       state === 'today' ? styles.todayText : null
                     ]}>
@@ -159,7 +170,7 @@ export function PeriodCalendarModal({ visible, onClose, onSave, selectedDates, s
                 textDisabledColor: '#d9e1e8',
                 dotColor: '#FF597B',
                 selectedDotColor: '#FF597B',
-                arrowColor: 'transparent',
+                arrowColor: 'black',
                 monthTextColor: '#000000',
                 textMonthFontWeight: 'bold',
                 textDayFontSize: 16,
@@ -249,15 +260,6 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     marginLeft: 4,
   },
-  todayButton: {
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-  },
-  todayButtonText: {
-    fontSize: 16,
-    fontWeight: '500',
-    color: '#FF597B',
-  },
   calendarContainer: {
     flex: 1,
   },
@@ -320,5 +322,22 @@ const styles = StyleSheet.create({
   },
   todayDayButton: {
     // This is for the day circle, not to be confused with the header Today button
+  },
+  selectedDay: {
+    backgroundColor: '#FFEAEE',
+    borderWidth: 2,
+    borderColor: '#FF597B',
+  },
+  selectedDayText: {
+    color: '#FF597B',
+    fontWeight: '500',
+  },
+  todayButton: {
+    padding: 8,
+  },
+  todayButtonText: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#FF597B',
   },
 });

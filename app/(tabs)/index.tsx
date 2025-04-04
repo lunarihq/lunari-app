@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, StyleSheet, Modal, Pressable, TouchableOpacity } from 'react-native';
-import { Link } from 'expo-router';
+import { Link, useLocalSearchParams } from 'expo-router';
 import { Calendar, DateData } from 'react-native-calendars';
 import { useState, useEffect } from 'react';
 import { PeriodCalendarModal } from '../../components/PeriodCalendar';
@@ -114,6 +114,7 @@ export default function Index() {
   const [currentCycleDay, setCurrentCycleDay] = useState<number | null>(null);
   const [currentDate, setCurrentDate] = useState(new Date());
   const [expandedPhase, setExpandedPhase] = useState<string | null>(null);
+  const params = useLocalSearchParams();
 
   useEffect(() => {
     const setup = async () => {
@@ -128,6 +129,13 @@ export default function Index() {
 
     return () => clearInterval(timer);
   }, []);
+
+  // Check if we should open the period modal (when coming from calendar screen)
+  useEffect(() => {
+    if (params.openPeriodModal === 'true') {
+      setModalVisible(true);
+    }
+  }, [params.openPeriodModal]);
 
   const calculateCurrentCycleDay = (dates: string[]) => {
     if (dates.length === 0) return null;

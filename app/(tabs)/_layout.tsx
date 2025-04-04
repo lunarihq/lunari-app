@@ -1,5 +1,7 @@
 import { Tabs } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { TouchableOpacity, Text } from 'react-native';
+import { router } from 'expo-router';
 
 export default function TabLayout() {
   return (
@@ -33,7 +35,26 @@ export default function TabLayout() {
       <Tabs.Screen
         name="calendar"
         options={{
-          headerShown: false,
+          headerShown: true,
+          headerTitle: "Calendar",
+          headerLeft: () => (
+            <TouchableOpacity 
+              onPress={() => router.back()}
+              style={{ marginLeft: 16 }}
+            >
+              <Ionicons name="chevron-back" size={24} color="#332F49" />
+            </TouchableOpacity>
+          ),
+          headerRight: () => (
+            <TouchableOpacity 
+              onPress={() => router.push('/calendar?openPeriodModal=true')}
+              style={{ marginRight: 16 }}
+            >
+              <Text style={{ color: '#4561D2', fontSize: 16, fontWeight: '500' }}>
+                Edit period dates
+              </Text>
+            </TouchableOpacity>
+          ),
           tabBarLabel: "Calendar",
           tabBarIcon: ({ color, focused }) => (
             <Ionicons name={focused ? 'calendar' : 'calendar-outline'} color={color} size={24}/>
