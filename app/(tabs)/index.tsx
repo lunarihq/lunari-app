@@ -114,6 +114,8 @@ export default function Index() {
   const [currentCycleDay, setCurrentCycleDay] = useState<number | null>(null);
   const [currentDate, setCurrentDate] = useState(new Date());
   const [expandedPhase, setExpandedPhase] = useState<string | null>(null);
+  const [isPeriodDay, setIsPeriodDay] = useState(false);
+  const [periodDayNumber, setPeriodDayNumber] = useState(0);
   const params = useLocalSearchParams();
 
   useEffect(() => {
@@ -148,6 +150,35 @@ export default function Index() {
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
     
     return diffDays;
+  };
+
+  const calculatePeriodDay = (dates: { [date: string]: any }) => {
+    const todayStr = new Date().toISOString().split('T')[0];
+    
+    // Check if today is a period day
+    if (dates[todayStr]) {
+      // It's a period day, now calculate which day it is
+      let dayCount = 1;
+      const tempDate = new Date(todayStr);
+      
+      // Look back day by day to find consecutive period days
+      while (true) {
+        tempDate.setDate(tempDate.getDate() - 1);
+        const prevDateStr = tempDate.toISOString().split('T')[0];
+        
+        if (dates[prevDateStr]) {
+          dayCount++;
+        } else {
+          break;
+        }
+      }
+      
+      setIsPeriodDay(true);
+      setPeriodDayNumber(dayCount);
+    } else {
+      setIsPeriodDay(false);
+      setPeriodDayNumber(0);
+    }
   };
 
   const loadSavedDates = async () => {
@@ -185,10 +216,15 @@ export default function Index() {
       
       setFirstPeriodDate(mostRecentStart);
       setCurrentCycleDay(calculateCurrentCycleDay([mostRecentStart]));
+      
+      // Calculate if today is a period day
+      calculatePeriodDay(dates);
     } else {
       // Explicitly set to null when no data exists
       setFirstPeriodDate(null);
       setCurrentCycleDay(null);
+      setIsPeriodDay(false);
+      setPeriodDayNumber(0);
     }
   };
 
@@ -200,10 +236,7 @@ export default function Index() {
         return;
       }
       
-      console.log('Saving dates:', dates);
-      
       await db.delete(periodDates);
-      console.log('Deleted old dates');
       
       const dateInserts = Object.keys(dates).map(date => ({
         date
@@ -211,7 +244,6 @@ export default function Index() {
       
       if (dateInserts.length > 0) {
         await db.insert(periodDates).values(dateInserts);
-        console.log('Inserted new dates:', dateInserts);
         
         // Use the same logic as loadSavedDates to find the most recent period
         const sortedDates = Object.keys(dates)
@@ -237,10 +269,15 @@ export default function Index() {
         setSelectedDates(dates);
         setFirstPeriodDate(mostRecentStart);
         setCurrentCycleDay(calculateCurrentCycleDay([mostRecentStart]));
+        
+        // Calculate if today is a period day after saving
+        calculatePeriodDay(dates);
       } else {
         setSelectedDates({});
         setFirstPeriodDate(null);
         setCurrentCycleDay(null);
+        setIsPeriodDay(false);
+        setPeriodDayNumber(0);
       }
       
       setModalVisible(false);
@@ -248,6 +285,11 @@ export default function Index() {
       console.error('Error saving dates:', error);
     }
   };
+
+  // Update period day check when current date changes
+  useEffect(() => {
+    calculatePeriodDay(selectedDates);
+  }, [currentDate]);
 
   const prediction = firstPeriodDate 
     ? PeriodPredictionService.getPrediction(firstPeriodDate, Object.keys(selectedDates))
@@ -257,10 +299,29 @@ export default function Index() {
     <View style={styles.container}>
       <View style={styles.predictionCard}>
         <View style={styles.predictionCircle}>
-          {prediction ? (
+          {isPeriodDay ? (
             <>
-              <Text style={styles.predictionLabel}>Period in</Text>
-              <Text style={styles.predictionDays}>{prediction.days} days</Text>
+              <Text style={styles.predictionLabel}>Period</Text>
+              <Text style={styles.predictionDays}>Day {periodDayNumber}</Text>
+            </>
+          ) : prediction ? (
+            <>
+              {prediction.days > 0 ? (
+                <>
+                  <Text style={styles.predictionLabel}>Expected period in</Text>
+                  <Text style={styles.predictionDays}>{prediction.days} {prediction.days === 1 ? 'day' : 'days'}</Text>
+                </>
+              ) : prediction.days === 0 ? (
+                <>
+                  <Text style={styles.predictionLabel}>Your period is</Text>
+                  <Text style={styles.predictionDays}>expected today</Text>
+                </>
+              ) : (
+                <>
+                  <Text style={styles.predictionLabel}>Your period is</Text>
+                  <Text style={styles.predictionDays}>{Math.abs(prediction.days)} {Math.abs(prediction.days) === 1 ? 'day' : 'days'} late</Text>
+                </>
+              )}
             </>
           ) : (
             <Text style={styles.emptyStateText}>Log the first day of your last period for next prediction.</Text>

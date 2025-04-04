@@ -34,16 +34,21 @@ export function PeriodCalendarModal({ visible, onClose, onSave, selectedDates, s
   }, [visible]); // Reset temp dates when modal opens
 
   const onDayPress = (day: DateData) => {
-    const selectedDate = new Date(day.dateString);
-    const todayDate = new Date();
-    todayDate.setHours(0, 0, 0, 0);  // Reset time part for accurate comparison
+    const selectedDateStr = day.dateString;
+    const todayDateStr = new Date().toISOString().split('T')[0];
+    const updatedDates = { ...tempDates };
 
-    if (selectedDate > todayDate) {
-      return;  // Ignore selections of future dates
+    // Check if the date is in the future
+    if (selectedDateStr > todayDateStr) {
+      // Allow deselection of future dates, but prevent selection
+      if (updatedDates[day.dateString]) {
+        delete updatedDates[day.dateString];
+        setTempDates(updatedDates);
+      }
+      return;  // Ignore new selections of future dates
     }
 
-    const updatedDates = { ...tempDates };
-    
+    // Normal behavior for today and past dates
     if (updatedDates[day.dateString]) {
       delete updatedDates[day.dateString];
     } else {
@@ -53,11 +58,13 @@ export function PeriodCalendarModal({ visible, onClose, onSave, selectedDates, s
       const prevDayString = prevDay.toISOString().split('T')[0];
       
       if (!updatedDates[prevDayString]) {
-        // Auto-select 5 days
+        // Auto-select 5 days, including future dates if needed
         for (let i = 0; i < 5; i++) {
           const date = new Date(day.dateString);
           date.setDate(date.getDate() + i);
           const dateString = date.toISOString().split('T')[0];
+          
+          // Allow future dates in auto-selection
           updatedDates[dateString] = { 
             selected: true, 
             selectedColor: '#FF597B', 

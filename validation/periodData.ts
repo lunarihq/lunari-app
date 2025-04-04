@@ -1,8 +1,12 @@
 export function validatePeriodDate(date: string): boolean {
   const dateObj = new Date(date);
   
-  // Check if it's a valid date and not in the future
-  return !isNaN(dateObj.getTime()) && dateObj <= new Date();
+  // Allow dates up to 7 days in the future to accommodate auto-selection
+  const maxFutureDate = new Date();
+  maxFutureDate.setDate(maxFutureDate.getDate() + 7);
+  
+  // Check if it's a valid date and not too far in the future
+  return !isNaN(dateObj.getTime()) && dateObj <= maxFutureDate;
 }
 
 // Optional: Add more specific validations

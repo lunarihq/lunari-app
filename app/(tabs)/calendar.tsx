@@ -29,6 +29,7 @@ export default function CalendarScreen() {
   const [currentDate] = useState(new Date().toISOString().split('T')[0]);
   const [modalVisible, setModalVisible] = useState(false);
   const [currentMonth, setCurrentMonth] = useState('');
+  const [calendarKey, setCalendarKey] = useState(Date.now());
   const params = useLocalSearchParams();
   
   // Store the setter function in the module-level variable
@@ -49,7 +50,15 @@ export default function CalendarScreen() {
     const saved = await db.select().from(periodDates);
     
     const dates = saved.reduce((acc: { [key: string]: any }, curr) => { 
-      acc[curr.date] = { selected: true, customStyles: { container: { backgroundColor: '#FF597B', borderRadius: 0 } } };
+      acc[curr.date] = { 
+        selected: true, 
+        customStyles: { 
+          container: { 
+            backgroundColor: '#FF597B',
+            borderRadius: 16,  // Changed from 0 to 16 to make it circular
+          } 
+        } 
+      };
       return acc;
     }, {} as { [key: string]: any });
     
@@ -98,8 +107,15 @@ export default function CalendarScreen() {
     
     // Generate predictions for the next 3 months
     for (let i = 0; i < 3; i++) {
-      const nextPeriodDate = new Date(startDate);
-      nextPeriodDate.setDate(nextPeriodDate.getDate() + cycleLength * (i + 1));
+      // Create date from startDate, ensuring we use a consistent date format
+      const startDateParts = startDate.split('-');
+      const year = parseInt(startDateParts[0]);
+      const month = parseInt(startDateParts[1]) - 1; // JS months are 0-indexed
+      const day = parseInt(startDateParts[2]);
+      
+      // Create a new date at noon to avoid timezone issues
+      const nextPeriodDate = new Date(year, month, day + cycleLength * (i + 1), 12, 0, 0);
+      const nextPeriodDateString = nextPeriodDate.toISOString().split('T')[0];
       
       // Mark 5 days of predicted period
       for (let j = 0; j < 5; j++) {
@@ -107,68 +123,54 @@ export default function CalendarScreen() {
         predictedDay.setDate(predictedDay.getDate() + j);
         const predictedDayString = predictedDay.toISOString().split('T')[0];
         
-        allMarkedDates[predictedDayString] = {
-          customStyles: {
-            container: {
-              borderWidth: 1.5,
-              borderRadius: 16,
-              borderStyle: 'dashed',
-              borderColor: '#FF597B',
-              backgroundColor: 'transparent',
-            },
-            text: {
-              color: '#FF597B'
+        // Only apply prediction style if this is not an actual period date
+        if (!allMarkedDates[predictedDayString] || !allMarkedDates[predictedDayString].selected) {
+          allMarkedDates[predictedDayString] = {
+            customStyles: {
+              container: {
+                borderWidth: 1.5,
+                borderRadius: 16,
+                borderStyle: 'dashed',
+                borderColor: '#FF597B',
+                backgroundColor: 'transparent',
+              },
+              text: {
+                color: '#FF597B'
+              }
             }
-          }
-        };
-      }
-      
-      // Calculate fertility window
-      const fertilityWindow = PeriodPredictionService.getFertilityWindow(
-        nextPeriodDate.toISOString().split('T')[0],
-        cycleLength
-      );
-      
-      // Mark fertility window
-      const startFertility = new Date(fertilityWindow.start);
-      const endFertility = new Date(fertilityWindow.end);
-      
-      for (let date = new Date(startFertility); date <= endFertility; date.setDate(date.getDate() + 1)) {
-        const dateString = date.toISOString().split('T')[0];
-        
-        // Skip if it's already a period day
-        if (allMarkedDates[dateString]?.customStyles?.container?.backgroundColor === '#FF597B') {
-          continue;
+          };
         }
-        
-        allMarkedDates[dateString] = {
-          ...allMarkedDates[dateString],
-          customStyles: {
-            container: {
-              borderRadius: 0,
-              backgroundColor: 'transparent'
-            },
-            text: {
-              color: '#26D07C',
-              fontWeight: '600'
-            }
-          }
-        };
       }
     }
     
-    // Mark today with a gray background
-    allMarkedDates[currentDate] = {
-      ...allMarkedDates[currentDate],
-      customStyles: {
-        ...(allMarkedDates[currentDate]?.customStyles || {}),
-        container: {
-          ...(allMarkedDates[currentDate]?.customStyles?.container || {}),
-          backgroundColor: allMarkedDates[currentDate]?.customStyles?.container?.backgroundColor || '#E6E6E6',
-          borderRadius: 16,
+    // Mark today with a gray background, but preserve period styling if it's a period day
+    if (allMarkedDates[currentDate] && allMarkedDates[currentDate].selected) {
+      // This is both today and a period day - keep period background but add border
+      allMarkedDates[currentDate] = {
+        ...allMarkedDates[currentDate],
+        customStyles: {
+          ...allMarkedDates[currentDate].customStyles,
+          container: {
+            ...allMarkedDates[currentDate].customStyles.container,
+            borderWidth: 2,
+            borderColor: 'black',
+          }
         }
-      }
-    };
+      };
+    } else {
+      // This is just today, not a period day
+      allMarkedDates[currentDate] = {
+        ...allMarkedDates[currentDate],
+        customStyles: {
+          ...(allMarkedDates[currentDate]?.customStyles || {}),
+          container: {
+            ...(allMarkedDates[currentDate]?.customStyles?.container || {}),
+            backgroundColor: allMarkedDates[currentDate]?.customStyles?.container?.backgroundColor || '#E6E6E6',
+            borderRadius: 16,
+          }
+        }
+      };
+    }
     
     // Store base marked dates (without selection highlight)
     setBaseMarkedDates(allMarkedDates);
@@ -194,6 +196,10 @@ export default function CalendarScreen() {
   useFocusEffect(
     useCallback(() => {
       loadData();
+      // Reset to current date whenever tab is focused
+      const today = new Date().toISOString().split('T')[0];
+      setSelectedDate(today);
+      setCalendarKey(Date.now()); // Force calendar re-render
       return () => {};
     }, [])
   );
@@ -262,11 +268,6 @@ export default function CalendarScreen() {
     }
   };
 
-  const getConceptionChance = () => {
-    if (!cycleDay) return '';
-    return `${PeriodPredictionService.getPregnancyChance(cycleDay).toLowerCase()} chance to conceive`;
-  };
-
   const onDayPress = (day: DateData) => {
     setSelectedDate(day.dateString);
   };
@@ -278,14 +279,22 @@ export default function CalendarScreen() {
   const selectedDateFormatted = selectedDate ? 
     new Date(selectedDate).toLocaleDateString('en-US', { day: 'numeric', month: 'long' }) : '';
 
+  const getConceptionChance = () => {
+    if (!cycleDay) return '';
+    return `${PeriodPredictionService.getPregnancyChance(cycleDay).toLowerCase()} chance to conceive`;
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.calendarContainer}>
         <Calendar
+          key={calendarKey}
+          current={selectedDate}
           markingType="custom"
           markedDates={markedDates}
           onDayPress={onDayPress}
           onMonthChange={onMonthChange}
+          hideExtraDays={true}
           hideArrows={false}
           renderArrow={(direction: 'left' | 'right') => (
             <Ionicons 
@@ -331,9 +340,6 @@ export default function CalendarScreen() {
         <View style={styles.legendItem}>
           <View style={styles.expectedPeriodDot} />
           <Text style={styles.legendText}>Expected period</Text>
-        </View>
-        <View style={styles.legendItem}>
-          <Text style={styles.fertilityText}>Fertility window</Text>
         </View>
       </View>
       
@@ -397,11 +403,6 @@ const styles = StyleSheet.create({
   legendText: {
     fontSize: 12,
     color: '#332F49',
-  },
-  fertilityText: {
-    fontSize: 12,
-    color: '#26D07C',
-    fontWeight: '500',
   },
   cycleSummary: {
     padding: 20,
