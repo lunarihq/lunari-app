@@ -2,6 +2,7 @@ import { Tabs } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { TouchableOpacity, Text } from 'react-native';
 import { router } from 'expo-router';
+import { openPeriodModal } from './calendar';
 
 export default function TabLayout() {
   return (
@@ -47,7 +48,7 @@ export default function TabLayout() {
           ),
           headerRight: () => (
             <TouchableOpacity 
-              onPress={() => router.push('/calendar?openPeriodModal=true')}
+              onPress={() => openPeriodModal()}
               style={{ marginRight: 16 }}
             >
               <Text style={{ color: '#4561D2', fontSize: 16, fontWeight: '500' }}>

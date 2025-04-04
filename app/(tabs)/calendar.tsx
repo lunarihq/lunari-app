@@ -9,9 +9,20 @@ import { PeriodPredictionService } from '../../services/periodPredictions';
 import { Ionicons } from '@expo/vector-icons';
 import { PeriodCalendarModal } from '../../components/PeriodCalendar';
 
+// Create a module-level variable to store the setter function
+let globalSetModalVisible: ((visible: boolean) => void) | null = null;
+
+// Export a function to toggle the modal from anywhere
+export function openPeriodModal() {
+  if (globalSetModalVisible) {
+    globalSetModalVisible(true);
+  }
+}
+
 export default function CalendarScreen() {
   const [selectedDates, setSelectedDates] = useState<{ [date: string]: any }>({});
   const [markedDates, setMarkedDates] = useState<{ [date: string]: any }>({});
+  const [baseMarkedDates, setBaseMarkedDates] = useState<{ [date: string]: any }>({});
   const [firstPeriodDate, setFirstPeriodDate] = useState<string | null>(null);
   const [cycleDay, setCycleDay] = useState<number | null>(null);
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
@@ -20,11 +31,17 @@ export default function CalendarScreen() {
   const [currentMonth, setCurrentMonth] = useState('');
   const params = useLocalSearchParams();
   
+  // Store the setter function in the module-level variable
+  useEffect(() => {
+    globalSetModalVisible = setModalVisible;
+    return () => {
+      globalSetModalVisible = null;
+    };
+  }, []);
+  
   // Check if we should open the period modal from URL params
   useEffect(() => {
-    if (params.openPeriodModal === 'true') {
-      setModalVisible(true);
-    }
+    setModalVisible(params.openPeriodModal === 'true');
   }, [params.openPeriodModal]);
   
   // Load period dates from database
@@ -153,7 +170,8 @@ export default function CalendarScreen() {
       }
     };
     
-    setMarkedDates(allMarkedDates);
+    // Store base marked dates (without selection highlight)
+    setBaseMarkedDates(allMarkedDates);
   };
 
   // Update cycle day info for selected date
@@ -194,6 +212,35 @@ export default function CalendarScreen() {
   useEffect(() => {
     updateSelectedDateInfo(selectedDate);
   }, [selectedDate, firstPeriodDate]);
+
+  // Update selected date highlight
+  const updateSelectedDateHighlight = useCallback(() => {
+    if (!selectedDate) return baseMarkedDates;
+    
+    // Create a new object with all the base marked dates
+    const updatedMarkedDates = { ...baseMarkedDates };
+    
+    // Add the highlight style only to the currently selected date
+    updatedMarkedDates[selectedDate] = {
+      ...updatedMarkedDates[selectedDate],
+      customStyles: {
+        ...(updatedMarkedDates[selectedDate]?.customStyles || {}),
+        container: {
+          ...(updatedMarkedDates[selectedDate]?.customStyles?.container || {}),
+          borderWidth: 2,
+          borderColor: 'black',
+          borderRadius: 16,
+        }
+      }
+    };
+    
+    return updatedMarkedDates;
+  }, [selectedDate, baseMarkedDates]);
+
+  // Update marked dates when selected date or base marked dates change
+  useEffect(() => {
+    setMarkedDates(updateSelectedDateHighlight());
+  }, [selectedDate, baseMarkedDates, updateSelectedDateHighlight]);
 
   // Handle saving period dates
   const savePeriodDates = async (dates: { [date: string]: any }) => {
