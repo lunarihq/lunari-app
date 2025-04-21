@@ -1,14 +1,17 @@
 import React from 'react';
-import { Text, View, StyleSheet, Modal, Pressable, TouchableOpacity } from 'react-native';
-import { Link, useLocalSearchParams, router } from 'expo-router';
+import { Text, View, StyleSheet, Modal, Pressable, TouchableOpacity, ScrollView } from 'react-native';
+import { Link, useLocalSearchParams, router, useFocusEffect } from 'expo-router';
 import { Calendar, DateData } from 'react-native-calendars';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { PeriodCalendarModal } from '../../components/PeriodCalendar';
 import { db } from '../../db';
-import { PeriodDate, periodDates } from '../../db/schema';
+import { PeriodDate, periodDates, healthLogs } from '../../db/schema';
 import { PeriodPredictionService } from '../../services/periodPredictions';
 import { validatePeriodDate } from '../../validation/periodData';
 import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { and, eq } from 'drizzle-orm';
 
 const getPregnancyChance = (cycleDay: number): string => {
   if (cycleDay >= 11 && cycleDay <= 17) return 'High';
@@ -116,6 +119,7 @@ export default function Index() {
   const [expandedPhase, setExpandedPhase] = useState<string | null>(null);
   const [isPeriodDay, setIsPeriodDay] = useState(false);
   const [periodDayNumber, setPeriodDayNumber] = useState(0);
+  const [todayHealthLogs, setTodayHealthLogs] = useState<any[]>([]);
   const params = useLocalSearchParams();
 
   useEffect(() => {
@@ -138,6 +142,26 @@ export default function Index() {
       setModalVisible(true);
     }
   }, [params.openPeriodModal]);
+
+  // Load health logs when the component is focused
+  useFocusEffect(
+    useCallback(() => {
+      const loadHealthLogs = async () => {
+        try {
+          const today = new Date().toISOString().split('T')[0];
+          const logs = await db.select().from(healthLogs)
+            .where(eq(healthLogs.date, today));
+          
+          setTodayHealthLogs(logs);
+          console.log('Loaded health logs:', logs.length);
+        } catch (error) {
+          console.error('Error loading health logs:', error);
+        }
+      };
+      
+      loadHealthLogs();
+    }, [])
+  );
 
   const calculateCurrentCycleDay = (dates: string[]) => {
     if (dates.length === 0) return null;
@@ -295,110 +319,161 @@ export default function Index() {
     ? PeriodPredictionService.getPrediction(firstPeriodDate, Object.keys(selectedDates))
     : null;
 
+  // Helper function to get the appropriate icon component
+  const getIconComponent = (log: any) => {
+    const { icon, icon_color, type } = log;
+    
+    if (type === 'symptom') {
+      if (icon === 'strawberry') {
+        return <FontAwesome5 name="strawberry" size={18} color={icon_color} />;
+      } else if (icon === 'hammer') {
+        return <Ionicons name="hammer" size={18} color={icon_color} />;
+      } else if (icon === 'head-flash') {
+        return <MaterialCommunityIcons name="head-flash" size={18} color={icon_color} />;
+      } else if (icon === 'rotate-orbit') {
+        return <MaterialCommunityIcons name="rotate-orbit" size={18} color={icon_color} />;
+      }
+    } else if (type === 'mood') {
+      return <Ionicons name={icon} size={18} color={icon_color} />;
+    }
+    
+    return <Ionicons name="help-circle" size={18} color="#888" />;
+  };
+
   return (
     <View style={styles.container}>
-      <View style={styles.predictionCard}>
-        <View style={styles.predictionCircle}>
-          {isPeriodDay ? (
+      <ScrollView style={styles.scrollContainer} showsVerticalScrollIndicator={false}>
+        <View style={styles.predictionCard}>
+          <View style={styles.predictionCircle}>
+            {isPeriodDay ? (
+              <>
+                <Text style={styles.predictionLabel}>Period</Text>
+                <Text style={styles.predictionDays}>Day {periodDayNumber}</Text>
+              </>
+            ) : prediction ? (
+              <>
+                {prediction.days > 0 ? (
+                  <>
+                    <Text style={styles.predictionLabel}>Expected period in</Text>
+                    <Text style={styles.predictionDays}>{prediction.days} {prediction.days === 1 ? 'day' : 'days'}</Text>
+                  </>
+                ) : prediction.days === 0 ? (
+                  <>
+                    <Text style={styles.predictionLabel}>Your period is</Text>
+                    <Text style={styles.predictionDays}>expected today</Text>
+                  </>
+                ) : (
+                  <>
+                    <Text style={styles.predictionLabel}>Your period is</Text>
+                    <Text style={styles.predictionDays}>{Math.abs(prediction.days)} {Math.abs(prediction.days) === 1 ? 'day' : 'days'} late</Text>
+                  </>
+                )}
+              </>
+            ) : (
+              <Text style={styles.emptyStateText}>Log the first day of your last period for next prediction.</Text>
+            )}
+          </View>
+          <Pressable onPress={() => setModalVisible(true)} style={styles.button}>
+            <Text style={styles.buttonText}>
+              {Object.keys(selectedDates).length > 0 
+                ? "Log or edit period dates"
+                : "Log your period"}
+            </Text>
+          </Pressable>
+        </View>
+
+        <View style={styles.insightsCard}>
+          <Text style={styles.insightsTitle}>
+            {currentCycleDay 
+              ? `Your cycle • Day ${currentCycleDay}`
+              : "Your cycle"}
+          </Text>
+          {currentCycleDay ? (
             <>
-              <Text style={styles.predictionLabel}>Period</Text>
-              <Text style={styles.predictionDays}>Day {periodDayNumber}</Text>
-            </>
-          ) : prediction ? (
-            <>
-              {prediction.days > 0 ? (
-                <>
-                  <Text style={styles.predictionLabel}>Expected period in</Text>
-                  <Text style={styles.predictionDays}>{prediction.days} {prediction.days === 1 ? 'day' : 'days'}</Text>
-                </>
-              ) : prediction.days === 0 ? (
-                <>
-                  <Text style={styles.predictionLabel}>Your period is</Text>
-                  <Text style={styles.predictionDays}>expected today</Text>
-                </>
-              ) : (
-                <>
-                  <Text style={styles.predictionLabel}>Your period is</Text>
-                  <Text style={styles.predictionDays}>{Math.abs(prediction.days)} {Math.abs(prediction.days) === 1 ? 'day' : 'days'} late</Text>
-                </>
-              )}
+              <View style={[styles.cycleInfo, styles.mt8]}>
+                <View style={styles.labelWithIcon}>
+                  <Ionicons name="sync" size={20} color="#878595" />
+                  <Text style={styles.cycleLabel}>Cycle phase</Text>
+                </View>
+                <View>
+                  <View style={styles.phaseContainer}>
+                    <Text style={styles.cycleDay}>
+                      {currentCycleDay ? getCyclePhase(currentCycleDay) : '-'}
+                    </Text>
+                    <TouchableOpacity 
+                      onPress={() => {
+                        const phase = getCyclePhase(currentCycleDay!);
+                        setExpandedPhase(expandedPhase === phase ? null : phase);
+                      }}
+                    >
+                      <Ionicons 
+                        name={expandedPhase ? "close-circle" : "information-circle"} 
+                        size={18} 
+                        color="#878595"
+                      />
+                    </TouchableOpacity>
+                  </View>
+                  {expandedPhase && (
+                    <View style={styles.tooltip}>
+                      <Text style={styles.phaseDescription}>
+                        {getPhaseDescription(expandedPhase)}
+                      </Text>
+                    </View>
+                  )}
+                </View>
+              </View>
+              <View style={[styles.cycleInfo, styles.mt8]}>
+                <View style={styles.labelWithIcon}>
+                  <Ionicons name="heart" size={20} color="#878595" />
+                  <Text style={styles.cycleLabel}>Chance to conceive</Text>
+                </View>
+                <Text style={styles.cycleDay}>{getPregnancyChance(currentCycleDay)}</Text>
+              </View>
             </>
           ) : (
-            <Text style={styles.emptyStateText}>Log the first day of your last period for next prediction.</Text>
+            <Text style={styles.insightsText}>
+              Please log at least one finished period to view your cycle insights.
+            </Text>
           )}
         </View>
-        <Pressable onPress={() => setModalVisible(true)} style={styles.button}>
-          <Text style={styles.buttonText}>
-            {Object.keys(selectedDates).length > 0 
-              ? "Log or edit period dates"
-              : "Log your period"}
-          </Text>
-        </Pressable>
-      </View>
 
-      <View style={styles.insightsCard}>
-        <Text style={styles.insightsTitle}>
-          {currentCycleDay 
-            ? `Your cycle • Day ${currentCycleDay}`
-            : "Your cycle"}
-        </Text>
-        {currentCycleDay ? (
-          <>
-            <View style={[styles.cycleInfo, styles.mt8]}>
-              <View style={styles.labelWithIcon}>
-                <Ionicons name="sync" size={20} color="#878595" />
-                <Text style={styles.cycleLabel}>Cycle phase</Text>
-              </View>
-              <View>
-                <View style={styles.phaseContainer}>
-                  <Text style={styles.cycleDay}>
-                    {currentCycleDay ? getCyclePhase(currentCycleDay) : '-'}
-                  </Text>
+        <View style={styles.symptomsCard}>
+          <View style={styles.symptomsHeader}>
+            <Text style={styles.symptomsText}>Log your symptoms</Text>
+            <TouchableOpacity 
+              onPress={() => router.push('/symptom-tracking')}
+              style={styles.addButton}
+            >
+              <Ionicons name="add-circle" size={24} color="#4561D2" />
+            </TouchableOpacity>
+          </View>
+          
+          {todayHealthLogs.length > 0 ? (
+            <>
+              <View style={styles.loggedItemsContainer}>
+                {todayHealthLogs.map((log) => (
                   <TouchableOpacity 
-                    onPress={() => {
-                      const phase = getCyclePhase(currentCycleDay!);
-                      setExpandedPhase(expandedPhase === phase ? null : phase);
-                    }}
+                    key={`${log.type}_${log.item_id}`} 
+                    style={styles.loggedItem}
+                    onPress={() => router.push('/symptom-tracking')}
+                    activeOpacity={0.7}
                   >
-                    <Ionicons 
-                      name={expandedPhase ? "close-circle" : "information-circle"} 
-                      size={18} 
-                      color="#878595"
-                    />
+                    <View style={styles.loggedItemIcon}>
+                      {getIconComponent(log)}
+                    </View>
+                    <Text style={styles.loggedItemText} numberOfLines={1}>{log.name}</Text>
                   </TouchableOpacity>
-                </View>
-                {expandedPhase && (
-                  <View style={styles.tooltip}>
-                    <Text style={styles.phaseDescription}>
-                      {getPhaseDescription(expandedPhase)}
-                    </Text>
-                  </View>
-                )}
+                ))}
               </View>
-            </View>
-            <View style={[styles.cycleInfo, styles.mt8]}>
-              <View style={styles.labelWithIcon}>
-                <Ionicons name="heart" size={20} color="#878595" />
-                <Text style={styles.cycleLabel}>Chance to conceive</Text>
-              </View>
-              <Text style={styles.cycleDay}>{getPregnancyChance(currentCycleDay)}</Text>
-            </View>
-          </>
-        ) : (
-          <Text style={styles.insightsText}>
-            Please log at least one finished period to view your cycle insights.
-          </Text>
-        )}
-      </View>
-
-      <View style={styles.symptomsCard}>
-        <View style={styles.symptomsRow}>
-          <Text style={styles.symptomsText}>Log your symptoms</Text>
-          <TouchableOpacity onPress={() => router.push('/symptom-tracking')}>
-            <Ionicons name="add-circle" size={24} color="#4561D2" />
-          </TouchableOpacity>
+            </>
+          ) : (
+            <Text style={styles.noLoggedItemsText}>No symptoms or moods logged for today</Text>
+          )}
         </View>
-      </View>
+        
+        {/* Add some bottom padding to ensure content isn't cut off by bottom nav */}
+        <View style={styles.bottomPadding} />
+      </ScrollView>
 
       <PeriodCalendarModal
         visible={modalVisible}
@@ -415,12 +490,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F3F2F7',
-    padding: 16,
-    gap: 16,
+  },
+  scrollContainer: {
+    flex: 1,
+    paddingHorizontal: 16,
+    paddingTop: 16,
+  },
+  bottomPadding: {
+    height: 80, // Add extra padding at the bottom to ensure content isn't cut off
   },
   predictionCard: {
     alignItems: 'center',
     gap: 24,
+    marginBottom: 16,
   },
   predictionCircle: {
     width: 250,
@@ -452,7 +534,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 12,
     padding: 16,
-    marginTop: 16,
+    marginBottom: 16,
   },
   insightsTitle: {
     fontSize: 22,
@@ -542,16 +624,50 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 12,
     padding: 16,
-    marginTop: 16,
+    marginBottom: 16,
   },
-  symptomsRow: {
+  symptomsHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginBottom: 12,
   },
   symptomsText: {
     fontSize: 18,
     fontWeight: '500',
     color: '#332F49',
+  },
+  addButton: {
+    padding: 5,
+  },
+  loggedItemsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  loggedItem: {
+    alignItems: 'center',
+    width: '25%',
+    marginBottom: 12,
+  },
+  loggedItemIcon: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: '#F9F8D5',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 4,
+  },
+  loggedItemText: {
+    fontSize: 12,
+    color: '#666',
+    textAlign: 'center',
+    paddingHorizontal: 2,
+  },
+  noLoggedItemsText: {
+    color: '#999',
+    fontSize: 14,
+    fontStyle: 'italic',
+    marginTop: 8,
   },
 });

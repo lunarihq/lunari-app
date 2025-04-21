@@ -7,4 +7,16 @@ export const periodDates = sqliteTable("period_dates", {
   createdAt: text("created_at").default(sql`CURRENT_TIMESTAMP`),
 });
 
+export const healthLogs = sqliteTable("health_logs", {
+  id: integer("id").primaryKey(),
+  date: text("date").notNull(),
+  type: text("type").notNull(), // 'symptom' or 'mood'
+  item_id: text("item_id").notNull(),
+  name: text("name").notNull(),
+  icon: text("icon").notNull(), // Store icon name
+  icon_color: text("icon_color"), // Store icon color
+  createdAt: text("created_at").default(sql`CURRENT_TIMESTAMP`),
+});
+
 export type PeriodDate = typeof periodDates.$inferSelect;
+export type HealthLog = typeof healthLogs.$inferSelect;

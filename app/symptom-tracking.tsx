@@ -14,6 +14,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import dayjs from 'dayjs';
+import { db } from '../db';
+import { healthLogs } from '../db/schema';
+import { sql, eq, inArray } from 'drizzle-orm';
 
 // Symptom type definition
 type Item = {
@@ -84,6 +87,10 @@ export default function SymptomTracking() {
   const [weeksData, setWeeksData] = useState<WeekData[]>(generateWeeksData());
   const [currentMonth, setCurrentMonth] = useState<string>(dayjs().format('MMMM'));
   const [currentWeekIndex, setCurrentWeekIndex] = useState<number>(Math.floor(WEEK_COUNT/2));
+  // Track original state to detect changes
+  const [originalSymptoms, setOriginalSymptoms] = useState<string[]>([]);
+  const [originalMoods, setOriginalMoods] = useState<string[]>([]);
+  const [hasChanges, setHasChanges] = useState<boolean>(false);
   
   const flatListRef = useRef<FlatList>(null);
   
@@ -167,6 +174,83 @@ export default function SymptomTracking() {
     },
   ]);
 
+  // Load existing health logs when the component mounts or selected date changes
+  useEffect(() => {
+    const loadExistingHealthLogs = async () => {
+      try {
+        // Fetch existing entries for the selected date
+        const existingEntries = await db.select().from(healthLogs)
+          .where(eq(healthLogs.date, selectedDate));
+        
+        // Create sets for quick lookup
+        const symptomIds = new Set();
+        const moodIds = new Set();
+        
+        // Populate the sets
+        existingEntries.forEach(entry => {
+          if (entry.type === 'symptom') {
+            symptomIds.add(entry.item_id);
+          } else if (entry.type === 'mood') {
+            moodIds.add(entry.item_id);
+          }
+        });
+        
+        // Update symptoms state
+        setSymptoms(prevSymptoms => 
+          prevSymptoms.map(symptom => ({
+            ...symptom,
+            selected: symptomIds.has(symptom.id)
+          }))
+        );
+        
+        // Update moods state
+        setMoods(prevMoods => 
+          prevMoods.map(mood => ({
+            ...mood,
+            selected: moodIds.has(mood.id)
+          }))
+        );
+        
+        // Store original state for comparison
+        setOriginalSymptoms(Array.from(symptomIds) as string[]);
+        setOriginalMoods(Array.from(moodIds) as string[]);
+        setHasChanges(false);
+        
+        console.log(`Loaded ${symptomIds.size} symptoms and ${moodIds.size} moods for ${selectedDate}`);
+      } catch (error) {
+        console.error('Error loading health logs:', error);
+      }
+    };
+    
+    loadExistingHealthLogs();
+  }, [selectedDate]);
+  
+  // Check for changes compared to original state
+  useEffect(() => {
+    // Get current selected symptom IDs
+    const currentSelectedSymptoms = symptoms
+      .filter(s => s.selected)
+      .map(s => s.id);
+    
+    // Get current selected mood IDs
+    const currentSelectedMoods = moods
+      .filter(m => m.selected)
+      .map(m => m.id);
+    
+    // Check if the selections have changed
+    const symptomsChanged = !(
+      currentSelectedSymptoms.length === originalSymptoms.length &&
+      currentSelectedSymptoms.every(id => originalSymptoms.includes(id))
+    );
+    
+    const moodsChanged = !(
+      currentSelectedMoods.length === originalMoods.length &&
+      currentSelectedMoods.every(id => originalMoods.includes(id))
+    );
+    
+    setHasChanges(symptomsChanged || moodsChanged);
+  }, [symptoms, moods, originalSymptoms, originalMoods]);
+
   // Go to today function
   const goToToday = () => {
     const todayIndex = Math.floor(WEEK_COUNT/2); // Center week is the current week
@@ -237,15 +321,90 @@ export default function SymptomTracking() {
   };
 
   // Save changes
-  const saveChanges = () => {
-    // Here you would save the selected symptoms and moods to your database
-    // For now, we'll just go back to the main screen
-    router.back();
+  const saveChanges = async () => {
+    try {
+      // Get all selected symptoms and moods
+      const selectedSymptoms = symptoms.filter(s => s.selected);
+      const selectedMoods = moods.filter(m => m.selected);
+      
+      // STEP 1: Delete ALL existing entries for this date
+      await db.delete(healthLogs)
+        .where(eq(healthLogs.date, selectedDate));
+      
+      // STEP 2: Prepare symptom records
+      const symptomRecords = selectedSymptoms.map(symptom => {
+        // Convert the icon React element to a string representation
+        let iconName = '';
+        let iconColor = '';
+        
+        if (symptom.id === '1') {
+          iconName = 'strawberry';
+          iconColor = '#FF5C7F';
+        } else if (symptom.id === '2') {
+          iconName = 'hammer';
+          iconColor = '#8B572A';
+        } else if (symptom.id === '3') {
+          iconName = 'head-flash';
+          iconColor = '#E73C3C';
+        } else if (symptom.id === '4') {
+          iconName = 'rotate-orbit';
+          iconColor = '#8B572A';
+        }
+        
+        return {
+          date: selectedDate,
+          type: 'symptom',
+          item_id: symptom.id,
+          name: symptom.name,
+          icon: iconName,
+          icon_color: iconColor
+        };
+      });
+      
+      // STEP 3: Prepare mood records
+      const moodRecords = selectedMoods.map(mood => {
+        // Convert the icon React element to a string representation
+        let iconName = '';
+        let iconColor = '';
+        
+        // Simple mapping for the moods
+        iconName = 'happy'; // Default for all moods in this example
+        iconColor = '#FFCC00';
+        
+        if (mood.id === '2') {
+          iconName = 'sad';
+        } else if (mood.id === '3') {
+          iconName = 'help';
+        } else if (mood.id === '4') {
+          iconName = 'remove-circle';
+          iconColor = '#FF3B30';
+        }
+        
+        return {
+          date: selectedDate,
+          type: 'mood',
+          item_id: mood.id,
+          name: mood.name,
+          icon: iconName,
+          icon_color: iconColor
+        };
+      });
+      
+      // STEP 4: Combine all records to insert
+      const allRecords = [...symptomRecords, ...moodRecords];
+      
+      // STEP 5: Insert new records (only if there are any)
+      if (allRecords.length > 0) {
+        await db.insert(healthLogs).values(allRecords);
+      }
+      
+      // STEP 6: Navigate back
+      router.back();
+    } catch (error) {
+      console.error('Error saving health logs:', error);
+    }
   };
 
-  // Check if any symptoms or moods are selected
-  const hasSelections = symptoms.some(s => s.selected) || moods.some(m => m.selected);
-  
   // Check if selected date is in the future
   const isSelectedDateInFuture = isFutureDate(selectedDate);
 
@@ -343,8 +502,8 @@ export default function SymptomTracking() {
         )}
       </ScrollView>
 
-      {/* Save button that appears only when selections are made and not a future date */}
-      {hasSelections && !isSelectedDateInFuture && (
+      {/* Save button that appears only when changes are made and not a future date */}
+      {hasChanges && !isSelectedDateInFuture && (
         <TouchableOpacity 
           style={styles.saveButton} 
           onPress={saveChanges}
