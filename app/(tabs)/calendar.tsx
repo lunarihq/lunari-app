@@ -8,6 +8,7 @@ import { periodDates } from '../../db/schema';
 import { PeriodPredictionService } from '../../services/periodPredictions';
 import { Ionicons } from '@expo/vector-icons';
 import { PeriodCalendarModal } from '../../components/PeriodCalendar';
+import { SymptomsTracker } from '../../components/SymptomsTracker';
 
 // Create a module-level variable to store the setter function
 let globalSetModalVisible: ((visible: boolean) => void) | null = null;
@@ -351,6 +352,8 @@ export default function CalendarScreen() {
           <Text style={styles.conceptionChance}>{getConceptionChance()}</Text>
         )}
       </View>
+      
+      <SymptomsTracker />
       
       <PeriodCalendarModal
         visible={modalVisible}
