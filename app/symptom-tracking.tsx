@@ -39,6 +39,13 @@ const getCurrentWeek = () => {
   return week;
 };
 
+// Check if a date is in the future
+const isFutureDate = (dateString: string) => {
+  const today = new Date();
+  const todayString = today.toISOString().split('T')[0]; // Format: YYYY-MM-DD
+  return dateString > todayString;
+};
+
 export default function SymptomTracking() {
   const params = useLocalSearchParams();
   const [selectedDate, setSelectedDate] = useState<string>(new Date().toISOString().split('T')[0]);
@@ -122,9 +129,6 @@ export default function SymptomTracking() {
       name: 'Angelic', 
       selected: false 
     },
-
-
-    
   ]);
 
   // Toggle symptom selection
@@ -155,6 +159,9 @@ export default function SymptomTracking() {
 
   // Check if any symptoms or moods are selected
   const hasSelections = symptoms.some(s => s.selected) || moods.some(m => m.selected);
+  
+  // Check if selected date is in the future
+  const isSelectedDateInFuture = isFutureDate(selectedDate);
 
   return (
     <View style={styles.container}>
@@ -164,7 +171,7 @@ export default function SymptomTracking() {
           <Ionicons name="close" size={28} color="black" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>
-          {selectedDate === new Date().toISOString().split('T')[0] ? 'Today' : new Date(selectedDate).toLocaleDateString()}
+          {new Date(selectedDate).toLocaleString('default', { month: 'long' })}
         </Text>
         <View style={{width: 28}} />
       </View>
@@ -193,53 +200,63 @@ export default function SymptomTracking() {
       </View>
 
       <ScrollView style={styles.scrollView}>
-        {/* Symptoms */}
-        <View style={styles.section}>
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>Symptoms</Text>
+        {isSelectedDateInFuture ? (
+          <View style={styles.futureMessageContainer}>
+            <Text style={styles.futureMessageText}>
+              You can't log symtomps for a future date.
+            </Text>
           </View>
-          
-          <View style={styles.itemsGrid}>
-            {symptoms.map((symptom) => (
-              <TouchableOpacity 
-                key={symptom.id} 
-                style={[styles.itemButton, symptom.selected && styles.selectedItemButton]}
-                onPress={() => toggleSymptom(symptom.id)}
-              >
-                <View style={[styles.itemIcon, symptom.selected && styles.selectedItemIcon]}>
-                  {symptom.icon}
-                </View>
-                <Text style={styles.itemText}>{symptom.name}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-        </View>
+        ) : (
+          <>
+            {/* Symptoms */}
+            <View style={styles.section}>
+              <View style={styles.sectionHeader}>
+                <Text style={styles.sectionTitle}>Symptoms</Text>
+              </View>
+              
+              <View style={styles.itemsGrid}>
+                {symptoms.map((symptom) => (
+                  <TouchableOpacity 
+                    key={symptom.id} 
+                    style={[styles.itemButton, symptom.selected && styles.selectedItemButton]}
+                    onPress={() => toggleSymptom(symptom.id)}
+                  >
+                    <View style={[styles.itemIcon, symptom.selected && styles.selectedItemIcon]}>
+                      {symptom.icon}
+                    </View>
+                    <Text style={styles.itemText}>{symptom.name}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </View>
 
-        {/* Moods */}
-        <View style={styles.section}>
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>Moods</Text>
-          </View>
-          
-          <View style={styles.itemsGrid}>
-            {moods.map((mood) => (
-              <TouchableOpacity 
-                key={mood.id} 
-                style={[styles.itemButton, mood.selected && styles.selectedItemButton]}
-                onPress={() => toggleMood(mood.id)}
-              >
-                <View style={[styles.itemIcon, mood.selected && styles.selectedItemIcon]}>
-                  {mood.icon}
-                </View>
-                <Text style={styles.itemText}>{mood.name}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-        </View>
+            {/* Moods */}
+            <View style={styles.section}>
+              <View style={styles.sectionHeader}>
+                <Text style={styles.sectionTitle}>Moods</Text>
+              </View>
+              
+              <View style={styles.itemsGrid}>
+                {moods.map((mood) => (
+                  <TouchableOpacity 
+                    key={mood.id} 
+                    style={[styles.itemButton, mood.selected && styles.selectedItemButton]}
+                    onPress={() => toggleMood(mood.id)}
+                  >
+                    <View style={[styles.itemIcon, mood.selected && styles.selectedItemIcon]}>
+                      {mood.icon}
+                    </View>
+                    <Text style={styles.itemText}>{mood.name}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </View>
+          </>
+        )}
       </ScrollView>
 
-      {/* Save button that appears only when selections are made */}
-      {hasSelections && (
+      {/* Save button that appears only when selections are made and not a future date */}
+      {hasSelections && !isSelectedDateInFuture && (
         <TouchableOpacity 
           style={styles.saveButton} 
           onPress={saveChanges}
@@ -306,6 +323,22 @@ const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
     paddingTop: 16,
+  },
+  futureMessageContainer: {
+    backgroundColor: '#fff',
+    borderRadius: 16,
+    marginHorizontal: 16,
+    marginTop: 20,
+    padding: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 200,
+  },
+  futureMessageText: {
+    fontSize: 18,
+    fontWeight: '500',
+    color: '#FF597B',
+    textAlign: 'center',
   },
   section: {
     backgroundColor: '#fff',
