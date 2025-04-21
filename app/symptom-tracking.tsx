@@ -1,16 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { 
   View, 
   Text, 
   StyleSheet, 
   TouchableOpacity, 
   ScrollView,
-  Pressable
+  Pressable,
+  FlatList,
+  Dimensions
 } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import dayjs from 'dayjs';
 
 // Symptom type definition
 type Item = {
@@ -20,36 +23,69 @@ type Item = {
   selected: boolean;
 };
 
-// Get current date and week
-const getCurrentWeek = () => {
-  const today = new Date();
-  const day = today.getDay(); // 0 is Sunday, 6 is Saturday
+type DayInfo = {
+  date: dayjs.Dayjs;
+  dayName: string;
+  dayNumber: number;
+  isToday: boolean;
+  isoDate: string;
+};
+
+type WeekData = {
+  id: string;
+  days: DayInfo[];
+  month: string;
+};
+
+const WEEK_COUNT = 10; // 5 weeks before and after the current week
+const screenWidth = Dimensions.get('window').width;
+
+// Generate weeks data for FlatList
+const generateWeeksData = (): WeekData[] => {
+  const today = dayjs();
+  const weeks: WeekData[] = [];
   
-  const week = [];
-  for (let i = 0; i < 7; i++) {
-    const date = new Date(today);
-    date.setDate(today.getDate() - day + i);
-    week.push({
-      day: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][i],
-      date: date.getDate(),
-      full: date.toISOString().split('T')[0],
-      isToday: i === day
+  // Generate weeks (centered around current week)
+  for (let weekOffset = -Math.floor(WEEK_COUNT/2); weekOffset < Math.ceil(WEEK_COUNT/2); weekOffset++) {
+    // Start with Monday of the current week
+    const startOfWeek = today.add(weekOffset * 7, 'day').startOf('week');
+    
+    const days: DayInfo[] = [];
+    for (let i = 0; i < 7; i++) {
+      const date = startOfWeek.add(i, 'day');
+      days.push({
+        date: date,
+        dayName: date.format('dd')[0], // First letter of day name (M, T, W, etc.)
+        dayNumber: date.date(),
+        isToday: date.format('YYYY-MM-DD') === today.format('YYYY-MM-DD'),
+        isoDate: date.format('YYYY-MM-DD')
+      });
+    }
+    
+    weeks.push({
+      id: `week-${weekOffset}`,
+      days,
+      month: days[0].date.format('MMMM'), // Month name from the first day of week
     });
   }
-  return week;
+  
+  return weeks;
 };
 
 // Check if a date is in the future
 const isFutureDate = (dateString: string) => {
-  const today = new Date();
-  const todayString = today.toISOString().split('T')[0]; // Format: YYYY-MM-DD
-  return dateString > todayString;
+  const today = dayjs().format('YYYY-MM-DD');
+  return dateString > today;
 };
 
 export default function SymptomTracking() {
   const params = useLocalSearchParams();
-  const [selectedDate, setSelectedDate] = useState<string>(new Date().toISOString().split('T')[0]);
-  const [weekDays, setWeekDays] = useState(getCurrentWeek());
+  const [selectedDate, setSelectedDate] = useState<string>(dayjs().format('YYYY-MM-DD'));
+  const [weeksData, setWeeksData] = useState<WeekData[]>(generateWeeksData());
+  const [currentMonth, setCurrentMonth] = useState<string>(dayjs().format('MMMM'));
+  const [currentWeekIndex, setCurrentWeekIndex] = useState<number>(Math.floor(WEEK_COUNT/2));
+  
+  const flatListRef = useRef<FlatList>(null);
   
   // Symptoms data
   const [symptoms, setSymptoms] = useState<Item[]>([
@@ -131,6 +167,14 @@ export default function SymptomTracking() {
     },
   ]);
 
+  // Go to today function
+  const goToToday = () => {
+    const todayIndex = Math.floor(WEEK_COUNT/2); // Center week is the current week
+    setCurrentWeekIndex(todayIndex);
+    flatListRef.current?.scrollToIndex({ index: todayIndex, animated: true });
+    setSelectedDate(dayjs().format('YYYY-MM-DD'));
+  };
+
   // Toggle symptom selection
   const toggleSymptom = (id: string) => {
     setSymptoms(symptoms.map(symptom => 
@@ -146,8 +190,50 @@ export default function SymptomTracking() {
   };
 
   // Select day from calendar
-  const selectDay = (day: any) => {
-    setSelectedDate(day.full);
+  const selectDay = (isoDate: string) => {
+    setSelectedDate(isoDate);
+  };
+
+  // Handle week change
+  const handleViewableItemsChanged = ({ viewableItems }: { viewableItems: any[] }) => {
+    if (viewableItems.length > 0) {
+      const visibleWeek = viewableItems[0].item;
+      setCurrentMonth(visibleWeek.month);
+      setCurrentWeekIndex(viewableItems[0].index);
+    }
+  };
+
+  // Render week item for FlatList
+  const renderWeekItem = ({ item }: { item: WeekData }) => {
+    return (
+      <View style={styles.weekContainer}>
+        <View style={styles.daysRow}>
+          {item.days.map((day, index) => (
+            <View key={index} style={styles.dayColumn}>
+              <Text style={styles.dayName}>{day.dayName}</Text>
+              <TouchableOpacity
+                onPress={() => selectDay(day.isoDate)}
+                style={[
+                  styles.dateCircle,
+                  day.isToday && styles.todayCircle,
+                  selectedDate === day.isoDate && styles.selectedDateCircle
+                ]}
+              >
+                <Text 
+                  style={[
+                    styles.dateNumber,
+                    day.isToday && styles.todayDateNumber,
+                    selectedDate === day.isoDate && styles.selectedDateNumber
+                  ]}
+                >
+                  {day.dayNumber}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          ))}
+        </View>
+      </View>
+    );
   };
 
   // Save changes
@@ -170,33 +256,35 @@ export default function SymptomTracking() {
         <TouchableOpacity onPress={() => router.back()}>
           <Ionicons name="close" size={28} color="black" />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>
-          {new Date(selectedDate).toLocaleString('default', { month: 'long' })}
-        </Text>
-        <View style={{width: 28}} />
+        <Text style={styles.headerTitle}>{currentMonth}</Text>
+        {currentWeekIndex !== Math.floor(WEEK_COUNT/2) ? (
+          <TouchableOpacity onPress={goToToday} style={styles.todayButton}>
+            <Text style={styles.todayButtonText}>Today</Text>
+          </TouchableOpacity>
+        ) : (
+          <View style={{width: 50}} />
+        )}
       </View>
 
-      {/* Calendar */}
-      <View style={styles.calendar}>
-        {weekDays.map((day, index) => (
-          <TouchableOpacity 
-            key={index} 
-            style={[
-              styles.dayButton, 
-              selectedDate === day.full && styles.selectedDayButton,
-              day.isToday && styles.todayButton
-            ]}
-            onPress={() => selectDay(day)}
-          >
-            <Text style={styles.dayText}>{day.day}</Text>
-            <Text style={[
-              styles.dateText, 
-              (selectedDate === day.full || day.isToday) && styles.selectedDateText
-            ]}>
-              {day.date}
-            </Text>
-          </TouchableOpacity>
-        ))}
+      {/* Calendar (FlatList) */}
+      <View style={styles.calendarContainer}>
+        <FlatList
+          ref={flatListRef}
+          data={weeksData}
+          renderItem={renderWeekItem}
+          keyExtractor={(item) => item.id}
+          horizontal
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          initialScrollIndex={Math.floor(WEEK_COUNT/2)} // Start at current week
+          getItemLayout={(data, index) => ({
+            length: screenWidth,
+            offset: screenWidth * index,
+            index,
+          })}
+          onViewableItemsChanged={handleViewableItemsChanged}
+          viewabilityConfig={{ itemVisiblePercentThreshold: 50 }}
+        />
       </View>
 
       <ScrollView style={styles.scrollView}>
@@ -287,38 +375,64 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#000',
   },
-  calendar: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+  calendarContainer: {
+    height: 110,
+    backgroundColor: '#F3F2F7',
   },
-  dayButton: {
+  weekContainer: {
+    width: screenWidth,
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+  },
+  daysRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+  },
+  dayColumn: {
+    alignItems: 'center',
+    width: 40,
+  },
+  dayName: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#000',
+    marginBottom: 8,
+  },
+  dateCircle: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
-    width: 44,
-    height: 70,
-    borderRadius: 22,
-    backgroundColor: '#F9F8D5',
   },
-  selectedDayButton: {
+  todayCircle: {
     borderWidth: 2,
     borderColor: '#4561D2',
   },
-  todayButton: {
-    backgroundColor: '#F9F8D5',
+  selectedDateCircle: {
+    backgroundColor: '#4561D2',
   },
-  dayText: {
-    fontSize: 14,
-    color: '#000',
-  },
-  dateText: {
-    fontSize: 24,
+  dateNumber: {
+    fontSize: 16,
     fontWeight: '600',
     color: '#000',
   },
-  selectedDateText: {
-    color: '#000',
+  todayDateNumber: {
+    color: '#4561D2',
+  },
+  selectedDateNumber: {
+    color: '#fff',
+  },
+  todayButton: {
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+  },
+  todayButtonText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#4561D2',
   },
   scrollView: {
     flex: 1,
