@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, StyleSheet, Modal, Pressable, TouchableOpacity } from 'react-native';
-import { Link, useLocalSearchParams } from 'expo-router';
+import { Link, useLocalSearchParams, router } from 'expo-router';
 import { Calendar, DateData } from 'react-native-calendars';
 import { useState, useEffect } from 'react';
 import { PeriodCalendarModal } from '../../components/PeriodCalendar';
@@ -391,6 +391,15 @@ export default function Index() {
         )}
       </View>
 
+      <View style={styles.symptomsCard}>
+        <View style={styles.symptomsRow}>
+          <Text style={styles.symptomsText}>Log your symptoms</Text>
+          <TouchableOpacity onPress={() => router.push('/symptom-tracking')}>
+            <Ionicons name="add-circle" size={24} color="#4561D2" />
+          </TouchableOpacity>
+        </View>
+      </View>
+
       <PeriodCalendarModal
         visible={modalVisible}
         onClose={() => setModalVisible(false)}
@@ -528,5 +537,21 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#fff',
     lineHeight: 18,
+  },
+  symptomsCard: {
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    padding: 16,
+    marginTop: 16,
+  },
+  symptomsRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  symptomsText: {
+    fontSize: 18,
+    fontWeight: '500',
+    color: '#332F49',
   },
 });
