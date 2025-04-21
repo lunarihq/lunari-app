@@ -75,6 +75,51 @@ const generateWeeksData = (): WeekData[] => {
   return weeks;
 };
 
+// Date Navigator Component
+const DateNavigator = ({ selectedDate, setSelectedDate }: { 
+  selectedDate: string, 
+  setSelectedDate: React.Dispatch<React.SetStateAction<string>> 
+}) => {
+  const today = dayjs();
+  const isToday = selectedDate === today.format('YYYY-MM-DD');
+  
+  const formattedDate = isToday 
+    ? `Today, ${dayjs(selectedDate).format('MMMM D')}` 
+    : dayjs(selectedDate).format('dddd, MMMM D');
+  
+  const goToPreviousDay = () => {
+    setSelectedDate(dayjs(selectedDate).subtract(1, 'day').format('YYYY-MM-DD'));
+  };
+  
+  const goToNextDay = () => {
+    setSelectedDate(dayjs(selectedDate).add(1, 'day').format('YYYY-MM-DD'));
+  };
+  
+  const isNextDayInFuture = dayjs(selectedDate).add(1, 'day').isAfter(today, 'day');
+  
+  return (
+    <View style={styles.dateNavigator}>
+      <TouchableOpacity 
+        onPress={goToPreviousDay} 
+        hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
+      >
+        <Ionicons name="chevron-back" size={24} color="#000" />
+      </TouchableOpacity>
+      
+      <Text style={styles.dateText}>{formattedDate}</Text>
+      
+      <TouchableOpacity 
+        onPress={goToNextDay}
+        disabled={isNextDayInFuture}
+        style={{opacity: isNextDayInFuture ? 0.3 : 1}}
+        hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
+      >
+        <Ionicons name="chevron-forward" size={24} color="#000" />
+      </TouchableOpacity>
+    </View>
+  );
+};
+
 // Check if a date is in the future
 const isFutureDate = (dateString: string) => {
   const today = dayjs().format('YYYY-MM-DD');
@@ -251,14 +296,6 @@ export default function SymptomTracking() {
     setHasChanges(symptomsChanged || moodsChanged);
   }, [symptoms, moods, originalSymptoms, originalMoods]);
 
-  // Go to today function
-  const goToToday = () => {
-    const todayIndex = Math.floor(WEEK_COUNT/2); // Center week is the current week
-    setCurrentWeekIndex(todayIndex);
-    flatListRef.current?.scrollToIndex({ index: todayIndex, animated: true });
-    setSelectedDate(dayjs().format('YYYY-MM-DD'));
-  };
-
   // Toggle symptom selection
   const toggleSymptom = (id: string) => {
     setSymptoms(symptoms.map(symptom => 
@@ -271,53 +308,6 @@ export default function SymptomTracking() {
     setMoods(moods.map(mood => 
       mood.id === id ? { ...mood, selected: !mood.selected } : mood
     ));
-  };
-
-  // Select day from calendar
-  const selectDay = (isoDate: string) => {
-    setSelectedDate(isoDate);
-  };
-
-  // Handle week change
-  const handleViewableItemsChanged = ({ viewableItems }: { viewableItems: any[] }) => {
-    if (viewableItems.length > 0) {
-      const visibleWeek = viewableItems[0].item;
-      setCurrentMonth(visibleWeek.month);
-      setCurrentWeekIndex(viewableItems[0].index);
-    }
-  };
-
-  // Render week item for FlatList
-  const renderWeekItem = ({ item }: { item: WeekData }) => {
-    return (
-      <View style={styles.weekContainer}>
-        <View style={styles.daysRow}>
-          {item.days.map((day, index) => (
-            <View key={index} style={styles.dayColumn}>
-              <Text style={styles.dayName}>{day.dayName}</Text>
-              <TouchableOpacity
-                onPress={() => selectDay(day.isoDate)}
-                style={[
-                  styles.dateCircle,
-                  day.isToday && styles.todayCircle,
-                  selectedDate === day.isoDate && styles.selectedDateCircle
-                ]}
-              >
-                <Text 
-                  style={[
-                    styles.dateNumber,
-                    day.isToday && styles.todayDateNumber,
-                    selectedDate === day.isoDate && styles.selectedDateNumber
-                  ]}
-                >
-                  {day.dayNumber}
-                </Text>
-              </TouchableOpacity>
-            </View>
-          ))}
-        </View>
-      </View>
-    );
   };
 
   // Save changes
@@ -410,41 +400,11 @@ export default function SymptomTracking() {
 
   return (
     <View style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.back()}>
-          <Ionicons name="close" size={28} color="black" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>{currentMonth}</Text>
-        {currentWeekIndex !== Math.floor(WEEK_COUNT/2) ? (
-          <TouchableOpacity onPress={goToToday} style={styles.todayButton}>
-            <Text style={styles.todayButtonText}>Today</Text>
-          </TouchableOpacity>
-        ) : (
-          <View style={{width: 50}} />
-        )}
-      </View>
-
-      {/* Calendar (FlatList) */}
-      <View style={styles.calendarContainer}>
-        <FlatList
-          ref={flatListRef}
-          data={weeksData}
-          renderItem={renderWeekItem}
-          keyExtractor={(item) => item.id}
-          horizontal
-          pagingEnabled
-          showsHorizontalScrollIndicator={false}
-          initialScrollIndex={Math.floor(WEEK_COUNT/2)} // Start at current week
-          getItemLayout={(data, index) => ({
-            length: screenWidth,
-            offset: screenWidth * index,
-            index,
-          })}
-          onViewableItemsChanged={handleViewableItemsChanged}
-          viewabilityConfig={{ itemVisiblePercentThreshold: 50 }}
-        />
-      </View>
+      {/* Date Navigator */}
+      <DateNavigator
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
+      />
 
       <ScrollView style={styles.scrollView}>
         {isSelectedDateInFuture ? (
@@ -521,77 +481,19 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F3F2F7',
   },
-  header: {
+  dateNavigator: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 16,
-    paddingTop: 50,
+    paddingHorizontal: 20,
+    paddingVertical: 15,
+    paddingTop: 35,
     backgroundColor: '#F3F2F7',
   },
-  headerTitle: {
-    fontSize: 24,
+  dateText: {
+    fontSize: 18,
     fontWeight: '600',
     color: '#000',
-  },
-  calendarContainer: {
-    height: 110,
-    backgroundColor: '#F3F2F7',
-  },
-  weekContainer: {
-    width: screenWidth,
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-  },
-  daysRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    paddingHorizontal: 10,
-  },
-  dayColumn: {
-    alignItems: 'center',
-    width: 40,
-  },
-  dayName: {
-    fontSize: 14,
-    fontWeight: '500',
-    color: '#000',
-    marginBottom: 8,
-  },
-  dateCircle: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  todayCircle: {
-    borderWidth: 2,
-    borderColor: '#4561D2',
-  },
-  selectedDateCircle: {
-    backgroundColor: '#4561D2',
-  },
-  dateNumber: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#000',
-  },
-  todayDateNumber: {
-    color: '#4561D2',
-  },
-  selectedDateNumber: {
-    color: '#fff',
-  },
-  todayButton: {
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-  },
-  todayButtonText: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#4561D2',
   },
   scrollView: {
     flex: 1,
