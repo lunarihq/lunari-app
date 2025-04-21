@@ -135,6 +135,7 @@ export function PeriodCalendarModal({ visible, onClose, onSave, selectedDates, s
             markedDates={markedDatesWithToday}
             markingType="custom"
             hideExtraDays={true}
+            firstDay={1}
             dayComponent={({date, state, marking}: any) => {
               const customMarking = marking as CustomMarking;
               const isSelected = customMarking?.selected;

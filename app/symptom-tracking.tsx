@@ -128,7 +128,10 @@ const isFutureDate = (dateString: string) => {
 
 export default function SymptomTracking() {
   const params = useLocalSearchParams();
-  const [selectedDate, setSelectedDate] = useState<string>(dayjs().format('YYYY-MM-DD'));
+  const [selectedDate, setSelectedDate] = useState<string>(
+    // Use the date from params if provided, otherwise use today's date
+    typeof params.date === 'string' ? params.date : dayjs().format('YYYY-MM-DD')
+  );
   const [weeksData, setWeeksData] = useState<WeekData[]>(generateWeeksData());
   const [currentMonth, setCurrentMonth] = useState<string>(dayjs().format('MMMM'));
   const [currentWeekIndex, setCurrentWeekIndex] = useState<number>(Math.floor(WEEK_COUNT/2));

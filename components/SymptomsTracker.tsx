@@ -6,27 +6,32 @@ import { db } from '../db';
 import { healthLogs } from '../db/schema';
 import { eq } from 'drizzle-orm';
 
-export const SymptomsTracker = () => {
-  const [todayHealthLogs, setTodayHealthLogs] = useState<any[]>([]);
+type SymptomsTrackerProps = {
+  selectedDate?: string;
+};
+
+export const SymptomsTracker = ({ selectedDate }: SymptomsTrackerProps) => {
+  const [healthLogsForDate, setHealthLogsForDate] = useState<any[]>([]);
   
-  // Load health logs when component is focused
+  // Load health logs when component is focused or selectedDate changes
   useFocusEffect(
     useCallback(() => {
       const loadHealthLogs = async () => {
         try {
-          const today = new Date().toISOString().split('T')[0];
+          // Use the selected date or default to today
+          const dateToUse = selectedDate || new Date().toISOString().split('T')[0];
           const logs = await db.select().from(healthLogs)
-            .where(eq(healthLogs.date, today));
+            .where(eq(healthLogs.date, dateToUse));
           
-          setTodayHealthLogs(logs);
-          console.log('Loaded health logs:', logs.length);
+          setHealthLogsForDate(logs);
+          console.log(`Loaded health logs for ${dateToUse}:`, logs.length);
         } catch (error) {
           console.error('Error loading health logs:', error);
         }
       };
       
       loadHealthLogs();
-    }, [])
+    }, [selectedDate])
   );
 
   // Helper function to get the appropriate icon component
@@ -50,26 +55,37 @@ export const SymptomsTracker = () => {
     return <Ionicons name="help-circle" size={18} color="#888" />;
   };
 
+  // Get date text for display
+  const getDateText = () => {
+    const dateToUse = selectedDate || new Date().toISOString().split('T')[0];
+    const isToday = dateToUse === new Date().toISOString().split('T')[0];
+    return isToday ? 'today' : 'this date';
+  };
+
   return (
     <View style={styles.symptomsCard}>
       <View style={styles.symptomsHeader}>
         <Text style={styles.symptomsText}>Log your symptoms</Text>
         <TouchableOpacity 
-          onPress={() => router.push('/symptom-tracking')}
+          onPress={() => router.push(selectedDate ? 
+            `/symptom-tracking?date=${selectedDate}` : 
+            '/symptom-tracking')}
           style={styles.addButton}
         >
           <Ionicons name="add-circle" size={24} color="#4561D2" />
         </TouchableOpacity>
       </View>
       
-      {todayHealthLogs.length > 0 ? (
+      {healthLogsForDate.length > 0 ? (
         <>
           <View style={styles.loggedItemsContainer}>
-            {todayHealthLogs.map((log) => (
+            {healthLogsForDate.map((log) => (
               <TouchableOpacity 
                 key={`${log.type}_${log.item_id}`} 
                 style={styles.loggedItem}
-                onPress={() => router.push('/symptom-tracking')}
+                onPress={() => router.push(selectedDate ? 
+                  `/symptom-tracking?date=${selectedDate}` : 
+                  '/symptom-tracking')}
                 activeOpacity={0.7}
               >
                 <View style={styles.loggedItemIcon}>
@@ -81,7 +97,7 @@ export const SymptomsTracker = () => {
           </View>
         </>
       ) : (
-        <Text style={styles.noLoggedItemsText}>No symptoms or moods logged for today</Text>
+        <Text style={styles.noLoggedItemsText}>No symptoms or moods logged for {getDateText()}</Text>
       )}
     </View>
   );

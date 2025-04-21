@@ -297,6 +297,7 @@ export default function CalendarScreen() {
           onMonthChange={onMonthChange}
           hideExtraDays={true}
           hideArrows={false}
+          firstDay={1}
           renderArrow={(direction: 'left' | 'right') => (
             <Ionicons 
               name={direction === 'left' ? 'chevron-back' : 'chevron-forward'} 
@@ -353,7 +354,7 @@ export default function CalendarScreen() {
         )}
       </View>
       
-      <SymptomsTracker />
+      <SymptomsTracker selectedDate={selectedDate} />
       
       <PeriodCalendarModal
         visible={modalVisible}
