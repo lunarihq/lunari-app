@@ -39,6 +39,13 @@ export function PeriodCalendarModal({ visible, onClose, onSave, selectedDates, s
   };
 
   const onDayPress = (day: DateData) => {
+    // Check if date is in the future and return if it is
+    const selectedDate = new Date(day.dateString);
+    const todayDate = new Date(today);
+    if (selectedDate > todayDate) {
+      return; // Exit early if future date
+    }
+
     const updatedDates = { ...tempDates };
 
     // Normal behavior for today and past dates
@@ -51,11 +58,17 @@ export function PeriodCalendarModal({ visible, onClose, onSave, selectedDates, s
       const prevDayString = formatDateString(prevDay);
       
       if (!updatedDates[prevDayString]) {
-        // Auto-select 5 days, including future dates if needed
+        // Auto-select 5 days, but don't include future dates
         const dateRange = generateDateRange(day.dateString, 5);
         
-        // Apply selection to all days in range
-        dateRange.forEach(dateString => {
+        // Filter out future dates from the range
+        const filteredDateRange = dateRange.filter(dateString => {
+          const rangeDate = new Date(dateString);
+          return rangeDate <= todayDate;
+        });
+        
+        // Apply selection to all days in filtered range
+        filteredDateRange.forEach(dateString => {
           updatedDates[dateString] = DEFAULT_SELECTED_STYLE;
         });
       } else {
@@ -101,6 +114,9 @@ export function PeriodCalendarModal({ visible, onClose, onSave, selectedDates, s
     const isToday = state === 'today';
     const isDisabled = state === 'disabled';
     
+    // Check if date is in the future
+    const isFuture = date ? new Date(date.dateString) > new Date(today) : false;
+    
     // Determine if this is a period day (has the pink background)
     const isPeriodDay = customMarking?.customStyles?.container?.backgroundColor === '#FF597B';
     
@@ -120,21 +136,25 @@ export function PeriodCalendarModal({ visible, onClose, onSave, selectedDates, s
           {date ? date.day : ''}
         </Text>
         
-        {/* Circle indicator below the day number */}
-        <View style={[
-          styles.dayIndicator,
-          isSelected ? styles.selectedDayIndicator : null,
-          isToday ? styles.todayIndicator : null,
-        ]}>
-          {isSelected && (
-            <Ionicons 
-              name="checkmark" 
-              size={14} 
-              color="#FFFFFF" 
-              style={styles.checkmark} 
-            />
-          )}
-        </View>
+        {/* Always render a View for consistent layout */}
+        {!isFuture ? (
+          <View style={[
+            styles.dayIndicator,
+            isSelected ? styles.selectedDayIndicator : null,
+            isToday ? styles.todayIndicator : null,
+          ]}>
+            {isSelected && (
+              <Ionicons 
+                name="checkmark" 
+                size={14} 
+                color="#FFFFFF" 
+                style={styles.checkmark} 
+              />
+            )}
+          </View>
+        ) : (
+          <View style={styles.emptyIndicator} />
+        )}
       </TouchableOpacity>
     );
   };
@@ -259,13 +279,14 @@ const styles = StyleSheet.create({
   // Custom day styles
   customDayContainer: {
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     width: 32,
     height: 45,
   },
   customDayText: {
     fontSize: 16,
     textAlign: 'center',
+    marginTop: 4,
     marginBottom: 4,
   },
   dayIndicator: {
@@ -276,6 +297,10 @@ const styles = StyleSheet.create({
     borderColor: '#979797',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  emptyIndicator: {
+    width: 22,
+    height: 22,
   },
   selectedDayIndicator: {
     backgroundColor: '#FF597B',
