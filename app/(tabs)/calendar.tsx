@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { View, StyleSheet, Text, SafeAreaView, TouchableOpacity } from 'react-native';
-import { Calendar, DateData } from 'react-native-calendars';
+import { DateData } from 'react-native-calendars';
 import { useFocusEffect } from '@react-navigation/native';
 import { useLocalSearchParams } from 'expo-router';
 import { db } from '../../db';
@@ -9,6 +9,8 @@ import { PeriodPredictionService } from '../../services/periodPredictions';
 import { Ionicons } from '@expo/vector-icons';
 import { PeriodCalendarModal } from '../../components/PeriodCalendar';
 import { SymptomsTracker } from '../../components/SymptomsTracker';
+import { BaseCalendar } from '../../components/BaseCalendar';
+import { MarkedDates, formatDateString } from '../../components/CalendarTypes';
 
 // Create a module-level variable to store the setter function
 let globalSetModalVisible: ((visible: boolean) => void) | null = null;
@@ -21,13 +23,13 @@ export function openPeriodModal() {
 }
 
 export default function CalendarScreen() {
-  const [selectedDates, setSelectedDates] = useState<{ [date: string]: any }>({});
-  const [markedDates, setMarkedDates] = useState<{ [date: string]: any }>({});
-  const [baseMarkedDates, setBaseMarkedDates] = useState<{ [date: string]: any }>({});
+  const [selectedDates, setSelectedDates] = useState<MarkedDates>({});
+  const [markedDates, setMarkedDates] = useState<MarkedDates>({});
+  const [baseMarkedDates, setBaseMarkedDates] = useState<MarkedDates>({});
   const [firstPeriodDate, setFirstPeriodDate] = useState<string | null>(null);
   const [cycleDay, setCycleDay] = useState<number | null>(null);
-  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
-  const [currentDate] = useState(new Date().toISOString().split('T')[0]);
+  const [selectedDate, setSelectedDate] = useState(formatDateString(new Date()));
+  const [currentDate] = useState(formatDateString(new Date()));
   const [modalVisible, setModalVisible] = useState(false);
   const [currentMonth, setCurrentMonth] = useState('');
   const [calendarKey, setCalendarKey] = useState(Date.now());
@@ -50,18 +52,21 @@ export default function CalendarScreen() {
   const loadData = async () => {
     const saved = await db.select().from(periodDates);
     
-    const dates = saved.reduce((acc: { [key: string]: any }, curr) => { 
+    const dates = saved.reduce((acc: MarkedDates, curr) => { 
       acc[curr.date] = { 
         selected: true, 
         customStyles: { 
           container: { 
             backgroundColor: '#FF597B',
-            borderRadius: 16,  // Changed from 0 to 16 to make it circular
-          } 
+            borderRadius: 16,
+          },
+          text: {
+            color: '#FFFFFF'  // Make text white for period days
+          }
         } 
       };
       return acc;
-    }, {} as { [key: string]: any });
+    }, {} as MarkedDates);
     
     setSelectedDates(dates);
     
@@ -100,7 +105,7 @@ export default function CalendarScreen() {
   };
 
   // Generate all marked dates including predictions
-  const generateMarkedDates = (periodDates: { [date: string]: any }, startDate: string) => {
+  const generateMarkedDates = (periodDates: MarkedDates, startDate: string) => {
     if (!startDate) return;
     
     const allMarkedDates = { ...periodDates };
@@ -116,13 +121,13 @@ export default function CalendarScreen() {
       
       // Create a new date at noon to avoid timezone issues
       const nextPeriodDate = new Date(year, month, day + cycleLength * (i + 1), 12, 0, 0);
-      const nextPeriodDateString = nextPeriodDate.toISOString().split('T')[0];
+      const nextPeriodDateString = formatDateString(nextPeriodDate);
       
       // Mark 5 days of predicted period
       for (let j = 0; j < 5; j++) {
         const predictedDay = new Date(nextPeriodDate);
         predictedDay.setDate(predictedDay.getDate() + j);
-        const predictedDayString = predictedDay.toISOString().split('T')[0];
+        const predictedDayString = formatDateString(predictedDay);
         
         // Only apply prediction style if this is not an actual period date
         if (!allMarkedDates[predictedDayString] || !allMarkedDates[predictedDayString].selected) {
@@ -152,9 +157,13 @@ export default function CalendarScreen() {
         customStyles: {
           ...allMarkedDates[currentDate].customStyles,
           container: {
-            ...allMarkedDates[currentDate].customStyles.container,
+            ...allMarkedDates[currentDate].customStyles?.container,
             borderWidth: 2,
             borderColor: 'black',
+          },
+          // Ensure text is white for period days
+          text: {
+            color: '#FFFFFF'
           }
         }
       };
@@ -198,7 +207,7 @@ export default function CalendarScreen() {
     useCallback(() => {
       loadData();
       // Reset to current date whenever tab is focused
-      const today = new Date().toISOString().split('T')[0];
+      const today = formatDateString(new Date());
       setSelectedDate(today);
       setCalendarKey(Date.now()); // Force calendar re-render
       return () => {};
@@ -227,6 +236,9 @@ export default function CalendarScreen() {
     // Create a new object with all the base marked dates
     const updatedMarkedDates = { ...baseMarkedDates };
     
+    // Check if this is a period date (which should have white text)
+    const isPeriodDate = updatedMarkedDates[selectedDate]?.customStyles?.container?.backgroundColor === '#FF597B';
+    
     // Add the highlight style only to the currently selected date
     updatedMarkedDates[selectedDate] = {
       ...updatedMarkedDates[selectedDate],
@@ -237,7 +249,11 @@ export default function CalendarScreen() {
           borderWidth: 2,
           borderColor: 'black',
           borderRadius: 16,
-        }
+        },
+        // Only override text color if it's not already a period date
+        text: isPeriodDate 
+          ? { color: '#FFFFFF' } 
+          : updatedMarkedDates[selectedDate]?.customStyles?.text
       }
     };
     
@@ -250,7 +266,7 @@ export default function CalendarScreen() {
   }, [selectedDate, baseMarkedDates, updateSelectedDateHighlight]);
 
   // Handle saving period dates
-  const savePeriodDates = async (dates: { [date: string]: any }) => {
+  const savePeriodDates = async (dates: MarkedDates) => {
     try {
       await db.delete(periodDates);
       
@@ -288,49 +304,13 @@ export default function CalendarScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.calendarContainer}>
-        <Calendar
+        <BaseCalendar
+          mode="view"
           key={calendarKey}
           current={selectedDate}
-          markingType="custom"
           markedDates={markedDates}
           onDayPress={onDayPress}
           onMonthChange={onMonthChange}
-          hideExtraDays={true}
-          hideArrows={false}
-          firstDay={1}
-          renderArrow={(direction: 'left' | 'right') => (
-            <Ionicons 
-              name={direction === 'left' ? 'chevron-back' : 'chevron-forward'} 
-              size={20} 
-              color="black" 
-            />
-          )}
-          theme={{
-            backgroundColor: '#ffffff',
-            calendarBackground: '#ffffff',
-            textSectionTitleColor: '#b6c1cd',
-            selectedDayBackgroundColor: '#FF597B',
-            selectedDayTextColor: '#ffffff',
-            todayTextColor: 'black',
-            dayTextColor: 'black',
-            textDisabledColor: '#d9e1e8',
-            dotColor: '#FF597B',
-            selectedDotColor: '#ffffff',
-            arrowColor: 'black',
-            monthTextColor: '#000000',
-            textMonthFontWeight: 'bold',
-            textDayFontSize: 14,
-            textMonthFontSize: 16,
-            textDayHeaderFontSize: 14,
-            'stylesheet.calendar.header': {
-              dayHeader: {
-                textAlign: 'center',
-                fontSize: 14,
-                fontWeight: '500',
-                color: '#7B7B7B'
-              },
-            }
-          }}
         />
       </View>
       

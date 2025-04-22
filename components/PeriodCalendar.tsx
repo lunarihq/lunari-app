@@ -1,7 +1,9 @@
-import { View, Modal, Pressable, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Modal, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useState, useEffect } from 'react';
-import { Calendar, DateData } from 'react-native-calendars';
+import { DateData } from 'react-native-calendars';
 import { Ionicons } from '@expo/vector-icons';
+import { BaseCalendar } from './BaseCalendar';
+import { CustomMarking, MarkedDates, DEFAULT_SELECTED_STYLE, formatDateString, generateDateRange } from './CalendarTypes';
 
 type Props = {
   visible: boolean;
@@ -11,21 +13,10 @@ type Props = {
   setSelectedDates: (dates: { [date: string]: any }) => void;
 };
 
-// Custom type for our marked dates with todayText
-type CustomMarking = {
-  selected?: boolean;
-  selectedColor?: string;
-  customContainerStyle?: any;
-  marked?: boolean;
-  todayStyle?: {
-    backgroundColor: string;
-  };
-};
-
 export function PeriodCalendarModal({ visible, onClose, onSave, selectedDates, setSelectedDates }: Props) {
-  const [tempDates, setTempDates] = useState<{[date: string]: CustomMarking}>(selectedDates);
+  const [tempDates, setTempDates] = useState<MarkedDates>(selectedDates);
   // Get current date for today marker
-  const today = new Date().toISOString().split('T')[0];
+  const today = formatDateString(new Date());
   const [currentMonth, setCurrentMonth] = useState(today);
   const [calendarKey, setCalendarKey] = useState(Date.now().toString());
 
@@ -33,20 +24,22 @@ export function PeriodCalendarModal({ visible, onClose, onSave, selectedDates, s
     setTempDates(selectedDates);
   }, [visible]); // Reset temp dates when modal opens
 
-  const onDayPress = (day: DateData) => {
-    const selectedDateStr = day.dateString;
-    const todayDateStr = new Date().toISOString().split('T')[0];
-    const updatedDates = { ...tempDates };
+  // Function to check if the current displayed month is different from today's month
+  const isTodayButtonVisible = () => {
+    // Extract year and month from today string (YYYY-MM-DD)
+    const todayYear = today.substring(0, 4);
+    const todayMonth = today.substring(5, 7);
+    
+    // Extract year and month from currentMonth string (YYYY-MM-DD)
+    const currentYear = currentMonth.substring(0, 4);
+    const currentMonth_ = currentMonth.substring(5, 7);
+    
+    // Return true if they are different (button should be visible)
+    return todayYear !== currentYear || todayMonth !== currentMonth_;
+  };
 
-    // Check if the date is in the future
-    if (selectedDateStr > todayDateStr) {
-      // Allow deselection of future dates, but prevent selection
-      if (updatedDates[day.dateString]) {
-        delete updatedDates[day.dateString];
-        setTempDates(updatedDates);
-      }
-      return;  // Ignore new selections of future dates
-    }
+  const onDayPress = (day: DateData) => {
+    const updatedDates = { ...tempDates };
 
     // Normal behavior for today and past dates
     if (updatedDates[day.dateString]) {
@@ -55,37 +48,19 @@ export function PeriodCalendarModal({ visible, onClose, onSave, selectedDates, s
       // Check if this is a new period start (no adjacent dates before it)
       const prevDay = new Date(day.dateString);
       prevDay.setDate(prevDay.getDate() - 1);
-      const prevDayString = prevDay.toISOString().split('T')[0];
+      const prevDayString = formatDateString(prevDay);
       
       if (!updatedDates[prevDayString]) {
         // Auto-select 5 days, including future dates if needed
-        for (let i = 0; i < 5; i++) {
-          const date = new Date(day.dateString);
-          date.setDate(date.getDate() + i);
-          const dateString = date.toISOString().split('T')[0];
-          
-          // Allow future dates in auto-selection
-          updatedDates[dateString] = { 
-            selected: true, 
-            selectedColor: '#FF597B', 
-            customContainerStyle: { 
-              borderWidth: 2, 
-              borderColor: '#FF597B', 
-              backgroundColor: '#FFEAEE' 
-            } 
-          };
-        }
+        const dateRange = generateDateRange(day.dateString, 5);
+        
+        // Apply selection to all days in range
+        dateRange.forEach(dateString => {
+          updatedDates[dateString] = DEFAULT_SELECTED_STYLE;
+        });
       } else {
         // Normal single day selection
-        updatedDates[day.dateString] = { 
-          selected: true, 
-          selectedColor: '#FF597B', 
-          customContainerStyle: { 
-            borderWidth: 2, 
-            borderColor: '#FF597B', 
-            backgroundColor: '#FFEAEE' 
-          } 
-        };
+        updatedDates[day.dateString] = DEFAULT_SELECTED_STYLE;
       }
     }
     
@@ -96,6 +71,11 @@ export function PeriodCalendarModal({ visible, onClose, onSave, selectedDates, s
     setCurrentMonth(today);
     // Force calendar to re-render with new current prop
     setCalendarKey(Date.now().toString());
+  };
+  
+  // Handler for month change
+  const onMonthChange = (month: DateData) => {
+    setCurrentMonth(month.dateString);
   };
   
   // Create modified markedDates with TODAY text
@@ -113,6 +93,52 @@ export function PeriodCalendarModal({ visible, onClose, onSave, selectedDates, s
     };
   }
 
+  // Custom day renderer for the period calendar
+  const renderCustomDay = ({ date, state, marking }: any) => {
+    const customMarking = marking as CustomMarking;
+    const isSelected = customMarking?.selected || 
+                      customMarking?.customStyles?.container?.backgroundColor === '#FF597B';
+    const isToday = state === 'today';
+    const isDisabled = state === 'disabled';
+    
+    // Determine if this is a period day (has the pink background)
+    const isPeriodDay = customMarking?.customStyles?.container?.backgroundColor === '#FF597B';
+    
+    return (
+      <TouchableOpacity 
+        style={styles.customDayContainer}
+        onPress={() => date ? onDayPress(date) : null}
+        disabled={isDisabled}
+      >
+        {/* Day number */}
+        <Text style={[
+          styles.customDayText,
+          isToday ? styles.todayText : null,
+          isDisabled ? styles.disabledDayText : null,
+          isSelected ? styles.selectedDayText : null,
+        ]}>
+          {date ? date.day : ''}
+        </Text>
+        
+        {/* Circle indicator below the day number */}
+        <View style={[
+          styles.dayIndicator,
+          isSelected ? styles.selectedDayIndicator : null,
+          isToday ? styles.todayIndicator : null,
+        ]}>
+          {isSelected && (
+            <Ionicons 
+              name="checkmark" 
+              size={14} 
+              color="#FFFFFF" 
+              style={styles.checkmark} 
+            />
+          )}
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <Modal visible={visible} animationType="slide">
       <View style={styles.modalContainer}>
@@ -122,104 +148,26 @@ export function PeriodCalendarModal({ visible, onClose, onSave, selectedDates, s
             <Ionicons name="chevron-back" size={24} color="black" />
             <Text style={styles.headerTitle}>Edit period</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={goToToday} style={styles.todayButton}>
-            <Text style={styles.todayButtonText}>Today</Text>
-          </TouchableOpacity>
+          {isTodayButtonVisible() && (
+            <TouchableOpacity onPress={goToToday}>
+              <Text style={styles.todayButtonText}>Today</Text>
+            </TouchableOpacity>
+          )}
         </View>
         
         <View style={styles.calendarContainer}>
-          <Calendar
-            key={calendarKey}
+          <BaseCalendar
+            mode="selection"
+            calendarKey={calendarKey}
             current={currentMonth}
-            onDayPress={onDayPress}
             markedDates={markedDatesWithToday}
-            markingType="custom"
-            hideExtraDays={true}
-            firstDay={1}
-            dayComponent={({date, state, marking}: any) => {
-              const customMarking = marking as CustomMarking;
-              const isSelected = customMarking?.selected;
-              
-              return (
-                <View style={styles.dayContainer}>
-                  <TouchableOpacity
-                    style={[
-                      styles.dayButton,
-                      isSelected ? styles.selectedDay : null,
-                      customMarking?.customContainerStyle,
-                      state === 'today' ? styles.todayDayButton : null,
-                      state === 'today' ? customMarking?.todayStyle : null,
-                      state === 'disabled' ? styles.disabledDay : null
-                    ]}
-                    onPress={() => date ? onDayPress(date) : null}
-                    disabled={state === 'disabled'}
-                  >
-                    <Text style={[
-                      styles.dayText,
-                      isSelected ? styles.selectedDayText : null,
-                      state === 'disabled' ? styles.disabledDayText : null,
-                      state === 'today' ? styles.todayText : null
-                    ]}>
-                      {date ? date.day : ''}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              );
+            onDayPress={onDayPress}
+            onMonthChange={onMonthChange}
+            selectionRules={{
+              disableFuture: true,
+              autoSelectDays: 5
             }}
-            theme={
-              {
-                backgroundColor: '#ffffff',
-                calendarBackground: '#ffffff',
-                textSectionTitleColor: '#b6c1cd',
-                selectedDayBackgroundColor: 'transparent',
-                selectedDayTextColor: '#000000',
-                todayTextColor: '#000000',
-                dayTextColor: '#2d4150',
-                textDisabledColor: '#d9e1e8',
-                dotColor: '#FF597B',
-                selectedDotColor: '#FF597B',
-                arrowColor: 'black',
-                monthTextColor: '#000000',
-                textMonthFontWeight: 'bold',
-                textDayFontSize: 16,
-                textMonthFontSize: 18,
-                textDayHeaderFontSize: 14,
-                dayNamesShort: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
-                // Custom styling for header and day components
-                'stylesheet.calendar.header': {
-                  header: {
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    paddingLeft: 10,
-                    paddingRight: 10,
-                    marginTop: 10,
-                    alignItems: 'center'
-                  },
-                  monthText: {
-                    fontSize: 18,
-                    fontWeight: 'bold',
-                    color: '#000000',
-                    margin: 10
-                  },
-                  dayHeader: {
-                    marginTop: 2,
-                    marginBottom: 7,
-                    width: 32,
-                    textAlign: 'center',
-                    fontSize: 14,
-                    color: '#b6c1cd'
-                  },
-                },
-                'stylesheet.day.basic': {
-                  base: {
-                    width: 32,
-                    height: 32,
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                  }
-                }
-              } as any
-            }
+            renderDay={renderCustomDay}
           />
         </View>
 
@@ -302,50 +250,50 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: '#ffffff',
   },
-  dayContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 32,
-    height: 45,
-  },
-  dayButton: {
-    width: 32,
-    height: 32,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 16,
-  },
-  dayText: {
-    fontSize: 16,
-    textAlign: 'center',
-  },
-  disabledDay: {
-    opacity: 0.3,
-  },
-  disabledDayText: {
-    color: '#d9e1e8',
-  },
-  todayText: {
-    fontWeight: 'bold',
-  },
-  todayDayButton: {
-    // This is for the day circle, not to be confused with the header Today button
-  },
-  selectedDay: {
-    backgroundColor: '#FFEAEE',
-    borderWidth: 2,
-    borderColor: '#FF597B',
-  },
-  selectedDayText: {
-    color: '#FF597B',
-    fontWeight: '500',
-  },
-  todayButton: {
-    padding: 8,
-  },
+ 
   todayButtonText: {
     fontSize: 16,
     fontWeight: '500',
     color: '#FF597B',
   },
+  // Custom day styles
+  customDayContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 32,
+    height: 45,
+  },
+  customDayText: {
+    fontSize: 16,
+    textAlign: 'center',
+    marginBottom: 4,
+  },
+  dayIndicator: {
+    width: 22,
+    height: 22,
+    borderRadius: 11,
+    borderWidth: 1,
+    borderColor: '#979797',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  selectedDayIndicator: {
+    backgroundColor: '#FF597B',
+    borderColor: '#FF597B',
+  },
+  todayIndicator: {
+    borderWidth: 2,
+  },
+  todayText: {
+    fontWeight: 'bold',
+  },
+  disabledDayText: {
+    color: '#d9e1e8',
+  },
+  selectedDayText: {
+    color: '#FF597B',
+  },
+  checkmark: {
+    marginTop: 0,
+  }
 });
