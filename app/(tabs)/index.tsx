@@ -391,7 +391,7 @@ export default function Index() {
             </>
           ) : (
             <Text style={styles.insightsText}>
-              Please log at least one finished period to view your cycle insights.
+              Please log at least one period to view your cycle insights.
             </Text>
           )}
         </View>

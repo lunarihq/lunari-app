@@ -38,6 +38,14 @@ export const SymptomsTracker = ({ selectedDate }: SymptomsTrackerProps) => {
   const getIconComponent = (log: any) => {
     const { icon, icon_color, type } = log;
     
+    // Check if the icon is an emoji (starts with a non-ASCII character)
+    const isEmoji = /^[^\x00-\x7F]/.test(icon);
+    
+    if (isEmoji) {
+      // Render emoji as text
+      return <Text style={{ fontSize: 18 }}>{icon}</Text>;
+    }
+    
     if (type === 'symptom') {
       if (icon === 'strawberry') {
         return <FontAwesome5 name="strawberry" size={18} color={icon_color} />;
@@ -65,7 +73,7 @@ export const SymptomsTracker = ({ selectedDate }: SymptomsTrackerProps) => {
   return (
     <View style={styles.symptomsCard}>
       <View style={styles.symptomsHeader}>
-        <Text style={styles.symptomsText}>Log your symptoms</Text>
+        <Text style={styles.symptomsText}>Symptoms and moods</Text>
         <TouchableOpacity 
           onPress={() => router.push(selectedDate ? 
             `/symptom-tracking?date=${selectedDate}` : 

@@ -329,3 +329,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#E5E5EA', // Light gray for regular days
   },
 });
+
+export default CycleHistory;

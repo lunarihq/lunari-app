@@ -47,4 +47,6 @@ const styles = StyleSheet.create({
     color: '#000',
     marginLeft: 8,
   },
-}); 
+});
+
+export default StatCard; 

@@ -11,8 +11,6 @@ import {
 } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { FontAwesome5 } from '@expo/vector-icons';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import dayjs from 'dayjs';
 import { db } from '../db';
 import { healthLogs } from '../db/schema';
@@ -21,7 +19,7 @@ import { sql, eq, inArray } from 'drizzle-orm';
 // Symptom type definition
 type Item = {
   id: string;
-  icon: React.ReactNode;
+  icon: React.ReactNode | string;
   name: string;
   selected: boolean;
 };
@@ -146,25 +144,25 @@ export default function SymptomTracking() {
   const [symptoms, setSymptoms] = useState<Item[]>([
     { 
       id: '1', 
-      icon: <FontAwesome5 name="strawberry" size={24} color="#FF5C7F" />,
+      icon: '🍓',
       name: 'Acne', 
       selected: false 
     },
     { 
       id: '2', 
-      icon: <Ionicons name="hammer" size={24} color="#8B572A" />,
+      icon: '🔨',
       name: 'Headache', 
       selected: false 
     },
     { 
       id: '3', 
-      icon: <MaterialCommunityIcons name="head-flash" size={24} color="#E73C3C" />,
+      icon: '⚡',
       name: 'Migraines', 
       selected: false 
     },
     { 
       id: '4', 
-      icon: <MaterialCommunityIcons name="rotate-orbit" size={24} color="#8B572A" />, 
+      icon: '💫', 
       name: 'Dizziness', 
       selected: false 
     },
@@ -174,49 +172,49 @@ export default function SymptomTracking() {
   const [moods, setMoods] = useState<Item[]>([
     { 
       id: '1', 
-      icon: <Ionicons name="happy" size={24} color="#FFCC00" />, 
+      icon: '👼', 
       name: 'Angelic', 
       selected: false 
     },
     { 
       id: '2', 
-      icon: <Ionicons name="sad" size={24} color="#FFCC00" />, 
+      icon: '🤬', 
       name: 'Angry', 
       selected: false 
     },
     { 
       id: '3', 
-      icon: <Ionicons name="help" size={24} color="#FFCC00" />, 
+      icon: '🤔', 
       name: 'Anxious', 
       selected: false 
     },
     { 
       id: '4', 
-      icon: <Ionicons name="remove-circle" size={24} color="#FF3B30" />,
+      icon: '🤷‍♂️', 
       name: 'Ashamed', 
       selected: false 
     },
     { 
       id: '5', 
-      icon: <Ionicons name="happy" size={24} color="#FFCC00" />, 
+      icon: '👼', 
       name: 'Angelic', 
       selected: false 
     },
     { 
       id: '6', 
-      icon: <Ionicons name="happy" size={24} color="#FFCC00" />, 
+      icon: '👼', 
       name: 'Angelic', 
       selected: false 
     },
     { 
       id: '7', 
-      icon: <Ionicons name="happy" size={24} color="#FFCC00" />, 
+      icon: '👼', 
       name: 'Angelic', 
       selected: false 
     },
     { 
       id: '8', 
-      icon: <Ionicons name="happy" size={24} color="#FFCC00" />, 
+      icon: '👼', 
       name: 'Angelic', 
       selected: false 
     },
@@ -326,21 +324,17 @@ export default function SymptomTracking() {
       
       // STEP 2: Prepare symptom records
       const symptomRecords = selectedSymptoms.map(symptom => {
-        // Convert the icon React element to a string representation
-        let iconName = '';
+        // Get the emoji as string
+        const emoji = String(symptom.icon);
         let iconColor = '';
         
         if (symptom.id === '1') {
-          iconName = 'strawberry';
           iconColor = '#FF5C7F';
         } else if (symptom.id === '2') {
-          iconName = 'hammer';
           iconColor = '#8B572A';
         } else if (symptom.id === '3') {
-          iconName = 'head-flash';
           iconColor = '#E73C3C';
         } else if (symptom.id === '4') {
-          iconName = 'rotate-orbit';
           iconColor = '#8B572A';
         }
         
@@ -349,36 +343,25 @@ export default function SymptomTracking() {
           type: 'symptom',
           item_id: symptom.id,
           name: symptom.name,
-          icon: iconName,
+          icon: emoji,
           icon_color: iconColor
         };
       });
       
       // STEP 3: Prepare mood records
       const moodRecords = selectedMoods.map(mood => {
-        // Convert the icon React element to a string representation
-        let iconName = '';
-        let iconColor = '';
+        // Get the emoji as string
+        const emoji = String(mood.icon);
         
-        // Simple mapping for the moods
-        iconName = 'happy'; // Default for all moods in this example
-        iconColor = '#FFCC00';
-        
-        if (mood.id === '2') {
-          iconName = 'sad';
-        } else if (mood.id === '3') {
-          iconName = 'help';
-        } else if (mood.id === '4') {
-          iconName = 'remove-circle';
-          iconColor = '#FF3B30';
-        }
+        // Use a standard color for all moods
+        const iconColor = '#FFCC00';
         
         return {
           date: selectedDate,
           type: 'mood',
           item_id: mood.id,
           name: mood.name,
-          icon: iconName,
+          icon: emoji,
           icon_color: iconColor
         };
       });
@@ -432,7 +415,7 @@ export default function SymptomTracking() {
                     onPress={() => toggleSymptom(symptom.id)}
                   >
                     <View style={[styles.itemIcon, symptom.selected && styles.selectedItemIcon]}>
-                      {symptom.icon}
+                      <Text style={styles.emojiText}>{symptom.icon}</Text>
                     </View>
                     <Text style={styles.itemText}>{symptom.name}</Text>
                   </TouchableOpacity>
@@ -454,7 +437,7 @@ export default function SymptomTracking() {
                     onPress={() => toggleMood(mood.id)}
                   >
                     <View style={[styles.itemIcon, mood.selected && styles.selectedItemIcon]}>
-                      {mood.icon}
+                      <Text style={styles.emojiText}>{mood.icon}</Text>
                     </View>
                     <Text style={styles.itemText}>{mood.name}</Text>
                   </TouchableOpacity>
@@ -567,6 +550,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 12,
     color: '#666',
+  },
+  emojiText: {
+    fontSize: 24,
   },
   saveButton: {
     position: 'absolute',
