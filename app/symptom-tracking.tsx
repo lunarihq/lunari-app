@@ -166,58 +166,91 @@ export default function SymptomTracking() {
       name: 'Dizziness', 
       selected: false 
     },
+    { 
+      id: '5', 
+      icon: '💤', 
+      name: 'Fatigue', 
+      selected: false 
+    },
+    { 
+      id: '6', 
+      icon: '🫄', 
+      name: 'Bloating', 
+      selected: false 
+    },
+    { 
+      id: '7', 
+      icon: '💩', 
+      name: 'Diarrhea', 
+      selected: false 
+    },
+    { 
+      id: '8', 
+      icon: '🍔', 
+      name: 'Cravings', 
+      selected: false 
+    },
+    
   ]);
 
   // Moods data
   const [moods, setMoods] = useState<Item[]>([
     { 
       id: '1', 
-      icon: '👼', 
-      name: 'Angelic', 
+      icon: '😌', 
+      name: 'Calm', 
       selected: false 
     },
     { 
       id: '2', 
-      icon: '🤬', 
-      name: 'Angry', 
+      icon: '😀', 
+      name: 'Happy', 
       selected: false 
     },
     { 
       id: '3', 
-      icon: '🤔', 
-      name: 'Anxious', 
+      icon: '💪', 
+      name: 'Energetic', 
       selected: false 
     },
     { 
       id: '4', 
-      icon: '🤷‍♂️', 
-      name: 'Ashamed', 
+      icon: '😥', 
+      name: 'Sad', 
       selected: false 
     },
+    
     { 
       id: '5', 
-      icon: '👼', 
-      name: 'Angelic', 
+      icon: '😰', 
+      name: 'Anxious', 
       selected: false 
     },
     { 
       id: '6', 
-      icon: '👼', 
-      name: 'Angelic', 
+      icon: '😕', 
+      name: 'Confused', 
       selected: false 
     },
     { 
       id: '7', 
-      icon: '👼', 
-      name: 'Angelic', 
+      icon: '😖', 
+      name: 'Irritated', 
       selected: false 
     },
     { 
       id: '8', 
-      icon: '👼', 
-      name: 'Angelic', 
+      icon: '😠', 
+      name: 'Angry', 
       selected: false 
     },
+    { 
+      id: '9', 
+      icon: '😭', 
+      name: 'Emotional', 
+      selected: false 
+    },
+    
   ]);
 
   // Load existing health logs when the component mounts or selected date changes

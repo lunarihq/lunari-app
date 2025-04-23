@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { router, useFocusEffect } from 'expo-router';
 import { Ionicons, FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
 import { db } from '../db';
@@ -72,41 +72,49 @@ export const SymptomsTracker = ({ selectedDate }: SymptomsTrackerProps) => {
 
   return (
     <View style={styles.symptomsCard}>
-      <View style={styles.symptomsHeader}>
-        <Text style={styles.symptomsText}>Symptoms and moods</Text>
+      <Text style={styles.symptomsText}>Symptoms & moods</Text>
+      
+      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.scrollContainer}>
+        {/* Add Button - Always visible */}
         <TouchableOpacity 
           onPress={() => router.push(selectedDate ? 
             `/symptom-tracking?date=${selectedDate}` : 
             '/symptom-tracking')}
-          style={styles.addButton}
+          style={styles.itemContainer}
         >
-          <Ionicons name="add-circle" size={24} color="#4561D2" />
-        </TouchableOpacity>
-      </View>
-      
-      {healthLogsForDate.length > 0 ? (
-        <>
-          <View style={styles.loggedItemsContainer}>
-            {healthLogsForDate.map((log) => (
-              <TouchableOpacity 
-                key={`${log.type}_${log.item_id}`} 
-                style={styles.loggedItem}
-                onPress={() => router.push(selectedDate ? 
-                  `/symptom-tracking?date=${selectedDate}` : 
-                  '/symptom-tracking')}
-                activeOpacity={0.7}
-              >
-                <View style={styles.loggedItemIcon}>
-                  {getIconComponent(log)}
-                </View>
-                <Text style={styles.loggedItemText} numberOfLines={1}>{log.name}</Text>
-              </TouchableOpacity>
-            ))}
+          <View style={styles.addButton}>
+            <Ionicons name="add" size={24} color="#4561D2" />
           </View>
-        </>
-      ) : (
-        <Text style={styles.noLoggedItemsText}>No symptoms or moods logged for {getDateText()}</Text>
-      )}
+          <Text style={styles.itemText}>Add</Text>
+        </TouchableOpacity>
+        
+        {/* Either show logged items or "No items" message */}
+        {healthLogsForDate.length > 0 ? (
+          // Map through logged items
+          healthLogsForDate.map((log) => (
+            <TouchableOpacity 
+              key={`${log.type}_${log.item_id}`} 
+              style={styles.itemContainer}
+              onPress={() => router.push(selectedDate ? 
+                `/symptom-tracking?date=${selectedDate}` : 
+                '/symptom-tracking')}
+              activeOpacity={0.7}
+            >
+              <View style={styles.itemIconContainer}>
+                {getIconComponent(log)}
+              </View>
+              <Text style={styles.itemText} numberOfLines={1}>{log.name}</Text>
+            </TouchableOpacity>
+          ))
+        ) : (
+          // No items message
+          <View style={styles.noItemsContainer}>
+            <Text style={styles.noLoggedItemsText}>
+              No symptoms or moods logged {getDateText()}.
+            </Text>
+          </View>
+        )}
+      </ScrollView>
     </View>
   );
 };
@@ -118,48 +126,48 @@ const styles = StyleSheet.create({
     padding: 16,
     marginBottom: 16,
   },
-  symptomsHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 12,
-  },
   symptomsText: {
-    fontSize: 18,
+    fontSize: 22,
     fontWeight: '500',
     color: '#332F49',
+    marginBottom: 16,
+  },
+  scrollContainer: {
+    flexDirection: 'row',
+  },
+  itemContainer: {
+    alignItems: 'center',
+    marginRight: 16,
   },
   addButton: {
-    padding: 5,
-  },
-  loggedItemsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-  loggedItem: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: '#EBEAFE',
+    justifyContent: 'center',
     alignItems: 'center',
-    width: '25%',
-    marginBottom: 12,
+    marginBottom: 8,
   },
-  loggedItemIcon: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
+  itemIconContainer: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
     backgroundColor: '#F9F8D5',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 4,
+    marginBottom: 8,
   },
-  loggedItemText: {
+  itemText: {
     fontSize: 12,
     color: '#666',
     textAlign: 'center',
-    paddingHorizontal: 2,
+  },
+  noItemsContainer: {
+    justifyContent: 'center',
+    paddingLeft: 8,
   },
   noLoggedItemsText: {
-    color: '#999',
+    color: '#676767',
     fontSize: 14,
-    fontStyle: 'italic',
-    marginTop: 8,
   },
 });

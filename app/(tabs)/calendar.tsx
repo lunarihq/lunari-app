@@ -389,11 +389,11 @@ const styles = StyleSheet.create({
     color: '#332F49',
   },
   cycleSummary: {
-    padding: 20,
+    padding: 16,
   },
   cycleSummaryTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
+    fontSize: 22,
+    fontWeight: '500',
     color: '#332F49',
     marginBottom: 4,
   },
