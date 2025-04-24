@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, StyleSheet, Text, SafeAreaView, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
 import { DateData } from 'react-native-calendars';
 import { useFocusEffect } from '@react-navigation/native';
 import { useLocalSearchParams } from 'expo-router';
 import { db } from '../../db';
 import { periodDates } from '../../db/schema';
 import { PeriodPredictionService } from '../../services/periodPredictions';
-import { Ionicons } from '@expo/vector-icons';
 import { PeriodCalendarModal } from '../../components/PeriodCalendar';
-import { SymptomsTracker } from '../../components/SymptomsTracker';
 import { BaseCalendar } from '../../components/BaseCalendar';
+import { CalendarLegend } from '../../components/CalendarLegend';
+import { CycleDetails } from '../../components/CycleDetails';
 import { MarkedDates, formatDateString } from '../../components/CalendarTypes';
 
 // Create a module-level variable to store the setter function
@@ -293,52 +293,30 @@ export default function CalendarScreen() {
     setCurrentMonth(`${new Date(month.dateString).toLocaleString('default', { month: 'long' })} ${new Date(month.dateString).getFullYear()}`);
   };
 
-  const selectedDateFormatted = selectedDate ? 
-    new Date(selectedDate).toLocaleDateString('en-US', { day: 'numeric', month: 'long' }) : '';
-
-  const getConceptionChance = () => {
-    if (!cycleDay) return '';
-    const chance = PeriodPredictionService.getPregnancyChance(cycleDay);
-    return `${chance.charAt(0).toUpperCase()}${chance.slice(1).toLowerCase()} chance to conceive`;
-  };
-
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.calendarContainer}>
-        <BaseCalendar
-          mode="view"
-          key={calendarKey}
-          current={selectedDate}
-          markedDates={markedDates}
-          onDayPress={onDayPress}
-          onMonthChange={onMonthChange}
+      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContent}>
+        <View style={styles.calendarContainer}>
+          <BaseCalendar
+            mode="view"
+            key={calendarKey}
+            current={selectedDate}
+            markedDates={markedDates}
+            onDayPress={onDayPress}
+            onMonthChange={onMonthChange}
+          />
+        </View>
+        
+        <CalendarLegend />
+        
+        <CycleDetails 
+          selectedDate={selectedDate}
+          cycleDay={cycleDay}
         />
-      </View>
-      
-      <View style={styles.legendContainer}>
-        <View style={styles.legendItem}>
-          <View style={styles.periodDot} />
-          <Text style={styles.legendText}>Period</Text>
-        </View>
-        <View style={styles.legendItem}>
-          <View style={styles.expectedPeriodDot} />
-          <Text style={styles.legendText}>Expected period</Text>
-        </View>
-      </View>
-      
-      <View style={styles.cycleSummary}>
-        <Text style={styles.cycleSummaryTitle}>
-          {selectedDateFormatted}{cycleDay ? ` • Cycle day ${cycleDay}` : ''}
-        </Text>
-        {cycleDay && (
-          <Text style={styles.conceptionChance}>{getConceptionChance()}</Text>
-        )}
-      </View>
-      
-      <SymptomsTracker 
-        selectedDate={selectedDate} 
-        titleStyle={{ fontSize: 20 }}
-      />
+        
+        {/* Add bottom padding to prevent content from being cut off */}
+        <View style={styles.bottomPadding} />
+      </ScrollView>
       
       <PeriodCalendarModal
         visible={modalVisible}
@@ -356,53 +334,16 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#ffffff',
   },
+  scrollView: {
+    flex: 1,
+  },
+  scrollViewContent: {
+    paddingBottom: 16,
+  },
   calendarContainer: {
     paddingTop: 4,
   },
-  legendContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    paddingVertical: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
-  },
-  legendItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginHorizontal: 8,
-  },
-  periodDot: {
-    width: 12,
-    height: 12,
-    borderRadius: 6,
-    backgroundColor: '#FF597B',
-    marginRight: 4,
-  },
-  expectedPeriodDot: {
-    width: 12,
-    height: 12,
-    borderRadius: 6,
-    backgroundColor: 'transparent',
-    borderWidth: 1.5,
-    borderColor: '#FF597B',
-    borderStyle: 'dashed',
-    marginRight: 4,
-  },
-  legendText: {
-    fontSize: 12,
-    color: '#332F49',
-  },
-  cycleSummary: {
-    padding: 16,
-  },
-  cycleSummaryTitle: {
-    fontSize: 22,
-    fontWeight: '500',
-    color: '#332F49',
-    marginBottom: 4,
-  },
-  conceptionChance: {
-    fontSize: 16,
-    color: '#878595',
+  bottomPadding: {
+    height: 10, // Add extra padding at the bottom to ensure content isn't cut off
   },
 });

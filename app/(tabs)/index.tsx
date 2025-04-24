@@ -388,6 +388,20 @@ export default function Index() {
                 </View>
                 <Text style={styles.cycleDay}>{getPregnancyChance(currentCycleDay)}</Text>
               </View>
+              <View style={[styles.cycleInfo, styles.mt8]}>
+                <View style={styles.labelWithIcon}>
+                  <Ionicons name="calendar" size={20} color="#878595" />
+                  <Text style={styles.cycleLabel}>Your next period is on</Text>
+                </View>
+                <Text style={styles.cycleDay}>{prediction ? prediction.date : '-'}</Text>
+              </View>
+              <View style={[styles.cycleInfo, styles.mt8]}>
+                <View style={styles.labelWithIcon}>
+                  <MaterialCommunityIcons name="egg-outline" size={20} color="#878595" />
+                  <Text style={styles.cycleLabel}>You might ovulate on</Text>
+                </View>
+                <Text style={styles.cycleDay}>{firstPeriodDate ? getOvulationDay(firstPeriodDate) : '-'}</Text>
+              </View>
             </>
           ) : (
             <Text style={styles.insightsText}>
@@ -424,7 +438,7 @@ const styles = StyleSheet.create({
     paddingTop: 16,
   },
   bottomPadding: {
-    height: 80, // Add extra padding at the bottom to ensure content isn't cut off
+    height: 40, // Add extra padding at the bottom to ensure content isn't cut off
   },
   predictionCard: {
     alignItems: 'center',
