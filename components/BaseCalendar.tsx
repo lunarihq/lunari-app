@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { Calendar, DateData } from 'react-native-calendars';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { CalendarList, DateData } from 'react-native-calendars';
 import { Ionicons } from '@expo/vector-icons';
 import { CustomMarking, MarkedDates, SelectionRules } from './CalendarTypes';
 
@@ -24,6 +24,14 @@ export type BaseCalendarProps = {
   renderDay?: (props: any) => React.ReactNode;
   // Optional callback for auto-selection
   onAutoSelect?: (startDay: DateData, selectedDays: DateData[]) => void;
+  // Enable horizontal scrolling
+  horizontal?: boolean;
+  // Custom calendar width for horizontal scrolling
+  calendarWidth?: number;
+  // Max amount of months allowed to scroll to the past
+  pastScrollRange?: number;
+  // Max amount of months allowed to scroll to the future
+  futureScrollRange?: number;
 };
 
 export function BaseCalendar({
@@ -37,7 +45,14 @@ export function BaseCalendar({
   renderHeader,
   renderDay,
   onAutoSelect,
+  horizontal = true,
+  calendarWidth,
+  pastScrollRange = 12,
+  futureScrollRange = 12,
 }: BaseCalendarProps) {
+  // Get device screen width for default calendarWidth
+  const screenWidth = Dimensions.get('window').width;
+  
   // Create a wrapped onDayPress that respects selectionRules
   const handleDayPress = (day: DateData) => {
     // If in view mode, pass through normally
@@ -107,7 +122,7 @@ export function BaseCalendar({
   const hideArrows = mode === 'selection' ? false : false;
 
   return (
-    <Calendar
+    <CalendarList
       key={calendarKey}
       current={current}
       markingType="custom"
@@ -118,6 +133,14 @@ export function BaseCalendar({
       hideArrows={hideArrows}
       firstDay={1}
       dayComponent={renderDay || defaultRenderDay}
+      // Horizontal scrolling props
+      horizontal={horizontal}
+      pagingEnabled={true}
+      calendarWidth={calendarWidth || screenWidth}
+      pastScrollRange={pastScrollRange}
+      futureScrollRange={futureScrollRange}
+      scrollEnabled={true}
+      showScrollIndicator={false}
       renderArrow={(direction: 'left' | 'right') => (
         <Ionicons 
           name={direction === 'left' ? 'chevron-back' : 'chevron-forward'} 
@@ -143,18 +166,10 @@ export function BaseCalendar({
         textDayFontSize: 16,
         textMonthFontSize: 18,
         textDayHeaderFontSize: 14,
-        dayNamesShort: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+        // @ts-ignore: Known theme typing issue in react-native-calendars
         'stylesheet.calendar.header': {
-          header: {
-            flexDirection: 'row',
-            justifyContent: 'center',
-            paddingLeft: 10,
-            paddingRight: 10,
-            marginTop: 10,
-            alignItems: 'center'
-          },
           monthText: {
-            fontSize: 18,
+            fontSize: 20,
             fontWeight: 'bold',
             color: '#000000',
             margin: 10
