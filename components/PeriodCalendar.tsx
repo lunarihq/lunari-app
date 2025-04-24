@@ -282,6 +282,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     width: 32,
     height: 45,
+    marginBottom: 16,
   },
   customDayText: {
     fontSize: 16,

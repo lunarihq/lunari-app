@@ -122,7 +122,8 @@ export function BaseCalendar({
         <Ionicons 
           name={direction === 'left' ? 'chevron-back' : 'chevron-forward'} 
           size={20} 
-          color="black" 
+          color="black"
+           
         />
       )}
       theme={{
@@ -172,7 +173,7 @@ export function BaseCalendar({
             width: 32,
             height: 32,
             alignItems: 'center',
-            justifyContent: 'center'
+            justifyContent: 'center',
           }
         }
       }}

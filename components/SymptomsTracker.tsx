@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, ScrollView, TextStyle } from 'react-native';
 import { router, useFocusEffect } from 'expo-router';
 import { Ionicons, FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
 import { db } from '../db';
@@ -8,9 +8,10 @@ import { eq } from 'drizzle-orm';
 
 type SymptomsTrackerProps = {
   selectedDate?: string;
+  titleStyle?: TextStyle;
 };
 
-export const SymptomsTracker = ({ selectedDate }: SymptomsTrackerProps) => {
+export const SymptomsTracker = ({ selectedDate, titleStyle }: SymptomsTrackerProps) => {
   const [healthLogsForDate, setHealthLogsForDate] = useState<any[]>([]);
   
   // Load health logs when component is focused or selectedDate changes
@@ -72,7 +73,7 @@ export const SymptomsTracker = ({ selectedDate }: SymptomsTrackerProps) => {
 
   return (
     <View style={styles.symptomsCard}>
-      <Text style={styles.symptomsText}>Symptoms & moods</Text>
+      <Text style={[styles.symptomsText, titleStyle]}>Symptoms & moods</Text>
       
       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.scrollContainer}>
         {/* Add Button - Always visible */}

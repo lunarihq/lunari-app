@@ -298,7 +298,8 @@ export default function CalendarScreen() {
 
   const getConceptionChance = () => {
     if (!cycleDay) return '';
-    return `${PeriodPredictionService.getPregnancyChance(cycleDay).toLowerCase()} chance to conceive`;
+    const chance = PeriodPredictionService.getPregnancyChance(cycleDay);
+    return `${chance.charAt(0).toUpperCase()}${chance.slice(1).toLowerCase()} chance to conceive`;
   };
 
   return (
@@ -334,7 +335,10 @@ export default function CalendarScreen() {
         )}
       </View>
       
-      <SymptomsTracker selectedDate={selectedDate} />
+      <SymptomsTracker 
+        selectedDate={selectedDate} 
+        titleStyle={{ fontSize: 20 }}
+      />
       
       <PeriodCalendarModal
         visible={modalVisible}
@@ -398,7 +402,7 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   conceptionChance: {
-    fontSize: 14,
+    fontSize: 16,
     color: '#878595',
   },
 });
