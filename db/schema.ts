@@ -18,5 +18,13 @@ export const healthLogs = sqliteTable("health_logs", {
   createdAt: text("created_at").default(sql`CURRENT_TIMESTAMP`),
 });
 
+export const settings = sqliteTable("settings", {
+  id: integer("id").primaryKey(),
+  key: text("key").notNull().unique(),
+  value: text("value").notNull(),
+  updatedAt: text("updated_at").default(sql`CURRENT_TIMESTAMP`),
+});
+
 export type PeriodDate = typeof periodDates.$inferSelect;
 export type HealthLog = typeof healthLogs.$inferSelect;
+export type Setting = typeof settings.$inferSelect;
