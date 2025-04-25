@@ -223,7 +223,7 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
                 <View>
                   <Text style={styles.currentCycleTitle}>Current cycle</Text>
                   <View style={styles.cycleInfoRow}>
-                    <Text style={styles.dateText}>Started {cycle.startDate}</Text>
+                    <Text style={styles.dateText}>{cycle.startDate} - Today</Text>
                     <Text style={styles.daysText}>{formattedCycleLength}</Text>
                   </View>
                 </View>
