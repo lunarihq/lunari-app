@@ -62,6 +62,31 @@ export default function TabLayout() {
           ),
         }}
       />
+
+<Tabs.Screen
+        name="stats"
+        options={{
+          headerShown: true,
+          headerTitle: "Stats",
+          tabBarLabel: "Stats",
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons name={focused ? 'bar-chart' : 'bar-chart-outline'} color={color} size={24}/>
+          ),
+        }}
+      />
+      
+      <Tabs.Screen
+        name="settings"
+        options={{
+          headerShown: true,
+          headerTitle: "Settings",
+          tabBarLabel: "Settings",
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons name={focused ? 'settings' : 'settings-outline'} color={color} size={24}/>
+          ),
+        }}
+      />
+      
     </Tabs>
   );
 }

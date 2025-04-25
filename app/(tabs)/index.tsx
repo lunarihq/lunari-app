@@ -5,9 +5,11 @@ import { Calendar, DateData } from 'react-native-calendars';
 import { useState, useEffect, useCallback } from 'react';
 import { PeriodCalendarModal } from '../../components/PeriodCalendar';
 import { SymptomsTracker } from '../../components/SymptomsTracker';
+import { TestNotification } from '../../components/TestNotification';
 import { db } from '../../db';
 import { PeriodDate, periodDates, healthLogs } from '../../db/schema';
 import { PeriodPredictionService } from '../../services/periodPredictions';
+import { NotificationService } from '../../services/notificationService';
 import { validatePeriodDate } from '../../validation/periodData';
 import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -223,6 +225,14 @@ export default function Index() {
       
       // Calculate if today is a period day
       calculatePeriodDay(dates);
+      
+      // Schedule period notifications if enabled
+      try {
+        // The schedulePeriodReminder function will check if notifications are enabled
+        await NotificationService.schedulePeriodReminder(mostRecentStart, sortedDates);
+      } catch (error) {
+        console.error('Failed to schedule period notifications on app load:', error);
+      }
     } else {
       // Explicitly set to null when no data exists
       setFirstPeriodDate(null);
@@ -276,12 +286,27 @@ export default function Index() {
         
         // Calculate if today is a period day after saving
         calculatePeriodDay(dates);
+        
+        // Schedule period notifications if enabled
+        try {
+          // The schedulePeriodReminder function will check if notifications are enabled
+          await NotificationService.schedulePeriodReminder(mostRecentStart, sortedDates);
+        } catch (error) {
+          console.error('Failed to schedule period notifications:', error);
+        }
       } else {
         setSelectedDates({});
         setFirstPeriodDate(null);
         setCurrentCycleDay(null);
         setIsPeriodDay(false);
         setPeriodDayNumber(0);
+        
+        // Cancel period notifications
+        try {
+          await NotificationService.cancelPeriodNotifications();
+        } catch (error) {
+          console.error('Failed to cancel period notifications:', error);
+        }
       }
       
       setModalVisible(false);
@@ -412,17 +437,28 @@ export default function Index() {
 
         <SymptomsTracker />
         
+        <TestNotification />
+        
         {/* Add some bottom padding to ensure content isn't cut off by bottom nav */}
         <View style={styles.bottomPadding} />
       </ScrollView>
 
-      <PeriodCalendarModal
+      <Modal
+        animationType="slide"
+        transparent={true}
         visible={modalVisible}
-        onClose={() => setModalVisible(false)}
-        onSave={savePeriodDates}
-        selectedDates={selectedDates}
-        setSelectedDates={setSelectedDates}
-      />
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <PeriodCalendarModal
+          visible={modalVisible}
+          selectedDates={selectedDates}
+          setSelectedDates={setSelectedDates}
+          onSave={savePeriodDates}
+          onClose={() => setModalVisible(false)}
+        />
+      </Modal>
     </View>
   );
 }
