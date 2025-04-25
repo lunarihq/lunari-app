@@ -19,10 +19,21 @@ export function PeriodCalendarModal({ visible, onClose, onSave, selectedDates, s
   const today = formatDateString(new Date());
   const [currentMonth, setCurrentMonth] = useState(today);
   const [calendarKey, setCalendarKey] = useState(Date.now().toString());
+  const [calendarReady, setCalendarReady] = useState(false);
+  const [layoutUpdated, setLayoutUpdated] = useState(0);
 
   useEffect(() => {
     setTempDates(selectedDates);
-  }, [visible]); // Reset temp dates when modal opens
+    if (visible) {
+      setCalendarKey(Date.now().toString()); // Force calendar re-render when modal opens
+      setCalendarReady(false);
+      // Delay showing the calendar to ensure layout is calculated properly
+      const timer = setTimeout(() => {
+        setCalendarReady(true);
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [visible, selectedDates]);
 
   // Function to check if the current displayed month is different from today's month
   const isTodayButtonVisible = () => {
@@ -106,6 +117,11 @@ export function PeriodCalendarModal({ visible, onClose, onSave, selectedDates, s
     };
   }
 
+  // Handle layout updates
+  const handleLayout = () => {
+    setLayoutUpdated(prev => prev + 1);
+  };
+
   // Custom day renderer for the period calendar
   const renderCustomDay = ({ date, state, marking }: any) => {
     const customMarking = marking as CustomMarking;
@@ -160,7 +176,14 @@ export function PeriodCalendarModal({ visible, onClose, onSave, selectedDates, s
   };
 
   return (
-    <Modal visible={visible} animationType="slide">
+    <Modal 
+      visible={visible} 
+      animationType="slide"
+      onShow={() => {
+        setCalendarKey(Date.now().toString());
+        setCalendarReady(true);
+      }}
+    >
       <View style={styles.modalContainer}>
         {/* Custom Header */}
         <View style={styles.header}>
@@ -175,20 +198,25 @@ export function PeriodCalendarModal({ visible, onClose, onSave, selectedDates, s
           )}
         </View>
         
-        <View style={styles.calendarContainer}>
-          <BaseCalendar
-            mode="selection"
-            calendarKey={calendarKey}
-            current={currentMonth}
-            markedDates={markedDatesWithToday}
-            onDayPress={onDayPress}
-            onMonthChange={onMonthChange}
-            selectionRules={{
-              disableFuture: true,
-              autoSelectDays: 5
-            }}
-            renderDay={renderCustomDay}
-          />
+        <View 
+          style={styles.calendarContainer} 
+          onLayout={handleLayout}
+        >
+          {calendarReady && (
+            <BaseCalendar
+              mode="selection"
+              calendarKey={`${calendarKey}-${layoutUpdated}`}
+              current={currentMonth}
+              markedDates={markedDatesWithToday}
+              onDayPress={onDayPress}
+              onMonthChange={onMonthChange}
+              selectionRules={{
+                disableFuture: true,
+                autoSelectDays: 5
+              }}
+              renderDay={renderCustomDay}
+            />
+          )}
         </View>
 
         {/* Footer with Save/Cancel buttons */}
