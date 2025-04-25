@@ -7,7 +7,9 @@ import {
   ScrollView, 
   Platform,
   TouchableOpacity,
-  ActivityIndicator
+  ActivityIndicator,
+  Alert,
+  Linking
 } from 'react-native';
 import { NotificationService } from '../../services/notificationService';
 import { StatusBar } from 'expo-status-bar';
@@ -52,16 +54,98 @@ export default function Settings() {
     }
   }, [statusMessage]);
 
+  // Show permission settings dialog
+  const showPermissionSettingsDialog = () => {
+    Alert.alert(
+      'Enable Notifications',
+      'To receive period reminders, please enable notifications for Lunari in your device settings.',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel'
+        },
+        {
+          text: 'Open Settings',
+          onPress: () => Linking.openSettings()
+        }
+      ]
+    );
+  };
+
   // Handle toggle for 3-day advance notification
   const toggleBeforePeriod = async (value: boolean) => {
-    setBeforePeriodEnabled(value);
-    await saveSettings(value, dayOfPeriodEnabled);
+    // If turning notifications off, no need to check permissions
+    if (!value) {
+      setBeforePeriodEnabled(value);
+      await saveSettings(value, dayOfPeriodEnabled);
+      return;
+    }
+    
+    setIsSaving(true);
+    try {
+      // Check if we already have permissions
+      let hasPermission = await NotificationService.checkPermissionStatus();
+      
+      // If no permission, request it
+      if (!hasPermission) {
+        hasPermission = await NotificationService.requestPermissions();
+      }
+      
+      if (hasPermission) {
+        // Only update UI and save setting if permission granted
+        setBeforePeriodEnabled(value);
+        await saveSettings(value, dayOfPeriodEnabled);
+      } else {
+        // Show settings dialog instead of error message
+        showPermissionSettingsDialog();
+      }
+    } catch (error) {
+      console.error('Error toggling notification:', error);
+      setStatusMessage({
+        text: 'Failed to update notification settings',
+        isError: true
+      });
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   // Handle toggle for day-of notification
   const toggleDayOfPeriod = async (value: boolean) => {
-    setDayOfPeriodEnabled(value);
-    await saveSettings(beforePeriodEnabled, value);
+    // If turning notifications off, no need to check permissions
+    if (!value) {
+      setDayOfPeriodEnabled(value);
+      await saveSettings(beforePeriodEnabled, value);
+      return;
+    }
+    
+    setIsSaving(true);
+    try {
+      // Check if we already have permissions
+      let hasPermission = await NotificationService.checkPermissionStatus();
+      
+      // If no permission, request it
+      if (!hasPermission) {
+        hasPermission = await NotificationService.requestPermissions();
+      }
+      
+      if (hasPermission) {
+        // Only update UI and save setting if permission granted
+        setDayOfPeriodEnabled(value);
+        await saveSettings(beforePeriodEnabled, value);
+      } else {
+        // Show settings dialog instead of error message
+        showPermissionSettingsDialog();
+      }
+    } catch (error) {
+      console.error('Error toggling notification:', error);
+      setStatusMessage({
+        text: 'Failed to update notification settings',
+        isError: true
+      });
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   // Save settings to database and update notification service
@@ -70,17 +154,7 @@ export default function Settings() {
     try {
       await NotificationService.saveNotificationSettings(before, dayOf);
       
-      if (before || dayOf) {
-        setStatusMessage({
-          text: 'Notifications enabled successfully',
-          isError: false
-        });
-      } else {
-        setStatusMessage({
-          text: 'Notifications disabled',
-          isError: false
-        });
-      }
+      // Removed notification success/disable messages
     } catch (error) {
       console.error('Failed to save notification settings:', error);
       // Revert UI state if save fails
@@ -110,8 +184,6 @@ export default function Settings() {
     <View style={styles.container}>
       <StatusBar style="dark" />
       
-      
-
       <ScrollView style={styles.content}>
         {statusMessage && (
           <View style={[

@@ -58,6 +58,17 @@ export class NotificationService {
     }
   }
   
+  // Check notification permission status without requesting
+  static async checkPermissionStatus(): Promise<boolean> {
+    if (!Device.isDevice) {
+      console.log('Must use a physical device for notifications');
+      return false;
+    }
+    
+    const { status } = await Notifications.getPermissionsAsync();
+    return status === 'granted';
+  }
+  
   // Check if period data exists and schedule notifications if it does
   private static async scheduleNotificationsIfDataExists(): Promise<void> {
     try {
