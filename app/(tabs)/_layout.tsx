@@ -37,14 +37,6 @@ export default function TabLayout() {
         options={{
           headerShown: true,
           headerTitle: "Calendar",
-          headerLeft: () => (
-            <TouchableOpacity 
-              onPress={() => router.back()}
-              style={{ marginLeft: 16 }}
-            >
-              <Ionicons name="chevron-back" size={24} color="#332F49" />
-            </TouchableOpacity>
-          ),
           headerRight: () => (
             <TouchableOpacity 
               onPress={() => router.push('/period-calendar')}

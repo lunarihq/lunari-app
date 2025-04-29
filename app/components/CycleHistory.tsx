@@ -253,8 +253,8 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 32,
-    marginBottom: 32,
+    marginVertical: 16,
+    
   },
   title: {
     fontSize: 24,

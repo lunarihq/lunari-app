@@ -158,20 +158,25 @@ export default function Stats() {
 
   return (
     <ScrollView style={styles.container}>
+      <View style={styles.myCyclesContainer}>
       <Text style={styles.heading}>My cycles</Text>
       <View style={styles.cardsContainer}>
-        <StatCard 
-          title="Average cycle" 
-          value={`${averageCycleLength} days`} 
-          icon={<Feather name="calendar" size={20} color="#000" />} 
-        />
-        <StatCard 
-          title="Period length" 
-          value={`${averagePeriodLength} days`} 
-          icon={<MaterialCommunityIcons name="water-outline" size={20} color="#000" />} 
-        />
+        <View style={{flex: 1}}>
+          <StatCard 
+            title="Average cycle" 
+            value={`${averageCycleLength} days`} 
+            icon={<Feather name="calendar" size={20} color="#000" />} 
+          />
+        </View>
+        <View style={{flex: 1}}>
+          <StatCard 
+            title="Period length" 
+            value={`${averagePeriodLength} days`} 
+            icon={<MaterialCommunityIcons name="water-outline" size={20} color="#000" />} 
+          />
+        </View>
       </View>
-      
+      </View>
       <CycleHistory cycles={cycleHistory} />
     </ScrollView>
   );
@@ -180,20 +185,20 @@ export default function Stats() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F3F2F7',
-    padding: 16,
+    backgroundColor: 'ECEEFF',
+    paddingHorizontal: 16,
+  },
+  myCyclesContainer: {
+    marginVertical: 16,
   },
   heading: {
     fontSize: 24,
-    fontWeight: 'bold',
-    marginTop: 16,
-    marginBottom: 24,
-    paddingHorizontal: 4,
+    fontWeight: '500',
+    marginBottom: 20,
   },
   cardsContainer: {
     flexDirection: 'row',
-    justifyContent: 'flex-start',
-    gap: 16,
-    marginBottom: 16,
+    justifyContent: 'space-between',
+    gap: 8,
   },
 });

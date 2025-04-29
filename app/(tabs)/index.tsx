@@ -455,14 +455,15 @@ export default function Index() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'green',
+    backgroundColor: 'ECEEFF',
     paddingHorizontal: 16,
   },
 
   predictionCard: {
     alignItems: 'center',
     gap: 24,
-    marginBottom: 16,
+    marginTop: 16,
+    marginBottom: 24,
   },
   predictionCircle: {
     width: 250,

@@ -17,8 +17,7 @@ export default function Settings() {
     <View style={styles.container}>
       <StatusBar style="dark" />
       
-      <ScrollView style={styles.content}>
-        
+      <ScrollView style={styles.container}>
         
         <View style={styles.section}>
           <TouchableOpacity 
@@ -60,23 +59,14 @@ export default function Settings() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F3F2F7',
-  },
-  content: {
-    flex: 1,
-  },
-  screenTitle: {
-    fontSize: 34,
-    fontWeight: 'bold',
-    color: '#333',
-    padding: 16,
-    paddingBottom: 8,
+    backgroundColor: 'ECEEFF',
+    paddingHorizontal: 8,
   },
   section: {
-    backgroundColor: '#fff',
-    marginVertical: 16,
     borderRadius: 8,
+    marginVertical: 16,
     overflow: 'hidden',
+    backgroundColor: 'white',
   },
   iconContainer: {
     marginRight: 12,

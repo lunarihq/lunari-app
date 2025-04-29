@@ -184,7 +184,7 @@ export default function Reminders() {
     <View style={styles.container}>
       <StatusBar style="dark" />
       
-      <ScrollView style={styles.content}>
+      <ScrollView>
         {statusMessage && (
           <View style={[
             styles.statusMessage, 
@@ -229,10 +229,11 @@ export default function Reminders() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F3F2F7',
-  },
+    container: {
+        flex: 1,
+        backgroundColor: 'ECEEFF',
+        paddingHorizontal: 16,
+      },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -243,9 +244,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#333',
   },
-  content: {
-    flex: 1,
-  },
+
   section: {
     backgroundColor: '#fff',
     marginVertical: 16,
