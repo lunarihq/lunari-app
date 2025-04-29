@@ -15,6 +15,7 @@ import dayjs from 'dayjs';
 import { db } from '../db';
 import { healthLogs } from '../db/schema';
 import { sql, eq, inArray } from 'drizzle-orm';
+import { useFocusEffect } from '@react-navigation/native';
 
 // Symptom type definition
 type Item = {
@@ -73,51 +74,6 @@ const generateWeeksData = (): WeekData[] => {
   return weeks;
 };
 
-// Date Navigator Component
-const DateNavigator = ({ selectedDate, setSelectedDate }: { 
-  selectedDate: string, 
-  setSelectedDate: React.Dispatch<React.SetStateAction<string>> 
-}) => {
-  const today = dayjs();
-  const isToday = selectedDate === today.format('YYYY-MM-DD');
-  
-  const formattedDate = isToday 
-    ? `Today, ${dayjs(selectedDate).format('MMMM D')}` 
-    : dayjs(selectedDate).format('dddd, MMMM D');
-  
-  const goToPreviousDay = () => {
-    setSelectedDate(dayjs(selectedDate).subtract(1, 'day').format('YYYY-MM-DD'));
-  };
-  
-  const goToNextDay = () => {
-    setSelectedDate(dayjs(selectedDate).add(1, 'day').format('YYYY-MM-DD'));
-  };
-  
-  const isNextDayInFuture = dayjs(selectedDate).add(1, 'day').isAfter(today, 'day');
-  
-  return (
-    <View style={styles.dateNavigator}>
-      <TouchableOpacity 
-        onPress={goToPreviousDay} 
-        hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
-      >
-        <Ionicons name="chevron-back" size={24} color="#000" />
-      </TouchableOpacity>
-      
-      <Text style={styles.dateText}>{formattedDate}</Text>
-      
-      <TouchableOpacity 
-        onPress={goToNextDay}
-        disabled={isNextDayInFuture}
-        style={{opacity: isNextDayInFuture ? 0.3 : 1}}
-        hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
-      >
-        <Ionicons name="chevron-forward" size={24} color="#000" />
-      </TouchableOpacity>
-    </View>
-  );
-};
-
 // Check if a date is in the future
 const isFutureDate = (dateString: string) => {
   const today = dayjs().format('YYYY-MM-DD');
@@ -140,6 +96,39 @@ export default function SymptomTracking() {
   
   const flatListRef = useRef<FlatList>(null);
   
+  // Update header title on focused
+  useFocusEffect(
+    React.useCallback(() => {
+      const isToday = selectedDate === dayjs().format('YYYY-MM-DD');
+      const formattedDate = isToday 
+        ? `Today, ${dayjs(selectedDate).format('MMMM D')}` 
+        : dayjs(selectedDate).format('dddd, MMMM D');
+      
+      // If possible, update the header title
+      if (router.canGoBack()) {
+        router.setParams({ title: formattedDate });
+      }
+      
+      return () => {};
+    }, [selectedDate])
+  );
+  
+  // Navigate to previous day
+  const goToPreviousDay = () => {
+    setSelectedDate(dayjs(selectedDate).subtract(1, 'day').format('YYYY-MM-DD'));
+  };
+  
+  // Navigate to next day
+  const goToNextDay = () => {
+    const nextDay = dayjs(selectedDate).add(1, 'day');
+    const today = dayjs();
+    
+    // Don't allow navigating to future dates
+    if (!nextDay.isAfter(today, 'day')) {
+      setSelectedDate(nextDay.format('YYYY-MM-DD'));
+    }
+  };
+
   // Symptoms data
   const [symptoms, setSymptoms] = useState<Item[]>([
     { 
@@ -419,11 +408,30 @@ export default function SymptomTracking() {
 
   return (
     <View style={styles.container}>
-      {/* Date Navigator */}
-      <DateNavigator
-        selectedDate={selectedDate}
-        setSelectedDate={setSelectedDate}
-      />
+      {/* Date Navigation Controls */}
+      <View style={styles.dateNavigator}>
+        <TouchableOpacity 
+          onPress={goToPreviousDay}
+          style={styles.headerButton}
+        >
+          <Ionicons name="chevron-back" size={24} color="#333" />
+        </TouchableOpacity>
+        
+        <Text style={styles.dateText}>
+          {selectedDate === dayjs().format('YYYY-MM-DD')
+            ? `Today, ${dayjs(selectedDate).format('MMMM D')}`
+            : dayjs(selectedDate).format('dddd, MMMM D')
+          }
+        </Text>
+        
+        <TouchableOpacity 
+          onPress={goToNextDay}
+          disabled={isSelectedDateInFuture}
+          style={[styles.headerButton, isSelectedDateInFuture && {opacity: 0.3}]}
+        >
+          <Ionicons name="chevron-forward" size={24} color="#333" />
+        </TouchableOpacity>
+      </View>
 
       <ScrollView style={styles.scrollView}>
         {isSelectedDateInFuture ? (
@@ -500,13 +508,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F3F2F7',
   },
+  headerButton: {
+    padding: 10,
+  },
   dateNavigator: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 20,
-    paddingVertical: 15,
-    paddingTop: 35,
+    paddingVertical: 10,
     backgroundColor: '#F3F2F7',
   },
   dateText: {

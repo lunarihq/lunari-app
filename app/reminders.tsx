@@ -6,14 +6,12 @@ import {
   Switch, 
   ScrollView, 
   Platform,
-  TouchableOpacity,
   ActivityIndicator,
   Alert,
   Linking
 } from 'react-native';
 import { NotificationService } from '../services/notificationService';
 import { StatusBar } from 'expo-status-bar';
-import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 
 export default function Reminders() {
@@ -186,16 +184,6 @@ export default function Reminders() {
     <View style={styles.container}>
       <StatusBar style="dark" />
       
-      <View style={styles.header}>
-        <TouchableOpacity 
-          style={styles.backButton}
-          onPress={() => router.back()}
-        >
-          <Ionicons name="chevron-back" size={24} color="#333" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Reminders</Text>
-      </View>
-      
       <ScrollView style={styles.content}>
         {statusMessage && (
           <View style={[
@@ -253,23 +241,6 @@ const styles = StyleSheet.create({
   loadingText: {
     marginTop: 16,
     fontSize: 16,
-    color: '#333',
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 15,
-    paddingTop: 55,
-    backgroundColor: '#F3F2F7',
-  },
-  backButton: {
-    padding: 8,
-    marginRight: 8,
-  },
-  headerTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
     color: '#333',
   },
   content: {
