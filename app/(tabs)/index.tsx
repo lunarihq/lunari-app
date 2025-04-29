@@ -333,7 +333,7 @@ export default function Index() {
 
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.scrollContainer} showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.predictionCard}>
           <View style={styles.predictionCircle}>
             {isPeriodDay ? (
@@ -446,8 +446,7 @@ export default function Index() {
         
         <TestNotification />
         
-        {/* Add some bottom padding to ensure content isn't cut off by bottom nav */}
-        <View style={styles.bottomPadding} />
+        <View />
       </ScrollView>
     </View>
   );
@@ -456,16 +455,10 @@ export default function Index() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F3F2F7',
-  },
-  scrollContainer: {
-    flex: 1,
+    backgroundColor: 'green',
     paddingHorizontal: 16,
-    paddingTop: 16,
   },
-  bottomPadding: {
-    height: 40, // Add extra padding at the bottom to ensure content isn't cut off
-  },
+
   predictionCard: {
     alignItems: 'center',
     gap: 24,
