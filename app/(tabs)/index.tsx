@@ -1,9 +1,8 @@
 import React from 'react';
-import { Text, View, StyleSheet, Modal, Pressable, TouchableOpacity, ScrollView } from 'react-native';
+import { Text, View, StyleSheet, Pressable, TouchableOpacity, ScrollView } from 'react-native';
 import { Link, useLocalSearchParams, router, useFocusEffect } from 'expo-router';
 import { Calendar, DateData } from 'react-native-calendars';
 import { useState, useEffect, useCallback } from 'react';
-import { PeriodCalendarModal } from '../../components/PeriodCalendar';
 import { SymptomsTracker } from '../../components/SymptomsTracker';
 import { TestNotification } from '../../components/TestNotification';
 import { db } from '../../db';
@@ -114,7 +113,6 @@ const getPhaseDescription = (phase: string): string => {
 };
 
 export default function Index() {
-  const [modalVisible, setModalVisible] = useState(false);
   const [selectedDates, setSelectedDates] = useState<{ [date: string]: any }>({});
   const [firstPeriodDate, setFirstPeriodDate] = useState<string | null>(null);
   const [currentCycleDay, setCurrentCycleDay] = useState<number | null>(null);
@@ -138,10 +136,21 @@ export default function Index() {
     return () => clearInterval(timer);
   }, []);
 
-  // Check if we should open the period modal (when coming from calendar screen)
+  // Reload data whenever the screen is focused (after returning from period-calendar)
+  useFocusEffect(
+    useCallback(() => {
+      const reloadData = async () => {
+        await loadSavedDates();
+      };
+      reloadData();
+      return () => {};
+    }, [])
+  );
+
+  // Check if we should navigate to the period calendar (when coming from calendar screen)
   useEffect(() => {
     if (params.openPeriodModal === 'true') {
-      setModalVisible(true);
+      router.push('/period-calendar');
     }
   }, [params.openPeriodModal]);
 
@@ -308,8 +317,6 @@ export default function Index() {
           console.error('Failed to cancel period notifications:', error);
         }
       }
-      
-      setModalVisible(false);
     } catch (error) {
       console.error('Error saving dates:', error);
     }
@@ -357,7 +364,7 @@ export default function Index() {
               <Text style={styles.emptyStateText}>Log the first day of your last period for next prediction.</Text>
             )}
           </View>
-          <Pressable onPress={() => setModalVisible(true)} style={styles.button}>
+          <Pressable onPress={() => router.push('/period-calendar')} style={styles.button}>
             <Text style={styles.buttonText}>
               {Object.keys(selectedDates).length > 0 
                 ? "Log or edit period dates"
@@ -442,23 +449,6 @@ export default function Index() {
         {/* Add some bottom padding to ensure content isn't cut off by bottom nav */}
         <View style={styles.bottomPadding} />
       </ScrollView>
-
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <PeriodCalendarModal
-          visible={modalVisible}
-          selectedDates={selectedDates}
-          setSelectedDates={setSelectedDates}
-          onSave={savePeriodDates}
-          onClose={() => setModalVisible(false)}
-        />
-      </Modal>
     </View>
   );
 }

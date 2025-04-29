@@ -2,24 +2,18 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { View, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
 import { DateData } from 'react-native-calendars';
 import { useFocusEffect } from '@react-navigation/native';
-import { useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, router } from 'expo-router';
 import { db } from '../../db';
 import { periodDates } from '../../db/schema';
 import { PeriodPredictionService } from '../../services/periodPredictions';
-import { PeriodCalendarModal } from '../../components/PeriodCalendar';
 import { BaseCalendar } from '../../components/BaseCalendar';
 import { CalendarLegend } from '../../components/CalendarLegend';
 import { CycleDetails } from '../../components/CycleDetails';
 import { MarkedDates, formatDateString } from '../../components/CalendarTypes';
 
-// Create a module-level variable to store the setter function
-let globalSetModalVisible: ((visible: boolean) => void) | null = null;
-
-// Export a function to toggle the modal from anywhere
+// Export a function to navigate to the period calendar screen
 export function openPeriodModal() {
-  if (globalSetModalVisible) {
-    globalSetModalVisible(true);
-  }
+  router.push('/period-calendar');
 }
 
 export default function CalendarScreen() {
@@ -30,22 +24,15 @@ export default function CalendarScreen() {
   const [cycleDay, setCycleDay] = useState<number | null>(null);
   const [selectedDate, setSelectedDate] = useState(formatDateString(new Date()));
   const [currentDate] = useState(formatDateString(new Date()));
-  const [modalVisible, setModalVisible] = useState(false);
   const [currentMonth, setCurrentMonth] = useState('');
   const [calendarKey, setCalendarKey] = useState(Date.now());
   const params = useLocalSearchParams();
   
-  // Store the setter function in the module-level variable
+  // Check if we should navigate to the period calendar screen from URL params
   useEffect(() => {
-    globalSetModalVisible = setModalVisible;
-    return () => {
-      globalSetModalVisible = null;
-    };
-  }, []);
-  
-  // Check if we should open the period modal from URL params
-  useEffect(() => {
-    setModalVisible(params.openPeriodModal === 'true');
+    if (params.openPeriodModal === 'true') {
+      router.push('/period-calendar');
+    }
   }, [params.openPeriodModal]);
   
   // Load period dates from database
@@ -205,11 +192,14 @@ export default function CalendarScreen() {
   // Reload data when tab is focused
   useFocusEffect(
     useCallback(() => {
-      loadData();
-      // Reset to current date whenever tab is focused
-      const today = formatDateString(new Date());
-      setSelectedDate(today);
-      setCalendarKey(Date.now()); // Force calendar re-render
+      const reloadData = async () => {
+        await loadData();
+        // Reset to current date whenever tab is focused
+        const today = formatDateString(new Date());
+        setSelectedDate(today);
+        setCalendarKey(Date.now()); // Force calendar re-render
+      };
+      reloadData();
       return () => {};
     }, [])
   );
@@ -278,7 +268,6 @@ export default function CalendarScreen() {
         await db.insert(periodDates).values(dateInserts);
       }
       
-      setModalVisible(false);
       loadData(); // Reload data after saving
     } catch (error) {
       console.error('Error saving dates:', error);
@@ -317,14 +306,6 @@ export default function CalendarScreen() {
         {/* Add bottom padding to prevent content from being cut off */}
         <View style={styles.bottomPadding} />
       </ScrollView>
-      
-      <PeriodCalendarModal
-        visible={modalVisible}
-        onClose={() => setModalVisible(false)}
-        onSave={savePeriodDates}
-        selectedDates={selectedDates}
-        setSelectedDates={setSelectedDates}
-      />
     </SafeAreaView>
   );
 }
