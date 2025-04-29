@@ -59,7 +59,7 @@ export default function Settings() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'ECEEFF',
+    backgroundColor: '#ECEEFF',
     paddingHorizontal: 8,
   },
   section: {
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 16,
-    paddingVertical: 16,
+    paddingVertical: 20,
     borderBottomWidth: 1,
     borderBottomColor: '#f0f0f0',
   },
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0,
   },
   settingText: {
-    fontSize: 16,
+    fontSize: 18,
     color: '#333',
     flex: 1,
   },

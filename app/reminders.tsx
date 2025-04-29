@@ -231,7 +231,7 @@ export default function Reminders() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'ECEEFF',
+        backgroundColor: '#ECEEFF',
         paddingHorizontal: 16,
       },
   loadingContainer: {
@@ -256,7 +256,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingVertical: 16,
     borderBottomWidth: 1,
     borderBottomColor: '#f0f0f0',
   },

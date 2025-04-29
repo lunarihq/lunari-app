@@ -21,16 +21,11 @@ export function StatCard({ title, value, icon }: StatCardProps) {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: 'white',
+    backgroundColor: '#F5F5FF',
     borderRadius: 12,
     padding: 16,
-    width: 175,
+    width: 168,
     alignItems: 'flex-start',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 3,
-    elevation: 1,
   },
   header: {
     flexDirection: 'row',

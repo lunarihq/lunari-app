@@ -254,20 +254,22 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
 const styles = StyleSheet.create({
   container: {
     marginVertical: 16,
-    
+    backgroundColor: 'white',
+    padding: 16,
+    borderRadius: 16,
+    overflow: 'hidden',
+
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: '500',
     color: '#332F49',
     marginBottom: 8,
-    paddingHorizontal: 4,
   },
   subtitle: {
     fontSize: 16,
     color: '#878595',
-    marginBottom: 16,
-    paddingHorizontal: 4,
+    marginBottom: 10,
   },
   currentCycleTitle: {
     fontSize: 18,
@@ -276,14 +278,15 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   card: {
-    backgroundColor: 'white',
+    backgroundColor: 'green',
     borderRadius: 12,
     padding: 0,
     marginBottom: 16,
     overflow: 'hidden',
   },
   cycleContainer: {
-    padding: 20,
+    paddingVertical: 20,
+    backgroundColor: 'white',
   },
   currentCycleContainer: {
     backgroundColor: 'white', // Very light pink background for current cycle

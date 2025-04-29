@@ -185,11 +185,14 @@ export default function Stats() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'ECEEFF',
+    backgroundColor: '#ECEEFF',
     paddingHorizontal: 16,
   },
   myCyclesContainer: {
     marginVertical: 16,
+    backgroundColor: 'white',
+    padding: 16,
+    borderRadius: 16,
   },
   heading: {
     fontSize: 24,
