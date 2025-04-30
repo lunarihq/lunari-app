@@ -6,10 +6,10 @@ import { useLocalSearchParams, router } from 'expo-router';
 import { db } from '../../db';
 import { periodDates } from '../../db/schema';
 import { PeriodPredictionService } from '../../services/periodPredictions';
-import { BaseCalendar } from '../../components/BaseCalendar';
-import { CalendarLegend } from '../../components/CalendarLegend';
-import { CycleDetails } from '../../components/CycleDetails';
-import { MarkedDates, formatDateString } from '../../components/CalendarTypes';
+import { BaseCalendar } from '../components/BaseCalendar';
+import { CalendarLegend } from '../components/CalendarLegend';
+import { CycleDetails } from '../components/CycleDetails';
+import { MarkedDates, formatDateString } from '../types/_CalendarTypes';
 
 // Export a function to navigate to the period calendar screen
 export function openPeriodModal() {

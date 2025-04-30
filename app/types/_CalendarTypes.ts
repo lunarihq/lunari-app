@@ -59,4 +59,13 @@ export function generateDateRange(startDate: string, days: number): string[] {
   }
   
   return dates;
-} 
+}
+
+// Create a utility object to export as default
+const CalendarUtils = {
+  formatDateString,
+  generateDateRange,
+  DEFAULT_SELECTED_STYLE
+};
+
+export default CalendarUtils;

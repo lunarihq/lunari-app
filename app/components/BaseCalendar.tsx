@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import { CalendarList, DateData } from 'react-native-calendars';
 import { Ionicons } from '@expo/vector-icons';
-import { CustomMarking, MarkedDates, SelectionRules } from './CalendarTypes';
+import { CustomMarking, MarkedDates, SelectionRules } from '../types/_CalendarTypes';
 
 export type BaseCalendarProps = {
   // Mode determines the calendar's primary purpose
@@ -237,3 +237,5 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
 }); 
+
+export default BaseCalendar;

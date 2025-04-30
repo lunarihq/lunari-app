@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { SymptomsTracker } from './SymptomsTracker';
-import { PeriodPredictionService } from '../services/periodPredictions';
+import { PeriodPredictionService } from '../../services/periodPredictions';
 
 interface CycleDetailsProps {
   selectedDate: string;
@@ -54,3 +54,5 @@ const styles = StyleSheet.create({
     color: '#878595',
   },
 }); 
+
+export default CycleDetails;

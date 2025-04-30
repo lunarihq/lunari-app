@@ -3,8 +3,8 @@ import { Text, View, StyleSheet, Pressable, TouchableOpacity, ScrollView } from 
 import { Link, useLocalSearchParams, router, useFocusEffect } from 'expo-router';
 import { Calendar, DateData } from 'react-native-calendars';
 import { useState, useEffect, useCallback } from 'react';
-import { SymptomsTracker } from '../../components/SymptomsTracker';
-import { TestNotification } from '../../components/TestNotification';
+import { SymptomsTracker } from '../components/SymptomsTracker';
+import { TestNotification } from '../components/TestNotification';
 import { db } from '../../db';
 import { PeriodDate, periodDates, healthLogs } from '../../db/schema';
 import { PeriodPredictionService } from '../../services/periodPredictions';

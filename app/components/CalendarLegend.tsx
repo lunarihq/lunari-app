@@ -52,3 +52,5 @@ const styles = StyleSheet.create({
     color: '#332F49',
   },
 }); 
+
+export default CalendarLegend;

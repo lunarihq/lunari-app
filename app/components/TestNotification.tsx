@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { NotificationService } from '../services/notificationService';
+import { NotificationService } from '../../services/notificationService';
 
 export function TestNotification() {
   const [notificationStatus, setNotificationStatus] = React.useState<string | null>(null);
@@ -60,3 +60,5 @@ const styles = StyleSheet.create({
     color: '#707070',
   },
 }); 
+
+export default TestNotification;
