@@ -7,7 +7,7 @@ import { PeriodPredictionService } from '../../services/periodPredictions';
 import { StatCard } from '../components/StatCard';
 import { CycleHistory } from '../components/CycleHistory';
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
-
+import theme from '../styles/theme';
 interface CycleData {
   startDate: string;
   cycleLength: string | number;
@@ -157,7 +157,7 @@ export default function Stats() {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={theme.globalStyles.container}>
       <View style={styles.myCyclesContainer}>
       <Text style={styles.heading}>My cycles</Text>
       <View style={styles.cardsContainer}>
@@ -183,11 +183,7 @@ export default function Stats() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ECEEFF',
-    paddingHorizontal: 16,
-  },
+
   myCyclesContainer: {
     marginVertical: 16,
     backgroundColor: 'white',

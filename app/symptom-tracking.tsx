@@ -5,7 +5,6 @@ import {
   StyleSheet, 
   TouchableOpacity,
   ScrollView,
-  Pressable,
   FlatList,
   Dimensions
 } from 'react-native';
@@ -14,9 +13,9 @@ import { Ionicons } from '@expo/vector-icons';
 import dayjs from 'dayjs';
 import { db } from '../db';
 import { healthLogs } from '../db/schema';
-import { sql, eq, inArray } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
 import { useFocusEffect } from '@react-navigation/native';
-
+import theme from './styles/theme';
 // Symptom type definition
 type Item = {
   id: string;
@@ -407,7 +406,7 @@ export default function SymptomTracking() {
   const isSelectedDateInFuture = isFutureDate(selectedDate);
 
   return (
-    <View style={styles.container}>
+    <View style={theme.globalStyles.container}>
       {/* Date Navigation Controls */}
       <View style={styles.dateNavigator}>
         <TouchableOpacity 
@@ -504,10 +503,7 @@ export default function SymptomTracking() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F3F2F7',
-  },
+
   headerButton: {
     padding: 10,
   },

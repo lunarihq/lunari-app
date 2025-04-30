@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Stack, useRouter, useSegments, usePathname } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { getSetting } from '../db';
-import { NotificationService } from '../services/notificationService';
 import * as Notifications from 'expo-notifications';
 
 export default function RootLayout() {

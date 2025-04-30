@@ -11,11 +11,8 @@ import {
   Linking
 } from 'react-native';
 import { NotificationService } from '../services/notificationService';
-import { StatusBar } from 'expo-status-bar';
-import { useRouter } from 'expo-router';
-
+import theme from './styles/theme';
 export default function Reminders() {
-  const router = useRouter();
   const [beforePeriodEnabled, setBeforePeriodEnabled] = useState(false);
   const [dayOfPeriodEnabled, setDayOfPeriodEnabled] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -175,16 +172,13 @@ export default function Reminders() {
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color="#FF597B" />
-        <Text style={styles.loadingText}>Loading settings...</Text>
+        <Text style={styles.loadingText}>Loading notification settings...</Text>
       </View>
     );
   }
 
   return (
-    <View style={styles.container}>
-      <StatusBar style="dark" />
-      
-      <ScrollView>
+      <ScrollView style={theme.globalStyles.container}>
         {statusMessage && (
           <View style={[
             styles.statusMessage, 
@@ -224,16 +218,11 @@ export default function Reminders() {
           </View>
         </View>
       </ScrollView>
-    </View>
   );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#ECEEFF',
-        paddingHorizontal: 16,
-      },
+
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',

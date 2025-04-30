@@ -1,19 +1,17 @@
 import React from 'react';
 import { Text, View, StyleSheet, Pressable, TouchableOpacity, ScrollView } from 'react-native';
 import { Link, useLocalSearchParams, router, useFocusEffect } from 'expo-router';
-import { Calendar, DateData } from 'react-native-calendars';
 import { useState, useEffect, useCallback } from 'react';
 import { SymptomsTracker } from '../components/SymptomsTracker';
 import { TestNotification } from '../components/TestNotification';
 import { db } from '../../db';
-import { PeriodDate, periodDates, healthLogs } from '../../db/schema';
+import { PeriodDate, periodDates} from '../../db/schema';
 import { PeriodPredictionService } from '../../services/periodPredictions';
 import { NotificationService } from '../../services/notificationService';
 import { validatePeriodDate } from '../../validation/periodData';
 import { Ionicons } from '@expo/vector-icons';
-import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { and, eq } from 'drizzle-orm';
+import theme from '../styles/theme';
 
 const getPregnancyChance = (cycleDay: number): string => {
   if (cycleDay >= 11 && cycleDay <= 17) return 'High';
@@ -332,31 +330,31 @@ export default function Index() {
     : null;
 
   return (
-    <View style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.predictionCard}>
-          <View style={styles.predictionCircle}>
+
+      <ScrollView style={theme.globalStyles.container} showsVerticalScrollIndicator={false}>
+        <View style={theme.globalStyles.predictionCard}>
+          <View style={theme.globalStyles.predictionCircle}>
             {isPeriodDay ? (
               <>
-                <Text style={styles.predictionLabel}>Period</Text>
-                <Text style={styles.predictionDays}>Day {periodDayNumber}</Text>
+                <Text style={theme.globalStyles.predictionLabel}>Period</Text>
+                <Text style={theme.globalStyles.predictionDays}>Day {periodDayNumber}</Text>
               </>
             ) : prediction ? (
               <>
                 {prediction.days > 0 ? (
                   <>
-                    <Text style={styles.predictionLabel}>Expected period in</Text>
-                    <Text style={styles.predictionDays}>{prediction.days} {prediction.days === 1 ? 'day' : 'days'}</Text>
+                    <Text style={theme.globalStyles.predictionLabel}>Expected period in</Text>
+                    <Text style={theme.globalStyles.predictionDays}>{prediction.days} {prediction.days === 1 ? 'day' : 'days'}</Text>
                   </>
                 ) : prediction.days === 0 ? (
                   <>
-                    <Text style={styles.predictionLabel}>Your period is</Text>
-                    <Text style={styles.predictionDays}>expected today</Text>
+                    <Text style={theme.globalStyles.predictionLabel}>Your period is</Text>
+                    <Text style={theme.globalStyles.predictionDays}>expected today</Text>
                   </>
                 ) : (
                   <>
-                    <Text style={styles.predictionLabel}>Your period is</Text>
-                    <Text style={styles.predictionDays}>{Math.abs(prediction.days)} {Math.abs(prediction.days) === 1 ? 'day' : 'days'} late</Text>
+                      <Text style={theme.globalStyles.predictionLabel}>Your period is</Text>
+                    <Text style={theme.globalStyles.predictionDays}>{Math.abs(prediction.days)} {Math.abs(prediction.days) === 1 ? 'day' : 'days'} late</Text>
                   </>
                 )}
               </>
@@ -364,8 +362,8 @@ export default function Index() {
               <Text style={styles.emptyStateText}>Log the first day of your last period for next prediction.</Text>
             )}
           </View>
-          <Pressable onPress={() => router.push('/period-calendar')} style={styles.button}>
-            <Text style={styles.buttonText}>
+          <Pressable onPress={() => router.push('/period-calendar')} style={theme.globalStyles.button}>
+            <Text style={theme.globalStyles.buttonText}>
               {Object.keys(selectedDates).length > 0 
                 ? "Log or edit period dates"
                 : "Log your period"}
@@ -448,49 +446,13 @@ export default function Index() {
         
         <View />
       </ScrollView>
-    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ECEEFF',
-    paddingHorizontal: 16,
-  },
 
-  predictionCard: {
-    alignItems: 'center',
-    gap: 24,
-    marginTop: 16,
-    marginBottom: 24,
-  },
-  predictionCircle: {
-    width: 250,
-    height: 250,
-    borderRadius: 125,
-    backgroundColor: '#FFEAEE',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 8,
-    borderColor: '#FFADBD',
-  },
-  predictionLabel: {
-    fontSize: 20,
-    fontWeight: '500',
-    color: '#000',
-  },
-  predictionDays: {
-    fontSize: 44,
-    fontWeight: 'bold',
-    color: '#000',
-  },
-  button: {
-    backgroundColor: '#4561D2',
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    borderRadius: 24,
-  },
+  
+  
   insightsCard: {
     backgroundColor: '#fff',
     borderRadius: 12,
@@ -508,26 +470,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 22,
   },
-  modalContainer: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: '#fff',
-  },
-  modalButtons: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 16,
-  },
-  modalButton: {
-    flex: 1,
-    marginHorizontal: 8,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '500',
-    textAlign: 'center',
-  },
+  
   cycleInfo: {
     flexDirection: 'row',
     justifyContent: 'space-between',

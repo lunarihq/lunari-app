@@ -6,19 +6,15 @@ import {
   ScrollView, 
   TouchableOpacity,
 } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-
+import theme from '../styles/theme';
 export default function Settings() {
   const router = useRouter();
 
   return (
-    <View style={styles.container}>
-      <StatusBar style="dark" />
-      
-      <ScrollView style={styles.container}>
-        
+
+      <ScrollView style={theme.globalStyles.container} showsVerticalScrollIndicator={false}>
         <View style={styles.section}>
           <TouchableOpacity 
             style={styles.settingRow}
@@ -52,16 +48,11 @@ export default function Settings() {
           </TouchableOpacity>
         </View>
       </ScrollView>
-    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ECEEFF',
-    paddingHorizontal: 8,
-  },
+
   section: {
     borderRadius: 8,
     marginVertical: 16,
