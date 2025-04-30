@@ -9,7 +9,7 @@ import { PeriodPredictionService } from '../../services/periodPredictions';
 import { BaseCalendar } from '../components/BaseCalendar';
 import { CalendarLegend } from '../components/CalendarLegend';
 import { CycleDetails } from '../components/CycleDetails';
-import { MarkedDates, formatDateString } from '../types/_CalendarTypes';
+import { MarkedDates, formatDateString } from '../types/calendarTypes';
 
 // Export a function to navigate to the period calendar screen
 export function openPeriodModal() {

@@ -1,4 +1,4 @@
-import { Colors } from "./_colors";
+import { Colors } from "./colors";
 
 export const Typography = {
     heading1: {

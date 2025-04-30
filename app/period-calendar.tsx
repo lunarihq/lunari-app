@@ -4,7 +4,7 @@ import { DateData } from 'react-native-calendars';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { BaseCalendar } from './components/BaseCalendar';
-import { CustomMarking, MarkedDates, DEFAULT_SELECTED_STYLE, formatDateString, generateDateRange } from './types/_CalendarTypes';
+import { CustomMarking, MarkedDates, DEFAULT_SELECTED_STYLE, formatDateString, generateDateRange } from './types/calendarTypes';
 import { db } from '../db';
 import { periodDates } from '../db/schema';
 
