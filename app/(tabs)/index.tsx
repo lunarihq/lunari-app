@@ -10,8 +10,8 @@ import { PeriodPredictionService } from '../../services/periodPredictions';
 import { NotificationService } from '../../services/notificationService';
 import { validatePeriodDate } from '../../validation/periodData';
 import { Ionicons } from '@expo/vector-icons';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import theme from '../styles/theme';
+import DropIcon from '../components/icons/DropIcon';
 
 const getPregnancyChance = (cycleDay: number): string => {
   if (cycleDay >= 11 && cycleDay <= 17) return 'High';
@@ -372,67 +372,49 @@ export default function Index() {
         </View>
 
         <View style={styles.insightsCard}>
-          <Text style={styles.insightsTitle}>
-            {currentCycleDay 
-              ? `Your cycle • Day ${currentCycleDay}`
-              : "Your cycle"}
-          </Text>
+          <View style={styles.insightsTitleContainer}>
+            <Text style={styles.insightsTitle}>Today insights</Text>
+            <Ionicons name="chevron-forward" size={24} color="#332F49" />
+          </View>
           {currentCycleDay ? (
-            <>
-              <View style={[styles.cycleInfo, styles.mt8]}>
-                <View style={styles.labelWithIcon}>
-                  <Ionicons name="sync" size={20} color="#878595" />
-                  <Text style={styles.cycleLabel}>Cycle phase</Text>
+            <View style={styles.insightsRow}>
+              <View style={[styles.insightCard, styles.cardBlue]}>
+                <View style={styles.insightTop}>
+                  <DropIcon color="#332F49" style={styles.insightIcon} />
+                  <Text style={styles.insightLabel}>Cycle day</Text>
                 </View>
-                <View>
-                  <View style={styles.phaseContainer}>
-                    <Text style={styles.cycleDay}>
-                      {currentCycleDay ? getCyclePhase(currentCycleDay) : '-'}
-                    </Text>
-                    <TouchableOpacity 
-                      onPress={() => {
-                        const phase = getCyclePhase(currentCycleDay!);
-                        setExpandedPhase(expandedPhase === phase ? null : phase);
-                      }}
-                    >
-                      <Ionicons 
-                        name={expandedPhase ? "close-circle" : "information-circle"} 
-                        size={18} 
-                        color="#878595"
-                      />
-                    </TouchableOpacity>
-                  </View>
-                  {expandedPhase && (
-                    <View style={styles.tooltip}>
-                      <Text style={styles.phaseDescription}>
-                        {getPhaseDescription(expandedPhase)}
-                      </Text>
-                    </View>
-                  )}
+                <View style={styles.insightValueContainer}>
+                  <Text style={styles.insightValue}>
+                    {currentCycleDay || '-'}
+                  </Text>
                 </View>
               </View>
-              <View style={[styles.cycleInfo, styles.mt8]}>
-                <View style={styles.labelWithIcon}>
-                  <Ionicons name="heart" size={20} color="#878595" />
-                  <Text style={styles.cycleLabel}>Chance to conceive</Text>
+              
+              <View style={[styles.insightCard, styles.cardYellow]}>
+                <View style={styles.insightTop}>
+                  <DropIcon color="#332F49" style={styles.insightIcon} />
+                  <Text style={styles.insightLabel}>Cycle phase</Text>
                 </View>
-                <Text style={styles.cycleDay}>{getPregnancyChance(currentCycleDay)}</Text>
-              </View>
-              <View style={[styles.cycleInfo, styles.mt8]}>
-                <View style={styles.labelWithIcon}>
-                  <Ionicons name="calendar" size={20} color="#878595" />
-                  <Text style={styles.cycleLabel}>Your next period is on</Text>
+                <View style={styles.insightValueContainer}>
+                  <Text style={styles.insightValue}>
+                    {currentCycleDay ? getCyclePhase(currentCycleDay) : '-'}
+                  </Text>
                 </View>
-                <Text style={styles.cycleDay}>{prediction ? prediction.date : '-'}</Text>
               </View>
-              <View style={[styles.cycleInfo, styles.mt8]}>
-                <View style={styles.labelWithIcon}>
-                  <MaterialCommunityIcons name="egg-outline" size={20} color="#878595" />
-                  <Text style={styles.cycleLabel}>You might ovulate on</Text>
+              
+              <View style={[styles.insightCard, styles.cardPink]}>
+                <View style={styles.insightTop}>
+                  <DropIcon color="#332F49" style={styles.insightIcon} />
+                  <Text style={styles.insightLabel}>Chance to</Text>
+                  <Text style={styles.insightLabel}>conceive</Text>
                 </View>
-                <Text style={styles.cycleDay}>{firstPeriodDate ? getOvulationDay(firstPeriodDate) : '-'}</Text>
+                <View style={styles.insightValueContainer}>
+                  <Text style={styles.insightValue}>
+                    {currentCycleDay ? getPregnancyChance(currentCycleDay) : '-'}
+                  </Text>
+                </View>
               </View>
-            </>
+            </View>
           ) : (
             <Text style={styles.insightsText}>
               Please log at least one period to view your cycle insights.
@@ -450,46 +432,76 @@ export default function Index() {
 }
 
 const styles = StyleSheet.create({
-
-  
-  
   insightsCard: {
     backgroundColor: '#fff',
     borderRadius: 12,
     padding: 16,
     marginBottom: 16,
   },
+  insightsTitleContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
   insightsTitle: {
     fontSize: 22,
     fontWeight: '600',
-    marginBottom: 8,
     color: '#332F49',
   },
   insightsText: {
     color: '#332F49',
     fontSize: 16,
-    lineHeight: 22,
+    lineHeight: 18,
   },
-  
-  cycleInfo: {
+  insightsRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    gap: 8,
+  },
+  insightCard: {
+    flex: 1,
+    borderRadius: 12,
+
+    paddingVertical: 12,
+    paddingBottom: 0,
     alignItems: 'center',
-    backgroundColor: '#fff',
-    paddingVertical: 16,
-    borderRadius: 8,
+    justifyContent: 'space-between',
+    minHeight: 140,
+    overflow: 'hidden',
   },
-  cycleLabel: {
-    fontSize: 16,
+  cardBlue: {
+    backgroundColor: '#D5D9FF',
+  },
+  cardYellow: {
+    backgroundColor: '#BBFFE5',
+  },
+  cardPink: {
+    backgroundColor: '#FFE9FB',
+  },
+  insightIcon: {
+    marginBottom: 6,
+  },
+  insightLabel: {
+    fontSize: 15,
     color: '#332F49',
+    textAlign: 'center',
+    lineHeight: 18,
   },
-  cycleDay: {
+  insightValueContainer: {
+    backgroundColor: 'rgba(0, 0, 0, 0.07)',
+    width: '100%',
+    alignItems: 'center',
+    paddingVertical: 12,
+    marginTop: 8,
+    borderBottomLeftRadius: 12,
+    borderBottomRightRadius: 12,
+  },
+  insightValue: {
     fontSize: 16,
     fontWeight: '600',
     color: '#332F49',
-  },
-  mt8: {
-    marginTop: 2,
+    textAlign: 'center',
   },
   emptyStateText: {
     fontSize: 22,
@@ -499,29 +511,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingHorizontal: 20,
   },
-  labelWithIcon: {
-    flexDirection: 'row',
+  insightTop: {
     alignItems: 'center',
-    gap: 8,
-  },
-  phaseContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-  },
-  tooltip: {
-    position: 'absolute',
-    right: 0,
-    top: 25,
-    backgroundColor: '#332F49',
-    padding: 12,
-    borderRadius: 8,
-    width: 200,
-    zIndex: 1,
-  },
-  phaseDescription: {
-    fontSize: 12,
-    color: '#fff',
-    lineHeight: 18,
+    width: '100%',
   },
 });
