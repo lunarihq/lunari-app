@@ -144,8 +144,8 @@ export default function SymptomTracking() {
     },
     { 
       id: '3', 
-      icon: '⚡',
-      name: 'Migraines', 
+      icon: '🦵',
+      name: 'Cramps', 
       selected: false 
     },
     { 
@@ -168,8 +168,8 @@ export default function SymptomTracking() {
     },
     { 
       id: '7', 
-      icon: '💩', 
-      name: 'Diarrhea', 
+      icon: '😬', 
+      name: 'Constipation', 
       selected: false 
     },
     { 
@@ -510,10 +510,8 @@ const styles = StyleSheet.create({
   dateNavigator: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginTop: 10,
     alignItems: 'center',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    backgroundColor: '#F3F2F7',
   },
   dateText: {
     fontSize: 18,

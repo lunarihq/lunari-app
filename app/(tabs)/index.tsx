@@ -380,7 +380,7 @@ export default function Index() {
             <View style={styles.insightsRow}>
               <View style={[styles.insightCard, styles.cardBlue]}>
                 <View style={styles.insightTop}>
-                  <DropIcon color="#332F49" style={styles.insightIcon} />
+                  <Ionicons name="calendar-outline" size={24} color="#332F49" style={styles.insightIcon} />
                   <Text style={styles.insightLabel}>Cycle day</Text>
                 </View>
                 <View style={styles.insightValueContainer}>
@@ -392,7 +392,7 @@ export default function Index() {
               
               <View style={[styles.insightCard, styles.cardYellow]}>
                 <View style={styles.insightTop}>
-                  <DropIcon color="#332F49" style={styles.insightIcon} />
+                  <Ionicons name="sync-outline" size={24} color="#332F49" style={styles.insightIcon} />
                   <Text style={styles.insightLabel}>Cycle phase</Text>
                 </View>
                 <View style={styles.insightValueContainer}>
@@ -404,7 +404,7 @@ export default function Index() {
               
               <View style={[styles.insightCard, styles.cardPink]}>
                 <View style={styles.insightTop}>
-                  <DropIcon color="#332F49" style={styles.insightIcon} />
+                  <Ionicons name="leaf-outline" size={24} color="#332F49" style={styles.insightIcon} />
                   <Text style={styles.insightLabel}>Chance to</Text>
                   <Text style={styles.insightLabel}>conceive</Text>
                 </View>

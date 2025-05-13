@@ -84,7 +84,7 @@ export const SymptomsTracker = ({ selectedDate, titleStyle }: SymptomsTrackerPro
           style={styles.itemContainer}
         >
           <View style={styles.addButton}>
-            <Ionicons name="add" size={24} color="#4561D2" />
+            <Ionicons name="add" size={24} color="white" />
           </View>
           <Text style={styles.itemText}>Add</Text>
         </TouchableOpacity>
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 24,
-    backgroundColor: '#EBEAFE',
+    backgroundColor: '#4561D2',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 8,
