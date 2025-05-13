@@ -373,7 +373,7 @@ export default function Index() {
 
         <View style={styles.insightsCard}>
           <View style={styles.insightsTitleContainer}>
-            <Text style={styles.insightsTitle}>Today insights</Text>
+            <Text style={styles.insightsTitle}>Today's insights</Text>
             <Ionicons name="chevron-forward" size={24} color="#332F49" />
           </View>
           {currentCycleDay ? (
