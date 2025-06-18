@@ -359,8 +359,8 @@ export default function Index() {
                   </>
                 ) : (
                   <>
-                      <Text style={theme.globalStyles.predictionLabel}>Your period is</Text>
-                    <Text style={theme.globalStyles.predictionDays}>{Math.abs(prediction.days)} {Math.abs(prediction.days) === 1 ? 'day' : 'days'} late</Text>
+                      <Text style={theme.globalStyles.predictionLabel}>Period late by</Text>
+                    <Text style={theme.globalStyles.predictionDays}>{Math.abs(prediction.days)} {Math.abs(prediction.days) === 1 ? 'day' : 'days'}</Text>
                   </>
                 )}
               </>

@@ -39,9 +39,9 @@ export const globalStyles = StyleSheet.create({
     marginBottom: 24,
   },
   predictionCircle: {
-    width: 250,
-    height: 250,
-    borderRadius: 125,
+    width: 320,
+    height: 320,
+    borderRadius: 160,
     backgroundColor: '#FFEAEE',
     justifyContent: 'center',
     alignItems: 'center',
