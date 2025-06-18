@@ -374,8 +374,8 @@ export default function Index() {
           <Pressable onPress={() => router.push('/period-calendar')} style={theme.globalStyles.button}>
             <Text style={theme.globalStyles.buttonText}>
               {Object.keys(selectedDates).length > 0 
-                ? "Log or edit period dates"
-                : "Log your period"}
+                ? "Edit period dates"
+                : "Log period"}
             </Text>
           </Pressable>
         </View>

@@ -198,25 +198,22 @@ export default function PeriodCalendarScreen() {
           {date ? date.day : ''}
         </Text>
         
-        {/* Always render a View for consistent layout */}
-        {!isFuture ? (
-          <View style={[
-            styles.dayIndicator,
-            isSelected ? styles.selectedDayIndicator : null,
-            isToday ? styles.todayIndicator : null,
-          ]}>
-            {isSelected && (
-              <Ionicons 
-                name="checkmark" 
-                size={14} 
-                color="#FFFFFF" 
-                style={styles.checkmark} 
-              />
-            )}
-          </View>
-        ) : (
-          <View style={styles.emptyIndicator} />
-        )}
+        {/* Day indicator - always render a circle */}
+        <View style={[
+          styles.dayIndicator,
+          isSelected ? styles.selectedDayIndicator : null,
+          isToday ? styles.todayIndicator : null,
+          isFuture ? styles.futureDayIndicator : null,
+        ]}>
+          {isSelected && !isFuture && (
+            <Ionicons 
+              name="checkmark" 
+              size={14} 
+              color="#FFFFFF" 
+              style={styles.checkmark} 
+            />
+          )}
+        </View>
       </TouchableOpacity>
     );
   };
@@ -320,12 +317,12 @@ const styles = StyleSheet.create({
   cancelButtonText: {
     fontSize: 16,
     fontWeight: '500',
-    color: '#FF597B',
+    color: '#4F5FEB',
   },
   saveButton: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: '#FF597B',
+    backgroundColor: '#4F5FEB',
     paddingVertical: 12,
     borderRadius: 4,
     marginLeft: 8,
@@ -339,7 +336,7 @@ const styles = StyleSheet.create({
   todayButtonText: {
     fontSize: 16,
     fontWeight: '500',
-    color: '#FF597B',
+    color: '#4F5FEB',
   },
   // Custom day styles
   customDayContainer: {
@@ -364,10 +361,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  emptyIndicator: {
-    width: 22,
-    height: 22,
-  },
   selectedDayIndicator: {
     backgroundColor: '#FF597B',
     borderColor: '#FF597B',
@@ -386,5 +379,9 @@ const styles = StyleSheet.create({
   },
   checkmark: {
     marginTop: 0,
-  }
+  },
+  futureDayIndicator: {
+    backgroundColor: '#E9F0FF',
+    borderWidth: 0,
+  },
 }); 
