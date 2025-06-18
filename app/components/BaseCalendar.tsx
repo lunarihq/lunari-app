@@ -118,6 +118,21 @@ export function BaseCalendar({
     );
   };
 
+  // Default header component if none provided
+  const defaultRenderHeader = (date: any) => {
+    const headerDate = new Date(date);
+    const monthName = headerDate.toLocaleString('default', { month: 'long' });
+    const year = headerDate.getFullYear();
+    
+    return (
+      <View style={styles.headerContainer}>
+        <Text style={styles.headerText}>
+          {monthName} {year}
+        </Text>
+      </View>
+    );
+  };
+
   // Determine whether to hide arrows based on mode
   const hideArrows = mode === 'selection' ? false : false;
 
@@ -133,6 +148,7 @@ export function BaseCalendar({
       hideArrows={hideArrows}
       firstDay={1}
       dayComponent={renderDay || defaultRenderDay}
+      renderHeader={renderHeader || defaultRenderHeader}
       // Horizontal scrolling props
       horizontal={horizontal}
       pagingEnabled={true}
@@ -235,6 +251,16 @@ const styles = StyleSheet.create({
   selectedDayText: {
     color: '#FF597B',
     fontWeight: '500',
+  },
+  headerContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 10,
+  },
+  headerText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#000000',
   },
 }); 
 
