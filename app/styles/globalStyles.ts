@@ -35,12 +35,12 @@ export const globalStyles = StyleSheet.create({
   predictionCard: {
     alignItems: 'center',
     gap: 24,
-    marginTop: 16,
+    marginTop: 8,
     marginBottom: 24,
   },
   predictionCircle: {
-    width: 320,
-    height: 320,
+    width: 300,
+    height: 300,
     borderRadius: 160,
     backgroundColor: '#FFEAEE',
     justifyContent: 'center',
@@ -54,9 +54,10 @@ export const globalStyles = StyleSheet.create({
     color: '#000',
   },
   predictionDays: {
-    fontSize: 44,
+    fontSize: 48,
     fontWeight: 'bold',
     color: '#000',
+    marginBottom: 24,
   },
 }); 
 

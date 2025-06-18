@@ -370,14 +370,14 @@ export default function Index() {
                 <Text style={styles.emptyStateText}>Log the first day of your last period for next prediction.</Text>
               </>
             )}
+            <Pressable onPress={() => router.push('/period-calendar')} style={theme.globalStyles.button}>
+              <Text style={theme.globalStyles.buttonText}>
+                {Object.keys(selectedDates).length > 0 
+                  ? "Edit period dates"
+                  : "Log period"}
+              </Text>
+            </Pressable>
           </View>
-          <Pressable onPress={() => router.push('/period-calendar')} style={theme.globalStyles.button}>
-            <Text style={theme.globalStyles.buttonText}>
-              {Object.keys(selectedDates).length > 0 
-                ? "Edit period dates"
-                : "Log period"}
-            </Text>
-          </Pressable>
         </View>
 
         <View style={styles.insightsCard}>
@@ -523,9 +523,9 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   currentDay: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: '500',
     color: '#332F49',
-    marginBottom: 10,
+    marginBottom: 24,
   },
 });
