@@ -49,7 +49,7 @@ export const globalStyles = StyleSheet.create({
     borderColor: '#FFADBD',
   },
   predictionLabel: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: '500',
     color: '#000',
   },

@@ -13,6 +13,10 @@ import { Ionicons } from '@expo/vector-icons';
 import theme from '../styles/theme';
 import DropIcon from '../components/icons/DropIcon';
 
+const getFormattedDate = (date: Date): string => {
+  return `Today, ${date.getDate()} ${date.toLocaleDateString('en-US', { month: 'long' })}`;
+};
+
 const getPregnancyChance = (cycleDay: number): string => {
   if (cycleDay >= 11 && cycleDay <= 17) return 'High';
   if (cycleDay >= 8 && cycleDay <= 20) return 'Medium';
@@ -336,11 +340,13 @@ export default function Index() {
           <View style={theme.globalStyles.predictionCircle}>
             {isPeriodDay ? (
               <>
+                <Text style={styles.currentDay}>{getFormattedDate(currentDate)}</Text>
                 <Text style={theme.globalStyles.predictionLabel}>Period</Text>
                 <Text style={theme.globalStyles.predictionDays}>Day {periodDayNumber}</Text>
               </>
             ) : prediction ? (
               <>
+                <Text style={styles.currentDay}>{getFormattedDate(currentDate)}</Text>
                 {prediction.days > 0 ? (
                   <>
                     <Text style={theme.globalStyles.predictionLabel}>Expected period in</Text>
@@ -359,7 +365,10 @@ export default function Index() {
                 )}
               </>
             ) : (
-              <Text style={styles.emptyStateText}>Log the first day of your last period for next prediction.</Text>
+              <>
+                <Text style={styles.currentDay}>{getFormattedDate(currentDate)}</Text>
+                <Text style={styles.emptyStateText}>Log the first day of your last period for next prediction.</Text>
+              </>
             )}
           </View>
           <Pressable onPress={() => router.push('/period-calendar')} style={theme.globalStyles.button}>
@@ -423,8 +432,6 @@ export default function Index() {
         </View>
 
         <SymptomsTracker />
-        
-        <TestNotification />
         
         <View />
       </ScrollView>
@@ -514,5 +521,11 @@ const styles = StyleSheet.create({
   insightTop: {
     alignItems: 'center',
     width: '100%',
+  },
+  currentDay: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#332F49',
+    marginBottom: 10,
   },
 });
