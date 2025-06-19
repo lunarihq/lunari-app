@@ -208,9 +208,6 @@ export default function PeriodCalendarScreen() {
     <View style={styles.container}>
       {/* Header with padding for status bar, similar to symptom-tracking.tsx */}
       <View style={styles.header}>
-        <TouchableOpacity onPress={handleCancel} style={styles.backButton}>
-          <Ionicons name="chevron-back" size={24} color="#000" />
-        </TouchableOpacity>
         <Text style={styles.headerTitle}>Edit Period</Text>
         {isTodayButtonVisible() && (
           <TouchableOpacity onPress={goToToday}>
@@ -262,7 +259,6 @@ export default function PeriodCalendarScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F3F2F7',
   },
   header: {
     flexDirection: 'row',
@@ -273,9 +269,6 @@ const styles = StyleSheet.create({
     paddingTop: 65, // Extra padding at top for status bar, like in symptom-tracking.tsx
     backgroundColor: '#ffffff',
   },
-  backButton: {
-    padding: 4,
-  },
   headerTitle: {
     fontSize: 18,
     fontWeight: '600',
@@ -283,7 +276,6 @@ const styles = StyleSheet.create({
   },
   calendarContainer: {
     flex: 1,
-    backgroundColor: '#fff',
   },
   footer: {
     flexDirection: 'row',
@@ -329,20 +321,20 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     width: 32,
     height: 55,
-    marginBottom: 8,
+    marginBottom: 6,
   },
   customDayText: {
     fontSize: 18,
     textAlign: 'center',
-    marginTop: 4,
-    marginBottom: 4,
+    marginBottom: 2,
+    color: '#000',
   },
   dayIndicator: {
     width: 22,
     height: 22,
     borderRadius: 11,
-    borderWidth: 1,
-    borderColor: '#979797',
+    borderWidth: 2,
+    borderColor: '#99A6C0',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -351,7 +343,7 @@ const styles = StyleSheet.create({
     borderColor: '#FF597B',
   },
   todayIndicator: {
-    borderWidth: 2,
+    borderWidth: 4,
   },
   todayText: {
     fontWeight: 'bold',
@@ -366,7 +358,6 @@ const styles = StyleSheet.create({
     marginTop: 0,
   },
   futureDayIndicator: {
-    backgroundColor: '#E9F0FF',
-    borderWidth: 0,
+    borderWidth: 1,
   },
 }); 

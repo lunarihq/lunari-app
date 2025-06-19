@@ -3,6 +3,9 @@ import { CalendarList, DateData } from 'react-native-calendars';
 import { Ionicons } from '@expo/vector-icons';
 import { CustomMarking, MarkedDates, SelectionRules } from '../types/calendarTypes';
 
+// Constants
+const MONTH_FONT_SIZE = 18;
+
 export type BaseCalendarProps = {
   // Mode determines the calendar's primary purpose
   mode: 'selection' | 'view';
@@ -143,7 +146,7 @@ export function BaseCalendar({
   const renderDayNamesHeader = () => {
     if (!hideDayNames) return null;
     
-    const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    const dayNames = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
     
     return (
       <View style={styles.dayNamesContainer}>
@@ -203,16 +206,10 @@ export function BaseCalendar({
           monthTextColor: '#000000',
           textMonthFontWeight: 'bold',
           textDayFontSize: 16,
-          textMonthFontSize: 18,
+          textMonthFontSize: MONTH_FONT_SIZE,
           textDayHeaderFontSize: 14,
           // @ts-ignore: Known theme typing issue in react-native-calendars
           'stylesheet.calendar.header': {
-            monthText: {
-              fontSize: 20,
-              fontWeight: 'bold',
-              color: '#000000',
-              margin: 10
-            },
             dayHeader: {
               marginTop: 2,
               marginBottom: 7,
@@ -282,26 +279,28 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   headerText: {
-    fontSize: 20,
+    fontSize: MONTH_FONT_SIZE,
     fontWeight: 'bold',
     color: '#000000',
   },
   dayNamesContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     paddingTop: 5,
     paddingBottom: 10,
+    paddingHorizontal: 36,
     backgroundColor: '#ffffff',
     borderBottomWidth: 1,
     borderBottomColor: '#E9F0FF',
+
   },
   dayNameCell: {
-    flex: 1,
     alignItems: 'center',
   },
   dayNameText: {
     fontSize: 12,
-    fontWeight: 'bold',
+    fontWeight: '500',
+    color: '#29263B',
   },
 }); 
 
