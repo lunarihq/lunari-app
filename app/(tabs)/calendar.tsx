@@ -291,6 +291,7 @@ export default function CalendarScreen() {
           onDayPress={onDayPress}
           onMonthChange={onMonthChange}
           hideDayNames={true}
+          calendarHeight={410}
         />
       </View>
     </SafeAreaView>

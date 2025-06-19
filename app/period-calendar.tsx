@@ -235,6 +235,8 @@ export default function PeriodCalendarScreen() {
             renderDay={renderCustomDay}
             hideDayNames={true}
             futureScrollRange={1}
+            pastScrollRange={12}
+            calendarHeight={500}
           />
 
       </View>

@@ -38,6 +38,8 @@ export type BaseCalendarProps = {
   futureScrollRange?: number;
   // Hide day names for each month (to show them only once at top)
   hideDayNames?: boolean;
+  // Dynamic calendar height
+  calendarHeight?: number;
 };
 
 export function BaseCalendar({
@@ -56,6 +58,7 @@ export function BaseCalendar({
   pastScrollRange = 12,
   futureScrollRange = 12,
   hideDayNames = false,
+  calendarHeight,
 }: BaseCalendarProps) {
   // Get device screen width for default calendarWidth
   const screenWidth = Dimensions.get('window').width;
@@ -180,6 +183,7 @@ export function BaseCalendar({
         horizontal={horizontal}
         pagingEnabled={horizontal}
         calendarWidth={calendarWidth || screenWidth}
+        calendarHeight={calendarHeight}
         pastScrollRange={pastScrollRange}
         futureScrollRange={futureScrollRange}
         scrollEnabled={true}
