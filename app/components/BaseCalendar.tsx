@@ -32,6 +32,8 @@ export type BaseCalendarProps = {
   pastScrollRange?: number;
   // Max amount of months allowed to scroll to the future
   futureScrollRange?: number;
+  // Hide day names for each month (to show them only once at top)
+  hideDayNames?: boolean;
 };
 
 export function BaseCalendar({
@@ -45,10 +47,11 @@ export function BaseCalendar({
   renderHeader,
   renderDay,
   onAutoSelect,
-  horizontal = true,
+  horizontal = false,
   calendarWidth,
   pastScrollRange = 12,
   futureScrollRange = 12,
+  hideDayNames = false,
 }: BaseCalendarProps) {
   // Get device screen width for default calendarWidth
   const screenWidth = Dimensions.get('window').width;
@@ -134,81 +137,102 @@ export function BaseCalendar({
   };
 
   // Determine whether to hide arrows based on mode
-  const hideArrows = mode === 'selection' ? false : false;
+  const hideArrows = true;
+
+  // Day names row component (only shown when hideDayNames is true on individual months)
+  const renderDayNamesHeader = () => {
+    if (!hideDayNames) return null;
+    
+    const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    
+    return (
+      <View style={styles.dayNamesContainer}>
+        {dayNames.map((day, index) => (
+          <View key={index} style={styles.dayNameCell}>
+            <Text style={styles.dayNameText}>{day}</Text>
+          </View>
+        ))}
+      </View>
+    );
+  };
 
   return (
-    <CalendarList
-      key={calendarKey}
-      current={current}
-      markingType="custom"
-      markedDates={markedDates}
-      onDayPress={handleDayPress}
-      onMonthChange={onMonthChange}
-      hideExtraDays={true}
-      hideArrows={hideArrows}
-      firstDay={1}
-      dayComponent={renderDay || defaultRenderDay}
-      renderHeader={renderHeader || defaultRenderHeader}
-      // Horizontal scrolling props
-      horizontal={horizontal}
-      pagingEnabled={true}
-      calendarWidth={calendarWidth || screenWidth}
-      pastScrollRange={pastScrollRange}
-      futureScrollRange={futureScrollRange}
-      scrollEnabled={true}
-      showScrollIndicator={false}
-      renderArrow={(direction: 'left' | 'right') => (
-        <Ionicons 
-          name={direction === 'left' ? 'chevron-back' : 'chevron-forward'} 
-          size={20} 
-          color="black"
-           
-        />
-      )}
-      theme={{
-        backgroundColor: '#ffffff',
-        calendarBackground: '#ffffff',
-        textSectionTitleColor: '#b6c1cd',
-        selectedDayBackgroundColor: 'transparent',
-        selectedDayTextColor: '#000000',
-        todayTextColor: '#000000',
-        dayTextColor: '#2d4150',
-        textDisabledColor: '#d9e1e8',
-        dotColor: '#FF597B',
-        selectedDotColor: '#FF597B',
-        arrowColor: 'black',
-        monthTextColor: '#000000',
-        textMonthFontWeight: 'bold',
-        textDayFontSize: 16,
-        textMonthFontSize: 18,
-        textDayHeaderFontSize: 14,
-        // @ts-ignore: Known theme typing issue in react-native-calendars
-        'stylesheet.calendar.header': {
-          monthText: {
-            fontSize: 20,
-            fontWeight: 'bold',
-            color: '#000000',
-            margin: 10
+    <View style={{ flex: 1 }}>
+      {renderDayNamesHeader()}
+      <CalendarList
+        key={calendarKey}
+        current={current}
+        markingType="custom"
+        markedDates={markedDates}
+        onDayPress={handleDayPress}
+        onMonthChange={onMonthChange}
+        hideExtraDays={true}
+        hideArrows={hideArrows}
+        firstDay={1}
+        hideDayNames={hideDayNames}
+        dayComponent={renderDay || defaultRenderDay}
+        renderHeader={renderHeader || defaultRenderHeader}
+        // Horizontal scrolling props
+        horizontal={horizontal}
+        pagingEnabled={horizontal}
+        calendarWidth={calendarWidth || screenWidth}
+        pastScrollRange={pastScrollRange}
+        futureScrollRange={futureScrollRange}
+        scrollEnabled={true}
+        showScrollIndicator={false}
+        renderArrow={(direction: 'left' | 'right') => (
+          <Ionicons 
+            name={direction === 'left' ? 'chevron-back' : 'chevron-forward'} 
+            size={20} 
+            color="black"
+             
+          />
+        )}
+        theme={{
+          backgroundColor: '#ffffff',
+          calendarBackground: '#ffffff',
+          textSectionTitleColor: '#b6c1cd',
+          selectedDayBackgroundColor: 'transparent',
+          selectedDayTextColor: '#000000',
+          todayTextColor: '#000000',
+          dayTextColor: '#2d4150',
+          textDisabledColor: '#d9e1e8',
+          dotColor: '#FF597B',
+          selectedDotColor: '#FF597B',
+          arrowColor: 'black',
+          monthTextColor: '#000000',
+          textMonthFontWeight: 'bold',
+          textDayFontSize: 16,
+          textMonthFontSize: 18,
+          textDayHeaderFontSize: 14,
+          // @ts-ignore: Known theme typing issue in react-native-calendars
+          'stylesheet.calendar.header': {
+            monthText: {
+              fontSize: 20,
+              fontWeight: 'bold',
+              color: '#000000',
+              margin: 10
+            },
+            dayHeader: {
+              marginTop: 2,
+              marginBottom: 7,
+              width: 32,
+              textAlign: 'center',
+              fontSize: 14,
+              color: '#4F4F4F'
+            },
           },
-          dayHeader: {
-            marginTop: 2,
-            marginBottom: 7,
-            width: 32,
-            textAlign: 'center',
-            fontSize: 14,
-            color: '#4F4F4F'
-          },
-        },
-        'stylesheet.day.basic': {
-          base: {
-            width: 32,
-            height: 32,
-            alignItems: 'center',
-            justifyContent: 'center',
+          'stylesheet.day.basic': {
+            base: {
+              width: 32,
+              height: 32,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }
           }
-        }
-      }}
-    />
+        }}
+      />
+    </View>
   );
 }
 
@@ -261,6 +285,23 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: '#000000',
+  },
+  dayNamesContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    paddingTop: 5,
+    paddingBottom: 10,
+    backgroundColor: '#ffffff',
+    borderBottomWidth: 1,
+    borderBottomColor: '#E9F0FF',
+  },
+  dayNameCell: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  dayNameText: {
+    fontSize: 12,
+    fontWeight: 'bold',
   },
 }); 
 

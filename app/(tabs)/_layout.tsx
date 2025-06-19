@@ -37,6 +37,9 @@ export default function TabLayout() {
         options={{
           headerShown: true,
           headerTitle: "Calendar",
+          headerStyle: {
+            backgroundColor: '#ffffff',
+          },
           headerRight: () => (
             <TouchableOpacity 
               onPress={() => router.push('/period-calendar')}

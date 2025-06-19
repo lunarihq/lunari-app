@@ -251,6 +251,7 @@ export default function PeriodCalendarScreen() {
               autoSelectDays: 5
             }}
             renderDay={renderCustomDay}
+            hideDayNames={true}
           />
         )}
       </View>
@@ -286,7 +287,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 15,
     paddingTop: 65, // Extra padding at top for status bar, like in symptom-tracking.tsx
-    backgroundColor: '#F3F2F7',
+    backgroundColor: '#ffffff',
   },
   backButton: {
     padding: 4,

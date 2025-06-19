@@ -7,8 +7,6 @@ import { db } from '../../db';
 import { periodDates } from '../../db/schema';
 import { PeriodPredictionService } from '../../services/periodPredictions';
 import { BaseCalendar } from '../components/BaseCalendar';
-import { CalendarLegend } from '../components/CalendarLegend';
-import { CycleDetails } from '../components/CycleDetails';
 import { MarkedDates, formatDateString } from '../types/calendarTypes';
 
 // Export a function to navigate to the period calendar screen
@@ -284,28 +282,17 @@ export default function CalendarScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContent}>
-        <View style={styles.calendarContainer}>
-          <BaseCalendar
-            mode="view"
-            key={calendarKey}
-            current={selectedDate}
-            markedDates={markedDates}
-            onDayPress={onDayPress}
-            onMonthChange={onMonthChange}
-          />
-        </View>
-        
-        <CalendarLegend />
-        
-        <CycleDetails 
-          selectedDate={selectedDate}
-          cycleDay={cycleDay}
+      <View style={styles.calendarContainer}>
+        <BaseCalendar
+          mode="view"
+          key={calendarKey}
+          current={selectedDate}
+          markedDates={markedDates}
+          onDayPress={onDayPress}
+          onMonthChange={onMonthChange}
+          hideDayNames={true}
         />
-        
-        {/* Add bottom padding to prevent content from being cut off */}
-        <View style={styles.bottomPadding} />
-      </ScrollView>
+      </View>
     </SafeAreaView>
   );
 }
@@ -315,16 +302,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#ffffff',
   },
-  scrollView: {
-    flex: 1,
-  },
-  scrollViewContent: {
-    paddingBottom: 16,
-  },
   calendarContainer: {
+    flex: 1,
     paddingTop: 4,
-  },
-  bottomPadding: {
-    height: 10, // Add extra padding at the bottom to ensure content isn't cut off
   },
 });
