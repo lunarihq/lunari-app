@@ -16,6 +16,7 @@ export default function PeriodCalendarScreen() {
   const today = formatDateString(new Date());
   const [currentMonth, setCurrentMonth] = useState(today);
   const [calendarKey, setCalendarKey] = useState(Date.now().toString());
+  const [displayedMonth, setDisplayedMonth] = useState(today);
 
   // Load saved dates when the component mounts
   useEffect(() => {
@@ -46,9 +47,9 @@ export default function PeriodCalendarScreen() {
     const todayYear = today.substring(0, 4);
     const todayMonth = today.substring(5, 7);
     
-    // Extract year and month from currentMonth string (YYYY-MM-DD)
-    const currentYear = currentMonth.substring(0, 4);
-    const currentMonth_ = currentMonth.substring(5, 7);
+    // Extract year and month from displayedMonth string (YYYY-MM-DD)
+    const currentYear = displayedMonth.substring(0, 4);
+    const currentMonth_ = displayedMonth.substring(5, 7);
     
     // Return true if they are different (button should be visible)
     return todayYear !== currentYear || todayMonth !== currentMonth_;
@@ -98,13 +99,14 @@ export default function PeriodCalendarScreen() {
 
   const goToToday = () => {
     setCurrentMonth(today);
+    setDisplayedMonth(today);
     // Force calendar to re-render with new current prop
     setCalendarKey(Date.now().toString());
   };
   
   // Handler for month change
   const onMonthChange = (month: DateData) => {
-
+    setDisplayedMonth(month.dateString);
   };
   
   // Create modified markedDates with TODAY text
