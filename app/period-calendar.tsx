@@ -16,8 +16,6 @@ export default function PeriodCalendarScreen() {
   const today = formatDateString(new Date());
   const [currentMonth, setCurrentMonth] = useState(today);
   const [calendarKey, setCalendarKey] = useState(Date.now().toString());
-  const [calendarReady, setCalendarReady] = useState(false);
-  const [layoutUpdated, setLayoutUpdated] = useState(0);
 
   // Load saved dates when the component mounts
   useEffect(() => {
@@ -39,14 +37,7 @@ export default function PeriodCalendarScreen() {
     
     loadSavedDates();
     setCalendarKey(Date.now().toString());
-    setCalendarReady(false);
-    
-    // Delay showing the calendar to ensure layout is calculated properly
-    const timer = setTimeout(() => {
-      setCalendarReady(true);
-    }, 100);
-    
-    return () => clearTimeout(timer);
+
   }, []);
 
   // Function to check if the current displayed month is different from today's month
@@ -113,7 +104,7 @@ export default function PeriodCalendarScreen() {
   
   // Handler for month change
   const onMonthChange = (month: DateData) => {
-    setCurrentMonth(month.dateString);
+
   };
   
   // Create modified markedDates with TODAY text
@@ -131,11 +122,6 @@ export default function PeriodCalendarScreen() {
     };
   }
 
-  // Handle layout updates
-  const handleLayout = () => {
-    setLayoutUpdated(prev => prev + 1);
-  };
-  
   // Save dates and go back
   const handleSave = async () => {
     try {
@@ -234,14 +220,10 @@ export default function PeriodCalendarScreen() {
         {!isTodayButtonVisible() && <View style={{width: 24}} />}
       </View>
       
-      <View 
-        style={styles.calendarContainer} 
-        onLayout={handleLayout}
-      >
-        {calendarReady && (
+      <View style={styles.calendarContainer}>
           <BaseCalendar
             mode="selection"
-            calendarKey={`${calendarKey}-${layoutUpdated}`}
+            calendarKey={calendarKey}
             current={currentMonth}
             markedDates={markedDatesWithToday}
             onDayPress={onDayPress}
@@ -249,11 +231,13 @@ export default function PeriodCalendarScreen() {
             selectionRules={{
               disableFuture: true,
               autoSelectDays: 5
+              
             }}
             renderDay={renderCustomDay}
             hideDayNames={true}
+            futureScrollRange={1}
           />
-        )}
+
       </View>
 
       {/* Footer with Save/Cancel buttons */}
