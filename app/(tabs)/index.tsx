@@ -6,7 +6,6 @@ import { SymptomsTracker } from '../components/SymptomsTracker';
 import { db } from '../../db';
 import { PeriodDate, periodDates} from '../../db/schema';
 import { PeriodPredictionService } from '../../services/periodPredictions';
-import { NotificationService } from '../../services/notificationService';
 import { validatePeriodDate } from '../../validation/periodData';
 import { Ionicons } from '@expo/vector-icons';
 import theme from '../styles/theme';
@@ -235,13 +234,7 @@ export default function Index() {
       // Calculate if today is a period day
       calculatePeriodDay(dates);
       
-      // Schedule period notifications if enabled
-      try {
-        // The schedulePeriodReminder function will check if notifications are enabled
-        await NotificationService.schedulePeriodReminder(mostRecentStart, sortedDates);
-      } catch (error) {
-        console.error('Failed to schedule period notifications on app load:', error);
-      }
+
     } else {
       // Explicitly set to null when no data exists
       setFirstPeriodDate(null);
@@ -296,26 +289,13 @@ export default function Index() {
         // Calculate if today is a period day after saving
         calculatePeriodDay(dates);
         
-        // Schedule period notifications if enabled
-        try {
-          // The schedulePeriodReminder function will check if notifications are enabled
-          await NotificationService.schedulePeriodReminder(mostRecentStart, sortedDates);
-        } catch (error) {
-          console.error('Failed to schedule period notifications:', error);
-        }
+
       } else {
         setSelectedDates({});
         setFirstPeriodDate(null);
         setCurrentCycleDay(null);
         setIsPeriodDay(false);
         setPeriodDayNumber(0);
-        
-        // Cancel period notifications
-        try {
-          await NotificationService.cancelPeriodNotifications();
-        } catch (error) {
-          console.error('Failed to cancel period notifications:', error);
-        }
       }
     } catch (error) {
       console.error('Error saving dates:', error);
