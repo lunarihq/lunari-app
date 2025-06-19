@@ -18,7 +18,10 @@ export default function TabLayout() {
     headerTintColor: '#fff',
     tabBarStyle: {
     backgroundColor: '#fff',
-    height: 60,
+    height: 80,
+    },
+    tabBarItemStyle: {
+      paddingTop: 6,
     },
   }}
 >
