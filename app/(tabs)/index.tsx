@@ -480,13 +480,19 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   cardBlue: {
-    backgroundColor: '#D5D9FF',
+    backgroundColor: '#E9F0FF',
+    borderWidth: 1,
+    borderColor: '#4F5FEB',
   },
   cardYellow: {
-    backgroundColor: '#BBFFE5',
+    backgroundColor: '#E9F0FF',
+    borderWidth: 1,
+    borderColor: '#4F5FEB',
   },
   cardPink: {
-    backgroundColor: '#FFE9FB',
+    backgroundColor: '#E9F0FF',
+    borderWidth: 1,
+    borderColor: '#4F5FEB',
   },
   insightIcon: {
     marginBottom: 6,
@@ -498,7 +504,7 @@ const styles = StyleSheet.create({
     lineHeight: 18,
   },
   insightValueContainer: {
-    backgroundColor: 'rgba(0, 0, 0, 0.07)',
+    backgroundColor: '#ffffff',
     width: '100%',
     alignItems: 'center',
     paddingVertical: 12,
