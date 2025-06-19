@@ -1,9 +1,8 @@
 import React from 'react';
 import { Text, View, StyleSheet, Pressable, TouchableOpacity, ScrollView } from 'react-native';
-import { Link, useLocalSearchParams, router, useFocusEffect } from 'expo-router';
+import { useLocalSearchParams, router, useFocusEffect } from 'expo-router';
 import { useState, useEffect, useCallback } from 'react';
 import { SymptomsTracker } from '../components/SymptomsTracker';
-import { TestNotification } from '../components/TestNotification';
 import { db } from '../../db';
 import { PeriodDate, periodDates} from '../../db/schema';
 import { PeriodPredictionService } from '../../services/periodPredictions';
@@ -11,10 +10,9 @@ import { NotificationService } from '../../services/notificationService';
 import { validatePeriodDate } from '../../validation/periodData';
 import { Ionicons } from '@expo/vector-icons';
 import theme from '../styles/theme';
-import DropIcon from '../components/icons/DropIcon';
 
 const getFormattedDate = (date: Date): string => {
-  return `Today, ${date.getDate()} ${date.toLocaleDateString('en-US', { month: 'long' })}`;
+  return `Today, ${date.getDate()} ${date.toLocaleDateString('en-US', { month: 'short' })}`;
 };
 
 const getPregnancyChance = (cycleDay: number): string => {
@@ -359,7 +357,7 @@ export default function Index() {
                   </>
                 ) : (
                   <>
-                      <Text style={theme.globalStyles.predictionLabel}>Period late by</Text>
+                      <Text style={theme.globalStyles.predictionLabel}>Late for</Text>
                     <Text style={theme.globalStyles.predictionDays}>{Math.abs(prediction.days)} {Math.abs(prediction.days) === 1 ? 'day' : 'days'}</Text>
                   </>
                 )}
@@ -523,7 +521,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   currentDay: {
-    fontSize: 18,
+    fontSize: 17,
     fontWeight: '500',
     color: '#332F49',
     marginBottom: 24,
