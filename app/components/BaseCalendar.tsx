@@ -5,6 +5,7 @@ import { CustomMarking, MarkedDates, SelectionRules } from '../types/calendarTyp
 
 // Constants
 const MONTH_FONT_SIZE = 18;
+export const DAY_FONT_SIZE = 18;
 
 export type BaseCalendarProps = {
   // Mode determines the calendar's primary purpose
@@ -249,7 +250,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
   },
   dayText: {
-    fontSize: 16,
+    fontSize: DAY_FONT_SIZE,
     textAlign: 'center',
   },
   disabledDay: {
