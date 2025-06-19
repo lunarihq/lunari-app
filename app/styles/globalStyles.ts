@@ -19,7 +19,7 @@ export const globalStyles = StyleSheet.create({
   },
 
   button: {
-    backgroundColor: '#4561D2',
+    backgroundColor: '#FF2D55',
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 24,
@@ -38,15 +38,21 @@ export const globalStyles = StyleSheet.create({
     marginTop: 8,
     marginBottom: 24,
   },
-  predictionCircle: {
-    width: 310,
-    height: 310,
-    borderRadius: 160,
-    backgroundColor: '#FFEAEE',
+  predictionOuterCircle: {
+    width: 345,
+    height: 345,
+    borderRadius: 200,
+    backgroundColor: 'transparent',
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 8,
-    borderColor: '#FFADBD',
+  },
+  predictionInnerCircle: {
+    width: 310,
+    height: 310,
+    borderRadius: 155,
+    backgroundColor: '#ffffff',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   predictionLabel: {
     fontSize: 22,

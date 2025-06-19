@@ -10,6 +10,7 @@ import { NotificationService } from '../../services/notificationService';
 import { validatePeriodDate } from '../../validation/periodData';
 import { Ionicons } from '@expo/vector-icons';
 import theme from '../styles/theme';
+import { DashedCircle } from '../components/DashedCircle';
 
 const getFormattedDate = (date: Date): string => {
   return `Today, ${date.getDate()} ${date.toLocaleDateString('en-US', { month: 'short' })}`;
@@ -335,7 +336,9 @@ export default function Index() {
 
       <ScrollView style={theme.globalStyles.container} showsVerticalScrollIndicator={false}>
         <View style={theme.globalStyles.predictionCard}>
-          <View style={theme.globalStyles.predictionCircle}>
+          <View style={theme.globalStyles.predictionOuterCircle}>
+            <DashedCircle size={350} strokeWidth={3} dashLength={3} dashCount={120} />
+            <View style={theme.globalStyles.predictionInnerCircle}>
             {isPeriodDay ? (
               <>
                 <Text style={styles.currentDay}>{getFormattedDate(currentDate)}</Text>
@@ -375,6 +378,7 @@ export default function Index() {
                   : "Log period"}
               </Text>
             </Pressable>
+            </View>
           </View>
         </View>
 
