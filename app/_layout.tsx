@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Stack, useRouter, useSegments, usePathname } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { getSetting } from '../db';
-
+import * as Notifications from 'expo-notifications';
 
 export default function RootLayout() {
   const [isReady, setIsReady] = useState(false);
@@ -11,6 +11,33 @@ export default function RootLayout() {
   const router = useRouter();
   const pathname = usePathname();
   const [initialRender, setInitialRender] = useState(true);
+  const notificationResponseListener = useRef<Notifications.Subscription>();
+
+  // Initialize notification response listener only (don't request permissions yet)
+  useEffect(() => {
+    async function setupNotificationListener() {
+      // Set up notification response listener
+      notificationResponseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+        const { notification } = response;
+        const data = notification.request.content.data;
+        
+        // Handle the notification based on type
+        if (data.type === 'period_reminder' || data.type === 'period_start') {
+          // Navigate to the home screen when a period notification is tapped
+          router.navigate('/(tabs)');
+        }
+      });
+    }
+
+    setupNotificationListener();
+    
+    // Clean up notification listeners on unmount
+    return () => {
+      if (notificationResponseListener.current) {
+        Notifications.removeNotificationSubscription(notificationResponseListener.current);
+      }
+    };
+  }, [router]);
 
   // Only check onboarding status once during initial mount
   useEffect(() => {
