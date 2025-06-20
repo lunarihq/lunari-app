@@ -177,20 +177,47 @@ export default function CalendarScreen() {
     setBaseMarkedDates(allMarkedDates);
   };
 
-  // Update cycle day info for selected date
-  const updateSelectedDateInfo = (date: string) => {
-    if (!firstPeriodDate) return;
+  // Calculate cycle day for a given date
+  const calculateCycleDay = (date: string): number | null => {
+    if (!firstPeriodDate) return null;
     
     const selectedDateObj = new Date(date);
     const startDateObj = new Date(firstPeriodDate);
     
-    // Only calculate cycle day if selected date is after first period
     if (selectedDateObj >= startDateObj) {
       const cycleInfo = PeriodPredictionService.getCycleInfo(firstPeriodDate, date);
-      setCycleDay(cycleInfo.cycleDay);
-    } else {
-      setCycleDay(null);
+      return cycleInfo.cycleDay;
     }
+    return null;
+  };
+
+  // Update cycle day info for selected date
+  const updateSelectedDateInfo = (date: string) => {
+    setCycleDay(calculateCycleDay(date));
+  };
+
+  // Generate marked dates with highlighting for a specific selected date
+  const getMarkedDatesWithSelection = (selectedDate: string) => {
+    const updatedMarkedDates = { ...baseMarkedDates };
+    const isPeriodDate = updatedMarkedDates[selectedDate]?.customStyles?.container?.backgroundColor === '#FF597B';
+    
+    updatedMarkedDates[selectedDate] = {
+      ...updatedMarkedDates[selectedDate],
+      customStyles: {
+        ...(updatedMarkedDates[selectedDate]?.customStyles || {}),
+        container: {
+          ...(updatedMarkedDates[selectedDate]?.customStyles?.container || {}),
+          borderWidth: 2,
+          borderColor: 'black',
+          borderRadius: 16,
+        },
+        text: isPeriodDate 
+          ? { color: '#FFFFFF' } 
+          : updatedMarkedDates[selectedDate]?.customStyles?.text
+      }
+    };
+    
+    return updatedMarkedDates;
   };
 
   // Reload data when tab is focused
@@ -223,41 +250,12 @@ export default function CalendarScreen() {
     updateSelectedDateInfo(selectedDate);
   }, [selectedDate, firstPeriodDate]);
 
-  // Update selected date highlight
-  const updateSelectedDateHighlight = useCallback(() => {
-    if (!selectedDate) return baseMarkedDates;
-    
-    // Create a new object with all the base marked dates
-    const updatedMarkedDates = { ...baseMarkedDates };
-    
-    // Check if this is a period date (which should have white text)
-    const isPeriodDate = updatedMarkedDates[selectedDate]?.customStyles?.container?.backgroundColor === '#FF597B';
-    
-    // Add the highlight style only to the currently selected date
-    updatedMarkedDates[selectedDate] = {
-      ...updatedMarkedDates[selectedDate],
-      customStyles: {
-        ...(updatedMarkedDates[selectedDate]?.customStyles || {}),
-        container: {
-          ...(updatedMarkedDates[selectedDate]?.customStyles?.container || {}),
-          borderWidth: 2,
-          borderColor: 'black',
-          borderRadius: 16,
-        },
-        // Only override text color if it's not already a period date
-        text: isPeriodDate 
-          ? { color: '#FFFFFF' } 
-          : updatedMarkedDates[selectedDate]?.customStyles?.text
-      }
-    };
-    
-    return updatedMarkedDates;
-  }, [selectedDate, baseMarkedDates]);
-
-  // Update marked dates when selected date or base marked dates change
+  // Update marked dates when base marked dates change (but not when selected date changes - handled in onDayPress)
   useEffect(() => {
-    setMarkedDates(updateSelectedDateHighlight());
-  }, [selectedDate, baseMarkedDates, updateSelectedDateHighlight]);
+    if (selectedDate) {
+      setMarkedDates(getMarkedDatesWithSelection(selectedDate));
+    }
+  }, [baseMarkedDates]);
 
   // Handle saving period dates
   const savePeriodDates = async (dates: MarkedDates) => {
@@ -322,7 +320,13 @@ export default function CalendarScreen() {
   };
 
   const onDayPress = (day: DateData) => {
-    setSelectedDate(day.dateString);
+    const newDate = day.dateString;
+    setSelectedDate(newDate);
+    
+    // Update cycle day and marked dates immediately to avoid delays
+    setCycleDay(calculateCycleDay(newDate));
+    setMarkedDates(getMarkedDatesWithSelection(newDate));
+    
     openDrawer();
   };
 
