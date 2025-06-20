@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { View, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { View, StyleSheet, SafeAreaView, ScrollView, Animated, Dimensions } from 'react-native';
+import { PanGestureHandler, State, GestureHandlerRootView } from 'react-native-gesture-handler';
 import { DateData } from 'react-native-calendars';
 import { useFocusEffect } from '@react-navigation/native';
 import { useLocalSearchParams, router } from 'expo-router';
@@ -7,6 +8,7 @@ import { db } from '../../db';
 import { periodDates } from '../../db/schema';
 import { PeriodPredictionService } from '../../services/periodPredictions';
 import { BaseCalendar } from '../components/BaseCalendar';
+import { CycleDetails } from '../components/CycleDetails';
 import { MarkedDates, formatDateString } from '../types/calendarTypes';
 
 // Export a function to navigate to the period calendar screen
@@ -24,6 +26,10 @@ export default function CalendarScreen() {
   const [currentDate] = useState(formatDateString(new Date()));
   const [currentMonth, setCurrentMonth] = useState('');
   const [calendarKey, setCalendarKey] = useState(Date.now());
+  const [isDrawerOpen, setIsDrawerOpen] = useState(true);
+  const drawerAnimation = useRef(new Animated.Value(0)).current;
+  const gestureRef = useRef(null);
+  const gestureY = useRef(new Animated.Value(0)).current;
   const params = useLocalSearchParams();
   
   // Check if we should navigate to the period calendar screen from URL params
@@ -272,8 +278,52 @@ export default function CalendarScreen() {
     }
   };
 
+  const openDrawer = () => {
+    setIsDrawerOpen(true);
+    Animated.spring(drawerAnimation, {
+      toValue: 0,
+      useNativeDriver: true,
+      tension: 80,
+      friction: 8,
+    }).start();
+  };
+
+  const closeDrawer = () => {
+    Animated.spring(drawerAnimation, {
+      toValue: 400,
+      useNativeDriver: true,
+      tension: 80,
+      friction: 8,
+    }).start(() => {
+      setIsDrawerOpen(false);
+    });
+  };
+
+  const onGestureEvent = Animated.event(
+    [{ nativeEvent: { translationY: gestureY } }],
+    { useNativeDriver: true }
+  );
+
+  const onHandlerStateChange = (event: any) => {
+    if (event.nativeEvent.state === State.END) {
+      const { translationY, velocityY } = event.nativeEvent;
+      
+      // Close if dragged down enough or swiped down quickly
+      if (translationY > 100 || velocityY > 500) {
+        closeDrawer();
+      } else {
+        // Snap back to open position
+        openDrawer();
+      }
+      
+      // Reset gesture value
+      gestureY.setValue(0);
+    }
+  };
+
   const onDayPress = (day: DateData) => {
     setSelectedDate(day.dateString);
+    openDrawer();
   };
 
   const onMonthChange = (month: DateData) => {
@@ -281,20 +331,53 @@ export default function CalendarScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.calendarContainer}>
-        <BaseCalendar
-          mode="view"
-          key={calendarKey}
-          current={selectedDate}
-          markedDates={markedDates}
-          onDayPress={onDayPress}
-          onMonthChange={onMonthChange}
-          hideDayNames={true}
-          calendarHeight={410}
-        />
-      </View>
-    </SafeAreaView>
+    <GestureHandlerRootView style={styles.container}>
+      <SafeAreaView style={styles.container}>
+        <View style={styles.calendarContainer}>
+          <BaseCalendar
+            mode="view"
+            key={calendarKey}
+            current={selectedDate}
+            markedDates={markedDates}
+            onDayPress={onDayPress}
+            onMonthChange={onMonthChange}
+            hideDayNames={true}
+            calendarHeight={410}
+          />
+        </View>
+        
+        {isDrawerOpen && (
+          <PanGestureHandler
+            ref={gestureRef}
+            onGestureEvent={onGestureEvent}
+            onHandlerStateChange={onHandlerStateChange}
+          >
+            <Animated.View 
+              style={[
+                styles.bottomDrawer,
+                {
+                  transform: [{
+                    translateY: Animated.add(drawerAnimation, gestureY).interpolate({
+                      inputRange: [0, 400],
+                      outputRange: [0, 400],
+                      extrapolate: 'clamp'
+                    })
+                  }]
+                }
+              ]}
+            >
+              <View style={styles.drawerHandleContainer}>
+                <View style={styles.drawerHandle} />
+              </View>
+              <CycleDetails 
+                selectedDate={selectedDate}
+                cycleDay={cycleDay}
+              />
+            </Animated.View>
+          </PanGestureHandler>
+        )}
+      </SafeAreaView>
+    </GestureHandlerRootView>
   );
 }
 
@@ -306,5 +389,33 @@ const styles = StyleSheet.create({
   calendarContainer: {
     flex: 1,
     paddingTop: 4,
+  },
+  bottomDrawer: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: '#ffffff',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: -2,
+    },
+    shadowOpacity: 0.6,
+    shadowRadius: 3.84,
+    elevation: 5,
+    paddingBottom: 20,
+  },
+  drawerHandleContainer: {
+    paddingVertical: 12,
+    alignItems: 'center',
+  },
+  drawerHandle: {
+    width: 40,
+    height: 4,
+    backgroundColor: '#D1D5DB',
+    borderRadius: 2,
   },
 });
