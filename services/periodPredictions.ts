@@ -145,6 +145,36 @@ export class PeriodPredictionService {
     return 'Low';
   }
 
+  static getPregnancyChanceDescription(chance: string): string {
+    switch (chance) {
+      case 'High':
+        return 'This is your fertile window when conception is most likely to occur. Ovulation typically happens during this time.';
+      case 'Medium':
+        return 'There is a moderate chance of conception during this time as you approach or move away from your fertile window.';
+      case 'Low':
+        return 'Conception is less likely during this time. This includes menstrual days and the later luteal phase of your cycle.';
+      default:
+        return '';
+    }
+  }
+
+  static getPossibleSymptoms(phase: string): string {
+    switch (phase) {
+      case 'Menstrual':
+        return 'Cramps, bloating, fatigue, headaches, mood swings, back pain, breast tenderness, and heavy or light bleeding.';
+      case 'Follicular':
+        return 'Increased energy, improved mood, clearer skin, higher motivation, and generally feeling more positive and active.';
+      case 'Ovulatory':
+        return 'Increased libido, mild pelvic pain, changes in cervical mucus, breast tenderness, and heightened energy levels.';
+      case 'Luteal':
+        return 'PMS symptoms including bloating, mood changes, irritability, food cravings, breast tenderness, fatigue, and acne.';
+      case 'Extended':
+        return 'Irregular symptoms may occur. You might experience fatigue, mood changes, or other cycle-related symptoms.';
+      default:
+        return '';
+    }
+  }
+
   static getCycleInfo(startDate: string, currentDate?: string, cycleLength?: number): CycleInfo {
     const cycleDay = this.getCurrentCycleDay(startDate, currentDate);
     const phase = this.getCyclePhase(cycleDay);

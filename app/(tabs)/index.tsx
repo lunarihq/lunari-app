@@ -401,7 +401,10 @@ export default function Index() {
                 </View>
               </View>
               
-              <View style={[styles.insightCard, styles.cardYellow]}>
+              <Pressable 
+                style={[styles.insightCard, styles.cardYellow]}
+                onPress={() => currentCycleDay && router.push(`/cycle-phase-details?cycleDay=${currentCycleDay}`)}
+              >
                 <View style={styles.insightTop}>
                   <Ionicons name="sync-outline" size={24} color="#332F49" style={styles.insightIcon} />
                   <Text style={styles.insightLabel}>Cycle phase</Text>
@@ -411,7 +414,7 @@ export default function Index() {
                     {currentCycleDay ? getCyclePhase(currentCycleDay) : '-'}
                   </Text>
                 </View>
-              </View>
+              </Pressable>
               
               <View style={[styles.insightCard, styles.cardPink]}>
                 <View style={styles.insightTop}>
