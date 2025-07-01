@@ -518,6 +518,7 @@ const styles = StyleSheet.create({
   },
   drawerHandleContainer: {
     paddingVertical: 12,
+    paddingBottom: 16,
     alignItems: 'center',
   },
   drawerHandle: {

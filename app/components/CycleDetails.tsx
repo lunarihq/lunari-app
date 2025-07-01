@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { SymptomsTracker } from './SymptomsTracker';
 import { PeriodPredictionService } from '../../services/periodPredictions';
+import { formatDateString } from '../types/calendarTypes';
 
 interface CycleDetailsProps {
   selectedDate: string;
@@ -18,6 +19,12 @@ export function CycleDetails({ selectedDate, cycleDay }: CycleDetailsProps) {
     return `${chance.charAt(0).toUpperCase()}${chance.slice(1).toLowerCase()} chance to conceive`;
   };
 
+  // Check if selected date is today or in the past
+  const isDateInPastOrToday = () => {
+    const today = formatDateString(new Date());
+    return selectedDate <= today;
+  };
+
   return (
     <>
       <View style={styles.cycleSummary}>
@@ -29,10 +36,12 @@ export function CycleDetails({ selectedDate, cycleDay }: CycleDetailsProps) {
         )}
       </View>
       
-      <SymptomsTracker 
-        selectedDate={selectedDate} 
-        titleStyle={{ fontSize: 20 }}
-      />
+      {isDateInPastOrToday() && (
+        <SymptomsTracker 
+          selectedDate={selectedDate} 
+          titleStyle={{ fontSize: 20 }}
+        />
+      )}
     </>
   );
 }
