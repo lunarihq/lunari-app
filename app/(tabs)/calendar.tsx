@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { View, StyleSheet, SafeAreaView, ScrollView, Animated, Dimensions, TouchableOpacity, Text } from 'react-native';
 import { PanGestureHandler, State, GestureHandlerRootView } from 'react-native-gesture-handler';
 import { DateData } from 'react-native-calendars';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useLocalSearchParams, router } from 'expo-router';
 import { db } from '../../db';
 import { periodDates } from '../../db/schema';
@@ -27,11 +27,13 @@ export default function CalendarScreen() {
   const [currentMonth, setCurrentMonth] = useState('');
   const [calendarKey, setCalendarKey] = useState(Date.now());
   const [isDrawerOpen, setIsDrawerOpen] = useState(true);
+  const [displayedMonth, setDisplayedMonth] = useState(formatDateString(new Date()));
   const drawerAnimation = useRef(new Animated.Value(0)).current;
   const gestureRef = useRef(null);
   const gestureY = useRef(new Animated.Value(0)).current;
   const buttonAnimation = useRef(new Animated.Value(280)).current;
   const params = useLocalSearchParams();
+  const navigation = useNavigation();
   
   // Check if we should navigate to the period calendar screen from URL params
   useEffect(() => {
@@ -229,6 +231,7 @@ export default function CalendarScreen() {
         // Reset to current date whenever tab is focused
         const today = formatDateString(new Date());
         setSelectedDate(today);
+        setDisplayedMonth(today);
         setCalendarKey(Date.now()); // Force calendar re-render
       };
       reloadData();
@@ -244,6 +247,7 @@ export default function CalendarScreen() {
     // Set initial month display
     const date = new Date(selectedDate);
     setCurrentMonth(`${date.toLocaleString('default', { month: 'long' })} ${date.getFullYear()}`);
+    setDisplayedMonth(selectedDate);
   }, []);
   
   // Update cycle info when selected date changes
@@ -257,6 +261,17 @@ export default function CalendarScreen() {
       setMarkedDates(getMarkedDatesWithSelection(selectedDate));
     }
   }, [baseMarkedDates]);
+
+  // Update header with Today button based on current month
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: isTodayButtonVisible() ? () => (
+        <TouchableOpacity onPress={goToToday}>
+          <Text style={styles.todayButtonText}>Today</Text>
+        </TouchableOpacity>
+      ) : undefined,
+    });
+  }, [displayedMonth, navigation]);
 
   // Handle saving period dates
   const savePeriodDates = async (dates: MarkedDates) => {
@@ -349,6 +364,30 @@ export default function CalendarScreen() {
 
   const onMonthChange = (month: DateData) => {
     setCurrentMonth(`${new Date(month.dateString).toLocaleString('default', { month: 'long' })} ${new Date(month.dateString).getFullYear()}`);
+    setDisplayedMonth(month.dateString);
+  };
+
+  // Function to check if the current displayed month is different from today's month
+  const isTodayButtonVisible = () => {
+    // Extract year and month from today string (YYYY-MM-DD)
+    const todayYear = currentDate.substring(0, 4);
+    const todayMonth = currentDate.substring(5, 7);
+    
+    // Extract year and month from displayedMonth string (YYYY-MM-DD)
+    const currentYear = displayedMonth.substring(0, 4);
+    const currentMonth_ = displayedMonth.substring(5, 7);
+    
+    // Return true if they are different (button should be visible)
+    return todayYear !== currentYear || todayMonth !== currentMonth_;
+  };
+
+  const goToToday = () => {
+    const today = formatDateString(new Date());
+    setSelectedDate(today);
+    setDisplayedMonth(today);
+    setCalendarKey(Date.now()); // Force calendar re-render
+    updateSelectedDateInfo(today);
+    setMarkedDates(getMarkedDatesWithSelection(today));
   };
 
   return (
@@ -424,6 +463,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#ffffff',
+  },
+  todayButtonText: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#4F5FEB',
+    marginRight: 16,
   },
   calendarContainer: {
     flex: 1,
