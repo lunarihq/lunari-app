@@ -10,13 +10,13 @@ interface DashedCircleProps {
   dashCount?: number;
 }
 
-export const DashedCircle: React.FC<DashedCircleProps> = ({
+export default function DashedCircle({
   size,
   strokeWidth = 3,
   strokeColor = '#B8D0FF',
   dashLength = 3,
   dashCount = 120,
-}) => {
+}: DashedCircleProps) {
   const center = size / 2;
   const radius = center - dashLength - 10;
   
@@ -51,4 +51,4 @@ export const DashedCircle: React.FC<DashedCircleProps> = ({
       </Svg>
     </View>
   );
-}; 
+} 

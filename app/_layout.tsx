@@ -11,7 +11,7 @@ export default function RootLayout() {
   const router = useRouter();
   const pathname = usePathname();
   const [initialRender, setInitialRender] = useState(true);
-  const notificationResponseListener = useRef<Notifications.Subscription>();
+  const notificationResponseListener = useRef<Notifications.Subscription | null>(null);
 
   // Initialize notification response listener only (don't request permissions yet)
   useEffect(() => {

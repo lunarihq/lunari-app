@@ -10,7 +10,7 @@ import { NotificationService } from '../../services/notificationService';
 import { validatePeriodDate } from '../../validation/periodData';
 import { Ionicons } from '@expo/vector-icons';
 import theme from '../styles/theme';
-import { DashedCircle } from '../components/DashedCircle';
+import DashedCircle from '../components/DashedCircle';
 
 const getFormattedDate = (date: Date): string => {
   return `Today, ${date.getDate()} ${date.toLocaleDateString('en-US', { month: 'short' })}`;
