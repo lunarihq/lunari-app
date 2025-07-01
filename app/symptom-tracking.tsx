@@ -73,11 +73,7 @@ const generateWeeksData = (): WeekData[] => {
   return weeks;
 };
 
-// Check if a date is in the future
-const isFutureDate = (dateString: string) => {
-  const today = dayjs().format('YYYY-MM-DD');
-  return dateString > today;
-};
+
 
 export default function SymptomTracking() {
   const params = useLocalSearchParams();
@@ -479,8 +475,7 @@ export default function SymptomTracking() {
     }
   };
 
-  // Check if selected date is in the future
-  const isSelectedDateInFuture = isFutureDate(selectedDate);
+
 
   return (
     <View style={theme.globalStyles.container}>
@@ -502,8 +497,7 @@ export default function SymptomTracking() {
         
         <TouchableOpacity 
           onPress={goToNextDay}
-          disabled={isSelectedDateInFuture}
-          style={[styles.headerButton, isSelectedDateInFuture && {opacity: 0.3}]}
+          style={styles.headerButton}
         >
           <Ionicons name="chevron-forward" size={24} color="#333" />
         </TouchableOpacity>
@@ -511,84 +505,74 @@ export default function SymptomTracking() {
 
       <ScrollView style={styles.scrollView}>
 
-        {isSelectedDateInFuture ? (
-          <View style={styles.futureMessageContainer}>
-            <Text style={styles.futureMessageText}>
-              You can't log symtomps for a future date.
-            </Text>
+        {/* Flow */}
+        <View style={styles.section}>
+            <View style={styles.sectionHeader}>
+              <Text style={styles.sectionTitle}>Flow</Text>
+            </View>
+            
+            <View style={styles.itemsGrid}>
+              {flows.map((flow) => (
+                <TouchableOpacity 
+                  key={flow.id} 
+                  style={[styles.itemButton, flow.selected && styles.selectedItemButton]}
+                  onPress={() => toggleFlow(flow.id)}
+                >
+                  <View style={[styles.itemIcon, flow.selected && styles.selectedItemIcon]}>
+                    <Text style={styles.emojiText}>{flow.icon}</Text>
+                  </View>
+                  <Text style={styles.itemText}>{flow.name}</Text>
+                </TouchableOpacity>
+              ))}
+            </View>
           </View>
-        ) : (
-          <>
-          {/* Flow */}
+          {/* Symptoms */}
           <View style={styles.section}>
-              <View style={styles.sectionHeader}>
-                <Text style={styles.sectionTitle}>Flow</Text>
-              </View>
-              
-              <View style={styles.itemsGrid}>
-                {flows.map((flow) => (
-                  <TouchableOpacity 
-                    key={flow.id} 
-                    style={[styles.itemButton, flow.selected && styles.selectedItemButton]}
-                    onPress={() => toggleFlow(flow.id)}
-                  >
-                    <View style={[styles.itemIcon, flow.selected && styles.selectedItemIcon]}>
-                      <Text style={styles.emojiText}>{flow.icon}</Text>
-                    </View>
-                    <Text style={styles.itemText}>{flow.name}</Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
+            <View style={styles.sectionHeader}>
+              <Text style={styles.sectionTitle}>Symptoms</Text>
             </View>
-            {/* Symptoms */}
-            <View style={styles.section}>
-              <View style={styles.sectionHeader}>
-                <Text style={styles.sectionTitle}>Symptoms</Text>
-              </View>
-              
-              <View style={styles.itemsGrid}>
-                {symptoms.map((symptom) => (
-                  <TouchableOpacity 
-                    key={symptom.id} 
-                    style={[styles.itemButton, symptom.selected && styles.selectedItemButton]}
-                    onPress={() => toggleSymptom(symptom.id)}
-                  >
-                    <View style={[styles.itemIcon, symptom.selected && styles.selectedItemIcon]}>
-                      <Text style={styles.emojiText}>{symptom.icon}</Text>
-                    </View>
-                    <Text style={styles.itemText}>{symptom.name}</Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
+            
+            <View style={styles.itemsGrid}>
+              {symptoms.map((symptom) => (
+                <TouchableOpacity 
+                  key={symptom.id} 
+                  style={[styles.itemButton, symptom.selected && styles.selectedItemButton]}
+                  onPress={() => toggleSymptom(symptom.id)}
+                >
+                  <View style={[styles.itemIcon, symptom.selected && styles.selectedItemIcon]}>
+                    <Text style={styles.emojiText}>{symptom.icon}</Text>
+                  </View>
+                  <Text style={styles.itemText}>{symptom.name}</Text>
+                </TouchableOpacity>
+              ))}
             </View>
+          </View>
 
-            {/* Moods */}
-            <View style={styles.section}>
-              <View style={styles.sectionHeader}>
-                <Text style={styles.sectionTitle}>Moods</Text>
-              </View>
-              
-              <View style={styles.itemsGrid}>
-                {moods.map((mood) => (
-                  <TouchableOpacity 
-                    key={mood.id} 
-                    style={[styles.itemButton, mood.selected && styles.selectedItemButton]}
-                    onPress={() => toggleMood(mood.id)}
-                  >
-                    <View style={[styles.itemIcon, mood.selected && styles.selectedItemIcon]}>
-                      <Text style={styles.emojiText}>{mood.icon}</Text>
-                    </View>
-                    <Text style={styles.itemText}>{mood.name}</Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
+          {/* Moods */}
+          <View style={styles.section}>
+            <View style={styles.sectionHeader}>
+              <Text style={styles.sectionTitle}>Moods</Text>
             </View>
-          </>
-        )}
+            
+            <View style={styles.itemsGrid}>
+              {moods.map((mood) => (
+                <TouchableOpacity 
+                  key={mood.id} 
+                  style={[styles.itemButton, mood.selected && styles.selectedItemButton]}
+                  onPress={() => toggleMood(mood.id)}
+                >
+                  <View style={[styles.itemIcon, mood.selected && styles.selectedItemIcon]}>
+                    <Text style={styles.emojiText}>{mood.icon}</Text>
+                  </View>
+                  <Text style={styles.itemText}>{mood.name}</Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </View>
       </ScrollView>
 
-      {/* Save button that appears only when changes are made and not a future date */}
-      {hasChanges && !isSelectedDateInFuture && (
+      {/* Save button that appears only when changes are made */}
+      {hasChanges && (
         <TouchableOpacity 
           style={styles.saveButton} 
           onPress={saveChanges}
@@ -621,22 +605,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 16,
   },
-  futureMessageContainer: {
-    backgroundColor: '#fff',
-    borderRadius: 16,
-    marginHorizontal: 16,
-    marginTop: 20,
-    padding: 24,
-    alignItems: 'center',
-    justifyContent: 'center',
-    minHeight: 200,
-  },
-  futureMessageText: {
-    fontSize: 18,
-    fontWeight: '500',
-    color: '#FF597B',
-    textAlign: 'center',
-  },
+
   section: {
     backgroundColor: '#fff',
     borderRadius: 16,
