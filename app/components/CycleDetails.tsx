@@ -39,8 +39,8 @@ export function CycleDetails({ selectedDate, cycleDay }: CycleDetailsProps) {
 
 const styles = StyleSheet.create({
   cycleSummary: {
-    paddingTop: 20,
-    paddingBottom: 12,
+    paddingTop: 6,
+    paddingBottom: 8,
     paddingHorizontal: 16,
   },
   cycleSummaryTitle: {

@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 12,
     padding: 16,
-    marginBottom: 16,
+    marginBottom: 8,
   },
   symptomsText: {
     fontSize: 22,
@@ -150,9 +150,9 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   itemIconContainer: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
+    width: 54,
+    height: 54,
+    borderRadius: 27,
     backgroundColor: '#F9F8D5',
     justifyContent: 'center',
     alignItems: 'center',
