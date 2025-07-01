@@ -125,7 +125,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 12,
     padding: 16,
-    marginBottom: 8,
   },
   symptomsText: {
     fontSize: 22,

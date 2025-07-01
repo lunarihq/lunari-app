@@ -444,12 +444,11 @@ export default function CalendarScreen() {
                 }
               ]}
             >
-              <View style={styles.drawerHandleContainer}>
-                <View style={styles.drawerHandle} />
-              </View>
+
               <CycleDetails 
                 selectedDate={selectedDate}
                 cycleDay={cycleDay}
+                onClose={closeDrawer}
               />
             </Animated.View>
           </PanGestureHandler>
@@ -507,6 +506,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
+    paddingVertical: 16,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -516,15 +516,5 @@ const styles = StyleSheet.create({
     shadowRadius: 20,
     elevation: 15,
   },
-  drawerHandleContainer: {
-    paddingVertical: 12,
-    paddingBottom: 16,
-    alignItems: 'center',
-  },
-  drawerHandle: {
-    width: 40,
-    height: 4,
-    backgroundColor: '#D1D5DB',
-    borderRadius: 2,
-  },
+
 });

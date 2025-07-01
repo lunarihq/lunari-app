@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { SymptomsTracker } from './SymptomsTracker';
 import { PeriodPredictionService } from '../../services/periodPredictions';
 import { formatDateString } from '../types/calendarTypes';
@@ -7,9 +8,10 @@ import { formatDateString } from '../types/calendarTypes';
 interface CycleDetailsProps {
   selectedDate: string;
   cycleDay: number | null;
+  onClose?: () => void;
 }
 
-export function CycleDetails({ selectedDate, cycleDay }: CycleDetailsProps) {
+export function CycleDetails({ selectedDate, cycleDay, onClose }: CycleDetailsProps) {
   const selectedDateFormatted = selectedDate ? 
     new Date(selectedDate).toLocaleDateString('en-US', { day: 'numeric', month: 'long' }) : '';
 
@@ -28,12 +30,21 @@ export function CycleDetails({ selectedDate, cycleDay }: CycleDetailsProps) {
   return (
     <>
       <View style={styles.cycleSummary}>
-        <Text style={styles.cycleSummaryTitle}>
-          {selectedDateFormatted}{cycleDay ? ` • Cycle day ${cycleDay}` : ''}
-        </Text>
-        {cycleDay && (
-          <Text style={styles.conceptionChance}>{getConceptionChance()}</Text>
-        )}
+        <View style={styles.headerRow}>
+          <View style={styles.titleContainer}>
+            <Text style={styles.cycleSummaryTitle}>
+              {selectedDateFormatted}{cycleDay ? ` • Cycle day ${cycleDay}` : ''}
+            </Text>
+            {cycleDay && (
+              <Text style={styles.conceptionChance}>{getConceptionChance()}</Text>
+            )}
+          </View>
+          {onClose && (
+            <TouchableOpacity onPress={onClose} style={styles.closeButton}>
+              <Ionicons name="close" size={28} color="#878595" />
+            </TouchableOpacity>
+          )}
+        </View>
       </View>
       
       {isDateInPastOrToday() && (
@@ -52,6 +63,14 @@ const styles = StyleSheet.create({
     paddingBottom: 8,
     paddingHorizontal: 16,
   },
+  headerRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+  },
+  titleContainer: {
+    flex: 1,
+  },
   cycleSummaryTitle: {
     fontSize: 23,
     fontWeight: 'bold',
@@ -61,6 +80,10 @@ const styles = StyleSheet.create({
   conceptionChance: {
     fontSize: 16,
     color: '#878595',
+  },
+  closeButton: {
+    padding: 8,
+    marginTop: -4,
   },
 }); 
 
