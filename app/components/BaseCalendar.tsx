@@ -231,6 +231,13 @@ export function BaseCalendar({
               alignItems: 'center',
               justifyContent: 'center',
             }
+          },
+          'stylesheet.calendar.main': {
+            container: {
+              borderBottomWidth: 1,
+              borderBottomColor: '#E9F0FF',
+              paddingBottom: 2,
+            }
           }
         }}
       />
