@@ -385,11 +385,24 @@ export default function Index() {
         <View style={styles.insightsCard}>
           <View style={styles.insightsTitleContainer}>
             <Text style={styles.insightsTitle}>Today's insights</Text>
-            <Ionicons name="chevron-forward" size={24} color="#332F49" />
+            <Pressable
+              onPress={() => currentCycleDay && router.push(`/cycle-phase-details?cycleDay=${currentCycleDay}`)}
+              disabled={!currentCycleDay}
+              style={[styles.chevronButton, !currentCycleDay && styles.chevronDisabled]}
+            >
+              <Ionicons 
+                name="chevron-forward" 
+                size={24} 
+                color={currentCycleDay ? "#332F49" : "#B0B0B0"} 
+              />
+            </Pressable>
           </View>
           {currentCycleDay ? (
             <View style={styles.insightsRow}>
-              <View style={[styles.insightCard, styles.cardBlue]}>
+              <Pressable 
+                style={[styles.insightCard, styles.cardBlue]}
+                onPress={() => currentCycleDay && router.push(`/cycle-phase-details?cycleDay=${currentCycleDay}`)}
+              >
                 <View style={styles.insightTop}>
                   <Ionicons name="calendar-outline" size={24} color="#332F49" style={styles.insightIcon} />
                   <Text style={styles.insightLabel}>Cycle day</Text>
@@ -399,7 +412,7 @@ export default function Index() {
                     {currentCycleDay || '-'}
                   </Text>
                 </View>
-              </View>
+              </Pressable>
               
               <Pressable 
                 style={[styles.insightCard, styles.cardYellow]}
@@ -416,7 +429,10 @@ export default function Index() {
                 </View>
               </Pressable>
               
-              <View style={[styles.insightCard, styles.cardPink]}>
+              <Pressable 
+                style={[styles.insightCard, styles.cardPink]}
+                onPress={() => currentCycleDay && router.push(`/cycle-phase-details?cycleDay=${currentCycleDay}`)}
+              >
                 <View style={styles.insightTop}>
                   <Ionicons name="leaf-outline" size={24} color="#332F49" style={styles.insightIcon} />
                   <Text style={styles.insightLabel}>Chance to</Text>
@@ -427,7 +443,7 @@ export default function Index() {
                     {currentCycleDay ? getPregnancyChance(currentCycleDay) : '-'}
                   </Text>
                 </View>
-              </View>
+              </Pressable>
             </View>
           ) : (
             <Text style={styles.insightsText}>
@@ -538,5 +554,12 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: '#332F49',
     marginBottom: 24,
+  },
+  chevronButton: {
+    padding: 4,
+    borderRadius: 4,
+  },
+  chevronDisabled: {
+    opacity: 0.5,
   },
 });

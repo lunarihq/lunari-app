@@ -91,6 +91,7 @@ export default function SymptomTracking() {
   // Track original state to detect changes
   const [originalSymptoms, setOriginalSymptoms] = useState<string[]>([]);
   const [originalMoods, setOriginalMoods] = useState<string[]>([]);
+  const [originalFlows, setOriginalFlows] = useState<string[]>([]);
   const [hasChanges, setHasChanges] = useState<boolean>(false);
   
   const flatListRef = useRef<FlatList>(null);
@@ -241,6 +242,34 @@ export default function SymptomTracking() {
     
   ]);
 
+  // Flows data
+  const [flows, setFlows] = useState<Item[]>([
+    { 
+      id: '1', 
+      icon: '💧',
+      name: 'Light', 
+      selected: false 
+    },
+    { 
+      id: '2', 
+      icon: '💧',
+      name: 'Medium', 
+      selected: false 
+    },
+    { 
+      id: '3', 
+      icon: '💧',
+      name: 'Heavy', 
+      selected: false 
+    },
+    { 
+      id: '4', 
+      icon: '💧',
+      name: 'Blood clots', 
+      selected: false 
+    },
+  ]);
+
   // Load existing health logs when the component mounts or selected date changes
   useEffect(() => {
     const loadExistingHealthLogs = async () => {
@@ -252,6 +281,7 @@ export default function SymptomTracking() {
         // Create sets for quick lookup
         const symptomIds = new Set();
         const moodIds = new Set();
+        const flowIds = new Set();
         
         // Populate the sets
         existingEntries.forEach(entry => {
@@ -259,6 +289,8 @@ export default function SymptomTracking() {
             symptomIds.add(entry.item_id);
           } else if (entry.type === 'mood') {
             moodIds.add(entry.item_id);
+          } else if (entry.type === 'flow') {
+            flowIds.add(entry.item_id);
           }
         });
         
@@ -278,12 +310,21 @@ export default function SymptomTracking() {
           }))
         );
         
+        // Update flows state
+        setFlows(prevFlows => 
+          prevFlows.map(flow => ({
+            ...flow,
+            selected: flowIds.has(flow.id)
+          }))
+        );
+        
         // Store original state for comparison
         setOriginalSymptoms(Array.from(symptomIds) as string[]);
         setOriginalMoods(Array.from(moodIds) as string[]);
+        setOriginalFlows(Array.from(flowIds) as string[]);
         setHasChanges(false);
         
-        console.log(`Loaded ${symptomIds.size} symptoms and ${moodIds.size} moods for ${selectedDate}`);
+        console.log(`Loaded ${symptomIds.size} symptoms, ${moodIds.size} moods, and ${flowIds.size} flows for ${selectedDate}`);
       } catch (error) {
         console.error('Error loading health logs:', error);
       }
@@ -304,6 +345,11 @@ export default function SymptomTracking() {
       .filter(m => m.selected)
       .map(m => m.id);
     
+    // Get current selected flow IDs
+    const currentSelectedFlows = flows
+      .filter(f => f.selected)
+      .map(f => f.id);
+    
     // Check if the selections have changed
     const symptomsChanged = !(
       currentSelectedSymptoms.length === originalSymptoms.length &&
@@ -315,8 +361,13 @@ export default function SymptomTracking() {
       currentSelectedMoods.every(id => originalMoods.includes(id))
     );
     
-    setHasChanges(symptomsChanged || moodsChanged);
-  }, [symptoms, moods, originalSymptoms, originalMoods]);
+    const flowsChanged = !(
+      currentSelectedFlows.length === originalFlows.length &&
+      currentSelectedFlows.every(id => originalFlows.includes(id))
+    );
+    
+    setHasChanges(symptomsChanged || moodsChanged || flowsChanged);
+  }, [symptoms, moods, flows, originalSymptoms, originalMoods, originalFlows]);
 
   // Toggle symptom selection
   const toggleSymptom = (id: string) => {
@@ -332,12 +383,20 @@ export default function SymptomTracking() {
     ));
   };
 
+  // Toggle flow selection
+  const toggleFlow = (id: string) => {
+    setFlows(flows.map(flow => 
+      flow.id === id ? { ...flow, selected: !flow.selected } : flow
+    ));
+  };
+
   // Save changes
   const saveChanges = async () => {
     try {
       // Get all selected symptoms and moods
       const selectedSymptoms = symptoms.filter(s => s.selected);
       const selectedMoods = moods.filter(m => m.selected);
+      const selectedFlows = flows.filter(f => f.selected);
       
       // STEP 1: Delete ALL existing entries for this date
       await db.delete(healthLogs)
@@ -387,15 +446,33 @@ export default function SymptomTracking() {
         };
       });
       
-      // STEP 4: Combine all records to insert
-      const allRecords = [...symptomRecords, ...moodRecords];
+      // STEP 4: Prepare flow records
+      const flowRecords = selectedFlows.map(flow => {
+        // Get the emoji as string
+        const emoji = String(flow.icon);
+        
+        // Use a standard color for all flows
+        const iconColor = '#FF597B';
+        
+        return {
+          date: selectedDate,
+          type: 'flow',
+          item_id: flow.id,
+          name: flow.name,
+          icon: emoji,
+          icon_color: iconColor
+        };
+      });
       
-      // STEP 5: Insert new records (only if there are any)
+      // STEP 5: Combine all records to insert
+      const allRecords = [...symptomRecords, ...moodRecords, ...flowRecords];
+      
+      // STEP 6: Insert new records (only if there are any)
       if (allRecords.length > 0) {
         await db.insert(healthLogs).values(allRecords);
       }
       
-      // STEP 6: Navigate back
+      // STEP 7: Navigate back
       router.back();
     } catch (error) {
       console.error('Error saving health logs:', error);
@@ -433,6 +510,7 @@ export default function SymptomTracking() {
       </View>
 
       <ScrollView style={styles.scrollView}>
+
         {isSelectedDateInFuture ? (
           <View style={styles.futureMessageContainer}>
             <Text style={styles.futureMessageText}>
@@ -441,6 +519,27 @@ export default function SymptomTracking() {
           </View>
         ) : (
           <>
+          {/* Flow */}
+          <View style={styles.section}>
+              <View style={styles.sectionHeader}>
+                <Text style={styles.sectionTitle}>Flow</Text>
+              </View>
+              
+              <View style={styles.itemsGrid}>
+                {flows.map((flow) => (
+                  <TouchableOpacity 
+                    key={flow.id} 
+                    style={[styles.itemButton, flow.selected && styles.selectedItemButton]}
+                    onPress={() => toggleFlow(flow.id)}
+                  >
+                    <View style={[styles.itemIcon, flow.selected && styles.selectedItemIcon]}>
+                      <Text style={styles.emojiText}>{flow.icon}</Text>
+                    </View>
+                    <Text style={styles.itemText}>{flow.name}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </View>
             {/* Symptoms */}
             <View style={styles.section}>
               <View style={styles.sectionHeader}>
@@ -570,9 +669,9 @@ const styles = StyleSheet.create({
     opacity: 1,
   },
   itemIcon: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
+    width: 56,
+    height: 56,
+    borderRadius: 30,
     backgroundColor: '#F9F8D5',
     justifyContent: 'center',
     alignItems: 'center',
@@ -589,7 +688,7 @@ const styles = StyleSheet.create({
     color: '#666',
   },
   emojiText: {
-    fontSize: 24,
+    fontSize: 28,
   },
   saveButton: {
     position: 'absolute',
