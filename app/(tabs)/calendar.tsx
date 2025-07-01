@@ -304,7 +304,7 @@ export default function CalendarScreen() {
         friction: 8,
       }),
       Animated.spring(buttonAnimation, {
-        toValue: 100,
+        toValue: 20,
         useNativeDriver: false,
         tension: 80,
         friction: 8,
@@ -431,15 +431,14 @@ const styles = StyleSheet.create({
   },
   floatingButton: {
     position: 'absolute',
-    left: 16,
-    right: 16,
+    alignSelf: 'center',
     zIndex: 999,
   },
   floatingButtonTouchable: {
     backgroundColor: '#FF597B',
-    borderRadius: 12,
-    paddingVertical: 16,
-    paddingHorizontal: 24,
+    borderRadius: 80,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
