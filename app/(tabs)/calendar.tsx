@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { View, StyleSheet, SafeAreaView, ScrollView, Animated, Dimensions } from 'react-native';
+import { View, StyleSheet, SafeAreaView, ScrollView, Animated, Dimensions, TouchableOpacity, Text } from 'react-native';
 import { PanGestureHandler, State, GestureHandlerRootView } from 'react-native-gesture-handler';
 import { DateData } from 'react-native-calendars';
 import { useFocusEffect } from '@react-navigation/native';
@@ -30,6 +30,7 @@ export default function CalendarScreen() {
   const drawerAnimation = useRef(new Animated.Value(0)).current;
   const gestureRef = useRef(null);
   const gestureY = useRef(new Animated.Value(0)).current;
+  const buttonAnimation = useRef(new Animated.Value(280)).current;
   const params = useLocalSearchParams();
   
   // Check if we should navigate to the period calendar screen from URL params
@@ -278,21 +279,37 @@ export default function CalendarScreen() {
 
   const openDrawer = () => {
     setIsDrawerOpen(true);
-    Animated.spring(drawerAnimation, {
-      toValue: 0,
-      useNativeDriver: true,
-      tension: 80,
-      friction: 8,
-    }).start();
+    Animated.parallel([
+      Animated.spring(drawerAnimation, {
+        toValue: 0,
+        useNativeDriver: true,
+        tension: 80,
+        friction: 8,
+      }),
+      Animated.spring(buttonAnimation, {
+        toValue: 280,
+        useNativeDriver: false,
+        tension: 80,
+        friction: 8,
+      })
+    ]).start();
   };
 
   const closeDrawer = () => {
-    Animated.spring(drawerAnimation, {
-      toValue: 400,
-      useNativeDriver: true,
-      tension: 80,
-      friction: 8,
-    }).start(() => {
+    Animated.parallel([
+      Animated.spring(drawerAnimation, {
+        toValue: 400,
+        useNativeDriver: true,
+        tension: 80,
+        friction: 8,
+      }),
+      Animated.spring(buttonAnimation, {
+        toValue: 100,
+        useNativeDriver: false,
+        tension: 80,
+        friction: 8,
+      })
+    ]).start(() => {
       setIsDrawerOpen(false);
     });
   };
@@ -350,6 +367,24 @@ export default function CalendarScreen() {
           />
         </View>
         
+        {/* Floating Action Button */}
+        <Animated.View 
+          style={[
+            styles.floatingButton,
+            {
+              bottom: buttonAnimation
+            }
+          ]}
+        >
+          <TouchableOpacity 
+            onPress={() => router.push('/period-calendar')}
+            activeOpacity={0.8}
+            style={styles.floatingButtonTouchable}
+          >
+            <Text style={styles.floatingButtonText}>Edit period dates</Text>
+          </TouchableOpacity>
+        </Animated.View>
+        
         {isDrawerOpen && (
           <PanGestureHandler
             ref={gestureRef}
@@ -393,6 +428,32 @@ const styles = StyleSheet.create({
   calendarContainer: {
     flex: 1,
     paddingTop: 4,
+  },
+  floatingButton: {
+    position: 'absolute',
+    left: 16,
+    right: 16,
+    zIndex: 999,
+  },
+  floatingButtonTouchable: {
+    backgroundColor: '#FF597B',
+    borderRadius: 12,
+    paddingVertical: 16,
+    paddingHorizontal: 24,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 8,
+  },
+  floatingButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '600',
   },
   bottomDrawer: {
     position: 'absolute',
