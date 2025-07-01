@@ -43,16 +43,6 @@ export default function TabLayout() {
           headerStyle: {
             backgroundColor: '#ffffff',
           },
-          headerRight: () => (
-            <TouchableOpacity 
-              onPress={() => router.push('/period-calendar')}
-              style={{ marginRight: 16 }}
-            >
-              <Text style={{ color: '#4561D2', fontSize: 16, fontWeight: '500' }}>
-                Edit period dates
-              </Text>
-            </TouchableOpacity>
-          ),
           tabBarLabel: "Calendar",
           tabBarIcon: ({ color, focused }) => (
             <Ionicons name={focused ? 'calendar' : 'calendar-outline'} color={color} size={24}/>
