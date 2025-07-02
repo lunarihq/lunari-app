@@ -233,10 +233,17 @@ export default function CalendarScreen() {
         setSelectedDate(today);
         setDisplayedMonth(today);
         setCalendarKey(Date.now()); // Force calendar re-render
+        
+        // Reset button position immediately if drawer is open
+        if (isDrawerOpen) {
+          const isDateInPastOrToday = today <= currentDate;
+          const buttonPosition = isDateInPastOrToday ? 275 : 120;
+          buttonAnimation.setValue(buttonPosition);
+        }
       };
       reloadData();
       return () => {};
-    }, [])
+    }, [isDrawerOpen, currentDate])
   );
 
   // Initial load
@@ -292,8 +299,14 @@ export default function CalendarScreen() {
     }
   };
 
-  const openDrawer = () => {
+  const openDrawer = (dateToUse?: string) => {
     setIsDrawerOpen(true);
+    
+    // Use provided date or fall back to current selectedDate
+    const dateForComparison = dateToUse || selectedDate;
+    const isDateInPastOrToday = dateForComparison <= currentDate;
+    const buttonPosition = isDateInPastOrToday ? 275 : 120;
+    
     Animated.parallel([
       Animated.spring(drawerAnimation, {
         toValue: 0,
@@ -302,7 +315,7 @@ export default function CalendarScreen() {
         friction: 8,
       }),
       Animated.spring(buttonAnimation, {
-        toValue: 280,
+        toValue: buttonPosition,
         useNativeDriver: false,
         tension: 80,
         friction: 8,
@@ -359,7 +372,7 @@ export default function CalendarScreen() {
     setCycleDay(calculateCycleDay(newDate));
     setMarkedDates(getMarkedDatesWithSelection(newDate));
     
-    openDrawer();
+    openDrawer(newDate);
   };
 
   const onMonthChange = (month: DateData) => {
