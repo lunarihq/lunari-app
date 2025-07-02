@@ -124,6 +124,9 @@ export function BaseCalendar({
             {date ? date.day : ''}
           </Text>
         </TouchableOpacity>
+        {isToday && (
+          <Text style={styles.todayLabel}>Today</Text>
+        )}
       </View>
     );
   };
@@ -249,9 +252,17 @@ export function BaseCalendar({
 const styles = StyleSheet.create({
   dayContainer: {
     alignItems: 'center',
-    justifyContent: 'center',
-    width: 32,
-    height: 45,
+    justifyContent: 'flex-start',
+    width: 40,
+    height: 52,
+    flexDirection: 'column',
+  },
+
+  todayLabel: {
+    fontSize: 11,
+    color: '#4E5166',
+    marginTop: 2,
+    textAlign: 'center',
   },
   dayButton: {
     width: 32,
@@ -274,7 +285,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   todayDayButton: {
-    backgroundColor: '#e6e6e6',
+    backgroundColor: '#DDE3F2',
   },
   selectedDay: {
     backgroundColor: '#FFEAEE',
