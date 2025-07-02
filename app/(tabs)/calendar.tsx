@@ -128,11 +128,8 @@ export default function CalendarScreen() {
           allMarkedDates[predictedDayString] = {
             customStyles: {
               container: {
-                borderWidth: 1.5,
                 borderRadius: 16,
-                borderStyle: 'dashed',
-                borderColor: '#FF597B',
-                backgroundColor: 'transparent',
+                backgroundColor: '#FFE7EC',
               },
               text: {
                 color: '#FF597B'
@@ -237,7 +234,7 @@ export default function CalendarScreen() {
         // Reset button position immediately if drawer is open
         if (isDrawerOpen) {
           const isDateInPastOrToday = today <= currentDate;
-          const buttonPosition = isDateInPastOrToday ? 275 : 120;
+          const buttonPosition = isDateInPastOrToday ? 280 : 120;
           buttonAnimation.setValue(buttonPosition);
         }
       };
@@ -305,7 +302,7 @@ export default function CalendarScreen() {
     // Use provided date or fall back to current selectedDate
     const dateForComparison = dateToUse || selectedDate;
     const isDateInPastOrToday = dateForComparison <= currentDate;
-    const buttonPosition = isDateInPastOrToday ? 275 : 120;
+    const buttonPosition = isDateInPastOrToday ? 280 : 120;
     
     Animated.parallel([
       Animated.spring(drawerAnimation, {
