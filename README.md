@@ -1,6 +1,8 @@
 # Lunari
 A private-first period tracking app designed to be a delight to use whilst preserving the users’ privacy by using local-only data storage. 
 
+<img width="1116" height="711" alt="lunari-thumbnail" src="https://github.com/user-attachments/assets/6930cc7d-a914-4433-91b8-58f464442200" />
+
 # 💡 Features
 * Period and ovulation tracking and statistics.
 * Symptoms and moods tracking.
@@ -32,7 +34,7 @@ Accessibility & Compliance
 * Color Vision Deficiency Support - Protanopia, Deuteranopia, Tritanopia
 * Multiple Indication Methods - Color + Icon + Text patterns
 
-<img width="1116" height="711" alt="lunari-thumbnail" src="https://github.com/user-attachments/assets/6930cc7d-a914-4433-91b8-58f464442200" />
+
 
 
 
