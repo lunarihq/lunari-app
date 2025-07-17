@@ -32,4 +32,7 @@ Accessibility & Compliance
 * Color Vision Deficiency Support - Protanopia, Deuteranopia, Tritanopia
 * Multiple Indication Methods - Color + Icon + Text patterns
 
+<img width="1116" height="711" alt="lunari-thumbnail" src="https://github.com/user-attachments/assets/6930cc7d-a914-4433-91b8-58f464442200" />
+
+
 
