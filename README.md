@@ -3,7 +3,7 @@ A private-first period tracking app designed to be a delight to use whilst prese
 
 <img width="1116" height="711" alt="lunari-thumbnail" src="https://github.com/user-attachments/assets/6930cc7d-a914-4433-91b8-58f464442200" />
 
-# 💡 Features
+# ⚙️ Features
 * Period and ovulation tracking and statistics.
 * Symptoms and moods tracking.
 * Cycle prediction with average period calculation.
