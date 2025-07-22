@@ -56,36 +56,32 @@ export default function PeriodCalendarScreen() {
   };
 
   const onDayPress = (day: DateData) => {
-    // Check if date is in the future and return if it is
     const selectedDate = new Date(day.dateString);
     const todayDate = new Date(today);
-    if (selectedDate > todayDate) {
-      return; // Exit early if future date
-    }
-
+    
     const updatedDates = { ...tempDates };
 
-    // Normal behavior for today and past dates
+    // Check if this would be an auto-selection (no adjacent dates before it)
+    const prevDay = new Date(day.dateString);
+    prevDay.setDate(prevDay.getDate() - 1);
+    const prevDayString = formatDateString(prevDay);
+    const wouldBeAutoSelection = !updatedDates[prevDayString];
+
+    // Block future dates only for individual selection (not auto-selection)
+    if (selectedDate > todayDate && !wouldBeAutoSelection) {
+      return; // Exit early if future date and not auto-selection
+    }
+
+    // Normal behavior for today and past dates, or auto-selection including future
     if (updatedDates[day.dateString]) {
       delete updatedDates[day.dateString];
     } else {
-      // Check if this is a new period start (no adjacent dates before it)
-      const prevDay = new Date(day.dateString);
-      prevDay.setDate(prevDay.getDate() - 1);
-      const prevDayString = formatDateString(prevDay);
-      
-      if (!updatedDates[prevDayString]) {
-        // Auto-select 5 days, but don't include future dates
+      if (wouldBeAutoSelection) {
+        // Auto-select 5 days, including future dates when starting from today/past
         const dateRange = generateDateRange(day.dateString, 5);
         
-        // Filter out future dates from the range
-        const filteredDateRange = dateRange.filter(dateString => {
-          const rangeDate = new Date(dateString);
-          return rangeDate <= todayDate;
-        });
-        
-        // Apply selection to all days in filtered range
-        filteredDateRange.forEach(dateString => {
+        // Apply selection to all days in range (including future dates for auto-selection)
+        dateRange.forEach(dateString => {
           updatedDates[dateString] = DEFAULT_SELECTED_STYLE;
         });
       } else {
