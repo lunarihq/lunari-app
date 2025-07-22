@@ -167,38 +167,44 @@ export default function PeriodCalendarScreen() {
     const isPeriodDay = customMarking?.customStyles?.container?.backgroundColor === '#FF597B';
     
     return (
-      <TouchableOpacity 
-        style={styles.customDayContainer}
-        onPress={() => date ? onDayPress(date) : null}
-        disabled={isDisabled}
-      >
-        {/* Day number */}
-        <Text style={[
-          styles.customDayText,
-          isToday ? styles.todayText : null,
-          isDisabled ? styles.disabledDayText : null,
-          isSelected ? styles.selectedDayText : null,
-        ]}>
-          {date ? date.day : ''}
-        </Text>
-        
-        {/* Day indicator - always render a circle */}
-        <View style={[
-          styles.dayIndicator,
-          isSelected ? styles.selectedDayIndicator : null,
-          isToday ? styles.todayIndicator : null,
-          isFuture ? styles.futureDayIndicator : null,
-        ]}>
-          {isSelected && !isFuture && (
-            <Ionicons 
-              name="checkmark" 
-              size={14} 
-              color="#FFFFFF" 
-              style={styles.checkmark} 
-            />
-          )}
-        </View>
-      </TouchableOpacity>
+      <View style={styles.customDayWrapper}>
+        <TouchableOpacity 
+          style={styles.customDayContainer}
+          onPress={() => date ? onDayPress(date) : null}
+          disabled={isDisabled}
+        >
+          {/* Day number */}
+          <Text style={[
+            styles.customDayText,
+            isToday ? styles.todayText : null,
+            isDisabled ? styles.disabledDayText : null,
+            isSelected ? styles.selectedDayText : null,
+          ]}>
+            {date ? date.day : ''}
+          </Text>
+          
+          {/* Day indicator - always render a circle */}
+          <View style={[
+            styles.dayIndicator,
+            isSelected ? styles.selectedDayIndicator : null,
+            isToday ? styles.todayIndicator : null,
+            isFuture ? styles.futureDayIndicator : null,
+          ]}>
+            {isSelected && !isFuture && (
+              <Ionicons 
+                name="checkmark" 
+                size={14} 
+                color="#FFFFFF" 
+                style={styles.checkmark} 
+              />
+            )}
+          </View>
+        </TouchableOpacity>
+        {/* Today label */}
+        {isToday && (
+          <Text style={styles.todayLabel}>Today</Text>
+        )}
+      </View>
     );
   };
 
@@ -263,19 +269,19 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
     paddingHorizontal: 20,
-    paddingVertical: 15,
-    paddingTop: 65, // Extra padding at top for status bar, like in symptom-tracking.tsx
-    backgroundColor: '#ffffff',
+    paddingVertical: 20,
+    paddingTop: 70, // Extra padding at top for status bar, like in symptom-tracking.tsx
+    backgroundColor: 'blue',
   },
   headerTitle: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#000',
+    color: '#332F49',
   },
   calendarContainer: {
     flex: 1,
+    backgroundColor: 'red',
   },
   footer: {
     flexDirection: 'row',
@@ -316,12 +322,20 @@ const styles = StyleSheet.create({
     color: '#4F5FEB',
   },
   // Custom day styles
+  customDayWrapper: {
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    width: 40,
+    height: 55,
+    flexDirection: 'column',
+    marginBottom: 6,
+    backgroundColor: 'green',
+  },
   customDayContainer: {
     alignItems: 'center',
     justifyContent: 'flex-start',
     width: 32,
-    height: 55,
-    marginBottom: 6,
+    height: 32,
   },
   customDayText: {
     fontSize: DAY_FONT_SIZE,
@@ -359,5 +373,11 @@ const styles = StyleSheet.create({
   },
   futureDayIndicator: {
     borderWidth: 1,
+  },
+  todayLabel: {
+    fontSize: 11,
+    color: '#4E5166',
+    marginTop: 20,
+    textAlign: 'center',
   },
 }); 
