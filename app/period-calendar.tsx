@@ -192,8 +192,8 @@ export default function PeriodCalendarScreen() {
           ]}>
             {isSelected && !isFuture && (
               <Ionicons 
-                name="checkmark" 
-                size={14} 
+                name="checkmark-sharp" 
+                size={16} 
                 color="#FFFFFF" 
                 style={styles.checkmark} 
               />
@@ -238,7 +238,7 @@ export default function PeriodCalendarScreen() {
             hideDayNames={true}
             futureScrollRange={1}
             pastScrollRange={12}
-            calendarHeight={500}
+            calendarHeight={505}
           />
 
       </View>
@@ -272,7 +272,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 20,
     paddingTop: 70, // Extra padding at top for status bar, like in symptom-tracking.tsx
-    backgroundColor: 'blue',
+    backgroundColor: '#ffffff',
   },
   headerTitle: {
     fontSize: 18,
@@ -329,7 +329,6 @@ const styles = StyleSheet.create({
     height: 55,
     flexDirection: 'column',
     marginBottom: 6,
-    backgroundColor: 'green',
   },
   customDayContainer: {
     alignItems: 'center',

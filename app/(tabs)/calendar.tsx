@@ -399,7 +399,7 @@ export default function CalendarScreen() {
             onDayPress={onDayPress}
             onMonthChange={onMonthChange}
             hideDayNames={true}
-            calendarHeight={450}
+            calendarHeight={505}
           />
         </View>
         
