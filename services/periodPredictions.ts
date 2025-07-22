@@ -18,14 +18,14 @@ interface CycleInfo {
 }
 
 export class PeriodPredictionService {
-  static getAverageCycleLength(dates: string[]): number {
-    if (dates.length < 2) return 28;
+  // Utility function to group consecutive dates into periods
+  static groupDateIntoPeriods(dates: string[]): string[][] {
+    if (dates.length === 0) return [];
     
     const sortedDates = dates.sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
     const periods: string[][] = [];
     let currentPeriod: string[] = [sortedDates[0]];
 
-    // Group consecutive days into periods
     for (let i = 1; i < sortedDates.length; i++) {
       const dayDiff = Math.abs((new Date(sortedDates[i]).getTime() - new Date(sortedDates[i-1]).getTime()) / (1000 * 60 * 60 * 24));
       if (dayDiff <= 7) {
@@ -36,6 +36,13 @@ export class PeriodPredictionService {
       }
     }
     periods.push(currentPeriod);
+    return periods;
+  }
+
+  static getAverageCycleLength(dates: string[]): number {
+    if (dates.length < 2) return 28;
+    
+    const periods = this.groupDateIntoPeriods(dates);
 
     // Calculate weighted average
     let weightedTotal = 0;
@@ -58,6 +65,33 @@ export class PeriodPredictionService {
     }
     
     return cycles > 0 ? Math.round(weightedTotal / weightSum) : 28;
+  }
+
+  // Calculate if today is a period day and which day it is
+  static calculatePeriodDay(periodDates: { [date: string]: any }): { isPeriodDay: boolean; dayNumber: number } {
+    const todayStr = new Date().toISOString().split('T')[0];
+    
+    if (!periodDates[todayStr]) {
+      return { isPeriodDay: false, dayNumber: 0 };
+    }
+
+    // It's a period day, calculate which day it is
+    let dayCount = 1;
+    const tempDate = new Date(todayStr);
+    
+    // Look back day by day to find consecutive period days
+    while (true) {
+      tempDate.setDate(tempDate.getDate() - 1);
+      const prevDateStr = tempDate.toISOString().split('T')[0];
+      
+      if (periodDates[prevDateStr]) {
+        dayCount++;
+      } else {
+        break;
+      }
+    }
+    
+    return { isPeriodDay: true, dayNumber: dayCount };
   }
 
   static getPrediction(startDate: string, allDates: string[]): PredictionResult {
@@ -114,11 +148,16 @@ export class PeriodPredictionService {
     };
   }
 
-  static getCyclePhase(cycleDay: number): string {
+  static getCyclePhase(cycleDay: number, averageCycleLength: number = 28): string {
     if (cycleDay <= 5) return 'Menstrual';
-    if (cycleDay <= 10) return 'Follicular';
-    if (cycleDay <= 14) return 'Ovulatory';
-    if (cycleDay <= 28) return 'Luteal';
+    
+    // Scale phases based on actual cycle length
+    const follicularEnd = Math.round(10 * (averageCycleLength / 28));
+    const ovulatoryEnd = Math.round(14 * (averageCycleLength / 28));
+    
+    if (cycleDay <= follicularEnd) return 'Follicular';
+    if (cycleDay <= ovulatoryEnd) return 'Ovulatory';
+    if (cycleDay <= averageCycleLength) return 'Luteal';
     return 'Extended';
   }
 
@@ -139,9 +178,13 @@ export class PeriodPredictionService {
     }
   }
 
-  static getPregnancyChance(cycleDay: number): string {
-    if (cycleDay >= 11 && cycleDay <= 17) return 'High';
-    if ((cycleDay >= 8 && cycleDay <= 10) || (cycleDay >= 18 && cycleDay <= 20)) return 'Medium';
+  static getPregnancyChance(cycleDay: number, averageCycleLength: number = 28): string {
+    const ovulationDay = averageCycleLength - 14; // Ovulation typically 14 days before next period
+    const fertilityStart = ovulationDay - 5;
+    const fertilityEnd = ovulationDay + 1;
+    
+    if (cycleDay >= fertilityStart && cycleDay <= fertilityEnd) return 'High';
+    if (cycleDay >= fertilityStart - 2 && cycleDay <= fertilityEnd + 2) return 'Medium';
     return 'Low';
   }
 
@@ -177,13 +220,14 @@ export class PeriodPredictionService {
 
   static getCycleInfo(startDate: string, currentDate?: string, cycleLength?: number): CycleInfo {
     const cycleDay = this.getCurrentCycleDay(startDate, currentDate);
-    const phase = this.getCyclePhase(cycleDay);
+    const avgCycleLength = cycleLength || 28;
+    const phase = this.getCyclePhase(cycleDay, avgCycleLength);
     
     return {
       phase,
       description: this.getPhaseDescription(phase),
       cycleDay,
-      pregnancyChance: this.getPregnancyChance(cycleDay)
+      pregnancyChance: this.getPregnancyChance(cycleDay, avgCycleLength)
     };
   }
 } 

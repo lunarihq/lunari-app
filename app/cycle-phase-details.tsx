@@ -12,11 +12,12 @@ const getFormattedDate = (date: Date): string => {
 export default function CyclePhaseDetails() {
   const params = useLocalSearchParams();
   const cycleDay = parseInt(params.cycleDay as string) || 0;
+  const averageCycleLength = parseInt(params.averageCycleLength as string) || 28;
   const currentDate = new Date();
   
-  const cyclePhase = PeriodPredictionService.getCyclePhase(cycleDay);
+  const cyclePhase = PeriodPredictionService.getCyclePhase(cycleDay, averageCycleLength);
   const phaseDescription = PeriodPredictionService.getPhaseDescription(cyclePhase);
-  const pregnancyChance = PeriodPredictionService.getPregnancyChance(cycleDay);
+  const pregnancyChance = PeriodPredictionService.getPregnancyChance(cycleDay, averageCycleLength);
   const pregnancyDescription = PeriodPredictionService.getPregnancyChanceDescription(pregnancyChance);
   const possibleSymptoms = PeriodPredictionService.getPossibleSymptoms(cyclePhase);
 

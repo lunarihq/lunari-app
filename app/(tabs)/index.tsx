@@ -16,102 +16,7 @@ const getFormattedDate = (date: Date): string => {
   return `Today, ${date.getDate()} ${date.toLocaleDateString('en-US', { month: 'short' })}`;
 };
 
-const getPregnancyChance = (cycleDay: number): string => {
-  if (cycleDay >= 11 && cycleDay <= 17) return 'High';
-  if (cycleDay >= 8 && cycleDay <= 20) return 'Medium';
-  return 'Low';
-};
 
-const getOvulationDay = (startDate: string): string => {
-  const date = new Date(startDate);
-  date.setDate(date.getDate() + 14);
-  return date.toLocaleDateString();
-};
-
-const getAverageCycleLength = (dates: string[]): number => {
-  if (dates.length < 2) return 28;
-  
-  const sortedDates = dates.sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
-  const periods: string[][] = [];
-  let currentPeriod: string[] = [sortedDates[0]];
-
-  // First group consecutive days into periods
-  for (let i = 1; i < sortedDates.length; i++) {
-    const dayDiff = Math.abs((new Date(sortedDates[i]).getTime() - new Date(sortedDates[i-1]).getTime()) / (1000 * 60 * 60 * 24));
-    if (dayDiff <= 7) {
-      currentPeriod.push(sortedDates[i]);
-    } else {
-      periods.push(currentPeriod);
-      currentPeriod = [sortedDates[i]];
-    }
-  }
-  periods.push(currentPeriod);
-
-  // Then calculate gaps between periods using their first days
-  let weightedTotal = 0;
-  let weightSum = 0;
-  let cycles = 0;
-
-  for (let i = 1; i < Math.min(periods.length, 6); i++) {
-    const currentPeriodStart = new Date(periods[i-1][periods[i-1].length-1]);
-    const prevPeriodStart = new Date(periods[i][periods[i].length-1]);
-    
-    const dayDiff = Math.floor(
-      (currentPeriodStart.getTime() - prevPeriodStart.getTime()) 
-      / (1000 * 60 * 60 * 24)
-    );
-    
-    const weight = Math.max(1 - ((cycles) * 0.2), 0.2);
-    weightedTotal += dayDiff * weight;
-    weightSum += weight;
-    cycles++;
-  }
-  
-  return cycles > 0 ? Math.round(weightedTotal / weightSum) : 28;
-};
-
-const getNextPeriodPrediction = (startDate: string, allDates: string[]): { days: number; date: string } => {
-  const cycleLength = getAverageCycleLength(allDates);
-  const today = new Date();
-  const nextPeriod = new Date(startDate);
-  
-  console.log('Cycle length:', cycleLength);
-  console.log('Start date:', startDate);
-  console.log('Today:', today.toISOString());
-  
-  nextPeriod.setDate(nextPeriod.getDate() + cycleLength);
-  console.log('Next period:', nextPeriod.toISOString());
-  
-  const daysUntil = Math.ceil((nextPeriod.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
-  console.log('Days until:', daysUntil);
-  
-  return { days: daysUntil, date: nextPeriod.toLocaleDateString() };
-};
-
-const getCyclePhase = (cycleDay: number): string => {
-  if (cycleDay <= 5) return 'Menstrual';
-  if (cycleDay <= 10) return 'Follicular';
-  if (cycleDay <= 14) return 'Ovulatory';
-  if (cycleDay <= 28) return 'Luteal';
-  return 'Extended';
-};
-
-const getPhaseDescription = (phase: string): string => {
-  switch (phase) {
-    case 'Menstrual':
-      return 'Your period is happening. You might experience cramps, fatigue, and mood changes. Focus on rest and self-care.';
-    case 'Follicular':
-      return 'Energy levels start to rise with increasing estrogen. Good time for starting new projects and physical activity.';
-    case 'Ovulatory':
-      return 'Peak fertility window. You might notice increased energy, better mood, and heightened sex drive.';
-    case 'Luteal':
-      return 'Progesterone rises. You might experience PMS symptoms like bloating or mood changes. Focus on gentle exercise and comfort.';
-    case 'Extended':
-      return 'Your cycle has gone longer than typical. Consider tracking any symptoms and consulting your healthcare provider if this persists.';
-    default:
-      return '';
-  }
-};
 
 export default function Index() {
   const [selectedDates, setSelectedDates] = useState<{ [date: string]: any }>({});
@@ -155,47 +60,7 @@ export default function Index() {
     }
   }, [params.openPeriodModal]);
 
-  const calculateCurrentCycleDay = (dates: string[]) => {
-    if (dates.length === 0) return null;
-    
-    const sortedDates = dates.sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
-    const mostRecentStart = new Date(sortedDates[0]);
-    const today = new Date();
-    
-    const diffTime = today.getTime() - mostRecentStart.getTime();
-    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
-    
-    return diffDays;
-  };
 
-  const calculatePeriodDay = (dates: { [date: string]: any }) => {
-    const todayStr = new Date().toISOString().split('T')[0];
-    
-    // Check if today is a period day
-    if (dates[todayStr]) {
-      // It's a period day, now calculate which day it is
-      let dayCount = 1;
-      const tempDate = new Date(todayStr);
-      
-      // Look back day by day to find consecutive period days
-      while (true) {
-        tempDate.setDate(tempDate.getDate() - 1);
-        const prevDateStr = tempDate.toISOString().split('T')[0];
-        
-        if (dates[prevDateStr]) {
-          dayCount++;
-        } else {
-          break;
-        }
-      }
-      
-      setIsPeriodDay(true);
-      setPeriodDayNumber(dayCount);
-    } else {
-      setIsPeriodDay(false);
-      setPeriodDayNumber(0);
-    }
-  };
 
   const loadSavedDates = async () => {
     const saved = await db.select().from(periodDates);
@@ -231,10 +96,12 @@ export default function Index() {
       const mostRecentStart = mostRecentPeriod[mostRecentPeriod.length - 1]; // Get the earliest date in the period
       
       setFirstPeriodDate(mostRecentStart);
-      setCurrentCycleDay(calculateCurrentCycleDay([mostRecentStart]));
+      setCurrentCycleDay(PeriodPredictionService.getCurrentCycleDay(mostRecentStart));
       
       // Calculate if today is a period day
-      calculatePeriodDay(dates);
+      const periodDayResult = PeriodPredictionService.calculatePeriodDay(dates);
+      setIsPeriodDay(periodDayResult.isPeriodDay);
+      setPeriodDayNumber(periodDayResult.dayNumber);
       
       // Schedule period notifications if enabled
       try {
@@ -292,10 +159,12 @@ export default function Index() {
         
         setSelectedDates(dates);
         setFirstPeriodDate(mostRecentStart);
-        setCurrentCycleDay(calculateCurrentCycleDay([mostRecentStart]));
+        setCurrentCycleDay(PeriodPredictionService.getCurrentCycleDay(mostRecentStart));
         
         // Calculate if today is a period day after saving
-        calculatePeriodDay(dates);
+        const periodDayResult = PeriodPredictionService.calculatePeriodDay(dates);
+        setIsPeriodDay(periodDayResult.isPeriodDay);
+        setPeriodDayNumber(periodDayResult.dayNumber);
         
         // Schedule period notifications if enabled
         try {
@@ -325,12 +194,18 @@ export default function Index() {
 
   // Update period day check when current date changes
   useEffect(() => {
-    calculatePeriodDay(selectedDates);
+    const periodDayResult = PeriodPredictionService.calculatePeriodDay(selectedDates);
+    setIsPeriodDay(periodDayResult.isPeriodDay);
+    setPeriodDayNumber(periodDayResult.dayNumber);
   }, [currentDate]);
 
   const prediction = firstPeriodDate 
     ? PeriodPredictionService.getPrediction(firstPeriodDate, Object.keys(selectedDates))
     : null;
+
+  const averageCycleLength = Object.keys(selectedDates).length > 0 
+    ? PeriodPredictionService.getAverageCycleLength(Object.keys(selectedDates))
+    : 28;
 
   return (
 
@@ -386,7 +261,7 @@ export default function Index() {
           <View style={styles.insightsTitleContainer}>
             <Text style={styles.insightsTitle}>Today's insights</Text>
             <Pressable
-              onPress={() => currentCycleDay && router.push(`/cycle-phase-details?cycleDay=${currentCycleDay}`)}
+              onPress={() => currentCycleDay && router.push(`/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}`)}
               disabled={!currentCycleDay}
               style={[styles.chevronButton, !currentCycleDay && styles.chevronDisabled]}
             >
@@ -401,7 +276,7 @@ export default function Index() {
             <View style={styles.insightsRow}>
               <Pressable 
                 style={[styles.insightCard, styles.cardBlue]}
-                onPress={() => currentCycleDay && router.push(`/cycle-phase-details?cycleDay=${currentCycleDay}`)}
+                onPress={() => currentCycleDay && router.push(`/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}`)}
               >
                 <View style={styles.insightTop}>
                   <Ionicons name="calendar-outline" size={24} color="#332F49" style={styles.insightIcon} />
@@ -416,7 +291,7 @@ export default function Index() {
               
               <Pressable 
                 style={[styles.insightCard, styles.cardYellow]}
-                onPress={() => currentCycleDay && router.push(`/cycle-phase-details?cycleDay=${currentCycleDay}`)}
+                onPress={() => currentCycleDay && router.push(`/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}`)}
               >
                 <View style={styles.insightTop}>
                   <Ionicons name="sync-outline" size={24} color="#332F49" style={styles.insightIcon} />
@@ -424,14 +299,14 @@ export default function Index() {
                 </View>
                 <View style={styles.insightValueContainer}>
                   <Text style={styles.insightValue}>
-                    {currentCycleDay ? getCyclePhase(currentCycleDay) : '-'}
+                    {currentCycleDay ? PeriodPredictionService.getCyclePhase(currentCycleDay, averageCycleLength) : '-'}
                   </Text>
                 </View>
               </Pressable>
               
               <Pressable 
                 style={[styles.insightCard, styles.cardPink]}
-                onPress={() => currentCycleDay && router.push(`/cycle-phase-details?cycleDay=${currentCycleDay}`)}
+                onPress={() => currentCycleDay && router.push(`/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}`)}
               >
                 <View style={styles.insightTop}>
                   <Ionicons name="leaf-outline" size={24} color="#332F49" style={styles.insightIcon} />
@@ -440,7 +315,7 @@ export default function Index() {
                 </View>
                 <View style={styles.insightValueContainer}>
                   <Text style={styles.insightValue}>
-                    {currentCycleDay ? getPregnancyChance(currentCycleDay) : '-'}
+                    {currentCycleDay ? PeriodPredictionService.getPregnancyChance(currentCycleDay, averageCycleLength) : '-'}
                   </Text>
                 </View>
               </Pressable>

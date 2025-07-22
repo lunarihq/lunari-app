@@ -8,16 +8,17 @@ import { formatDateString } from '../types/calendarTypes';
 interface CycleDetailsProps {
   selectedDate: string;
   cycleDay: number | null;
+  averageCycleLength?: number;
   onClose?: () => void;
 }
 
-export function CycleDetails({ selectedDate, cycleDay, onClose }: CycleDetailsProps) {
+export function CycleDetails({ selectedDate, cycleDay, averageCycleLength = 28, onClose }: CycleDetailsProps) {
   const selectedDateFormatted = selectedDate ? 
     new Date(selectedDate).toLocaleDateString('en-US', { day: 'numeric', month: 'long' }) : '';
 
   const getConceptionChance = () => {
     if (!cycleDay) return '';
-    const chance = PeriodPredictionService.getPregnancyChance(cycleDay);
+    const chance = PeriodPredictionService.getPregnancyChance(cycleDay, averageCycleLength);
     return `${chance.charAt(0).toUpperCase()}${chance.slice(1).toLowerCase()} chance to conceive`;
   };
 

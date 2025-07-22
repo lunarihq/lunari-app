@@ -51,24 +51,8 @@ export default function Stats() {
         return;
       }
 
-      // Sort dates in descending order for grouping
-      const sortedDates = saved.map(s => s.date)
-        .sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
-      
-      // Group consecutive days into periods
-      const periods: string[][] = [];
-      let currentPeriod: string[] = [sortedDates[0]];
-
-      for (let i = 1; i < sortedDates.length; i++) {
-        const dayDiff = Math.abs((new Date(sortedDates[i]).getTime() - new Date(sortedDates[i-1]).getTime()) / (1000 * 60 * 60 * 24));
-        if (dayDiff <= 7) {
-          currentPeriod.push(sortedDates[i]);
-        } else {
-          periods.push(currentPeriod);
-          currentPeriod = [sortedDates[i]];
-        }
-      }
-      periods.push(currentPeriod);
+      const sortedDates = saved.map(s => s.date);
+      const periods = PeriodPredictionService.groupDateIntoPeriods(sortedDates);
 
       // Calculate completed cycles (periods - 1)
       const cycles = Math.max(0, periods.length - 1);

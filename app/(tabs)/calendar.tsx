@@ -22,6 +22,7 @@ export default function CalendarScreen() {
   const [baseMarkedDates, setBaseMarkedDates] = useState<MarkedDates>({});
   const [firstPeriodDate, setFirstPeriodDate] = useState<string | null>(null);
   const [cycleDay, setCycleDay] = useState<number | null>(null);
+  const [averageCycleLength, setAverageCycleLength] = useState<number>(28);
   const [selectedDate, setSelectedDate] = useState(formatDateString(new Date()));
   const [currentDate] = useState(formatDateString(new Date()));
   const [currentMonth, setCurrentMonth] = useState('');
@@ -65,23 +66,8 @@ export default function CalendarScreen() {
     setSelectedDates(dates);
     
     if (saved.length > 0) {
-      // Sort dates in descending order for grouping
-      const sortedDates = saved.map(s => s.date)
-        .sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
-      
-      const periods: string[][] = [];
-      let currentPeriod: string[] = [sortedDates[0]];
-
-      for (let i = 1; i < sortedDates.length; i++) {
-        const dayDiff = Math.abs((new Date(sortedDates[i]).getTime() - new Date(sortedDates[i-1]).getTime()) / (1000 * 60 * 60 * 24));
-        if (dayDiff <= 7) {
-          currentPeriod.push(sortedDates[i]);
-        } else {
-          periods.push(currentPeriod);
-          currentPeriod = [sortedDates[i]];
-        }
-      }
-      periods.push(currentPeriod);
+      const sortedDates = saved.map(s => s.date);
+      const periods = PeriodPredictionService.groupDateIntoPeriods(sortedDates);
 
       // Get the start date of the most recent period
       const mostRecentPeriod = periods[0];
@@ -104,6 +90,7 @@ export default function CalendarScreen() {
     
     const allMarkedDates = { ...periodDates };
     const cycleLength = PeriodPredictionService.getAverageCycleLength(Object.keys(periodDates));
+    setAverageCycleLength(cycleLength);
     
     // Generate predictions for the next 3 months
     for (let i = 0; i < 3; i++) {
@@ -458,6 +445,7 @@ export default function CalendarScreen() {
               <CycleDetails 
                 selectedDate={selectedDate}
                 cycleDay={cycleDay}
+                averageCycleLength={averageCycleLength}
                 onClose={closeDrawer}
               />
             </Animated.View>

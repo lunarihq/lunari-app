@@ -76,24 +76,8 @@ export class NotificationService {
       const saved = await db.select().from(periodDates);
       
       if (saved.length > 0) {
-        // Sort dates to find the most recent period
-        const sortedDates = saved.map(s => s.date)
-          .sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
-        
-        // Group consecutive dates into periods
-        const periods: string[][] = [];
-        let currentPeriod: string[] = [sortedDates[0]];
-  
-        for (let i = 1; i < sortedDates.length; i++) {
-          const dayDiff = Math.abs((new Date(sortedDates[i]).getTime() - new Date(sortedDates[i-1]).getTime()) / (1000 * 60 * 60 * 24));
-          if (dayDiff <= 7) {
-            currentPeriod.push(sortedDates[i]);
-          } else {
-            periods.push(currentPeriod);
-            currentPeriod = [sortedDates[i]];
-          }
-        }
-        periods.push(currentPeriod);
+        const sortedDates = saved.map(s => s.date);
+        const periods = PeriodPredictionService.groupDateIntoPeriods(sortedDates);
   
         // Find the start date of the most recent period
         if (periods.length > 0) {
