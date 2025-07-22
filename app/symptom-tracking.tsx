@@ -503,7 +503,7 @@ export default function SymptomTracking() {
         </TouchableOpacity>
       </View>
 
-      <ScrollView style={styles.scrollView}>
+      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
 
         {/* Flow */}
         <View style={styles.section}>
@@ -609,7 +609,6 @@ const styles = StyleSheet.create({
   section: {
     backgroundColor: '#fff',
     borderRadius: 16,
-    marginHorizontal: 16,
     marginBottom: 16,
     padding: 16,
   },
@@ -620,7 +619,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   sectionTitle: {
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: '600',
     color: '#000',
   },
