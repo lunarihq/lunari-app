@@ -4,7 +4,7 @@ import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { setSetting } from '../../db';
 
-export default function GetStartedScreen() {
+export default function CycleLengthScreen() {
   const router = useRouter();
   const [cycleLength, setCycleLength] = useState(28);
   const [dontKnow, setDontKnow] = useState(false);

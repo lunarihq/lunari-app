@@ -7,11 +7,11 @@ export default function WelcomeScreen() {
   const router = useRouter();
 
   const handleNext = () => {
-    router.push({ pathname: '/onboarding/features' });
+    router.push({ pathname: '/onboarding/period-length' });
   };
 
   const handleSkip = () => {
-    router.push({ pathname: '/onboarding/get-started' });
+    router.push({ pathname: '/onboarding/cycle-length' });
   };
 
   return (

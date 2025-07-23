@@ -4,7 +4,7 @@ import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { setSetting } from '../../db';
 
-export default function FeaturesScreen() {
+export default function PeriodLengthScreen() {
   const router = useRouter();
   const [periodLength, setPeriodLength] = useState(5);
   const [dontKnow, setDontKnow] = useState(false);
@@ -15,10 +15,10 @@ export default function FeaturesScreen() {
       if (!dontKnow) {
         await setSetting('userPeriodLength', periodLength.toString());
       }
-      router.push({ pathname: '/onboarding/get-started' });
+      router.push({ pathname: '/onboarding/cycle-length' });
     } catch (error) {
       console.error('Error saving period length:', error);
-      router.push({ pathname: '/onboarding/get-started' });
+      router.push({ pathname: '/onboarding/cycle-length' });
     }
   };
 
