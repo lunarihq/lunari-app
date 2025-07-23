@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import { CalendarList, DateData } from 'react-native-calendars';
 import { Ionicons } from '@expo/vector-icons';
+import { useCallback, useMemo } from 'react';
 import { CustomMarking, MarkedDates, SelectionRules } from '../types/calendarTypes';
 
 // Constants
@@ -64,7 +65,7 @@ export function BaseCalendar({
   const screenWidth = Dimensions.get('window').width;
   
   // Create a wrapped onDayPress that respects selectionRules
-  const handleDayPress = (day: DateData) => {
+  const handleDayPress = useCallback((day: DateData) => {
     // If in view mode, pass through normally
     if (mode === 'view') {
       onDayPress(day);
@@ -85,10 +86,10 @@ export function BaseCalendar({
     
     // No special handling needed, pass through to parent component
     onDayPress(day);
-  };
+  }, [mode, onDayPress, selectionRules?.disableFuture, markedDates]);
 
   // Default day component if none provided
-  const defaultRenderDay = ({ date, state, marking }: any) => {
+  const defaultRenderDay = useCallback(({ date, state, marking }: any) => {
     const customMarking = marking as CustomMarking;
     const isSelected = customMarking?.selected || 
                       customMarking?.customStyles?.container?.backgroundColor === '#FF597B';
@@ -129,10 +130,10 @@ export function BaseCalendar({
         )}
       </View>
     );
-  };
+  }, [handleDayPress]);
 
   // Default header component if none provided
-  const defaultRenderHeader = (date: any) => {
+  const defaultRenderHeader = useCallback((date: any) => {
     const headerDate = new Date(date);
     const monthName = headerDate.toLocaleString('default', { month: 'long' });
     const year = headerDate.getFullYear();
@@ -144,16 +145,16 @@ export function BaseCalendar({
         </Text>
       </View>
     );
-  };
+  }, []);
 
   // Determine whether to hide arrows based on mode
   const hideArrows = true;
 
   // Day names row component (only shown when hideDayNames is true on individual months)
-  const renderDayNamesHeader = () => {
+  const dayNames = useMemo(() => ['M', 'T', 'W', 'T', 'F', 'S', 'S'], []);
+  
+  const renderDayNamesHeader = useCallback(() => {
     if (!hideDayNames) return null;
-    
-    const dayNames = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
     
     return (
       <View style={styles.dayNamesContainer}>
@@ -164,7 +165,7 @@ export function BaseCalendar({
         ))}
       </View>
     );
-  };
+  }, [hideDayNames, dayNames]);
 
   return (
     <View style={{ flex: 1 }}>
