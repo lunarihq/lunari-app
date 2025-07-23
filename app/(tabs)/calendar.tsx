@@ -4,7 +4,7 @@ import { PanGestureHandler, State, GestureHandlerRootView } from 'react-native-g
 import { DateData } from 'react-native-calendars';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useLocalSearchParams, router } from 'expo-router';
-import { db } from '../../db';
+import { db, getSetting } from '../../db';
 import { periodDates } from '../../db/schema';
 import { PeriodPredictionService } from '../../services/periodPredictions';
 import { BaseCalendar } from '../components/BaseCalendar';
@@ -23,6 +23,8 @@ export default function CalendarScreen() {
   const [firstPeriodDate, setFirstPeriodDate] = useState<string | null>(null);
   const [cycleDay, setCycleDay] = useState<number | null>(null);
   const [averageCycleLength, setAverageCycleLength] = useState<number>(28);
+  const [userCycleLength, setUserCycleLength] = useState<number>(28);
+  const [userPeriodLength, setUserPeriodLength] = useState<number>(5);
   const [selectedDate, setSelectedDate] = useState(formatDateString(new Date()));
   const [currentDate] = useState(formatDateString(new Date()));
   const [currentMonth, setCurrentMonth] = useState('');
@@ -35,6 +37,26 @@ export default function CalendarScreen() {
   const buttonAnimation = useRef(new Animated.Value(280)).current;
   const params = useLocalSearchParams();
   const navigation = useNavigation();
+
+  // Load user settings
+  useEffect(() => {
+    const loadUserSettings = async () => {
+      try {
+        const cycleLength = await getSetting('userCycleLength');
+        if (cycleLength) {
+          setUserCycleLength(parseInt(cycleLength, 10));
+        }
+
+        const periodLength = await getSetting('userPeriodLength');
+        if (periodLength) {
+          setUserPeriodLength(parseInt(periodLength, 10));
+        }
+      } catch (error) {
+        console.error('Error loading user settings:', error);
+      }
+    };
+    loadUserSettings();
+  }, []);
   
   // Check if we should navigate to the period calendar screen from URL params
   useEffect(() => {
@@ -89,7 +111,7 @@ export default function CalendarScreen() {
     if (!startDate) return;
     
     const allMarkedDates = { ...periodDates };
-    const cycleLength = PeriodPredictionService.getAverageCycleLength(Object.keys(periodDates));
+    const cycleLength = PeriodPredictionService.getAverageCycleLength(Object.keys(periodDates), userCycleLength);
     setAverageCycleLength(cycleLength);
     
     // Generate predictions for the next 3 months
@@ -104,8 +126,8 @@ export default function CalendarScreen() {
       const nextPeriodDate = new Date(year, month, day + cycleLength * (i + 1), 12, 0, 0);
       const nextPeriodDateString = formatDateString(nextPeriodDate);
       
-      // Mark 5 days of predicted period
-      for (let j = 0; j < 5; j++) {
+      // Mark user's preferred period length for predicted period
+      for (let j = 0; j < userPeriodLength; j++) {
         const predictedDay = new Date(nextPeriodDate);
         predictedDay.setDate(predictedDay.getDate() + j);
         const predictedDayString = formatDateString(predictedDay);

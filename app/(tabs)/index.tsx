@@ -11,6 +11,7 @@ import { validatePeriodDate } from '../../validation/periodData';
 import { Ionicons } from '@expo/vector-icons';
 import theme from '../styles/theme';
 import DashedCircle from '../components/DashedCircle';
+import { getSetting } from '../../db';
 
 const getFormattedDate = (date: Date): string => {
   return `Today, ${date.getDate()} ${date.toLocaleDateString('en-US', { month: 'short' })}`;
@@ -171,13 +172,30 @@ export default function Index() {
     setPeriodDayNumber(periodDayResult.dayNumber);
   }, [currentDate]);
 
+  const [userCycleLength, setUserCycleLength] = useState<number>(28);
+
   const prediction = firstPeriodDate 
-    ? PeriodPredictionService.getPrediction(firstPeriodDate, Object.keys(selectedDates))
+    ? PeriodPredictionService.getPrediction(firstPeriodDate, Object.keys(selectedDates), userCycleLength)
     : null;
 
+  // Load user settings
+  useEffect(() => {
+    const loadUserSettings = async () => {
+      try {
+        const cycleLength = await getSetting('userCycleLength');
+        if (cycleLength) {
+          setUserCycleLength(parseInt(cycleLength, 10));
+        }
+      } catch (error) {
+        console.error('Error loading user settings:', error);
+      }
+    };
+    loadUserSettings();
+  }, []);
+
   const averageCycleLength = Object.keys(selectedDates).length > 0 
-    ? PeriodPredictionService.getAverageCycleLength(Object.keys(selectedDates))
-    : 28;
+    ? PeriodPredictionService.getAverageCycleLength(Object.keys(selectedDates), userCycleLength)
+    : userCycleLength;
 
   return (
 

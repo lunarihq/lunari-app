@@ -159,8 +159,12 @@ export class NotificationService {
     // Cancel any existing period notifications first
     await this.cancelPeriodNotifications();
     
+    // Load user cycle length setting
+    const userCycleLengthSetting = await getSetting('userCycleLength');
+    const userCycleLength = userCycleLengthSetting ? parseInt(userCycleLengthSetting, 10) : undefined;
+    
     // Get prediction for next period date
-    const prediction = PeriodPredictionService.getPrediction(startDate, allDates);
+    const prediction = PeriodPredictionService.getPrediction(startDate, allDates, userCycleLength);
     
     // Schedule before-period notification if enabled
     if (beforePeriodEnabled) {

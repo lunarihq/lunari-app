@@ -39,8 +39,8 @@ export class PeriodPredictionService {
     return periods;
   }
 
-  static getAverageCycleLength(dates: string[]): number {
-    if (dates.length < 2) return 28;
+  static getAverageCycleLength(dates: string[], userCycleLength?: number): number {
+    if (dates.length < 2) return userCycleLength || 28;
     
     const periods = this.groupDateIntoPeriods(dates);
 
@@ -64,7 +64,7 @@ export class PeriodPredictionService {
       cycles++;
     }
     
-    return cycles > 0 ? Math.round(weightedTotal / weightSum) : 28;
+    return cycles > 0 ? Math.round(weightedTotal / weightSum) : userCycleLength || 28;
   }
 
   // Calculate if today is a period day and which day it is
@@ -94,8 +94,8 @@ export class PeriodPredictionService {
     return { isPeriodDay: true, dayNumber: dayCount };
   }
 
-  static getPrediction(startDate: string, allDates: string[]): PredictionResult {
-    const cycleLength = this.getAverageCycleLength(allDates);
+  static getPrediction(startDate: string, allDates: string[], userCycleLength?: number): PredictionResult {
+    const cycleLength = this.getAverageCycleLength(allDates, userCycleLength);
     const today = new Date();
     const nextPeriod = new Date(startDate);
     

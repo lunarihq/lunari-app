@@ -5,12 +5,13 @@ import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { BaseCalendar, DAY_FONT_SIZE } from './components/BaseCalendar';
 import { CustomMarking, MarkedDates, DEFAULT_SELECTED_STYLE, formatDateString, generateDateRange } from './types/calendarTypes';
-import { db } from '../db';
+import { db, getSetting } from '../db';
 import { periodDates } from '../db/schema';
 
 export default function PeriodCalendarScreen() {
   const [selectedDates, setSelectedDates] = useState<MarkedDates>({});
   const [tempDates, setTempDates] = useState<MarkedDates>({});
+  const [userPeriodLength, setUserPeriodLength] = useState<number>(5);
   
   // Get current date for today marker
   const today = formatDateString(new Date());
@@ -18,10 +19,17 @@ export default function PeriodCalendarScreen() {
   const [calendarKey, setCalendarKey] = useState(Date.now().toString());
   const [displayedMonth, setDisplayedMonth] = useState(today);
 
-  // Load saved dates when the component mounts
+  // Load user settings and saved dates when the component mounts
   useEffect(() => {
-    const loadSavedDates = async () => {
+    const loadData = async () => {
       try {
+        // Load user period length setting
+        const periodLength = await getSetting('userPeriodLength');
+        if (periodLength) {
+          setUserPeriodLength(parseInt(periodLength, 10));
+        }
+
+        // Load saved period dates
         const saved = await db.select().from(periodDates);
         
         const dates = saved.reduce((acc: { [key: string]: any }, curr) => { 
@@ -32,11 +40,11 @@ export default function PeriodCalendarScreen() {
         setSelectedDates(dates);
         setTempDates(dates);
       } catch (error) {
-        console.error('Error loading dates:', error);
+        console.error('Error loading data:', error);
       }
     };
     
-    loadSavedDates();
+    loadData();
     setCalendarKey(Date.now().toString());
 
   }, []);
@@ -77,8 +85,8 @@ export default function PeriodCalendarScreen() {
       delete updatedDates[day.dateString];
     } else {
       if (wouldBeAutoSelection) {
-        // Auto-select 5 days, including future dates when starting from today/past
-        const dateRange = generateDateRange(day.dateString, 5);
+        // Auto-select user's preferred period length, including future dates when starting from today/past
+        const dateRange = generateDateRange(day.dateString, userPeriodLength);
         
         // Apply selection to all days in range (including future dates for auto-selection)
         dateRange.forEach(dateString => {
@@ -231,7 +239,7 @@ export default function PeriodCalendarScreen() {
             onMonthChange={onMonthChange}
             selectionRules={{
               disableFuture: true,
-              autoSelectDays: 5
+              autoSelectDays: userPeriodLength
               
             }}
             renderDay={renderCustomDay}

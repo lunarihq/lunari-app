@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { View, ScrollView, StyleSheet, Text } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
-import { db } from '../../db';
+import { db, getSetting } from '../../db';
 import { periodDates } from '../../db/schema';
 import { PeriodPredictionService } from '../../services/periodPredictions';
 import { StatCard } from '../components/StatCard';
@@ -23,13 +23,29 @@ export default function Stats() {
   const [averageCycleLength, setAverageCycleLength] = useState<number>(0);
   const [averagePeriodLength, setAveragePeriodLength] = useState<number>(0);
   const [cycleHistory, setCycleHistory] = useState<CycleData[]>([]);
+  const [userCycleLength, setUserCycleLength] = useState<number>(28);
 
   useFocusEffect(
     useCallback(() => {
       loadStatistics();
       return () => {};
-    }, [])
+    }, [userCycleLength])
   );
+
+  // Load user settings
+  useEffect(() => {
+    const loadUserSettings = async () => {
+      try {
+        const cycleLength = await getSetting('userCycleLength');
+        if (cycleLength) {
+          setUserCycleLength(parseInt(cycleLength, 10));
+        }
+      } catch (error) {
+        console.error('Error loading user settings:', error);
+      }
+    };
+    loadUserSettings();
+  }, []);
 
   // Format date as "MMM DD" (e.g., "Apr 10")
   const formatDate = (dateString: string) => {
@@ -59,7 +75,7 @@ export default function Stats() {
       setCompletedCycles(cycles);
 
       // Calculate average cycle length
-      const cycleLength = PeriodPredictionService.getAverageCycleLength(sortedDates);
+      const cycleLength = PeriodPredictionService.getAverageCycleLength(sortedDates, userCycleLength);
       setAverageCycleLength(cycleLength);
 
       // Calculate average period length
