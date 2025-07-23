@@ -106,17 +106,17 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
   // Helper function to format the cycle length for display
   const formatCycleLength = (length: string | number): string => {
     if (typeof length === 'number') {
-      return `${length} days`;
+      return `${length} ${length === 1 ? 'day' : 'days'}`;
     } else if (typeof length === 'string') {
       // Check if it's already formatted with "days"
-      if (length.includes('days')) {
+      if (length.includes('days') || length.includes('day')) {
         return length;
       }
       
       // Try to parse as number
       const parsedLength = parseInt(length, 10);
       if (!isNaN(parsedLength)) {
-        return `${parsedLength} days`;
+        return `${parsedLength} ${parsedLength === 1 ? 'day' : 'days'}`;
       }
     }
     
@@ -171,7 +171,7 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
               if (startDateObj && !isNaN(startDateObj.getTime())) {
                 const today = new Date();
                 daysSoFar = Math.floor((today.getTime() - startDateObj.getTime()) / (1000 * 60 * 60 * 24)) + 1;
-                displayCycleLength = `${daysSoFar} days`;
+                displayCycleLength = `${daysSoFar} ${daysSoFar === 1 ? 'day' : 'days'}`;
               } else {
                 displayCycleLength = "In progress";
               }
