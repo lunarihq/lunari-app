@@ -73,26 +73,12 @@ export default function Index() {
     setSelectedDates(dates);
     
     if (saved.length > 0) {
-      // Sort dates in ascending order for grouping
-      const sortedDates = saved.map(s => s.date)
-        .sort((a, b) => new Date(b).getTime() - new Date(a).getTime()); // Changed to descending order
-      
-      const periods: string[][] = [];
-      let currentPeriod: string[] = [sortedDates[0]];
-
-      for (let i = 1; i < sortedDates.length; i++) {
-        const dayDiff = Math.abs((new Date(sortedDates[i]).getTime() - new Date(sortedDates[i-1]).getTime()) / (1000 * 60 * 60 * 24));
-        if (dayDiff <= 7) {
-          currentPeriod.push(sortedDates[i]);
-        } else {
-          periods.push(currentPeriod);
-          currentPeriod = [sortedDates[i]];
-        }
-      }
-      periods.push(currentPeriod);
+      // Use the service to group dates into periods
+      const sortedDates = saved.map(s => s.date);
+      const periods = PeriodPredictionService.groupDateIntoPeriods(sortedDates);
 
       // Get the start date of the most recent period
-      const mostRecentPeriod = periods[0]; // Changed to first period since we sorted in descending order
+      const mostRecentPeriod = periods[0];
       const mostRecentStart = mostRecentPeriod[mostRecentPeriod.length - 1]; // Get the earliest date in the period
       
       setFirstPeriodDate(mostRecentStart);
@@ -136,23 +122,9 @@ export default function Index() {
       if (dateInserts.length > 0) {
         await db.insert(periodDates).values(dateInserts);
         
-        // Use the same logic as loadSavedDates to find the most recent period
-        const sortedDates = Object.keys(dates)
-          .sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
-        
-        const periods: string[][] = [];
-        let currentPeriod: string[] = [sortedDates[0]];
-
-        for (let i = 1; i < sortedDates.length; i++) {
-          const dayDiff = Math.abs((new Date(sortedDates[i]).getTime() - new Date(sortedDates[i-1]).getTime()) / (1000 * 60 * 60 * 24));
-          if (dayDiff <= 7) {
-            currentPeriod.push(sortedDates[i]);
-          } else {
-            periods.push(currentPeriod);
-            currentPeriod = [sortedDates[i]];
-          }
-        }
-        periods.push(currentPeriod);
+        // Use the service to group dates into periods
+        const sortedDates = Object.keys(dates);
+        const periods = PeriodPredictionService.groupDateIntoPeriods(sortedDates);
 
         const mostRecentPeriod = periods[0];
         const mostRecentStart = mostRecentPeriod[mostRecentPeriod.length - 1];
