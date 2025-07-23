@@ -3,8 +3,10 @@ import { Stack, useRouter, useSegments, usePathname } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { getSetting } from '../db';
 import * as Notifications from 'expo-notifications';
+import { AuthProvider, useAuth } from '../contexts/AuthContext';
+import { LockScreen } from '../components/LockScreen';
 
-export default function RootLayout() {
+function AppContent() {
   const [isReady, setIsReady] = useState(false);
   const [onboardingCompleted, setOnboardingCompleted] = useState(false);
   const segments = useSegments();
@@ -12,6 +14,7 @@ export default function RootLayout() {
   const pathname = usePathname();
   const [initialRender, setInitialRender] = useState(true);
   const notificationResponseListener = useRef<Notifications.Subscription | null>(null);
+  const { isLocked, isAuthenticated } = useAuth();
 
   // Initialize notification response listener only (don't request permissions yet)
   useEffect(() => {
@@ -78,6 +81,16 @@ export default function RootLayout() {
     return null;
   }
 
+  // Show lock screen if app is locked
+  if (isLocked && !isAuthenticated) {
+    return (
+      <>
+        <LockScreen />
+        <StatusBar style="dark" />
+      </>
+    );
+  }
+
   return (
     <>
       <Stack>
@@ -93,6 +106,22 @@ export default function RootLayout() {
           }} 
         />
         <Stack.Screen 
+          name="app-lock" 
+          options={{ 
+            headerShown: true, 
+            headerTitle: "App Lock",
+            headerShadowVisible: false,
+          }} 
+        />
+        <Stack.Screen 
+          name="pin-setup" 
+          options={({ route }) => ({ 
+            headerShown: true, 
+            headerTitle: (route.params as any)?.mode === 'change' ? 'Change PIN' : 'Set PIN',
+            headerShadowVisible: false,
+          })} 
+        />
+        <Stack.Screen 
           name="symptom-tracking" 
           options={{ 
             headerShown: true, 
@@ -104,5 +133,13 @@ export default function RootLayout() {
       </Stack>
       <StatusBar style="dark" />
     </>
+  );
+}
+
+export default function RootLayout() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 }

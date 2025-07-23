@@ -2,8 +2,8 @@ import React, { useState, useCallback } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, ScrollView, TextStyle } from 'react-native';
 import { router, useFocusEffect } from 'expo-router';
 import { Ionicons, FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
-import { db } from '../../db';
-import { healthLogs } from '../../db/schema';
+import { db } from '../db';
+import { healthLogs } from '../db/schema';
 import { eq } from 'drizzle-orm';
 
 type SymptomsTrackerProps = {

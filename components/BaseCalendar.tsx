@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-nati
 import { CalendarList, DateData } from 'react-native-calendars';
 import { Ionicons } from '@expo/vector-icons';
 import { useCallback, useMemo } from 'react';
-import { CustomMarking, MarkedDates, SelectionRules } from '../types/calendarTypes';
+import { CustomMarking, MarkedDates, SelectionRules } from '../app/types/calendarTypes';
 
 // Constants
 const MONTH_FONT_SIZE = 18;

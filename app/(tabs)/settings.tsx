@@ -29,6 +29,17 @@ export default function Settings() {
           
           <TouchableOpacity 
             style={styles.settingRow}
+            onPress={() => router.push('/app-lock')}
+          >
+            <View style={styles.iconContainer}>
+              <Ionicons name="lock-closed-outline" size={24} color="#333" />
+            </View>
+            <Text style={styles.settingText}>App Lock</Text>
+            <Ionicons name="chevron-forward" size={24} color="#333" />
+          </TouchableOpacity>
+          
+          <TouchableOpacity 
+            style={styles.settingRow}
           >
             <View style={styles.iconContainer}>
               <Ionicons name="document-text-outline" size={24} color="#333" />

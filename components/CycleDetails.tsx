@@ -2,8 +2,8 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { SymptomsTracker } from './SymptomsTracker';
-import { PeriodPredictionService } from '../../services/periodPredictions';
-import { formatDateString } from '../types/calendarTypes';
+import { PeriodPredictionService } from '../services/periodPredictions';
+import { formatDateString } from '../app/types/calendarTypes';
 
 interface CycleDetailsProps {
   selectedDate: string;

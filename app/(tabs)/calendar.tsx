@@ -7,8 +7,8 @@ import { useLocalSearchParams, router } from 'expo-router';
 import { db, getSetting } from '../../db';
 import { periodDates } from '../../db/schema';
 import { PeriodPredictionService } from '../../services/periodPredictions';
-import { BaseCalendar } from '../components/BaseCalendar';
-import { CycleDetails } from '../components/CycleDetails';
+import { BaseCalendar } from '../../components/BaseCalendar';
+import { CycleDetails } from '../../components/CycleDetails';
 import { MarkedDates, formatDateString } from '../types/calendarTypes';
 
 // Export a function to navigate to the period calendar screen

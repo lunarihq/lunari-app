@@ -4,8 +4,8 @@ import { useFocusEffect } from '@react-navigation/native';
 import { db, getSetting } from '../../db';
 import { periodDates } from '../../db/schema';
 import { PeriodPredictionService } from '../../services/periodPredictions';
-import { StatCard } from '../components/StatCard';
-import { CycleHistory } from '../components/CycleHistory';
+import { StatCard } from '../../components/StatCard';
+import { CycleHistory } from '../../components/CycleHistory';
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import theme from '../styles/theme';
 interface CycleData {
