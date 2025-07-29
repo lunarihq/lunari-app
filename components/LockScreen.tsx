@@ -8,21 +8,31 @@ export function LockScreen() {
     verifyPin,
     canUseBiometric,
     authenticateWithBiometric,
-    getBiometricType,
   } = useAuth();
 
   const [errorMessage, setErrorMessage] = useState('');
-  const [biometricType, setBiometricType] = useState('Biometric');
+  const [biometricAttempted, setBiometricAttempted] = useState(false);
 
+  // Automatically attempt biometric authentication when screen loads
   useEffect(() => {
-    const loadBiometricType = async () => {
-      if (canUseBiometric) {
-        const type = await getBiometricType();
-        setBiometricType(type);
+    if (canUseBiometric && !biometricAttempted) {
+      setBiometricAttempted(true);
+      handleBiometricAuth();
+    }
+  }, [canUseBiometric, biometricAttempted]);
+
+  const handleBiometricAuth = async () => {
+    try {
+      const success = await authenticateWithBiometric();
+      if (!success) {
+        // Biometric failed or was cancelled, user can now use PIN
+        // Don't show error message, just let them use PIN
+        console.log('Biometric authentication failed, showing PIN input');
       }
-    };
-    loadBiometricType();
-  }, [canUseBiometric, getBiometricType]);
+    } catch (error) {
+      console.error('Biometric authentication error:', error);
+    }
+  };
 
   const handlePinComplete = async (pin: string) => {
     const isValid = await verifyPin(pin);
@@ -35,20 +45,8 @@ export function LockScreen() {
 
   const handleStartTyping = () => {
     setErrorMessage('');
-  };
-
-  const handleBiometricPress = async () => {
-    const success = await authenticateWithBiometric();
-    if (!success) {
-      setErrorMessage('Biometric authentication failed.');
-      setTimeout(() => setErrorMessage(''), 3000);
-    }
-  };
-
-  const getBiometricIcon = () => {
-    if (biometricType === 'Face ID') return 'face-recognition';
-    if (biometricType === 'Touch ID') return 'finger-print';
-    return 'finger-print';
+    // Reset biometric attempt so user can try biometric again after typing PIN
+    setBiometricAttempted(true);
   };
 
   return (
@@ -60,10 +58,6 @@ export function LockScreen() {
           onPinComplete={handlePinComplete}
           errorMessage={errorMessage}
           onStartTyping={handleStartTyping}
-          showBiometric={canUseBiometric}
-          onBiometricPress={handleBiometricPress}
-          biometricIcon={getBiometricIcon()}
-          biometricLabel={`Use ${biometricType}`}
         />
       </View>
     </SafeAreaView>

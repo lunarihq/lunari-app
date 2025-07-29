@@ -84,8 +84,10 @@ export class AuthService {
     try {
       const result = await LocalAuthentication.authenticateAsync({
         promptMessage: 'Unlock Lunari',
-        cancelLabel: 'Cancel',
+        cancelLabel: 'Use PIN',
         disableDeviceFallback: true,
+        requireConfirmation: false,
+        fallbackLabel: 'Use PIN instead',
       });
 
       if (result.success) {
