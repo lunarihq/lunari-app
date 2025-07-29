@@ -19,13 +19,36 @@ export default function AppLockScreen() {
     isPinSet,
     removePin,
     refreshPinStatus,
+    canUseBiometric,
+    setBiometricEnabled,
+    getBiometricType,
   } = useAuth();
 
   const [pinEnabled, setPinEnabled] = useState(false);
+  const [biometricEnabled, setBiometricEnabledState] = useState(false);
+  const [biometricType, setBiometricType] = useState('Biometric');
+  const [biometricSupported, setBiometricSupported] = useState(false);
 
   useEffect(() => {
     setPinEnabled(isPinSet);
-  }, [isPinSet]);
+    setBiometricEnabledState(canUseBiometric);
+    
+    const checkBiometricSupport = async () => {
+      if (isPinSet) {
+        const { AuthService } = await import('../services/authService');
+        const supported = await AuthService.isBiometricSupported();
+        const enrolled = await AuthService.isBiometricEnrolled();
+        setBiometricSupported(supported && enrolled);
+        
+        if (supported && enrolled) {
+          const type = await getBiometricType();
+          setBiometricType(type);
+        }
+      }
+    };
+    
+    checkBiometricSupport();
+  }, [isPinSet, canUseBiometric, getBiometricType]);
 
   const handlePinToggle = async (value: boolean) => {
     if (value) {
@@ -59,6 +82,15 @@ export default function AppLockScreen() {
     }
   };
 
+  const handleBiometricToggle = async (value: boolean) => {
+    const success = await setBiometricEnabled(value);
+    if (success) {
+      setBiometricEnabledState(value);
+    } else {
+      Alert.alert('Error', 'Failed to update biometric settings. Please try again.');
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
@@ -89,7 +121,25 @@ export default function AppLockScreen() {
           )}
         </View>
 
-
+        {isPinSet && biometricSupported && (
+          <View style={styles.section}>
+            <View style={[styles.settingRow, styles.lastRow]}>
+              <View style={styles.settingContent}>
+                <Text style={styles.settingTitle}>Use {biometricType}</Text>
+                <Text style={styles.settingSubtitle}>
+                  Unlock app with {biometricType.toLowerCase()} instead of PIN
+                </Text>
+              </View>
+              <Switch
+                value={biometricEnabled}
+                onValueChange={handleBiometricToggle}
+                trackColor={{ false: '#e0e0e0', true: '#4561D2' }}
+                thumbColor="#ffffff"
+                ios_backgroundColor="#e0e0e0"
+              />
+            </View>
+          </View>
+        )}
 
         {isPinSet && (
           <View style={styles.infoSection}>
@@ -97,6 +147,7 @@ export default function AppLockScreen() {
               <Ionicons name="information-circle" size={20} color="#666" style={styles.infoIcon} />
               <Text style={styles.infoText}>
                 When app lock is enabled, you'll need to authenticate when the app starts or returns from the background.
+                {biometricSupported && biometricEnabled && ` You can use your ${biometricType.toLowerCase()} or PIN to unlock.`}
               </Text>
             </View>
           </View>

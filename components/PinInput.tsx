@@ -5,7 +5,6 @@ import {
   TouchableOpacity,
   StyleSheet,
   Vibration,
-  Alert,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -18,7 +17,7 @@ interface PinInputProps {
   biometricIcon?: string;
   biometricLabel?: string;
   errorMessage?: string;
-  maxAttempts?: number;
+  onStartTyping?: () => void;
 }
 
 export function PinInput({
@@ -30,11 +29,10 @@ export function PinInput({
   biometricIcon = 'finger-print',
   biometricLabel = 'Use Biometric',
   errorMessage,
-  maxAttempts = 5,
+  onStartTyping,
 }: PinInputProps) {
   const [pin, setPin] = useState('');
   const [attempts, setAttempts] = useState(0);
-  const [isLocked, setIsLocked] = useState(false);
 
   const PIN_LENGTH = 4;
 
@@ -49,30 +47,21 @@ export function PinInput({
       Vibration.vibrate(500);
       setAttempts(prev => prev + 1);
       setPin('');
-
-      if (attempts + 1 >= maxAttempts) {
-        setIsLocked(true);
-        Alert.alert(
-          'Too Many Attempts',
-          'Please try again in 30 seconds.',
-          [{ text: 'OK' }]
-        );
-        
-        setTimeout(() => {
-          setIsLocked(false);
-          setAttempts(0);
-        }, 30000);
-      }
     }
-  }, [errorMessage, attempts, maxAttempts]);
+  }, [errorMessage]);
 
   const handleNumberPress = (number: string) => {
-    if (isLocked || pin.length >= PIN_LENGTH) return;
+    if (pin.length >= PIN_LENGTH) return;
+    
+    // Clear error message when user starts typing
+    if (pin.length === 0 && onStartTyping) {
+      onStartTyping();
+    }
+    
     setPin(prev => prev + number);
   };
 
   const handleBackspace = () => {
-    if (isLocked) return;
     setPin(prev => prev.slice(0, -1));
   };
 
@@ -116,7 +105,6 @@ export function PinInput({
                     key={colIndex}
                     style={styles.numberButton}
                     onPress={handleBackspace}
-                    disabled={isLocked}
                   >
                     <Ionicons name="backspace-outline" size={24} color="#333" />
                   </TouchableOpacity>
@@ -128,7 +116,6 @@ export function PinInput({
                   key={colIndex}
                   style={styles.numberButton}
                   onPress={() => handleNumberPress(item)}
-                  disabled={isLocked}
                 >
                   <Text style={styles.numberText}>{item}</Text>
                 </TouchableOpacity>
@@ -153,17 +140,12 @@ export function PinInput({
         <Text style={styles.errorText}>{errorMessage}</Text>
       )}
 
-      {isLocked && (
-        <Text style={styles.lockText}>Please wait 30 seconds...</Text>
-      )}
-
       {renderNumberPad()}
 
       {showBiometric && onBiometricPress && (
         <TouchableOpacity
           style={styles.biometricButton}
           onPress={onBiometricPress}
-          disabled={isLocked}
         >
           <Ionicons name={biometricIcon as any} size={24} color="#4561D2" />
           <Text style={styles.biometricText}>{biometricLabel}</Text>
@@ -255,13 +237,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center',
     marginBottom: 20,
-  },
-  lockText: {
-    color: '#ff4757',
-    fontSize: 16,
-    textAlign: 'center',
-    marginBottom: 20,
-    fontWeight: '600',
   },
   biometricButton: {
     flexDirection: 'row',

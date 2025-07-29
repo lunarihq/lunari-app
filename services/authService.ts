@@ -1,6 +1,8 @@
 import * as SecureStore from 'expo-secure-store';
+import * as LocalAuthentication from 'expo-local-authentication';
 
 const PIN_KEY = 'app_pin';
+const BIOMETRIC_ENABLED_KEY = 'biometric_enabled';
 
 export class AuthService {
   // Check if PIN is set
@@ -47,5 +49,85 @@ export class AuthService {
     }
   }
 
+  // Biometric Authentication Methods
+  static async isBiometricSupported(): Promise<boolean> {
+    try {
+      const compatible = await LocalAuthentication.hasHardwareAsync();
+      return compatible;
+    } catch (error) {
+      console.error('Error checking biometric support:', error);
+      return false;
+    }
+  }
 
+  static async isBiometricEnrolled(): Promise<boolean> {
+    try {
+      const enrolled = await LocalAuthentication.isEnrolledAsync();
+      return enrolled;
+    } catch (error) {
+      console.error('Error checking biometric enrollment:', error);
+      return false;
+    }
+  }
+
+  static async getBiometricType(): Promise<LocalAuthentication.AuthenticationType[]> {
+    try {
+      const types = await LocalAuthentication.supportedAuthenticationTypesAsync();
+      return types;
+    } catch (error) {
+      console.error('Error getting biometric types:', error);
+      return [];
+    }
+  }
+
+  static async authenticateWithBiometric(): Promise<{ success: boolean; error?: string }> {
+    try {
+      const result = await LocalAuthentication.authenticateAsync({
+        promptMessage: 'Unlock Lunari',
+        cancelLabel: 'Cancel',
+        disableDeviceFallback: true,
+      });
+
+      if (result.success) {
+        return { success: true };
+      } else {
+        return { 
+          success: false, 
+          error: result.error === 'user_cancel' ? 'Authentication cancelled' : 'Authentication failed'
+        };
+      }
+    } catch (error) {
+      console.error('Error with biometric authentication:', error);
+      return { success: false, error: 'Biometric authentication error' };
+    }
+  }
+
+  static async isBiometricEnabled(): Promise<boolean> {
+    try {
+      const enabled = await SecureStore.getItemAsync(BIOMETRIC_ENABLED_KEY);
+      return enabled === 'true';
+    } catch (error) {
+      console.error('Error checking biometric enabled status:', error);
+      return false;
+    }
+  }
+
+  static async setBiometricEnabled(enabled: boolean): Promise<boolean> {
+    try {
+      await SecureStore.setItemAsync(BIOMETRIC_ENABLED_KEY, enabled.toString());
+      return true;
+    } catch (error) {
+      console.error('Error setting biometric enabled status:', error);
+      return false;
+    }
+  }
+
+  static async canUseBiometric(): Promise<boolean> {
+    const supported = await this.isBiometricSupported();
+    const enrolled = await this.isBiometricEnrolled();
+    const enabled = await this.isBiometricEnabled();
+    const pinSet = await this.isPinSet();
+    
+    return supported && enrolled && enabled && pinSet;
+  }
 } 

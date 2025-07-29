@@ -6,6 +6,7 @@ interface AuthContextType {
   isLocked: boolean;
   isPinSet: boolean;
   isAuthenticated: boolean;
+  canUseBiometric: boolean;
   lockApp: () => void;
   unlockApp: () => void;
   setupPin: (pin: string) => Promise<boolean>;
@@ -13,6 +14,9 @@ interface AuthContextType {
   checkPin: (pin: string) => Promise<boolean>;
   removePin: () => Promise<boolean>;
   refreshPinStatus: () => Promise<void>;
+  authenticateWithBiometric: () => Promise<boolean>;
+  setBiometricEnabled: (enabled: boolean) => Promise<boolean>;
+  getBiometricType: () => Promise<string>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -26,6 +30,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [isPinSet, setIsPinSet] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [appStateBackground, setAppStateBackground] = useState(false);
+  const [canUseBiometric, setCanUseBiometric] = useState(false);
 
   // Initialize auth state
   useEffect(() => {
@@ -41,8 +46,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const initializeAuth = async () => {
     try {
       const pinSet = await AuthService.isPinSet();
+      const biometricAvailable = await AuthService.canUseBiometric();
 
       setIsPinSet(pinSet);
+      setCanUseBiometric(biometricAvailable);
 
       // If PIN is set, app should be locked initially
       if (pinSet) {
@@ -136,10 +143,52 @@ export function AuthProvider({ children }: AuthProviderProps) {
     await initializeAuth();
   };
 
+  const authenticateWithBiometric = async (): Promise<boolean> => {
+    try {
+      const result = await AuthService.authenticateWithBiometric();
+      if (result.success) {
+        unlockApp();
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error('Error with biometric authentication:', error);
+      return false;
+    }
+  };
+
+  const setBiometricEnabled = async (enabled: boolean): Promise<boolean> => {
+    try {
+      const success = await AuthService.setBiometricEnabled(enabled);
+      if (success) {
+        const biometricAvailable = await AuthService.canUseBiometric();
+        setCanUseBiometric(biometricAvailable);
+      }
+      return success;
+    } catch (error) {
+      console.error('Error setting biometric enabled:', error);
+      return false;
+    }
+  };
+
+  const getBiometricType = async (): Promise<string> => {
+    try {
+      const types = await AuthService.getBiometricType();
+      if (types.includes(1)) return 'Touch ID';
+      if (types.includes(2)) return 'Face ID';
+      if (types.includes(3)) return 'Fingerprint';
+      return 'Biometric';
+    } catch (error) {
+      console.error('Error getting biometric type:', error);
+      return 'Biometric';
+    }
+  };
+
   const value: AuthContextType = {
     isLocked,
     isPinSet,
     isAuthenticated,
+    canUseBiometric,
     lockApp,
     unlockApp,
     setupPin,
@@ -147,6 +196,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
     checkPin,
     removePin,
     refreshPinStatus,
+    authenticateWithBiometric,
+    setBiometricEnabled,
+    getBiometricType,
   };
 
   return (
