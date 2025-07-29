@@ -5,8 +5,8 @@ import { useCallback, useMemo } from 'react';
 import { CustomMarking, MarkedDates, SelectionRules } from '../app/types/calendarTypes';
 
 // Constants
-const MONTH_FONT_SIZE = 18;
-export const DAY_FONT_SIZE = 18;
+const MONTH_FONT_SIZE = 16;
+export const DAY_FONT_SIZE = 16;
 
 export type BaseCalendarProps = {
   // Mode determines the calendar's primary purpose
@@ -255,9 +255,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     width: 40,
-    height: 55,
+    height: 58,
     flexDirection: 'column',
     marginBottom: 6,
+    backgroundColor: 'green',
   },
 
   todayLabel: {

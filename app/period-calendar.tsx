@@ -207,11 +207,12 @@ export default function PeriodCalendarScreen() {
               />
             )}
           </View>
+          
+          {/* Today label - now inside the container */}
+          {isToday && (
+            <Text style={styles.todayLabel}>Today</Text>
+          )}
         </TouchableOpacity>
-        {/* Today label */}
-        {isToday && (
-          <Text style={styles.todayLabel}>Today</Text>
-        )}
       </View>
     );
   };
@@ -246,7 +247,7 @@ export default function PeriodCalendarScreen() {
             hideDayNames={true}
             futureScrollRange={1}
             pastScrollRange={12}
-            calendarHeight={505}
+            calendarHeight={520}
           />
 
       </View>
@@ -289,7 +290,6 @@ const styles = StyleSheet.create({
   },
   calendarContainer: {
     flex: 1,
-    backgroundColor: 'red',
   },
   footer: {
     flexDirection: 'row',
@@ -334,9 +334,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     width: 40,
-    height: 55,
+    height: 58,
     flexDirection: 'column',
     marginBottom: 6,
+    backgroundColor: '#BDC3FB',
   },
   customDayContainer: {
     alignItems: 'center',
@@ -347,12 +348,12 @@ const styles = StyleSheet.create({
   customDayText: {
     fontSize: DAY_FONT_SIZE,
     textAlign: 'center',
-    marginBottom: 2,
+    marginBottom: 1,
     color: '#000',
   },
   dayIndicator: {
-    width: 22,
-    height: 22,
+    width: 20,
+    height: 20,
     borderRadius: 11,
     borderWidth: 2,
     borderColor: '#99A6C0',
@@ -384,7 +385,7 @@ const styles = StyleSheet.create({
   todayLabel: {
     fontSize: 11,
     color: '#4E5166',
-    marginTop: 20,
+    marginTop: 1,
     textAlign: 'center',
   },
 }); 
