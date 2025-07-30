@@ -9,7 +9,8 @@ export default function TabLayout() {
   screenOptions={{
     tabBarActiveTintColor: '#4561D2',
     headerStyle: {
-      backgroundColor: '#ECEEFF',
+      backgroundColor: 'blue',
+      height: 100,
     },
     headerTitleStyle: {
       color: '#332F49',
@@ -42,9 +43,6 @@ export default function TabLayout() {
           headerShown: true,
           headerTitle: "Calendar",
           tabBarLabel: "Calendar",
-          headerStyle: {
-            backgroundColor: '#ffffff',
-          },
           tabBarIcon: ({ color, focused }) => (
             <Ionicons name={focused ? 'calendar' : 'calendar-outline'} color={color} size={24}/>
           ),

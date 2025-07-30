@@ -487,7 +487,6 @@ const styles = StyleSheet.create({
   },
   calendarContainer: {
     flex: 1,
-    paddingTop: 4,
   },
   floatingButton: {
     position: 'absolute',

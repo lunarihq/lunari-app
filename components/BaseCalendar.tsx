@@ -289,7 +289,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 40,
     height: 58,
-    flexDirection: 'column',
     backgroundColor: 'green',
   },
 
@@ -340,10 +339,9 @@ const styles = StyleSheet.create({
   dayNamesContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingTop: 5,
-    paddingBottom: 10,
-    paddingHorizontal: 36,
-    backgroundColor: '#ffffff',
+    paddingVertical: 5,
+    paddingHorizontal: 34,
+    backgroundColor: 'yellow',
     borderBottomWidth: 1,
     borderBottomColor: '#E9F0FF',
   },

@@ -275,15 +275,15 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: 20,
-    paddingVertical: 20,
-    paddingTop: 70, // Extra padding at top for status bar, like in symptom-tracking.tsx
-    backgroundColor: '#ffffff',
+    paddingHorizontal: 18,
+    height: 100,
+    backgroundColor: 'blue',
   },
   headerTitle: {
     fontSize: 18,
     fontWeight: '600',
     color: '#332F49',
+    paddingTop: 63,
   },
   calendarContainer: {
     flex: 1,
@@ -325,6 +325,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
     color: '#4F5FEB',
+    paddingTop: 63,
   },
   // Custom day styles
   customDayWrapper: {
