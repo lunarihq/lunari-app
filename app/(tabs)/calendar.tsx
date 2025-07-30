@@ -149,38 +149,7 @@ export default function CalendarScreen() {
       }
     }
     
-    // Mark today with a gray background, but preserve period styling if it's a period day
-    if (allMarkedDates[currentDate] && allMarkedDates[currentDate].selected) {
-      // This is both today and a period day - keep period background but add border
-      allMarkedDates[currentDate] = {
-        ...allMarkedDates[currentDate],
-        customStyles: {
-          ...allMarkedDates[currentDate].customStyles,
-          container: {
-            ...allMarkedDates[currentDate].customStyles?.container,
-            borderWidth: 2,
-            borderColor: 'black',
-          },
-          // Ensure text is white for period days
-          text: {
-            color: '#FFFFFF'
-          }
-        }
-      };
-    } else {
-      // This is just today, not a period day
-      allMarkedDates[currentDate] = {
-        ...allMarkedDates[currentDate],
-        customStyles: {
-          ...(allMarkedDates[currentDate]?.customStyles || {}),
-          container: {
-            ...(allMarkedDates[currentDate]?.customStyles?.container || {}),
-            backgroundColor: allMarkedDates[currentDate]?.customStyles?.container?.backgroundColor || '#E6E6E6',
-            borderRadius: 16,
-          }
-        }
-      };
-    }
+    // Remove today styling - let the calendar handle it naturally
     
     // Store base marked dates (without selection highlight)
     setBaseMarkedDates(allMarkedDates);
@@ -210,21 +179,48 @@ export default function CalendarScreen() {
     const updatedMarkedDates = { ...baseMarkedDates };
     const isPeriodDate = updatedMarkedDates[selectedDate]?.customStyles?.container?.backgroundColor === '#FF597B';
     
-    updatedMarkedDates[selectedDate] = {
-      ...updatedMarkedDates[selectedDate],
-      customStyles: {
-        ...(updatedMarkedDates[selectedDate]?.customStyles || {}),
-        container: {
-          ...(updatedMarkedDates[selectedDate]?.customStyles?.container || {}),
-          borderWidth: 2,
-          borderColor: 'black',
-          borderRadius: 16,
+    if (isPeriodDate) {
+      // For period dates, preserve the pink background but add a grey background behind it
+      updatedMarkedDates[selectedDate] = {
+        ...updatedMarkedDates[selectedDate],
+        customStyles: {
+          ...(updatedMarkedDates[selectedDate]?.customStyles || {}),
+          container: {
+            ...(updatedMarkedDates[selectedDate]?.customStyles?.container || {}),
+            backgroundColor: '#FF597B', // Keep the pink background
+            borderRadius: 16, // Keep the original size for the pink circle
+            width: 32, // Keep the original size for the pink circle
+            height: 32, // Keep the original size for the pink circle
+          },
+          text: { color: '#FFFFFF' }
         },
-        text: isPeriodDate 
-          ? { color: '#FFFFFF' } 
-          : updatedMarkedDates[selectedDate]?.customStyles?.text
-      }
-    };
+        // Add a custom container style for the grey background behind
+        customContainerStyle: {
+          backgroundColor: '#E6E6E6',
+          borderRadius: 20,
+          width: 40,
+          height: 40,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }
+      };
+    } else {
+      // For non-period dates, just add the grey background
+      updatedMarkedDates[selectedDate] = {
+        ...updatedMarkedDates[selectedDate],
+        customStyles: {
+          ...(updatedMarkedDates[selectedDate]?.customStyles || {}),
+          container: {
+            ...(updatedMarkedDates[selectedDate]?.customStyles?.container || {}),
+            backgroundColor: '#E6E6E6', // Grey background like Flo
+            borderRadius: 20, // Bigger circle
+            width: 40, // Make it bigger
+            height: 40, // Make it bigger
+          },
+          text: updatedMarkedDates[selectedDate]?.customStyles?.text
+        }
+      };
+    }
     
     return updatedMarkedDates;
   };

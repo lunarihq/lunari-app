@@ -99,37 +99,76 @@ export function BaseCalendar({
     // Determine if this is a period day (has the pink background)
     const isPeriodDay = customMarking?.customStyles?.container?.backgroundColor === '#FF597B';
     
-    return (
-      <View style={styles.dayContainer}>
-        <TouchableOpacity
-          style={[
-            styles.dayButton,
-            isSelected ? styles.selectedDay : null,
-            customMarking?.customStyles?.container,
-            customMarking?.customContainerStyle,
-            isToday ? styles.todayDayButton : null,
-            isToday && customMarking?.todayStyle,
-            isDisabled ? styles.disabledDay : null
-          ]}
-          onPress={() => date ? handleDayPress(date) : null}
-          disabled={isDisabled}
-        >
-          <Text style={[
-            styles.dayText,
-            isSelected && !isPeriodDay ? styles.selectedDayText : null,
-            isPeriodDay ? { color: '#FFFFFF' } : null,
-            isDisabled ? styles.disabledDayText : null,
-            isToday ? styles.todayText : null,
-            customMarking?.customStyles?.text
-          ]}>
-            {date ? date.day : ''}
-          </Text>
-        </TouchableOpacity>
-        {isToday && (
-          <Text style={styles.todayLabel}>Today</Text>
-        )}
-      </View>
-    );
+    // Check if this day has a custom container style (for selection background)
+    const hasCustomContainer = customMarking?.customContainerStyle;
+    
+    if (hasCustomContainer) {
+      // Render with layered background for selection
+      return (
+        <View style={styles.dayContainer}>
+          <View style={customMarking.customContainerStyle}>
+            <TouchableOpacity
+              style={[
+                styles.dayButton,
+                isSelected ? styles.selectedDay : null,
+                customMarking?.customStyles?.container,
+                isToday ? styles.todayDayButton : null,
+                isToday && customMarking?.todayStyle,
+                isDisabled ? styles.disabledDay : null
+              ]}
+              onPress={() => date ? handleDayPress(date) : null}
+              disabled={isDisabled}
+            >
+              <Text style={[
+                styles.dayText,
+                isSelected && !isPeriodDay ? styles.selectedDayText : null,
+                isPeriodDay ? { color: '#FFFFFF' } : null,
+                isDisabled ? styles.disabledDayText : null,
+                isToday ? styles.todayText : null,
+                customMarking?.customStyles?.text
+              ]}>
+                {date ? date.day : ''}
+              </Text>
+            </TouchableOpacity>
+          </View>
+          {isToday && (
+            <Text style={styles.todayLabel}>Today</Text>
+          )}
+        </View>
+      );
+    } else {
+      // Render normally without custom container
+      return (
+        <View style={styles.dayContainer}>
+          <TouchableOpacity
+            style={[
+              styles.dayButton,
+              isSelected ? styles.selectedDay : null,
+              customMarking?.customStyles?.container,
+              isToday ? styles.todayDayButton : null,
+              isToday && customMarking?.todayStyle,
+              isDisabled ? styles.disabledDay : null
+            ]}
+            onPress={() => date ? handleDayPress(date) : null}
+            disabled={isDisabled}
+          >
+            <Text style={[
+              styles.dayText,
+              isSelected && !isPeriodDay ? styles.selectedDayText : null,
+              isPeriodDay ? { color: '#FFFFFF' } : null,
+              isDisabled ? styles.disabledDayText : null,
+              isToday ? styles.todayText : null,
+              customMarking?.customStyles?.text
+            ]}>
+              {date ? date.day : ''}
+            </Text>
+          </TouchableOpacity>
+          {isToday && (
+            <Text style={styles.todayLabel}>Today</Text>
+          )}
+        </View>
+      );
+    }
   }, [handleDayPress]);
 
   // Default header component if none provided
@@ -257,7 +296,6 @@ const styles = StyleSheet.create({
     width: 40,
     height: 58,
     flexDirection: 'column',
-    marginBottom: 6,
     backgroundColor: 'green',
   },
 
@@ -272,6 +310,7 @@ const styles = StyleSheet.create({
     height: 32,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: 'red',
     borderRadius: 16,
   },
   dayText: {
@@ -288,7 +327,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   todayDayButton: {
-    backgroundColor: '#DDE3F2',
+    // Remove today background styling
   },
   selectedDay: {
     backgroundColor: '#FFEAEE',
