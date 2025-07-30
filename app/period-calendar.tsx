@@ -208,10 +208,7 @@ export default function PeriodCalendarScreen() {
             )}
           </View>
           
-          {/* Today label - now inside the container */}
-          {isToday && (
-            <Text style={styles.todayLabel}>Today</Text>
-          )}
+
         </TouchableOpacity>
       </View>
     );
@@ -382,10 +379,5 @@ const styles = StyleSheet.create({
   futureDayIndicator: {
     borderWidth: 1,
   },
-  todayLabel: {
-    fontSize: 11,
-    color: '#4E5166',
-    marginTop: 1,
-    textAlign: 'center',
-  },
+
 }); 
