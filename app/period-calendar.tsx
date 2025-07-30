@@ -277,7 +277,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 18,
     height: 100,
-    backgroundColor: 'blue',
+    backgroundColor: 'white',
   },
   headerTitle: {
     fontSize: 18,
@@ -335,7 +335,7 @@ const styles = StyleSheet.create({
     height: 58,
     flexDirection: 'column',
     marginBottom: 6,
-    backgroundColor: '#BDC3FB',
+    backgroundColor: 'white',
   },
   customDayContainer: {
     alignItems: 'center',

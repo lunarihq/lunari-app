@@ -239,7 +239,7 @@ export default function CalendarScreen() {
         // Reset button position immediately if drawer is open
         if (isDrawerOpen) {
           const isDateInPastOrToday = today <= currentDate;
-          const buttonPosition = isDateInPastOrToday ? 280 : 120;
+          const buttonPosition = isDateInPastOrToday ? 255 : 100;
           buttonAnimation.setValue(buttonPosition);
         }
       };
@@ -307,7 +307,7 @@ export default function CalendarScreen() {
     // Use provided date or fall back to current selectedDate
     const dateForComparison = dateToUse || selectedDate;
     const isDateInPastOrToday = dateForComparison <= currentDate;
-    const buttonPosition = isDateInPastOrToday ? 280 : 120;
+    const buttonPosition = isDateInPastOrToday ? 255 : 100;
     
     Animated.parallel([
       Animated.spring(drawerAnimation, {
@@ -496,8 +496,8 @@ const styles = StyleSheet.create({
   floatingButtonTouchable: {
     backgroundColor: '#FF597B',
     borderRadius: 80,
-    paddingVertical: 12,
-    paddingHorizontal: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 16,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
@@ -521,7 +521,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    paddingVertical: 16,
+    paddingVertical: 8,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
