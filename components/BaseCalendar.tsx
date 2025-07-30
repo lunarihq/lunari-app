@@ -289,7 +289,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 40,
     height: 58,
-    backgroundColor: 'green',
+    backgroundColor: 'white',
   },
 
 
@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
     height: 32,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'red',
+    backgroundColor: 'white',
     borderRadius: 16,
   },
   dayText: {
@@ -341,7 +341,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingVertical: 5,
     paddingHorizontal: 34,
-    backgroundColor: 'yellow',
+    backgroundColor: 'white',
     borderBottomWidth: 1,
     borderBottomColor: '#E9F0FF',
   },
