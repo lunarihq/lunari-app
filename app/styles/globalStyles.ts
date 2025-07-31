@@ -19,9 +19,9 @@ export const globalStyles = StyleSheet.create({
   },
 
   button: {
-    backgroundColor: '#FF2D55',
-    paddingVertical: 12,
-    paddingHorizontal: 24,
+    backgroundColor: '#4F5FEB',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
     borderRadius: 24,
     alignItems: 'center',
   },

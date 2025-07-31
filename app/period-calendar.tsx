@@ -195,7 +195,6 @@ export default function PeriodCalendarScreen() {
           <View style={[
             styles.dayIndicator,
             isSelected ? styles.selectedDayIndicator : null,
-            isToday ? styles.todayIndicator : null,
             isFuture ? styles.futureDayIndicator : null,
           ]}>
             {isSelected && !isFuture && (
@@ -291,7 +290,9 @@ const styles = StyleSheet.create({
   footer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 16,
+    paddingTop: 16,
+    paddingBottom: 20,
+    paddingHorizontal: 16,
     backgroundColor: '#fff',
     borderTopWidth: 1,
     borderTopColor: '#e0e0e0',
@@ -312,7 +313,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#4F5FEB',
     paddingVertical: 12,
-    borderRadius: 4,
+    borderRadius: 80,
     marginLeft: 8,
   },
   saveButtonText: {
@@ -350,9 +351,9 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   dayIndicator: {
-    width: 20,
-    height: 20,
-    borderRadius: 11,
+    width: 22,
+    height: 22,
+    borderRadius: 12,
     borderWidth: 2,
     borderColor: '#99A6C0',
     alignItems: 'center',
@@ -362,9 +363,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FF597B',
     borderColor: '#FF597B',
   },
-  todayIndicator: {
-    borderWidth: 4,
-  },
+
   todayText: {
     fontWeight: 'bold',
   },

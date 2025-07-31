@@ -44,7 +44,7 @@ export const SymptomsTracker = ({ selectedDate, titleStyle }: SymptomsTrackerPro
     
     if (isEmoji) {
       // Render emoji as text
-      return <Text style={{ fontSize: 18 }}>{icon}</Text>;
+      return <Text style={{ fontSize: 30 }}>{icon}</Text>;
     }
     
     if (type === 'symptom') {

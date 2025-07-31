@@ -196,7 +196,7 @@ export default function CalendarScreen() {
         },
         // Add a custom container style for the grey background behind
         customContainerStyle: {
-          backgroundColor: '#E6E6E6',
+          backgroundColor: '#E5E5E5',
           borderRadius: 20,
           width: 40,
           height: 40,
@@ -494,7 +494,7 @@ const styles = StyleSheet.create({
     zIndex: 999,
   },
   floatingButtonTouchable: {
-    backgroundColor: '#FF597B',
+    backgroundColor: '#4F5FEB',
     borderRadius: 80,
     paddingVertical: 10,
     paddingHorizontal: 16,
