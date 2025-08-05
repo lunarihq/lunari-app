@@ -59,9 +59,25 @@ export const SymptomsTracker = ({ selectedDate, titleStyle }: SymptomsTrackerPro
       }
     } else if (type === 'mood') {
       return <Ionicons name={icon} size={18} color={icon_color} />;
+    } else if (type === 'notes') {
+      // Use a note icon for notes
+      return <Ionicons name="document-text" size={18} color={icon_color} />;
     }
     
     return <Ionicons name="help-circle" size={18} color="#888" />;
+  };
+
+  // Helper function to get display text for each log item
+  const getDisplayText = (log: any) => {
+    const { type, name } = log;
+    
+    // For notes, always show "Note" instead of the actual note text
+    if (type === 'notes') {
+      return 'Note';
+    }
+    
+    // For other types, show the original name
+    return name;
   };
 
   // Get date text for display
@@ -104,7 +120,7 @@ export const SymptomsTracker = ({ selectedDate, titleStyle }: SymptomsTrackerPro
               <View style={styles.itemIconContainer}>
                 {getIconComponent(log)}
               </View>
-              <Text style={styles.itemText} numberOfLines={1}>{log.name}</Text>
+              <Text style={styles.itemText} numberOfLines={1}>{getDisplayText(log)}</Text>
             </TouchableOpacity>
           ))
         ) : (

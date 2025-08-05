@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, StyleSheet, Pressable } from 'react-native';
+import { Text, View, StyleSheet, Pressable, ScrollView } from 'react-native';
 import { useLocalSearchParams, router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { PeriodPredictionService } from '../services/periodPredictions';
@@ -23,7 +23,11 @@ export default function CyclePhaseDetails() {
 
   return (
     <View style={theme.globalStyles.container}>
-      <View style={styles.content}>
+      <ScrollView 
+        style={styles.content} 
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+      >
         <Text style={styles.dateText}>{getFormattedDate(currentDate)}</Text>
         
         <Text style={styles.cycleTitle}>Cycle day {cycleDay}</Text>
@@ -58,15 +62,29 @@ export default function CyclePhaseDetails() {
           
           <Text style={styles.phaseDescription}>{possibleSymptoms}</Text>
         </View>
-      </View>
+        <View style={styles.phaseCard}>
+          <View style={styles.phaseHeader}>
+            <Ionicons name="medical-outline" size={24} color="#332F49" />
+            <Text style={styles.cardTitle}>Possible symptoms</Text>
+          </View>
+          
+          <Text style={styles.phaseDescription}>{possibleSymptoms}</Text>
+        </View>
+
+      </ScrollView>
+      
     </View>
+    
   );
 }
 
 const styles = StyleSheet.create({
   content: {
     flex: 1,
+  },
+  scrollContent: {
     paddingTop: 30,
+    paddingBottom: 40,
   },
   dateText: {
     fontSize: 17,

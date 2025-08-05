@@ -4,6 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import { getSetting } from '../db';
 import * as Notifications from 'expo-notifications';
 import { AuthProvider, useAuth } from '../contexts/AuthContext';
+import { NotesProvider } from '../contexts/NotesContext';
 import { LockScreen } from '../components/LockScreen';
 
 function AppContent() {
@@ -129,6 +130,14 @@ function AppContent() {
             headerShadowVisible: false,
           }} 
         />
+        <Stack.Screen 
+          name="notes-editor" 
+          options={{ 
+            headerShown: true,
+            headerTitle: "Notes",
+            headerShadowVisible: false,
+          }} 
+        />
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style="dark" />
@@ -139,7 +148,9 @@ function AppContent() {
 export default function RootLayout() {
   return (
     <AuthProvider>
-      <AppContent />
+      <NotesProvider>
+        <AppContent />
+      </NotesProvider>
     </AuthProvider>
   );
 }

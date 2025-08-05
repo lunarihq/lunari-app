@@ -16,6 +16,8 @@ import { healthLogs } from '../db/schema';
 import { eq } from 'drizzle-orm';
 import { useFocusEffect } from '@react-navigation/native';
 import theme from './styles/theme';
+import { useNotes } from '../contexts/NotesContext';
+
 // Symptom type definition
 type Item = {
   id: string;
@@ -73,10 +75,9 @@ const generateWeeksData = (): WeekData[] => {
   return weeks;
 };
 
-
-
 export default function SymptomTracking() {
   const params = useLocalSearchParams();
+  const { notes, setNotes } = useNotes();
   const [selectedDate, setSelectedDate] = useState<string>(
     // Use the date from params if provided, otherwise use today's date
     typeof params.date === 'string' ? params.date : dayjs().format('YYYY-MM-DD')
@@ -88,6 +89,7 @@ export default function SymptomTracking() {
   const [originalSymptoms, setOriginalSymptoms] = useState<string[]>([]);
   const [originalMoods, setOriginalMoods] = useState<string[]>([]);
   const [originalFlows, setOriginalFlows] = useState<string[]>([]);
+  const [originalNotes, setOriginalNotes] = useState<string>('');
   const [hasChanges, setHasChanges] = useState<boolean>(false);
   
   const flatListRef = useRef<FlatList>(null);
@@ -278,6 +280,7 @@ export default function SymptomTracking() {
         const symptomIds = new Set();
         const moodIds = new Set();
         const flowIds = new Set();
+        let notesText = '';
         
         // Populate the sets
         existingEntries.forEach(entry => {
@@ -287,6 +290,8 @@ export default function SymptomTracking() {
             moodIds.add(entry.item_id);
           } else if (entry.type === 'flow') {
             flowIds.add(entry.item_id);
+          } else if (entry.type === 'notes') {
+            notesText = entry.name || '';
           }
         });
         
@@ -314,20 +319,24 @@ export default function SymptomTracking() {
           }))
         );
         
+        // Update notes state
+        setNotes(notesText);
+        
         // Store original state for comparison
         setOriginalSymptoms(Array.from(symptomIds) as string[]);
         setOriginalMoods(Array.from(moodIds) as string[]);
         setOriginalFlows(Array.from(flowIds) as string[]);
+        setOriginalNotes(notesText);
         setHasChanges(false);
         
-        console.log(`Loaded ${symptomIds.size} symptoms, ${moodIds.size} moods, and ${flowIds.size} flows for ${selectedDate}`);
+        console.log(`Loaded ${symptomIds.size} symptoms, ${moodIds.size} moods, ${flowIds.size} flows, and notes for ${selectedDate}`);
       } catch (error) {
         console.error('Error loading health logs:', error);
       }
     };
     
     loadExistingHealthLogs();
-  }, [selectedDate]);
+  }, [selectedDate, setNotes]);
   
   // Check for changes compared to original state
   useEffect(() => {
@@ -362,8 +371,10 @@ export default function SymptomTracking() {
       currentSelectedFlows.every(id => originalFlows.includes(id))
     );
     
-    setHasChanges(symptomsChanged || moodsChanged || flowsChanged);
-  }, [symptoms, moods, flows, originalSymptoms, originalMoods, originalFlows]);
+    const notesChanged = notes !== originalNotes;
+    
+    setHasChanges(symptomsChanged || moodsChanged || flowsChanged || notesChanged);
+  }, [symptoms, moods, flows, notes, originalSymptoms, originalMoods, originalFlows, originalNotes]);
 
   // Toggle symptom selection
   const toggleSymptom = (id: string) => {
@@ -384,6 +395,14 @@ export default function SymptomTracking() {
     setFlows(flows.map(flow => 
       flow.id === id ? { ...flow, selected: !flow.selected } : flow
     ));
+  };
+
+  // Navigate to notes editor
+  const openNotesEditor = () => {
+    router.push({
+      pathname: '/notes-editor',
+      params: { notes: notes }
+    });
   };
 
   // Save changes
@@ -460,22 +479,30 @@ export default function SymptomTracking() {
         };
       });
       
-      // STEP 5: Combine all records to insert
-      const allRecords = [...symptomRecords, ...moodRecords, ...flowRecords];
+      // STEP 5: Prepare notes record (only if notes exist)
+      const notesRecords = notes.trim() ? [{
+        date: selectedDate,
+        type: 'notes',
+        item_id: '1',
+        name: notes.trim(),
+        icon: '📝',
+        icon_color: '#4561D2'
+      }] : [];
       
-      // STEP 6: Insert new records (only if there are any)
+      // STEP 6: Combine all records to insert
+      const allRecords = [...symptomRecords, ...moodRecords, ...flowRecords, ...notesRecords];
+      
+      // STEP 7: Insert new records (only if there are any)
       if (allRecords.length > 0) {
         await db.insert(healthLogs).values(allRecords);
       }
       
-      // STEP 7: Navigate back
+      // STEP 8: Navigate back
       router.back();
     } catch (error) {
       console.error('Error saving health logs:', error);
     }
   };
-
-
 
   return (
     <View style={theme.globalStyles.container}>
@@ -503,7 +530,11 @@ export default function SymptomTracking() {
         </TouchableOpacity>
       </View>
 
-      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+      <ScrollView 
+        style={styles.scrollView} 
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+      >
 
         {/* Flow */}
         <View style={styles.section}>
@@ -569,6 +600,32 @@ export default function SymptomTracking() {
               ))}
             </View>
           </View>
+
+          {/* Notes */}
+          <View style={styles.section}>
+            <View style={styles.sectionHeader}>
+              <Text style={styles.sectionTitle}>Notes</Text>
+            </View>
+            
+            <TouchableOpacity 
+              style={styles.notesContainer}
+              onPress={openNotesEditor}
+              activeOpacity={0.7}
+            >
+              {notes.trim() ? (
+                <Text style={styles.notesText} numberOfLines={3}>
+                  {notes}
+                </Text>
+              ) : (
+                <Text style={styles.notesPlaceholder}>
+                  Tap to add notes about your day...
+                </Text>
+              )}
+              <View style={styles.notesIcon}>
+                <Ionicons name="chevron-forward" size={16} color="#999" />
+              </View>
+            </TouchableOpacity>
+          </View>
       </ScrollView>
 
       {/* Save button that appears only when changes are made */}
@@ -603,7 +660,10 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1,
+  },
+  scrollContent: {
     paddingTop: 16,
+    paddingBottom: 40,
   },
 
   section: {
@@ -657,6 +717,32 @@ const styles = StyleSheet.create({
   },
   emojiText: {
     fontSize: 28,
+  },
+  notesContainer: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
+    borderRadius: 12,
+    padding: 16,
+    backgroundColor: '#FAFAFA',
+    minHeight: 60,
+  },
+  notesText: {
+    flex: 1,
+    fontSize: 16,
+    lineHeight: 22,
+    color: '#333',
+  },
+  notesPlaceholder: {
+    flex: 1,
+    fontSize: 16,
+    color: '#999',
+    fontStyle: 'italic',
+  },
+  notesIcon: {
+    marginLeft: 12,
+    marginTop: 2,
   },
   saveButton: {
     position: 'absolute',
