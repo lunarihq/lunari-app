@@ -145,7 +145,6 @@ const styles = StyleSheet.create({
     color: '#333',
     textAlignVertical: 'top',
     padding: 0,
-    backgroundColor: 'red',
   },
   keyboardToolbar: {
     position: 'absolute',
@@ -170,8 +169,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    borderTopWidth: 1,
-    borderTopColor: 'rgba(0, 0, 0, 0.1)',
   },
 
   saveButton: {
