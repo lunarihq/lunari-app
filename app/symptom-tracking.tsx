@@ -93,6 +93,8 @@ export default function SymptomTracking() {
   const [hasChanges, setHasChanges] = useState<boolean>(false);
   
   const flatListRef = useRef<FlatList>(null);
+  const scrollViewRef = useRef<ScrollView>(null);
+  const notesSectionRef = useRef<View>(null);
   
   // Update header title on focused
   useFocusEffect(
@@ -337,6 +339,24 @@ export default function SymptomTracking() {
     
     loadExistingHealthLogs();
   }, [selectedDate, setNotes]);
+
+  // Handle scrollTo parameter to navigate to specific sections
+  useEffect(() => {
+    if (params.scrollTo === 'notes' && scrollViewRef.current && notesSectionRef.current) {
+      // Use setTimeout to ensure the component has fully rendered
+      setTimeout(() => {
+        notesSectionRef.current?.measureLayout(
+          scrollViewRef.current as any,
+          (x, y) => {
+            scrollViewRef.current?.scrollTo({ y, animated: true });
+          },
+          () => {
+            console.log('Failed to measure notes section position');
+          }
+        );
+      }, 100);
+    }
+  }, [params.scrollTo]);
   
   // Check for changes compared to original state
   useEffect(() => {
@@ -531,6 +551,7 @@ export default function SymptomTracking() {
       </View>
 
       <ScrollView 
+        ref={scrollViewRef}
         style={styles.scrollView} 
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
@@ -602,7 +623,7 @@ export default function SymptomTracking() {
           </View>
 
           {/* Notes */}
-          <View style={styles.section}>
+          <View ref={notesSectionRef} style={styles.section}>
             <View style={styles.sectionHeader}>
               <Text style={styles.sectionTitle}>Notes</Text>
               <View style={styles.notesIconsContainer}>

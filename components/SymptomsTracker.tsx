@@ -112,9 +112,20 @@ export const SymptomsTracker = ({ selectedDate, titleStyle }: SymptomsTrackerPro
             <TouchableOpacity 
               key={`${log.type}_${log.item_id}`} 
               style={styles.itemContainer}
-              onPress={() => router.push(selectedDate ? 
-                `/symptom-tracking?date=${selectedDate}` : 
-                '/symptom-tracking')}
+              onPress={() => {
+                const params: any = {};
+                if (selectedDate) {
+                  params.date = selectedDate;
+                }
+                if (log.type === 'notes') {
+                  params.scrollTo = 'notes';
+                }
+                
+                router.push({
+                  pathname: '/symptom-tracking',
+                  params
+                });
+              }}
               activeOpacity={0.7}
             >
               <View style={styles.itemIconContainer}>
