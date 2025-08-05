@@ -107,11 +107,11 @@ export default function NotesEditor() {
         </View>
       </KeyboardAvoidingView>
 
-      {/* Done Button - positioned above keyboard */}
-      {isKeyboardVisible && localNotes.trim() && (
+      {/* Done Button - positioned above keyboard or at bottom */}
+      {localNotes.trim() && (
         <View style={[
-          styles.keyboardToolbar,
-          { bottom: keyboardHeight }
+          isKeyboardVisible ? styles.keyboardToolbar : styles.bottomToolbar,
+          isKeyboardVisible ? { bottom: keyboardHeight } : {}
         ]}>
           <TouchableOpacity 
             style={styles.saveButton} 
@@ -157,6 +157,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  bottomToolbar: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    paddingHorizontal: 20,
+    paddingBottom: 40,
+    paddingTop: 20,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(0, 0, 0, 0.1)',
   },
 
   saveButton: {
