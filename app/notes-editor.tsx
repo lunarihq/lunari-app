@@ -7,7 +7,8 @@ import {
   TextInput,
   SafeAreaView,
   KeyboardAvoidingView,
-  Platform
+  Platform,
+  Keyboard
 } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 import theme from './styles/theme';
@@ -19,6 +20,8 @@ export default function NotesEditor() {
   const [localNotes, setLocalNotes] = useState<string>('');
   const [hasChanges, setHasChanges] = useState<boolean>(false);
   const [originalNotes, setOriginalNotes] = useState<string>('');
+  const [keyboardHeight, setKeyboardHeight] = useState<number>(0);
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState<boolean>(false);
 
   // Get the initial notes from params or context
   useEffect(() => {
@@ -31,6 +34,30 @@ export default function NotesEditor() {
   useEffect(() => {
     setHasChanges(localNotes !== originalNotes);
   }, [localNotes, originalNotes]);
+
+  // Keyboard event listeners
+  useEffect(() => {
+    const keyboardWillShowListener = Keyboard.addListener(
+      Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow',
+      (event) => {
+        setKeyboardHeight(event.endCoordinates.height);
+        setIsKeyboardVisible(true);
+      }
+    );
+
+    const keyboardWillHideListener = Keyboard.addListener(
+      Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide',
+      () => {
+        setKeyboardHeight(0);
+        setIsKeyboardVisible(false);
+      }
+    );
+
+    return () => {
+      keyboardWillShowListener.remove();
+      keyboardWillHideListener.remove();
+    };
+  }, []);
 
   // Handle save
   const handleSave = () => {
@@ -57,19 +84,6 @@ export default function NotesEditor() {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Action Buttons - positioned above KeyboardAvoidingView */}
-      <View style={styles.actionButtonsContainer}>
-        {localNotes.trim() && (
-          <TouchableOpacity 
-            style={styles.saveButton} 
-            onPress={handleSave}
-            activeOpacity={0.8}
-          >
-            <Text style={styles.saveButtonText}>Done</Text>
-          </TouchableOpacity>
-        )}
-      </View>
-
       {/* Main Content with KeyboardAvoidingView */}
       <KeyboardAvoidingView 
         style={styles.keyboardAvoidingView}
@@ -92,6 +106,22 @@ export default function NotesEditor() {
           />
         </View>
       </KeyboardAvoidingView>
+
+      {/* Done Button - positioned above keyboard */}
+      {isKeyboardVisible && localNotes.trim() && (
+        <View style={[
+          styles.keyboardToolbar,
+          { bottom: keyboardHeight }
+        ]}>
+          <TouchableOpacity 
+            style={styles.saveButton} 
+            onPress={handleSave}
+            activeOpacity={0.8}
+          >
+            <Text style={styles.saveButtonText}>Done</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </SafeAreaView>
   );
 }
@@ -109,19 +139,21 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   notesInput: {
-    flex: 1,
+    maxHeight: 300,
     fontSize: 16,
     lineHeight: 24,
     color: '#333',
     textAlignVertical: 'top',
     padding: 0,
+    backgroundColor: 'red',
   },
-  actionButtonsContainer: {
-    backgroundColor: '#fff',
+  keyboardToolbar: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
     paddingHorizontal: 20,
-    paddingVertical: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#E0E0E0',
+    paddingBottom: 40,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
