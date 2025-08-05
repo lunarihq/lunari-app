@@ -129,6 +129,13 @@ export default function SymptomTracking() {
     }
   };
 
+  // Check if next day would be in the future
+  const isNextDayDisabled = () => {
+    const nextDay = dayjs(selectedDate).add(1, 'day');
+    const today = dayjs();
+    return nextDay.isAfter(today, 'day');
+  };
+
   // Symptoms data
   const [symptoms, setSymptoms] = useState<Item[]>([
     { 
@@ -544,9 +551,14 @@ export default function SymptomTracking() {
         
         <TouchableOpacity 
           onPress={goToNextDay}
-          style={styles.headerButton}
+          style={[styles.headerButton, isNextDayDisabled() && styles.disabledButton]}
+          disabled={isNextDayDisabled()}
         >
-          <Ionicons name="chevron-forward" size={24} color="#333" />
+          <Ionicons 
+            name="chevron-forward" 
+            size={24} 
+            color={isNextDayDisabled() ? "#CCC" : "#333"} 
+          />
         </TouchableOpacity>
       </View>
 
@@ -682,6 +694,9 @@ const styles = StyleSheet.create({
 
   headerButton: {
     padding: 10,
+  },
+  disabledButton: {
+    opacity: 10,
   },
   dateNavigator: {
     flexDirection: 'row',
