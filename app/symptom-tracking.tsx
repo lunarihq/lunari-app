@@ -605,6 +605,24 @@ export default function SymptomTracking() {
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
               <Text style={styles.sectionTitle}>Notes</Text>
+              <View style={styles.notesIconsContainer}>
+                {notes.trim() && (
+                  <TouchableOpacity 
+                    style={styles.notesIcon}
+                    onPress={() => setNotes('')}
+                    activeOpacity={0.7}
+                  >
+                    <Ionicons name="trash-outline" size={24} color="#999" />
+                  </TouchableOpacity>
+                )}
+                <TouchableOpacity 
+                  style={styles.notesIcon}
+                  onPress={openNotesEditor}
+                  activeOpacity={0.7}
+                >
+                  <Ionicons name="create-outline" size={24} color="#999" />
+                </TouchableOpacity>
+              </View>
             </View>
             
             <TouchableOpacity 
@@ -618,12 +636,9 @@ export default function SymptomTracking() {
                 </Text>
               ) : (
                 <Text style={styles.notesPlaceholder}>
-                  Tap to add notes about your day...
+                  Add notes about your day...
                 </Text>
               )}
-              <View style={styles.notesIcon}>
-                <Ionicons name="chevron-forward" size={16} color="#999" />
-              </View>
             </TouchableOpacity>
           </View>
       </ScrollView>
@@ -663,7 +678,7 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     paddingTop: 16,
-    paddingBottom: 40,
+    paddingBottom: 80,
   },
 
   section: {
@@ -721,11 +736,7 @@ const styles = StyleSheet.create({
   notesContainer: {
     flexDirection: 'row',
     alignItems: 'flex-start',
-    borderWidth: 1,
-    borderColor: '#E0E0E0',
     borderRadius: 12,
-    padding: 16,
-    backgroundColor: '#FAFAFA',
     minHeight: 60,
   },
   notesText: {
@@ -740,9 +751,12 @@ const styles = StyleSheet.create({
     color: '#999',
     fontStyle: 'italic',
   },
+  notesIconsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   notesIcon: {
-    marginLeft: 12,
-    marginTop: 2,
+    marginLeft: 16,
   },
   saveButton: {
     position: 'absolute',
