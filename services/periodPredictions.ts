@@ -231,6 +231,46 @@ export class PeriodPredictionService {
     };
   }
 
+  // Generate fertile windows and ovulation for actual logged periods
+  static generateFertilityForLoggedPeriods(periodStartDates: string[], userCycleLength: number): { [date: string]: { type: 'fertile' | 'ovulation' } } {
+    const fertilityDates: { [date: string]: { type: 'fertile' | 'ovulation' } } = {};
+    
+    periodStartDates.forEach(startDate => {
+      // Calculate ovulation date (14 days before period start)
+      const startDateParts = startDate.split('-');
+      const year = parseInt(startDateParts[0]);
+      const month = parseInt(startDateParts[1]) - 1; // JS months are 0-indexed
+      const day = parseInt(startDateParts[2]);
+      
+      const periodDate = new Date(year, month, day, 12, 0, 0);
+      const ovulationDate = new Date(periodDate);
+      ovulationDate.setDate(ovulationDate.getDate() - 14);
+      const ovulationDateString = ovulationDate.toISOString().split('T')[0];
+      
+      // Calculate fertile window (5 days before ovulation + ovulation day + 1 day after)
+      const fertileStart = new Date(ovulationDate);
+      fertileStart.setDate(fertileStart.getDate() - 5);
+      
+      const fertileEnd = new Date(ovulationDate);
+      fertileEnd.setDate(fertileEnd.getDate() + 1);
+      
+      // Add fertile window dates
+      for (let d = new Date(fertileStart); d <= fertileEnd; d.setDate(d.getDate() + 1)) {
+        const fertileDateString = d.toISOString().split('T')[0];
+        
+        if (fertileDateString === ovulationDateString) {
+          // This is the ovulation day - mark it as ovulation
+          fertilityDates[fertileDateString] = { type: 'ovulation' };
+        } else {
+          // This is a fertile window day (not ovulation)
+          fertilityDates[fertileDateString] = { type: 'fertile' };
+        }
+      }
+    });
+    
+    return fertilityDates;
+  }
+
   // Generate all predicted dates (periods, fertile window, and ovulation) for multiple cycles
   static generatePredictedDates(startDate: string, userCycleLength: number, userPeriodLength: number, numCycles: number = 3): { [date: string]: { type: 'period' | 'fertile' | 'ovulation' } } {
     const predictedDates: { [date: string]: { type: 'period' | 'fertile' | 'ovulation' } } = {};

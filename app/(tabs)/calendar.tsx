@@ -98,7 +98,7 @@ export default function CalendarScreen() {
       setFirstPeriodDate(mostRecentStart);
       
       // Generate predictions and marked dates
-      generateMarkedDates(dates, mostRecentStart);
+      generateMarkedDates(dates, mostRecentStart, periods);
     } else {
       setFirstPeriodDate(null);
       setCycleDay(null);
@@ -107,19 +107,61 @@ export default function CalendarScreen() {
   };
 
   // Generate all marked dates including predictions
-  const generateMarkedDates = (periodDates: MarkedDates, startDate: string) => {
+  const generateMarkedDates = (periodDates: MarkedDates, startDate: string, allPeriods: string[][]) => {
     if (!startDate) return;
     
     const allMarkedDates = { ...periodDates };
     const cycleLength = PeriodPredictionService.getAverageCycleLength(Object.keys(periodDates), userCycleLength);
     setAverageCycleLength(cycleLength);
     
-    // Get predicted dates from the service
+    // Get all period start dates (earliest date in each period)
+    const periodStartDates = allPeriods.map(period => period[period.length - 1]);
+    
+    // Generate fertile windows and ovulation for all logged periods (past and present)
+    const fertilityDates = PeriodPredictionService.generateFertilityForLoggedPeriods(periodStartDates, cycleLength);
+    
+    // Get predicted dates for future cycles
     const predictedDates = PeriodPredictionService.generatePredictedDates(startDate, cycleLength, userPeriodLength, 12);
     
-    // Apply styling to predicted dates
+    // Apply styling to fertility dates (past and present cycles)
+    Object.entries(fertilityDates).forEach(([dateString, prediction]) => {
+      // Only apply fertility style if this is not an actual period date
+      if (!allMarkedDates[dateString] || !allMarkedDates[dateString].selected) {
+        if (prediction.type === 'ovulation') {
+          // Ovulation day: Blue outline circle on light blue background
+          allMarkedDates[dateString] = {
+            customStyles: {
+              container: {
+                borderRadius: 16,
+                backgroundColor: '#E7F3FF', // Light blue background
+                borderWidth: 2,
+                borderColor: '#4F5FEB', // Blue outline
+              },
+              text: {
+                color: '#4F5FEB'
+              }
+            }
+          };
+        } else if (prediction.type === 'fertile') {
+          // Fertile window days: Light blue background
+          allMarkedDates[dateString] = {
+            customStyles: {
+              container: {
+                borderRadius: 16,
+                backgroundColor: '#E7F3FF',
+              },
+              text: {
+                color: '#4F5FEB'
+              }
+            }
+          };
+        }
+      }
+    });
+    
+    // Apply styling to predicted dates (future cycles only)
     Object.entries(predictedDates).forEach(([dateString, prediction]) => {
-      // Only apply prediction style if this is not an actual period date
+      // Only apply prediction style if this is not an actual period date and not already a fertility date
       if (!allMarkedDates[dateString] || !allMarkedDates[dateString].selected) {
         if (prediction.type === 'ovulation') {
           // Ovulation day: Blue outline circle on light blue background
