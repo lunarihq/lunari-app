@@ -319,7 +319,7 @@ export default function Index() {
 
         <SymptomsTracker />
         
-        <View />
+        <View style={{ height: 20 }} />
       </ScrollView>
   );
 }
