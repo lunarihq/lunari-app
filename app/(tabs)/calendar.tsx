@@ -122,7 +122,22 @@ export default function CalendarScreen() {
       // Only apply prediction style if this is not an actual period date
       if (!allMarkedDates[dateString] || !allMarkedDates[dateString].selected) {
         if (prediction.type === 'ovulation') {
-          // Light blue styling for ovulation days
+          // Ovulation day: Blue outline circle on light blue background
+          allMarkedDates[dateString] = {
+            customStyles: {
+              container: {
+                borderRadius: 16,
+                backgroundColor: '#E7F3FF', // Light blue background
+                borderWidth: 2,
+                borderColor: '#4F5FEB', // Blue outline
+              },
+              text: {
+                color: '#4F5FEB'
+              }
+            }
+          };
+        } else if (prediction.type === 'fertile') {
+          // Fertile window days: Light blue background
           allMarkedDates[dateString] = {
             customStyles: {
               container: {

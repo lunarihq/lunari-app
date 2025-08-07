@@ -231,9 +231,9 @@ export class PeriodPredictionService {
     };
   }
 
-  // Generate all predicted dates (periods and ovulation) for multiple cycles
-  static generatePredictedDates(startDate: string, userCycleLength: number, userPeriodLength: number, numCycles: number = 3): { [date: string]: { type: 'period' | 'ovulation' } } {
-    const predictedDates: { [date: string]: { type: 'period' | 'ovulation' } } = {};
+  // Generate all predicted dates (periods, fertile window, and ovulation) for multiple cycles
+  static generatePredictedDates(startDate: string, userCycleLength: number, userPeriodLength: number, numCycles: number = 3): { [date: string]: { type: 'period' | 'fertile' | 'ovulation' } } {
+    const predictedDates: { [date: string]: { type: 'period' | 'fertile' | 'ovulation' } } = {};
     
     for (let i = 0; i < numCycles; i++) {
       // Calculate next period start date
@@ -249,8 +249,28 @@ export class PeriodPredictionService {
       ovulationDate.setDate(ovulationDate.getDate() - 14);
       const ovulationDateString = ovulationDate.toISOString().split('T')[0];
       
-      // Add ovulation date
-      predictedDates[ovulationDateString] = { type: 'ovulation' };
+      // Calculate fertile window (5 days before ovulation + ovulation day + 1 day after)
+      const fertileStart = new Date(ovulationDate);
+      fertileStart.setDate(fertileStart.getDate() - 5);
+      
+      const fertileEnd = new Date(ovulationDate);
+      fertileEnd.setDate(fertileEnd.getDate() + 1);
+      
+      // Add fertile window dates
+      for (let d = new Date(fertileStart); d <= fertileEnd; d.setDate(d.getDate() + 1)) {
+        const fertileDateString = d.toISOString().split('T')[0];
+        
+        // Don't override period dates with fertile window
+        if (!predictedDates[fertileDateString] || predictedDates[fertileDateString].type !== 'period') {
+          if (fertileDateString === ovulationDateString) {
+            // This is the ovulation day - mark it as ovulation (will get special styling)
+            predictedDates[fertileDateString] = { type: 'ovulation' };
+          } else {
+            // This is a fertile window day (not ovulation)
+            predictedDates[fertileDateString] = { type: 'fertile' };
+          }
+        }
+      }
       
       // Add period dates
       for (let j = 0; j < userPeriodLength; j++) {
