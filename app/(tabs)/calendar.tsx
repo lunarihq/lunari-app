@@ -115,7 +115,7 @@ export default function CalendarScreen() {
     setAverageCycleLength(cycleLength);
     
     // Get predicted dates from the service
-    const predictedDates = PeriodPredictionService.generatePredictedDates(startDate, cycleLength, userPeriodLength, 3);
+    const predictedDates = PeriodPredictionService.generatePredictedDates(startDate, cycleLength, userPeriodLength, 12);
     
     // Apply styling to predicted dates
     Object.entries(predictedDates).forEach(([dateString, prediction]) => {
