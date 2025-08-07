@@ -230,4 +230,37 @@ export class PeriodPredictionService {
       pregnancyChance: this.getPregnancyChance(cycleDay, avgCycleLength)
     };
   }
+
+  // Generate all predicted dates (periods and ovulation) for multiple cycles
+  static generatePredictedDates(startDate: string, userCycleLength: number, userPeriodLength: number, numCycles: number = 3): { [date: string]: { type: 'period' | 'ovulation' } } {
+    const predictedDates: { [date: string]: { type: 'period' | 'ovulation' } } = {};
+    
+    for (let i = 0; i < numCycles; i++) {
+      // Calculate next period start date
+      const startDateParts = startDate.split('-');
+      const year = parseInt(startDateParts[0]);
+      const month = parseInt(startDateParts[1]) - 1; // JS months are 0-indexed
+      const day = parseInt(startDateParts[2]);
+      
+      const nextPeriodDate = new Date(year, month, day + userCycleLength * (i + 1), 12, 0, 0);
+      
+      // Calculate ovulation date (14 days before period start)
+      const ovulationDate = new Date(nextPeriodDate);
+      ovulationDate.setDate(ovulationDate.getDate() - 14);
+      const ovulationDateString = ovulationDate.toISOString().split('T')[0];
+      
+      // Add ovulation date
+      predictedDates[ovulationDateString] = { type: 'ovulation' };
+      
+      // Add period dates
+      for (let j = 0; j < userPeriodLength; j++) {
+        const periodDay = new Date(nextPeriodDate);
+        periodDay.setDate(periodDay.getDate() + j);
+        const periodDayString = periodDay.toISOString().split('T')[0];
+        predictedDates[periodDayString] = { type: 'period' };
+      }
+    }
+    
+    return predictedDates;
+  }
 } 

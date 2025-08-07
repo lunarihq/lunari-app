@@ -114,27 +114,29 @@ export default function CalendarScreen() {
     const cycleLength = PeriodPredictionService.getAverageCycleLength(Object.keys(periodDates), userCycleLength);
     setAverageCycleLength(cycleLength);
     
-    // Generate predictions for the next 3 months
-    for (let i = 0; i < 3; i++) {
-      // Create date from startDate, ensuring we use a consistent date format
-      const startDateParts = startDate.split('-');
-      const year = parseInt(startDateParts[0]);
-      const month = parseInt(startDateParts[1]) - 1; // JS months are 0-indexed
-      const day = parseInt(startDateParts[2]);
-      
-      // Create a new date at noon to avoid timezone issues
-      const nextPeriodDate = new Date(year, month, day + cycleLength * (i + 1), 12, 0, 0);
-      const nextPeriodDateString = formatDateString(nextPeriodDate);
-      
-      // Mark user's preferred period length for predicted period
-      for (let j = 0; j < userPeriodLength; j++) {
-        const predictedDay = new Date(nextPeriodDate);
-        predictedDay.setDate(predictedDay.getDate() + j);
-        const predictedDayString = formatDateString(predictedDay);
-        
-        // Only apply prediction style if this is not an actual period date
-        if (!allMarkedDates[predictedDayString] || !allMarkedDates[predictedDayString].selected) {
-          allMarkedDates[predictedDayString] = {
+    // Get predicted dates from the service
+    const predictedDates = PeriodPredictionService.generatePredictedDates(startDate, cycleLength, userPeriodLength, 3);
+    
+    // Apply styling to predicted dates
+    Object.entries(predictedDates).forEach(([dateString, prediction]) => {
+      // Only apply prediction style if this is not an actual period date
+      if (!allMarkedDates[dateString] || !allMarkedDates[dateString].selected) {
+        if (prediction.type === 'ovulation') {
+          // Light blue styling for ovulation days
+          allMarkedDates[dateString] = {
+            customStyles: {
+              container: {
+                borderRadius: 16,
+                backgroundColor: '#E7F3FF',
+              },
+              text: {
+                color: '#4F5FEB'
+              }
+            }
+          };
+        } else if (prediction.type === 'period') {
+          // Light pink styling for predicted period days
+          allMarkedDates[dateString] = {
             customStyles: {
               container: {
                 borderRadius: 16,
@@ -147,9 +149,7 @@ export default function CalendarScreen() {
           };
         }
       }
-    }
-    
-    // Remove today styling - let the calendar handle it naturally
+    });
     
     // Store base marked dates (without selection highlight)
     setBaseMarkedDates(allMarkedDates);
