@@ -27,7 +27,7 @@ export type BaseCalendarProps = {
   // Optional custom header component
   renderHeader?: (month: string) => React.ReactNode;
   // Optional custom day component
-  renderDay?: (props: any) => React.ReactNode;
+  renderDay?: React.ComponentType<any>;
   // Optional callback for auto-selection
   onAutoSelect?: (startDay: DateData, selectedDays: DateData[]) => void;
   // Enable horizontal scrolling
@@ -90,7 +90,7 @@ export function BaseCalendar({
   }, [mode, onDayPress, selectionRules?.disableFuture, markedDates]);
 
   // Default day component if none provided
-  const defaultRenderDay = useCallback(({ date, state, marking }: { date: DateData; state: string; marking: CustomMarking }) => {
+  const DefaultDay: React.FC<any> = ({ date, state, marking }: { date?: DateData; state: string; marking: CustomMarking }) => {
     const customMarking = marking;
     const isSelected = customMarking?.selected || 
                       customMarking?.customStyles?.container?.backgroundColor === Colors.periodPink;
@@ -164,7 +164,7 @@ export function BaseCalendar({
         </View>
       );
     }
-  }, [handleDayPress]);
+  };
 
   // Default header component if none provided
   const defaultRenderHeader = useCallback((date: any) => {
@@ -215,7 +215,7 @@ export function BaseCalendar({
         hideArrows={hideArrows}
         firstDay={1}
         hideDayNames={hideDayNames}
-        dayComponent={renderDay || defaultRenderDay}
+        dayComponent={renderDay || DefaultDay}
         renderHeader={renderHeader || defaultRenderHeader}
         // Horizontal scrolling props
         horizontal={horizontal}
