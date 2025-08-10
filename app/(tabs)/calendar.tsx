@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { View, StyleSheet, SafeAreaView, ScrollView, Animated, Dimensions, TouchableOpacity, Text } from 'react-native';
-import { PanGestureHandler, State, GestureHandlerRootView } from 'react-native-gesture-handler';
+import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
+import { View, StyleSheet, SafeAreaView, Animated, TouchableOpacity, Text } from 'react-native';
+import Colors from '../styles/colors';
+import { PanGestureHandler, State, GestureHandlerRootView, PanGestureHandlerStateChangeEvent } from 'react-native-gesture-handler';
 import { DateData } from 'react-native-calendars';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useLocalSearchParams, router } from 'expo-router';
@@ -75,11 +76,11 @@ export default function CalendarScreen() {
         selected: true, 
         customStyles: { 
           container: { 
-            backgroundColor: '#FF597B',
+            backgroundColor: Colors.periodPink,
             borderRadius: 16,
           },
           text: {
-            color: '#FFFFFF'  // Make text white for period days
+            color: Colors.white
           }
         } 
       };
@@ -136,12 +137,12 @@ export default function CalendarScreen() {
             customStyles: {
               container: {
                 borderRadius: 16,
-                backgroundColor: '#E7F3FF', // Light blue background
+                backgroundColor: Colors.fertileBlueBg,
                 borderWidth: 2,
-                borderColor: '#4F5FEB', // Blue outline
+                borderColor: Colors.fertileBlue,
               },
               text: {
-                color: '#4F5FEB'
+                color: Colors.fertileBlue
               }
             }
           };
@@ -151,10 +152,10 @@ export default function CalendarScreen() {
             customStyles: {
               container: {
                 borderRadius: 16,
-                backgroundColor: '#E7F3FF',
+                backgroundColor: Colors.fertileBlueBg,
               },
               text: {
-                color: '#4F5FEB'
+                color: Colors.fertileBlue
               }
             }
           };
@@ -172,12 +173,12 @@ export default function CalendarScreen() {
             customStyles: {
               container: {
                 borderRadius: 16,
-                backgroundColor: '#E7F3FF', // Light blue background
+                backgroundColor: Colors.fertileBlueBg,
                 borderWidth: 2,
-                borderColor: '#4F5FEB', // Blue outline
+                borderColor: Colors.fertileBlue,
               },
               text: {
-                color: '#4F5FEB'
+                color: Colors.fertileBlue
               }
             }
           };
@@ -187,10 +188,10 @@ export default function CalendarScreen() {
             customStyles: {
               container: {
                 borderRadius: 16,
-                backgroundColor: '#E7F3FF',
+                backgroundColor: Colors.fertileBlueBg,
               },
               text: {
-                color: '#4F5FEB'
+                color: Colors.fertileBlue
               }
             }
           };
@@ -200,10 +201,10 @@ export default function CalendarScreen() {
             customStyles: {
               container: {
                 borderRadius: 16,
-                backgroundColor: '#FFE7EC',
+                backgroundColor: Colors.periodPinkVeryLight,
               },
               text: {
-                color: '#FF597B'
+                color: Colors.periodPink
               }
             }
           };
@@ -249,7 +250,7 @@ export default function CalendarScreen() {
         // Calculate the previous cycle start date
         const prevCycleStart = new Date(periodStart);
         prevCycleStart.setDate(prevCycleStart.getDate() - cycleLength);
-        const prevCycleStartStr = prevCycleStart.toISOString().split('T')[0];
+        const prevCycleStartStr = formatDateString(prevCycleStart);
         
         // If target date is after the previous cycle start, it's in that cycle
         if (date >= prevCycleStartStr) {
@@ -268,28 +269,28 @@ export default function CalendarScreen() {
   };
 
   // Generate marked dates with highlighting for a specific selected date
-  const getMarkedDatesWithSelection = (selectedDate: string) => {
+  const getMarkedDatesWithSelection = useCallback((selectedDateParam: string) => {
     const updatedMarkedDates = { ...baseMarkedDates };
-    const isPeriodDate = updatedMarkedDates[selectedDate]?.customStyles?.container?.backgroundColor === '#FF597B';
+    const isPeriodDate = updatedMarkedDates[selectedDateParam]?.customStyles?.container?.backgroundColor === Colors.periodPink;
     
     if (isPeriodDate) {
       // For period dates, preserve the pink background but add a grey background behind it
-      updatedMarkedDates[selectedDate] = {
-        ...updatedMarkedDates[selectedDate],
+      updatedMarkedDates[selectedDateParam] = {
+        ...updatedMarkedDates[selectedDateParam],
         customStyles: {
-          ...(updatedMarkedDates[selectedDate]?.customStyles || {}),
+          ...(updatedMarkedDates[selectedDateParam]?.customStyles || {}),
           container: {
-            ...(updatedMarkedDates[selectedDate]?.customStyles?.container || {}),
-            backgroundColor: '#FF597B', // Keep the pink background
+            ...(updatedMarkedDates[selectedDateParam]?.customStyles?.container || {}),
+            backgroundColor: Colors.periodPink,
             borderRadius: 16, // Keep the original size for the pink circle
             width: 32, // Keep the original size for the pink circle
             height: 32, // Keep the original size for the pink circle
           },
-          text: { color: '#FFFFFF' }
+          text: { color: Colors.white }
         },
         // Add a custom container style for the grey background behind
         customContainerStyle: {
-          backgroundColor: '#E5E5E5',
+          backgroundColor: Colors.calendarNeutral,
           borderRadius: 20,
           width: 40,
           height: 40,
@@ -299,24 +300,28 @@ export default function CalendarScreen() {
       };
     } else {
       // For non-period dates, just add the grey background
-      updatedMarkedDates[selectedDate] = {
-        ...updatedMarkedDates[selectedDate],
+      updatedMarkedDates[selectedDateParam] = {
+        ...updatedMarkedDates[selectedDateParam],
         customStyles: {
-          ...(updatedMarkedDates[selectedDate]?.customStyles || {}),
+          ...(updatedMarkedDates[selectedDateParam]?.customStyles || {}),
           container: {
-            ...(updatedMarkedDates[selectedDate]?.customStyles?.container || {}),
-            backgroundColor: '#E6E6E6', // Grey background like Flo
+            ...(updatedMarkedDates[selectedDateParam]?.customStyles?.container || {}),
+            backgroundColor: Colors.calendarNeutralLight,
             borderRadius: 20, // Bigger circle
             width: 40, // Make it bigger
             height: 40, // Make it bigger
           },
-          text: updatedMarkedDates[selectedDate]?.customStyles?.text
+          text: updatedMarkedDates[selectedDateParam]?.customStyles?.text
         }
       };
     }
     
     return updatedMarkedDates;
-  };
+  }, [baseMarkedDates]);
+
+  const selectionMarkedDates = useMemo(() => (
+    selectedDate ? getMarkedDatesWithSelection(selectedDate) : baseMarkedDates
+  ), [baseMarkedDates, selectedDate, getMarkedDatesWithSelection]);
 
   // Reload data when tab is focused
   useFocusEffect(
@@ -359,10 +364,8 @@ export default function CalendarScreen() {
 
   // Update marked dates when base marked dates change (but not when selected date changes - handled in onDayPress)
   useEffect(() => {
-    if (selectedDate) {
-      setMarkedDates(getMarkedDatesWithSelection(selectedDate));
-    }
-  }, [baseMarkedDates]);
+    setMarkedDates(selectionMarkedDates);
+  }, [selectionMarkedDates]);
 
   // Update header with Today button based on current month
   useEffect(() => {
@@ -442,7 +445,7 @@ export default function CalendarScreen() {
     { useNativeDriver: true }
   );
 
-  const onHandlerStateChange = (event: any) => {
+  const onHandlerStateChange = (event: PanGestureHandlerStateChangeEvent) => {
     if (event.nativeEvent.state === State.END) {
       const { translationY, velocityY } = event.nativeEvent;
       
@@ -459,7 +462,7 @@ export default function CalendarScreen() {
     }
   };
 
-  const onDayPress = (day: DateData) => {
+  const onDayPress = useCallback((day: DateData) => {
     const newDate = day.dateString;
     setSelectedDate(newDate);
     
@@ -468,12 +471,12 @@ export default function CalendarScreen() {
     setMarkedDates(getMarkedDatesWithSelection(newDate));
     
     openDrawer(newDate);
-  };
+  }, [calculateCycleDay, getMarkedDatesWithSelection, openDrawer]);
 
-  const onMonthChange = (month: DateData) => {
+  const onMonthChange = useCallback((month: DateData) => {
     setCurrentMonth(`${new Date(month.dateString).toLocaleString('default', { month: 'long' })} ${new Date(month.dateString).getFullYear()}`);
     setDisplayedMonth(month.dateString);
-  };
+  }, []);
 
   // Function to check if the current displayed month is different from today's month
   const isTodayButtonVisible = () => {
@@ -489,14 +492,14 @@ export default function CalendarScreen() {
     return todayYear !== currentYear || todayMonth !== currentMonth_;
   };
 
-  const goToToday = () => {
+  const goToToday = useCallback(() => {
     const today = formatDateString(new Date());
     setSelectedDate(today);
     setDisplayedMonth(today);
     setCalendarKey(Date.now()); // Force calendar re-render
     updateSelectedDateInfo(today);
     setMarkedDates(getMarkedDatesWithSelection(today));
-  };
+  }, [getMarkedDatesWithSelection]);
 
   return (
     <GestureHandlerRootView style={styles.container}>
@@ -570,12 +573,12 @@ export default function CalendarScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: Colors.white,
   },
   todayButtonText: {
     fontSize: 16,
     fontWeight: '500',
-    color: '#4F5FEB',
+    color: Colors.fertileBlue,
     marginRight: 16,
   },
   calendarContainer: {
@@ -587,7 +590,7 @@ const styles = StyleSheet.create({
     zIndex: 999,
   },
   floatingButtonTouchable: {
-    backgroundColor: '#4F5FEB',
+    backgroundColor: Colors.fertileBlue,
     borderRadius: 80,
     paddingVertical: 10,
     paddingHorizontal: 16,
@@ -602,7 +605,7 @@ const styles = StyleSheet.create({
     elevation: 8,
   },
   floatingButtonText: {
-    color: '#FFFFFF',
+    color: Colors.white,
     fontSize: 16,
     fontWeight: '600',
   },
@@ -611,7 +614,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: 'white',
+    backgroundColor: Colors.white,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     paddingVertical: 8,

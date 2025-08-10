@@ -2,7 +2,8 @@ import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-nati
 import { CalendarList, DateData } from 'react-native-calendars';
 import { Ionicons } from '@expo/vector-icons';
 import { useCallback, useMemo } from 'react';
-import { CustomMarking, MarkedDates, SelectionRules } from '../app/types/calendarTypes';
+import { CustomMarking, MarkedDates, SelectionRules, formatDateString } from '../app/types/calendarTypes';
+import Colors from '../app/styles/colors';
 
 // Constants
 const MONTH_FONT_SIZE = 16;
@@ -74,7 +75,7 @@ export function BaseCalendar({
     
     // In selection mode, apply rules if specified
     if (selectionRules?.disableFuture) {
-      const todayDateStr = new Date().toISOString().split('T')[0];
+      const todayDateStr = formatDateString(new Date());
       if (day.dateString > todayDateStr) {
         // Allow deselection of future dates if already selected
         if (markedDates[day.dateString]) {
@@ -89,15 +90,15 @@ export function BaseCalendar({
   }, [mode, onDayPress, selectionRules?.disableFuture, markedDates]);
 
   // Default day component if none provided
-  const defaultRenderDay = useCallback(({ date, state, marking }: any) => {
-    const customMarking = marking as CustomMarking;
+  const defaultRenderDay = useCallback(({ date, state, marking }: { date: DateData; state: string; marking: CustomMarking }) => {
+    const customMarking = marking;
     const isSelected = customMarking?.selected || 
-                      customMarking?.customStyles?.container?.backgroundColor === '#FF597B';
+                      customMarking?.customStyles?.container?.backgroundColor === Colors.periodPink;
     const isToday = state === 'today';
     const isDisabled = state === 'disabled';
     
     // Determine if this is a period day (has the pink background)
-    const isPeriodDay = customMarking?.customStyles?.container?.backgroundColor === '#FF597B';
+    const isPeriodDay = customMarking?.customStyles?.container?.backgroundColor === Colors.periodPink;
     
     // Check if this day has a custom container style (for selection background)
     const hasCustomContainer = customMarking?.customContainerStyle;
@@ -122,7 +123,7 @@ export function BaseCalendar({
               <Text style={[
                 styles.dayText,
                 isSelected && !isPeriodDay ? styles.selectedDayText : null,
-                isPeriodDay ? { color: '#FFFFFF' } : null,
+                 isPeriodDay ? { color: Colors.white } : null,
                 isDisabled ? styles.disabledDayText : null,
                 isToday ? styles.todayText : null,
                 customMarking?.customStyles?.text
@@ -152,7 +153,7 @@ export function BaseCalendar({
             <Text style={[
               styles.dayText,
               isSelected && !isPeriodDay ? styles.selectedDayText : null,
-              isPeriodDay ? { color: '#FFFFFF' } : null,
+                 isPeriodDay ? { color: Colors.white } : null,
               isDisabled ? styles.disabledDayText : null,
               isToday ? styles.todayText : null,
               customMarking?.customStyles?.text
@@ -234,16 +235,16 @@ export function BaseCalendar({
           />
         )}
         theme={{
-          backgroundColor: '#ffffff',
-          calendarBackground: '#ffffff',
+           backgroundColor: Colors.white,
+           calendarBackground: Colors.white,
           textSectionTitleColor: '#b6c1cd',
           selectedDayBackgroundColor: 'transparent',
           selectedDayTextColor: '#000000',
           todayTextColor: '#000000',
           dayTextColor: '#2d4150',
           textDisabledColor: '#d9e1e8',
-          dotColor: '#FF597B',
-          selectedDotColor: '#FF597B',
+           dotColor: Colors.periodPink,
+           selectedDotColor: Colors.periodPink,
           arrowColor: 'black',
           monthTextColor: '#000000',
           textMonthFontWeight: 'bold',
@@ -258,7 +259,7 @@ export function BaseCalendar({
               width: 32,
               textAlign: 'center',
               fontSize: 14,
-              color: '#4F4F4F',
+               color: Colors.calendarHeaderText,
             },
           },
           'stylesheet.day.basic': {
@@ -272,7 +273,7 @@ export function BaseCalendar({
           'stylesheet.calendar.main': {
             container: {
               borderBottomWidth: 1,
-              borderBottomColor: '#E9F0FF',
+               borderBottomColor: Colors.calendarBorderBlue,
               paddingBottom: 2,
             }
           }

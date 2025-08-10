@@ -28,7 +28,7 @@ export class PeriodPredictionService {
 
     for (let i = 1; i < sortedDates.length; i++) {
       const dayDiff = Math.abs((new Date(sortedDates[i]).getTime() - new Date(sortedDates[i-1]).getTime()) / (1000 * 60 * 60 * 24));
-      if (dayDiff <= 7) {
+      if (dayDiff <= 1) {
         currentPeriod.push(sortedDates[i]);
       } else {
         periods.push(currentPeriod);
@@ -69,7 +69,8 @@ export class PeriodPredictionService {
 
   // Calculate if today is a period day and which day it is
   static calculatePeriodDay(periodDates: { [date: string]: any }): { isPeriodDay: boolean; dayNumber: number } {
-    const todayStr = new Date().toISOString().split('T')[0];
+    const today = new Date();
+    const todayStr = `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${today.getDate().toString().padStart(2, '0')}`;
     
     if (!periodDates[todayStr]) {
       return { isPeriodDay: false, dayNumber: 0 };
@@ -77,12 +78,12 @@ export class PeriodPredictionService {
 
     // It's a period day, calculate which day it is
     let dayCount = 1;
-    const tempDate = new Date(todayStr);
+    const tempDate = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 12, 0, 0);
     
     // Look back day by day to find consecutive period days
     while (true) {
       tempDate.setDate(tempDate.getDate() - 1);
-      const prevDateStr = tempDate.toISOString().split('T')[0];
+      const prevDateStr = `${tempDate.getFullYear()}-${(tempDate.getMonth() + 1).toString().padStart(2, '0')}-${tempDate.getDate().toString().padStart(2, '0')}`;
       
       if (periodDates[prevDateStr]) {
         dayCount++;
@@ -103,11 +104,8 @@ export class PeriodPredictionService {
     
     const daysUntil = Math.ceil((nextPeriod.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
     
-    return { 
-      days: daysUntil, 
-      date: nextPeriod.toLocaleDateString(),
-      cycleLength 
-    };
+    const dateStr = `${nextPeriod.getFullYear()}-${(nextPeriod.getMonth() + 1).toString().padStart(2, '0')}-${nextPeriod.getDate().toString().padStart(2, '0')}`;
+    return { days: daysUntil, date: dateStr, cycleLength };
   }
 
   static getCurrentCycleDay(startDate: string, currentDate?: string): number {
@@ -130,22 +128,20 @@ export class PeriodPredictionService {
     const ovulationDate = new Date(start);
     ovulationDate.setDate(ovulationDate.getDate() + ovulationDayOffset);
     
-    return ovulationDate.toLocaleDateString();
+    return `${ovulationDate.getFullYear()}-${(ovulationDate.getMonth() + 1).toString().padStart(2, '0')}-${ovulationDate.getDate().toString().padStart(2, '0')}`;
   }
 
   static getFertilityWindow(startDate: string, cycleLength?: number): FertilityWindow {
     const cycle = cycleLength || 28;
     const ovulationDay = this.getOvulationDay(startDate, cycle);
-    const ovulationDate = new Date(ovulationDay);
+    const [y, m, d] = ovulationDay.split('-').map((v) => parseInt(v, 10));
+    const ovulationDate = new Date(y, (m - 1), d, 12, 0, 0);
     
     const startWindow = new Date(ovulationDate);
     startWindow.setDate(ovulationDate.getDate() - 5); // Fertility typically starts 5 days before ovulation
     
-    return {
-      start: startWindow.toLocaleDateString(),
-      end: ovulationDay,
-      ovulationDay
-    };
+    const startStr = `${startWindow.getFullYear()}-${(startWindow.getMonth() + 1).toString().padStart(2, '0')}-${startWindow.getDate().toString().padStart(2, '0')}`;
+    return { start: startStr, end: ovulationDay, ovulationDay };
   }
 
   static getCyclePhase(cycleDay: number, averageCycleLength: number = 28): string {
@@ -245,7 +241,7 @@ export class PeriodPredictionService {
       const periodDate = new Date(year, month, day, 12, 0, 0);
       const ovulationDate = new Date(periodDate);
       ovulationDate.setDate(ovulationDate.getDate() - 14);
-      const ovulationDateString = ovulationDate.toISOString().split('T')[0];
+      const ovulationDateString = `${ovulationDate.getFullYear()}-${(ovulationDate.getMonth() + 1).toString().padStart(2, '0')}-${ovulationDate.getDate().toString().padStart(2, '0')}`;
       
       // Calculate fertile window (5 days before ovulation + ovulation day + 1 day after)
       const fertileStart = new Date(ovulationDate);
@@ -256,7 +252,7 @@ export class PeriodPredictionService {
       
       // Add fertile window dates
       for (let d = new Date(fertileStart); d <= fertileEnd; d.setDate(d.getDate() + 1)) {
-        const fertileDateString = d.toISOString().split('T')[0];
+        const fertileDateString = `${d.getFullYear()}-${(d.getMonth() + 1).toString().padStart(2, '0')}-${d.getDate().toString().padStart(2, '0')}`;
         
         if (fertileDateString === ovulationDateString) {
           // This is the ovulation day - mark it as ovulation
@@ -287,7 +283,7 @@ export class PeriodPredictionService {
       // Calculate ovulation date (14 days before period start)
       const ovulationDate = new Date(nextPeriodDate);
       ovulationDate.setDate(ovulationDate.getDate() - 14);
-      const ovulationDateString = ovulationDate.toISOString().split('T')[0];
+      const ovulationDateString = `${ovulationDate.getFullYear()}-${(ovulationDate.getMonth() + 1).toString().padStart(2, '0')}-${ovulationDate.getDate().toString().padStart(2, '0')}`;
       
       // Calculate fertile window (5 days before ovulation + ovulation day + 1 day after)
       const fertileStart = new Date(ovulationDate);
@@ -298,7 +294,7 @@ export class PeriodPredictionService {
       
       // Add fertile window dates
       for (let d = new Date(fertileStart); d <= fertileEnd; d.setDate(d.getDate() + 1)) {
-        const fertileDateString = d.toISOString().split('T')[0];
+        const fertileDateString = `${d.getFullYear()}-${(d.getMonth() + 1).toString().padStart(2, '0')}-${d.getDate().toString().padStart(2, '0')}`;
         
         // Don't override period dates with fertile window
         if (!predictedDates[fertileDateString] || predictedDates[fertileDateString].type !== 'period') {
@@ -316,7 +312,7 @@ export class PeriodPredictionService {
       for (let j = 0; j < userPeriodLength; j++) {
         const periodDay = new Date(nextPeriodDate);
         periodDay.setDate(periodDay.getDate() + j);
-        const periodDayString = periodDay.toISOString().split('T')[0];
+        const periodDayString = `${periodDay.getFullYear()}-${(periodDay.getMonth() + 1).toString().padStart(2, '0')}-${periodDay.getDate().toString().padStart(2, '0')}`;
         predictedDates[periodDayString] = { type: 'period' };
       }
     }

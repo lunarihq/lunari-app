@@ -1,4 +1,5 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import Colors from './styles/colors';
 import { useState, useEffect } from 'react';
 import { DateData } from 'react-native-calendars';
 import { Ionicons } from '@expo/vector-icons';
@@ -139,16 +140,8 @@ export default function PeriodCalendarScreen() {
       
       if (dateInserts.length > 0) {
         await db.insert(periodDates).values(dateInserts);
-        
-        // Add a small delay to ensure database changes are complete
-        // before navigating back to the previous screen
-        setTimeout(() => {
-          router.back();
-        }, 100);
-      } else {
-        // No dates to insert, so just go back
-        router.back();
       }
+      router.back();
     } catch (error) {
       console.error('Error saving dates:', error);
       router.back();
@@ -164,7 +157,7 @@ export default function PeriodCalendarScreen() {
   const renderCustomDay = ({ date, state, marking }: any) => {
     const customMarking = marking as CustomMarking;
     const isSelected = customMarking?.selected || 
-                      customMarking?.customStyles?.container?.backgroundColor === '#FF597B';
+                      customMarking?.customStyles?.container?.backgroundColor === Colors.periodPink;
     const isToday = state === 'today';
     const isDisabled = state === 'disabled';
     
@@ -172,7 +165,7 @@ export default function PeriodCalendarScreen() {
     const isFuture = date ? new Date(date.dateString) > new Date(today) : false;
     
     // Determine if this is a period day (has the pink background)
-    const isPeriodDay = customMarking?.customStyles?.container?.backgroundColor === '#FF597B';
+    const isPeriodDay = customMarking?.customStyles?.container?.backgroundColor === Colors.periodPink;
     
     return (
       <View style={styles.customDayWrapper}>
@@ -201,7 +194,7 @@ export default function PeriodCalendarScreen() {
               <Ionicons 
                 name="checkmark-sharp" 
                 size={16} 
-                color="#FFFFFF" 
+                color={Colors.white} 
                 style={styles.checkmark} 
               />
             )}
@@ -276,7 +269,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 18,
     height: 100,
-    backgroundColor: 'white',
+    backgroundColor: Colors.white,
   },
   headerTitle: {
     fontSize: 18,
@@ -293,7 +286,7 @@ const styles = StyleSheet.create({
     paddingTop: 16,
     paddingBottom: 20,
     paddingHorizontal: 16,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.white,
     borderTopWidth: 1,
     borderTopColor: '#e0e0e0',
   },
@@ -306,12 +299,12 @@ const styles = StyleSheet.create({
   cancelButtonText: {
     fontSize: 16,
     fontWeight: '500',
-    color: '#4F5FEB',
+    color: Colors.fertileBlue,
   },
   saveButton: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: '#4F5FEB',
+    backgroundColor: Colors.fertileBlue,
     paddingVertical: 12,
     borderRadius: 80,
     marginLeft: 8,
@@ -319,13 +312,13 @@ const styles = StyleSheet.create({
   saveButtonText: {
     fontSize: 16,
     fontWeight: '500',
-    color: '#ffffff',
+    color: Colors.white,
   },
  
   todayButtonText: {
     fontSize: 16,
     fontWeight: '500',
-    color: '#4F5FEB',
+    color: Colors.fertileBlue,
     paddingTop: 63,
   },
   // Custom day styles
@@ -336,7 +329,7 @@ const styles = StyleSheet.create({
     height: 58,
     flexDirection: 'column',
     marginBottom: 6,
-    backgroundColor: 'white',
+    backgroundColor: Colors.white,
   },
   customDayContainer: {
     alignItems: 'center',
@@ -355,13 +348,13 @@ const styles = StyleSheet.create({
     height: 22,
     borderRadius: 12,
     borderWidth: 2,
-    borderColor: '#99A6C0',
+    borderColor: Colors.calendarIndicatorBorder,
     alignItems: 'center',
     justifyContent: 'center',
   },
   selectedDayIndicator: {
-    backgroundColor: '#FF597B',
-    borderColor: '#FF597B',
+    backgroundColor: Colors.periodPink,
+    borderColor: Colors.periodPink,
   },
 
   todayText: {
@@ -371,7 +364,7 @@ const styles = StyleSheet.create({
     color: '#d9e1e8',
   },
   selectedDayText: {
-    color: '#FF597B',
+    color: Colors.periodPink,
   },
   checkmark: {
     marginTop: 0,

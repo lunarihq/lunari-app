@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS period_dates (
   date TEXT NOT NULL,
   created_at TEXT DEFAULT CURRENT_TIMESTAMP
 );
+CREATE UNIQUE INDEX IF NOT EXISTS idx_period_dates_date ON period_dates(date);
 
 CREATE TABLE IF NOT EXISTS health_logs (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
