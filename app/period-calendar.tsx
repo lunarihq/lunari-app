@@ -67,38 +67,42 @@ export default function PeriodCalendarScreen() {
   const onDayPress = (day: DateData) => {
     const selectedDate = new Date(day.dateString);
     const todayDate = new Date(today);
-    
+
     const updatedDates = { ...tempDates };
 
-    // Check if this would be an auto-selection (no adjacent dates before it)
     const prevDay = new Date(day.dateString);
     prevDay.setDate(prevDay.getDate() - 1);
     const prevDayString = formatDateString(prevDay);
-    const wouldBeAutoSelection = !updatedDates[prevDayString];
 
-    // Block future dates only for individual selection (not auto-selection)
-    if (selectedDate > todayDate && !wouldBeAutoSelection) {
-      return; // Exit early if future date and not auto-selection
+    const isAlreadySelected = !!updatedDates[day.dateString];
+    const isFuture = selectedDate > todayDate;
+    const isStartOfSelection = !updatedDates[prevDayString];
+
+    // Disallow selecting future days, but allow deselecting them if they were auto-selected
+    if (isFuture && !isAlreadySelected) {
+      return;
     }
 
-    // Normal behavior for today and past dates, or auto-selection including future
-    if (updatedDates[day.dateString]) {
+    // Toggle off if already selected
+    if (isAlreadySelected) {
       delete updatedDates[day.dateString];
-    } else {
-      if (wouldBeAutoSelection) {
-        // Auto-select user's preferred period length, including future dates when starting from today/past
-        const dateRange = generateDateRange(day.dateString, userPeriodLength);
-        
-        // Apply selection to all days in range (including future dates for auto-selection)
-        dateRange.forEach(dateString => {
-          updatedDates[dateString] = DEFAULT_SELECTED_STYLE;
-        });
-      } else {
-        // Normal single day selection
-        updatedDates[day.dateString] = DEFAULT_SELECTED_STYLE;
-      }
+      setTempDates(updatedDates);
+      return;
     }
-    
+
+    // Start auto-selection when tapping a day that is not preceded by a selected day
+    if (isStartOfSelection) {
+      const dateRange = generateDateRange(day.dateString, userPeriodLength);
+      // Allow auto-selection to include future days regardless of start (past or today)
+      dateRange.forEach(dateString => {
+        updatedDates[dateString] = DEFAULT_SELECTED_STYLE;
+      });
+      setTempDates(updatedDates);
+      return;
+    }
+
+    // Fallback: single-day selection for non-future dates
+    updatedDates[day.dateString] = DEFAULT_SELECTED_STYLE;
     setTempDates(updatedDates);
   };
 
