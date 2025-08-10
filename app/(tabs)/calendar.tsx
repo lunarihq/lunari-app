@@ -21,6 +21,7 @@ export default function CalendarScreen() {
   const [markedDates, setMarkedDates] = useState<MarkedDates>({});
   const [baseMarkedDates, setBaseMarkedDates] = useState<MarkedDates>({});
   const [firstPeriodDate, setFirstPeriodDate] = useState<string | null>(null);
+  const [allPeriodDates, setAllPeriodDates] = useState<string[]>([]);
   const [cycleDay, setCycleDay] = useState<number | null>(null);
   const [averageCycleLength, setAverageCycleLength] = useState<number>(28);
   const [userCycleLength, setUserCycleLength] = useState<number>(28);
@@ -89,6 +90,7 @@ export default function CalendarScreen() {
     
     if (saved.length > 0) {
       const sortedDates = saved.map(s => s.date);
+      setAllPeriodDates(sortedDates);
       const periods = PeriodPredictionService.groupDateIntoPeriods(sortedDates);
 
       // Get the start date of the most recent period
@@ -101,6 +103,7 @@ export default function CalendarScreen() {
       generateMarkedDates(dates, mostRecentStart, periods);
     } else {
       setFirstPeriodDate(null);
+      setAllPeriodDates([]);
       setCycleDay(null);
       setMarkedDates({});
     }
@@ -214,15 +217,48 @@ export default function CalendarScreen() {
 
   // Calculate cycle day for a given date
   const calculateCycleDay = (date: string): number | null => {
-    if (!firstPeriodDate) return null;
+    if (!firstPeriodDate || allPeriodDates.length === 0) return null;
     
     const selectedDateObj = new Date(date);
     const startDateObj = new Date(firstPeriodDate);
     
+    // If the selected date is in the current cycle or future, use the current cycle start
     if (selectedDateObj >= startDateObj) {
       const cycleInfo = PeriodPredictionService.getCycleInfo(firstPeriodDate, date);
       return cycleInfo.cycleDay;
     }
+    
+    // For dates before the current cycle, find the appropriate cycle start date
+    const periods = PeriodPredictionService.groupDateIntoPeriods(allPeriodDates);
+    const cycleLength = PeriodPredictionService.getAverageCycleLength(allPeriodDates, userCycleLength);
+    
+    // Find which cycle contains the target date
+    for (let i = 0; i < periods.length; i++) {
+      const period = periods[i];
+      const periodStart = period[period.length - 1]; // Earliest date in the period
+      const periodEnd = period[0]; // Latest date in the period
+      
+      // If target date is within this period, calculate cycle day from this period start
+      if (date >= periodStart && date <= periodEnd) {
+        const cycleInfo = PeriodPredictionService.getCycleInfo(periodStart, date);
+        return cycleInfo.cycleDay;
+      }
+      
+      // If target date is before this period, check if it's in the previous cycle
+      if (date < periodStart) {
+        // Calculate the previous cycle start date
+        const prevCycleStart = new Date(periodStart);
+        prevCycleStart.setDate(prevCycleStart.getDate() - cycleLength);
+        const prevCycleStartStr = prevCycleStart.toISOString().split('T')[0];
+        
+        // If target date is after the previous cycle start, it's in that cycle
+        if (date >= prevCycleStartStr) {
+          const cycleInfo = PeriodPredictionService.getCycleInfo(prevCycleStartStr, date);
+          return cycleInfo.cycleDay;
+        }
+      }
+    }
+    
     return null;
   };
 
@@ -319,7 +355,7 @@ export default function CalendarScreen() {
   // Update cycle info when selected date changes
   useEffect(() => {
     updateSelectedDateInfo(selectedDate);
-  }, [selectedDate, firstPeriodDate]);
+  }, [selectedDate, firstPeriodDate, allPeriodDates]);
 
   // Update marked dates when base marked dates change (but not when selected date changes - handled in onDayPress)
   useEffect(() => {
