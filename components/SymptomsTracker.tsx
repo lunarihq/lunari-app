@@ -5,6 +5,8 @@ import { Ionicons, FontAwesome5, MaterialCommunityIcons } from '@expo/vector-ico
 import { db } from '../db';
 import { healthLogs } from '../db/schema';
 import { eq } from 'drizzle-orm';
+import Colors from '../app/styles/colors';
+import dayjs from 'dayjs';
 
 type SymptomsTrackerProps = {
   selectedDate?: string;
@@ -20,7 +22,7 @@ export const SymptomsTracker = ({ selectedDate, titleStyle }: SymptomsTrackerPro
       const loadHealthLogs = async () => {
         try {
           // Use the selected date or default to today
-          const dateToUse = selectedDate || new Date().toISOString().split('T')[0];
+          const dateToUse = selectedDate || dayjs().format('YYYY-MM-DD');
           const logs = await db.select().from(healthLogs)
             .where(eq(healthLogs.date, dateToUse));
           
@@ -82,8 +84,8 @@ export const SymptomsTracker = ({ selectedDate, titleStyle }: SymptomsTrackerPro
 
   // Get date text for display
   const getDateText = () => {
-    const dateToUse = selectedDate || new Date().toISOString().split('T')[0];
-    const isToday = dateToUse === new Date().toISOString().split('T')[0];
+    const dateToUse = selectedDate || dayjs().format('YYYY-MM-DD');
+    const isToday = dateToUse === dayjs().format('YYYY-MM-DD');
     return isToday ? 'today' : 'this date';
   };
 
@@ -156,7 +158,7 @@ const styles = StyleSheet.create({
   symptomsText: {
     fontSize: 22,
     fontWeight: '500',
-    color: '#332F49',
+    color: Colors.textPrimary,
     marginBottom: 16,
   },
   scrollContainer: {
@@ -187,7 +189,7 @@ const styles = StyleSheet.create({
   itemText: {
     fontSize: 12,
     fontWeight: '500',
-    color: '#666',
+    color: Colors.textSecondary,
     textAlign: 'center',
   },
   noItemsContainer: {
@@ -195,7 +197,7 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
   },
   noLoggedItemsText: {
-    color: '#676767',
+    color: Colors.textSecondary,
     fontSize: 14,
   },
 });

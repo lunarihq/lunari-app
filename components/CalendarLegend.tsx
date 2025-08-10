@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import Colors from '../app/styles/colors';
 
 export function CalendarLegend() {
   return (
@@ -22,7 +23,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingVertical: 16,
     borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
+    borderBottomColor: Colors.border,
     backgroundColor: '#f2f2f2',
   },
   legendItem: {
@@ -34,7 +35,7 @@ const styles = StyleSheet.create({
     width: 16,
     height: 16,
     borderRadius: 8,
-    backgroundColor: '#FF597B',
+    backgroundColor: Colors.periodPink,
     marginRight: 8,
   },
   expectedPeriodDot: {
@@ -43,13 +44,13 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     backgroundColor: 'transparent',
     borderWidth: 1.5,
-    borderColor: '#FF597B',
+    borderColor: Colors.periodPink,
     borderStyle: 'dashed',
     marginRight: 8,
   },
   legendText: {
     fontSize: 13,
-    color: '#332F49',
+    color: Colors.textPrimary,
   },
 }); 
 

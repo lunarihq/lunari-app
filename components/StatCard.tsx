@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import Colors from '../app/styles/colors';
 
 interface StatCardProps {
   title: string;
@@ -35,11 +36,11 @@ const styles = StyleSheet.create({
   value: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#000',
+    color: Colors.black,
   },
   title: {
     fontSize: 14,
-    color: '#000',
+    color: Colors.black,
     marginLeft: 8,
   },
 });

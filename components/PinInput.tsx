@@ -7,6 +7,7 @@ import {
   Vibration,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import Colors from '../app/styles/colors';
 
 interface PinInputProps {
   title: string;
@@ -160,7 +161,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#ECEEFF',
+    backgroundColor: Colors.background,
     paddingHorizontal: 20,
   },
   header: {
@@ -170,13 +171,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: '600',
-    color: '#332F49',
+    color: Colors.textPrimary,
     textAlign: 'center',
     marginBottom: 8,
   },
   subtitle: {
     fontSize: 16,
-    color: '#666',
+    color: Colors.textSecondary,
     textAlign: 'center',
   },
   pinContainer: {
@@ -214,7 +215,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: 'white',
+    backgroundColor: Colors.white,
     justifyContent: 'center',
     alignItems: 'center',
     marginHorizontal: 20,
@@ -230,7 +231,7 @@ const styles = StyleSheet.create({
   numberText: {
     fontSize: 24,
     fontWeight: '600',
-    color: '#333',
+    color: Colors.textPrimary,
   },
   errorText: {
     color: '#ff4757',

@@ -4,6 +4,7 @@ import { Platform } from 'react-native';
 import { PeriodPredictionService } from './periodPredictions';
 import { getSetting, setSetting, db } from '../db';
 import { periodDates } from '../db/schema';
+import Colors from '../app/styles/colors';
 
 // Configure how notifications are handled when the app is in the foreground
 Notifications.setNotificationHandler({
@@ -119,7 +120,7 @@ export class NotificationService {
       name: 'Period Notifications',
       importance: Notifications.AndroidImportance.HIGH,
       vibrationPattern: [0, 250, 250, 250],
-      lightColor: '#FF597B',
+      lightColor: Colors.periodPink,
       description: 'Notifications for period tracking and reminders',
     });
   }
@@ -163,13 +164,15 @@ export class NotificationService {
     const userCycleLengthSetting = await getSetting('userCycleLength');
     const userCycleLength = userCycleLengthSetting ? parseInt(userCycleLengthSetting, 10) : undefined;
     
-    // Get prediction for next period date
+    // Get prediction for next period date (YYYY-MM-DD string)
     const prediction = PeriodPredictionService.getPrediction(startDate, allDates, userCycleLength);
+    const [py, pm, pd] = prediction.date.split('-').map(Number);
+    const predictionDateLocal = new Date(py, pm - 1, pd, 12, 0, 0);
     
     // Schedule before-period notification if enabled
     if (beforePeriodEnabled) {
       // Calculate the notification time - daysBefore days before the period
-      const notificationDate = new Date(prediction.date);
+      const notificationDate = new Date(predictionDateLocal);
       notificationDate.setDate(notificationDate.getDate() - daysBefore);
       
       // Don't schedule if the notification date is in the past
@@ -179,7 +182,7 @@ export class NotificationService {
             title: 'Period Reminder',
             body: `Your period is expected to start in ${daysBefore} days, on ${prediction.date}`,
             data: { type: 'period_reminder' },
-            color: '#FF597B',
+            color: Colors.periodPink,
           },
           trigger: {
             type: Notifications.SchedulableTriggerInputTypes.DATE,
@@ -193,7 +196,7 @@ export class NotificationService {
     
     // Schedule day-of notification if enabled
     if (dayOfPeriodEnabled) {
-      const periodDate = new Date(prediction.date);
+      const periodDate = new Date(predictionDateLocal);
       
       // Don't schedule if the notification date is in the past
       if (periodDate > new Date()) {
@@ -202,7 +205,7 @@ export class NotificationService {
             title: 'Period Starting Today',
             body: `Your period is expected to start today based on your cycle history`,
             data: { type: 'period_start' },
-            color: '#FF597B',
+            color: Colors.periodPink,
           },
           trigger: {
             type: Notifications.SchedulableTriggerInputTypes.DATE,

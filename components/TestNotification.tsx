@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import Colors from '../app/styles/colors';
 import { NotificationService } from '../services/notificationService';
 
 export function TestNotification() {
@@ -45,14 +46,14 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   button: {
-    backgroundColor: '#FF597B',
+    backgroundColor: Colors.periodPink,
     paddingVertical: 10,
     paddingHorizontal: 16,
     borderRadius: 4,
     alignItems: 'center',
   },
   buttonText: {
-    color: 'white',
+    color: Colors.white,
     fontWeight: '500',
   },
   status: {

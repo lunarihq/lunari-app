@@ -4,6 +4,7 @@ import { useLocalSearchParams, router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { PeriodPredictionService } from '../services/periodPredictions';
 import theme from './styles/theme';
+import Colors from './styles/colors';
 
 const getFormattedDate = (date: Date): string => {
   return `Today, ${date.toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}`;
@@ -56,18 +57,9 @@ export default function CyclePhaseDetails() {
 
         <View style={styles.phaseCard}>
           <View style={styles.phaseHeader}>
-            <Ionicons name="medical-outline" size={24} color="#332F49" />
+            <Ionicons name="medical-outline" size={24} color={Colors.textPrimary} />
             <Text style={styles.cardTitle}>Possible symptoms</Text>
           </View>
-          
-          <Text style={styles.phaseDescription}>{possibleSymptoms}</Text>
-        </View>
-        <View style={styles.phaseCard}>
-          <View style={styles.phaseHeader}>
-            <Ionicons name="medical-outline" size={24} color="#332F49" />
-            <Text style={styles.cardTitle}>Possible symptoms</Text>
-          </View>
-          
           <Text style={styles.phaseDescription}>{possibleSymptoms}</Text>
         </View>
 
@@ -89,19 +81,19 @@ const styles = StyleSheet.create({
   dateText: {
     fontSize: 17,
     fontWeight: '500',
-    color: '#332F49',
+    color: Colors.textPrimary,
     marginBottom: 8,
     textAlign: 'center',
   },
   cycleTitle: {
     fontSize: 32,
     fontWeight: 'bold',
-    color: '#332F49',
+    color: Colors.textPrimary,
     textAlign: 'center',
     marginBottom: 32,
   },
   phaseCard: {
-    backgroundColor: '#ffffff',
+    backgroundColor: Colors.white,
     borderRadius: 16,
     padding: 16,
     marginBottom: 24,
@@ -115,18 +107,18 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontSize: 24,
     fontWeight: '600',
-    color: '#332F49',
+    color: Colors.textPrimary,
     marginLeft: 8,
   },
   phaseTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#332F49',
+    color: Colors.textPrimary,
     marginBottom: 8,
   },
   phaseDescription: {
     fontSize: 18,
     lineHeight: 24,
-    color: '#332F49',
+    color: Colors.textPrimary,
   },
 }); 

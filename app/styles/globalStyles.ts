@@ -4,7 +4,7 @@ import { Colors } from './colors';
 export const globalStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ECEEFF',
+    backgroundColor: Colors.background,
     paddingHorizontal: 16,
   },
   card: {
@@ -19,7 +19,7 @@ export const globalStyles = StyleSheet.create({
   },
 
   button: {
-    backgroundColor: '#4F5FEB',
+    backgroundColor: Colors.fertileBlue,
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 24,
@@ -50,19 +50,19 @@ export const globalStyles = StyleSheet.create({
     width: 310,
     height: 310,
     borderRadius: 155,
-    backgroundColor: '#ffffff',
+    backgroundColor: Colors.white,
     justifyContent: 'center',
     alignItems: 'center',
   },
   predictionLabel: {
     fontSize: 22,
     fontWeight: '500',
-    color: '#000',
+    color: Colors.black,
   },
   predictionDays: {
     fontSize: 48,
     fontWeight: 'bold',
-    color: '#000',
+    color: Colors.black,
     marginBottom: 24,
   },
 }); 

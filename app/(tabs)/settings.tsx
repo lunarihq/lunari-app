@@ -9,6 +9,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import theme from '../styles/theme';
+import Colors from '../styles/colors';
 export default function Settings() {
   const router = useRouter();
 
@@ -21,10 +22,10 @@ export default function Settings() {
             onPress={() => router.push('/reminders')}
           >
             <View style={styles.iconContainer}>
-              <Ionicons name="alarm-outline" size={24} color="#333" />
+              <Ionicons name="alarm-outline" size={24} color={Colors.textPrimary} />
             </View>
             <Text style={styles.settingText}>Reminders</Text>
-            <Ionicons name="chevron-forward" size={24} color="#333" />
+            <Ionicons name="chevron-forward" size={24} color={Colors.textPrimary} />
           </TouchableOpacity>
           
           <TouchableOpacity 
@@ -32,30 +33,30 @@ export default function Settings() {
             onPress={() => router.push('/app-lock')}
           >
             <View style={styles.iconContainer}>
-              <Ionicons name="lock-closed-outline" size={24} color="#333" />
+              <Ionicons name="lock-closed-outline" size={24} color={Colors.textPrimary} />
             </View>
             <Text style={styles.settingText}>App Lock</Text>
-            <Ionicons name="chevron-forward" size={24} color="#333" />
+            <Ionicons name="chevron-forward" size={24} color={Colors.textPrimary} />
           </TouchableOpacity>
           
           <TouchableOpacity 
             style={styles.settingRow}
           >
             <View style={styles.iconContainer}>
-              <Ionicons name="document-text-outline" size={24} color="#333" />
+              <Ionicons name="document-text-outline" size={24} color={Colors.textPrimary} />
             </View>
             <Text style={styles.settingText}>Privacy policy</Text>
-            <Ionicons name="chevron-forward" size={24} color="#333" />
+            <Ionicons name="chevron-forward" size={24} color={Colors.textPrimary} />
           </TouchableOpacity>
           
           <TouchableOpacity 
             style={[styles.settingRow, styles.lastRow]}
           >
             <View style={styles.iconContainer}>
-              <Ionicons name="information-circle-outline" size={24} color="#333" />
+              <Ionicons name="information-circle-outline" size={24} color={Colors.textPrimary} />
             </View>
             <Text style={styles.settingText}>About</Text>
-            <Ionicons name="chevron-forward" size={24} color="#333" />
+            <Ionicons name="chevron-forward" size={24} color={Colors.textPrimary} />
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -68,7 +69,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginVertical: 16,
     overflow: 'hidden',
-    backgroundColor: 'white',
+    backgroundColor: Colors.white,
   },
   iconContainer: {
     marginRight: 12,
@@ -79,14 +80,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 20,
     borderBottomWidth: 1,
-    borderBottomColor: '#f0f0f0',
+    borderBottomColor: Colors.border,
   },
   lastRow: {
     borderBottomWidth: 0,
   },
   settingText: {
     fontSize: 18,
-    color: '#333',
+    color: Colors.textPrimary,
     flex: 1,
   },
 });

@@ -11,11 +11,13 @@ import {
 import { router, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import dayjs from 'dayjs';
+import isoWeek from 'dayjs/plugin/isoWeek';
 import { db } from '../db';
 import { healthLogs } from '../db/schema';
 import { eq } from 'drizzle-orm';
 import { useFocusEffect } from '@react-navigation/native';
 import theme from './styles/theme';
+import Colors from './styles/colors';
 import { useNotes } from '../contexts/NotesContext';
 
 // Symptom type definition
@@ -43,6 +45,8 @@ type WeekData = {
 const WEEK_COUNT = 10; // 5 weeks before and after the current week
 const screenWidth = Dimensions.get('window').width;
 
+dayjs.extend(isoWeek);
+
 // Generate weeks data for FlatList
 const generateWeeksData = (): WeekData[] => {
   const today = dayjs();
@@ -50,8 +54,8 @@ const generateWeeksData = (): WeekData[] => {
   
   // Generate weeks (centered around current week)
   for (let weekOffset = -Math.floor(WEEK_COUNT/2); weekOffset < Math.ceil(WEEK_COUNT/2); weekOffset++) {
-    // Start with Monday of the current week
-    const startOfWeek = today.add(weekOffset * 7, 'day').startOf('week');
+    // Start with Monday of the current week (ISO week)
+    const startOfWeek = today.add(weekOffset * 7, 'day').startOf('isoWeek');
     
     const days: DayInfo[] = [];
     for (let i = 0; i < 7; i++) {
@@ -539,7 +543,7 @@ export default function SymptomTracking() {
           onPress={goToPreviousDay}
           style={styles.headerButton}
         >
-          <Ionicons name="chevron-back" size={24} color="#333" />
+          <Ionicons name="chevron-back" size={24} color={Colors.textPrimary} />
         </TouchableOpacity>
         
         <Text style={styles.dateText}>
@@ -554,11 +558,7 @@ export default function SymptomTracking() {
           style={[styles.headerButton, isNextDayDisabled() && styles.disabledButton]}
           disabled={isNextDayDisabled()}
         >
-          <Ionicons 
-            name="chevron-forward" 
-            size={24} 
-            color={isNextDayDisabled() ? "#CCC" : "#333"} 
-          />
+          <Ionicons name="chevron-forward" size={24} color={isNextDayDisabled() ? '#CCC' : Colors.textPrimary} />
         </TouchableOpacity>
       </View>
 
@@ -695,9 +695,7 @@ const styles = StyleSheet.create({
   headerButton: {
     padding: 10,
   },
-  disabledButton: {
-    opacity: 10,
-  },
+  disabledButton: { opacity: 0.5 },
   dateNavigator: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -732,7 +730,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 22,
     fontWeight: '600',
-    color: '#000',
+    color: Colors.black,
   },
   itemsGrid: {
     flexDirection: 'row',
@@ -758,13 +756,13 @@ const styles = StyleSheet.create({
   },
   selectedItemIcon: {
     borderWidth: 3,
-    borderColor: '#FF597B',
-    backgroundColor: '#FFECF1',
+    borderColor: Colors.periodPink,
+    backgroundColor: Colors.periodPinkVeryLight,
   },
   itemText: {
     textAlign: 'center',
     fontSize: 12,
-    color: '#666',
+    color: Colors.textSecondary,
   },
   emojiText: {
     fontSize: 28,
@@ -779,7 +777,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 16,
     lineHeight: 22,
-    color: '#333',
+    color: Colors.textPrimary,
   },
   notesPlaceholder: {
     flex: 1,

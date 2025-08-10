@@ -8,6 +8,7 @@ import { StatCard } from '../../components/StatCard';
 import { CycleHistory } from '../../components/CycleHistory';
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import theme from '../styles/theme';
+import Colors from '../styles/colors';
 interface CycleData {
   startDate: string;
   cycleLength: string | number;
@@ -87,13 +88,13 @@ export default function Stats() {
       // Generate cycle history data
       const history: HistoryEntryWithDate[] = [];
       
-      console.log("Original periods:", periods);
+      // console.log removed
 
       // The periods array is in descending order (newest to oldest)
       // We need to reverse it to get chronological order (oldest to newest)
       const chronologicalPeriods = [...periods].reverse();
 
-      console.log("Chronological periods:", chronologicalPeriods);
+      // console.log removed
 
       // Create an array of period start dates (first day of each period)
       const periodStartDates = chronologicalPeriods.map(period => {
@@ -104,7 +105,7 @@ export default function Stats() {
       // Sort period start dates in chronological order (oldest to newest)
       periodStartDates.sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
 
-      console.log("Period start dates:", periodStartDates);
+      // console.log removed
 
       // For each period, calculate its data
       for (let i = 0; i < chronologicalPeriods.length; i++) {
@@ -186,7 +187,7 @@ const styles = StyleSheet.create({
 
   myCyclesContainer: {
     marginVertical: 16,
-    backgroundColor: 'white',
+    backgroundColor: Colors.white,
     padding: 16,
     borderRadius: 16,
   },

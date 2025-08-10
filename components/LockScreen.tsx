@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, SafeAreaView } from 'react-native';
 import { PinInput } from './PinInput';
 import { useAuth } from '../contexts/AuthContext';
+import Colors from '../app/styles/colors';
 
 export function LockScreen() {
   const {
@@ -67,7 +68,7 @@ export function LockScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ECEEFF',
+    backgroundColor: Colors.background,
   },
   content: {
     flex: 1,

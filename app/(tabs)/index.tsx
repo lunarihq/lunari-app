@@ -12,6 +12,7 @@ import { Ionicons } from '@expo/vector-icons';
 import theme from '../styles/theme';
 import DashedCircle from '../../components/DashedCircle';
 import { getSetting } from '../../db';
+import Colors from '../styles/colors';
 
 const getFormattedDate = (date: Date): string => {
   return `Today, ${date.getDate()} ${date.toLocaleDateString('en-US', { month: 'short' })}`;
@@ -35,12 +36,19 @@ export default function Index() {
     };
     setup();
 
-    // Update date every day at midnight
-    const timer = setInterval(() => {
-      setCurrentDate(new Date());
-    }, 1000 * 60 * 60 * 24);
-
-    return () => clearInterval(timer);
+    const scheduleMidnightTick = () => {
+      const now = new Date();
+      const next = new Date(now);
+      next.setHours(24, 0, 0, 0);
+      const delay = next.getTime() - now.getTime();
+      const timeoutId = setTimeout(() => {
+        setCurrentDate(new Date());
+        setInterval(() => setCurrentDate(new Date()), 24 * 60 * 60 * 1000);
+      }, delay);
+      return () => clearTimeout(timeoutId);
+    };
+    const cancel = scheduleMidnightTick();
+    return cancel;
   }, []);
 
   // Reload data whenever the screen is focused (after returning from period-calendar)
@@ -97,7 +105,7 @@ export default function Index() {
       } catch (error) {
         console.error('Failed to schedule period notifications on app load:', error);
       }
-    } else {
+      } else {
       // Explicitly set to null when no data exists
       setFirstPeriodDate(null);
       setCurrentCycleDay(null);
@@ -248,7 +256,7 @@ export default function Index() {
         </View>
 
         <View style={styles.insightsCard}>
-          <View style={styles.insightsTitleContainer}>
+        <View style={styles.insightsTitleContainer}>
             <Text style={styles.insightsTitle}>Today's insights</Text>
             <Pressable
               onPress={() => currentCycleDay && router.push(`/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}`)}
@@ -258,7 +266,7 @@ export default function Index() {
               <Ionicons 
                 name="chevron-forward" 
                 size={24} 
-                color={currentCycleDay ? "#332F49" : "#B0B0B0"} 
+              color={currentCycleDay ? Colors.textPrimary : '#B0B0B0'} 
               />
             </Pressable>
           </View>
@@ -269,7 +277,7 @@ export default function Index() {
                 onPress={() => currentCycleDay && router.push(`/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}`)}
               >
                 <View style={styles.insightTop}>
-                  <Ionicons name="calendar-outline" size={24} color="#332F49" style={styles.insightIcon} />
+                  <Ionicons name="calendar-outline" size={24} color={Colors.textPrimary} style={styles.insightIcon} />
                   <Text style={styles.insightLabel}>Cycle day</Text>
                 </View>
                 <View style={styles.insightValueContainer}>
@@ -284,7 +292,7 @@ export default function Index() {
                 onPress={() => currentCycleDay && router.push(`/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}`)}
               >
                 <View style={styles.insightTop}>
-                  <Ionicons name="sync-outline" size={24} color="#332F49" style={styles.insightIcon} />
+                  <Ionicons name="sync-outline" size={24} color={Colors.textPrimary} style={styles.insightIcon} />
                   <Text style={styles.insightLabel}>Cycle phase</Text>
                 </View>
                 <View style={styles.insightValueContainer}>
@@ -299,7 +307,7 @@ export default function Index() {
                 onPress={() => currentCycleDay && router.push(`/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}`)}
               >
                 <View style={styles.insightTop}>
-                  <Ionicons name="leaf-outline" size={24} color="#332F49" style={styles.insightIcon} />
+                  <Ionicons name="leaf-outline" size={24} color={Colors.textPrimary} style={styles.insightIcon} />
                   <Text style={styles.insightLabel}>Chance to</Text>
                   <Text style={styles.insightLabel}>conceive</Text>
                 </View>
@@ -326,7 +334,7 @@ export default function Index() {
 
 const styles = StyleSheet.create({
   insightsCard: {
-    backgroundColor: '#fff',
+    backgroundColor: Colors.white,
     borderRadius: 12,
     padding: 16,
     marginBottom: 16,
@@ -340,10 +348,10 @@ const styles = StyleSheet.create({
   insightsTitle: {
     fontSize: 22,
     fontWeight: '600',
-    color: '#332F49',
+    color: Colors.textPrimary,
   },
   insightsText: {
-    color: '#332F49',
+    color: Colors.textPrimary,
     fontSize: 16,
     lineHeight: 18,
   },
@@ -363,21 +371,9 @@ const styles = StyleSheet.create({
     minHeight: 140,
     overflow: 'hidden',
   },
-  cardBlue: {
-    backgroundColor: '#E9F0FF',
-    borderWidth: 1,
-    borderColor: '#4F5FEB',
-  },
-  cardYellow: {
-    backgroundColor: '#E9F0FF',
-    borderWidth: 1,
-    borderColor: '#4F5FEB',
-  },
-  cardPink: {
-    backgroundColor: '#E9F0FF',
-    borderWidth: 1,
-    borderColor: '#4F5FEB',
-  },
+  cardBlue: { backgroundColor: Colors.calendarBorderBlue, borderWidth: 1, borderColor: Colors.fertileBlue },
+  cardYellow: { backgroundColor: Colors.calendarBorderBlue, borderWidth: 1, borderColor: Colors.fertileBlue },
+  cardPink: { backgroundColor: Colors.calendarBorderBlue, borderWidth: 1, borderColor: Colors.fertileBlue },
   insightIcon: {
     marginBottom: 6,
   },
@@ -388,7 +384,7 @@ const styles = StyleSheet.create({
     lineHeight: 18,
   },
   insightValueContainer: {
-    backgroundColor: '#ffffff',
+    backgroundColor: Colors.white,
     width: '100%',
     alignItems: 'center',
     paddingVertical: 12,
@@ -399,14 +395,14 @@ const styles = StyleSheet.create({
   insightValue: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#332F49',
+    color: Colors.textPrimary,
     textAlign: 'center',
   },
   emptyStateText: {
     fontSize: 22,
     fontWeight: '500',
     lineHeight: 26,
-    color: '#000',
+    color: Colors.black,
     textAlign: 'center',
     paddingHorizontal: 20,
   },
@@ -417,7 +413,7 @@ const styles = StyleSheet.create({
   currentDay: {
     fontSize: 17,
     fontWeight: '500',
-    color: '#332F49',
+    color: Colors.textPrimary,
     marginBottom: 24,
   },
   chevronButton: {

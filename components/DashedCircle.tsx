@@ -1,6 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import Svg, { Line } from 'react-native-svg';
+import Colors from '../app/styles/colors';
 
 interface DashedCircleProps {
   size: number;
@@ -13,7 +14,7 @@ interface DashedCircleProps {
 export default function DashedCircle({
   size,
   strokeWidth = 3,
-  strokeColor = '#B8D0FF',
+  strokeColor = Colors.calendarBorderBlue,
   dashLength = 3,
   dashCount = 120,
 }: DashedCircleProps) {

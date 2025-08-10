@@ -1,5 +1,6 @@
 import * as SecureStore from 'expo-secure-store';
 import * as LocalAuthentication from 'expo-local-authentication';
+import * as Crypto from 'expo-crypto';
 
 const PIN_KEY = 'app_pin';
 const BIOMETRIC_ENABLED_KEY = 'biometric_enabled';
@@ -19,7 +20,9 @@ export class AuthService {
   // Set PIN
   static async setPin(pin: string): Promise<boolean> {
     try {
-      await SecureStore.setItemAsync(PIN_KEY, pin);
+      if (!/^[0-9]{4}$/.test(pin)) return false;
+      const hash = await Crypto.digestStringAsync(Crypto.CryptoDigestAlgorithm.SHA256, `lunari_v1:${pin}`);
+      await SecureStore.setItemAsync(PIN_KEY, hash);
       return true;
     } catch (error) {
       console.error('Error setting PIN:', error);
@@ -31,7 +34,9 @@ export class AuthService {
   static async verifyPin(pin: string): Promise<boolean> {
     try {
       const storedPin = await SecureStore.getItemAsync(PIN_KEY);
-      return storedPin === pin;
+      if (!storedPin) return false;
+      const hash = await Crypto.digestStringAsync(Crypto.CryptoDigestAlgorithm.SHA256, `lunari_v1:${pin}`);
+      return storedPin === hash;
     } catch (error) {
       console.error('Error verifying PIN:', error);
       return false;

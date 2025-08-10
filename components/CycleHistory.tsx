@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import Colors from '../app/styles/colors';
 
 interface CycleData {
   startDate: string;
@@ -254,7 +255,7 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
 const styles = StyleSheet.create({
   container: {
     marginVertical: 16,
-    backgroundColor: 'white',
+    backgroundColor: Colors.white,
     padding: 16,
     borderRadius: 16,
     overflow: 'hidden',
@@ -263,7 +264,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: '500',
-    color: '#332F49',
+    color: Colors.textPrimary,
     marginBottom: 8,
   },
   subtitle: {
@@ -278,7 +279,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   card: {
-    backgroundColor: 'green',
+    backgroundColor: Colors.white,
     borderRadius: 12,
     padding: 0,
     marginBottom: 16,
@@ -286,13 +287,13 @@ const styles = StyleSheet.create({
   },
   cycleContainer: {
     paddingVertical: 20,
-    backgroundColor: 'white',
+    backgroundColor: Colors.white,
   },
   currentCycleContainer: {
-    backgroundColor: 'white', // Very light pink background for current cycle
+    backgroundColor: Colors.white,
   },
   alternateCycleContainer: {
-    backgroundColor: 'white',
+    backgroundColor: Colors.white,
     borderColor: '#F2F2F2',
     borderTopWidth: 1,
     borderBottomWidth: 1, // Light gray for alternating cycles
@@ -306,12 +307,12 @@ const styles = StyleSheet.create({
   dateText: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#332F49',
+    color: Colors.textPrimary,
   },
   daysText: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#332F49',
+    color: Colors.textPrimary,
   },
   circleContainer: {
     flexDirection: 'row',
@@ -326,7 +327,7 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   periodCircle: {
-    backgroundColor: '#EF5DA8', // Pink color for period days
+    backgroundColor: '#EF5DA8',
   },
   regularCircle: {
     backgroundColor: '#E5E5EA', // Light gray for regular days

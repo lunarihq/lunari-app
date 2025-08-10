@@ -11,7 +11,7 @@ import {
   Keyboard
 } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
-import theme from './styles/theme';
+import Colors from './styles/colors';
 import { useNotes } from '../contexts/NotesContext';
 
 export default function NotesEditor() {
@@ -67,20 +67,8 @@ export default function NotesEditor() {
 
 
 
-  // Handle back navigation with unsaved changes
-  useEffect(() => {
-    const handleBackPress = () => {
-      if (hasChanges) {
-        // If there are unsaved changes, save them before going back
-        setNotes(localNotes);
-      }
-    };
-
-    // This will be handled by the default header back button
-    return () => {
-      handleBackPress();
-    };
-  }, [hasChanges, localNotes, setNotes]);
+// Optional: confirm unsaved changes instead of auto-saving on unmount
+// (Keeping UX simple here; remove if you want auto-save-on-unmount back.)
 
   return (
     <SafeAreaView style={styles.container}>
@@ -129,7 +117,7 @@ export default function NotesEditor() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.white,
   },
   keyboardAvoidingView: {
     flex: 1,
@@ -172,7 +160,7 @@ const styles = StyleSheet.create({
   },
 
   saveButton: {
-    backgroundColor: '#FF597B',
+    backgroundColor: Colors.periodPink,
     paddingVertical: 12,
     paddingHorizontal: 30,
     borderRadius: 25,
@@ -185,7 +173,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   saveButtonText: {
-    color: 'white',
+    color: Colors.white,
     fontSize: 18,
     fontWeight: '600',
   },
