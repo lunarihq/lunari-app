@@ -330,9 +330,10 @@ export default function CalendarScreen() {
         await loadData();
         // Reset to current date whenever tab is focused
         const today = formatDateString(new Date());
-        setSelectedDate(today);
-        setDisplayedMonth(today);
-        setCalendarKey(Date.now()); // Force calendar re-render
+        if (selectedDate !== today) {
+          setSelectedDate(today);
+        }
+        // Do not force re-render or change displayedMonth here to avoid blink and header desync
         
         // Reset button position immediately if drawer is open
         if (isDrawerOpen) {
@@ -343,7 +344,7 @@ export default function CalendarScreen() {
       };
       reloadData();
       return () => {};
-    }, [isDrawerOpen, currentDate])
+    }, [isDrawerOpen, currentDate, selectedDate])
   );
 
   // Initial load
@@ -496,7 +497,7 @@ export default function CalendarScreen() {
     const today = formatDateString(new Date());
     setSelectedDate(today);
     setDisplayedMonth(today);
-    setCalendarKey(Date.now()); // Force calendar re-render
+    setCalendarKey(Date.now()); // Force calendar to reposition to today without remounting BaseCalendar
     updateSelectedDateInfo(today);
     setMarkedDates(getMarkedDatesWithSelection(today));
   }, [getMarkedDatesWithSelection]);
@@ -507,7 +508,7 @@ export default function CalendarScreen() {
         <View style={styles.calendarContainer}>
           <BaseCalendar
             mode="view"
-            key={calendarKey}
+            calendarKey={calendarKey}
             current={selectedDate}
             markedDates={markedDates}
             onDayPress={onDayPress}
