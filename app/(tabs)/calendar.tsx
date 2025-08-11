@@ -328,23 +328,14 @@ export default function CalendarScreen() {
     useCallback(() => {
       const reloadData = async () => {
         await loadData();
-        // Reset to current date whenever tab is focused
         const today = formatDateString(new Date());
-        if (selectedDate !== today) {
-          setSelectedDate(today);
-        }
-        // Do not force re-render or change displayedMonth here to avoid blink and header desync
-        
-        // Reset button position immediately if drawer is open
-        if (isDrawerOpen) {
-          const isDateInPastOrToday = today <= currentDate;
-          const buttonPosition = isDateInPastOrToday ? 255 : 100;
-          buttonAnimation.setValue(buttonPosition);
-        }
+        setSelectedDate(today);
+        setDisplayedMonth(today);
+        setCalendarKey(Date.now());
       };
       reloadData();
       return () => {};
-    }, [isDrawerOpen, currentDate, selectedDate])
+    }, [])
   );
 
   // Initial load
