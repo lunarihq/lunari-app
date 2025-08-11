@@ -138,8 +138,6 @@ export default function CalendarScreen() {
               container: {
                 borderRadius: 16,
                 backgroundColor: Colors.fertileBlueBg,
-                borderWidth: 2,
-                borderColor: Colors.fertileBlue,
               },
               text: {
                 color: Colors.fertileBlue
@@ -152,7 +150,6 @@ export default function CalendarScreen() {
             customStyles: {
               container: {
                 borderRadius: 16,
-                backgroundColor: Colors.fertileBlueBg,
               },
               text: {
                 color: Colors.fertileBlue
@@ -173,9 +170,9 @@ export default function CalendarScreen() {
             customStyles: {
               container: {
                 borderRadius: 16,
-                backgroundColor: Colors.fertileBlueBg,
-                borderWidth: 2,
+                borderWidth: 1.6,
                 borderColor: Colors.fertileBlue,
+                borderStyle: 'dashed',
               },
               text: {
                 color: Colors.fertileBlue
@@ -188,7 +185,6 @@ export default function CalendarScreen() {
             customStyles: {
               container: {
                 borderRadius: 16,
-                backgroundColor: Colors.fertileBlueBg,
               },
               text: {
                 color: Colors.fertileBlue
