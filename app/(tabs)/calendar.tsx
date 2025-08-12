@@ -11,7 +11,7 @@ import { BaseCalendar } from '../../components/BaseCalendar';
 import { CycleDetails } from '../../components/CycleDetails';
 import { MarkedDates, formatDateString } from '../types/calendarTypes';
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
-import Animated, { useAnimatedStyle, interpolate, useSharedValue } from 'react-native-reanimated';
+import Animated, { useAnimatedStyle, interpolate, useSharedValue, Extrapolation } from 'react-native-reanimated';
 
 // Export a function to navigate to the period calendar screen
 export function openPeriodModal() {
@@ -36,6 +36,15 @@ export default function CalendarScreen() {
   const [displayedMonth, setDisplayedMonth] = useState(formatDateString(new Date()));
   const bottomSheetRef = useRef<any>(null);
   const animatedIndex = useSharedValue(0);
+  const contentHeightSv = useSharedValue(0);
+  const [snapPoints, setSnapPoints] = useState<number[]>([1]);
+  const onSheetContentLayout = useCallback((e: any) => {
+    const height = e?.nativeEvent?.layout?.height ?? 0;
+    contentHeightSv.value = height;
+    const HANDLE_APPROX = 24;
+    const computed = Math.max(1, Math.ceil(height + HANDLE_APPROX));
+    setSnapPoints([computed]);
+  }, []);
   const params = useLocalSearchParams();
   const navigation = useNavigation();
 
@@ -398,12 +407,19 @@ export default function CalendarScreen() {
 
   // derive FAB position from bottom sheet animated index
   const closedBottom = 20;
-  const openBottomPastOrToday = 255;
-  const openBottomFuture = 100;
-  const targetOpenBottom = (selectedDate <= currentDate) ? openBottomPastOrToday : openBottomFuture;
-  const fabAnimatedStyle = useAnimatedStyle(() => ({
-    bottom: interpolate(animatedIndex.value, [-1, 0], [closedBottom, targetOpenBottom])
-  }));
+  const fabAnimatedStyle = useAnimatedStyle(() => {
+    const HANDLE_APPROX = 24;
+    const contentHeight = contentHeightSv.value;
+    const openBottom = contentHeight + HANDLE_APPROX + 16;
+    return {
+      bottom: interpolate(
+        animatedIndex.value,
+        [-1, 0],
+        [closedBottom, openBottom],
+        Extrapolation.CLAMP
+      ),
+    };
+  });
 
   const onDayPress = useCallback((day: DateData) => {
     const newDate = day.dateString;
@@ -478,9 +494,10 @@ export default function CalendarScreen() {
         <BottomSheet
           ref={bottomSheetRef}
           index={isDrawerOpen ? 0 : -1}
-          snapPoints={[400]}
+          snapPoints={snapPoints}
           animatedIndex={animatedIndex}
           enablePanDownToClose
+          enableOverDrag={false}
           onChange={(i: number) => setIsDrawerOpen(i >= 0)}
           backgroundStyle={{
             backgroundColor: 'white',
@@ -494,7 +511,7 @@ export default function CalendarScreen() {
           }}
           handleIndicatorStyle={{ backgroundColor: 'red' }}
         >
-          <BottomSheetView>
+          <BottomSheetView onLayout={onSheetContentLayout}>
             <CycleDetails 
               selectedDate={selectedDate}
               cycleDay={cycleDay}
