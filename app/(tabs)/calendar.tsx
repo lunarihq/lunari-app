@@ -41,8 +41,7 @@ export default function CalendarScreen() {
   const onSheetContentLayout = useCallback((e: any) => {
     const height = e?.nativeEvent?.layout?.height ?? 0;
     contentHeightSv.value = height;
-    const HANDLE_APPROX = 24;
-    const computed = Math.max(1, Math.ceil(height + HANDLE_APPROX));
+    const computed = Math.max(1, Math.ceil(height));
     setSnapPoints([computed]);
   }, []);
   const params = useLocalSearchParams();
@@ -408,9 +407,8 @@ export default function CalendarScreen() {
   // derive FAB position from bottom sheet animated index
   const closedBottom = 20;
   const fabAnimatedStyle = useAnimatedStyle(() => {
-    const HANDLE_APPROX = 24;
     const contentHeight = contentHeightSv.value;
-    const openBottom = contentHeight + HANDLE_APPROX + 16;
+    const openBottom = contentHeight + 16;
     return {
       bottom: interpolate(
         animatedIndex.value,
@@ -509,9 +507,9 @@ export default function CalendarScreen() {
             shadowRadius: 12,
             elevation: 12,
           }}
-          handleIndicatorStyle={{ backgroundColor: 'red' }}
+          handleComponent={() => null}
         >
-          <BottomSheetView onLayout={onSheetContentLayout}>
+          <BottomSheetView onLayout={onSheetContentLayout} style={styles.sheetContent}>
             <CycleDetails 
               selectedDate={selectedDate}
               cycleDay={cycleDay}
@@ -527,7 +525,7 @@ export default function CalendarScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.white,
+    backgroundColor: 'Colors.white',
   },
   todayButtonText: {
     fontSize: 16,
@@ -562,6 +560,9 @@ const styles = StyleSheet.create({
     color: Colors.white,
     fontSize: 16,
     fontWeight: '600',
+  },
+  sheetContent: {
+    paddingTop: 8,
   },
 
 
