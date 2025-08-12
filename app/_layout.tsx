@@ -6,6 +6,7 @@ import * as Notifications from 'expo-notifications';
 import { AuthProvider, useAuth } from '../contexts/AuthContext';
 import { NotesProvider } from '../contexts/NotesContext';
 import { LockScreen } from '../components/LockScreen';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 function AppContent() {
   const [isReady, setIsReady] = useState(false);
@@ -147,10 +148,12 @@ function AppContent() {
 
 export default function RootLayout() {
   return (
-    <AuthProvider>
-      <NotesProvider>
-        <AppContent />
-      </NotesProvider>
-    </AuthProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <AuthProvider>
+        <NotesProvider>
+          <AppContent />
+        </NotesProvider>
+      </AuthProvider>
+    </GestureHandlerRootView>
   );
 }

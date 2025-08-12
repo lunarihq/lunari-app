@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
-import { View, StyleSheet, SafeAreaView, Animated, TouchableOpacity, Text } from 'react-native';
+import { View, StyleSheet, SafeAreaView, TouchableOpacity, Text } from 'react-native';
 import Colors from '../styles/colors';
-import { PanGestureHandler, State, GestureHandlerRootView, PanGestureHandlerStateChangeEvent } from 'react-native-gesture-handler';
 import { DateData } from 'react-native-calendars';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useLocalSearchParams, router } from 'expo-router';
@@ -11,6 +10,8 @@ import { PeriodPredictionService } from '../../services/periodPredictions';
 import { BaseCalendar } from '../../components/BaseCalendar';
 import { CycleDetails } from '../../components/CycleDetails';
 import { MarkedDates, formatDateString } from '../types/calendarTypes';
+import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
+import Animated, { useAnimatedStyle, interpolate, useSharedValue } from 'react-native-reanimated';
 
 // Export a function to navigate to the period calendar screen
 export function openPeriodModal() {
@@ -33,10 +34,8 @@ export default function CalendarScreen() {
   const [calendarKey, setCalendarKey] = useState(Date.now());
   const [isDrawerOpen, setIsDrawerOpen] = useState(true);
   const [displayedMonth, setDisplayedMonth] = useState(formatDateString(new Date()));
-  const drawerAnimation = useRef(new Animated.Value(0)).current;
-  const gestureRef = useRef(null);
-  const gestureY = useRef(new Animated.Value(0)).current;
-  const buttonAnimation = useRef(new Animated.Value(280)).current;
+  const bottomSheetRef = useRef<any>(null);
+  const animatedIndex = useSharedValue(0);
   const params = useLocalSearchParams();
   const navigation = useNavigation();
 
@@ -387,68 +386,24 @@ export default function CalendarScreen() {
 
   const openDrawer = (dateToUse?: string) => {
     setIsDrawerOpen(true);
-    
-    // Use provided date or fall back to current selectedDate
     const dateForComparison = dateToUse || selectedDate;
-    const isDateInPastOrToday = dateForComparison <= currentDate;
-    const buttonPosition = isDateInPastOrToday ? 255 : 100;
-    
-    Animated.parallel([
-      Animated.spring(drawerAnimation, {
-        toValue: 0,
-        useNativeDriver: true,
-        tension: 80,
-        friction: 8,
-      }),
-      Animated.spring(buttonAnimation, {
-        toValue: buttonPosition,
-        useNativeDriver: false,
-        tension: 80,
-        friction: 8,
-      })
-    ]).start();
+    const _ = dateForComparison; // keep comparison available for derived FAB style via re-render
+    bottomSheetRef.current?.snapToIndex?.(0);
   };
 
   const closeDrawer = () => {
-    Animated.parallel([
-      Animated.spring(drawerAnimation, {
-        toValue: 400,
-        useNativeDriver: true,
-        tension: 80,
-        friction: 8,
-      }),
-      Animated.spring(buttonAnimation, {
-        toValue: 20,
-        useNativeDriver: false,
-        tension: 80,
-        friction: 8,
-      })
-    ]).start(() => {
-      setIsDrawerOpen(false);
-    });
+    bottomSheetRef.current?.close?.();
+    setIsDrawerOpen(false);
   };
 
-  const onGestureEvent = Animated.event(
-    [{ nativeEvent: { translationY: gestureY } }],
-    { useNativeDriver: true }
-  );
-
-  const onHandlerStateChange = (event: PanGestureHandlerStateChangeEvent) => {
-    if (event.nativeEvent.state === State.END) {
-      const { translationY, velocityY } = event.nativeEvent;
-      
-      // Close if dragged down enough or swiped down quickly
-      if (translationY > 100 || velocityY > 500) {
-        closeDrawer();
-      } else {
-        // Snap back to open position
-        openDrawer();
-      }
-      
-      // Reset gesture value
-      gestureY.setValue(0);
-    }
-  };
+  // derive FAB position from bottom sheet animated index
+  const closedBottom = 20;
+  const openBottomPastOrToday = 255;
+  const openBottomFuture = 100;
+  const targetOpenBottom = (selectedDate <= currentDate) ? openBottomPastOrToday : openBottomFuture;
+  const fabAnimatedStyle = useAnimatedStyle(() => ({
+    bottom: interpolate(animatedIndex.value, [-1, 0], [closedBottom, targetOpenBottom])
+  }));
 
   const onDayPress = useCallback((day: DateData) => {
     const newDate = day.dateString;
@@ -490,8 +445,7 @@ export default function CalendarScreen() {
   }, [getMarkedDatesWithSelection]);
 
   return (
-    <GestureHandlerRootView style={styles.container}>
-      <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container}>
         <View style={styles.calendarContainer}>
           <BaseCalendar
             mode="view"
@@ -509,9 +463,7 @@ export default function CalendarScreen() {
         <Animated.View 
           style={[
             styles.floatingButton,
-            {
-              bottom: buttonAnimation
-            }
+            fabAnimatedStyle
           ]}
         >
           <TouchableOpacity 
@@ -523,38 +475,30 @@ export default function CalendarScreen() {
           </TouchableOpacity>
         </Animated.View>
         
-        {isDrawerOpen && (
-          <PanGestureHandler
-            ref={gestureRef}
-            onGestureEvent={onGestureEvent}
-            onHandlerStateChange={onHandlerStateChange}
-          >
-            <Animated.View 
-              style={[
-                styles.bottomDrawer,
-                {
-                  transform: [{
-                    translateY: Animated.add(drawerAnimation, gestureY).interpolate({
-                      inputRange: [0, 400],
-                      outputRange: [0, 400],
-                      extrapolate: 'clamp'
-                    })
-                  }]
-                }
-              ]}
-            >
-
-              <CycleDetails 
-                selectedDate={selectedDate}
-                cycleDay={cycleDay}
-                averageCycleLength={averageCycleLength}
-                onClose={closeDrawer}
-              />
-            </Animated.View>
-          </PanGestureHandler>
-        )}
+        <BottomSheet
+          ref={bottomSheetRef}
+          index={isDrawerOpen ? 0 : -1}
+          snapPoints={[400]}
+          animatedIndex={animatedIndex}
+          enablePanDownToClose
+          onChange={(i: number) => setIsDrawerOpen(i >= 0)}
+          backgroundStyle={{
+            backgroundColor: Colors.white,
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20,
+          }}
+          handleIndicatorStyle={{ backgroundColor: '#ccc' }}
+        >
+          <BottomSheetView>
+            <CycleDetails 
+              selectedDate={selectedDate}
+              cycleDay={cycleDay}
+              averageCycleLength={averageCycleLength}
+              onClose={closeDrawer}
+            />
+          </BottomSheetView>
+        </BottomSheet>
       </SafeAreaView>
-    </GestureHandlerRootView>
   );
 }
 
