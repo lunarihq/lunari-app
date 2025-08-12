@@ -483,11 +483,16 @@ export default function CalendarScreen() {
           enablePanDownToClose
           onChange={(i: number) => setIsDrawerOpen(i >= 0)}
           backgroundStyle={{
-            backgroundColor: Colors.white,
+            backgroundColor: 'white',
             borderTopLeftRadius: 20,
             borderTopRightRadius: 20,
+            shadowColor: '#000',
+            shadowOffset: { width: 2, height: -8 },
+            shadowOpacity: 0.8,
+            shadowRadius: 12,
+            elevation: 12,
           }}
-          handleIndicatorStyle={{ backgroundColor: '#ccc' }}
+          handleIndicatorStyle={{ backgroundColor: 'red' }}
         >
           <BottomSheetView>
             <CycleDetails 
@@ -541,23 +546,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
   },
-  bottomDrawer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: Colors.white,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    paddingVertical: 8,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: -2,
-    },
-    shadowOpacity: 0.9,
-    shadowRadius: 20,
-    elevation: 15,
-  },
+
 
 });
