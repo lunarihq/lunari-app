@@ -371,9 +371,9 @@ const styles = StyleSheet.create({
     minHeight: 140,
     overflow: 'hidden',
   },
-  cardBlue: { backgroundColor: Colors.calendarBorderBlue, borderWidth: 1, borderColor: Colors.fertileBlue },
-  cardYellow: { backgroundColor: Colors.calendarBorderBlue, borderWidth: 1, borderColor: Colors.fertileBlue },
-  cardPink: { backgroundColor: Colors.calendarBorderBlue, borderWidth: 1, borderColor: Colors.fertileBlue },
+  cardBlue: { backgroundColor: Colors.primaryLight, borderWidth: 1, borderColor: Colors.primary },
+  cardYellow: { backgroundColor: Colors.primaryLight, borderWidth: 1, borderColor: Colors.primary },
+  cardPink: { backgroundColor: Colors.primaryLight, borderWidth: 1, borderColor: Colors.primary },
   insightIcon: {
     marginBottom: 6,
   },

@@ -7,8 +7,8 @@ export const Colors = {
   border: '#D9DAE6',     // borders / dividers
 
   // primary / main brand colors
-  primary: '#4F5FEB',    // main action (primary buttons, text buttons, links, active tabs
-  primaryLight: '#BADAF9',
+  primary: '#4B61C7',    // main action (primary buttons, text buttons, links, active tabs
+  primaryLight: '#D6E8FE',
   accentPink: '#FB3192',     // Pink for period day highlights
   accentPinkLight: '#3C4FAF', // Ligther pink for backgrounds
 

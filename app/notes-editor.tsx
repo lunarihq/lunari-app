@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
   },
 
   saveButton: {
-    backgroundColor: Colors.periodPink,
+    backgroundColor: Colors.primary,
     paddingVertical: 12,
     paddingHorizontal: 30,
     borderRadius: 25,

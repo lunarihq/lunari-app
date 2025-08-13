@@ -756,8 +756,8 @@ const styles = StyleSheet.create({
   },
   selectedItemIcon: {
     borderWidth: 3,
-    borderColor: Colors.periodPink,
-    backgroundColor: Colors.periodPinkVeryLight,
+    borderColor: Colors.primary,
+    backgroundColor: Colors.primaryLight,
   },
   itemText: {
     textAlign: 'center',
