@@ -1,26 +1,25 @@
 export const Colors = {
-  primary: '#E91E63',      // Pink
-  accent: '#F06292',       // Light Pink
-  background: '#FFF1F5',
-  surface: '#FFFFFF',
-  textPrimary: '#212121',
-  textSecondary: '#757575',
-  error: '#D32F2F',
-  border: '#E0E0E0',
-  // App-specific tokens
-  periodPink: '#FF597B',
-  periodPinkLight: '#FFEAEE',
-  periodPinkVeryLight: '#FFE7EC',
-  fertileBlue: '#4F5FEB',
-  fertileBlueBg: '#E7F3FF',
-  calendarBorderBlue: '#E9F0FF',
-  calendarHeaderText: '#4F4F4F',
-  calendarDayNameText: '#29263B',
-  calendarNeutralLight: '#E6E6E6',
-  calendarNeutral: '#E5E5E5',
-  calendarIndicatorBorder: '#99A6C0',
+  // surfaces
+  background: '#ECEDFF', // page background
+  surface: '#FFFFFF',    // cards / panels
+  panel: '#F1F0F6',      // subtle panel background
+  card: '#F4F4F5',       // card background (slightly different)
+  border: '#D9DAE6',     // borders / dividers
+
+  // primary / main brand colors
+  primary: '#4F5FEB',    // main action (primary buttons, text buttons, links, active tabs
+  primaryLight: '#BADAF9',
+  accentPink: '#FB3192',     // Pink for period day highlights
+  accentPinkLight: '#3C4FAF', // Ligther pink for backgrounds
+
+  // text
+  textPrimary: '#353345', // main text
+  textSecondary: '#353345', // secondary text (subtitle)
+  textMuted: '#A1ADD7',   // muted / hint
+  placeholder: '#5C5B63',
+  
   white: '#FFFFFF',
-  black: '#000000',
-}; 
+  black: '#000000',// placeholder / disabled text
+};
 
 export default Colors; 

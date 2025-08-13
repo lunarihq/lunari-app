@@ -83,7 +83,7 @@ export default function CalendarScreen() {
         selected: true, 
         customStyles: { 
           container: { 
-            backgroundColor: Colors.periodPink,
+            backgroundColor: Colors.accentPink,
             borderRadius: 16,
           },
           text: {
@@ -144,10 +144,10 @@ export default function CalendarScreen() {
             customStyles: {
               container: {
                 borderRadius: 16,
-                backgroundColor: Colors.fertileBlueBg,
+                backgroundColor: Colors.primaryLight,
               },
               text: {
-                color: Colors.fertileBlue
+                color: Colors.primary
               }
             }
           };
@@ -159,7 +159,7 @@ export default function CalendarScreen() {
                 borderRadius: 16,
               },
               text: {
-                color: Colors.fertileBlue
+                color: Colors.primary
               }
             }
           };
@@ -178,11 +178,11 @@ export default function CalendarScreen() {
               container: {
                 borderRadius: 16,
                 borderWidth: 1.6,
-                borderColor: Colors.fertileBlue,
+                borderColor: Colors.primary,
                 borderStyle: 'dashed',
               },
               text: {
-                color: Colors.fertileBlue
+                color: Colors.primary
               }
             }
           };
@@ -194,7 +194,7 @@ export default function CalendarScreen() {
                 borderRadius: 16,
               },
               text: {
-                color: Colors.fertileBlue
+                color: Colors.accentPink
               }
             }
           };
@@ -204,10 +204,10 @@ export default function CalendarScreen() {
             customStyles: {
               container: {
                 borderRadius: 16,
-                backgroundColor: Colors.periodPinkVeryLight,
+                backgroundColor: Colors.accentPinkLight,
               },
               text: {
-                color: Colors.periodPink
+                color: Colors.accentPink
               }
             }
           };
@@ -274,7 +274,7 @@ export default function CalendarScreen() {
   // Generate marked dates with highlighting for a specific selected date
   const getMarkedDatesWithSelection = useCallback((selectedDateParam: string) => {
     const updatedMarkedDates = { ...baseMarkedDates };
-    const isPeriodDate = updatedMarkedDates[selectedDateParam]?.customStyles?.container?.backgroundColor === Colors.periodPink;
+    const isPeriodDate = updatedMarkedDates[selectedDateParam]?.customStyles?.container?.backgroundColor === Colors.accentPink;
     
     if (isPeriodDate) {
       // For period dates, preserve the pink background but add a grey background behind it
@@ -284,7 +284,7 @@ export default function CalendarScreen() {
           ...(updatedMarkedDates[selectedDateParam]?.customStyles || {}),
           container: {
             ...(updatedMarkedDates[selectedDateParam]?.customStyles?.container || {}),
-            backgroundColor: Colors.periodPink,
+            backgroundColor: Colors.accentPink,
             borderRadius: 16, // Keep the original size for the pink circle
             width: 32, // Keep the original size for the pink circle
             height: 32, // Keep the original size for the pink circle
@@ -293,7 +293,7 @@ export default function CalendarScreen() {
         },
         // Add a custom container style for the grey background behind
         customContainerStyle: {
-          backgroundColor: Colors.calendarNeutral,
+          backgroundColor: Colors.accentPinkLight,
           borderRadius: 20,
           width: 40,
           height: 40,
@@ -309,7 +309,7 @@ export default function CalendarScreen() {
           ...(updatedMarkedDates[selectedDateParam]?.customStyles || {}),
           container: {
             ...(updatedMarkedDates[selectedDateParam]?.customStyles?.container || {}),
-            backgroundColor: Colors.calendarNeutralLight,
+            backgroundColor: Colors.accentPinkLight,
             borderRadius: 20, // Bigger circle
             width: 40, // Make it bigger
             height: 40, // Make it bigger
@@ -530,7 +530,7 @@ const styles = StyleSheet.create({
   todayButtonText: {
     fontSize: 16,
     fontWeight: '500',
-    color: Colors.fertileBlue,
+    color: Colors.primary,
     marginRight: 16,
   },
   calendarContainer: {
@@ -542,7 +542,7 @@ const styles = StyleSheet.create({
     zIndex: 999,
   },
   floatingButtonTouchable: {
-    backgroundColor: Colors.fertileBlue,
+    backgroundColor: Colors.primary,
     borderRadius: 80,
     paddingVertical: 10,
     paddingHorizontal: 16,
@@ -564,6 +564,4 @@ const styles = StyleSheet.create({
   sheetContent: {
     paddingTop: 8,
   },
-
-
 });

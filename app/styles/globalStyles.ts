@@ -19,7 +19,7 @@ export const globalStyles = StyleSheet.create({
   },
 
   button: {
-    backgroundColor: Colors.fertileBlue,
+    backgroundColor: Colors.primary,
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 24,

@@ -275,7 +275,7 @@ const styles = StyleSheet.create({
   currentCycleTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#332F49',
+    color: Colors.textPrimary,
     marginBottom: 8,
   },
   card: {
@@ -327,10 +327,10 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   periodCircle: {
-    backgroundColor: '#EF5DA8',
+    backgroundColor: Colors.accentPink,
   },
   regularCircle: {
-    backgroundColor: '#E5E5EA', // Light gray for regular days
+    backgroundColor: Colors.border, // Light gray for regular days
   },
 });
 

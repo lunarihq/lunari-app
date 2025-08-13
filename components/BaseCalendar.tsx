@@ -93,12 +93,12 @@ export function BaseCalendar({
   const DefaultDay: React.FC<any> = ({ date, state, marking }: { date?: DateData; state: string; marking: CustomMarking }) => {
     const customMarking = marking;
     const isSelected = customMarking?.selected || 
-                      customMarking?.customStyles?.container?.backgroundColor === Colors.periodPink;
+                      customMarking?.customStyles?.container?.backgroundColor === Colors.accentPink;
     const isToday = state === 'today';
     const isDisabled = state === 'disabled';
     
     // Determine if this is a period day (has the pink background)
-    const isPeriodDay = customMarking?.customStyles?.container?.backgroundColor === Colors.periodPink;
+    const isPeriodDay = customMarking?.customStyles?.container?.backgroundColor === Colors.accentPink;
     
     // Check if this day has a custom container style (for selection background)
     const hasCustomContainer = customMarking?.customContainerStyle;
@@ -243,8 +243,8 @@ export function BaseCalendar({
           todayTextColor: '#000000',
           dayTextColor: '#2d4150',
           textDisabledColor: '#d9e1e8',
-           dotColor: Colors.periodPink,
-           selectedDotColor: Colors.periodPink,
+           dotColor: Colors.accentPink,
+           selectedDotColor: Colors.accentPink,
           arrowColor: 'black',
           monthTextColor: '#000000',
           textMonthFontWeight: 'bold',
@@ -259,7 +259,7 @@ export function BaseCalendar({
               width: 32,
               textAlign: 'center',
               fontSize: 14,
-               color: Colors.calendarHeaderText,
+               color: Colors.textPrimary,
             },
           },
           'stylesheet.day.basic': {
@@ -273,7 +273,7 @@ export function BaseCalendar({
           'stylesheet.calendar.main': {
             container: {
               borderBottomWidth: 1,
-               borderBottomColor: Colors.calendarBorderBlue,
+               borderBottomColor: Colors.border,
               paddingBottom: 2,
             }
           }
