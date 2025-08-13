@@ -4,9 +4,7 @@ import {
   Text, 
   StyleSheet, 
   TouchableOpacity,
-  ScrollView,
-  FlatList,
-  Dimensions
+  ScrollView
 } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -28,56 +26,11 @@ type Item = {
   selected: boolean;
 };
 
-type DayInfo = {
-  date: dayjs.Dayjs;
-  dayName: string;
-  dayNumber: number;
-  isToday: boolean;
-  isoDate: string;
-};
-
-type WeekData = {
-  id: string;
-  days: DayInfo[];
-  month: string;
-};
-
-const WEEK_COUNT = 10; // 5 weeks before and after the current week
-const screenWidth = Dimensions.get('window').width;
+//
 
 dayjs.extend(isoWeek);
 
-// Generate weeks data for FlatList
-const generateWeeksData = (): WeekData[] => {
-  const today = dayjs();
-  const weeks: WeekData[] = [];
-  
-  // Generate weeks (centered around current week)
-  for (let weekOffset = -Math.floor(WEEK_COUNT/2); weekOffset < Math.ceil(WEEK_COUNT/2); weekOffset++) {
-    // Start with Monday of the current week (ISO week)
-    const startOfWeek = today.add(weekOffset * 7, 'day').startOf('isoWeek');
-    
-    const days: DayInfo[] = [];
-    for (let i = 0; i < 7; i++) {
-      const date = startOfWeek.add(i, 'day');
-      days.push({
-        date: date,
-        dayName: date.format('dd')[0], // First letter of day name (M, T, W, etc.)
-        dayNumber: date.date(),
-        isToday: date.format('YYYY-MM-DD') === today.format('YYYY-MM-DD'),
-        isoDate: date.format('YYYY-MM-DD')
-      });
-    }
-    
-    weeks.push({
-      id: `week-${weekOffset}`,
-      days,
-      month: days[0].date.format('MMMM'), // Month name from the first day of week
-    });
-  }
-  
-  return weeks;
-};
+// leftover types used to render week data were removed
 
 export default function SymptomTracking() {
   const params = useLocalSearchParams();
@@ -86,9 +39,7 @@ export default function SymptomTracking() {
     // Use the date from params if provided, otherwise use today's date
     typeof params.date === 'string' ? params.date : dayjs().format('YYYY-MM-DD')
   );
-  const [weeksData, setWeeksData] = useState<WeekData[]>(generateWeeksData());
-  const [currentMonth, setCurrentMonth] = useState<string>(dayjs().format('MMMM'));
-  const [currentWeekIndex, setCurrentWeekIndex] = useState<number>(Math.floor(WEEK_COUNT/2));
+  
   // Track original state to detect changes
   const [originalSymptoms, setOriginalSymptoms] = useState<string[]>([]);
   const [originalMoods, setOriginalMoods] = useState<string[]>([]);
@@ -96,7 +47,6 @@ export default function SymptomTracking() {
   const [originalNotes, setOriginalNotes] = useState<string>('');
   const [hasChanges, setHasChanges] = useState<boolean>(false);
   
-  const flatListRef = useRef<FlatList>(null);
   const scrollViewRef = useRef<ScrollView>(null);
   const notesSectionRef = useRef<View>(null);
   
@@ -342,7 +292,7 @@ export default function SymptomTracking() {
         setOriginalNotes(notesText);
         setHasChanges(false);
         
-        console.log(`Loaded ${symptomIds.size} symptoms, ${moodIds.size} moods, ${flowIds.size} flows, and notes for ${selectedDate}`);
+        
       } catch (error) {
         console.error('Error loading health logs:', error);
       }
@@ -361,9 +311,7 @@ export default function SymptomTracking() {
           (x, y) => {
             scrollViewRef.current?.scrollTo({ y, animated: true });
           },
-          () => {
-            console.log('Failed to measure notes section position');
-          }
+          () => {}
         );
       }, 100);
     }

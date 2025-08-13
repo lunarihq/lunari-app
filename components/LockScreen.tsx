@@ -26,9 +26,7 @@ export function LockScreen() {
     try {
       const success = await authenticateWithBiometric();
       if (!success) {
-        // Biometric failed or was cancelled, user can now use PIN
-        // Don't show error message, just let them use PIN
-        console.log('Biometric authentication failed, showing PIN input');
+        // Biometric failed; user can use PIN
       }
     } catch (error) {
       console.error('Biometric authentication error:', error);

@@ -28,7 +28,6 @@ export const SymptomsTracker = ({ selectedDate, titleStyle }: SymptomsTrackerPro
             .where(eq(healthLogs.date, dateToUse));
           
           setHealthLogsForDate(logs);
-          console.log(`Loaded health logs for ${dateToUse}:`, logs.length);
         } catch (error) {
           console.error('Error loading health logs:', error);
         }

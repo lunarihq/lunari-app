@@ -14,10 +14,7 @@ import { MarkedDates, formatDateString } from '../types/calendarTypes';
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import Animated, { useAnimatedStyle, interpolate, useSharedValue, Extrapolation } from 'react-native-reanimated';
 
-// Export a function to navigate to the period calendar screen
-export function openPeriodModal() {
-  router.push('/period-calendar');
-}
+// Removed unused exported function openPeriodModal
 
 export default function CalendarScreen() {
   const [selectedDates, setSelectedDates] = useState<MarkedDates>({});
@@ -31,7 +28,7 @@ export default function CalendarScreen() {
   const [userPeriodLength, setUserPeriodLength] = useState<number>(5);
   const [selectedDate, setSelectedDate] = useState(formatDateString(new Date()));
   const [currentDate] = useState(formatDateString(new Date()));
-  const [currentMonth, setCurrentMonth] = useState('');
+  
   const [calendarKey, setCalendarKey] = useState(Date.now());
   const [isDrawerOpen, setIsDrawerOpen] = useState(true);
   const [displayedMonth, setDisplayedMonth] = useState(formatDateString(new Date()));
@@ -349,7 +346,6 @@ export default function CalendarScreen() {
     
     // Set initial month display
     const date = new Date(selectedDate);
-    setCurrentMonth(`${date.toLocaleString('default', { month: 'long' })} ${date.getFullYear()}`);
     setDisplayedMonth(selectedDate);
   }, []);
   
@@ -395,8 +391,6 @@ export default function CalendarScreen() {
 
   const openDrawer = (dateToUse?: string) => {
     setIsDrawerOpen(true);
-    const dateForComparison = dateToUse || selectedDate;
-    const _ = dateForComparison; // keep comparison available for derived FAB style via re-render
     bottomSheetRef.current?.snapToIndex?.(0);
   };
 
@@ -432,7 +426,6 @@ export default function CalendarScreen() {
   }, [calculateCycleDay, getMarkedDatesWithSelection, openDrawer]);
 
   const onMonthChange = useCallback((month: DateData) => {
-    setCurrentMonth(`${new Date(month.dateString).toLocaleString('default', { month: 'long' })} ${new Date(month.dateString).getFullYear()}`);
     setDisplayedMonth(month.dateString);
   }, []);
 

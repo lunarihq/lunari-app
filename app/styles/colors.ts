@@ -10,7 +10,7 @@ export const Colors = {
   primary: '#4B61C7',    // main action (primary buttons, text buttons, links, active tabs
   primaryLight: '#D6E8FE',
   accentPink: '#FB3192',     // Pink for period day highlights
-  accentPinkLight: '#3C4FAF', // Ligther pink for backgrounds
+  accentPinkLight: '#FFAFD5', // Ligther pink for backgrounds
 
   // text
   textPrimary: '#353345', // main text
@@ -19,7 +19,7 @@ export const Colors = {
   placeholder: '#5C5B63',
   
   white: '#FFFFFF',
-  black: '#000000',// placeholder / disabled text
+  black: '#000000',
 };
 
 export default Colors; 

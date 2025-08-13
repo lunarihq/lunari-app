@@ -14,9 +14,7 @@ import DashedCircle from '../../components/DashedCircle';
 import { getSetting } from '../../db';
 import Colors from '../styles/colors';
 
-const getFormattedDate = (date: Date): string => {
-  return `Today, ${date.getDate()} ${date.toLocaleDateString('en-US', { month: 'short' })}`;
-};
+const getFormattedDate = (date: Date): string => `Today, ${date.getDate()} ${date.toLocaleDateString('en-US', { month: 'short' })}`;
 
 
 
@@ -47,8 +45,7 @@ export default function Index() {
       }, delay);
       return () => clearTimeout(timeoutId);
     };
-    const cancel = scheduleMidnightTick();
-    return cancel;
+      return scheduleMidnightTick();
   }, []);
 
   // Reload data whenever the screen is focused (after returning from period-calendar)
@@ -101,7 +98,7 @@ export default function Index() {
       // Schedule period notifications if enabled
       try {
         // The schedulePeriodReminder function will check if notifications are enabled
-        await NotificationService.schedulePeriodReminder(mostRecentStart, sortedDates);
+         await NotificationService.schedulePeriodReminder(mostRecentStart, sortedDates);
       } catch (error) {
         console.error('Failed to schedule period notifications on app load:', error);
       }
@@ -194,9 +191,7 @@ export default function Index() {
         if (cycleLength) {
           setUserCycleLength(parseInt(cycleLength, 10));
         }
-      } catch (error) {
-        console.error('Error loading user settings:', error);
-      }
+      } catch {}
     };
     loadUserSettings();
   }, []);

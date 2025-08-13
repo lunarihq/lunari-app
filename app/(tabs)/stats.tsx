@@ -119,7 +119,6 @@ export default function Stats() {
         
         // Check if this is the most recent period (last in the array after sorting)
         if (i === chronologicalPeriods.length - 1) {
-          console.log(`Marking cycle starting on ${startDate} as "In progress"`);
           cycleLengthValue = "In progress";
         } else {
           const currentStartDate = periodStartDates[i];

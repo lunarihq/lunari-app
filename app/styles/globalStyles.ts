@@ -14,10 +14,6 @@ export const globalStyles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 24,
     alignItems: 'center',
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-    textAlign: 'center',
   },
   buttonText: {
     color: '#fff',
@@ -69,5 +65,3 @@ export const globalStyles = StyleSheet.create({
     marginBottom: 24,
   },
 }); 
-
-export default globalStyles; 

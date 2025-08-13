@@ -12,6 +12,9 @@ Notifications.setNotificationHandler({
     shouldShowAlert: true,
     shouldPlaySound: true,
     shouldSetBadge: false,
+    // Newer SDKs also require these fields on iOS
+    shouldShowBanner: true,
+    shouldShowList: true,
   }),
 });
 
@@ -87,7 +90,7 @@ export class NotificationService {
           
           // Schedule notifications based on this data
           await this.schedulePeriodReminder(mostRecentStart, sortedDates);
-          console.log('Notifications scheduled immediately after enabling setting');
+          // scheduled
         }
       }
     } catch (error) {
@@ -116,11 +119,11 @@ export class NotificationService {
   
   // Set up Android notification channel
   private static async setupNotificationChannel() {
-    await Notifications.setNotificationChannelAsync('period-notifications', {
+      await Notifications.setNotificationChannelAsync('period-notifications', {
       name: 'Period Notifications',
       importance: Notifications.AndroidImportance.HIGH,
       vibrationPattern: [0, 250, 250, 250],
-      lightColor: Colors.periodPink,
+        lightColor: Colors.accentPink,
       description: 'Notifications for period tracking and reminders',
     });
   }
@@ -182,7 +185,7 @@ export class NotificationService {
             title: 'Period Reminder',
             body: `Your period is expected to start in ${daysBefore} days, on ${prediction.date}`,
             data: { type: 'period_reminder' },
-            color: Colors.periodPink,
+            color: Colors.accentPink,
           },
           trigger: {
             type: Notifications.SchedulableTriggerInputTypes.DATE,
@@ -205,7 +208,7 @@ export class NotificationService {
             title: 'Period Starting Today',
             body: `Your period is expected to start today based on your cycle history`,
             data: { type: 'period_start' },
-            color: Colors.periodPink,
+            color: Colors.accentPink,
           },
           trigger: {
             type: Notifications.SchedulableTriggerInputTypes.DATE,
