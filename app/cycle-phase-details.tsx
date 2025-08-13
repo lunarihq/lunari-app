@@ -1,6 +1,6 @@
 import React from 'react';
-import { Text, View, StyleSheet, Pressable, ScrollView } from 'react-native';
-import { useLocalSearchParams, router } from 'expo-router';
+import { Text, View, StyleSheet, ScrollView } from 'react-native';
+import { useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { PeriodPredictionService } from '../services/periodPredictions';
 import theme from './styles/theme';
