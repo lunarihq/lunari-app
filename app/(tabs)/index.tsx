@@ -244,7 +244,7 @@ export default function Index() {
                 <Text style={styles.emptyStateText}>Log the first day of your last period for next prediction.</Text>
               </>
             )}
-            <Pressable onPress={() => router.push('/period-calendar')} style={theme.globalStyles.button}>
+            <Pressable onPress={() => router.push('/period-calendar')} style={theme.globalStyles.primaryButton}>
               <Text style={theme.globalStyles.buttonText}>
                 {Object.keys(selectedDates).length > 0 
                   ? "Edit period dates"

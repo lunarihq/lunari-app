@@ -13,6 +13,7 @@ import {
 import { router, useLocalSearchParams } from 'expo-router';
 import Colors from './styles/colors';
 import { useNotes } from '../contexts/NotesContext';
+import { globalStyles } from './styles/globalStyles';
 
 export default function NotesEditor() {
   const params = useLocalSearchParams();
@@ -102,7 +103,7 @@ export default function NotesEditor() {
           isKeyboardVisible ? { bottom: keyboardHeight } : {}
         ]}>
           <TouchableOpacity 
-            style={styles.saveButton} 
+            style={globalStyles.primaryButton} 
             onPress={handleSave}
             activeOpacity={0.8}
           >

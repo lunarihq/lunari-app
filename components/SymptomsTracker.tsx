@@ -7,6 +7,7 @@ import { healthLogs } from '../db/schema';
 import { eq } from 'drizzle-orm';
 import Colors from '../app/styles/colors';
 import dayjs from 'dayjs';
+import { globalStyles } from '../app/styles/globalStyles';
 
 type SymptomsTrackerProps = {
   selectedDate?: string;
@@ -101,7 +102,7 @@ export const SymptomsTracker = ({ selectedDate, titleStyle }: SymptomsTrackerPro
             '/symptom-tracking')}
           style={styles.itemContainer}
         >
-          <View style={styles.addButton}>
+          <View style={globalStyles.fab}>
             <Ionicons name="add" size={32} color="white" />
           </View>
           <Text style={styles.itemText}>Add</Text>
@@ -168,15 +169,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginRight: 16,
   },
-  addButton: {
-    width: 54,
-    height: 54,
-    borderRadius: 27,
-    backgroundColor: '#4561D2',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 8,
-  },
+
   itemIconContainer: {
     width: 54,
     height: 54,

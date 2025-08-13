@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { View, StyleSheet, SafeAreaView, TouchableOpacity, Text } from 'react-native';
 import Colors from '../styles/colors';
+import { globalStyles } from '../styles/globalStyles';
 import { DateData } from 'react-native-calendars';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useLocalSearchParams, router } from 'expo-router';
@@ -483,9 +484,9 @@ export default function CalendarScreen() {
           <TouchableOpacity 
             onPress={() => router.push('/period-calendar')}
             activeOpacity={0.8}
-            style={styles.floatingButtonTouchable}
+            style={[globalStyles.primaryButton, styles.floatingButtonTouchable]}
           >
-            <Text style={styles.floatingButtonText}>Edit period dates</Text>
+            <Text style={globalStyles.buttonText}>Edit period dates</Text>
           </TouchableOpacity>
         </Animated.View>
         
@@ -542,11 +543,8 @@ const styles = StyleSheet.create({
     zIndex: 999,
   },
   floatingButtonTouchable: {
-    backgroundColor: Colors.primary,
     borderRadius: 80,
-    paddingVertical: 10,
     paddingHorizontal: 16,
-    alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -556,11 +554,7 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 8,
   },
-  floatingButtonText: {
-    color: Colors.white,
-    fontSize: 16,
-    fontWeight: '600',
-  },
+
   sheetContent: {
     paddingTop: 8,
   },
