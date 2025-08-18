@@ -142,7 +142,9 @@ export default function CalendarScreen() {
             customStyles: {
               container: {
                 borderRadius: 16,
-                backgroundColor: Colors.primaryLight,
+                borderWidth: 1.6,
+                borderColor: Colors.primary,
+                borderStyle: 'dashed',
               },
               text: {
                 color: Colors.primary
@@ -192,7 +194,7 @@ export default function CalendarScreen() {
                 borderRadius: 16,
               },
               text: {
-                color: Colors.accentPink
+                color: Colors.primary
               }
             }
           };
@@ -282,7 +284,7 @@ export default function CalendarScreen() {
           ...(updatedMarkedDates[selectedDateParam]?.customStyles || {}),
           container: {
             ...(updatedMarkedDates[selectedDateParam]?.customStyles?.container || {}),
-            backgroundColor: Colors.accentPink,
+            backgroundColor: 'green',
             borderRadius: 16, // Keep the original size for the pink circle
             width: 32, // Keep the original size for the pink circle
             height: 32, // Keep the original size for the pink circle
