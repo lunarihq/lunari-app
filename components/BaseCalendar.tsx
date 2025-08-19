@@ -1,6 +1,5 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { CalendarList, DateData } from 'react-native-calendars';
-import { Ionicons } from '@expo/vector-icons';
 import { useCallback, useMemo } from 'react';
 import { CustomMarking, MarkedDates, SelectionRules, formatDateString } from '../app/types/calendarTypes';
 import { useTheme } from '../app/styles/theme';
