@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { View, StyleSheet, SafeAreaView } from 'react-native';
 import { PinInput } from './PinInput';
 import { useAuth } from '../contexts/AuthContext';
@@ -15,15 +15,7 @@ export function LockScreen() {
   const [errorMessage, setErrorMessage] = useState('');
   const [biometricAttempted, setBiometricAttempted] = useState(false);
 
-  // Automatically attempt biometric authentication when screen loads
-  useEffect(() => {
-    if (canUseBiometric && !biometricAttempted) {
-      setBiometricAttempted(true);
-      handleBiometricAuth();
-    }
-  }, [canUseBiometric, biometricAttempted]);
-
-  const handleBiometricAuth = async () => {
+  const handleBiometricAuth = useCallback(async () => {
     try {
       const success = await authenticateWithBiometric();
       if (!success) {
@@ -32,7 +24,15 @@ export function LockScreen() {
     } catch (error) {
       console.error('Biometric authentication error:', error);
     }
-  };
+  }, [authenticateWithBiometric]);
+
+  // Automatically attempt biometric authentication when screen loads
+  useEffect(() => {
+    if (canUseBiometric && !biometricAttempted) {
+      setBiometricAttempted(true);
+      handleBiometricAuth();
+    }
+  }, [canUseBiometric, biometricAttempted, handleBiometricAuth]);
 
   const handlePinComplete = async (pin: string) => {
     const isValid = await verifyPin(pin);

@@ -34,7 +34,7 @@ export function PinInput({
 }: PinInputProps) {
   const { colors } = useTheme();
   const [pin, setPin] = useState('');
-  const [attempts, setAttempts] = useState(0);
+
 
   const PIN_LENGTH = 4;
 
@@ -47,7 +47,7 @@ export function PinInput({
   useEffect(() => {
     if (errorMessage) {
       Vibration.vibrate(500);
-      setAttempts(prev => prev + 1);
+
       setPin('');
     }
   }, [errorMessage]);
@@ -67,22 +67,7 @@ export function PinInput({
     setPin(prev => prev.slice(0, -1));
   };
 
-  const renderPinDots = () => {
-    return (
-      <View style={styles.pinContainer}>
-        {Array.from({ length: PIN_LENGTH }).map((_, index) => (
-          <View
-            key={index}
-            style={[
-              styles.pinDot,
-              index < pin.length && styles.pinDotFilled,
-              errorMessage && styles.pinDotError,
-            ]}
-          />
-        ))}
-      </View>
-    );
-  };
+
 
   const renderNumberPad = () => {
     const numbers = [
