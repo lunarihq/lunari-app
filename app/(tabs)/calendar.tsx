@@ -349,15 +349,15 @@ export default function CalendarScreen() {
 
 
 
-  const openDrawer = (dateToUse?: string) => {
+  const openDrawer = useCallback((dateToUse?: string) => {
     setIsDrawerOpen(true);
     bottomSheetRef.current?.snapToIndex?.(0);
-  };
+  }, []);
 
-  const closeDrawer = () => {
+  const closeDrawer = useCallback(() => {
     bottomSheetRef.current?.close?.();
     setIsDrawerOpen(false);
-  };
+  }, []);
 
   // derive FAB position from bottom sheet animated index
   const closedBottom = 20;
@@ -410,7 +410,7 @@ export default function CalendarScreen() {
     setCalendarKey(Date.now()); // Force calendar to reposition to today without remounting BaseCalendar
     updateSelectedDateInfo(today);
     setMarkedDates(getMarkedDatesWithSelection(today));
-  }, [getMarkedDatesWithSelection]);
+  }, [getMarkedDatesWithSelection, updateSelectedDateInfo]);
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
