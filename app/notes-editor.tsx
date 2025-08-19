@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   View, 
   Text, 
@@ -21,16 +21,18 @@ export default function NotesEditor() {
   const { notes, setNotes } = useNotes();
   const [localNotes, setLocalNotes] = useState<string>('');
 
-  const [originalNotes, setOriginalNotes] = useState<string>('');
   const [keyboardHeight, setKeyboardHeight] = useState<number>(0);
   const [isKeyboardVisible, setIsKeyboardVisible] = useState<boolean>(false);
+  const hasInitialized = useRef(false);
 
-  // Get the initial notes from params or context
+  // Initialize notes from params or context, but only once
   useEffect(() => {
-    const initialNotes = typeof params.notes === 'string' ? params.notes : notes;
-    setLocalNotes(initialNotes);
-    setOriginalNotes(initialNotes);
-  }, [params.notes]); // Re-run when params change, but not when context notes change
+    if (!hasInitialized.current) {
+      const initialNotes = typeof params.notes === 'string' ? params.notes : notes;
+      setLocalNotes(initialNotes);
+      hasInitialized.current = true;
+    }
+  }, [params.notes, notes]);
 
 
 
