@@ -17,16 +17,17 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const systemColorScheme = useColorScheme();
   const [themeMode, setThemeModeState] = useState<ThemeMode>('system');
-  
-  const isDark = themeMode === 'system' 
-    ? systemColorScheme === 'dark'
-    : themeMode === 'dark';
-    
+
+  const isDark =
+    themeMode === 'system'
+      ? systemColorScheme === 'dark'
+      : themeMode === 'dark';
+
   const colors = isDark ? darkColors : lightColors;
 
   // Load saved theme preference on mount
   useEffect(() => {
-    getSetting('themeMode').then((saved) => {
+    getSetting('themeMode').then(saved => {
       if (saved && ['light', 'dark', 'system'].includes(saved)) {
         setThemeModeState(saved as ThemeMode);
       }

@@ -13,21 +13,18 @@ export function ThemeToggle() {
 
   return (
     <View style={[styles.container, { backgroundColor: colors.surface }]}>
-      <Text style={[styles.title, { color: colors.textPrimary }]}>
-        Theme
-      </Text>
+      <Text style={[styles.title, { color: colors.textPrimary }]}>Theme</Text>
       <View style={styles.optionsContainer}>
-        {themeOptions.map((option) => (
+        {themeOptions.map(option => (
           <TouchableOpacity
             key={option.mode}
             style={[
               styles.option,
-              { 
-                backgroundColor: themeMode === option.mode 
-                  ? colors.primary 
-                  : colors.panel,
-                borderColor: colors.border
-              }
+              {
+                backgroundColor:
+                  themeMode === option.mode ? colors.primary : colors.panel,
+                borderColor: colors.border,
+              },
             ]}
             onPress={() => setThemeMode(option.mode)}
           >
@@ -35,10 +32,11 @@ export function ThemeToggle() {
               style={[
                 styles.optionText,
                 {
-                  color: themeMode === option.mode 
-                    ? colors.white 
-                    : colors.textPrimary
-                }
+                  color:
+                    themeMode === option.mode
+                      ? colors.white
+                      : colors.textPrimary,
+                },
               ]}
             >
               {option.label}
@@ -86,4 +84,3 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-

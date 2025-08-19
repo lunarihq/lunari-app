@@ -2,8 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Text, View, StyleSheet, Pressable, ScrollView } from 'react-native';
 import { useLocalSearchParams, router, useFocusEffect } from 'expo-router';
 import { SymptomsTracker } from '../../components/SymptomsTracker';
-import { db , getSetting } from '../../db';
-import { PeriodDate, periodDates} from '../../db/schema';
+import { db, getSetting } from '../../db';
+import { PeriodDate, periodDates } from '../../db/schema';
 import { PeriodPredictionService } from '../../services/periodPredictions';
 import { NotificationService } from '../../services/notificationService';
 
@@ -11,13 +11,14 @@ import { Ionicons } from '@expo/vector-icons';
 import defaultTheme, { useTheme } from '../styles/theme';
 import DashedCircle from '../../components/DashedCircle';
 
-const getFormattedDate = (date: Date): string => `Today, ${date.getDate()} ${date.toLocaleDateString('en-US', { month: 'short' })}`;
-
-
+const getFormattedDate = (date: Date): string =>
+  `Today, ${date.getDate()} ${date.toLocaleDateString('en-US', { month: 'short' })}`;
 
 export default function Index() {
   const { colors } = useTheme();
-  const [selectedDates, setSelectedDates] = useState<{ [date: string]: any }>({});
+  const [selectedDates, setSelectedDates] = useState<{ [date: string]: any }>(
+    {}
+  );
   const [firstPeriodDate, setFirstPeriodDate] = useState<string | null>(null);
   const [currentCycleDay, setCurrentCycleDay] = useState<number | null>(null);
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -43,7 +44,7 @@ export default function Index() {
       }, delay);
       return () => clearTimeout(timeoutId);
     };
-      return scheduleMidnightTick();
+    return scheduleMidnightTick();
   }, []);
 
   // Reload data whenever the screen is focused (after returning from period-calendar)
@@ -64,18 +65,19 @@ export default function Index() {
     }
   }, [params.openPeriodModal]);
 
-
-
   const loadSavedDates = async () => {
     const saved = await db.select().from(periodDates);
-    
-    const dates = saved.reduce((acc: { [key: string]: any }, curr: PeriodDate) => { 
-      acc[curr.date] = { selected: true, selectedColor: '#FF597B' };
-      return acc;
-    }, {} as { [key: string]: any });
-    
+
+    const dates = saved.reduce(
+      (acc: { [key: string]: any }, curr: PeriodDate) => {
+        acc[curr.date] = { selected: true, selectedColor: '#FF597B' };
+        return acc;
+      },
+      {} as { [key: string]: any }
+    );
+
     setSelectedDates(dates);
-    
+
     if (saved.length > 0) {
       // Use the service to group dates into periods
       const sortedDates = saved.map(s => s.date);
@@ -84,23 +86,31 @@ export default function Index() {
       // Get the start date of the most recent period
       const mostRecentPeriod = periods[0];
       const mostRecentStart = mostRecentPeriod[mostRecentPeriod.length - 1]; // Get the earliest date in the period
-      
+
       setFirstPeriodDate(mostRecentStart);
-      setCurrentCycleDay(PeriodPredictionService.getCurrentCycleDay(mostRecentStart));
-      
+      setCurrentCycleDay(
+        PeriodPredictionService.getCurrentCycleDay(mostRecentStart)
+      );
+
       // Calculate if today is a period day
       const periodDayResult = PeriodPredictionService.calculatePeriodDay(dates);
       setIsPeriodDay(periodDayResult.isPeriodDay);
       setPeriodDayNumber(periodDayResult.dayNumber);
-      
+
       // Schedule period notifications if enabled
       try {
         // The schedulePeriodReminder function will check if notifications are enabled
-         await NotificationService.schedulePeriodReminder(mostRecentStart, sortedDates);
+        await NotificationService.schedulePeriodReminder(
+          mostRecentStart,
+          sortedDates
+        );
       } catch (error) {
-        console.error('Failed to schedule period notifications on app load:', error);
+        console.error(
+          'Failed to schedule period notifications on app load:',
+          error
+        );
       }
-      } else {
+    } else {
       // Explicitly set to null when no data exists
       setFirstPeriodDate(null);
       setCurrentCycleDay(null);
@@ -109,19 +119,22 @@ export default function Index() {
     }
   };
 
-
-
   // Update period day check when current date changes
   useEffect(() => {
-    const periodDayResult = PeriodPredictionService.calculatePeriodDay(selectedDates);
+    const periodDayResult =
+      PeriodPredictionService.calculatePeriodDay(selectedDates);
     setIsPeriodDay(periodDayResult.isPeriodDay);
     setPeriodDayNumber(periodDayResult.dayNumber);
   }, [currentDate, selectedDates]);
 
   const [userCycleLength, setUserCycleLength] = useState<number>(28);
 
-  const prediction = firstPeriodDate 
-    ? PeriodPredictionService.getPrediction(firstPeriodDate, Object.keys(selectedDates), userCycleLength)
+  const prediction = firstPeriodDate
+    ? PeriodPredictionService.getPrediction(
+        firstPeriodDate,
+        Object.keys(selectedDates),
+        userCycleLength
+      )
     : null;
 
   // Load user settings
@@ -137,134 +150,334 @@ export default function Index() {
     loadUserSettings();
   }, []);
 
-  const averageCycleLength = Object.keys(selectedDates).length > 0 
-    ? PeriodPredictionService.getAverageCycleLength(Object.keys(selectedDates), userCycleLength)
-    : userCycleLength;
+  const averageCycleLength =
+    Object.keys(selectedDates).length > 0
+      ? PeriodPredictionService.getAverageCycleLength(
+          Object.keys(selectedDates),
+          userCycleLength
+        )
+      : userCycleLength;
 
   return (
-
-      <ScrollView style={[defaultTheme.globalStyles.container, { backgroundColor: colors.background }]} showsVerticalScrollIndicator={false}>
-        <View style={defaultTheme.globalStyles.predictionCard}>
-          <View style={defaultTheme.globalStyles.predictionOuterCircle}>
-            <DashedCircle size={350} strokeWidth={3} dashLength={3} dashCount={120} />
-            <View style={[defaultTheme.globalStyles.predictionInnerCircle, { backgroundColor: colors.surface }]}>
+    <ScrollView
+      style={[
+        defaultTheme.globalStyles.container,
+        { backgroundColor: colors.background },
+      ]}
+      showsVerticalScrollIndicator={false}
+    >
+      <View style={defaultTheme.globalStyles.predictionCard}>
+        <View style={defaultTheme.globalStyles.predictionOuterCircle}>
+          <DashedCircle
+            size={350}
+            strokeWidth={3}
+            dashLength={3}
+            dashCount={120}
+          />
+          <View
+            style={[
+              defaultTheme.globalStyles.predictionInnerCircle,
+              { backgroundColor: colors.surface },
+            ]}
+          >
             {isPeriodDay ? (
               <>
-                <Text style={[styles.currentDay, { color: colors.textPrimary }]}>{getFormattedDate(currentDate)}</Text>
-                <Text style={[defaultTheme.globalStyles.predictionLabel, { color: colors.textPrimary }]}>Period</Text>
-                <Text style={[defaultTheme.globalStyles.predictionDays, { color: colors.textPrimary }]}>Day {periodDayNumber}</Text>
+                <Text
+                  style={[styles.currentDay, { color: colors.textPrimary }]}
+                >
+                  {getFormattedDate(currentDate)}
+                </Text>
+                <Text
+                  style={[
+                    defaultTheme.globalStyles.predictionLabel,
+                    { color: colors.textPrimary },
+                  ]}
+                >
+                  Period
+                </Text>
+                <Text
+                  style={[
+                    defaultTheme.globalStyles.predictionDays,
+                    { color: colors.textPrimary },
+                  ]}
+                >
+                  Day {periodDayNumber}
+                </Text>
               </>
             ) : prediction ? (
               <>
-                <Text style={[styles.currentDay, { color: colors.textPrimary }]}>{getFormattedDate(currentDate)}</Text>
+                <Text
+                  style={[styles.currentDay, { color: colors.textPrimary }]}
+                >
+                  {getFormattedDate(currentDate)}
+                </Text>
                 {prediction.days > 0 ? (
                   <>
-                    <Text style={[defaultTheme.globalStyles.predictionLabel, { color: colors.textPrimary }]}>Expected period in</Text>
-                    <Text style={[defaultTheme.globalStyles.predictionDays, { color: colors.textPrimary }]}>{prediction.days} {prediction.days === 1 ? 'day' : 'days'}</Text>
+                    <Text
+                      style={[
+                        defaultTheme.globalStyles.predictionLabel,
+                        { color: colors.textPrimary },
+                      ]}
+                    >
+                      Expected period in
+                    </Text>
+                    <Text
+                      style={[
+                        defaultTheme.globalStyles.predictionDays,
+                        { color: colors.textPrimary },
+                      ]}
+                    >
+                      {prediction.days} {prediction.days === 1 ? 'day' : 'days'}
+                    </Text>
                   </>
                 ) : prediction.days === 0 ? (
                   <>
-                    <Text style={[defaultTheme.globalStyles.predictionLabel, { color: colors.textPrimary }]}>Your period is</Text>
-                    <Text style={[defaultTheme.globalStyles.predictionDays, { color: colors.textPrimary }]}>expected today</Text>
+                    <Text
+                      style={[
+                        defaultTheme.globalStyles.predictionLabel,
+                        { color: colors.textPrimary },
+                      ]}
+                    >
+                      Your period is
+                    </Text>
+                    <Text
+                      style={[
+                        defaultTheme.globalStyles.predictionDays,
+                        { color: colors.textPrimary },
+                      ]}
+                    >
+                      expected today
+                    </Text>
                   </>
                 ) : (
                   <>
-                      <Text style={[defaultTheme.globalStyles.predictionLabel, { color: colors.textPrimary }]}>Late for</Text>
-                    <Text style={[defaultTheme.globalStyles.predictionDays, { color: colors.textPrimary }]}>{Math.abs(prediction.days)} {Math.abs(prediction.days) === 1 ? 'day' : 'days'}</Text>
+                    <Text
+                      style={[
+                        defaultTheme.globalStyles.predictionLabel,
+                        { color: colors.textPrimary },
+                      ]}
+                    >
+                      Late for
+                    </Text>
+                    <Text
+                      style={[
+                        defaultTheme.globalStyles.predictionDays,
+                        { color: colors.textPrimary },
+                      ]}
+                    >
+                      {Math.abs(prediction.days)}{' '}
+                      {Math.abs(prediction.days) === 1 ? 'day' : 'days'}
+                    </Text>
                   </>
                 )}
               </>
             ) : (
               <>
-                <Text style={[styles.currentDay, { color: colors.textPrimary }]}>{getFormattedDate(currentDate)}</Text>
-                <Text style={[styles.emptyStateText, { color: colors.textPrimary }]}>Log the first day of your last period for next prediction.</Text>
+                <Text
+                  style={[styles.currentDay, { color: colors.textPrimary }]}
+                >
+                  {getFormattedDate(currentDate)}
+                </Text>
+                <Text
+                  style={[styles.emptyStateText, { color: colors.textPrimary }]}
+                >
+                  Log the first day of your last period for next prediction.
+                </Text>
               </>
             )}
-            <Pressable onPress={() => router.push('/period-calendar')} style={defaultTheme.globalStyles.primaryButton}>
+            <Pressable
+              onPress={() => router.push('/period-calendar')}
+              style={defaultTheme.globalStyles.primaryButton}
+            >
               <Text style={defaultTheme.globalStyles.buttonText}>
-                {Object.keys(selectedDates).length > 0 
-                  ? "Edit period dates"
-                  : "Log period"}
+                {Object.keys(selectedDates).length > 0
+                  ? 'Edit period dates'
+                  : 'Log period'}
               </Text>
             </Pressable>
-            </View>
           </View>
         </View>
+      </View>
 
-        <View style={[styles.insightsCard, { backgroundColor: colors.surface }]}>
+      <View style={[styles.insightsCard, { backgroundColor: colors.surface }]}>
         <View style={styles.insightsTitleContainer}>
-            <Text style={[styles.insightsTitle, { color: colors.textPrimary }]}>Today's insights</Text>
+          <Text style={[styles.insightsTitle, { color: colors.textPrimary }]}>
+            Today's insights
+          </Text>
+          <Pressable
+            onPress={() =>
+              currentCycleDay &&
+              router.push(
+                `/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}`
+              )
+            }
+            disabled={!currentCycleDay}
+            style={[
+              styles.chevronButton,
+              !currentCycleDay && styles.chevronDisabled,
+            ]}
+          >
+            <Ionicons
+              name="chevron-forward"
+              size={24}
+              color={currentCycleDay ? colors.textPrimary : colors.textMuted}
+            />
+          </Pressable>
+        </View>
+        {currentCycleDay ? (
+          <View style={styles.insightsRow}>
             <Pressable
-              onPress={() => currentCycleDay && router.push(`/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}`)}
-              disabled={!currentCycleDay}
-              style={[styles.chevronButton, !currentCycleDay && styles.chevronDisabled]}
+              style={[
+                styles.insightCard,
+                {
+                  backgroundColor: colors.primaryLight,
+                  borderColor: colors.primary,
+                },
+              ]}
+              onPress={() =>
+                currentCycleDay &&
+                router.push(
+                  `/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}`
+                )
+              }
             >
-              <Ionicons 
-                name="chevron-forward" 
-                size={24} 
-              color={currentCycleDay ? colors.textPrimary : colors.textMuted} 
-              />
+              <View style={styles.insightTop}>
+                <Ionicons
+                  name="calendar-outline"
+                  size={24}
+                  color={colors.textPrimary}
+                  style={styles.insightIcon}
+                />
+                <Text
+                  style={[styles.insightLabel, { color: colors.textPrimary }]}
+                >
+                  Cycle day
+                </Text>
+              </View>
+              <View
+                style={[
+                  styles.insightValueContainer,
+                  { backgroundColor: colors.surface },
+                ]}
+              >
+                <Text
+                  style={[styles.insightValue, { color: colors.textPrimary }]}
+                >
+                  {currentCycleDay || '-'}
+                </Text>
+              </View>
+            </Pressable>
+
+            <Pressable
+              style={[
+                styles.insightCard,
+                {
+                  backgroundColor: colors.primaryLight,
+                  borderColor: colors.primary,
+                },
+              ]}
+              onPress={() =>
+                currentCycleDay &&
+                router.push(
+                  `/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}`
+                )
+              }
+            >
+              <View style={styles.insightTop}>
+                <Ionicons
+                  name="sync-outline"
+                  size={24}
+                  color={colors.textPrimary}
+                  style={styles.insightIcon}
+                />
+                <Text
+                  style={[styles.insightLabel, { color: colors.textPrimary }]}
+                >
+                  Cycle phase
+                </Text>
+              </View>
+              <View
+                style={[
+                  styles.insightValueContainer,
+                  { backgroundColor: colors.surface },
+                ]}
+              >
+                <Text
+                  style={[styles.insightValue, { color: colors.textPrimary }]}
+                >
+                  {currentCycleDay
+                    ? PeriodPredictionService.getCyclePhase(
+                        currentCycleDay,
+                        averageCycleLength
+                      )
+                    : '-'}
+                </Text>
+              </View>
+            </Pressable>
+
+            <Pressable
+              style={[
+                styles.insightCard,
+                {
+                  backgroundColor: colors.primaryLight,
+                  borderColor: colors.primary,
+                },
+              ]}
+              onPress={() =>
+                currentCycleDay &&
+                router.push(
+                  `/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}`
+                )
+              }
+            >
+              <View style={styles.insightTop}>
+                <Ionicons
+                  name="leaf-outline"
+                  size={24}
+                  color={colors.textPrimary}
+                  style={styles.insightIcon}
+                />
+                <Text
+                  style={[styles.insightLabel, { color: colors.textPrimary }]}
+                >
+                  Chance to
+                </Text>
+                <Text
+                  style={[styles.insightLabel, { color: colors.textPrimary }]}
+                >
+                  conceive
+                </Text>
+              </View>
+              <View
+                style={[
+                  styles.insightValueContainer,
+                  { backgroundColor: colors.surface },
+                ]}
+              >
+                <Text
+                  style={[styles.insightValue, { color: colors.textPrimary }]}
+                >
+                  {currentCycleDay
+                    ? PeriodPredictionService.getPregnancyChance(
+                        currentCycleDay,
+                        averageCycleLength
+                      )
+                    : '-'}
+                </Text>
+              </View>
             </Pressable>
           </View>
-          {currentCycleDay ? (
-            <View style={styles.insightsRow}>
-              <Pressable 
-                style={[styles.insightCard, { backgroundColor: colors.primaryLight, borderColor: colors.primary }]}
-                onPress={() => currentCycleDay && router.push(`/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}`)}
-              >
-                <View style={styles.insightTop}>
-                  <Ionicons name="calendar-outline" size={24} color={colors.textPrimary} style={styles.insightIcon} />
-                  <Text style={[styles.insightLabel, { color: colors.textPrimary }]}>Cycle day</Text>
-                </View>
-                <View style={[styles.insightValueContainer, { backgroundColor: colors.surface }]}>
-                  <Text style={[styles.insightValue, { color: colors.textPrimary }]}>
-                    {currentCycleDay || '-'}
-                  </Text>
-                </View>
-              </Pressable>
-              
-              <Pressable 
-                style={[styles.insightCard, { backgroundColor: colors.primaryLight, borderColor: colors.primary }]}
-                onPress={() => currentCycleDay && router.push(`/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}`)}
-              >
-                <View style={styles.insightTop}>
-                  <Ionicons name="sync-outline" size={24} color={colors.textPrimary} style={styles.insightIcon} />
-                  <Text style={[styles.insightLabel, { color: colors.textPrimary }]}>Cycle phase</Text>
-                </View>
-                <View style={[styles.insightValueContainer, { backgroundColor: colors.surface }]}>
-                  <Text style={[styles.insightValue, { color: colors.textPrimary }]}>
-                    {currentCycleDay ? PeriodPredictionService.getCyclePhase(currentCycleDay, averageCycleLength) : '-'}
-                  </Text>
-                </View>
-              </Pressable>
-              
-              <Pressable 
-                style={[styles.insightCard, { backgroundColor: colors.primaryLight, borderColor: colors.primary }]}
-                onPress={() => currentCycleDay && router.push(`/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}`)}
-              >
-                <View style={styles.insightTop}>
-                  <Ionicons name="leaf-outline" size={24} color={colors.textPrimary} style={styles.insightIcon} />
-                  <Text style={[styles.insightLabel, { color: colors.textPrimary }]}>Chance to</Text>
-                  <Text style={[styles.insightLabel, { color: colors.textPrimary }]}>conceive</Text>
-                </View>
-                <View style={[styles.insightValueContainer, { backgroundColor: colors.surface }]}>
-                  <Text style={[styles.insightValue, { color: colors.textPrimary }]}>
-                    {currentCycleDay ? PeriodPredictionService.getPregnancyChance(currentCycleDay, averageCycleLength) : '-'}
-                  </Text>
-                </View>
-              </Pressable>
-            </View>
-          ) : (
-            <Text style={[styles.insightsText, { color: colors.textPrimary }]}>
-              Please log at least one period to view your cycle insights.
-            </Text>
-          )}
-        </View>
+        ) : (
+          <Text style={[styles.insightsText, { color: colors.textPrimary }]}>
+            Please log at least one period to view your cycle insights.
+          </Text>
+        )}
+      </View>
 
-        <SymptomsTracker />
-        
-        <View style={{ height: 20 }} />
-      </ScrollView>
+      <SymptomsTracker />
+
+      <View style={{ height: 20 }} />
+    </ScrollView>
   );
 }
 

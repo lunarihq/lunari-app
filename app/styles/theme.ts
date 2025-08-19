@@ -7,7 +7,7 @@ export const theme = {
   Colors,
   Typography,
   globalStyles,
-}; 
+};
 
 export default theme;
 

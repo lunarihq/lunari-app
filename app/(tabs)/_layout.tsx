@@ -4,39 +4,43 @@ import { useTheme } from '../styles/theme';
 
 export default function TabLayout() {
   const { colors } = useTheme();
-  
+
   return (
     <Tabs
-  screenOptions={{
-    tabBarActiveTintColor: colors.primary,
-    tabBarInactiveTintColor: colors.textMuted,
-    headerStyle: {
-      backgroundColor: colors.background,
-      height: 100,
-    },
-    headerTitleStyle: {
-      color: colors.textPrimary,
-      fontSize: 18,
-    },
-    headerShadowVisible: false,
-    headerTintColor: colors.textPrimary,
-    tabBarStyle: {
-    backgroundColor: colors.surface,
-    height: 80,
-    borderTopColor: colors.border,
-    },
-    tabBarItemStyle: {
-      paddingTop: 6,
-    },
-  }}
->
+      screenOptions={{
+        tabBarActiveTintColor: colors.primary,
+        tabBarInactiveTintColor: colors.textMuted,
+        headerStyle: {
+          backgroundColor: colors.background,
+          height: 100,
+        },
+        headerTitleStyle: {
+          color: colors.textPrimary,
+          fontSize: 18,
+        },
+        headerShadowVisible: false,
+        headerTintColor: colors.textPrimary,
+        tabBarStyle: {
+          backgroundColor: colors.surface,
+          height: 80,
+          borderTopColor: colors.border,
+        },
+        tabBarItemStyle: {
+          paddingTop: 6,
+        },
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
-          headerTitle: "Lunari",
-          tabBarLabel: "Today",
+          headerTitle: 'Lunari',
+          tabBarLabel: 'Today',
           tabBarIcon: ({ color, focused }) => (
-            <Ionicons name={focused ? 'time' : 'time-outline'} color={color} size={24}/>
+            <Ionicons
+              name={focused ? 'time' : 'time-outline'}
+              color={color}
+              size={24}
+            />
           ),
         }}
       />
@@ -44,7 +48,7 @@ export default function TabLayout() {
         name="calendar"
         options={{
           headerShown: true,
-          headerTitle: "Calendar",
+          headerTitle: 'Calendar',
           headerStyle: {
             backgroundColor: colors.surface,
             height: 100,
@@ -54,37 +58,48 @@ export default function TabLayout() {
             fontSize: 18,
           },
           headerTintColor: colors.textPrimary,
-          tabBarLabel: "Calendar",
+          tabBarLabel: 'Calendar',
           tabBarIcon: ({ color, focused }) => (
-            <Ionicons name={focused ? 'calendar' : 'calendar-outline'} color={color} size={24}/>
+            <Ionicons
+              name={focused ? 'calendar' : 'calendar-outline'}
+              color={color}
+              size={24}
+            />
           ),
         }}
       />
 
-<Tabs.Screen
+      <Tabs.Screen
         name="stats"
         options={{
           headerShown: true,
-          headerTitle: "Stats",
-          tabBarLabel: "Stats",
+          headerTitle: 'Stats',
+          tabBarLabel: 'Stats',
           tabBarIcon: ({ color, focused }) => (
-            <Ionicons name={focused ? 'bar-chart' : 'bar-chart-outline'} color={color} size={24}/>
+            <Ionicons
+              name={focused ? 'bar-chart' : 'bar-chart-outline'}
+              color={color}
+              size={24}
+            />
           ),
         }}
       />
-      
+
       <Tabs.Screen
         name="settings"
         options={{
           headerShown: true,
-          headerTitle: "Settings",
-          tabBarLabel: "Settings",
+          headerTitle: 'Settings',
+          tabBarLabel: 'Settings',
           tabBarIcon: ({ color, focused }) => (
-            <Ionicons name={focused ? 'settings' : 'settings-outline'} color={color} size={24}/>
+            <Ionicons
+              name={focused ? 'settings' : 'settings-outline'}
+              color={color}
+              size={24}
+            />
           ),
         }}
       />
-      
     </Tabs>
   );
 }

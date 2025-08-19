@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  SafeAreaView,
+} from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { setSetting } from '../../db';
@@ -15,10 +21,10 @@ export default function CycleLengthScreen() {
       if (!dontKnow) {
         await setSetting('userCycleLength', cycleLength.toString());
       }
-      
+
       // Mark onboarding as completed
       await setSetting('onboardingCompleted', 'true');
-      
+
       // Navigate to main app
       router.replace('/(tabs)');
     } catch (error) {
@@ -46,44 +52,73 @@ export default function CycleLengthScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
-        <Ionicons name="calendar-outline" size={100} color="#4E74B9" style={styles.icon} />
+        <Ionicons
+          name="calendar-outline"
+          size={100}
+          color="#4E74B9"
+          style={styles.icon}
+        />
         <Text style={styles.title}>What's your typical cycle length?</Text>
-        <Text style={styles.message}>This is the number of days from the start of one period to the start of the next.</Text>
-        
-        <View style={[styles.pickerContainer, dontKnow && styles.pickerDisabled]}>
-          <TouchableOpacity 
-            style={[styles.pickerButton, dontKnow && styles.buttonDisabled]} 
+        <Text style={styles.message}>
+          This is the number of days from the start of one period to the start
+          of the next.
+        </Text>
+
+        <View
+          style={[styles.pickerContainer, dontKnow && styles.pickerDisabled]}
+        >
+          <TouchableOpacity
+            style={[styles.pickerButton, dontKnow && styles.buttonDisabled]}
             onPress={decrementCycleLength}
             disabled={dontKnow}
           >
-            <Ionicons name="remove" size={24} color={dontKnow ? "#ccc" : "#4E74B9"} />
+            <Ionicons
+              name="remove"
+              size={24}
+              color={dontKnow ? '#ccc' : '#4E74B9'}
+            />
           </TouchableOpacity>
-          
+
           <View style={styles.valueContainer}>
-            <Text style={[styles.valueText, dontKnow && styles.textDisabled]}>{cycleLength}</Text>
-            <Text style={[styles.labelText, dontKnow && styles.textDisabled]}>days</Text>
+            <Text style={[styles.valueText, dontKnow && styles.textDisabled]}>
+              {cycleLength}
+            </Text>
+            <Text style={[styles.labelText, dontKnow && styles.textDisabled]}>
+              days
+            </Text>
           </View>
-          
-          <TouchableOpacity 
-            style={[styles.pickerButton, dontKnow && styles.buttonDisabled]} 
+
+          <TouchableOpacity
+            style={[styles.pickerButton, dontKnow && styles.buttonDisabled]}
             onPress={incrementCycleLength}
             disabled={dontKnow}
           >
-            <Ionicons name="add" size={24} color={dontKnow ? "#ccc" : "#4E74B9"} />
+            <Ionicons
+              name="add"
+              size={24}
+              color={dontKnow ? '#ccc' : '#4E74B9'}
+            />
           </TouchableOpacity>
         </View>
 
-        <TouchableOpacity style={styles.dontKnowContainer} onPress={toggleDontKnow}>
+        <TouchableOpacity
+          style={styles.dontKnowContainer}
+          onPress={toggleDontKnow}
+        >
           <View style={styles.checkboxContainer}>
             <View style={[styles.checkbox, dontKnow && styles.checkboxChecked]}>
               {dontKnow && <Ionicons name="checkmark" size={16} color="#fff" />}
             </View>
-            <Text style={styles.dontKnowText}>Don't know - let the app learn</Text>
+            <Text style={styles.dontKnowText}>
+              Don't know - let the app learn
+            </Text>
           </View>
           <Text style={styles.dontKnowSubText}>Uses 28 days as default</Text>
         </TouchableOpacity>
-        
-        <Text style={styles.subMessage}>Don't worry, we'll learn your actual patterns as you track!</Text>
+
+        <Text style={styles.subMessage}>
+          Don't worry, we'll learn your actual patterns as you track!
+        </Text>
       </View>
 
       <View style={styles.footer}>
@@ -98,7 +133,10 @@ export default function CycleLengthScreen() {
             <Text style={styles.backButtonText}>Back</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.getStartedButton} onPress={handleGetStarted}>
+          <TouchableOpacity
+            style={styles.getStartedButton}
+            onPress={handleGetStarted}
+          >
             <Text style={styles.getStartedButtonText}>Get Started</Text>
           </TouchableOpacity>
         </View>
@@ -254,4 +292,4 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
   },
-}); 
+});

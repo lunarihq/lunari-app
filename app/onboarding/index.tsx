@@ -1,5 +1,11 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  SafeAreaView,
+} from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -17,9 +23,16 @@ export default function WelcomeScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
-        <Ionicons name="heart-outline" size={100} color="#4E74B9" style={styles.icon} />
+        <Ionicons
+          name="heart-outline"
+          size={100}
+          color="#4E74B9"
+          style={styles.icon}
+        />
         <Text style={styles.title}>Welcome to the App</Text>
-        <Text style={styles.message}>Track your health and wellness with our easy-to-use app.</Text>
+        <Text style={styles.message}>
+          Track your health and wellness with our easy-to-use app.
+        </Text>
       </View>
 
       <View style={styles.footer}>

@@ -22,17 +22,17 @@ export default function DashedCircle({
   const finalStrokeColor = strokeColor || colors.neutral100;
   const center = size / 2;
   const radius = center - dashLength - 10;
-  
+
   const dashes = [];
   for (let i = 0; i < dashCount; i++) {
     const angle = (i * 360) / dashCount;
     const radian = (angle * Math.PI) / 180;
-    
+
     const startX = center + Math.cos(radian) * radius;
     const startY = center + Math.sin(radian) * radius;
     const endX = center + Math.cos(radian) * (radius + dashLength);
     const endY = center + Math.sin(radian) * (radius + dashLength);
-    
+
     dashes.push(
       <Line
         key={i}
@@ -46,7 +46,7 @@ export default function DashedCircle({
       />
     );
   }
-  
+
   return (
     <View style={{ position: 'absolute', width: size, height: size }}>
       <Svg width={size} height={size}>
@@ -54,4 +54,4 @@ export default function DashedCircle({
       </Svg>
     </View>
   );
-} 
+}

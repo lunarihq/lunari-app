@@ -1,9 +1,9 @@
 import React from 'react';
-import { 
-  Text, 
-  View, 
-  StyleSheet, 
-  ScrollView, 
+import {
+  Text,
+  View,
+  StyleSheet,
+  ScrollView,
   TouchableOpacity,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
@@ -15,54 +15,97 @@ export default function Settings() {
   const { colors } = useTheme();
 
   return (
+    <ScrollView
+      style={[
+        defaultTheme.globalStyles.container,
+        { backgroundColor: colors.background },
+      ]}
+      showsVerticalScrollIndicator={false}
+    >
+      <ThemeToggle />
 
-      <ScrollView style={[defaultTheme.globalStyles.container, { backgroundColor: colors.background }]} showsVerticalScrollIndicator={false}>
-        <ThemeToggle />
-        
-        <View style={[styles.section, { backgroundColor: colors.surface }]}>
-          <TouchableOpacity 
-            style={[styles.settingRow, { borderBottomColor: colors.border }]}
-            onPress={() => router.push('/reminders')}
-          >
-            <View style={styles.iconContainer}>
-              <Ionicons name="alarm-outline" size={24} color={colors.textPrimary} />
-            </View>
-            <Text style={[styles.settingText, { color: colors.textPrimary }]}>Reminders</Text>
-            <Ionicons name="chevron-forward" size={24} color={colors.textPrimary} />
-          </TouchableOpacity>
-          
-          <TouchableOpacity 
-            style={[styles.settingRow, { borderBottomColor: colors.border }]}
-            onPress={() => router.push('/app-lock')}
-          >
-            <View style={styles.iconContainer}>
-              <Ionicons name="lock-closed-outline" size={24} color={colors.textPrimary} />
-            </View>
-            <Text style={[styles.settingText, { color: colors.textPrimary }]}>App Lock</Text>
-            <Ionicons name="chevron-forward" size={24} color={colors.textPrimary} />
-          </TouchableOpacity>
-          
-          <TouchableOpacity 
-            style={[styles.settingRow, { borderBottomColor: colors.border }]}
-          >
-            <View style={styles.iconContainer}>
-              <Ionicons name="document-text-outline" size={24} color={colors.textPrimary} />
-            </View>
-            <Text style={[styles.settingText, { color: colors.textPrimary }]}>Privacy policy</Text>
-            <Ionicons name="chevron-forward" size={24} color={colors.textPrimary} />
-          </TouchableOpacity>
-          
-          <TouchableOpacity 
-            style={[styles.settingRow, styles.lastRow]}
-          >
-            <View style={styles.iconContainer}>
-              <Ionicons name="information-circle-outline" size={24} color={colors.textPrimary} />
-            </View>
-            <Text style={[styles.settingText, { color: colors.textPrimary }]}>About</Text>
-            <Ionicons name="chevron-forward" size={24} color={colors.textPrimary} />
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
+      <View style={[styles.section, { backgroundColor: colors.surface }]}>
+        <TouchableOpacity
+          style={[styles.settingRow, { borderBottomColor: colors.border }]}
+          onPress={() => router.push('/reminders')}
+        >
+          <View style={styles.iconContainer}>
+            <Ionicons
+              name="alarm-outline"
+              size={24}
+              color={colors.textPrimary}
+            />
+          </View>
+          <Text style={[styles.settingText, { color: colors.textPrimary }]}>
+            Reminders
+          </Text>
+          <Ionicons
+            name="chevron-forward"
+            size={24}
+            color={colors.textPrimary}
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.settingRow, { borderBottomColor: colors.border }]}
+          onPress={() => router.push('/app-lock')}
+        >
+          <View style={styles.iconContainer}>
+            <Ionicons
+              name="lock-closed-outline"
+              size={24}
+              color={colors.textPrimary}
+            />
+          </View>
+          <Text style={[styles.settingText, { color: colors.textPrimary }]}>
+            App Lock
+          </Text>
+          <Ionicons
+            name="chevron-forward"
+            size={24}
+            color={colors.textPrimary}
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.settingRow, { borderBottomColor: colors.border }]}
+        >
+          <View style={styles.iconContainer}>
+            <Ionicons
+              name="document-text-outline"
+              size={24}
+              color={colors.textPrimary}
+            />
+          </View>
+          <Text style={[styles.settingText, { color: colors.textPrimary }]}>
+            Privacy policy
+          </Text>
+          <Ionicons
+            name="chevron-forward"
+            size={24}
+            color={colors.textPrimary}
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity style={[styles.settingRow, styles.lastRow]}>
+          <View style={styles.iconContainer}>
+            <Ionicons
+              name="information-circle-outline"
+              size={24}
+              color={colors.textPrimary}
+            />
+          </View>
+          <Text style={[styles.settingText, { color: colors.textPrimary }]}>
+            About
+          </Text>
+          <Ionicons
+            name="chevron-forward"
+            size={24}
+            color={colors.textPrimary}
+          />
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
   );
 }
 

@@ -35,7 +35,6 @@ export function PinInput({
   const { colors } = useTheme();
   const [pin, setPin] = useState('');
 
-
   const PIN_LENGTH = 4;
 
   useEffect(() => {
@@ -54,20 +53,18 @@ export function PinInput({
 
   const handleNumberPress = (number: string) => {
     if (pin.length >= PIN_LENGTH) return;
-    
+
     // Clear error message when user starts typing
     if (pin.length === 0 && onStartTyping) {
       onStartTyping();
     }
-    
+
     setPin(prev => prev + number);
   };
 
   const handleBackspace = () => {
     setPin(prev => prev.slice(0, -1));
   };
-
-
 
   const renderNumberPad = () => {
     const numbers = [
@@ -85,15 +82,22 @@ export function PinInput({
               if (item === '') {
                 return <View key={colIndex} style={styles.numberButton} />;
               }
-              
+
               if (item === 'backspace') {
                 return (
                   <TouchableOpacity
                     key={colIndex}
-                    style={[styles.numberButton, { backgroundColor: colors.surface }]}
+                    style={[
+                      styles.numberButton,
+                      { backgroundColor: colors.surface },
+                    ]}
                     onPress={handleBackspace}
                   >
-                    <Ionicons name="backspace-outline" size={24} color={colors.textPrimary} />
+                    <Ionicons
+                      name="backspace-outline"
+                      size={24}
+                      color={colors.textPrimary}
+                    />
                   </TouchableOpacity>
                 );
               }
@@ -101,10 +105,17 @@ export function PinInput({
               return (
                 <TouchableOpacity
                   key={colIndex}
-                  style={[styles.numberButton, { backgroundColor: colors.surface }]}
+                  style={[
+                    styles.numberButton,
+                    { backgroundColor: colors.surface },
+                  ]}
                   onPress={() => handleNumberPress(item)}
                 >
-                  <Text style={[styles.numberText, { color: colors.textPrimary }]}>{item}</Text>
+                  <Text
+                    style={[styles.numberText, { color: colors.textPrimary }]}
+                  >
+                    {item}
+                  </Text>
                 </TouchableOpacity>
               );
             })}
@@ -117,8 +128,14 @@ export function PinInput({
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.header}>
-        <Text style={[styles.title, { color: colors.textPrimary }]}>{title}</Text>
-        {subtitle && <Text style={[styles.subtitle, { color: colors.textSecondary }]}>{subtitle}</Text>}
+        <Text style={[styles.title, { color: colors.textPrimary }]}>
+          {title}
+        </Text>
+        {subtitle && (
+          <Text style={[styles.subtitle, { color: colors.textSecondary }]}>
+            {subtitle}
+          </Text>
+        )}
       </View>
 
       <View style={styles.pinContainer}>
@@ -128,16 +145,17 @@ export function PinInput({
             style={[
               styles.pinDot,
               { borderColor: colors.border },
-              index < pin.length && { backgroundColor: colors.primary, borderColor: colors.primary },
+              index < pin.length && {
+                backgroundColor: colors.primary,
+                borderColor: colors.primary,
+              },
               errorMessage && styles.pinDotError,
             ]}
           />
         ))}
       </View>
 
-      {errorMessage && (
-        <Text style={styles.errorText}>{errorMessage}</Text>
-      )}
+      {errorMessage && <Text style={styles.errorText}>{errorMessage}</Text>}
 
       {renderNumberPad()}
 
@@ -146,8 +164,14 @@ export function PinInput({
           style={styles.biometricButton}
           onPress={onBiometricPress}
         >
-          <Ionicons name={biometricIcon as any} size={24} color={colors.primary} />
-          <Text style={[styles.biometricText, { color: colors.primary }]}>{biometricLabel}</Text>
+          <Ionicons
+            name={biometricIcon as any}
+            size={24}
+            color={colors.primary}
+          />
+          <Text style={[styles.biometricText, { color: colors.primary }]}>
+            {biometricLabel}
+          </Text>
         </TouchableOpacity>
       )}
     </View>
@@ -239,4 +263,4 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
   },
-}); 
+});

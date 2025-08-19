@@ -1,5 +1,3 @@
-
-
 // Custom type for marked dates with today style
 export type CustomMarking = {
   selected?: boolean;
@@ -33,13 +31,13 @@ export const DEFAULT_SELECTED_STYLE: CustomMarking = {
   customContainerStyle: {
     borderWidth: 2,
     borderColor: '#FF597B',
-    backgroundColor: '#FFEAEE'
+    backgroundColor: '#FFEAEE',
   },
   customStyles: {
     text: {
-      color: '#FFFFFF'
-    }
-  }
+      color: '#FFFFFF',
+    },
+  },
 };
 
 // Helper function to create date string (YYYY-MM-DD)
@@ -54,13 +52,13 @@ export function formatDateString(date: Date): string {
 export function generateDateRange(startDate: string, days: number): string[] {
   const dates: string[] = [];
   const start = new Date(startDate);
-  
+
   for (let i = 0; i < days; i++) {
     const date = new Date(start);
     date.setDate(date.getDate() + i);
     dates.push(formatDateString(date));
   }
-  
+
   return dates;
 }
 

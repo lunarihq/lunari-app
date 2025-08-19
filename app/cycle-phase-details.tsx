@@ -13,60 +13,110 @@ export default function CyclePhaseDetails() {
   const { colors } = useTheme();
   const params = useLocalSearchParams();
   const cycleDay = parseInt(params.cycleDay as string) || 0;
-  const averageCycleLength = parseInt(params.averageCycleLength as string) || 28;
+  const averageCycleLength =
+    parseInt(params.averageCycleLength as string) || 28;
   const currentDate = new Date();
-  
-  const cyclePhase = PeriodPredictionService.getCyclePhase(cycleDay, averageCycleLength);
-  const phaseDescription = PeriodPredictionService.getPhaseDescription(cyclePhase);
-  const pregnancyChance = PeriodPredictionService.getPregnancyChance(cycleDay, averageCycleLength);
-  const pregnancyDescription = PeriodPredictionService.getPregnancyChanceDescription(pregnancyChance);
-  const possibleSymptoms = PeriodPredictionService.getPossibleSymptoms(cyclePhase);
+
+  const cyclePhase = PeriodPredictionService.getCyclePhase(
+    cycleDay,
+    averageCycleLength
+  );
+  const phaseDescription =
+    PeriodPredictionService.getPhaseDescription(cyclePhase);
+  const pregnancyChance = PeriodPredictionService.getPregnancyChance(
+    cycleDay,
+    averageCycleLength
+  );
+  const pregnancyDescription =
+    PeriodPredictionService.getPregnancyChanceDescription(pregnancyChance);
+  const possibleSymptoms =
+    PeriodPredictionService.getPossibleSymptoms(cyclePhase);
 
   return (
-    <View style={[defaultTheme.globalStyles.container, { backgroundColor: colors.background }]}>
-      <ScrollView 
-        style={styles.content} 
+    <View
+      style={[
+        defaultTheme.globalStyles.container,
+        { backgroundColor: colors.background },
+      ]}
+    >
+      <ScrollView
+        style={styles.content}
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        <Text style={[styles.dateText, { color: colors.textPrimary }]}>{getFormattedDate(currentDate)}</Text>
-        
-        <Text style={[styles.cycleTitle, { color: colors.textPrimary }]}>Cycle day {cycleDay}</Text>
-        
+        <Text style={[styles.dateText, { color: colors.textPrimary }]}>
+          {getFormattedDate(currentDate)}
+        </Text>
+
+        <Text style={[styles.cycleTitle, { color: colors.textPrimary }]}>
+          Cycle day {cycleDay}
+        </Text>
+
         <View style={[styles.phaseCard, { backgroundColor: colors.surface }]}>
           <View style={styles.phaseHeader}>
-            <Ionicons name="sync-outline" size={24} color={colors.textPrimary} />
-            <Text style={[styles.cardTitle, { color: colors.textPrimary }]}>Cycle phase</Text>
+            <Ionicons
+              name="sync-outline"
+              size={24}
+              color={colors.textPrimary}
+            />
+            <Text style={[styles.cardTitle, { color: colors.textPrimary }]}>
+              Cycle phase
+            </Text>
           </View>
-          
-          <Text style={[styles.phaseTitle, { color: colors.textPrimary }]}>{cyclePhase}</Text>
-          
-          <Text style={[styles.phaseDescription, { color: colors.textPrimary }]}>{phaseDescription}</Text>
+
+          <Text style={[styles.phaseTitle, { color: colors.textPrimary }]}>
+            {cyclePhase}
+          </Text>
+
+          <Text
+            style={[styles.phaseDescription, { color: colors.textPrimary }]}
+          >
+            {phaseDescription}
+          </Text>
         </View>
 
         <View style={[styles.phaseCard, { backgroundColor: colors.surface }]}>
           <View style={styles.phaseHeader}>
-            <Ionicons name="leaf-outline" size={24} color={colors.textPrimary} />
-            <Text style={[styles.cardTitle, { color: colors.textPrimary }]}>Chance to conceive</Text>
+            <Ionicons
+              name="leaf-outline"
+              size={24}
+              color={colors.textPrimary}
+            />
+            <Text style={[styles.cardTitle, { color: colors.textPrimary }]}>
+              Chance to conceive
+            </Text>
           </View>
-          
-          <Text style={[styles.phaseTitle, { color: colors.textPrimary }]}>{pregnancyChance}</Text>
-          
-          <Text style={[styles.phaseDescription, { color: colors.textPrimary }]}>{pregnancyDescription}</Text>
+
+          <Text style={[styles.phaseTitle, { color: colors.textPrimary }]}>
+            {pregnancyChance}
+          </Text>
+
+          <Text
+            style={[styles.phaseDescription, { color: colors.textPrimary }]}
+          >
+            {pregnancyDescription}
+          </Text>
         </View>
 
         <View style={[styles.phaseCard, { backgroundColor: colors.surface }]}>
           <View style={styles.phaseHeader}>
-            <Ionicons name="medical-outline" size={24} color={colors.textPrimary} />
-            <Text style={[styles.cardTitle, { color: colors.textPrimary }]}>Possible symptoms</Text>
+            <Ionicons
+              name="medical-outline"
+              size={24}
+              color={colors.textPrimary}
+            />
+            <Text style={[styles.cardTitle, { color: colors.textPrimary }]}>
+              Possible symptoms
+            </Text>
           </View>
-          <Text style={[styles.phaseDescription, { color: colors.textPrimary }]}>{possibleSymptoms}</Text>
+          <Text
+            style={[styles.phaseDescription, { color: colors.textPrimary }]}
+          >
+            {possibleSymptoms}
+          </Text>
         </View>
-
       </ScrollView>
-      
     </View>
-    
   );
 }
 
@@ -114,4 +164,4 @@ const styles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 24,
   },
-}); 
+});

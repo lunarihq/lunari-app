@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  SafeAreaView,
+} from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { setSetting } from '../../db';
@@ -41,39 +47,65 @@ export default function PeriodLengthScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
-        <Ionicons name="water-outline" size={100} color="#4E74B9" style={styles.icon} />
+        <Ionicons
+          name="water-outline"
+          size={100}
+          color="#4E74B9"
+          style={styles.icon}
+        />
         <Text style={styles.title}>How long is your period?</Text>
-        <Text style={styles.message}>This helps us provide more accurate predictions for your cycle.</Text>
-        
-        <View style={[styles.pickerContainer, dontKnow && styles.pickerDisabled]}>
-          <TouchableOpacity 
-            style={[styles.pickerButton, dontKnow && styles.buttonDisabled]} 
+        <Text style={styles.message}>
+          This helps us provide more accurate predictions for your cycle.
+        </Text>
+
+        <View
+          style={[styles.pickerContainer, dontKnow && styles.pickerDisabled]}
+        >
+          <TouchableOpacity
+            style={[styles.pickerButton, dontKnow && styles.buttonDisabled]}
             onPress={decrementPeriodLength}
             disabled={dontKnow}
           >
-            <Ionicons name="remove" size={24} color={dontKnow ? "#ccc" : "#4E74B9"} />
+            <Ionicons
+              name="remove"
+              size={24}
+              color={dontKnow ? '#ccc' : '#4E74B9'}
+            />
           </TouchableOpacity>
-          
+
           <View style={styles.valueContainer}>
-            <Text style={[styles.valueText, dontKnow && styles.textDisabled]}>{periodLength}</Text>
-            <Text style={[styles.labelText, dontKnow && styles.textDisabled]}>days</Text>
+            <Text style={[styles.valueText, dontKnow && styles.textDisabled]}>
+              {periodLength}
+            </Text>
+            <Text style={[styles.labelText, dontKnow && styles.textDisabled]}>
+              days
+            </Text>
           </View>
-          
-          <TouchableOpacity 
-            style={[styles.pickerButton, dontKnow && styles.buttonDisabled]} 
+
+          <TouchableOpacity
+            style={[styles.pickerButton, dontKnow && styles.buttonDisabled]}
             onPress={incrementPeriodLength}
             disabled={dontKnow}
           >
-            <Ionicons name="add" size={24} color={dontKnow ? "#ccc" : "#4E74B9"} />
+            <Ionicons
+              name="add"
+              size={24}
+              color={dontKnow ? '#ccc' : '#4E74B9'}
+            />
           </TouchableOpacity>
         </View>
 
-        <TouchableOpacity style={styles.dontKnowContainer} onPress={toggleDontKnow}>
+        <TouchableOpacity
+          style={styles.dontKnowContainer}
+          onPress={toggleDontKnow}
+        >
           <View style={styles.checkboxContainer}>
             <View style={[styles.checkbox, dontKnow && styles.checkboxChecked]}>
               {dontKnow && <Ionicons name="checkmark" size={16} color="#fff" />}
             </View>
-            <Text style={styles.dontKnowText}>Don't know - let the app learn</Text>
+            <Text style={styles.dontKnowText}>
+              Don't know - let the app learn
+            </Text>
           </View>
           <Text style={styles.dontKnowSubText}>Uses 5 days as default</Text>
         </TouchableOpacity>
@@ -240,4 +272,4 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
   },
-}); 
+});

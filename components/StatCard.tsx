@@ -10,12 +10,14 @@ interface StatCardProps {
 
 export function StatCard({ title, value, icon }: StatCardProps) {
   const { colors } = useTheme();
-  
+
   return (
     <View style={[styles.card, { backgroundColor: colors.panel }]}>
       <View style={styles.header}>
         {icon}
-        <Text style={[styles.title, { color: colors.textPrimary }]}>{title}</Text>
+        <Text style={[styles.title, { color: colors.textPrimary }]}>
+          {title}
+        </Text>
       </View>
       <Text style={[styles.value, { color: colors.textPrimary }]}>{value}</Text>
     </View>
@@ -44,4 +46,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default StatCard; 
+export default StatCard;

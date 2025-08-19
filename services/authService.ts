@@ -21,7 +21,10 @@ export class AuthService {
   static async setPin(pin: string): Promise<boolean> {
     try {
       if (!/^[0-9]{4}$/.test(pin)) return false;
-      const hash = await Crypto.digestStringAsync(Crypto.CryptoDigestAlgorithm.SHA256, `lunari_v1:${pin}`);
+      const hash = await Crypto.digestStringAsync(
+        Crypto.CryptoDigestAlgorithm.SHA256,
+        `lunari_v1:${pin}`
+      );
       await SecureStore.setItemAsync(PIN_KEY, hash);
       return true;
     } catch (error) {
@@ -35,7 +38,10 @@ export class AuthService {
     try {
       const storedPin = await SecureStore.getItemAsync(PIN_KEY);
       if (!storedPin) return false;
-      const hash = await Crypto.digestStringAsync(Crypto.CryptoDigestAlgorithm.SHA256, `lunari_v1:${pin}`);
+      const hash = await Crypto.digestStringAsync(
+        Crypto.CryptoDigestAlgorithm.SHA256,
+        `lunari_v1:${pin}`
+      );
       return storedPin === hash;
     } catch (error) {
       console.error('Error verifying PIN:', error);
@@ -75,9 +81,12 @@ export class AuthService {
     }
   }
 
-  static async getBiometricType(): Promise<LocalAuthentication.AuthenticationType[]> {
+  static async getBiometricType(): Promise<
+    LocalAuthentication.AuthenticationType[]
+  > {
     try {
-      const types = await LocalAuthentication.supportedAuthenticationTypesAsync();
+      const types =
+        await LocalAuthentication.supportedAuthenticationTypesAsync();
       return types;
     } catch (error) {
       console.error('Error getting biometric types:', error);
@@ -85,7 +94,10 @@ export class AuthService {
     }
   }
 
-  static async authenticateWithBiometric(): Promise<{ success: boolean; error?: string }> {
+  static async authenticateWithBiometric(): Promise<{
+    success: boolean;
+    error?: string;
+  }> {
     try {
       const result = await LocalAuthentication.authenticateAsync({
         promptMessage: 'Unlock Lunari',
@@ -98,9 +110,12 @@ export class AuthService {
       if (result.success) {
         return { success: true };
       } else {
-        return { 
-          success: false, 
-          error: result.error === 'user_cancel' ? 'Authentication cancelled' : 'Authentication failed'
+        return {
+          success: false,
+          error:
+            result.error === 'user_cancel'
+              ? 'Authentication cancelled'
+              : 'Authentication failed',
         };
       }
     } catch (error) {
@@ -134,7 +149,7 @@ export class AuthService {
     const enrolled = await this.isBiometricEnrolled();
     const enabled = await this.isBiometricEnabled();
     const pinSet = await this.isPinSet();
-    
+
     return supported && enrolled && enabled && pinSet;
   }
-} 
+}

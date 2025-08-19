@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from 'react';
 import { AppState, AppStateStatus } from 'react-native';
 import { AuthService } from '../services/authService';
 
@@ -39,7 +45,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   // Handle app state changes for auto-lock
   useEffect(() => {
-    const subscription = AppState.addEventListener('change', handleAppStateChange);
+    const subscription = AppState.addEventListener(
+      'change',
+      handleAppStateChange
+    );
     return () => subscription?.remove();
   }, [isPinSet]);
 
@@ -201,11 +210,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     getBiometricType,
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 export function useAuth() {
@@ -214,4 +219,4 @@ export function useAuth() {
     throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
-} 
+}

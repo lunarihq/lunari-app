@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { 
-  View, 
-  Text, 
-  StyleSheet, 
+import {
+  View,
+  Text,
+  StyleSheet,
   TouchableOpacity,
-  ScrollView
+  ScrollView,
 } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -39,44 +39,46 @@ export default function SymptomTracking() {
     // Use the date from params if provided, otherwise use today's date
     typeof params.date === 'string' ? params.date : dayjs().format('YYYY-MM-DD')
   );
-  
+
   // Track original state to detect changes
   const [originalSymptoms, setOriginalSymptoms] = useState<string[]>([]);
   const [originalMoods, setOriginalMoods] = useState<string[]>([]);
   const [originalFlows, setOriginalFlows] = useState<string[]>([]);
   const [originalNotes, setOriginalNotes] = useState<string>('');
   const [hasChanges, setHasChanges] = useState<boolean>(false);
-  
+
   const scrollViewRef = useRef<ScrollView>(null);
   const notesSectionRef = useRef<View>(null);
-  
+
   // Update header title on focused
   useFocusEffect(
     React.useCallback(() => {
       const isToday = selectedDate === dayjs().format('YYYY-MM-DD');
-      const formattedDate = isToday 
-        ? `Today, ${dayjs(selectedDate).format('MMMM D')}` 
+      const formattedDate = isToday
+        ? `Today, ${dayjs(selectedDate).format('MMMM D')}`
         : dayjs(selectedDate).format('dddd, MMMM D');
-      
+
       // If possible, update the header title
       if (router.canGoBack()) {
         router.setParams({ title: formattedDate });
       }
-      
+
       return () => {};
     }, [selectedDate])
   );
-  
+
   // Navigate to previous day
   const goToPreviousDay = () => {
-    setSelectedDate(dayjs(selectedDate).subtract(1, 'day').format('YYYY-MM-DD'));
+    setSelectedDate(
+      dayjs(selectedDate).subtract(1, 'day').format('YYYY-MM-DD')
+    );
   };
-  
+
   // Navigate to next day
   const goToNextDay = () => {
     const nextDay = dayjs(selectedDate).add(1, 'day');
     const today = dayjs();
-    
+
     // Don't allow navigating to future dates
     if (!nextDay.isAfter(today, 'day')) {
       setSelectedDate(nextDay.format('YYYY-MM-DD'));
@@ -92,142 +94,140 @@ export default function SymptomTracking() {
 
   // Symptoms data
   const [symptoms, setSymptoms] = useState<Item[]>([
-    { 
-      id: '1', 
+    {
+      id: '1',
       icon: '🍓',
-      name: 'Acne', 
-      selected: false 
+      name: 'Acne',
+      selected: false,
     },
-    { 
-      id: '2', 
+    {
+      id: '2',
       icon: '🔨',
-      name: 'Headache', 
-      selected: false 
+      name: 'Headache',
+      selected: false,
     },
-    { 
-      id: '3', 
+    {
+      id: '3',
       icon: '🦵',
-      name: 'Cramps', 
-      selected: false 
+      name: 'Cramps',
+      selected: false,
     },
-    { 
-      id: '4', 
-      icon: '💫', 
-      name: 'Dizziness', 
-      selected: false 
+    {
+      id: '4',
+      icon: '💫',
+      name: 'Dizziness',
+      selected: false,
     },
-    { 
-      id: '5', 
-      icon: '💤', 
-      name: 'Fatigue', 
-      selected: false 
+    {
+      id: '5',
+      icon: '💤',
+      name: 'Fatigue',
+      selected: false,
     },
-    { 
-      id: '6', 
-      icon: '🫄', 
-      name: 'Bloating', 
-      selected: false 
+    {
+      id: '6',
+      icon: '🫄',
+      name: 'Bloating',
+      selected: false,
     },
-    { 
-      id: '7', 
-      icon: '😬', 
-      name: 'Constipation', 
-      selected: false 
+    {
+      id: '7',
+      icon: '😬',
+      name: 'Constipation',
+      selected: false,
     },
-    { 
-      id: '8', 
-      icon: '🍔', 
-      name: 'Cravings', 
-      selected: false 
+    {
+      id: '8',
+      icon: '🍔',
+      name: 'Cravings',
+      selected: false,
     },
-    
   ]);
 
   // Moods data
   const [moods, setMoods] = useState<Item[]>([
-    { 
-      id: '1', 
-      icon: '😌', 
-      name: 'Calm', 
-      selected: false 
+    {
+      id: '1',
+      icon: '😌',
+      name: 'Calm',
+      selected: false,
     },
-    { 
-      id: '2', 
-      icon: '😀', 
-      name: 'Happy', 
-      selected: false 
+    {
+      id: '2',
+      icon: '😀',
+      name: 'Happy',
+      selected: false,
     },
-    { 
-      id: '3', 
-      icon: '💪', 
-      name: 'Energetic', 
-      selected: false 
+    {
+      id: '3',
+      icon: '💪',
+      name: 'Energetic',
+      selected: false,
     },
-    { 
-      id: '4', 
-      icon: '😥', 
-      name: 'Sad', 
-      selected: false 
+    {
+      id: '4',
+      icon: '😥',
+      name: 'Sad',
+      selected: false,
     },
-    
-    { 
-      id: '5', 
-      icon: '😰', 
-      name: 'Anxious', 
-      selected: false 
+
+    {
+      id: '5',
+      icon: '😰',
+      name: 'Anxious',
+      selected: false,
     },
-    { 
-      id: '6', 
-      icon: '😕', 
-      name: 'Confused', 
-      selected: false 
+    {
+      id: '6',
+      icon: '😕',
+      name: 'Confused',
+      selected: false,
     },
-    { 
-      id: '7', 
-      icon: '😖', 
-      name: 'Irritated', 
-      selected: false 
+    {
+      id: '7',
+      icon: '😖',
+      name: 'Irritated',
+      selected: false,
     },
-    { 
-      id: '8', 
-      icon: '😠', 
-      name: 'Angry', 
-      selected: false 
+    {
+      id: '8',
+      icon: '😠',
+      name: 'Angry',
+      selected: false,
     },
-    { 
-      id: '9', 
-      icon: '😭', 
-      name: 'Emotional', 
-      selected: false 
+    {
+      id: '9',
+      icon: '😭',
+      name: 'Emotional',
+      selected: false,
     },
-    
   ]);
 
   // Flows data
   const [flows, setFlows] = useState<Item[]>([
-    { 
-      id: '1', 
+    {
+      id: '1',
       icon: '💧',
-      name: 'Light', 
-      selected: false 
+      name: 'Light',
+      selected: false,
     },
-    { 
-      id: '2', 
+    {
+      id: '2',
       icon: '💧',
-      name: 'Medium', 
-      selected: false 
+      name: 'Medium',
+      selected: false,
     },
-    { 
-      id: '3', 
+    {
+      id: '3',
       icon: '💧',
-      name: 'Heavy', 
-      selected: false 
+      name: 'Heavy',
+      selected: false,
     },
-    { 
-      id: '4', 
+    {
+      id: '4',
       icon: '💧',
-      name: 'Blood clots', 
-      selected: false 
+      name: 'Blood clots',
+      selected: false,
     },
   ]);
 
@@ -236,15 +236,17 @@ export default function SymptomTracking() {
     const loadExistingHealthLogs = async () => {
       try {
         // Fetch existing entries for the selected date
-        const existingEntries = await db.select().from(healthLogs)
+        const existingEntries = await db
+          .select()
+          .from(healthLogs)
           .where(eq(healthLogs.date, selectedDate));
-        
+
         // Create sets for quick lookup
         const symptomIds = new Set();
         const moodIds = new Set();
         const flowIds = new Set();
         let notesText = '';
-        
+
         // Populate the sets
         existingEntries.forEach(entry => {
           if (entry.type === 'symptom') {
@@ -257,53 +259,55 @@ export default function SymptomTracking() {
             notesText = entry.name || '';
           }
         });
-        
+
         // Update symptoms state
-        setSymptoms(prevSymptoms => 
+        setSymptoms(prevSymptoms =>
           prevSymptoms.map(symptom => ({
             ...symptom,
-            selected: symptomIds.has(symptom.id)
+            selected: symptomIds.has(symptom.id),
           }))
         );
-        
+
         // Update moods state
-        setMoods(prevMoods => 
+        setMoods(prevMoods =>
           prevMoods.map(mood => ({
             ...mood,
-            selected: moodIds.has(mood.id)
+            selected: moodIds.has(mood.id),
           }))
         );
-        
+
         // Update flows state
-        setFlows(prevFlows => 
+        setFlows(prevFlows =>
           prevFlows.map(flow => ({
             ...flow,
-            selected: flowIds.has(flow.id)
+            selected: flowIds.has(flow.id),
           }))
         );
-        
+
         // Update notes state
         setNotes(notesText);
-        
+
         // Store original state for comparison
         setOriginalSymptoms(Array.from(symptomIds) as string[]);
         setOriginalMoods(Array.from(moodIds) as string[]);
         setOriginalFlows(Array.from(flowIds) as string[]);
         setOriginalNotes(notesText);
         setHasChanges(false);
-        
-        
       } catch (error) {
         console.error('Error loading health logs:', error);
       }
     };
-    
+
     loadExistingHealthLogs();
   }, [selectedDate, setNotes]);
 
   // Handle scrollTo parameter to navigate to specific sections
   useEffect(() => {
-    if (params.scrollTo === 'notes' && scrollViewRef.current && notesSectionRef.current) {
+    if (
+      params.scrollTo === 'notes' &&
+      scrollViewRef.current &&
+      notesSectionRef.current
+    ) {
       // Use setTimeout to ensure the component has fully rendered
       setTimeout(() => {
         notesSectionRef.current?.measureLayout(
@@ -316,71 +320,86 @@ export default function SymptomTracking() {
       }, 100);
     }
   }, [params.scrollTo]);
-  
+
   // Check for changes compared to original state
   useEffect(() => {
     // Get current selected symptom IDs
     const currentSelectedSymptoms = symptoms
       .filter(s => s.selected)
       .map(s => s.id);
-    
+
     // Get current selected mood IDs
-    const currentSelectedMoods = moods
-      .filter(m => m.selected)
-      .map(m => m.id);
-    
+    const currentSelectedMoods = moods.filter(m => m.selected).map(m => m.id);
+
     // Get current selected flow IDs
-    const currentSelectedFlows = flows
-      .filter(f => f.selected)
-      .map(f => f.id);
-    
+    const currentSelectedFlows = flows.filter(f => f.selected).map(f => f.id);
+
     // Check if the selections have changed
     const symptomsChanged = !(
       currentSelectedSymptoms.length === originalSymptoms.length &&
       currentSelectedSymptoms.every(id => originalSymptoms.includes(id))
     );
-    
+
     const moodsChanged = !(
       currentSelectedMoods.length === originalMoods.length &&
       currentSelectedMoods.every(id => originalMoods.includes(id))
     );
-    
+
     const flowsChanged = !(
       currentSelectedFlows.length === originalFlows.length &&
       currentSelectedFlows.every(id => originalFlows.includes(id))
     );
-    
+
     const notesChanged = notes !== originalNotes;
-    
-    setHasChanges(symptomsChanged || moodsChanged || flowsChanged || notesChanged);
-  }, [symptoms, moods, flows, notes, originalSymptoms, originalMoods, originalFlows, originalNotes]);
+
+    setHasChanges(
+      symptomsChanged || moodsChanged || flowsChanged || notesChanged
+    );
+  }, [
+    symptoms,
+    moods,
+    flows,
+    notes,
+    originalSymptoms,
+    originalMoods,
+    originalFlows,
+    originalNotes,
+  ]);
 
   // Toggle symptom selection
   const toggleSymptom = (id: string) => {
-    setSymptoms(symptoms.map(symptom => 
-      symptom.id === id ? { ...symptom, selected: !symptom.selected } : symptom
-    ));
+    setSymptoms(
+      symptoms.map(symptom =>
+        symptom.id === id
+          ? { ...symptom, selected: !symptom.selected }
+          : symptom
+      )
+    );
   };
 
   // Toggle mood selection
   const toggleMood = (id: string) => {
-    setMoods(moods.map(mood => 
-      mood.id === id ? { ...mood, selected: !mood.selected } : mood
-    ));
+    setMoods(
+      moods.map(mood =>
+        mood.id === id ? { ...mood, selected: !mood.selected } : mood
+      )
+    );
   };
 
   // Toggle flow selection
   const toggleFlow = (id: string) => {
-    setFlows(flows.map(flow => 
-      flow.id === id ? { ...flow, selected: !flow.selected } : flow
-    ));
+    setFlows(
+      flows.map(flow =>
+        flow.id === id ? { ...flow, selected: !flow.selected } : flow
+      )
+    );
   };
 
   // Navigate to notes editor
   const openNotesEditor = () => {
     router.push({
       pathname: '/notes-editor',
-      params: { notes: notes }
+      params: { notes: notes },
     });
   };
 
@@ -391,17 +410,16 @@ export default function SymptomTracking() {
       const selectedSymptoms = symptoms.filter(s => s.selected);
       const selectedMoods = moods.filter(m => m.selected);
       const selectedFlows = flows.filter(f => f.selected);
-      
+
       // STEP 1: Delete ALL existing entries for this date
-      await db.delete(healthLogs)
-        .where(eq(healthLogs.date, selectedDate));
-      
+      await db.delete(healthLogs).where(eq(healthLogs.date, selectedDate));
+
       // STEP 2: Prepare symptom records
       const symptomRecords = selectedSymptoms.map(symptom => {
         // Get the emoji as string
         const emoji = String(symptom.icon);
         let iconColor = '';
-        
+
         if (symptom.id === '1') {
           iconColor = '#FF5C7F';
         } else if (symptom.id === '2') {
@@ -411,71 +429,80 @@ export default function SymptomTracking() {
         } else if (symptom.id === '4') {
           iconColor = '#8B572A';
         }
-        
+
         return {
           date: selectedDate,
           type: 'symptom',
           item_id: symptom.id,
           name: symptom.name,
           icon: emoji,
-          icon_color: iconColor
+          icon_color: iconColor,
         };
       });
-      
+
       // STEP 3: Prepare mood records
       const moodRecords = selectedMoods.map(mood => {
         // Get the emoji as string
         const emoji = String(mood.icon);
-        
+
         // Use a standard color for all moods
         const iconColor = '#FFCC00';
-        
+
         return {
           date: selectedDate,
           type: 'mood',
           item_id: mood.id,
           name: mood.name,
           icon: emoji,
-          icon_color: iconColor
+          icon_color: iconColor,
         };
       });
-      
+
       // STEP 4: Prepare flow records
       const flowRecords = selectedFlows.map(flow => {
         // Get the emoji as string
         const emoji = String(flow.icon);
-        
+
         // Use a standard color for all flows
         const iconColor = '#FF597B';
-        
+
         return {
           date: selectedDate,
           type: 'flow',
           item_id: flow.id,
           name: flow.name,
           icon: emoji,
-          icon_color: iconColor
+          icon_color: iconColor,
         };
       });
-      
+
       // STEP 5: Prepare notes record (only if notes exist)
-      const notesRecords = notes.trim() ? [{
-        date: selectedDate,
-        type: 'notes',
-        item_id: '1',
-        name: notes.trim(),
-        icon: '📝',
-        icon_color: '#4561D2'
-      }] : [];
-      
+      const notesRecords = notes.trim()
+        ? [
+            {
+              date: selectedDate,
+              type: 'notes',
+              item_id: '1',
+              name: notes.trim(),
+              icon: '📝',
+              icon_color: '#4561D2',
+            },
+          ]
+        : [];
+
       // STEP 6: Combine all records to insert
-      const allRecords = [...symptomRecords, ...moodRecords, ...flowRecords, ...notesRecords];
-      
+      const allRecords = [
+        ...symptomRecords,
+        ...moodRecords,
+        ...flowRecords,
+        ...notesRecords,
+      ];
+
       // STEP 7: Insert new records (only if there are any)
       if (allRecords.length > 0) {
         await db.insert(healthLogs).values(allRecords);
       }
-      
+
       // STEP 8: Navigate back
       router.back();
     } catch (error) {
@@ -484,154 +511,227 @@ export default function SymptomTracking() {
   };
 
   return (
-    <View style={[defaultTheme.globalStyles.container, { backgroundColor: colors.background }]}>
+    <View
+      style={[
+        defaultTheme.globalStyles.container,
+        { backgroundColor: colors.background },
+      ]}
+    >
       {/* Date Navigation Controls */}
       <View style={styles.dateNavigator}>
-        <TouchableOpacity 
-          onPress={goToPreviousDay}
-          style={styles.headerButton}
-        >
+        <TouchableOpacity onPress={goToPreviousDay} style={styles.headerButton}>
           <Ionicons name="chevron-back" size={24} color={colors.textPrimary} />
         </TouchableOpacity>
-        
+
         <Text style={[styles.dateText, { color: colors.textPrimary }]}>
           {selectedDate === dayjs().format('YYYY-MM-DD')
             ? `Today, ${dayjs(selectedDate).format('MMMM D')}`
-            : dayjs(selectedDate).format('dddd, MMMM D')
-          }
+            : dayjs(selectedDate).format('dddd, MMMM D')}
         </Text>
-        
-        <TouchableOpacity 
+
+        <TouchableOpacity
           onPress={goToNextDay}
-          style={[styles.headerButton, isNextDayDisabled() && styles.disabledButton]}
+          style={[
+            styles.headerButton,
+            isNextDayDisabled() && styles.disabledButton,
+          ]}
           disabled={isNextDayDisabled()}
         >
-          <Ionicons name="chevron-forward" size={24} color={isNextDayDisabled() ? colors.textMuted : colors.textPrimary} />
+          <Ionicons
+            name="chevron-forward"
+            size={24}
+            color={isNextDayDisabled() ? colors.textMuted : colors.textPrimary}
+          />
         </TouchableOpacity>
       </View>
 
-      <ScrollView 
+      <ScrollView
         ref={scrollViewRef}
-        style={styles.scrollView} 
+        style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-
         {/* Flow */}
         <View style={[styles.section, { backgroundColor: colors.surface }]}>
-            <View style={styles.sectionHeader}>
-              <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>Flow</Text>
-            </View>
-            
-            <View style={styles.itemsGrid}>
-              {flows.map((flow) => (
-                <TouchableOpacity 
-                  key={flow.id} 
-                  style={[styles.itemButton, flow.selected && styles.selectedItemButton]}
-                  onPress={() => toggleFlow(flow.id)}
-                >
-                  <View style={[styles.itemIcon, flow.selected && { ...styles.selectedItemIcon, borderColor: colors.primary, backgroundColor: colors.primaryLight }]}>
-                    <Text style={styles.emojiText}>{flow.icon}</Text>
-                  </View>
-                  <Text style={[styles.itemText, { color: colors.textSecondary }]}>{flow.name}</Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-          </View>
-          {/* Symptoms */}
-          <View style={[styles.section, { backgroundColor: colors.surface }]}>
-            <View style={styles.sectionHeader}>
-              <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>Symptoms</Text>
-            </View>
-            
-            <View style={styles.itemsGrid}>
-              {symptoms.map((symptom) => (
-                <TouchableOpacity 
-                  key={symptom.id} 
-                  style={[styles.itemButton, symptom.selected && styles.selectedItemButton]}
-                  onPress={() => toggleSymptom(symptom.id)}
-                >
-                  <View style={[styles.itemIcon, symptom.selected && { ...styles.selectedItemIcon, borderColor: colors.primary, backgroundColor: colors.primaryLight }]}>
-                    <Text style={styles.emojiText}>{symptom.icon}</Text>
-                  </View>
-                  <Text style={[styles.itemText, { color: colors.textSecondary }]}>{symptom.name}</Text>
-                </TouchableOpacity>
-              ))}
-            </View>
+          <View style={styles.sectionHeader}>
+            <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
+              Flow
+            </Text>
           </View>
 
-          {/* Moods */}
-          <View style={[styles.section, { backgroundColor: colors.surface }]}>
-            <View style={styles.sectionHeader}>
-              <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>Moods</Text>
-            </View>
-            
-            <View style={styles.itemsGrid}>
-              {moods.map((mood) => (
-                <TouchableOpacity 
-                  key={mood.id} 
-                  style={[styles.itemButton, mood.selected && styles.selectedItemButton]}
-                  onPress={() => toggleMood(mood.id)}
+          <View style={styles.itemsGrid}>
+            {flows.map(flow => (
+              <TouchableOpacity
+                key={flow.id}
+                style={[
+                  styles.itemButton,
+                  flow.selected && styles.selectedItemButton,
+                ]}
+                onPress={() => toggleFlow(flow.id)}
+              >
+                <View
+                  style={[
+                    styles.itemIcon,
+                    flow.selected && {
+                      ...styles.selectedItemIcon,
+                      borderColor: colors.primary,
+                      backgroundColor: colors.primaryLight,
+                    },
+                  ]}
                 >
-                  <View style={[styles.itemIcon, mood.selected && { ...styles.selectedItemIcon, borderColor: colors.primary, backgroundColor: colors.primaryLight }]}>
-                    <Text style={styles.emojiText}>{mood.icon}</Text>
-                  </View>
-                  <Text style={[styles.itemText, { color: colors.textSecondary }]}>{mood.name}</Text>
-                </TouchableOpacity>
-              ))}
-            </View>
+                  <Text style={styles.emojiText}>{flow.icon}</Text>
+                </View>
+                <Text
+                  style={[styles.itemText, { color: colors.textSecondary }]}
+                >
+                  {flow.name}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
+        {/* Symptoms */}
+        <View style={[styles.section, { backgroundColor: colors.surface }]}>
+          <View style={styles.sectionHeader}>
+            <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
+              Symptoms
+            </Text>
           </View>
 
-          {/* Notes */}
-          <View ref={notesSectionRef} style={[styles.section, { backgroundColor: colors.surface }]}>
-            <View style={styles.sectionHeader}>
-              <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>Notes</Text>
-              <View style={styles.notesIconsContainer}>
-                {notes.trim() && (
-                  <TouchableOpacity 
-                    style={styles.notesIcon}
-                    onPress={() => setNotes('')}
-                    activeOpacity={0.7}
-                  >
-                    <Ionicons name="trash-outline" size={24} color="#999" />
-                  </TouchableOpacity>
-                )}
-                <TouchableOpacity 
+          <View style={styles.itemsGrid}>
+            {symptoms.map(symptom => (
+              <TouchableOpacity
+                key={symptom.id}
+                style={[
+                  styles.itemButton,
+                  symptom.selected && styles.selectedItemButton,
+                ]}
+                onPress={() => toggleSymptom(symptom.id)}
+              >
+                <View
+                  style={[
+                    styles.itemIcon,
+                    symptom.selected && {
+                      ...styles.selectedItemIcon,
+                      borderColor: colors.primary,
+                      backgroundColor: colors.primaryLight,
+                    },
+                  ]}
+                >
+                  <Text style={styles.emojiText}>{symptom.icon}</Text>
+                </View>
+                <Text
+                  style={[styles.itemText, { color: colors.textSecondary }]}
+                >
+                  {symptom.name}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
+
+        {/* Moods */}
+        <View style={[styles.section, { backgroundColor: colors.surface }]}>
+          <View style={styles.sectionHeader}>
+            <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
+              Moods
+            </Text>
+          </View>
+
+          <View style={styles.itemsGrid}>
+            {moods.map(mood => (
+              <TouchableOpacity
+                key={mood.id}
+                style={[
+                  styles.itemButton,
+                  mood.selected && styles.selectedItemButton,
+                ]}
+                onPress={() => toggleMood(mood.id)}
+              >
+                <View
+                  style={[
+                    styles.itemIcon,
+                    mood.selected && {
+                      ...styles.selectedItemIcon,
+                      borderColor: colors.primary,
+                      backgroundColor: colors.primaryLight,
+                    },
+                  ]}
+                >
+                  <Text style={styles.emojiText}>{mood.icon}</Text>
+                </View>
+                <Text
+                  style={[styles.itemText, { color: colors.textSecondary }]}
+                >
+                  {mood.name}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
+
+        {/* Notes */}
+        <View
+          ref={notesSectionRef}
+          style={[styles.section, { backgroundColor: colors.surface }]}
+        >
+          <View style={styles.sectionHeader}>
+            <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
+              Notes
+            </Text>
+            <View style={styles.notesIconsContainer}>
+              {notes.trim() && (
+                <TouchableOpacity
                   style={styles.notesIcon}
-                  onPress={openNotesEditor}
+                  onPress={() => setNotes('')}
                   activeOpacity={0.7}
                 >
-                  <Ionicons name="create-outline" size={24} color="#999" />
+                  <Ionicons name="trash-outline" size={24} color="#999" />
                 </TouchableOpacity>
-              </View>
-            </View>
-            
-            <TouchableOpacity 
-              style={styles.notesContainer}
-              onPress={openNotesEditor}
-              activeOpacity={0.7}
-            >
-              {notes.trim() ? (
-                <Text style={[styles.notesText, { color: colors.textPrimary }]} numberOfLines={3}>
-                  {notes}
-                </Text>
-              ) : (
-                <Text style={[styles.notesPlaceholder, { color: colors.textMuted }]}>
-                  Add notes about your day...
-                </Text>
               )}
-            </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.notesIcon}
+                onPress={openNotesEditor}
+                activeOpacity={0.7}
+              >
+                <Ionicons name="create-outline" size={24} color="#999" />
+              </TouchableOpacity>
+            </View>
           </View>
+
+          <TouchableOpacity
+            style={styles.notesContainer}
+            onPress={openNotesEditor}
+            activeOpacity={0.7}
+          >
+            {notes.trim() ? (
+              <Text
+                style={[styles.notesText, { color: colors.textPrimary }]}
+                numberOfLines={3}
+              >
+                {notes}
+              </Text>
+            ) : (
+              <Text
+                style={[styles.notesPlaceholder, { color: colors.textMuted }]}
+              >
+                Add notes about your day...
+              </Text>
+            )}
+          </TouchableOpacity>
+        </View>
       </ScrollView>
 
       {/* Save button that appears only when changes are made */}
       {hasChanges && (
-        <TouchableOpacity 
-          style={[styles.saveButton, { backgroundColor: colors.primary }]} 
+        <TouchableOpacity
+          style={[styles.saveButton, { backgroundColor: colors.primary }]}
           onPress={saveChanges}
           activeOpacity={0.8}
         >
-          <Text style={[styles.saveButtonText, { color: colors.white }]}>Save</Text>
+          <Text style={[styles.saveButtonText, { color: colors.white }]}>
+            Save
+          </Text>
         </TouchableOpacity>
       )}
     </View>
@@ -639,7 +739,6 @@ export default function SymptomTracking() {
 }
 
 const styles = StyleSheet.create({
-
   headerButton: {
     padding: 10,
   },

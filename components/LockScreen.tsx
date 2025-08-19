@@ -6,11 +6,7 @@ import { useTheme } from '../app/styles/theme';
 
 export function LockScreen() {
   const { colors } = useTheme();
-  const {
-    verifyPin,
-    canUseBiometric,
-    authenticateWithBiometric,
-  } = useAuth();
+  const { verifyPin, canUseBiometric, authenticateWithBiometric } = useAuth();
 
   const [errorMessage, setErrorMessage] = useState('');
   const [biometricAttempted, setBiometricAttempted] = useState(false);
@@ -36,7 +32,7 @@ export function LockScreen() {
 
   const handlePinComplete = async (pin: string) => {
     const isValid = await verifyPin(pin);
-    
+
     if (!isValid) {
       setErrorMessage('Incorrect PIN. Please try again.');
       setTimeout(() => setErrorMessage(''), 3000);
@@ -50,7 +46,9 @@ export function LockScreen() {
   };
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: colors.background }]}
+    >
       <View style={styles.content}>
         <PinInput
           title="Enter PIN"
@@ -71,4 +69,4 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
   },
-}); 
+});

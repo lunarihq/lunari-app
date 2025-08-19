@@ -33,21 +33,21 @@ export default function AppLockScreen() {
   useEffect(() => {
     setPinEnabled(isPinSet);
     setBiometricEnabledState(canUseBiometric);
-    
+
     const checkBiometricSupport = async () => {
       if (isPinSet) {
         const { AuthService } = await import('../services/authService');
         const supported = await AuthService.isBiometricSupported();
         const enrolled = await AuthService.isBiometricEnrolled();
         setBiometricSupported(supported && enrolled);
-        
+
         if (supported && enrolled) {
           const type = await getBiometricType();
           setBiometricType(type);
         }
       }
     };
-    
+
     checkBiometricSupport();
   }, [isPinSet, canUseBiometric, getBiometricType]);
 
@@ -57,29 +57,25 @@ export default function AppLockScreen() {
       router.push('/pin-setup?mode=setup');
     } else {
       // Show confirmation dialog
-      Alert.alert(
-        'Remove PIN',
-        'Are you sure you want to remove your PIN?',
-        [
-          {
-            text: 'Cancel',
-            style: 'cancel',
+      Alert.alert('Remove PIN', 'Are you sure you want to remove your PIN?', [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Remove',
+          style: 'destructive',
+          onPress: async () => {
+            const success = await removePin();
+            if (success) {
+              setPinEnabled(false);
+              await refreshPinStatus();
+            } else {
+              Alert.alert('Error', 'Failed to remove PIN. Please try again.');
+            }
           },
-          {
-            text: 'Remove',
-            style: 'destructive',
-            onPress: async () => {
-              const success = await removePin();
-              if (success) {
-                setPinEnabled(false);
-                await refreshPinStatus();
-              } else {
-                Alert.alert('Error', 'Failed to remove PIN. Please try again.');
-              }
-            },
-          },
-        ]
-      );
+        },
+      ]);
     }
   };
 
@@ -88,17 +84,32 @@ export default function AppLockScreen() {
     if (success) {
       setBiometricEnabledState(value);
     } else {
-      Alert.alert('Error', 'Failed to update biometric settings. Please try again.');
+      Alert.alert(
+        'Error',
+        'Failed to update biometric settings. Please try again.'
+      );
     }
   };
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]} edges={['top']}>
-      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: colors.background }]}
+      edges={['top']}
+    >
+      <ScrollView
+        style={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={[styles.section, { backgroundColor: colors.surface }]}>
-          <View style={[styles.settingRow, { borderBottomColor: colors.border }]}>
+          <View
+            style={[styles.settingRow, { borderBottomColor: colors.border }]}
+          >
             <View style={styles.settingContent}>
-              <Text style={[styles.settingTitle, { color: colors.textPrimary }]}>Set up a PIN</Text>
+              <Text
+                style={[styles.settingTitle, { color: colors.textPrimary }]}
+              >
+                Set up a PIN
+              </Text>
             </View>
             <Switch
               value={pinEnabled}
@@ -115,9 +126,17 @@ export default function AppLockScreen() {
               onPress={() => router.push('/pin-setup?mode=change')}
             >
               <View style={styles.settingContent}>
-                <Text style={[styles.settingTitle, { color: colors.textPrimary }]}>Change PIN</Text>
+                <Text
+                  style={[styles.settingTitle, { color: colors.textPrimary }]}
+                >
+                  Change PIN
+                </Text>
               </View>
-              <Ionicons name="chevron-forward" size={20} color={colors.textMuted} />
+              <Ionicons
+                name="chevron-forward"
+                size={20}
+                color={colors.textMuted}
+              />
             </TouchableOpacity>
           )}
         </View>
@@ -126,8 +145,14 @@ export default function AppLockScreen() {
           <View style={[styles.section, { backgroundColor: colors.surface }]}>
             <View style={[styles.settingRow, styles.lastRow]}>
               <View style={styles.settingContent}>
-                <Text style={[styles.settingTitle, { color: colors.textPrimary }]}>Use {biometricType}</Text>
-                <Text style={[styles.settingSubtitle, { color: colors.textMuted }]}>
+                <Text
+                  style={[styles.settingTitle, { color: colors.textPrimary }]}
+                >
+                  Use {biometricType}
+                </Text>
+                <Text
+                  style={[styles.settingSubtitle, { color: colors.textMuted }]}
+                >
                   Unlock app with {biometricType.toLowerCase()} instead of PIN
                 </Text>
               </View>
@@ -144,11 +169,21 @@ export default function AppLockScreen() {
 
         {isPinSet && (
           <View style={styles.infoSection}>
-            <View style={[styles.infoContainer, { backgroundColor: colors.panel }]}>
-              <Ionicons name="information-circle" size={20} color={colors.textMuted} style={styles.infoIcon} />
+            <View
+              style={[styles.infoContainer, { backgroundColor: colors.panel }]}
+            >
+              <Ionicons
+                name="information-circle"
+                size={20}
+                color={colors.textMuted}
+                style={styles.infoIcon}
+              />
               <Text style={[styles.infoText, { color: colors.textMuted }]}>
-                When app lock is enabled, you'll need to authenticate when the app starts or returns from the background.
-                {biometricSupported && biometricEnabled && ` You can use your ${biometricType.toLowerCase()} or PIN to unlock.`}
+                When app lock is enabled, you'll need to authenticate when the
+                app starts or returns from the background.
+                {biometricSupported &&
+                  biometricEnabled &&
+                  ` You can use your ${biometricType.toLowerCase()} or PIN to unlock.`}
               </Text>
             </View>
           </View>
@@ -211,4 +246,4 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 20,
   },
-}); 
+});

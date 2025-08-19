@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { 
-  View, 
-  Text, 
-  StyleSheet, 
+import {
+  View,
+  Text,
+  StyleSheet,
   TouchableOpacity,
   TextInput,
   SafeAreaView,
   KeyboardAvoidingView,
   Platform,
-  Keyboard
+  Keyboard,
 } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useTheme } from './styles/theme';
@@ -28,19 +28,18 @@ export default function NotesEditor() {
   // Initialize notes from params or context, but only once
   useEffect(() => {
     if (!hasInitialized.current) {
-      const initialNotes = typeof params.notes === 'string' ? params.notes : notes;
+      const initialNotes =
+        typeof params.notes === 'string' ? params.notes : notes;
       setLocalNotes(initialNotes);
       hasInitialized.current = true;
     }
   }, [params.notes, notes]);
 
-
-
   // Keyboard event listeners
   useEffect(() => {
     const keyboardWillShowListener = Keyboard.addListener(
       Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow',
-      (event) => {
+      event => {
         setKeyboardHeight(event.endCoordinates.height);
         setIsKeyboardVisible(true);
       }
@@ -66,15 +65,15 @@ export default function NotesEditor() {
     router.back();
   };
 
-
-
-// Optional: confirm unsaved changes instead of auto-saving on unmount
-// (Keeping UX simple here; remove if you want auto-save-on-unmount back.)
+  // Optional: confirm unsaved changes instead of auto-saving on unmount
+  // (Keeping UX simple here; remove if you want auto-save-on-unmount back.)
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.surface }]}>
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: colors.surface }]}
+    >
       {/* Main Content with KeyboardAvoidingView */}
-      <KeyboardAvoidingView 
+      <KeyboardAvoidingView
         style={styles.keyboardAvoidingView}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 0}
@@ -98,16 +97,23 @@ export default function NotesEditor() {
 
       {/* Done Button - positioned above keyboard or at bottom */}
       {localNotes.trim() && (
-        <View style={[
-          isKeyboardVisible ? styles.keyboardToolbar : styles.bottomToolbar,
-          isKeyboardVisible ? { bottom: keyboardHeight } : {}
-        ]}>
-          <TouchableOpacity 
-            style={[globalStyles.primaryButton, { backgroundColor: colors.primary }]} 
+        <View
+          style={[
+            isKeyboardVisible ? styles.keyboardToolbar : styles.bottomToolbar,
+            isKeyboardVisible ? { bottom: keyboardHeight } : {},
+          ]}
+        >
+          <TouchableOpacity
+            style={[
+              globalStyles.primaryButton,
+              { backgroundColor: colors.primary },
+            ]}
             onPress={handleSave}
             activeOpacity={0.8}
           >
-            <Text style={[styles.saveButtonText, { color: colors.white }]}>Done</Text>
+            <Text style={[styles.saveButtonText, { color: colors.white }]}>
+              Done
+            </Text>
           </TouchableOpacity>
         </View>
       )}
@@ -174,4 +180,4 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
   },
-}); 
+});

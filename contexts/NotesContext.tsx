@@ -32,4 +32,4 @@ export const NotesProvider: React.FC<NotesProviderProps> = ({ children }) => {
       {children}
     </NotesContext.Provider>
   );
-}; 
+};

@@ -13,19 +13,21 @@ interface PinSetupProps {
 export function PinSetup({ mode = 'setup' }: PinSetupProps) {
   const { colors } = useTheme();
   const { setupPin } = useAuth();
-  const [step, setStep] = useState<'verify' | 'initial' | 'confirm'>(mode === 'change' ? 'verify' : 'initial');
+  const [step, setStep] = useState<'verify' | 'initial' | 'confirm'>(
+    mode === 'change' ? 'verify' : 'initial'
+  );
   const [initialPin, setInitialPin] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleCurrentPinComplete = async (pin: string) => {
     const isValid = await AuthService.verifyPin(pin);
-    
+
     if (!isValid) {
       setErrorMessage('Incorrect current PIN. Please try again.');
       setTimeout(() => setErrorMessage(''), 3000);
       return;
     }
-    
+
     setStep('initial');
     setErrorMessage('');
   };
@@ -51,9 +53,11 @@ export function PinSetup({ mode = 'setup' }: PinSetupProps) {
       const success = await setupPin(pin);
       if (success) {
         Alert.alert(
-          mode === 'change' ? 'PIN Changed Successfully' : 'PIN Set Successfully',
-          mode === 'change' 
-            ? 'Your PIN has been changed successfully.' 
+          mode === 'change'
+            ? 'PIN Changed Successfully'
+            : 'PIN Set Successfully',
+          mode === 'change'
+            ? 'Your PIN has been changed successfully.'
             : 'Your PIN has been set up. You can now use it to secure your app.',
           [
             {
@@ -82,7 +86,9 @@ export function PinSetup({ mode = 'setup' }: PinSetupProps) {
   };
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: colors.background }]}
+    >
       <View style={styles.content}>
         {step === 'verify' ? (
           <PinInput
@@ -96,7 +102,11 @@ export function PinSetup({ mode = 'setup' }: PinSetupProps) {
           <PinInput
             key="initial-pin"
             title={mode === 'change' ? 'Set New PIN' : 'Set PIN'}
-            subtitle={mode === 'change' ? 'Choose a new 4-digit PIN' : 'Choose a 4-digit PIN to secure your app'}
+            subtitle={
+              mode === 'change'
+                ? 'Choose a new 4-digit PIN'
+                : 'Choose a 4-digit PIN to secure your app'
+            }
             onPinComplete={handleInitialPinComplete}
             errorMessage={errorMessage}
           />
@@ -121,4 +131,4 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
   },
-}); 
+});

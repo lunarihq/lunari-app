@@ -16,7 +16,8 @@ function AppContent() {
   const router = useRouter();
   const pathname = usePathname();
   const [initialRender, setInitialRender] = useState(true);
-  const notificationResponseListener = useRef<Notifications.Subscription | null>(null);
+  const notificationResponseListener =
+    useRef<Notifications.Subscription | null>(null);
   const { isLocked, isAuthenticated } = useAuth();
   const { isDark } = useTheme();
 
@@ -24,24 +25,27 @@ function AppContent() {
   useEffect(() => {
     async function setupNotificationListener() {
       // Set up notification response listener
-      notificationResponseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-        const { notification } = response;
-        const data = notification.request.content.data;
-        
-        // Handle the notification based on type
-        if (data.type === 'period_reminder' || data.type === 'period_start') {
-          // Navigate to the home screen when a period notification is tapped
-          router.navigate('/(tabs)');
-        }
-      });
+      notificationResponseListener.current =
+        Notifications.addNotificationResponseReceivedListener(response => {
+          const { notification } = response;
+          const data = notification.request.content.data;
+
+          // Handle the notification based on type
+          if (data.type === 'period_reminder' || data.type === 'period_start') {
+            // Navigate to the home screen when a period notification is tapped
+            router.navigate('/(tabs)');
+          }
+        });
     }
 
     setupNotificationListener();
-    
+
     // Clean up notification listeners on unmount
     return () => {
       if (notificationResponseListener.current) {
-        Notifications.removeNotificationSubscription(notificationResponseListener.current);
+        Notifications.removeNotificationSubscription(
+          notificationResponseListener.current
+        );
       }
     };
   }, [router]);
@@ -70,9 +74,9 @@ function AppContent() {
     // Only redirect on initial app launch
     if (initialRender) {
       setInitialRender(false);
-      
+
       const inOnboardingPath = pathname.startsWith('/onboarding');
-      
+
       if (!onboardingCompleted && !inOnboardingPath) {
         // If onboarding not completed and not on onboarding screen,
         // redirect to onboarding
@@ -90,7 +94,7 @@ function AppContent() {
     return (
       <>
         <LockScreen />
-        <StatusBar style={isDark ? "light" : "dark"} />
+        <StatusBar style={isDark ? 'light' : 'dark'} />
       </>
     );
   }
@@ -101,57 +105,60 @@ function AppContent() {
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="onboarding" options={{ headerShown: false }} />
         <Stack.Screen name="period-calendar" options={{ headerShown: false }} />
-        <Stack.Screen 
-          name="reminders" 
-          options={{ 
-            headerShown: true, 
-            headerTitle: "Reminders",
-            headerShadowVisible: false,
-          }} 
-        />
-        <Stack.Screen 
-          name="app-lock" 
-          options={{ 
-            headerShown: true, 
-            headerTitle: "App Lock",
-            headerShadowVisible: false,
-          }} 
-        />
-        <Stack.Screen 
-          name="pin-setup" 
-          options={({ route }) => ({ 
-            headerShown: true, 
-            headerTitle: (route.params as any)?.mode === 'change' ? 'Change PIN' : 'Set PIN',
-            headerShadowVisible: false,
-          })} 
-        />
-        <Stack.Screen 
-          name="symptom-tracking" 
-          options={{ 
-            headerShown: true, 
-            headerTitle: "Symptom Tracking",
-            headerShadowVisible: false,
-          }} 
-        />
-        <Stack.Screen 
-          name="notes-editor" 
-          options={{ 
+        <Stack.Screen
+          name="reminders"
+          options={{
             headerShown: true,
-            headerTitle: "Notes",
+            headerTitle: 'Reminders',
             headerShadowVisible: false,
-          }} 
+          }}
         />
-        <Stack.Screen 
-          name="cycle-phase-details" 
-          options={{ 
+        <Stack.Screen
+          name="app-lock"
+          options={{
             headerShown: true,
-            headerTitle: "Cycle Details",
+            headerTitle: 'App Lock',
             headerShadowVisible: false,
-          }} 
+          }}
+        />
+        <Stack.Screen
+          name="pin-setup"
+          options={({ route }) => ({
+            headerShown: true,
+            headerTitle:
+              (route.params as any)?.mode === 'change'
+                ? 'Change PIN'
+                : 'Set PIN',
+            headerShadowVisible: false,
+          })}
+        />
+        <Stack.Screen
+          name="symptom-tracking"
+          options={{
+            headerShown: true,
+            headerTitle: 'Symptom Tracking',
+            headerShadowVisible: false,
+          }}
+        />
+        <Stack.Screen
+          name="notes-editor"
+          options={{
+            headerShown: true,
+            headerTitle: 'Notes',
+            headerShadowVisible: false,
+          }}
+        />
+        <Stack.Screen
+          name="cycle-phase-details"
+          options={{
+            headerShown: true,
+            headerTitle: 'Cycle Details',
+            headerShadowVisible: false,
+          }}
         />
         <Stack.Screen name="+not-found" />
       </Stack>
-      <StatusBar style={isDark ? "light" : "dark"} />
+      <StatusBar style={isDark ? 'light' : 'dark'} />
     </>
   );
 }

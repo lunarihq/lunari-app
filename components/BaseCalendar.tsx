@@ -1,7 +1,12 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { CalendarList, DateData } from 'react-native-calendars';
 import { useCallback, useMemo } from 'react';
-import { CustomMarking, MarkedDates, SelectionRules, formatDateString } from '../app/types/calendarTypes';
+import {
+  CustomMarking,
+  MarkedDates,
+  SelectionRules,
+  formatDateString,
+} from '../app/types/calendarTypes';
 import { useTheme } from '../app/styles/theme';
 
 // Constants
@@ -27,7 +32,6 @@ export type BaseCalendarProps = {
   // Optional custom day component
   renderDay?: React.ComponentType<any>;
 
-
   // Max amount of months allowed to scroll to the past
   pastScrollRange?: number;
   // Max amount of months allowed to scroll to the future
@@ -49,61 +53,75 @@ export function BaseCalendar({
   renderHeader,
   renderDay,
 
-
   pastScrollRange = 12,
   futureScrollRange = 12,
   hideDayNames = false,
   calendarHeight,
 }: BaseCalendarProps) {
   const { colors } = useTheme();
-  
+
   // Create a wrapped onDayPress that respects selectionRules
-  const handleDayPress = useCallback((day: DateData) => {
-    // If in view mode, pass through normally
-    if (mode === 'view') {
-      onDayPress(day);
-      return;
-    }
-    
-    // In selection mode, apply rules if specified
-    if (selectionRules?.disableFuture) {
-      const todayDateStr = formatDateString(new Date());
-      if (day.dateString > todayDateStr) {
-        // Allow deselection of future dates if already selected
-        if (markedDates[day.dateString]) {
-          onDayPress(day);
-        }
-        return; // Ignore selection of future dates
+  const handleDayPress = useCallback(
+    (day: DateData) => {
+      // If in view mode, pass through normally
+      if (mode === 'view') {
+        onDayPress(day);
+        return;
       }
-    }
-    
-    // No special handling needed, pass through to parent component
-    onDayPress(day);
-  }, [mode, onDayPress, selectionRules?.disableFuture, markedDates]);
+
+      // In selection mode, apply rules if specified
+      if (selectionRules?.disableFuture) {
+        const todayDateStr = formatDateString(new Date());
+        if (day.dateString > todayDateStr) {
+          // Allow deselection of future dates if already selected
+          if (markedDates[day.dateString]) {
+            onDayPress(day);
+          }
+          return; // Ignore selection of future dates
+        }
+      }
+
+      // No special handling needed, pass through to parent component
+      onDayPress(day);
+    },
+    [mode, onDayPress, selectionRules?.disableFuture, markedDates]
+  );
 
   // Default day component if none provided
-  const DefaultDay: React.FC<any> = ({ date, state, marking }: { date?: DateData; state: string; marking: CustomMarking }) => {
+  const DefaultDay: React.FC<any> = ({
+    date,
+    state,
+    marking,
+  }: {
+    date?: DateData;
+    state: string;
+    marking: CustomMarking;
+  }) => {
     const customMarking = marking;
-    const isSelected = customMarking?.selected || 
-                      customMarking?.customStyles?.container?.backgroundColor === colors.accentPink;
+    const isSelected =
+      customMarking?.selected ||
+      customMarking?.customStyles?.container?.backgroundColor ===
+        colors.accentPink;
     const isToday = state === 'today';
     const isDisabled = state === 'disabled';
-    
+
     // Determine if this is a period day (has the pink background)
-    const isPeriodDay = customMarking?.customStyles?.container?.backgroundColor === colors.accentPink;
-    
+    const isPeriodDay =
+      customMarking?.customStyles?.container?.backgroundColor ===
+      colors.accentPink;
+
     // Check if this day has a custom container style (for selection background)
     const hasCustomContainer = customMarking?.customContainerStyle;
-    
+
     // Calculate styles once
     const buttonStyles = [
       styles.dayButton,
       isSelected ? styles.selectedDay : null,
       customMarking?.customStyles?.container,
       isToday && customMarking?.todayStyle,
-      isDisabled ? styles.disabledDay : null
+      isDisabled ? styles.disabledDay : null,
     ];
-    
+
     const textStyles = [
       styles.dayText,
       { color: colors.textPrimary },
@@ -111,27 +129,23 @@ export function BaseCalendar({
       isPeriodDay ? { color: colors.white } : null,
       isDisabled ? styles.disabledDayText : null,
       isToday ? styles.todayText : null,
-      customMarking?.customStyles?.text
+      customMarking?.customStyles?.text,
     ];
-    
+
     const dayButton = (
       <TouchableOpacity
         style={buttonStyles}
-        onPress={() => date ? handleDayPress(date) : null}
+        onPress={() => (date ? handleDayPress(date) : null)}
         disabled={isDisabled}
       >
-        <Text style={textStyles}>
-          {date ? date.day : ''}
-        </Text>
+        <Text style={textStyles}>{date ? date.day : ''}</Text>
       </TouchableOpacity>
     );
-    
+
     return (
       <View style={styles.dayContainer}>
         {hasCustomContainer ? (
-          <View style={customMarking.customContainerStyle}>
-            {dayButton}
-          </View>
+          <View style={customMarking.customContainerStyle}>{dayButton}</View>
         ) : (
           dayButton
         )}
@@ -140,34 +154,44 @@ export function BaseCalendar({
   };
 
   // Default header component if none provided
-  const defaultRenderHeader = useCallback((date: any) => {
-    const headerDate = new Date(date);
-    const monthName = headerDate.toLocaleString('default', { month: 'long' });
-    const year = headerDate.getFullYear();
-    
-    return (
-      <View style={styles.headerContainer}>
-        <Text style={[styles.headerText, { color: colors.textPrimary }]}>
-          {monthName} {year}
-        </Text>
-      </View>
-    );
-  }, [colors]);
+  const defaultRenderHeader = useCallback(
+    (date: any) => {
+      const headerDate = new Date(date);
+      const monthName = headerDate.toLocaleString('default', { month: 'long' });
+      const year = headerDate.getFullYear();
+
+      return (
+        <View style={styles.headerContainer}>
+          <Text style={[styles.headerText, { color: colors.textPrimary }]}>
+            {monthName} {year}
+          </Text>
+        </View>
+      );
+    },
+    [colors]
+  );
 
   // Determine whether to hide arrows based on mode
   const hideArrows = true;
 
   // Day names row component (only shown when hideDayNames is true on individual months)
   const dayNames = useMemo(() => ['M', 'T', 'W', 'T', 'F', 'S', 'S'], []);
-  
+
   const renderDayNamesHeader = useCallback(() => {
     if (!hideDayNames) return null;
-    
+
     return (
-      <View style={[styles.dayNamesContainer, { borderBottomColor: colors.border, backgroundColor: colors.surface }]}>
+      <View
+        style={[
+          styles.dayNamesContainer,
+          { borderBottomColor: colors.border, backgroundColor: colors.surface },
+        ]}
+      >
         {dayNames.map((day, index) => (
           <View key={index} style={styles.dayNameCell}>
-            <Text style={[styles.dayNameText, { color: colors.textPrimary }]}>{day}</Text>
+            <Text style={[styles.dayNameText, { color: colors.textPrimary }]}>
+              {day}
+            </Text>
           </View>
         ))}
       </View>
@@ -190,13 +214,11 @@ export function BaseCalendar({
         hideDayNames={hideDayNames}
         dayComponent={renderDay || DefaultDay}
         renderHeader={renderHeader || defaultRenderHeader}
-
         calendarHeight={calendarHeight}
         pastScrollRange={pastScrollRange}
         futureScrollRange={futureScrollRange}
         scrollEnabled={true}
         showScrollIndicator={false}
-
         theme={{
           backgroundColor: colors.surface,
           calendarBackground: colors.surface,
@@ -217,8 +239,8 @@ export function BaseCalendar({
               borderBottomWidth: 1,
               borderBottomColor: colors.border,
               paddingBottom: 2,
-            }
-          }
+            },
+          },
         }}
       />
     </View>
@@ -288,6 +310,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '500',
   },
-}); 
+});
 
 export default BaseCalendar;

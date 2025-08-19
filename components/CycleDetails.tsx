@@ -13,14 +13,26 @@ interface CycleDetailsProps {
   onClose?: () => void;
 }
 
-export function CycleDetails({ selectedDate, cycleDay, averageCycleLength = 28, onClose }: CycleDetailsProps) {
+export function CycleDetails({
+  selectedDate,
+  cycleDay,
+  averageCycleLength = 28,
+  onClose,
+}: CycleDetailsProps) {
   const { colors } = useTheme();
-  const selectedDateFormatted = selectedDate ? 
-    new Date(selectedDate).toLocaleDateString('en-US', { day: 'numeric', month: 'long' }) : '';
+  const selectedDateFormatted = selectedDate
+    ? new Date(selectedDate).toLocaleDateString('en-US', {
+        day: 'numeric',
+        month: 'long',
+      })
+    : '';
 
   const getConceptionChance = () => {
     if (!cycleDay) return '';
-    const chance = PeriodPredictionService.getPregnancyChance(cycleDay, averageCycleLength);
+    const chance = PeriodPredictionService.getPregnancyChance(
+      cycleDay,
+      averageCycleLength
+    );
     return `${chance.charAt(0).toUpperCase()}${chance.slice(1).toLowerCase()} chance to conceive`;
   };
 
@@ -35,11 +47,18 @@ export function CycleDetails({ selectedDate, cycleDay, averageCycleLength = 28, 
       <View style={styles.cycleSummary}>
         <View style={styles.headerRow}>
           <View style={styles.titleContainer}>
-            <Text style={[styles.cycleSummaryTitle, { color: colors.textPrimary }]}>
-              {selectedDateFormatted}{cycleDay ? ` • Cycle day ${cycleDay}` : ''}
+            <Text
+              style={[styles.cycleSummaryTitle, { color: colors.textPrimary }]}
+            >
+              {selectedDateFormatted}
+              {cycleDay ? ` • Cycle day ${cycleDay}` : ''}
             </Text>
             {cycleDay && (
-              <Text style={[styles.conceptionChance, { color: colors.textMuted }]}>{getConceptionChance()}</Text>
+              <Text
+                style={[styles.conceptionChance, { color: colors.textMuted }]}
+              >
+                {getConceptionChance()}
+              </Text>
             )}
           </View>
           {onClose && (
@@ -49,10 +68,10 @@ export function CycleDetails({ selectedDate, cycleDay, averageCycleLength = 28, 
           )}
         </View>
       </View>
-      
+
       {isDateInPastOrToday() && (
-        <SymptomsTracker 
-          selectedDate={selectedDate} 
+        <SymptomsTracker
+          selectedDate={selectedDate}
           titleStyle={{ fontSize: 20 }}
         />
       )}
@@ -86,6 +105,6 @@ const styles = StyleSheet.create({
     padding: 8,
     marginTop: -4,
   },
-}); 
+});
 
 export default CycleDetails;

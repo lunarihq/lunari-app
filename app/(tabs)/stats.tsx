@@ -29,7 +29,7 @@ export default function Stats() {
     try {
       // Load period dates from the database
       const saved = await db.select().from(periodDates);
-      
+
       if (saved.length === 0) {
         // Reset all states when there are no period dates
         setAverageCycleLength(0);
@@ -42,18 +42,26 @@ export default function Stats() {
       const periods = PeriodPredictionService.groupDateIntoPeriods(sortedDates);
 
       // Calculate average cycle length
-      const cycleLength = PeriodPredictionService.getAverageCycleLength(sortedDates, userCycleLength);
+      const cycleLength = PeriodPredictionService.getAverageCycleLength(
+        sortedDates,
+        userCycleLength
+      );
       setAverageCycleLength(cycleLength);
 
       // Calculate average period length
       const periodLengths = periods.map(period => period.length);
-      const totalPeriodLength = periodLengths.reduce((sum, length) => sum + length, 0);
-      const avgPeriodLength = Math.round(totalPeriodLength / periodLengths.length);
+      const totalPeriodLength = periodLengths.reduce(
+        (sum, length) => sum + length,
+        0
+      );
+      const avgPeriodLength = Math.round(
+        totalPeriodLength / periodLengths.length
+      );
       setAveragePeriodLength(avgPeriodLength);
-      
+
       // Generate cycle history data
       const history: HistoryEntryWithDate[] = [];
-      
+
       // console.log removed
 
       // The periods array is in descending order (newest to oldest)
@@ -64,12 +72,16 @@ export default function Stats() {
 
       // Create an array of period start dates (first day of each period)
       const periodStartDates = chronologicalPeriods.map(period => {
-        const sortedPeriod = [...period].sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
+        const sortedPeriod = [...period].sort(
+          (a, b) => new Date(a).getTime() - new Date(b).getTime()
+        );
         return sortedPeriod[0];
       });
 
       // Sort period start dates in chronological order (oldest to newest)
-      periodStartDates.sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
+      periodStartDates.sort(
+        (a, b) => new Date(a).getTime() - new Date(b).getTime()
+      );
 
       // console.log removed
 
@@ -77,35 +89,41 @@ export default function Stats() {
       for (let i = 0; i < chronologicalPeriods.length; i++) {
         const period = chronologicalPeriods[i];
         // Get the start date for this period
-        const sortedPeriod = [...period].sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
+        const sortedPeriod = [...period].sort(
+          (a, b) => new Date(a).getTime() - new Date(b).getTime()
+        );
         const startDate = sortedPeriod[0];
-        
+
         // Calculate cycle length
         let cycleLengthValue: string | number;
-        
+
         // Check if this is the most recent period (last in the array after sorting)
         if (i === chronologicalPeriods.length - 1) {
-          cycleLengthValue = "In progress";
+          cycleLengthValue = 'In progress';
         } else {
           const currentStartDate = periodStartDates[i];
           const nextStartDate = periodStartDates[i + 1];
-          
+
           const daysBetween = Math.round(
-            Math.abs((new Date(nextStartDate).getTime() - new Date(currentStartDate).getTime()) / (1000 * 60 * 60 * 24))
+            Math.abs(
+              (new Date(nextStartDate).getTime() -
+                new Date(currentStartDate).getTime()) /
+                (1000 * 60 * 60 * 24)
+            )
           );
           cycleLengthValue = daysBetween;
         }
-        
+
         // Add to history with the original date for sorting
         const historyEntry = {
           startDate: formatDate(startDate),
           originalDate: startDate, // Store original date for sorting
           cycleLength: cycleLengthValue,
-          periodLength: period.length
+          periodLength: period.length,
         };
         history.push(historyEntry);
       }
-      
+
       // Sort history from most recent to oldest
       history.sort((a, b) => {
         const dateA = new Date(a.originalDate);
@@ -116,7 +134,6 @@ export default function Stats() {
       // Remove originalDate field before setting state
       const cleanHistory = history.map(({ originalDate, ...rest }) => rest);
       setCycleHistory(cleanHistory);
-      
     } catch (error) {
       console.error('Error loading statistics:', error);
     }
@@ -150,28 +167,43 @@ export default function Stats() {
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
   };
 
-
-
   return (
-    <ScrollView style={[defaultTheme.globalStyles.container, { backgroundColor: colors.background }]}>
-      <View style={[styles.myCyclesContainer, { backgroundColor: colors.surface }]}>
-      <Text style={[styles.heading, { color: colors.textPrimary }]}>My cycles</Text>
-      <View style={styles.cardsContainer}>
-        <View style={{flex: 1}}>
-          <StatCard 
-            title="Average cycle" 
-            value={`${averageCycleLength} days`} 
-            icon={<Feather name="calendar" size={20} color={colors.textPrimary} />} 
-          />
+    <ScrollView
+      style={[
+        defaultTheme.globalStyles.container,
+        { backgroundColor: colors.background },
+      ]}
+    >
+      <View
+        style={[styles.myCyclesContainer, { backgroundColor: colors.surface }]}
+      >
+        <Text style={[styles.heading, { color: colors.textPrimary }]}>
+          My cycles
+        </Text>
+        <View style={styles.cardsContainer}>
+          <View style={{ flex: 1 }}>
+            <StatCard
+              title="Average cycle"
+              value={`${averageCycleLength} days`}
+              icon={
+                <Feather name="calendar" size={20} color={colors.textPrimary} />
+              }
+            />
+          </View>
+          <View style={{ flex: 1 }}>
+            <StatCard
+              title="Period length"
+              value={`${averagePeriodLength} days`}
+              icon={
+                <MaterialCommunityIcons
+                  name="water-outline"
+                  size={20}
+                  color={colors.textPrimary}
+                />
+              }
+            />
+          </View>
         </View>
-        <View style={{flex: 1}}>
-          <StatCard 
-            title="Period length" 
-            value={`${averagePeriodLength} days`} 
-            icon={<MaterialCommunityIcons name="water-outline" size={20} color={colors.textPrimary} />} 
-          />
-        </View>
-      </View>
       </View>
       <CycleHistory cycles={cycleHistory} />
     </ScrollView>
