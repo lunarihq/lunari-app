@@ -1,18 +1,15 @@
-import React from 'react';
-import { Text, View, StyleSheet, Pressable, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Text, View, StyleSheet, Pressable, ScrollView } from 'react-native';
 import { useLocalSearchParams, router, useFocusEffect } from 'expo-router';
-import { useState, useEffect, useCallback } from 'react';
 import { SymptomsTracker } from '../../components/SymptomsTracker';
-import { db } from '../../db';
+import { db , getSetting } from '../../db';
 import { PeriodDate, periodDates} from '../../db/schema';
 import { PeriodPredictionService } from '../../services/periodPredictions';
 import { NotificationService } from '../../services/notificationService';
-import { validatePeriodDate } from '../../validation/periodData';
+
 import { Ionicons } from '@expo/vector-icons';
-import theme from '../styles/theme';
-import { useTheme } from '../styles/theme';
+import themeStyles, { useTheme } from '../styles/theme';
 import DashedCircle from '../../components/DashedCircle';
-import { getSetting } from '../../db';
 
 const getFormattedDate = (date: Date): string => `Today, ${date.getDate()} ${date.toLocaleDateString('en-US', { month: 'short' })}`;
 
@@ -24,7 +21,7 @@ export default function Index() {
   const [firstPeriodDate, setFirstPeriodDate] = useState<string | null>(null);
   const [currentCycleDay, setCurrentCycleDay] = useState<number | null>(null);
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [expandedPhase, setExpandedPhase] = useState<string | null>(null);
+
   const [isPeriodDay, setIsPeriodDay] = useState(false);
   const [periodDayNumber, setPeriodDayNumber] = useState(0);
   const params = useLocalSearchParams();
@@ -112,71 +109,14 @@ export default function Index() {
     }
   };
 
-  const savePeriodDates = async (dates: { [date: string]: any }) => {
-    try {
-      // Validate dates before saving
-      if (!Object.keys(dates).every(date => validatePeriodDate(date))) {
-        console.error('Invalid dates detected');
-        return;
-      }
-      
-      await db.delete(periodDates);
-      
-      const dateInserts = Object.keys(dates).map(date => ({
-        date
-      }));
-      
-      if (dateInserts.length > 0) {
-        await db.insert(periodDates).values(dateInserts);
-        
-        // Use the service to group dates into periods
-        const sortedDates = Object.keys(dates);
-        const periods = PeriodPredictionService.groupDateIntoPeriods(sortedDates);
 
-        const mostRecentPeriod = periods[0];
-        const mostRecentStart = mostRecentPeriod[mostRecentPeriod.length - 1];
-        
-        setSelectedDates(dates);
-        setFirstPeriodDate(mostRecentStart);
-        setCurrentCycleDay(PeriodPredictionService.getCurrentCycleDay(mostRecentStart));
-        
-        // Calculate if today is a period day after saving
-        const periodDayResult = PeriodPredictionService.calculatePeriodDay(dates);
-        setIsPeriodDay(periodDayResult.isPeriodDay);
-        setPeriodDayNumber(periodDayResult.dayNumber);
-        
-        // Schedule period notifications if enabled
-        try {
-          // The schedulePeriodReminder function will check if notifications are enabled
-          await NotificationService.schedulePeriodReminder(mostRecentStart, sortedDates);
-        } catch (error) {
-          console.error('Failed to schedule period notifications:', error);
-        }
-      } else {
-        setSelectedDates({});
-        setFirstPeriodDate(null);
-        setCurrentCycleDay(null);
-        setIsPeriodDay(false);
-        setPeriodDayNumber(0);
-        
-        // Cancel period notifications
-        try {
-          await NotificationService.cancelPeriodNotifications();
-        } catch (error) {
-          console.error('Failed to cancel period notifications:', error);
-        }
-      }
-    } catch (error) {
-      console.error('Error saving dates:', error);
-    }
-  };
 
   // Update period day check when current date changes
   useEffect(() => {
     const periodDayResult = PeriodPredictionService.calculatePeriodDay(selectedDates);
     setIsPeriodDay(periodDayResult.isPeriodDay);
     setPeriodDayNumber(periodDayResult.dayNumber);
-  }, [currentDate]);
+  }, [currentDate, selectedDates]);
 
   const [userCycleLength, setUserCycleLength] = useState<number>(28);
 
@@ -203,34 +143,34 @@ export default function Index() {
 
   return (
 
-      <ScrollView style={[theme.globalStyles.container, { backgroundColor: colors.background }]} showsVerticalScrollIndicator={false}>
-        <View style={theme.globalStyles.predictionCard}>
-          <View style={theme.globalStyles.predictionOuterCircle}>
+      <ScrollView style={[themeStyles.globalStyles.container, { backgroundColor: colors.background }]} showsVerticalScrollIndicator={false}>
+        <View style={themeStyles.globalStyles.predictionCard}>
+          <View style={themeStyles.globalStyles.predictionOuterCircle}>
             <DashedCircle size={350} strokeWidth={3} dashLength={3} dashCount={120} />
-            <View style={[theme.globalStyles.predictionInnerCircle, { backgroundColor: colors.surface }]}>
+            <View style={[themeStyles.globalStyles.predictionInnerCircle, { backgroundColor: colors.surface }]}>
             {isPeriodDay ? (
               <>
                 <Text style={[styles.currentDay, { color: colors.textPrimary }]}>{getFormattedDate(currentDate)}</Text>
-                <Text style={[theme.globalStyles.predictionLabel, { color: colors.textPrimary }]}>Period</Text>
-                <Text style={[theme.globalStyles.predictionDays, { color: colors.textPrimary }]}>Day {periodDayNumber}</Text>
+                <Text style={[themeStyles.globalStyles.predictionLabel, { color: colors.textPrimary }]}>Period</Text>
+                <Text style={[themeStyles.globalStyles.predictionDays, { color: colors.textPrimary }]}>Day {periodDayNumber}</Text>
               </>
             ) : prediction ? (
               <>
                 <Text style={[styles.currentDay, { color: colors.textPrimary }]}>{getFormattedDate(currentDate)}</Text>
                 {prediction.days > 0 ? (
                   <>
-                    <Text style={[theme.globalStyles.predictionLabel, { color: colors.textPrimary }]}>Expected period in</Text>
-                    <Text style={[theme.globalStyles.predictionDays, { color: colors.textPrimary }]}>{prediction.days} {prediction.days === 1 ? 'day' : 'days'}</Text>
+                    <Text style={[themeStyles.globalStyles.predictionLabel, { color: colors.textPrimary }]}>Expected period in</Text>
+                    <Text style={[themeStyles.globalStyles.predictionDays, { color: colors.textPrimary }]}>{prediction.days} {prediction.days === 1 ? 'day' : 'days'}</Text>
                   </>
                 ) : prediction.days === 0 ? (
                   <>
-                    <Text style={[theme.globalStyles.predictionLabel, { color: colors.textPrimary }]}>Your period is</Text>
-                    <Text style={[theme.globalStyles.predictionDays, { color: colors.textPrimary }]}>expected today</Text>
+                    <Text style={[themeStyles.globalStyles.predictionLabel, { color: colors.textPrimary }]}>Your period is</Text>
+                    <Text style={[themeStyles.globalStyles.predictionDays, { color: colors.textPrimary }]}>expected today</Text>
                   </>
                 ) : (
                   <>
-                      <Text style={[theme.globalStyles.predictionLabel, { color: colors.textPrimary }]}>Late for</Text>
-                    <Text style={[theme.globalStyles.predictionDays, { color: colors.textPrimary }]}>{Math.abs(prediction.days)} {Math.abs(prediction.days) === 1 ? 'day' : 'days'}</Text>
+                      <Text style={[themeStyles.globalStyles.predictionLabel, { color: colors.textPrimary }]}>Late for</Text>
+                    <Text style={[themeStyles.globalStyles.predictionDays, { color: colors.textPrimary }]}>{Math.abs(prediction.days)} {Math.abs(prediction.days) === 1 ? 'day' : 'days'}</Text>
                   </>
                 )}
               </>
@@ -240,8 +180,8 @@ export default function Index() {
                 <Text style={[styles.emptyStateText, { color: colors.textPrimary }]}>Log the first day of your last period for next prediction.</Text>
               </>
             )}
-            <Pressable onPress={() => router.push('/period-calendar')} style={theme.globalStyles.primaryButton}>
-              <Text style={theme.globalStyles.buttonText}>
+            <Pressable onPress={() => router.push('/period-calendar')} style={themeStyles.globalStyles.primaryButton}>
+              <Text style={themeStyles.globalStyles.buttonText}>
                 {Object.keys(selectedDates).length > 0 
                   ? "Edit period dates"
                   : "Log period"}
@@ -253,7 +193,7 @@ export default function Index() {
 
         <View style={[styles.insightsCard, { backgroundColor: colors.surface }]}>
         <View style={styles.insightsTitleContainer}>
-            <Text style={[styles.insightsTitle, { color: colors.textPrimary }]}>Today's insights</Text>
+            <Text style={[styles.insightsTitle, { color: colors.textPrimary }]}>Today&#39;s insights</Text>
             <Pressable
               onPress={() => currentCycleDay && router.push(`/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}`)}
               disabled={!currentCycleDay}
