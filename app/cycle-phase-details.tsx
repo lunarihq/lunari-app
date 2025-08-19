@@ -3,8 +3,7 @@ import { Text, View, StyleSheet, ScrollView } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { PeriodPredictionService } from '../services/periodPredictions';
-import theme from './styles/theme';
-import { useTheme } from './styles/theme';
+import defaultTheme, { useTheme } from './styles/theme';
 
 const getFormattedDate = (date: Date): string => {
   return `Today, ${date.toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}`;
@@ -24,7 +23,7 @@ export default function CyclePhaseDetails() {
   const possibleSymptoms = PeriodPredictionService.getPossibleSymptoms(cyclePhase);
 
   return (
-    <View style={[theme.globalStyles.container, { backgroundColor: colors.background }]}>
+    <View style={[defaultTheme.globalStyles.container, { backgroundColor: colors.background }]}>
       <ScrollView 
         style={styles.content} 
         contentContainerStyle={styles.scrollContent}

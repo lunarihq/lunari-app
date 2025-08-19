@@ -14,8 +14,7 @@ import { db } from '../db';
 import { healthLogs } from '../db/schema';
 import { eq } from 'drizzle-orm';
 import { useFocusEffect } from '@react-navigation/native';
-import theme from './styles/theme';
-import { useTheme } from './styles/theme';
+import defaultTheme, { useTheme } from './styles/theme';
 import { useNotes } from '../contexts/NotesContext';
 
 // Symptom type definition
@@ -485,7 +484,7 @@ export default function SymptomTracking() {
   };
 
   return (
-    <View style={[theme.globalStyles.container, { backgroundColor: colors.background }]}>
+    <View style={[defaultTheme.globalStyles.container, { backgroundColor: colors.background }]}>
       {/* Date Navigation Controls */}
       <View style={styles.dateNavigator}>
         <TouchableOpacity 

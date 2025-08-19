@@ -8,7 +8,7 @@ import { PeriodPredictionService } from '../../services/periodPredictions';
 import { NotificationService } from '../../services/notificationService';
 
 import { Ionicons } from '@expo/vector-icons';
-import themeStyles, { useTheme } from '../styles/theme';
+import defaultTheme, { useTheme } from '../styles/theme';
 import DashedCircle from '../../components/DashedCircle';
 
 const getFormattedDate = (date: Date): string => `Today, ${date.getDate()} ${date.toLocaleDateString('en-US', { month: 'short' })}`;
@@ -143,34 +143,34 @@ export default function Index() {
 
   return (
 
-      <ScrollView style={[themeStyles.globalStyles.container, { backgroundColor: colors.background }]} showsVerticalScrollIndicator={false}>
-        <View style={themeStyles.globalStyles.predictionCard}>
-          <View style={themeStyles.globalStyles.predictionOuterCircle}>
+      <ScrollView style={[defaultTheme.globalStyles.container, { backgroundColor: colors.background }]} showsVerticalScrollIndicator={false}>
+        <View style={defaultTheme.globalStyles.predictionCard}>
+          <View style={defaultTheme.globalStyles.predictionOuterCircle}>
             <DashedCircle size={350} strokeWidth={3} dashLength={3} dashCount={120} />
-            <View style={[themeStyles.globalStyles.predictionInnerCircle, { backgroundColor: colors.surface }]}>
+            <View style={[defaultTheme.globalStyles.predictionInnerCircle, { backgroundColor: colors.surface }]}>
             {isPeriodDay ? (
               <>
                 <Text style={[styles.currentDay, { color: colors.textPrimary }]}>{getFormattedDate(currentDate)}</Text>
-                <Text style={[themeStyles.globalStyles.predictionLabel, { color: colors.textPrimary }]}>Period</Text>
-                <Text style={[themeStyles.globalStyles.predictionDays, { color: colors.textPrimary }]}>Day {periodDayNumber}</Text>
+                <Text style={[defaultTheme.globalStyles.predictionLabel, { color: colors.textPrimary }]}>Period</Text>
+                <Text style={[defaultTheme.globalStyles.predictionDays, { color: colors.textPrimary }]}>Day {periodDayNumber}</Text>
               </>
             ) : prediction ? (
               <>
                 <Text style={[styles.currentDay, { color: colors.textPrimary }]}>{getFormattedDate(currentDate)}</Text>
                 {prediction.days > 0 ? (
                   <>
-                    <Text style={[themeStyles.globalStyles.predictionLabel, { color: colors.textPrimary }]}>Expected period in</Text>
-                    <Text style={[themeStyles.globalStyles.predictionDays, { color: colors.textPrimary }]}>{prediction.days} {prediction.days === 1 ? 'day' : 'days'}</Text>
+                    <Text style={[defaultTheme.globalStyles.predictionLabel, { color: colors.textPrimary }]}>Expected period in</Text>
+                    <Text style={[defaultTheme.globalStyles.predictionDays, { color: colors.textPrimary }]}>{prediction.days} {prediction.days === 1 ? 'day' : 'days'}</Text>
                   </>
                 ) : prediction.days === 0 ? (
                   <>
-                    <Text style={[themeStyles.globalStyles.predictionLabel, { color: colors.textPrimary }]}>Your period is</Text>
-                    <Text style={[themeStyles.globalStyles.predictionDays, { color: colors.textPrimary }]}>expected today</Text>
+                    <Text style={[defaultTheme.globalStyles.predictionLabel, { color: colors.textPrimary }]}>Your period is</Text>
+                    <Text style={[defaultTheme.globalStyles.predictionDays, { color: colors.textPrimary }]}>expected today</Text>
                   </>
                 ) : (
                   <>
-                      <Text style={[themeStyles.globalStyles.predictionLabel, { color: colors.textPrimary }]}>Late for</Text>
-                    <Text style={[themeStyles.globalStyles.predictionDays, { color: colors.textPrimary }]}>{Math.abs(prediction.days)} {Math.abs(prediction.days) === 1 ? 'day' : 'days'}</Text>
+                      <Text style={[defaultTheme.globalStyles.predictionLabel, { color: colors.textPrimary }]}>Late for</Text>
+                    <Text style={[defaultTheme.globalStyles.predictionDays, { color: colors.textPrimary }]}>{Math.abs(prediction.days)} {Math.abs(prediction.days) === 1 ? 'day' : 'days'}</Text>
                   </>
                 )}
               </>
@@ -180,8 +180,8 @@ export default function Index() {
                 <Text style={[styles.emptyStateText, { color: colors.textPrimary }]}>Log the first day of your last period for next prediction.</Text>
               </>
             )}
-            <Pressable onPress={() => router.push('/period-calendar')} style={themeStyles.globalStyles.primaryButton}>
-              <Text style={themeStyles.globalStyles.buttonText}>
+            <Pressable onPress={() => router.push('/period-calendar')} style={defaultTheme.globalStyles.primaryButton}>
+              <Text style={defaultTheme.globalStyles.buttonText}>
                 {Object.keys(selectedDates).length > 0 
                   ? "Edit period dates"
                   : "Log period"}

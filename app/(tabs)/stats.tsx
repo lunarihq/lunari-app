@@ -7,8 +7,7 @@ import { PeriodPredictionService } from '../../services/periodPredictions';
 import { StatCard } from '../../components/StatCard';
 import { CycleHistory } from '../../components/CycleHistory';
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
-import theme from '../styles/theme';
-import { useTheme } from '../styles/theme';
+import defaultTheme, { useTheme } from '../styles/theme';
 interface CycleData {
   startDate: string;
   cycleLength: string | number;
@@ -158,7 +157,7 @@ export default function Stats() {
   };
 
   return (
-    <ScrollView style={[theme.globalStyles.container, { backgroundColor: colors.background }]}>
+    <ScrollView style={[defaultTheme.globalStyles.container, { backgroundColor: colors.background }]}>
       <View style={[styles.myCyclesContainer, { backgroundColor: colors.surface }]}>
       <Text style={[styles.heading, { color: colors.textPrimary }]}>My cycles</Text>
       <View style={styles.cardsContainer}>

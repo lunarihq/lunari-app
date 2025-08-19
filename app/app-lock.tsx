@@ -12,8 +12,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useAuth } from '../contexts/AuthContext';
-import theme from './styles/theme';
-import { useTheme } from './styles/theme';
+import defaultTheme, { useTheme } from './styles/theme';
 
 export default function AppLockScreen() {
   const { colors } = useTheme();

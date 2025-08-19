@@ -11,8 +11,7 @@ import {
   Linking
 } from 'react-native';
 import { NotificationService } from '../services/notificationService';
-import theme from './styles/theme';
-import { useTheme } from './styles/theme';
+import defaultTheme, { useTheme } from './styles/theme';
 export default function Reminders() {
   const { colors } = useTheme();
   const [beforePeriodEnabled, setBeforePeriodEnabled] = useState(false);
@@ -180,7 +179,7 @@ export default function Reminders() {
   }
 
   return (
-      <ScrollView style={[theme.globalStyles.container, { backgroundColor: colors.background }]}>
+      <ScrollView style={[defaultTheme.globalStyles.container, { backgroundColor: colors.background }]}>
         {statusMessage && (
           <View style={[
             styles.statusMessage, 

@@ -8,8 +8,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import theme from '../styles/theme';
-import { useTheme } from '../styles/theme';
+import defaultTheme, { useTheme } from '../styles/theme';
 import { ThemeToggle } from '../../components/ThemeToggle';
 export default function Settings() {
   const router = useRouter();
@@ -17,7 +16,7 @@ export default function Settings() {
 
   return (
 
-      <ScrollView style={[theme.globalStyles.container, { backgroundColor: colors.background }]} showsVerticalScrollIndicator={false}>
+      <ScrollView style={[defaultTheme.globalStyles.container, { backgroundColor: colors.background }]} showsVerticalScrollIndicator={false}>
         <ThemeToggle />
         
         <View style={[styles.section, { backgroundColor: colors.surface }]}>
