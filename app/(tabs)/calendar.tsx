@@ -2,7 +2,6 @@ import React, {
   useState,
   useEffect,
   useCallback,
-  useRef,
   useMemo,
 } from 'react';
 import {
@@ -13,7 +12,6 @@ import {
   Text,
 } from 'react-native';
 import { useTheme } from '../styles/theme';
-import { globalStyles } from '../styles/globalStyles';
 import { DateData } from 'react-native-calendars';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useLocalSearchParams, router } from 'expo-router';
@@ -21,15 +19,8 @@ import { db, getSetting } from '../../db';
 import { periodDates } from '../../db/schema';
 import { PeriodPredictionService } from '../../services/periodPredictions';
 import { BaseCalendar } from '../../components/BaseCalendar';
-import { CycleDetails } from '../../components/CycleDetails';
+import { CalendarBottomSheet } from '../../components/CalendarBottomSheet';
 import { MarkedDates, formatDateString } from '../types/calendarTypes';
-import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
-import Animated, {
-  useAnimatedStyle,
-  interpolate,
-  useSharedValue,
-  Extrapolation,
-} from 'react-native-reanimated';
 
 export default function CalendarScreen() {
   const { colors } = useTheme();
@@ -51,19 +42,6 @@ export default function CalendarScreen() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(true);
   const [displayedMonth, setDisplayedMonth] = useState(
     formatDateString(new Date())
-  );
-  const bottomSheetRef = useRef<any>(null);
-  const animatedIndex = useSharedValue(0);
-  const contentHeightSv = useSharedValue(0);
-  const [snapPoints, setSnapPoints] = useState<number[]>([1]);
-  const onSheetContentLayout = useCallback(
-    (e: any) => {
-      const height = e?.nativeEvent?.layout?.height ?? 0;
-      contentHeightSv.value = height;
-      const computed = Math.max(1, Math.ceil(height));
-      setSnapPoints([computed]);
-    },
-    [contentHeightSv]
   );
   const params = useLocalSearchParams();
   const navigation = useNavigation();
@@ -403,30 +381,9 @@ export default function CalendarScreen() {
     setMarkedDates(selectionMarkedDates);
   }, [selectionMarkedDates]);
 
-  const openDrawer = useCallback((dateToUse?: string) => {
+  const openDrawer = useCallback(() => {
     setIsDrawerOpen(true);
-    bottomSheetRef.current?.snapToIndex?.(0);
   }, []);
-
-  const closeDrawer = useCallback(() => {
-    bottomSheetRef.current?.close?.();
-    setIsDrawerOpen(false);
-  }, []);
-
-  // derive FAB position from bottom sheet animated index
-  const closedBottom = 20;
-  const fabAnimatedStyle = useAnimatedStyle(() => {
-    const contentHeight = contentHeightSv.value;
-    const openBottom = contentHeight + 16;
-    return {
-      bottom: interpolate(
-        animatedIndex.value,
-        [-1, 0],
-        [closedBottom, openBottom],
-        Extrapolation.CLAMP
-      ),
-    };
-  });
 
   const onDayPress = useCallback(
     (day: DateData) => {
@@ -437,7 +394,7 @@ export default function CalendarScreen() {
       setCycleDay(calculateCycleDay(newDate));
       setMarkedDates(getMarkedDatesWithSelection(newDate));
 
-      openDrawer(newDate);
+      openDrawer();
     },
     [calculateCycleDay, getMarkedDatesWithSelection, openDrawer]
   );
@@ -507,49 +464,13 @@ export default function CalendarScreen() {
         />
       </View>
 
-      {/* Floating Action Button */}
-      <Animated.View style={[styles.floatingButton, fabAnimatedStyle]}>
-        <TouchableOpacity
-          onPress={() => router.push('/period-calendar')}
-          activeOpacity={0.8}
-          style={[globalStyles.primaryButton, styles.floatingButtonTouchable]}
-        >
-          <Text style={globalStyles.buttonText}>Edit period dates</Text>
-        </TouchableOpacity>
-      </Animated.View>
-
-      <BottomSheet
-        ref={bottomSheetRef}
-        index={isDrawerOpen ? 0 : -1}
-        snapPoints={snapPoints}
-        animatedIndex={animatedIndex}
-        enablePanDownToClose
-        enableOverDrag={false}
-        onChange={(i: number) => setIsDrawerOpen(i >= 0)}
-        backgroundStyle={{
-          backgroundColor: colors.surface,
-          borderTopLeftRadius: 20,
-          borderTopRightRadius: 20,
-          shadowColor: '#000',
-          shadowOffset: { width: 2, height: -8 },
-          shadowOpacity: 0.8,
-          shadowRadius: 12,
-          elevation: 12,
-        }}
-        handleComponent={() => null}
-      >
-        <BottomSheetView
-          onLayout={onSheetContentLayout}
-          style={styles.sheetContent}
-        >
-          <CycleDetails
-            selectedDate={selectedDate}
-            cycleDay={cycleDay}
-            averageCycleLength={averageCycleLength}
-            onClose={closeDrawer}
-          />
-        </BottomSheetView>
-      </BottomSheet>
+      <CalendarBottomSheet
+        selectedDate={selectedDate}
+        cycleDay={cycleDay}
+        averageCycleLength={averageCycleLength}
+        isOpen={isDrawerOpen}
+        onOpenChange={setIsDrawerOpen}
+      />
     </SafeAreaView>
   );
 }
@@ -566,25 +487,5 @@ const styles = StyleSheet.create({
   calendarContainer: {
     flex: 1,
   },
-  floatingButton: {
-    position: 'absolute',
-    alignSelf: 'center',
-    zIndex: 999,
-  },
-  floatingButtonTouchable: {
-    borderRadius: 80,
-    paddingHorizontal: 16,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 8,
-  },
 
-  sheetContent: {
-    paddingTop: 8,
-  },
 });
