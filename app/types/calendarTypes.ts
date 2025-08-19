@@ -1,4 +1,4 @@
-import { DateData } from 'react-native-calendars';
+
 
 // Custom type for marked dates with today style
 export type CustomMarking = {
