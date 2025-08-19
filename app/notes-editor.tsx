@@ -20,7 +20,7 @@ export default function NotesEditor() {
   const params = useLocalSearchParams();
   const { notes, setNotes } = useNotes();
   const [localNotes, setLocalNotes] = useState<string>('');
-  const [hasChanges, setHasChanges] = useState<boolean>(false);
+
   const [originalNotes, setOriginalNotes] = useState<string>('');
   const [keyboardHeight, setKeyboardHeight] = useState<number>(0);
   const [isKeyboardVisible, setIsKeyboardVisible] = useState<boolean>(false);
@@ -30,12 +30,9 @@ export default function NotesEditor() {
     const initialNotes = typeof params.notes === 'string' ? params.notes : notes;
     setLocalNotes(initialNotes);
     setOriginalNotes(initialNotes);
-  }, []); // Only run once on mount
+  }, [params.notes]); // Re-run when params change, but not when context notes change
 
-  // Check for changes
-  useEffect(() => {
-    setHasChanges(localNotes !== originalNotes);
-  }, [localNotes, originalNotes]);
+
 
   // Keyboard event listeners
   useEffect(() => {
