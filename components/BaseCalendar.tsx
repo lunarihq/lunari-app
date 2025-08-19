@@ -152,7 +152,7 @@ export function BaseCalendar({
         </Text>
       </View>
     );
-  }, []);
+  }, [colors]);
 
   // Determine whether to hide arrows based on mode
   const hideArrows = true;

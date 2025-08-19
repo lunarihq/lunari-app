@@ -94,7 +94,7 @@ const calculateEndDate = (startDate: string, cycleLength: string | number) => {
       month: 'short', 
       day: 'numeric'
     });
-  } catch (error) {
+  } catch {
     // Return fallback if any error occurs
     return "Unknown";
   }
@@ -179,7 +179,7 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
               } else {
                 displayCycleLength = "In progress";
               }
-            } catch (error) {
+            } catch {
               displayCycleLength = "In progress";
             }
           } else if (typeof cycle.cycleLength === 'string') {
