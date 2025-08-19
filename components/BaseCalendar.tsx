@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { CalendarList, DateData } from 'react-native-calendars';
 import { Ionicons } from '@expo/vector-icons';
 import { useCallback, useMemo } from 'react';
@@ -6,7 +6,6 @@ import { CustomMarking, MarkedDates, SelectionRules, formatDateString } from '..
 import { useTheme } from '../app/styles/theme';
 
 // Constants
-const MONTH_FONT_SIZE = 16;
 export const DAY_FONT_SIZE = 16;
 
 export type BaseCalendarProps = {
@@ -28,12 +27,8 @@ export type BaseCalendarProps = {
   renderHeader?: (month: string) => React.ReactNode;
   // Optional custom day component
   renderDay?: React.ComponentType<any>;
-  // Optional callback for auto-selection
-  onAutoSelect?: (startDay: DateData, selectedDays: DateData[]) => void;
-  // Enable horizontal scrolling
-  horizontal?: boolean;
-  // Custom calendar width for horizontal scrolling
-  calendarWidth?: number;
+
+
   // Max amount of months allowed to scroll to the past
   pastScrollRange?: number;
   // Max amount of months allowed to scroll to the future
@@ -54,17 +49,14 @@ export function BaseCalendar({
   calendarKey,
   renderHeader,
   renderDay,
-  onAutoSelect,
-  horizontal = false,
-  calendarWidth,
+
+
   pastScrollRange = 12,
   futureScrollRange = 12,
   hideDayNames = false,
   calendarHeight,
 }: BaseCalendarProps) {
   const { colors } = useTheme();
-  // Get device screen width for default calendarWidth
-  const screenWidth = Dimensions.get('window').width;
   
   // Create a wrapped onDayPress that respects selectionRules
   const handleDayPress = useCallback((day: DateData) => {
@@ -104,69 +96,48 @@ export function BaseCalendar({
     // Check if this day has a custom container style (for selection background)
     const hasCustomContainer = customMarking?.customContainerStyle;
     
-    if (hasCustomContainer) {
-      // Render with layered background for selection
-      return (
-        <View style={styles.dayContainer}>
+    // Calculate styles once
+    const buttonStyles = [
+      styles.dayButton,
+      isSelected ? styles.selectedDay : null,
+      customMarking?.customStyles?.container,
+      isToday && customMarking?.todayStyle,
+      isDisabled ? styles.disabledDay : null
+    ];
+    
+    const textStyles = [
+      styles.dayText,
+      { color: colors.textPrimary },
+      isSelected && !isPeriodDay ? styles.selectedDayText : null,
+      isPeriodDay ? { color: colors.white } : null,
+      isDisabled ? styles.disabledDayText : null,
+      isToday ? styles.todayText : null,
+      customMarking?.customStyles?.text
+    ];
+    
+    const dayButton = (
+      <TouchableOpacity
+        style={buttonStyles}
+        onPress={() => date ? handleDayPress(date) : null}
+        disabled={isDisabled}
+      >
+        <Text style={textStyles}>
+          {date ? date.day : ''}
+        </Text>
+      </TouchableOpacity>
+    );
+    
+    return (
+      <View style={styles.dayContainer}>
+        {hasCustomContainer ? (
           <View style={customMarking.customContainerStyle}>
-            <TouchableOpacity
-              style={[
-                styles.dayButton,
-                isSelected ? styles.selectedDay : null,
-                customMarking?.customStyles?.container,
-                isToday ? styles.todayDayButton : null,
-                isToday && customMarking?.todayStyle,
-                isDisabled ? styles.disabledDay : null
-              ]}
-              onPress={() => date ? handleDayPress(date) : null}
-              disabled={isDisabled}
-            >
-              <Text style={[
-                styles.dayText,
-                { color: colors.textPrimary },
-                isSelected && !isPeriodDay ? styles.selectedDayText : null,
-                 isPeriodDay ? { color: colors.white } : null,
-                isDisabled ? styles.disabledDayText : null,
-                isToday ? styles.todayText : null,
-                customMarking?.customStyles?.text
-              ]}>
-                {date ? date.day : ''}
-              </Text>
-            </TouchableOpacity>
+            {dayButton}
           </View>
-        </View>
-      );
-    } else {
-      // Render normally without custom container
-      return (
-        <View style={styles.dayContainer}>
-          <TouchableOpacity
-            style={[
-              styles.dayButton,
-              isSelected ? styles.selectedDay : null,
-              customMarking?.customStyles?.container,
-              isToday ? styles.todayDayButton : null,
-              isToday && customMarking?.todayStyle,
-              isDisabled ? styles.disabledDay : null
-            ]}
-            onPress={() => date ? handleDayPress(date) : null}
-            disabled={isDisabled}
-          >
-            <Text style={[
-              styles.dayText,
-              { color: colors.textPrimary },
-              isSelected && !isPeriodDay ? styles.selectedDayText : null,
-                 isPeriodDay ? { color: colors.white } : null,
-              isDisabled ? styles.disabledDayText : null,
-              isToday ? styles.todayText : null,
-              customMarking?.customStyles?.text
-            ]}>
-              {date ? date.day : ''}
-            </Text>
-          </TouchableOpacity>
-        </View>
-      );
-    }
+        ) : (
+          dayButton
+        )}
+      </View>
+    );
   };
 
   // Default header component if none provided
@@ -220,38 +191,16 @@ export function BaseCalendar({
         hideDayNames={hideDayNames}
         dayComponent={renderDay || DefaultDay}
         renderHeader={renderHeader || defaultRenderHeader}
-        // Horizontal scrolling props
-        horizontal={horizontal}
-        pagingEnabled={horizontal}
-        calendarWidth={calendarWidth || screenWidth}
+
         calendarHeight={calendarHeight}
         pastScrollRange={pastScrollRange}
         futureScrollRange={futureScrollRange}
         scrollEnabled={true}
         showScrollIndicator={false}
-        renderArrow={(direction: 'left' | 'right') => (
-          <Ionicons 
-            name={direction === 'left' ? 'chevron-back' : 'chevron-forward'} 
-            size={20} 
-            color={colors.textPrimary}
-          />
-        )}
+
         theme={{
-           backgroundColor: colors.surface,
-           calendarBackground: colors.surface,
-          textSectionTitleColor: colors.textMuted,
-          selectedDayBackgroundColor: 'transparent',
-          selectedDayTextColor: colors.textPrimary,
-          todayTextColor: colors.textPrimary,
-          dayTextColor: colors.textPrimary,
-          textDisabledColor: colors.textMuted,
-           dotColor: colors.primary,
-           selectedDotColor: colors.primary,
-          arrowColor: colors.textPrimary,
-          monthTextColor: colors.neutral100,
-          textMonthFontWeight: 'bold',
-          textDayFontSize: 16,
-          textMonthFontSize: MONTH_FONT_SIZE,
+          backgroundColor: colors.surface,
+          calendarBackground: colors.surface,
           textDayHeaderFontSize: 14,
           // @ts-ignore: Known theme typing issue in react-native-calendars
           'stylesheet.calendar.header': {
@@ -261,21 +210,13 @@ export function BaseCalendar({
               width: 32,
               textAlign: 'center',
               fontSize: 14,
-               color: colors.textPrimary,
+              color: colors.textPrimary,
             },
-          },
-          'stylesheet.day.basic': {
-            base: {
-              width: 32,
-              height: 32,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }
           },
           'stylesheet.calendar.main': {
             container: {
               borderBottomWidth: 1,
-               borderBottomColor: colors.border,
+              borderBottomColor: colors.border,
               paddingBottom: 2,
             }
           }
@@ -294,8 +235,6 @@ const styles = StyleSheet.create({
     height: 58,
     backgroundColor: 'transparent',
   },
-
-
   dayButton: {
     width: 32,
     height: 32,
@@ -317,9 +256,7 @@ const styles = StyleSheet.create({
   todayText: {
     fontWeight: 'bold',
   },
-  todayDayButton: {
-    // Remove today background styling
-  },
+
   selectedDay: {
     backgroundColor: '#FFEAEE',
     borderWidth: 2,
@@ -335,7 +272,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   headerText: {
-    fontSize: MONTH_FONT_SIZE,
+    fontSize: 16,
     fontWeight: 'bold',
   },
   dayNamesContainer: {
