@@ -40,7 +40,7 @@ export default function CalendarScreen() {
     contentHeightSv.value = height;
     const computed = Math.max(1, Math.ceil(height));
     setSnapPoints([computed]);
-  }, []);
+  }, [contentHeightSv]);
   const params = useLocalSearchParams();
   const navigation = useNavigation();
 
@@ -71,51 +71,8 @@ export default function CalendarScreen() {
     }
   }, [params.openPeriodModal]);
   
-  // Load period dates from database
-  const loadData = async () => {
-    const saved = await db.select().from(periodDates);
-    
-    const dates = saved.reduce((acc: MarkedDates, curr) => { 
-      acc[curr.date] = { 
-        selected: true, 
-        customStyles: { 
-          container: { 
-            backgroundColor: colors.accentPink,
-            borderRadius: 16,
-          },
-          text: {
-            color: colors.white
-          }
-        } 
-      };
-      return acc;
-    }, {} as MarkedDates);
-    
-
-    
-    if (saved.length > 0) {
-      const sortedDates = saved.map(s => s.date);
-      setAllPeriodDates(sortedDates);
-      const periods = PeriodPredictionService.groupDateIntoPeriods(sortedDates);
-
-      // Get the start date of the most recent period
-      const mostRecentPeriod = periods[0];
-      const mostRecentStart = mostRecentPeriod[mostRecentPeriod.length - 1]; // Get the earliest date in the period
-      
-      setFirstPeriodDate(mostRecentStart);
-      
-      // Generate predictions and marked dates
-      generateMarkedDates(dates, mostRecentStart, periods);
-    } else {
-      setFirstPeriodDate(null);
-      setAllPeriodDates([]);
-      setCycleDay(null);
-      setMarkedDates({});
-    }
-  };
-
   // Helper function to get custom styles for different prediction types
-  const getStylesForPredictionType = (predictionType: string) => {
+  const getStylesForPredictionType = useCallback((predictionType: string) => {
     switch (predictionType) {
       case 'ovulation':
         return {
@@ -157,10 +114,10 @@ export default function CalendarScreen() {
       default:
         return {};
     }
-  };
+  }, [colors.primary, colors.accentPinkLight, colors.accentPink]);
 
   // Generate all marked dates including predictions
-  const generateMarkedDates = (periodDates: MarkedDates, startDate: string, allPeriods: string[][]) => {
+  const generateMarkedDates = useCallback((periodDates: MarkedDates, startDate: string, allPeriods: string[][]) => {
     if (!startDate) return;
     
     const allMarkedDates = { ...periodDates };
@@ -200,10 +157,57 @@ export default function CalendarScreen() {
     
     // Store base marked dates (without selection highlight)
     setBaseMarkedDates(allMarkedDates);
-  };
+  }, [userCycleLength, userPeriodLength, getStylesForPredictionType]);
+
+  // Load period dates from database
+  const loadData = useCallback(async () => {
+    const saved = await db.select().from(periodDates);
+    
+    const dates = saved.reduce((acc: MarkedDates, curr) => { 
+      acc[curr.date] = { 
+        selected: true, 
+        customStyles: { 
+          container: { 
+            backgroundColor: colors.accentPink,
+            borderRadius: 16,
+          },
+          text: {
+            color: colors.white
+          }
+        } 
+      };
+      return acc;
+    }, {} as MarkedDates);
+    
+
+    
+    if (saved.length > 0) {
+      const sortedDates = saved.map(s => s.date);
+      setAllPeriodDates(sortedDates);
+      const periods = PeriodPredictionService.groupDateIntoPeriods(sortedDates);
+
+      // Get the start date of the most recent period
+      const mostRecentPeriod = periods[0];
+      const mostRecentStart = mostRecentPeriod[mostRecentPeriod.length - 1]; // Get the earliest date in the period
+      
+      setFirstPeriodDate(mostRecentStart);
+      
+      // Generate predictions and marked dates
+      generateMarkedDates(dates, mostRecentStart, periods);
+    } else {
+      setFirstPeriodDate(null);
+      setAllPeriodDates([]);
+      setCycleDay(null);
+      setMarkedDates({});
+    }
+  }, [colors.accentPink, colors.white, generateMarkedDates]);
+
+
+
+
 
   // Calculate cycle day for a given date
-  const calculateCycleDay = (date: string): number | null => {
+  const calculateCycleDay = useCallback((date: string): number | null => {
     if (!firstPeriodDate || allPeriodDates.length === 0) return null;
     
     const selectedDateObj = new Date(date);
@@ -247,12 +251,12 @@ export default function CalendarScreen() {
     }
     
     return null;
-  };
+  }, [firstPeriodDate, allPeriodDates, userCycleLength]);
 
   // Update cycle day info for selected date
-  const updateSelectedDateInfo = (date: string) => {
+  const updateSelectedDateInfo = useCallback((date: string) => {
     setCycleDay(calculateCycleDay(date));
-  };
+  }, [calculateCycleDay]);
 
   // Generate marked dates with highlighting for a specific selected date
   const getMarkedDatesWithSelection = useCallback((selectedDateParam: string) => {
@@ -295,7 +299,7 @@ export default function CalendarScreen() {
     }
     
     return updatedMarkedDates;
-  }, [baseMarkedDates]);
+  }, [baseMarkedDates, colors.accentPink, colors.primary, colors.white]);
 
   const selectionMarkedDates = useMemo(() => (
     selectedDate ? getMarkedDatesWithSelection(selectedDate) : baseMarkedDates
@@ -313,39 +317,20 @@ export default function CalendarScreen() {
       };
       reloadData();
       return () => {};
-    }, [])
+    }, [loadData])
   );
 
-  // Initial load
-  useEffect(() => {
-    loadData();
-    updateSelectedDateInfo(selectedDate);
-    
-    // Set initial month display
-    const date = new Date(selectedDate);
-    setDisplayedMonth(selectedDate);
-  }, []);
+
   
   // Update cycle info when selected date changes
   useEffect(() => {
     updateSelectedDateInfo(selectedDate);
-  }, [selectedDate, firstPeriodDate, allPeriodDates]);
+  }, [selectedDate, firstPeriodDate, allPeriodDates, updateSelectedDateInfo]);
 
   // Update marked dates when base marked dates change (but not when selected date changes - handled in onDayPress)
   useEffect(() => {
     setMarkedDates(selectionMarkedDates);
   }, [selectionMarkedDates]);
-
-  // Update header with Today button based on current month
-  useEffect(() => {
-    navigation.setOptions({
-      headerRight: isTodayButtonVisible() ? () => (
-        <TouchableOpacity onPress={goToToday}>
-          <Text style={[styles.todayButtonText, { color: colors.primary }]}>Today</Text>
-        </TouchableOpacity>
-      ) : undefined,
-    });
-  }, [displayedMonth, navigation]);
 
 
 
@@ -390,7 +375,7 @@ export default function CalendarScreen() {
   }, []);
 
   // Function to check if the current displayed month is different from today's month
-  const isTodayButtonVisible = () => {
+  const isTodayButtonVisible = useCallback(() => {
     // Extract year and month from today string (YYYY-MM-DD)
     const todayYear = currentDate.substring(0, 4);
     const todayMonth = currentDate.substring(5, 7);
@@ -401,7 +386,7 @@ export default function CalendarScreen() {
     
     // Return true if they are different (button should be visible)
     return todayYear !== currentYear || todayMonth !== currentMonth;
-  };
+  }, [currentDate, displayedMonth]);
 
   const goToToday = useCallback(() => {
     const today = formatDateString(new Date());
@@ -411,6 +396,17 @@ export default function CalendarScreen() {
     updateSelectedDateInfo(today);
     setMarkedDates(getMarkedDatesWithSelection(today));
   }, [getMarkedDatesWithSelection, updateSelectedDateInfo]);
+
+  // Update header with Today button based on current month
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: isTodayButtonVisible() ? () => (
+        <TouchableOpacity onPress={goToToday}>
+          <Text style={[styles.todayButtonText, { color: colors.primary }]}>Today</Text>
+        </TouchableOpacity>
+      ) : undefined,
+    });
+  }, [displayedMonth, navigation, colors.primary, goToToday, isTodayButtonVisible]);
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
