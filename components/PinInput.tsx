@@ -7,7 +7,7 @@ import {
   Vibration,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import Colors from '../app/styles/colors';
+import { useTheme } from '../app/styles/theme';
 
 interface PinInputProps {
   title: string;
@@ -32,6 +32,7 @@ export function PinInput({
   errorMessage,
   onStartTyping,
 }: PinInputProps) {
+  const { colors } = useTheme();
   const [pin, setPin] = useState('');
   const [attempts, setAttempts] = useState(0);
 
@@ -104,10 +105,10 @@ export function PinInput({
                 return (
                   <TouchableOpacity
                     key={colIndex}
-                    style={styles.numberButton}
+                    style={[styles.numberButton, { backgroundColor: colors.surface }]}
                     onPress={handleBackspace}
                   >
-                    <Ionicons name="backspace-outline" size={24} color="#333" />
+                    <Ionicons name="backspace-outline" size={24} color={colors.textPrimary} />
                   </TouchableOpacity>
                 );
               }
@@ -115,10 +116,10 @@ export function PinInput({
               return (
                 <TouchableOpacity
                   key={colIndex}
-                  style={styles.numberButton}
+                  style={[styles.numberButton, { backgroundColor: colors.surface }]}
                   onPress={() => handleNumberPress(item)}
                 >
-                  <Text style={styles.numberText}>{item}</Text>
+                  <Text style={[styles.numberText, { color: colors.textPrimary }]}>{item}</Text>
                 </TouchableOpacity>
               );
             })}
@@ -129,13 +130,25 @@ export function PinInput({
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.header}>
-        <Text style={styles.title}>{title}</Text>
-        {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
+        <Text style={[styles.title, { color: colors.textPrimary }]}>{title}</Text>
+        {subtitle && <Text style={[styles.subtitle, { color: colors.textSecondary }]}>{subtitle}</Text>}
       </View>
 
-      {renderPinDots()}
+      <View style={styles.pinContainer}>
+        {Array.from({ length: PIN_LENGTH }).map((_, index) => (
+          <View
+            key={index}
+            style={[
+              styles.pinDot,
+              { borderColor: colors.border },
+              index < pin.length && { backgroundColor: colors.primary, borderColor: colors.primary },
+              errorMessage && styles.pinDotError,
+            ]}
+          />
+        ))}
+      </View>
 
       {errorMessage && (
         <Text style={styles.errorText}>{errorMessage}</Text>
@@ -148,8 +161,8 @@ export function PinInput({
           style={styles.biometricButton}
           onPress={onBiometricPress}
         >
-          <Ionicons name={biometricIcon as any} size={24} color="#4561D2" />
-          <Text style={styles.biometricText}>{biometricLabel}</Text>
+          <Ionicons name={biometricIcon as any} size={24} color={colors.primary} />
+          <Text style={[styles.biometricText, { color: colors.primary }]}>{biometricLabel}</Text>
         </TouchableOpacity>
       )}
     </View>
@@ -161,7 +174,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: Colors.background,
     paddingHorizontal: 20,
   },
   header: {
@@ -171,13 +183,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: '600',
-    color: Colors.textPrimary,
     textAlign: 'center',
     marginBottom: 8,
   },
   subtitle: {
     fontSize: 16,
-    color: Colors.textSecondary,
     textAlign: 'center',
   },
   pinContainer: {
@@ -192,13 +202,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: 'transparent',
     borderWidth: 2,
-    borderColor: '#ccc',
     marginHorizontal: 10,
   },
-  pinDotFilled: {
-    backgroundColor: '#4561D2',
-    borderColor: '#4561D2',
-  },
+
   pinDotError: {
     borderColor: '#ff4757',
     backgroundColor: 'transparent',
@@ -215,7 +221,6 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: Colors.white,
     justifyContent: 'center',
     alignItems: 'center',
     marginHorizontal: 20,
@@ -231,7 +236,6 @@ const styles = StyleSheet.create({
   numberText: {
     fontSize: 24,
     fontWeight: '600',
-    color: Colors.textPrimary,
   },
   errorText: {
     color: '#ff4757',
@@ -248,7 +252,6 @@ const styles = StyleSheet.create({
   biometricText: {
     marginLeft: 8,
     fontSize: 16,
-    color: '#4561D2',
     fontWeight: '500',
   },
 }); 

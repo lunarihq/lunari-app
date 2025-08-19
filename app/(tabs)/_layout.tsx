@@ -1,25 +1,29 @@
 import { Tabs } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import Colors from '../styles/colors';
+import { useTheme } from '../styles/theme';
 
 export default function TabLayout() {
+  const { colors } = useTheme();
+  
   return (
     <Tabs
   screenOptions={{
-    tabBarActiveTintColor: Colors.primary,
+    tabBarActiveTintColor: colors.primary,
+    tabBarInactiveTintColor: colors.textMuted,
     headerStyle: {
-      backgroundColor: Colors.background,
+      backgroundColor: colors.surface,
       height: 100,
     },
     headerTitleStyle: {
-      color: '#332F49',
+      color: colors.textPrimary,
       fontSize: 18,
     },
     headerShadowVisible: false,
-    headerTintColor: '#fff',
+    headerTintColor: colors.textPrimary,
     tabBarStyle: {
-    backgroundColor: '#fff',
+    backgroundColor: colors.surface,
     height: 80,
+    borderTopColor: colors.border,
     },
     tabBarItemStyle: {
       paddingTop: 6,
@@ -42,8 +46,14 @@ export default function TabLayout() {
           headerShown: true,
           headerTitle: "Calendar",
           headerStyle: {
-            backgroundColor: 'white',
+            backgroundColor: colors.surface,
+            height: 100,
           },
+          headerTitleStyle: {
+            color: colors.textPrimary,
+            fontSize: 18,
+          },
+          headerTintColor: colors.textPrimary,
           tabBarLabel: "Calendar",
           tabBarIcon: ({ color, focused }) => (
             <Ionicons name={focused ? 'calendar' : 'calendar-outline'} color={color} size={24}/>

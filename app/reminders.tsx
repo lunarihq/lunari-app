@@ -12,7 +12,9 @@ import {
 } from 'react-native';
 import { NotificationService } from '../services/notificationService';
 import theme from './styles/theme';
+import { useTheme } from './styles/theme';
 export default function Reminders() {
+  const { colors } = useTheme();
   const [beforePeriodEnabled, setBeforePeriodEnabled] = useState(false);
   const [dayOfPeriodEnabled, setDayOfPeriodEnabled] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -170,49 +172,49 @@ export default function Reminders() {
 
   if (isLoading) {
     return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#FF597B" />
-        <Text style={styles.loadingText}>Loading notification settings...</Text>
+      <View style={[styles.loadingContainer, { backgroundColor: colors.background }]}>
+        <ActivityIndicator size="large" color={colors.primary} />
+        <Text style={[styles.loadingText, { color: colors.textPrimary }]}>Loading notification settings...</Text>
       </View>
     );
   }
 
   return (
-      <ScrollView style={theme.globalStyles.container}>
+      <ScrollView style={[theme.globalStyles.container, { backgroundColor: colors.background }]}>
         {statusMessage && (
           <View style={[
             styles.statusMessage, 
             statusMessage.isError ? styles.errorMessage : styles.successMessage
           ]}>
-            <Text style={styles.statusText}>{statusMessage.text}</Text>
+            <Text style={[styles.statusText, { color: colors.textPrimary }]}>{statusMessage.text}</Text>
           </View>
         )}
         
-        <View style={styles.section}>
-          <View style={styles.settingRow}>
-            <Text style={styles.settingText}>
+        <View style={[styles.section, { backgroundColor: colors.surface }]}>
+          <View style={[styles.settingRow, { borderBottomColor: colors.border }]}>
+            <Text style={[styles.settingText, { color: colors.textPrimary }]}>
               Get a notification 3 days before your next period is likely to start.
             </Text>
             <Switch
               value={beforePeriodEnabled}
               onValueChange={toggleBeforePeriod}
-              trackColor={{ false: '#e0e0e0', true: '#FF597B' }}
-              thumbColor={Platform.OS === 'ios' ? undefined : '#ffffff'}
-              ios_backgroundColor="#e0e0e0"
+              trackColor={{ false: colors.border, true: colors.accentPink }}
+              thumbColor={Platform.OS === 'ios' ? undefined : colors.white}
+              ios_backgroundColor={colors.border}
               disabled={isSaving}
             />
           </View>
           
           <View style={[styles.settingRow, styles.lastRow]}>
-            <Text style={styles.settingText}>
+            <Text style={[styles.settingText, { color: colors.textPrimary }]}>
               Get a notification the day of your period start.
             </Text>
             <Switch
               value={dayOfPeriodEnabled}
               onValueChange={toggleDayOfPeriod}
-              trackColor={{ false: '#e0e0e0', true: '#FF597B' }}
-              thumbColor={Platform.OS === 'ios' ? undefined : '#ffffff'}
-              ios_backgroundColor="#e0e0e0"
+              trackColor={{ false: colors.border, true: colors.accentPink }}
+              thumbColor={Platform.OS === 'ios' ? undefined : colors.white}
+              ios_backgroundColor={colors.border}
               disabled={isSaving}
             />
           </View>
@@ -231,11 +233,9 @@ const styles = StyleSheet.create({
   loadingText: {
     marginTop: 16,
     fontSize: 16,
-    color: '#333',
   },
 
   section: {
-    backgroundColor: '#fff',
     marginVertical: 16,
     borderRadius: 8,
     overflow: 'hidden',
@@ -247,14 +247,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 16,
     borderBottomWidth: 1,
-    borderBottomColor: '#f0f0f0',
   },
   lastRow: {
     borderBottomWidth: 0,
   },
   settingText: {
     fontSize: 16,
-    color: '#333',
     flexShrink: 1,
     paddingRight: 12,
     flex: 1,
@@ -274,6 +272,5 @@ const styles = StyleSheet.create({
   statusText: {
     fontSize: 16,
     textAlign: 'center',
-    color: '#333',
   },
 });

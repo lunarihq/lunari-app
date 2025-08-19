@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import Colors from '../app/styles/colors';
+import { useTheme } from '../app/styles/theme';
 
 interface CycleData {
   startDate: string;
@@ -15,6 +15,7 @@ interface CycleHistoryProps {
 
 // Helper to render the circles representing days
 const DayCircles = ({ totalDays, periodDays }: { totalDays: number, periodDays: number }) => {
+  const { colors } = useTheme();
   const circles = [];
   
   for (let i = 0; i < totalDays; i++) {
@@ -23,7 +24,7 @@ const DayCircles = ({ totalDays, periodDays }: { totalDays: number, periodDays: 
         key={i} 
         style={[
           styles.circle, 
-          i < periodDays ? styles.periodCircle : styles.regularCircle
+          { backgroundColor: i < periodDays ? colors.accentPink : colors.border }
         ]} 
       />
     );
@@ -100,6 +101,8 @@ const calculateEndDate = (startDate: string, cycleLength: string | number) => {
 };
 
 export function CycleHistory({ cycles }: CycleHistoryProps) {
+  const { colors } = useTheme();
+  
   if (cycles.length === 0) {
     return null;
   }
@@ -126,11 +129,11 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Cycle history</Text>
-      <Text style={styles.subtitle}>{cycles.length} logged cycles</Text>
+    <View style={[styles.container, { backgroundColor: colors.surface }]}>
+      <Text style={[styles.title, { color: colors.textPrimary }]}>Cycle history</Text>
+      <Text style={[styles.subtitle, { color: colors.textMuted }]}>{cycles.length} logged cycles</Text>
       
-      <View style={styles.card}>
+      <View style={[styles.card, { backgroundColor: colors.surface }]}>
         {cycles.map((cycle, index) => {
           const isCurrentCycle = index === 0; // Assuming first cycle is current
           
@@ -210,10 +213,11 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
           // Determine background color based on index
           const cycleStyle = [
             styles.cycleContainer,
+            { backgroundColor: colors.surface },
             isCurrentCycle 
-              ? styles.currentCycleContainer 
+              ? {} 
               : index % 2 === 1 
-                ? styles.alternateCycleContainer 
+                ? { borderColor: colors.border, borderTopWidth: 1, borderBottomWidth: 1 }
                 : {}
           ];
             
@@ -222,21 +226,21 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
               {isCurrentCycle ? (
                 // Special layout for current cycle
                 <View>
-                  <Text style={styles.currentCycleTitle}>Current cycle</Text>
+                  <Text style={[styles.currentCycleTitle, { color: colors.textPrimary }]}>Current cycle</Text>
                   <View style={styles.cycleInfoRow}>
-                    <Text style={styles.dateText}>{cycle.startDate} - Today</Text>
-                    <Text style={styles.daysText}>{formattedCycleLength}</Text>
+                    <Text style={[styles.dateText, { color: colors.textPrimary }]}>{cycle.startDate} - Today</Text>
+                    <Text style={[styles.daysText, { color: colors.textPrimary }]}>{formattedCycleLength}</Text>
                   </View>
                 </View>
               ) : (
                 // Regular layout for past cycles
                 <View style={styles.cycleInfoRow}>
-                  <Text style={styles.dateText}>
+                  <Text style={[styles.dateText, { color: colors.textPrimary }]}>
                     {cycle.endDate 
                       ? `${cycle.startDate} - ${cycle.endDate}` 
                       : `${cycle.startDate} - ${calculateEndDate(cycle.startDate, circleDays)}`}
                   </Text>
-                  <Text style={styles.daysText}>{formattedCycleLength}</Text>
+                  <Text style={[styles.daysText, { color: colors.textPrimary }]}>{formattedCycleLength}</Text>
                 </View>
               )}
               
@@ -255,31 +259,25 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
 const styles = StyleSheet.create({
   container: {
     marginVertical: 16,
-    backgroundColor: Colors.white,
     padding: 16,
     borderRadius: 16,
     overflow: 'hidden',
-
   },
   title: {
     fontSize: 24,
     fontWeight: '500',
-    color: Colors.textPrimary,
     marginBottom: 8,
   },
   subtitle: {
     fontSize: 16,
-    color: '#878595',
     marginBottom: 10,
   },
   currentCycleTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: Colors.textPrimary,
     marginBottom: 8,
   },
   card: {
-    backgroundColor: Colors.white,
     borderRadius: 12,
     padding: 0,
     marginBottom: 16,
@@ -287,16 +285,6 @@ const styles = StyleSheet.create({
   },
   cycleContainer: {
     paddingVertical: 20,
-    backgroundColor: Colors.white,
-  },
-  currentCycleContainer: {
-    backgroundColor: Colors.white,
-  },
-  alternateCycleContainer: {
-    backgroundColor: Colors.white,
-    borderColor: '#F2F2F2',
-    borderTopWidth: 1,
-    borderBottomWidth: 1, // Light gray for alternating cycles
   },
   cycleInfoRow: {
     flexDirection: 'row',
@@ -307,12 +295,10 @@ const styles = StyleSheet.create({
   dateText: {
     fontSize: 16,
     fontWeight: '600',
-    color: Colors.textPrimary,
   },
   daysText: {
     fontSize: 16,
     fontWeight: '600',
-    color: Colors.textPrimary,
   },
   circleContainer: {
     flexDirection: 'row',
@@ -326,12 +312,7 @@ const styles = StyleSheet.create({
     marginRight: 4,
     marginBottom: 4,
   },
-  periodCircle: {
-    backgroundColor: Colors.accentPink,
-  },
-  regularCircle: {
-    backgroundColor: Colors.border, // Light gray for regular days
-  },
+
 });
 
 export default CycleHistory;

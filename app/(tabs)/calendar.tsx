@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { View, StyleSheet, SafeAreaView, TouchableOpacity, Text } from 'react-native';
-import Colors from '../styles/colors';
+import { useTheme } from '../styles/theme';
 import { globalStyles } from '../styles/globalStyles';
 import { DateData } from 'react-native-calendars';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
@@ -17,6 +17,7 @@ import Animated, { useAnimatedStyle, interpolate, useSharedValue, Extrapolation 
 // Removed unused exported function openPeriodModal
 
 export default function CalendarScreen() {
+  const { colors } = useTheme();
   const [selectedDates, setSelectedDates] = useState<MarkedDates>({});
   const [markedDates, setMarkedDates] = useState<MarkedDates>({});
   const [baseMarkedDates, setBaseMarkedDates] = useState<MarkedDates>({});
@@ -81,11 +82,11 @@ export default function CalendarScreen() {
         selected: true, 
         customStyles: { 
           container: { 
-            backgroundColor: Colors.accentPink,
+            backgroundColor: colors.accentPink,
             borderRadius: 16,
           },
           text: {
-            color: Colors.white
+            color: colors.white
           }
         } 
       };
@@ -143,11 +144,11 @@ export default function CalendarScreen() {
               container: {
                 borderRadius: 16,
                 borderWidth: 1.6,
-                borderColor: Colors.primary,
+                borderColor: colors.primary,
                 borderStyle: 'dashed',
               },
               text: {
-                color: Colors.primary
+                color: colors.primary
               }
             }
           };
@@ -159,7 +160,7 @@ export default function CalendarScreen() {
                 borderRadius: 16,
               },
               text: {
-                color: Colors.primary
+                color: colors.primary
               }
             }
           };
@@ -178,11 +179,11 @@ export default function CalendarScreen() {
               container: {
                 borderRadius: 16,
                 borderWidth: 1.6,
-                borderColor: Colors.primary,
+                borderColor: colors.primary,
                 borderStyle: 'dashed',
               },
               text: {
-                color: Colors.primary
+                color: colors.primary
               }
             }
           };
@@ -194,7 +195,7 @@ export default function CalendarScreen() {
                 borderRadius: 16,
               },
               text: {
-                color: Colors.primary
+                color: colors.primary
               }
             }
           };
@@ -204,10 +205,10 @@ export default function CalendarScreen() {
             customStyles: {
               container: {
                 borderRadius: 16,
-                backgroundColor: Colors.accentPinkLight,
+                backgroundColor: colors.accentPinkLight,
               },
               text: {
-                color: Colors.accentPink
+                color: colors.accentPink
               }
             }
           };
@@ -274,7 +275,7 @@ export default function CalendarScreen() {
   // Generate marked dates with highlighting for a specific selected date
   const getMarkedDatesWithSelection = useCallback((selectedDateParam: string) => {
     const updatedMarkedDates = { ...baseMarkedDates };
-    const isPeriodDate = updatedMarkedDates[selectedDateParam]?.customStyles?.container?.backgroundColor === Colors.accentPink;
+    const isPeriodDate = updatedMarkedDates[selectedDateParam]?.customStyles?.container?.backgroundColor === colors.accentPink;
     
     if (isPeriodDate) {
       // For period dates, preserve the pink background but add a grey background behind it
@@ -284,16 +285,16 @@ export default function CalendarScreen() {
           ...(updatedMarkedDates[selectedDateParam]?.customStyles || {}),
           container: {
             ...(updatedMarkedDates[selectedDateParam]?.customStyles?.container || {}),
-            backgroundColor: Colors.primary,
+            backgroundColor: colors.primary,
             borderRadius: 16, // Keep the original size for the pink circle
             width: 32, // Keep the original size for the pink circle
             height: 32, // Keep the original size for the pink circle
           },
-          text: { color: Colors.white }
+          text: { color: colors.white }
         },
         // Add a custom container style for the grey background behind
         customContainerStyle: {
-          backgroundColor: Colors.accentPinkLight,
+          backgroundColor: colors.accentPinkLight,
           borderRadius: 20,
           width: 40,
           height: 40,
@@ -366,7 +367,7 @@ export default function CalendarScreen() {
     navigation.setOptions({
       headerRight: isTodayButtonVisible() ? () => (
         <TouchableOpacity onPress={goToToday}>
-          <Text style={styles.todayButtonText}>Today</Text>
+          <Text style={[styles.todayButtonText, { color: colors.primary }]}>Today</Text>
         </TouchableOpacity>
       ) : undefined,
     });
@@ -455,7 +456,7 @@ export default function CalendarScreen() {
   }, [getMarkedDatesWithSelection]);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
         <View style={styles.calendarContainer}>
           <BaseCalendar
             mode="view"
@@ -494,7 +495,7 @@ export default function CalendarScreen() {
           enableOverDrag={false}
           onChange={(i: number) => setIsDrawerOpen(i >= 0)}
           backgroundStyle={{
-            backgroundColor: 'white',
+            backgroundColor: colors.surface,
             borderTopLeftRadius: 20,
             borderTopRightRadius: 20,
             shadowColor: '#000',
@@ -521,12 +522,10 @@ export default function CalendarScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'Colors.white',
   },
   todayButtonText: {
     fontSize: 16,
     fontWeight: '500',
-    color: Colors.primary,
     marginRight: 16,
   },
   calendarContainer: {

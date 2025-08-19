@@ -11,11 +11,12 @@ import {
   Keyboard
 } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
-import Colors from './styles/colors';
+import { useTheme } from './styles/theme';
 import { useNotes } from '../contexts/NotesContext';
 import { globalStyles } from './styles/globalStyles';
 
 export default function NotesEditor() {
+  const { colors } = useTheme();
   const params = useLocalSearchParams();
   const { notes, setNotes } = useNotes();
   const [localNotes, setLocalNotes] = useState<string>('');
@@ -72,7 +73,7 @@ export default function NotesEditor() {
 // (Keeping UX simple here; remove if you want auto-save-on-unmount back.)
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.surface }]}>
       {/* Main Content with KeyboardAvoidingView */}
       <KeyboardAvoidingView 
         style={styles.keyboardAvoidingView}
@@ -82,9 +83,9 @@ export default function NotesEditor() {
         {/* Notes Input */}
         <View style={styles.content}>
           <TextInput
-            style={styles.notesInput}
+            style={[styles.notesInput, { color: colors.textPrimary }]}
             placeholder="Add notes, any extra symptoms, or how you've been feeling..."
-            placeholderTextColor="#999"
+            placeholderTextColor={colors.textMuted}
             value={localNotes}
             onChangeText={setLocalNotes}
             multiline
@@ -103,11 +104,11 @@ export default function NotesEditor() {
           isKeyboardVisible ? { bottom: keyboardHeight } : {}
         ]}>
           <TouchableOpacity 
-            style={globalStyles.primaryButton} 
+            style={[globalStyles.primaryButton, { backgroundColor: colors.primary }]} 
             onPress={handleSave}
             activeOpacity={0.8}
           >
-            <Text style={styles.saveButtonText}>Done</Text>
+            <Text style={[styles.saveButtonText, { color: colors.white }]}>Done</Text>
           </TouchableOpacity>
         </View>
       )}
@@ -118,7 +119,6 @@ export default function NotesEditor() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.white,
   },
   keyboardAvoidingView: {
     flex: 1,
@@ -131,7 +131,6 @@ const styles = StyleSheet.create({
     maxHeight: 300,
     fontSize: 16,
     lineHeight: 24,
-    color: '#333',
     textAlignVertical: 'top',
     padding: 0,
   },
@@ -161,7 +160,6 @@ const styles = StyleSheet.create({
   },
 
   saveButton: {
-    backgroundColor: Colors.primary,
     paddingVertical: 12,
     paddingHorizontal: 30,
     borderRadius: 25,
@@ -174,7 +172,6 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   saveButtonText: {
-    color: Colors.white,
     fontSize: 18,
     fontWeight: '600',
   },

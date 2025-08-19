@@ -13,8 +13,10 @@ import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useAuth } from '../contexts/AuthContext';
 import theme from './styles/theme';
+import { useTheme } from './styles/theme';
 
 export default function AppLockScreen() {
+  const { colors } = useTheme();
   const {
     isPinSet,
     removePin,
@@ -92,19 +94,19 @@ export default function AppLockScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container} edges={['top']}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]} edges={['top']}>
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
-        <View style={styles.section}>
-          <View style={styles.settingRow}>
+        <View style={[styles.section, { backgroundColor: colors.surface }]}>
+          <View style={[styles.settingRow, { borderBottomColor: colors.border }]}>
             <View style={styles.settingContent}>
-              <Text style={styles.settingTitle}>Set up a PIN</Text>
+              <Text style={[styles.settingTitle, { color: colors.textPrimary }]}>Set up a PIN</Text>
             </View>
             <Switch
               value={pinEnabled}
               onValueChange={handlePinToggle}
-              trackColor={{ false: '#e0e0e0', true: '#4561D2' }}
-              thumbColor="#ffffff"
-              ios_backgroundColor="#e0e0e0"
+              trackColor={{ false: colors.border, true: colors.primary }}
+              thumbColor={colors.white}
+              ios_backgroundColor={colors.border}
             />
           </View>
 
@@ -114,28 +116,28 @@ export default function AppLockScreen() {
               onPress={() => router.push('/pin-setup?mode=change')}
             >
               <View style={styles.settingContent}>
-                <Text style={styles.settingTitle}>Change PIN</Text>
+                <Text style={[styles.settingTitle, { color: colors.textPrimary }]}>Change PIN</Text>
               </View>
-              <Ionicons name="chevron-forward" size={20} color="#666" />
+              <Ionicons name="chevron-forward" size={20} color={colors.textMuted} />
             </TouchableOpacity>
           )}
         </View>
 
         {isPinSet && biometricSupported && (
-          <View style={styles.section}>
+          <View style={[styles.section, { backgroundColor: colors.surface }]}>
             <View style={[styles.settingRow, styles.lastRow]}>
               <View style={styles.settingContent}>
-                <Text style={styles.settingTitle}>Use {biometricType}</Text>
-                <Text style={styles.settingSubtitle}>
+                <Text style={[styles.settingTitle, { color: colors.textPrimary }]}>Use {biometricType}</Text>
+                <Text style={[styles.settingSubtitle, { color: colors.textMuted }]}>
                   Unlock app with {biometricType.toLowerCase()} instead of PIN
                 </Text>
               </View>
               <Switch
                 value={biometricEnabled}
                 onValueChange={handleBiometricToggle}
-                trackColor={{ false: '#e0e0e0', true: '#4561D2' }}
-                thumbColor="#ffffff"
-                ios_backgroundColor="#e0e0e0"
+                trackColor={{ false: colors.border, true: colors.primary }}
+                thumbColor={colors.white}
+                ios_backgroundColor={colors.border}
               />
             </View>
           </View>
@@ -143,9 +145,9 @@ export default function AppLockScreen() {
 
         {isPinSet && (
           <View style={styles.infoSection}>
-            <View style={styles.infoContainer}>
-              <Ionicons name="information-circle" size={20} color="#666" style={styles.infoIcon} />
-              <Text style={styles.infoText}>
+            <View style={[styles.infoContainer, { backgroundColor: colors.panel }]}>
+              <Ionicons name="information-circle" size={20} color={colors.textMuted} style={styles.infoIcon} />
+              <Text style={[styles.infoText, { color: colors.textMuted }]}>
                 When app lock is enabled, you'll need to authenticate when the app starts or returns from the background.
                 {biometricSupported && biometricEnabled && ` You can use your ${biometricType.toLowerCase()} or PIN to unlock.`}
               </Text>
@@ -160,14 +162,12 @@ export default function AppLockScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ECEEFF',
   },
   scrollView: {
     flex: 1,
     paddingHorizontal: 16,
   },
   section: {
-    backgroundColor: 'white',
     borderRadius: 12,
     marginVertical: 8,
     overflow: 'hidden',
@@ -178,7 +178,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 16,
     borderBottomWidth: 0.5,
-    borderBottomColor: '#e0e0e0',
   },
   lastRow: {
     borderBottomWidth: 0,
@@ -189,12 +188,10 @@ const styles = StyleSheet.create({
   },
   settingTitle: {
     fontSize: 16,
-    color: '#333',
     fontWeight: '500',
   },
   settingSubtitle: {
     fontSize: 14,
-    color: '#666',
     marginTop: 2,
   },
   infoSection: {
@@ -203,7 +200,6 @@ const styles = StyleSheet.create({
   infoContainer: {
     flexDirection: 'row',
     alignItems: 'flex-start',
-    backgroundColor: '#f8f9fa',
     padding: 16,
     borderRadius: 12,
   },
@@ -214,7 +210,6 @@ const styles = StyleSheet.create({
   infoText: {
     flex: 1,
     fontSize: 14,
-    color: '#666',
     lineHeight: 20,
   },
 }); 

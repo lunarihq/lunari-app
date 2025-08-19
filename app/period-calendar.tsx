@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import Colors from './styles/colors';
+import { useTheme } from './styles/theme';
 import { useState, useEffect } from 'react';
 import { DateData } from 'react-native-calendars';
 import { Ionicons } from '@expo/vector-icons';
@@ -10,6 +10,7 @@ import { db, getSetting } from '../db';
 import { periodDates } from '../db/schema';
 
 export default function PeriodCalendarScreen() {
+  const { colors } = useTheme();
   const [selectedDates, setSelectedDates] = useState<MarkedDates>({});
   const [tempDates, setTempDates] = useState<MarkedDates>({});
   const [userPeriodLength, setUserPeriodLength] = useState<number>(5);
@@ -161,7 +162,7 @@ export default function PeriodCalendarScreen() {
   const renderCustomDay = ({ date, state, marking }: any) => {
     const customMarking = marking as CustomMarking;
     const isSelected = customMarking?.selected || 
-                      customMarking?.customStyles?.container?.backgroundColor === Colors.accentPink;
+                      customMarking?.customStyles?.container?.backgroundColor === colors.accentPink;
     const isToday = state === 'today';
     const isDisabled = state === 'disabled';
     
@@ -169,7 +170,7 @@ export default function PeriodCalendarScreen() {
     const isFuture = date ? new Date(date.dateString) > new Date(today) : false;
     
     // Determine if this is a period day (has the pink background)
-    const isPeriodDay = customMarking?.customStyles?.container?.backgroundColor === Colors.accentPink;
+    const isPeriodDay = customMarking?.customStyles?.container?.backgroundColor === colors.accentPink;
     
     return (
       <View style={styles.customDayWrapper}>
@@ -198,7 +199,7 @@ export default function PeriodCalendarScreen() {
               <Ionicons 
                 name="checkmark-sharp" 
                 size={16} 
-                color={Colors.white} 
+                color={colors.white} 
                 style={styles.checkmark} 
               />
             )}
@@ -211,13 +212,13 @@ export default function PeriodCalendarScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       {/* Header with padding for status bar, similar to symptom-tracking.tsx */}
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Edit Period</Text>
+      <View style={[styles.header, { backgroundColor: colors.surface }]}>
+        <Text style={[styles.headerTitle, { color: colors.textPrimary }]}>Edit Period</Text>
         {isTodayButtonVisible() && (
           <TouchableOpacity onPress={goToToday}>
-            <Text style={styles.todayButtonText}>Today</Text>
+            <Text style={[styles.todayButtonText, { color: colors.primary }]}>Today</Text>
           </TouchableOpacity>
         )}
         {!isTodayButtonVisible() && <View style={{width: 24}} />}
@@ -246,18 +247,18 @@ export default function PeriodCalendarScreen() {
       </View>
 
       {/* Footer with Save/Cancel buttons */}
-      <View style={styles.footer}>
+      <View style={[styles.footer, { backgroundColor: colors.surface, borderTopColor: colors.border }]}>
         <TouchableOpacity 
           style={styles.cancelButton} 
           onPress={handleCancel}
         >
-          <Text style={styles.cancelButtonText}>Cancel</Text>
+          <Text style={[styles.cancelButtonText, { color: colors.primary }]}>Cancel</Text>
         </TouchableOpacity>
         <TouchableOpacity 
-          style={styles.saveButton}
+          style={[styles.saveButton, { backgroundColor: colors.primary }]}
           onPress={handleSave}
         >
-          <Text style={styles.saveButtonText}>Save</Text>
+          <Text style={[styles.saveButtonText, { color: colors.white }]}>Save</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -273,12 +274,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 18,
     height: 100,
-    backgroundColor: Colors.white,
   },
   headerTitle: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#332F49',
     paddingTop: 63,
   },
   calendarContainer: {
@@ -290,9 +289,7 @@ const styles = StyleSheet.create({
     paddingTop: 16,
     paddingBottom: 20,
     paddingHorizontal: 16,
-    backgroundColor: Colors.white,
     borderTopWidth: 1,
-    borderTopColor: '#e0e0e0',
   },
   cancelButton: {
     flex: 1,
@@ -303,12 +300,10 @@ const styles = StyleSheet.create({
   cancelButtonText: {
     fontSize: 16,
     fontWeight: '500',
-    color: Colors.primary,
   },
   saveButton: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: Colors.primary,
     paddingVertical: 12,
     borderRadius: 80,
     marginLeft: 8,
@@ -316,13 +311,11 @@ const styles = StyleSheet.create({
   saveButtonText: {
     fontSize: 16,
     fontWeight: '500',
-    color: Colors.white,
   },
  
   todayButtonText: {
     fontSize: 16,
     fontWeight: '500',
-    color: Colors.primary,
     paddingTop: 63,
   },
   // Custom day styles
@@ -333,7 +326,7 @@ const styles = StyleSheet.create({
     height: 58,
     flexDirection: 'column',
     marginBottom: 6,
-    backgroundColor: Colors.white,
+    backgroundColor: 'transparent',
   },
   customDayContainer: {
     alignItems: 'center',
@@ -352,13 +345,13 @@ const styles = StyleSheet.create({
     height: 22,
     borderRadius: 12,
     borderWidth: 2,
-    borderColor: Colors.border,
+    borderColor: '#E0E0E0',
     alignItems: 'center',
     justifyContent: 'center',
   },
   selectedDayIndicator: {
-    backgroundColor: Colors.accentPink,
-    borderColor: Colors.accentPink,
+    backgroundColor: '#FB3192',
+    borderColor: '#FB3192',
   },
 
   todayText: {
@@ -368,7 +361,7 @@ const styles = StyleSheet.create({
     color: '#d9e1e8',
   },
   selectedDayText: {
-    color: Colors.accentPink,
+    color: '#FB3192',
   },
   checkmark: {
     marginTop: 0,

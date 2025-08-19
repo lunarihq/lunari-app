@@ -5,6 +5,7 @@ import { getSetting } from '../db';
 import * as Notifications from 'expo-notifications';
 import { AuthProvider, useAuth } from '../contexts/AuthContext';
 import { NotesProvider } from '../contexts/NotesContext';
+import { ThemeProvider, useTheme } from '../contexts/ThemeContext';
 import { LockScreen } from '../components/LockScreen';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
@@ -17,6 +18,7 @@ function AppContent() {
   const [initialRender, setInitialRender] = useState(true);
   const notificationResponseListener = useRef<Notifications.Subscription | null>(null);
   const { isLocked, isAuthenticated } = useAuth();
+  const { isDark } = useTheme();
 
   // Initialize notification response listener only (don't request permissions yet)
   useEffect(() => {
@@ -88,7 +90,7 @@ function AppContent() {
     return (
       <>
         <LockScreen />
-        <StatusBar style="dark" />
+        <StatusBar style={isDark ? "light" : "dark"} />
       </>
     );
   }
@@ -141,7 +143,7 @@ function AppContent() {
         />
         <Stack.Screen name="+not-found" />
       </Stack>
-      <StatusBar style="dark" />
+      <StatusBar style={isDark ? "light" : "dark"} />
     </>
   );
 }
@@ -149,11 +151,13 @@ function AppContent() {
 export default function RootLayout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <AuthProvider>
-        <NotesProvider>
-          <AppContent />
-        </NotesProvider>
-      </AuthProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <NotesProvider>
+            <AppContent />
+          </NotesProvider>
+        </AuthProvider>
+      </ThemeProvider>
     </GestureHandlerRootView>
   );
 }

@@ -8,7 +8,7 @@ import { StatCard } from '../../components/StatCard';
 import { CycleHistory } from '../../components/CycleHistory';
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import theme from '../styles/theme';
-import Colors from '../styles/colors';
+import { useTheme } from '../styles/theme';
 interface CycleData {
   startDate: string;
   cycleLength: string | number;
@@ -20,6 +20,7 @@ interface HistoryEntryWithDate extends CycleData {
 }
 
 export default function Stats() {
+  const { colors } = useTheme();
   const [completedCycles, setCompletedCycles] = useState<number>(0);
   const [averageCycleLength, setAverageCycleLength] = useState<number>(0);
   const [averagePeriodLength, setAveragePeriodLength] = useState<number>(0);
@@ -157,22 +158,22 @@ export default function Stats() {
   };
 
   return (
-    <ScrollView style={theme.globalStyles.container}>
-      <View style={styles.myCyclesContainer}>
-      <Text style={styles.heading}>My cycles</Text>
+    <ScrollView style={[theme.globalStyles.container, { backgroundColor: colors.background }]}>
+      <View style={[styles.myCyclesContainer, { backgroundColor: colors.surface }]}>
+      <Text style={[styles.heading, { color: colors.textPrimary }]}>My cycles</Text>
       <View style={styles.cardsContainer}>
         <View style={{flex: 1}}>
           <StatCard 
             title="Average cycle" 
             value={`${averageCycleLength} days`} 
-            icon={<Feather name="calendar" size={20} color="#000" />} 
+            icon={<Feather name="calendar" size={20} color={colors.textPrimary} />} 
           />
         </View>
         <View style={{flex: 1}}>
           <StatCard 
             title="Period length" 
             value={`${averagePeriodLength} days`} 
-            icon={<MaterialCommunityIcons name="water-outline" size={20} color="#000" />} 
+            icon={<MaterialCommunityIcons name="water-outline" size={20} color={colors.textPrimary} />} 
           />
         </View>
       </View>
@@ -183,10 +184,8 @@ export default function Stats() {
 }
 
 const styles = StyleSheet.create({
-
   myCyclesContainer: {
     marginVertical: 16,
-    backgroundColor: Colors.white,
     padding: 16,
     borderRadius: 16,
   },

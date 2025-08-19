@@ -5,7 +5,7 @@ import { Ionicons, FontAwesome5, MaterialCommunityIcons } from '@expo/vector-ico
 import { db } from '../db';
 import { healthLogs } from '../db/schema';
 import { eq } from 'drizzle-orm';
-import Colors from '../app/styles/colors';
+import { useTheme } from '../app/styles/theme';
 import dayjs from 'dayjs';
 import { globalStyles } from '../app/styles/globalStyles';
 
@@ -15,6 +15,7 @@ type SymptomsTrackerProps = {
 };
 
 export const SymptomsTracker = ({ selectedDate, titleStyle }: SymptomsTrackerProps) => {
+  const { colors } = useTheme();
   const [healthLogsForDate, setHealthLogsForDate] = useState<any[]>([]);
   
   // Load health logs when component is focused or selectedDate changes
@@ -90,8 +91,8 @@ export const SymptomsTracker = ({ selectedDate, titleStyle }: SymptomsTrackerPro
   };
 
   return (
-    <View style={styles.symptomsCard}>
-      <Text style={[styles.symptomsText, titleStyle]}>Symptoms & moods</Text>
+    <View style={[styles.symptomsCard, { backgroundColor: colors.surface }]}>
+      <Text style={[styles.symptomsText, titleStyle, { color: colors.textPrimary }]}>Symptoms & moods</Text>
       
       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.scrollContainer}>
         {/* Add Button - Always visible */}
@@ -101,10 +102,10 @@ export const SymptomsTracker = ({ selectedDate, titleStyle }: SymptomsTrackerPro
             '/symptom-tracking')}
           style={styles.itemContainer}
         >
-          <View style={globalStyles.fab}>
-            <Ionicons name="add" size={32} color="white" />
+          <View style={[globalStyles.fab, { backgroundColor: colors.primary }]}>
+            <Ionicons name="add" size={32} color={colors.white} />
           </View>
-          <Text style={styles.itemText}>Add</Text>
+          <Text style={[styles.itemText, { color: colors.textSecondary }]}>Add</Text>
         </TouchableOpacity>
         
         {/* Either show logged items or "No items" message */}
@@ -133,13 +134,13 @@ export const SymptomsTracker = ({ selectedDate, titleStyle }: SymptomsTrackerPro
               <View style={styles.itemIconContainer}>
                 {getIconComponent(log)}
               </View>
-              <Text style={styles.itemText} numberOfLines={1}>{getDisplayText(log)}</Text>
+              <Text style={[styles.itemText, { color: colors.textSecondary }]} numberOfLines={1}>{getDisplayText(log)}</Text>
             </TouchableOpacity>
           ))
         ) : (
           // No items message
           <View style={styles.noItemsContainer}>
-            <Text style={styles.noLoggedItemsText}>
+            <Text style={[styles.noLoggedItemsText, { color: colors.textSecondary }]}>
               No symptoms or moods logged {getDateText()}.
             </Text>
           </View>
@@ -151,14 +152,12 @@ export const SymptomsTracker = ({ selectedDate, titleStyle }: SymptomsTrackerPro
 
 const styles = StyleSheet.create({
   symptomsCard: {
-    backgroundColor: '#fff',
     borderRadius: 12,
     padding: 16,
   },
   symptomsText: {
     fontSize: 22,
     fontWeight: '500',
-    color: Colors.textPrimary,
     marginBottom: 16,
   },
   scrollContainer: {
@@ -181,7 +180,6 @@ const styles = StyleSheet.create({
   itemText: {
     fontSize: 12,
     fontWeight: '500',
-    color: Colors.textSecondary,
     textAlign: 'center',
   },
   noItemsContainer: {
@@ -189,7 +187,6 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
   },
   noLoggedItemsText: {
-    color: Colors.textSecondary,
     fontSize: 14,
   },
 });

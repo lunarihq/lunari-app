@@ -10,15 +10,16 @@ import { NotificationService } from '../../services/notificationService';
 import { validatePeriodDate } from '../../validation/periodData';
 import { Ionicons } from '@expo/vector-icons';
 import theme from '../styles/theme';
+import { useTheme } from '../styles/theme';
 import DashedCircle from '../../components/DashedCircle';
 import { getSetting } from '../../db';
-import Colors from '../styles/colors';
 
 const getFormattedDate = (date: Date): string => `Today, ${date.getDate()} ${date.toLocaleDateString('en-US', { month: 'short' })}`;
 
 
 
 export default function Index() {
+  const { colors } = useTheme();
   const [selectedDates, setSelectedDates] = useState<{ [date: string]: any }>({});
   const [firstPeriodDate, setFirstPeriodDate] = useState<string | null>(null);
   const [currentCycleDay, setCurrentCycleDay] = useState<number | null>(null);
@@ -202,41 +203,41 @@ export default function Index() {
 
   return (
 
-      <ScrollView style={theme.globalStyles.container} showsVerticalScrollIndicator={false}>
+      <ScrollView style={[theme.globalStyles.container, { backgroundColor: colors.background }]} showsVerticalScrollIndicator={false}>
         <View style={theme.globalStyles.predictionCard}>
           <View style={theme.globalStyles.predictionOuterCircle}>
             <DashedCircle size={350} strokeWidth={3} dashLength={3} dashCount={120} />
-            <View style={theme.globalStyles.predictionInnerCircle}>
+            <View style={[theme.globalStyles.predictionInnerCircle, { backgroundColor: colors.surface }]}>
             {isPeriodDay ? (
               <>
-                <Text style={styles.currentDay}>{getFormattedDate(currentDate)}</Text>
-                <Text style={theme.globalStyles.predictionLabel}>Period</Text>
-                <Text style={theme.globalStyles.predictionDays}>Day {periodDayNumber}</Text>
+                <Text style={[styles.currentDay, { color: colors.textPrimary }]}>{getFormattedDate(currentDate)}</Text>
+                <Text style={[theme.globalStyles.predictionLabel, { color: colors.textPrimary }]}>Period</Text>
+                <Text style={[theme.globalStyles.predictionDays, { color: colors.textPrimary }]}>Day {periodDayNumber}</Text>
               </>
             ) : prediction ? (
               <>
-                <Text style={styles.currentDay}>{getFormattedDate(currentDate)}</Text>
+                <Text style={[styles.currentDay, { color: colors.textPrimary }]}>{getFormattedDate(currentDate)}</Text>
                 {prediction.days > 0 ? (
                   <>
-                    <Text style={theme.globalStyles.predictionLabel}>Expected period in</Text>
-                    <Text style={theme.globalStyles.predictionDays}>{prediction.days} {prediction.days === 1 ? 'day' : 'days'}</Text>
+                    <Text style={[theme.globalStyles.predictionLabel, { color: colors.textPrimary }]}>Expected period in</Text>
+                    <Text style={[theme.globalStyles.predictionDays, { color: colors.textPrimary }]}>{prediction.days} {prediction.days === 1 ? 'day' : 'days'}</Text>
                   </>
                 ) : prediction.days === 0 ? (
                   <>
-                    <Text style={theme.globalStyles.predictionLabel}>Your period is</Text>
-                    <Text style={theme.globalStyles.predictionDays}>expected today</Text>
+                    <Text style={[theme.globalStyles.predictionLabel, { color: colors.textPrimary }]}>Your period is</Text>
+                    <Text style={[theme.globalStyles.predictionDays, { color: colors.textPrimary }]}>expected today</Text>
                   </>
                 ) : (
                   <>
-                      <Text style={theme.globalStyles.predictionLabel}>Late for</Text>
-                    <Text style={theme.globalStyles.predictionDays}>{Math.abs(prediction.days)} {Math.abs(prediction.days) === 1 ? 'day' : 'days'}</Text>
+                      <Text style={[theme.globalStyles.predictionLabel, { color: colors.textPrimary }]}>Late for</Text>
+                    <Text style={[theme.globalStyles.predictionDays, { color: colors.textPrimary }]}>{Math.abs(prediction.days)} {Math.abs(prediction.days) === 1 ? 'day' : 'days'}</Text>
                   </>
                 )}
               </>
             ) : (
               <>
-                <Text style={styles.currentDay}>{getFormattedDate(currentDate)}</Text>
-                <Text style={styles.emptyStateText}>Log the first day of your last period for next prediction.</Text>
+                <Text style={[styles.currentDay, { color: colors.textPrimary }]}>{getFormattedDate(currentDate)}</Text>
+                <Text style={[styles.emptyStateText, { color: colors.textPrimary }]}>Log the first day of your last period for next prediction.</Text>
               </>
             )}
             <Pressable onPress={() => router.push('/period-calendar')} style={theme.globalStyles.primaryButton}>
@@ -250,9 +251,9 @@ export default function Index() {
           </View>
         </View>
 
-        <View style={styles.insightsCard}>
+        <View style={[styles.insightsCard, { backgroundColor: colors.surface }]}>
         <View style={styles.insightsTitleContainer}>
-            <Text style={styles.insightsTitle}>Today's insights</Text>
+            <Text style={[styles.insightsTitle, { color: colors.textPrimary }]}>Today's insights</Text>
             <Pressable
               onPress={() => currentCycleDay && router.push(`/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}`)}
               disabled={!currentCycleDay}
@@ -261,60 +262,60 @@ export default function Index() {
               <Ionicons 
                 name="chevron-forward" 
                 size={24} 
-              color={currentCycleDay ? Colors.textPrimary : '#B0B0B0'} 
+              color={currentCycleDay ? colors.textPrimary : colors.textMuted} 
               />
             </Pressable>
           </View>
           {currentCycleDay ? (
             <View style={styles.insightsRow}>
               <Pressable 
-                style={[styles.insightCard, styles.cardBlue]}
+                style={[styles.insightCard, { backgroundColor: colors.primaryLight, borderColor: colors.primary }]}
                 onPress={() => currentCycleDay && router.push(`/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}`)}
               >
                 <View style={styles.insightTop}>
-                  <Ionicons name="calendar-outline" size={24} color={Colors.textPrimary} style={styles.insightIcon} />
-                  <Text style={styles.insightLabel}>Cycle day</Text>
+                  <Ionicons name="calendar-outline" size={24} color={colors.textPrimary} style={styles.insightIcon} />
+                  <Text style={[styles.insightLabel, { color: colors.textPrimary }]}>Cycle day</Text>
                 </View>
-                <View style={styles.insightValueContainer}>
-                  <Text style={styles.insightValue}>
+                <View style={[styles.insightValueContainer, { backgroundColor: colors.surface }]}>
+                  <Text style={[styles.insightValue, { color: colors.textPrimary }]}>
                     {currentCycleDay || '-'}
                   </Text>
                 </View>
               </Pressable>
               
               <Pressable 
-                style={[styles.insightCard, styles.cardYellow]}
+                style={[styles.insightCard, { backgroundColor: colors.primaryLight, borderColor: colors.primary }]}
                 onPress={() => currentCycleDay && router.push(`/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}`)}
               >
                 <View style={styles.insightTop}>
-                  <Ionicons name="sync-outline" size={24} color={Colors.textPrimary} style={styles.insightIcon} />
-                  <Text style={styles.insightLabel}>Cycle phase</Text>
+                  <Ionicons name="sync-outline" size={24} color={colors.textPrimary} style={styles.insightIcon} />
+                  <Text style={[styles.insightLabel, { color: colors.textPrimary }]}>Cycle phase</Text>
                 </View>
-                <View style={styles.insightValueContainer}>
-                  <Text style={styles.insightValue}>
+                <View style={[styles.insightValueContainer, { backgroundColor: colors.surface }]}>
+                  <Text style={[styles.insightValue, { color: colors.textPrimary }]}>
                     {currentCycleDay ? PeriodPredictionService.getCyclePhase(currentCycleDay, averageCycleLength) : '-'}
                   </Text>
                 </View>
               </Pressable>
               
               <Pressable 
-                style={[styles.insightCard, styles.cardPink]}
+                style={[styles.insightCard, { backgroundColor: colors.primaryLight, borderColor: colors.primary }]}
                 onPress={() => currentCycleDay && router.push(`/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}`)}
               >
                 <View style={styles.insightTop}>
-                  <Ionicons name="leaf-outline" size={24} color={Colors.textPrimary} style={styles.insightIcon} />
-                  <Text style={styles.insightLabel}>Chance to</Text>
-                  <Text style={styles.insightLabel}>conceive</Text>
+                  <Ionicons name="leaf-outline" size={24} color={colors.textPrimary} style={styles.insightIcon} />
+                  <Text style={[styles.insightLabel, { color: colors.textPrimary }]}>Chance to</Text>
+                  <Text style={[styles.insightLabel, { color: colors.textPrimary }]}>conceive</Text>
                 </View>
-                <View style={styles.insightValueContainer}>
-                  <Text style={styles.insightValue}>
+                <View style={[styles.insightValueContainer, { backgroundColor: colors.surface }]}>
+                  <Text style={[styles.insightValue, { color: colors.textPrimary }]}>
                     {currentCycleDay ? PeriodPredictionService.getPregnancyChance(currentCycleDay, averageCycleLength) : '-'}
                   </Text>
                 </View>
               </Pressable>
             </View>
           ) : (
-            <Text style={styles.insightsText}>
+            <Text style={[styles.insightsText, { color: colors.textPrimary }]}>
               Please log at least one period to view your cycle insights.
             </Text>
           )}
@@ -329,7 +330,6 @@ export default function Index() {
 
 const styles = StyleSheet.create({
   insightsCard: {
-    backgroundColor: Colors.white,
     borderRadius: 12,
     padding: 16,
     marginBottom: 16,
@@ -343,10 +343,8 @@ const styles = StyleSheet.create({
   insightsTitle: {
     fontSize: 22,
     fontWeight: '600',
-    color: Colors.textPrimary,
   },
   insightsText: {
-    color: Colors.textPrimary,
     fontSize: 16,
     lineHeight: 18,
   },
@@ -358,7 +356,7 @@ const styles = StyleSheet.create({
   insightCard: {
     flex: 1,
     borderRadius: 12,
-
+    borderWidth: 1,
     paddingVertical: 12,
     paddingBottom: 0,
     alignItems: 'center',
@@ -366,9 +364,6 @@ const styles = StyleSheet.create({
     minHeight: 140,
     overflow: 'hidden',
   },
-  cardBlue: { backgroundColor: Colors.primaryLight, borderWidth: 1, borderColor: Colors.primary },
-  cardYellow: { backgroundColor: Colors.primaryLight, borderWidth: 1, borderColor: Colors.primary },
-  cardPink: { backgroundColor: Colors.primaryLight, borderWidth: 1, borderColor: Colors.primary },
   insightIcon: {
     marginBottom: 6,
   },
@@ -379,7 +374,6 @@ const styles = StyleSheet.create({
     lineHeight: 18,
   },
   insightValueContainer: {
-    backgroundColor: Colors.white,
     width: '100%',
     alignItems: 'center',
     paddingVertical: 12,
@@ -390,14 +384,12 @@ const styles = StyleSheet.create({
   insightValue: {
     fontSize: 16,
     fontWeight: '600',
-    color: Colors.textPrimary,
     textAlign: 'center',
   },
   emptyStateText: {
     fontSize: 22,
     fontWeight: '500',
     lineHeight: 26,
-    color: Colors.black,
     textAlign: 'center',
     paddingHorizontal: 20,
   },
@@ -408,7 +400,6 @@ const styles = StyleSheet.create({
   currentDay: {
     fontSize: 17,
     fontWeight: '500',
-    color: Colors.textPrimary,
     marginBottom: 24,
   },
   chevronButton: {

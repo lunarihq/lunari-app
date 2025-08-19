@@ -3,7 +3,7 @@ import { CalendarList, DateData } from 'react-native-calendars';
 import { Ionicons } from '@expo/vector-icons';
 import { useCallback, useMemo } from 'react';
 import { CustomMarking, MarkedDates, SelectionRules, formatDateString } from '../app/types/calendarTypes';
-import Colors from '../app/styles/colors';
+import { useTheme } from '../app/styles/theme';
 
 // Constants
 const MONTH_FONT_SIZE = 16;
@@ -62,6 +62,7 @@ export function BaseCalendar({
   hideDayNames = false,
   calendarHeight,
 }: BaseCalendarProps) {
+  const { colors } = useTheme();
   // Get device screen width for default calendarWidth
   const screenWidth = Dimensions.get('window').width;
   
@@ -93,12 +94,12 @@ export function BaseCalendar({
   const DefaultDay: React.FC<any> = ({ date, state, marking }: { date?: DateData; state: string; marking: CustomMarking }) => {
     const customMarking = marking;
     const isSelected = customMarking?.selected || 
-                      customMarking?.customStyles?.container?.backgroundColor === Colors.accentPink;
+                      customMarking?.customStyles?.container?.backgroundColor === colors.accentPink;
     const isToday = state === 'today';
     const isDisabled = state === 'disabled';
     
     // Determine if this is a period day (has the pink background)
-    const isPeriodDay = customMarking?.customStyles?.container?.backgroundColor === Colors.accentPink;
+    const isPeriodDay = customMarking?.customStyles?.container?.backgroundColor === colors.accentPink;
     
     // Check if this day has a custom container style (for selection background)
     const hasCustomContainer = customMarking?.customContainerStyle;
@@ -123,7 +124,7 @@ export function BaseCalendar({
               <Text style={[
                 styles.dayText,
                 isSelected && !isPeriodDay ? styles.selectedDayText : null,
-                 isPeriodDay ? { color: Colors.white } : null,
+                 isPeriodDay ? { color: colors.white } : null,
                 isDisabled ? styles.disabledDayText : null,
                 isToday ? styles.todayText : null,
                 customMarking?.customStyles?.text
@@ -153,7 +154,7 @@ export function BaseCalendar({
             <Text style={[
               styles.dayText,
               isSelected && !isPeriodDay ? styles.selectedDayText : null,
-                 isPeriodDay ? { color: Colors.white } : null,
+                 isPeriodDay ? { color: colors.white } : null,
               isDisabled ? styles.disabledDayText : null,
               isToday ? styles.todayText : null,
               customMarking?.customStyles?.text
@@ -230,23 +231,22 @@ export function BaseCalendar({
           <Ionicons 
             name={direction === 'left' ? 'chevron-back' : 'chevron-forward'} 
             size={20} 
-            color="black"
-             
+            color={colors.textPrimary}
           />
         )}
         theme={{
-           backgroundColor: Colors.white,
-           calendarBackground: Colors.white,
-          textSectionTitleColor: '#b6c1cd',
+           backgroundColor: colors.surface,
+           calendarBackground: colors.surface,
+          textSectionTitleColor: colors.textMuted,
           selectedDayBackgroundColor: 'transparent',
-          selectedDayTextColor: '#000000',
-          todayTextColor: '#000000',
-          dayTextColor: '#2d4150',
-          textDisabledColor: '#d9e1e8',
-           dotColor: Colors.primary,
-           selectedDotColor: Colors.primary,
-          arrowColor: 'black',
-          monthTextColor: '#000000',
+          selectedDayTextColor: colors.textPrimary,
+          todayTextColor: colors.textPrimary,
+          dayTextColor: colors.textPrimary,
+          textDisabledColor: colors.textMuted,
+           dotColor: colors.primary,
+           selectedDotColor: colors.primary,
+          arrowColor: colors.textPrimary,
+          monthTextColor: colors.textPrimary,
           textMonthFontWeight: 'bold',
           textDayFontSize: 16,
           textMonthFontSize: MONTH_FONT_SIZE,
@@ -259,7 +259,7 @@ export function BaseCalendar({
               width: 32,
               textAlign: 'center',
               fontSize: 14,
-               color: Colors.textPrimary,
+               color: colors.textPrimary,
             },
           },
           'stylesheet.day.basic': {
@@ -273,7 +273,7 @@ export function BaseCalendar({
           'stylesheet.calendar.main': {
             container: {
               borderBottomWidth: 1,
-               borderBottomColor: Colors.border,
+               borderBottomColor: colors.border,
               paddingBottom: 2,
             }
           }
@@ -290,7 +290,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 40,
     height: 58,
-    backgroundColor: 'white',
+    backgroundColor: 'transparent',
   },
 
 
@@ -299,7 +299,7 @@ const styles = StyleSheet.create({
     height: 32,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'white',
+    backgroundColor: 'transparent',
     borderRadius: 16,
   },
   dayText: {
@@ -335,14 +335,13 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: MONTH_FONT_SIZE,
     fontWeight: 'bold',
-    color: '#000000',
   },
   dayNamesContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingVertical: 5,
     paddingHorizontal: 34,
-    backgroundColor: 'white',
+    backgroundColor: 'transparent',
     borderBottomWidth: 1,
     borderBottomColor: '#E9F0FF',
   },
@@ -352,7 +351,6 @@ const styles = StyleSheet.create({
   dayNameText: {
     fontSize: 12,
     fontWeight: '500',
-    color: '#29263B',
   },
 }); 
 

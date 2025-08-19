@@ -15,7 +15,7 @@ import { healthLogs } from '../db/schema';
 import { eq } from 'drizzle-orm';
 import { useFocusEffect } from '@react-navigation/native';
 import theme from './styles/theme';
-import Colors from './styles/colors';
+import { useTheme } from './styles/theme';
 import { useNotes } from '../contexts/NotesContext';
 
 // Symptom type definition
@@ -33,6 +33,7 @@ dayjs.extend(isoWeek);
 // leftover types used to render week data were removed
 
 export default function SymptomTracking() {
+  const { colors } = useTheme();
   const params = useLocalSearchParams();
   const { notes, setNotes } = useNotes();
   const [selectedDate, setSelectedDate] = useState<string>(
@@ -484,17 +485,17 @@ export default function SymptomTracking() {
   };
 
   return (
-    <View style={theme.globalStyles.container}>
+    <View style={[theme.globalStyles.container, { backgroundColor: colors.background }]}>
       {/* Date Navigation Controls */}
       <View style={styles.dateNavigator}>
         <TouchableOpacity 
           onPress={goToPreviousDay}
           style={styles.headerButton}
         >
-          <Ionicons name="chevron-back" size={24} color={Colors.textPrimary} />
+          <Ionicons name="chevron-back" size={24} color={colors.textPrimary} />
         </TouchableOpacity>
         
-        <Text style={styles.dateText}>
+        <Text style={[styles.dateText, { color: colors.textPrimary }]}>
           {selectedDate === dayjs().format('YYYY-MM-DD')
             ? `Today, ${dayjs(selectedDate).format('MMMM D')}`
             : dayjs(selectedDate).format('dddd, MMMM D')
@@ -506,7 +507,7 @@ export default function SymptomTracking() {
           style={[styles.headerButton, isNextDayDisabled() && styles.disabledButton]}
           disabled={isNextDayDisabled()}
         >
-          <Ionicons name="chevron-forward" size={24} color={isNextDayDisabled() ? '#CCC' : Colors.textPrimary} />
+          <Ionicons name="chevron-forward" size={24} color={isNextDayDisabled() ? colors.textMuted : colors.textPrimary} />
         </TouchableOpacity>
       </View>
 
@@ -518,9 +519,9 @@ export default function SymptomTracking() {
       >
 
         {/* Flow */}
-        <View style={styles.section}>
+        <View style={[styles.section, { backgroundColor: colors.surface }]}>
             <View style={styles.sectionHeader}>
-              <Text style={styles.sectionTitle}>Flow</Text>
+              <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>Flow</Text>
             </View>
             
             <View style={styles.itemsGrid}>
@@ -530,18 +531,18 @@ export default function SymptomTracking() {
                   style={[styles.itemButton, flow.selected && styles.selectedItemButton]}
                   onPress={() => toggleFlow(flow.id)}
                 >
-                  <View style={[styles.itemIcon, flow.selected && styles.selectedItemIcon]}>
+                  <View style={[styles.itemIcon, flow.selected && { ...styles.selectedItemIcon, borderColor: colors.primary, backgroundColor: colors.primaryLight }]}>
                     <Text style={styles.emojiText}>{flow.icon}</Text>
                   </View>
-                  <Text style={styles.itemText}>{flow.name}</Text>
+                  <Text style={[styles.itemText, { color: colors.textSecondary }]}>{flow.name}</Text>
                 </TouchableOpacity>
               ))}
             </View>
           </View>
           {/* Symptoms */}
-          <View style={styles.section}>
+          <View style={[styles.section, { backgroundColor: colors.surface }]}>
             <View style={styles.sectionHeader}>
-              <Text style={styles.sectionTitle}>Symptoms</Text>
+              <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>Symptoms</Text>
             </View>
             
             <View style={styles.itemsGrid}>
@@ -551,19 +552,19 @@ export default function SymptomTracking() {
                   style={[styles.itemButton, symptom.selected && styles.selectedItemButton]}
                   onPress={() => toggleSymptom(symptom.id)}
                 >
-                  <View style={[styles.itemIcon, symptom.selected && styles.selectedItemIcon]}>
+                  <View style={[styles.itemIcon, symptom.selected && { ...styles.selectedItemIcon, borderColor: colors.primary, backgroundColor: colors.primaryLight }]}>
                     <Text style={styles.emojiText}>{symptom.icon}</Text>
                   </View>
-                  <Text style={styles.itemText}>{symptom.name}</Text>
+                  <Text style={[styles.itemText, { color: colors.textSecondary }]}>{symptom.name}</Text>
                 </TouchableOpacity>
               ))}
             </View>
           </View>
 
           {/* Moods */}
-          <View style={styles.section}>
+          <View style={[styles.section, { backgroundColor: colors.surface }]}>
             <View style={styles.sectionHeader}>
-              <Text style={styles.sectionTitle}>Moods</Text>
+              <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>Moods</Text>
             </View>
             
             <View style={styles.itemsGrid}>
@@ -573,19 +574,19 @@ export default function SymptomTracking() {
                   style={[styles.itemButton, mood.selected && styles.selectedItemButton]}
                   onPress={() => toggleMood(mood.id)}
                 >
-                  <View style={[styles.itemIcon, mood.selected && styles.selectedItemIcon]}>
+                  <View style={[styles.itemIcon, mood.selected && { ...styles.selectedItemIcon, borderColor: colors.primary, backgroundColor: colors.primaryLight }]}>
                     <Text style={styles.emojiText}>{mood.icon}</Text>
                   </View>
-                  <Text style={styles.itemText}>{mood.name}</Text>
+                  <Text style={[styles.itemText, { color: colors.textSecondary }]}>{mood.name}</Text>
                 </TouchableOpacity>
               ))}
             </View>
           </View>
 
           {/* Notes */}
-          <View ref={notesSectionRef} style={styles.section}>
+          <View ref={notesSectionRef} style={[styles.section, { backgroundColor: colors.surface }]}>
             <View style={styles.sectionHeader}>
-              <Text style={styles.sectionTitle}>Notes</Text>
+              <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>Notes</Text>
               <View style={styles.notesIconsContainer}>
                 {notes.trim() && (
                   <TouchableOpacity 
@@ -612,11 +613,11 @@ export default function SymptomTracking() {
               activeOpacity={0.7}
             >
               {notes.trim() ? (
-                <Text style={styles.notesText} numberOfLines={3}>
+                <Text style={[styles.notesText, { color: colors.textPrimary }]} numberOfLines={3}>
                   {notes}
                 </Text>
               ) : (
-                <Text style={styles.notesPlaceholder}>
+                <Text style={[styles.notesPlaceholder, { color: colors.textMuted }]}>
                   Add notes about your day...
                 </Text>
               )}
@@ -627,11 +628,11 @@ export default function SymptomTracking() {
       {/* Save button that appears only when changes are made */}
       {hasChanges && (
         <TouchableOpacity 
-          style={styles.saveButton} 
+          style={[styles.saveButton, { backgroundColor: colors.primary }]} 
           onPress={saveChanges}
           activeOpacity={0.8}
         >
-          <Text style={styles.saveButtonText}>Save</Text>
+          <Text style={[styles.saveButtonText, { color: colors.white }]}>Save</Text>
         </TouchableOpacity>
       )}
     </View>
@@ -653,7 +654,6 @@ const styles = StyleSheet.create({
   dateText: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#000',
   },
   scrollView: {
     flex: 1,
@@ -664,7 +664,6 @@ const styles = StyleSheet.create({
   },
 
   section: {
-    backgroundColor: '#fff',
     borderRadius: 16,
     marginBottom: 16,
     padding: 16,
@@ -678,7 +677,6 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 22,
     fontWeight: '600',
-    color: Colors.black,
   },
   itemsGrid: {
     flexDirection: 'row',
@@ -704,13 +702,10 @@ const styles = StyleSheet.create({
   },
   selectedItemIcon: {
     borderWidth: 3,
-    borderColor: Colors.primary,
-    backgroundColor: Colors.primaryLight,
   },
   itemText: {
     textAlign: 'center',
     fontSize: 12,
-    color: Colors.textSecondary,
   },
   emojiText: {
     fontSize: 28,
@@ -725,12 +720,10 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 16,
     lineHeight: 22,
-    color: Colors.textPrimary,
   },
   notesPlaceholder: {
     flex: 1,
     fontSize: 16,
-    color: '#999',
     fontStyle: 'italic',
   },
   notesIconsContainer: {
@@ -745,7 +738,6 @@ const styles = StyleSheet.create({
     bottom: 30,
     left: 40,
     right: 40,
-    backgroundColor: '#4561D2',
     paddingVertical: 16,
     borderRadius: 30,
     alignItems: 'center',
@@ -757,7 +749,6 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   saveButtonText: {
-    color: 'white',
     fontSize: 18,
     fontWeight: '600',
   },

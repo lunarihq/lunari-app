@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import Colors from '../app/styles/colors';
+import { useTheme } from '../app/styles/theme';
 
 interface StatCardProps {
   title: string;
@@ -9,20 +9,21 @@ interface StatCardProps {
 }
 
 export function StatCard({ title, value, icon }: StatCardProps) {
+  const { colors } = useTheme();
+  
   return (
-    <View style={styles.card}>
+    <View style={[styles.card, { backgroundColor: colors.panel }]}>
       <View style={styles.header}>
         {icon}
-        <Text style={styles.title}>{title}</Text>
+        <Text style={[styles.title, { color: colors.textPrimary }]}>{title}</Text>
       </View>
-      <Text style={styles.value}>{value}</Text>
+      <Text style={[styles.value, { color: colors.textPrimary }]}>{value}</Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#F5F5FF',
     borderRadius: 12,
     padding: 16,
     width: 168,
@@ -36,11 +37,9 @@ const styles = StyleSheet.create({
   value: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: Colors.black,
   },
   title: {
     fontSize: 14,
-    color: Colors.black,
     marginLeft: 8,
   },
 });

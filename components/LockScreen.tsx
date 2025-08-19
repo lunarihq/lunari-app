@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, SafeAreaView } from 'react-native';
 import { PinInput } from './PinInput';
 import { useAuth } from '../contexts/AuthContext';
-import Colors from '../app/styles/colors';
+import { useTheme } from '../app/styles/theme';
 
 export function LockScreen() {
+  const { colors } = useTheme();
   const {
     verifyPin,
     canUseBiometric,
@@ -49,7 +50,7 @@ export function LockScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.content}>
         <PinInput
           title="Enter PIN"
@@ -66,7 +67,6 @@ export function LockScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.background,
   },
   content: {
     flex: 1,

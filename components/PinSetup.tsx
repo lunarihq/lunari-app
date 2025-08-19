@@ -4,12 +4,14 @@ import { PinInput } from './PinInput';
 import { useAuth } from '../contexts/AuthContext';
 import { AuthService } from '../services/authService';
 import { router } from 'expo-router';
+import { useTheme } from '../app/styles/theme';
 
 interface PinSetupProps {
   mode?: 'setup' | 'change';
 }
 
 export function PinSetup({ mode = 'setup' }: PinSetupProps) {
+  const { colors } = useTheme();
   const { setupPin } = useAuth();
   const [step, setStep] = useState<'verify' | 'initial' | 'confirm'>(mode === 'change' ? 'verify' : 'initial');
   const [initialPin, setInitialPin] = useState('');
@@ -80,7 +82,7 @@ export function PinSetup({ mode = 'setup' }: PinSetupProps) {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.content}>
         {step === 'verify' ? (
           <PinInput
@@ -115,7 +117,6 @@ export function PinSetup({ mode = 'setup' }: PinSetupProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ECEEFF',
   },
   content: {
     flex: 1,

@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { SymptomsTracker } from './SymptomsTracker';
 import { PeriodPredictionService } from '../services/periodPredictions';
 import { formatDateString } from '../app/types/calendarTypes';
+import { useTheme } from '../app/styles/theme';
 
 interface CycleDetailsProps {
   selectedDate: string;
@@ -13,6 +14,7 @@ interface CycleDetailsProps {
 }
 
 export function CycleDetails({ selectedDate, cycleDay, averageCycleLength = 28, onClose }: CycleDetailsProps) {
+  const { colors } = useTheme();
   const selectedDateFormatted = selectedDate ? 
     new Date(selectedDate).toLocaleDateString('en-US', { day: 'numeric', month: 'long' }) : '';
 
@@ -33,16 +35,16 @@ export function CycleDetails({ selectedDate, cycleDay, averageCycleLength = 28, 
       <View style={styles.cycleSummary}>
         <View style={styles.headerRow}>
           <View style={styles.titleContainer}>
-            <Text style={styles.cycleSummaryTitle}>
+            <Text style={[styles.cycleSummaryTitle, { color: colors.textPrimary }]}>
               {selectedDateFormatted}{cycleDay ? ` • Cycle day ${cycleDay}` : ''}
             </Text>
             {cycleDay && (
-              <Text style={styles.conceptionChance}>{getConceptionChance()}</Text>
+              <Text style={[styles.conceptionChance, { color: colors.textMuted }]}>{getConceptionChance()}</Text>
             )}
           </View>
           {onClose && (
             <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-              <Ionicons name="close" size={28} color="#878595" />
+              <Ionicons name="close" size={28} color={colors.textMuted} />
             </TouchableOpacity>
           )}
         </View>
@@ -75,12 +77,10 @@ const styles = StyleSheet.create({
   cycleSummaryTitle: {
     fontSize: 23,
     fontWeight: 'bold',
-    color: '#332F49',
     marginBottom: 6,
   },
   conceptionChance: {
     fontSize: 16,
-    color: '#878595',
   },
   closeButton: {
     padding: 8,
