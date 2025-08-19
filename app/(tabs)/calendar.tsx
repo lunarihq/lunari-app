@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import { useTheme } from '../styles/theme';
 import { DateData } from 'react-native-calendars';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation, useIsFocused } from '@react-navigation/native';
 import { useLocalSearchParams, router } from 'expo-router';
 import { BaseCalendar } from '../../components/BaseCalendar';
 import { CalendarBottomSheet } from '../../components/CalendarBottomSheet';
@@ -24,6 +24,7 @@ import { useCycleCalculations } from '../../hooks/useCycleCalculations';
 
 export default function CalendarScreen() {
   const { colors } = useTheme();
+  const isFocused = useIsFocused();
 
   const {
     firstPeriodDate,
@@ -183,13 +184,15 @@ export default function CalendarScreen() {
         />
       </View>
 
-      <CalendarBottomSheet
-        selectedDate={selectedDate}
-        cycleDay={cycleDay}
-        averageCycleLength={averageCycleLength}
-        isOpen={isDrawerOpen}
-        onOpenChange={setIsDrawerOpen}
-      />
+      {isFocused && (
+        <CalendarBottomSheet
+          selectedDate={selectedDate}
+          cycleDay={cycleDay}
+          averageCycleLength={averageCycleLength}
+          isOpen={isDrawerOpen}
+          onOpenChange={setIsDrawerOpen}
+        />
+      )}
     </SafeAreaView>
   );
 }

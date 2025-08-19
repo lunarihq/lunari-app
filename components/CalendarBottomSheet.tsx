@@ -65,7 +65,10 @@ export function CalendarBottomSheet({
   return (
     <>
       {/* Floating Action Button */}
-      <Animated.View style={[styles.floatingButton, fabAnimatedStyle]}>
+      <Animated.View 
+        style={[styles.floatingButton, fabAnimatedStyle]}
+        pointerEvents="box-none"
+      >
         <TouchableOpacity
           onPress={() => router.push('/period-calendar')}
           activeOpacity={0.8}
@@ -115,7 +118,7 @@ const styles = StyleSheet.create({
   floatingButton: {
     position: 'absolute',
     alignSelf: 'center',
-    zIndex: 999,
+    zIndex: 1,
   },
   floatingButtonTouchable: {
     borderRadius: 80,
