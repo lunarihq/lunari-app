@@ -182,6 +182,7 @@ export default function PeriodCalendarScreen() {
           {/* Day number */}
           <Text style={[
             styles.customDayText,
+            { color: colors.textPrimary },
             isToday ? styles.todayText : null,
             isDisabled ? styles.disabledDayText : null,
             isSelected ? styles.selectedDayText : null,
@@ -338,7 +339,6 @@ const styles = StyleSheet.create({
     fontSize: DAY_FONT_SIZE,
     textAlign: 'center',
     marginBottom: 1,
-    color: '#000',
   },
   dayIndicator: {
     width: 22,

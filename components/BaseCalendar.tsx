@@ -123,6 +123,7 @@ export function BaseCalendar({
             >
               <Text style={[
                 styles.dayText,
+                { color: colors.textPrimary },
                 isSelected && !isPeriodDay ? styles.selectedDayText : null,
                  isPeriodDay ? { color: colors.white } : null,
                 isDisabled ? styles.disabledDayText : null,
@@ -153,6 +154,7 @@ export function BaseCalendar({
           >
             <Text style={[
               styles.dayText,
+              { color: colors.textPrimary },
               isSelected && !isPeriodDay ? styles.selectedDayText : null,
                  isPeriodDay ? { color: colors.white } : null,
               isDisabled ? styles.disabledDayText : null,
@@ -175,7 +177,7 @@ export function BaseCalendar({
     
     return (
       <View style={styles.headerContainer}>
-        <Text style={styles.headerText}>
+        <Text style={[styles.headerText, { color: colors.textPrimary }]}>
           {monthName} {year}
         </Text>
       </View>
@@ -192,10 +194,10 @@ export function BaseCalendar({
     if (!hideDayNames) return null;
     
     return (
-      <View style={styles.dayNamesContainer}>
+      <View style={[styles.dayNamesContainer, { borderBottomColor: colors.border }]}>
         {dayNames.map((day, index) => (
           <View key={index} style={styles.dayNameCell}>
-            <Text style={styles.dayNameText}>{day}</Text>
+            <Text style={[styles.dayNameText, { color: colors.textPrimary }]}>{day}</Text>
           </View>
         ))}
       </View>
@@ -343,7 +345,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 34,
     backgroundColor: 'transparent',
     borderBottomWidth: 1,
-    borderBottomColor: '#E9F0FF',
   },
   dayNameCell: {
     alignItems: 'center',

@@ -290,7 +290,7 @@ export default function CalendarScreen() {
             width: 32, // Keep the original size for the pink circle
             height: 32, // Keep the original size for the pink circle
           },
-          text: { color: colors.white }
+          text: { color: 'colors.white' }
         },
         // Add a custom container style for the grey background behind
         customContainerStyle: {
