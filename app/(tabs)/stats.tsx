@@ -20,48 +20,18 @@ interface HistoryEntryWithDate extends CycleData {
 
 export default function Stats() {
   const { colors } = useTheme();
-  const [completedCycles, setCompletedCycles] = useState<number>(0);
   const [averageCycleLength, setAverageCycleLength] = useState<number>(0);
   const [averagePeriodLength, setAveragePeriodLength] = useState<number>(0);
   const [cycleHistory, setCycleHistory] = useState<CycleData[]>([]);
   const [userCycleLength, setUserCycleLength] = useState<number>(28);
 
-  useFocusEffect(
-    useCallback(() => {
-      loadStatistics();
-      return () => {};
-    }, [userCycleLength])
-  );
-
-  // Load user settings
-  useEffect(() => {
-    const loadUserSettings = async () => {
-      try {
-        const cycleLength = await getSetting('userCycleLength');
-        if (cycleLength) {
-          setUserCycleLength(parseInt(cycleLength, 10));
-        }
-      } catch (error) {
-        console.error('Error loading user settings:', error);
-      }
-    };
-    loadUserSettings();
-  }, []);
-
-  // Format date as "MMM DD" (e.g., "Apr 10")
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-  };
-
-  const loadStatistics = async () => {
+  const loadStatistics = useCallback(async () => {
     try {
       // Load period dates from the database
       const saved = await db.select().from(periodDates);
       
       if (saved.length === 0) {
         // Reset all states when there are no period dates
-        setCompletedCycles(0);
         setAverageCycleLength(0);
         setAveragePeriodLength(0);
         setCycleHistory([]);
@@ -70,10 +40,6 @@ export default function Stats() {
 
       const sortedDates = saved.map(s => s.date);
       const periods = PeriodPredictionService.groupDateIntoPeriods(sortedDates);
-
-      // Calculate completed cycles (periods - 1)
-      const cycles = Math.max(0, periods.length - 1);
-      setCompletedCycles(cycles);
 
       // Calculate average cycle length
       const cycleLength = PeriodPredictionService.getAverageCycleLength(sortedDates, userCycleLength);
@@ -154,7 +120,37 @@ export default function Stats() {
     } catch (error) {
       console.error('Error loading statistics:', error);
     }
+  }, [userCycleLength]);
+
+  useFocusEffect(
+    useCallback(() => {
+      loadStatistics();
+      return () => {};
+    }, [loadStatistics])
+  );
+
+  // Load user settings
+  useEffect(() => {
+    const loadUserSettings = async () => {
+      try {
+        const cycleLength = await getSetting('userCycleLength');
+        if (cycleLength) {
+          setUserCycleLength(parseInt(cycleLength, 10));
+        }
+      } catch (error) {
+        console.error('Error loading user settings:', error);
+      }
+    };
+    loadUserSettings();
+  }, []);
+
+  // Format date as "MMM DD" (e.g., "Apr 10")
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
   };
+
+
 
   return (
     <ScrollView style={[defaultTheme.globalStyles.container, { backgroundColor: colors.background }]}>

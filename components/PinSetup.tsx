@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, Alert } from 'react-native';
+import { View, StyleSheet, SafeAreaView, Alert } from 'react-native';
 import { PinInput } from './PinInput';
 import { useAuth } from '../contexts/AuthContext';
 import { AuthService } from '../services/authService';

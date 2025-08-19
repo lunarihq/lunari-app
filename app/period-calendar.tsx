@@ -11,7 +11,6 @@ import { periodDates } from '../db/schema';
 
 export default function PeriodCalendarScreen() {
   const { colors } = useTheme();
-  const [selectedDates, setSelectedDates] = useState<MarkedDates>({});
   const [tempDates, setTempDates] = useState<MarkedDates>({});
   const [userPeriodLength, setUserPeriodLength] = useState<number>(5);
   
@@ -39,7 +38,6 @@ export default function PeriodCalendarScreen() {
           return acc;
         }, {} as { [key: string]: any });
         
-        setSelectedDates(dates);
         setTempDates(dates);
       } catch (error) {
         console.error('Error loading data:', error);
@@ -168,9 +166,6 @@ export default function PeriodCalendarScreen() {
     
     // Check if date is in the future
     const isFuture = date ? new Date(date.dateString) > new Date(today) : false;
-    
-    // Determine if this is a period day (has the pink background)
-    const isPeriodDay = customMarking?.customStyles?.container?.backgroundColor === colors.accentPink;
     
     return (
       <View style={styles.customDayWrapper}>
