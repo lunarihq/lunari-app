@@ -194,7 +194,7 @@ export function BaseCalendar({
     if (!hideDayNames) return null;
     
     return (
-      <View style={[styles.dayNamesContainer, { borderBottomColor: colors.border }]}>
+      <View style={[styles.dayNamesContainer, { borderBottomColor: colors.border, backgroundColor: colors.surface }]}>
         {dayNames.map((day, index) => (
           <View key={index} style={styles.dayNameCell}>
             <Text style={[styles.dayNameText, { color: colors.textPrimary }]}>{day}</Text>
@@ -202,7 +202,7 @@ export function BaseCalendar({
         ))}
       </View>
     );
-  }, [hideDayNames, dayNames]);
+  }, [hideDayNames, dayNames, colors]);
 
   return (
     <View style={{ flex: 1 }}>
@@ -248,7 +248,7 @@ export function BaseCalendar({
            dotColor: colors.primary,
            selectedDotColor: colors.primary,
           arrowColor: colors.textPrimary,
-          monthTextColor: colors.textPrimary,
+          monthTextColor: colors.neutral100,
           textMonthFontWeight: 'bold',
           textDayFontSize: 16,
           textMonthFontSize: MONTH_FONT_SIZE,
@@ -343,7 +343,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingVertical: 5,
     paddingHorizontal: 34,
-    backgroundColor: 'transparent',
     borderBottomWidth: 1,
   },
   dayNameCell: {
