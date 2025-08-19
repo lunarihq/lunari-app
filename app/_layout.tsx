@@ -141,6 +141,14 @@ function AppContent() {
             headerShadowVisible: false,
           }} 
         />
+        <Stack.Screen 
+          name="cycle-phase-details" 
+          options={{ 
+            headerShown: true,
+            headerTitle: "Cycle Details",
+            headerShadowVisible: false,
+          }} 
+        />
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style={isDark ? "light" : "dark"} />
