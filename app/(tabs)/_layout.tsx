@@ -11,7 +11,7 @@ export default function TabLayout() {
     tabBarActiveTintColor: colors.primary,
     tabBarInactiveTintColor: colors.textMuted,
     headerStyle: {
-      backgroundColor: colors.surface,
+      backgroundColor: colors.background,
       height: 100,
     },
     headerTitleStyle: {
