@@ -14,11 +14,9 @@ import { MarkedDates, formatDateString } from '../types/calendarTypes';
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import Animated, { useAnimatedStyle, interpolate, useSharedValue, Extrapolation } from 'react-native-reanimated';
 
-// Removed unused exported function openPeriodModal
-
 export default function CalendarScreen() {
   const { colors } = useTheme();
-  const [selectedDates, setSelectedDates] = useState<MarkedDates>({});
+
   const [markedDates, setMarkedDates] = useState<MarkedDates>({});
   const [baseMarkedDates, setBaseMarkedDates] = useState<MarkedDates>({});
   const [firstPeriodDate, setFirstPeriodDate] = useState<string | null>(null);
@@ -93,7 +91,7 @@ export default function CalendarScreen() {
       return acc;
     }, {} as MarkedDates);
     
-    setSelectedDates(dates);
+
     
     if (saved.length > 0) {
       const sortedDates = saved.map(s => s.date);
@@ -113,6 +111,51 @@ export default function CalendarScreen() {
       setAllPeriodDates([]);
       setCycleDay(null);
       setMarkedDates({});
+    }
+  };
+
+  // Helper function to get custom styles for different prediction types
+  const getStylesForPredictionType = (predictionType: string) => {
+    switch (predictionType) {
+      case 'ovulation':
+        return {
+          customStyles: {
+            container: {
+              borderRadius: 16,
+              borderWidth: 1.6,
+              borderColor: colors.primary,
+              borderStyle: 'dashed',
+            },
+            text: {
+              color: colors.primary
+            }
+          }
+        };
+      case 'fertile':
+        return {
+          customStyles: {
+            container: {
+              borderRadius: 16,
+            },
+            text: {
+              color: colors.primary
+            }
+          }
+        };
+      case 'period':
+        return {
+          customStyles: {
+            container: {
+              borderRadius: 16,
+              backgroundColor: colors.accentPinkLight,
+            },
+            text: {
+              color: colors.accentPink
+            }
+          }
+        };
+      default:
+        return {};
     }
   };
 
@@ -137,33 +180,9 @@ export default function CalendarScreen() {
     Object.entries(fertilityDates).forEach(([dateString, prediction]) => {
       // Only apply fertility style if this is not an actual period date
       if (!allMarkedDates[dateString] || !allMarkedDates[dateString].selected) {
-        if (prediction.type === 'ovulation') {
-          // Ovulation day: Blue outline circle on light blue background
-          allMarkedDates[dateString] = {
-            customStyles: {
-              container: {
-                borderRadius: 16,
-                borderWidth: 1.6,
-                borderColor: colors.primary,
-                borderStyle: 'dashed',
-              },
-              text: {
-                color: colors.primary
-              }
-            }
-          };
-        } else if (prediction.type === 'fertile') {
-          // Fertile window days: Light blue background
-          allMarkedDates[dateString] = {
-            customStyles: {
-              container: {
-                borderRadius: 16,
-              },
-              text: {
-                color: colors.primary
-              }
-            }
-          };
+        const styles = getStylesForPredictionType(prediction.type);
+        if (Object.keys(styles).length > 0) {
+          allMarkedDates[dateString] = styles;
         }
       }
     });
@@ -172,46 +191,9 @@ export default function CalendarScreen() {
     Object.entries(predictedDates).forEach(([dateString, prediction]) => {
       // Only apply prediction style if this is not an actual period date and not already a fertility date
       if (!allMarkedDates[dateString] || !allMarkedDates[dateString].selected) {
-        if (prediction.type === 'ovulation') {
-          // Ovulation day: Blue outline circle on light blue background
-          allMarkedDates[dateString] = {
-            customStyles: {
-              container: {
-                borderRadius: 16,
-                borderWidth: 1.6,
-                borderColor: colors.primary,
-                borderStyle: 'dashed',
-              },
-              text: {
-                color: colors.primary
-              }
-            }
-          };
-        } else if (prediction.type === 'fertile') {
-          // Fertile window days: Light blue background
-          allMarkedDates[dateString] = {
-            customStyles: {
-              container: {
-                borderRadius: 16,
-              },
-              text: {
-                color: colors.primary
-              }
-            }
-          };
-        } else if (prediction.type === 'period') {
-          // Light pink styling for predicted period days
-          allMarkedDates[dateString] = {
-            customStyles: {
-              container: {
-                borderRadius: 16,
-                backgroundColor: colors.accentPinkLight,
-              },
-              text: {
-                color: colors.accentPink
-              }
-            }
-          };
+        const styles = getStylesForPredictionType(prediction.type);
+        if (Object.keys(styles).length > 0) {
+          allMarkedDates[dateString] = styles;
         }
       }
     });
@@ -290,17 +272,9 @@ export default function CalendarScreen() {
             width: 32, // Keep the original size for the pink circle
             height: 32, // Keep the original size for the pink circle
           },
-          text: { color: 'colors.white' }
+          text: { color: colors.white }
         },
-        // Add a custom container style for the grey background behind
-        customContainerStyle: {
-          backgroundColor: colors.accentPinkLight,
-          borderRadius: 20,
-          width: 40,
-          height: 40,
-          alignItems: 'center',
-          justifyContent: 'center',
-        }
+
       };
     } else {
       // For non-period dates, just add the grey background
@@ -373,24 +347,7 @@ export default function CalendarScreen() {
     });
   }, [displayedMonth, navigation]);
 
-  // Handle saving period dates
-  const savePeriodDates = async (dates: MarkedDates) => {
-    try {
-      await db.delete(periodDates);
-      
-      const dateInserts = Object.keys(dates).map(date => ({
-        date
-      }));
-      
-      if (dateInserts.length > 0) {
-        await db.insert(periodDates).values(dateInserts);
-      }
-      
-      loadData(); // Reload data after saving
-    } catch (error) {
-      console.error('Error saving dates:', error);
-    }
-  };
+
 
   const openDrawer = (dateToUse?: string) => {
     setIsDrawerOpen(true);
@@ -440,10 +397,10 @@ export default function CalendarScreen() {
     
     // Extract year and month from displayedMonth string (YYYY-MM-DD)
     const currentYear = displayedMonth.substring(0, 4);
-    const currentMonth_ = displayedMonth.substring(5, 7);
+    const currentMonth = displayedMonth.substring(5, 7);
     
     // Return true if they are different (button should be visible)
-    return todayYear !== currentYear || todayMonth !== currentMonth_;
+    return todayYear !== currentYear || todayMonth !== currentMonth;
   };
 
   const goToToday = useCallback(() => {
