@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Stack, useRouter, useSegments, usePathname } from 'expo-router';
+import { Stack, useRouter, usePathname } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { getSetting } from '../db';
 import * as Notifications from 'expo-notifications';
@@ -12,7 +12,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 function AppContent() {
   const [isReady, setIsReady] = useState(false);
   const [onboardingCompleted, setOnboardingCompleted] = useState(false);
-  const segments = useSegments();
+
   const router = useRouter();
   const pathname = usePathname();
   const [initialRender, setInitialRender] = useState(true);
