@@ -193,7 +193,7 @@ export default function Index() {
 
         <View style={[styles.insightsCard, { backgroundColor: colors.surface }]}>
         <View style={styles.insightsTitleContainer}>
-            <Text style={[styles.insightsTitle, { color: colors.textPrimary }]}>Today&#39;s insights</Text>
+            <Text style={[styles.insightsTitle, { color: colors.textPrimary }]}>Today's insights</Text>
             <Pressable
               onPress={() => currentCycleDay && router.push(`/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}`)}
               disabled={!currentCycleDay}
