@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback } from 'react';
 import { PeriodPredictionService } from '../services/periodPredictions';
 import { MarkedDates } from '../app/types/calendarTypes';
 
