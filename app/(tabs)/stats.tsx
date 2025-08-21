@@ -7,6 +7,7 @@ import { PeriodPredictionService } from '../../services/periodPredictions';
 import { StatCard } from '../../components/StatCard';
 import { CycleHistory } from '../../components/CycleHistory';
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
+import { DropIcon } from '../../components/icons/Drop';
 import defaultTheme, { useTheme } from '../styles/theme';
 interface CycleData {
   startDate: string;
@@ -186,20 +187,16 @@ export default function Stats() {
               title="Average cycle"
               value={`${averageCycleLength} days`}
               icon={
-                <Feather name="calendar" size={20} color={colors.textPrimary} />
+                <DropIcon size={24} color={colors.textPrimary} />
               }
             />
           </View>
           <View style={{ flex: 1 }}>
             <StatCard
-              title="Period length"
+              title="Average period"
               value={`${averagePeriodLength} days`}
               icon={
-                <MaterialCommunityIcons
-                  name="water-outline"
-                  size={20}
-                  color={colors.textPrimary}
-                />
+                <DropIcon size={24} color={colors.textPrimary} />
               }
             />
           </View>
@@ -219,7 +216,7 @@ const styles = StyleSheet.create({
   heading: {
     fontSize: 24,
     fontWeight: '500',
-    marginBottom: 20,
+    marginBottom: 16,
   },
   cardsContainer: {
     flexDirection: 'row',

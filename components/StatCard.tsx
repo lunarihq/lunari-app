@@ -27,7 +27,7 @@ export function StatCard({ title, value, icon }: StatCardProps) {
 const styles = StyleSheet.create({
   card: {
     borderRadius: 12,
-    padding: 16,
+    padding: 12,
     width: 168,
     alignItems: 'flex-start',
   },
@@ -41,8 +41,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   title: {
-    fontSize: 14,
-    marginLeft: 8,
+    fontSize: 16,
+    marginLeft: 4,
   },
 });
 
