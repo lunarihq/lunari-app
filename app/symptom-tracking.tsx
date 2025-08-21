@@ -409,6 +409,18 @@ export default function SymptomTracking() {
     return '#666';
   };
 
+  // Get background color based on type
+  const getBackgroundColor = (type: 'symptom' | 'mood' | 'flow') => {
+    if (type === 'symptom') {
+      return '#F5E6D3'; // light brown background
+    } else if (type === 'mood') {
+      return '#FFF8E1'; // light yellow background
+    } else if (type === 'flow') {
+      return '#FFE6E6'; // light pink/red background
+    }
+    return '#F9F8D5'; // fallback
+  };
+
   // Navigate to notes editor
   const openNotesEditor = () => {
     router.push({
@@ -578,10 +590,10 @@ export default function SymptomTracking() {
                 <View
                   style={[
                     styles.itemIcon,
+                    { backgroundColor: getBackgroundColor('flow') },
                     flow.selected && {
                       ...styles.selectedItemIcon,
-                      borderColor: colors.primary,
-                      backgroundColor: colors.primaryLight,
+                      borderColor: getIconColor('flow', flow.id),
                     },
                   ]}
                 >
@@ -621,10 +633,10 @@ export default function SymptomTracking() {
                 <View
                   style={[
                     styles.itemIcon,
+                    { backgroundColor: getBackgroundColor('symptom') },
                     symptom.selected && {
                       ...styles.selectedItemIcon,
-                      borderColor: colors.primary,
-                      backgroundColor: colors.primaryLight,
+                      borderColor: getIconColor('symptom', symptom.id),
                     },
                   ]}
                 >
@@ -665,10 +677,10 @@ export default function SymptomTracking() {
                 <View
                   style={[
                     styles.itemIcon,
+                    { backgroundColor: getBackgroundColor('mood') },
                     mood.selected && {
                       ...styles.selectedItemIcon,
-                      borderColor: colors.primary,
-                      backgroundColor: colors.primaryLight,
+                      borderColor: getIconColor('mood', mood.id),
                     },
                   ]}
                 >
@@ -811,7 +823,6 @@ const styles = StyleSheet.create({
     width: 56,
     height: 56,
     borderRadius: 30,
-    backgroundColor: '#F9F8D5',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 8,
