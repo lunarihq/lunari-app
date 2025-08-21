@@ -426,7 +426,7 @@ export default function SymptomTracking() {
           item_id: symptom.id,
           name: symptom.name,
           icon: symptom.icon,
-          icon_color: colors.symptomsIcon,
+          icon_color: '#FFD21F',
         };
       });
 
@@ -438,7 +438,7 @@ export default function SymptomTracking() {
           item_id: mood.id,
           name: mood.name,
           icon: mood.icon,
-          icon_color: colors.moodsIcon,
+          icon_color: '#FFD21F',
         };
       });
 
@@ -450,7 +450,7 @@ export default function SymptomTracking() {
           item_id: flow.id,
           name: flow.name,
           icon: flow.icon,
-          icon_color: colors.flowsIcon,
+          icon_color: '#FFD21F',
         };
       });
 
@@ -463,7 +463,7 @@ export default function SymptomTracking() {
               item_id: '1',
               name: notes.trim(),
               icon: 'notes',
-              icon_color: colors.notesIcon,
+              icon_color: '#4561D2',
             },
           ]
         : [];
@@ -553,14 +553,13 @@ export default function SymptomTracking() {
                     { backgroundColor: colors.flowsBackground },
                     flow.selected && {
                       ...styles.selectedItemIcon,
-                      borderColor: colors.flowsIcon,
+                      borderColor: colors.primary,
                     },
                   ]}
                 >
                   <CustomIcon 
                     name={flow.icon as any}
                     size={ICON_SIZE}
-                    color={colors.flowsIcon}
                   />
                 </View>
                 <Text
@@ -596,14 +595,13 @@ export default function SymptomTracking() {
                     { backgroundColor: colors.symptomsBackground },
                     symptom.selected && {
                       ...styles.selectedItemIcon,
-                      borderColor: colors.symptomsIcon,
+                      borderColor: colors.primary,
                     },
                   ]}
                 >
                   <CustomIcon 
                     name={symptom.icon as any}
                     size={ICON_SIZE}
-                    color={colors.symptomsIcon}
                   />
                 </View>
                 <Text
@@ -640,14 +638,13 @@ export default function SymptomTracking() {
                     { backgroundColor: colors.moodsBackground },
                     mood.selected && {
                       ...styles.selectedItemIcon,
-                      borderColor: colors.moodsIcon,
+                      borderColor: colors.primary,
                     },
                   ]}
                 >
                   <CustomIcon 
                     name={mood.icon as any}
                     size={ICON_SIZE}
-                    color={colors.moodsIcon}
                   />
                 </View>
                 <Text

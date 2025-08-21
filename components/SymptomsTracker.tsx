@@ -82,12 +82,12 @@ export const SymptomsTracker = ({
       ];
       
       if (customIconNames.includes(icon)) {
-        return <CustomIcon name={icon as any} size={48} color={icon_color} />;
+        return <CustomIcon name={icon as any} size={48} />;
       }
     }
 
     // For notes and any unrecognized icons, use AcneIcon as placeholder
-    return <CustomIcon name="acne" size={48} color={icon_color} />;
+    return <CustomIcon name="acne" size={48} />;
   };
 
   // Helper function to get display text for each log item

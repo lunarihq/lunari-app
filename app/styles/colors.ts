@@ -22,14 +22,10 @@ export interface ColorScheme {
   textMuted: string;
   placeholder: string;
 
-  // Symptoms and Moodsicon colors
-  symptomsIcon: string;
+  // Symptoms and Moods background colors
   symptomsBackground: string;
-  moodsIcon: string;
   moodsBackground: string;
-  flowsIcon: string;
   flowsBackground: string;
-  notesIcon: string;
 
   white: string;
   black: string;
@@ -59,14 +55,10 @@ export const lightColors: ColorScheme = {
   textMuted: '#A1ADD7', // muted / hint
   placeholder: '#5C5B63',
 
-  // Symptoms and Moods icon colors
-  symptomsIcon: '#9268E8', // brown for symptoms
+  // Symptoms and Moods background colors
   symptomsBackground: '#E8DFFF', // light brown background
-  moodsIcon: '#FFCC00', // yellow for moods
   moodsBackground: '#FFF8E1', // light yellow background
-  flowsIcon: '#FF597B', // pink/red for flows
   flowsBackground: '#FFE6E6', // light pink background
-  notesIcon: '#4561D2', // blue for notes
 
   white: '#FFFFFF',
   black: '#000000',
@@ -96,14 +88,10 @@ export const darkColors: ColorScheme = {
   textMuted: '#8A8A8A', // muted gray for hints
   placeholder: '#6A6A6A', // placeholder text
 
-  // icon colors (same for dark mode for now)
-  symptomsIcon: '#8B572A', // brown for symptoms
+  // background colors (same for dark mode for now)
   symptomsBackground: '#F5E6D3', // light brown background
-  moodsIcon: '#FFCC00', // yellow for moods
   moodsBackground: '#FFF8E1', // light yellow background
-  flowsIcon: '#FF597B', // pink/red for flows
   flowsBackground: '#FFE6E6', // light pink background
-  notesIcon: '#4561D2', // blue for notes
 
   white: '#FFFFFF',
   black: '#000000',
