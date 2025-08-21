@@ -75,7 +75,7 @@ export const SymptomsTracker = ({
     }
 
     // For notes and any unrecognized icons, use AcneIcon as placeholder
-    return <CustomIcon name="acne" size={50} />;
+    return <CustomIcon name="acne" size={54} />;
   };
 
   // Helper function to get display text for each log item
