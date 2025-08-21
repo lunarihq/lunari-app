@@ -420,55 +420,37 @@ export default function SymptomTracking() {
 
       // STEP 2: Prepare symptom records
       const symptomRecords = selectedSymptoms.map(symptom => {
-        let iconColor = '';
-
-        if (symptom.id === '1') {
-          iconColor = '#FF5C7F';
-        } else if (symptom.id === '2') {
-          iconColor = '#8B572A';
-        } else if (symptom.id === '3') {
-          iconColor = '#E73C3C';
-        } else if (symptom.id === '4') {
-          iconColor = '#8B572A';
-        }
-
         return {
           date: selectedDate,
           type: 'symptom',
           item_id: symptom.id,
           name: symptom.name,
           icon: symptom.icon,
-          icon_color: iconColor,
+          icon_color: colors.symptomsIcon,
         };
       });
 
       // STEP 3: Prepare mood records
       const moodRecords = selectedMoods.map(mood => {
-        // Use a standard color for all moods
-        const iconColor = '#FFCC00';
-
         return {
           date: selectedDate,
           type: 'mood',
           item_id: mood.id,
           name: mood.name,
           icon: mood.icon,
-          icon_color: iconColor,
+          icon_color: colors.moodsIcon,
         };
       });
 
       // STEP 4: Prepare flow records
       const flowRecords = selectedFlows.map(flow => {
-        // Use a standard color for all flows
-        const iconColor = '#FF597B';
-
         return {
           date: selectedDate,
           type: 'flow',
           item_id: flow.id,
           name: flow.name,
           icon: flow.icon,
-          icon_color: iconColor,
+          icon_color: colors.flowsIcon,
         };
       });
 
