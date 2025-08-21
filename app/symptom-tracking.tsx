@@ -805,7 +805,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   selectedItemIcon: {
-    borderWidth: 3,
+    borderWidth: 1.5,
   },
   itemText: {
     textAlign: 'center',

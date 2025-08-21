@@ -1,6 +1,6 @@
 // components/icons/index.tsx
 import React from 'react';
-import { DropIcon } from './Drop';
+import { HappyIcon } from './Happy';
 
 
 interface IconProps {
@@ -32,27 +32,27 @@ export type IconName =
   | 'blood-clots';
 
 const iconMap: Record<IconName, React.FC<IconProps>> = {
-  acne: DropIcon,
-  headache: DropIcon,
-  cramps: DropIcon,
-  dizziness: DropIcon,
-  fatigue: DropIcon,
-  bloating: DropIcon,
-  constipation: DropIcon,
-  cravings: DropIcon,
-  calm: DropIcon,
-  happy: DropIcon,
-  energetic: DropIcon,
-  sad: DropIcon,
-  anxious: DropIcon,
-  confused: DropIcon,
-  irritated: DropIcon,
-  angry: DropIcon,
-  emotional: DropIcon,
-  light: DropIcon,
-  medium: DropIcon,
-  heavy: DropIcon,
-  'blood-clots': DropIcon,
+  acne: HappyIcon,
+  headache: HappyIcon,
+  cramps: HappyIcon,
+  dizziness: HappyIcon,
+  fatigue: HappyIcon,
+  bloating: HappyIcon,
+  constipation: HappyIcon,
+  cravings: HappyIcon,
+  calm: HappyIcon,
+  happy: HappyIcon,
+  energetic: HappyIcon,
+  sad: HappyIcon,
+  anxious: HappyIcon,
+  confused: HappyIcon,
+  irritated: HappyIcon,
+  angry: HappyIcon,
+  emotional: HappyIcon,
+  light: HappyIcon,
+  medium: HappyIcon,
+  heavy: HappyIcon,
+  'blood-clots': HappyIcon,
 };
 
 interface CustomIconProps extends IconProps {
