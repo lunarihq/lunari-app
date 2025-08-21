@@ -1,6 +1,7 @@
 // components/icons/index.tsx
 import React from 'react';
 import { HappyIcon } from './Happy';
+import { BloatedIcon } from './Bloated';
 
 
 interface IconProps {
@@ -33,7 +34,7 @@ export type IconName =
 
 const iconMap: Record<IconName, React.FC<IconProps>> = {
   acne: HappyIcon,
-  headache: HappyIcon,
+  headache: BloatedIcon,
   cramps: HappyIcon,
   dizziness: HappyIcon,
   fatigue: HappyIcon,

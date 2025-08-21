@@ -1,13 +1,17 @@
-<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g clip-path="url(#clip0_471_3735)">
-<circle cx="12.2149" cy="9.26567" r="9.26567" fill="#9168EA"/>
-<path d="M11.7891 4.21178C12.9821 4.07142 15.3682 4.21804 16.4209 7.58088" stroke="white" stroke-width="2.527" stroke-linecap="round"/>
-<path d="M8.84766 19.5842C8.84766 19.0027 9.31906 18.5312 9.90057 18.5312H14.5334C15.1149 18.5312 15.5863 19.0027 15.5863 19.5842V19.5842C15.5863 20.1657 15.1149 20.6371 14.5334 20.6371H9.90057C9.31906 20.6371 8.84766 20.1657 8.84766 19.5842V19.5842Z" fill="#3C4564"/>
-<path d="M8.84766 22.7417H10.5316C11.462 22.7417 12.2163 21.9874 12.2163 21.057V20.4258" stroke="#3C4564" stroke-width="2.527"/>
-</g>
-<defs>
-<clipPath id="clip0_471_3735">
-<rect width="24" height="24" fill="white"/>
-</clipPath>
-</defs>
-</svg>
+import React from 'react';
+import Svg, { Path, Circle } from 'react-native-svg';
+
+interface IconProps {
+  size?: number;
+  color?: string;
+}
+
+export const BloatedIcon: React.FC<IconProps> = ({ size = 24, color = '#DFD0F9' }) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+    <Path d="M24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12Z" fill={color}/>
+    <Circle cx="11.9082" cy="10.3262" r="7.3457" fill="#9168EA"/>
+    <Path d="M11.5703 6.318C12.5159 6.20675 14.4072 6.32296 15.2415 8.98836" stroke="white" strokeWidth="2.00337" strokeLinecap="round"/>
+    <Path d="M9.24219 18.5066C9.24219 18.0456 9.61591 17.6719 10.0769 17.6719H13.7498C14.2108 17.6719 14.5845 18.0456 14.5845 18.5066C14.5845 18.9676 14.2108 19.3414 13.7498 19.3414H10.0769C9.61591 19.3414 9.24219 18.9676 9.24219 18.5066Z" fill="#3C4564"/>
+    <Path d="M9.24219 21.0079H10.5772C11.3148 21.0079 11.9128 20.4099 11.9128 19.6723V19.1719" stroke="#3C4564" strokeWidth="2.00337"/>
+  </Svg>
+);
