@@ -69,7 +69,7 @@ export const SymptomsTracker = ({
 
   // Helper function to get the appropriate icon component
   const getIconComponent = (log: any) => {
-    const { icon, icon_color, type } = log;
+    const { icon, type } = log;
 
     // Use CustomIcon for symptoms, moods, and flows that have custom SVG icons
     if (type === 'symptom' || type === 'mood' || type === 'flow') {

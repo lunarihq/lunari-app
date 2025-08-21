@@ -426,7 +426,6 @@ export default function SymptomTracking() {
           item_id: symptom.id,
           name: symptom.name,
           icon: symptom.icon,
-          icon_color: '#FFD21F',
         };
       });
 
@@ -438,7 +437,6 @@ export default function SymptomTracking() {
           item_id: mood.id,
           name: mood.name,
           icon: mood.icon,
-          icon_color: '#FFD21F',
         };
       });
 
@@ -450,7 +448,6 @@ export default function SymptomTracking() {
           item_id: flow.id,
           name: flow.name,
           icon: flow.icon,
-          icon_color: '#FFD21F',
         };
       });
 
@@ -463,7 +460,6 @@ export default function SymptomTracking() {
               item_id: '1',
               name: notes.trim(),
               icon: 'notes',
-              icon_color: '#4561D2',
             },
           ]
         : [];
@@ -553,7 +549,7 @@ export default function SymptomTracking() {
                     { backgroundColor: colors.flowsBackground },
                     flow.selected && {
                       ...styles.selectedItemIcon,
-                      borderColor: colors.primary,
+                      borderColor: colors.accentPink,
                     },
                   ]}
                 >
@@ -638,7 +634,7 @@ export default function SymptomTracking() {
                     { backgroundColor: colors.moodsBackground },
                     mood.selected && {
                       ...styles.selectedItemIcon,
-                      borderColor: colors.primary,
+                      borderColor: colors.neutral100,
                     },
                   ]}
                 >
@@ -673,7 +669,7 @@ export default function SymptomTracking() {
                   onPress={() => setNotes('')}
                   activeOpacity={0.7}
                 >
-                  <Ionicons name="trash-outline" size={24} color="#999" />
+                  <Ionicons name="trash-outline" size={24} color={colors.textMuted} />
                 </TouchableOpacity>
               )}
               <TouchableOpacity
@@ -681,7 +677,7 @@ export default function SymptomTracking() {
                 onPress={openNotesEditor}
                 activeOpacity={0.7}
               >
-                <Ionicons name="create-outline" size={24} color="#999" />
+                <Ionicons name="create-outline" size={24} color={colors.textMuted} />
               </TouchableOpacity>
             </View>
           </View>
@@ -712,7 +708,13 @@ export default function SymptomTracking() {
       {/* Save button that appears only when changes are made */}
       {hasChanges && (
         <TouchableOpacity
-          style={[styles.saveButton, { backgroundColor: colors.primary }]}
+          style={[
+            styles.saveButton, 
+            { 
+              backgroundColor: colors.primary,
+              shadowColor: colors.black,
+            }
+          ]}
           onPress={saveChanges}
           activeOpacity={0.8}
         >
@@ -826,7 +828,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: '#000',
+
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
