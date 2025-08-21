@@ -22,6 +22,14 @@ export interface ColorScheme {
   textMuted: string;
   placeholder: string;
 
+  // icon colors
+  symptomsIcon: string;
+  symptomsBackground: string;
+  moodsIcon: string;
+  moodsBackground: string;
+  flowsIcon: string;
+  flowsBackground: string;
+
   white: string;
   black: string;
 }
@@ -50,6 +58,14 @@ export const lightColors: ColorScheme = {
   textMuted: '#A1ADD7', // muted / hint
   placeholder: '#5C5B63',
 
+  // icon colors
+  symptomsIcon: '#8B572A', // brown for symptoms
+  symptomsBackground: '#F5E6D3', // light brown background
+  moodsIcon: '#FFCC00', // yellow for moods
+  moodsBackground: '#FFF8E1', // light yellow background
+  flowsIcon: '#FF597B', // pink/red for flows
+  flowsBackground: '#FFE6E6', // light pink background
+
   white: '#FFFFFF',
   black: '#000000',
 };
@@ -77,6 +93,14 @@ export const darkColors: ColorScheme = {
   textSecondary: '#E0E0E0', // light gray for secondary text
   textMuted: '#8A8A8A', // muted gray for hints
   placeholder: '#6A6A6A', // placeholder text
+
+  // icon colors (same for dark mode for now)
+  symptomsIcon: '#8B572A', // brown for symptoms
+  symptomsBackground: '#F5E6D3', // light brown background
+  moodsIcon: '#FFCC00', // yellow for moods
+  moodsBackground: '#FFF8E1', // light yellow background
+  flowsIcon: '#FF597B', // pink/red for flows
+  flowsBackground: '#FFE6E6', // light pink background
 
   white: '#FFFFFF',
   black: '#000000',

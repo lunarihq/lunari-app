@@ -397,29 +397,7 @@ export default function SymptomTracking() {
     );
   };
 
-  // Get icon color based on type and id
-  const getIconColor = (type: 'symptom' | 'mood' | 'flow', id: string) => {
-    if (type === 'symptom') {
-      return '#8B572A'; // brown for all symptoms
-    } else if (type === 'mood') {
-      return '#FFCC00'; // standard mood color
-    } else if (type === 'flow') {
-      return '#FF597B'; // standard flow color
-    }
-    return '#666';
-  };
 
-  // Get background color based on type
-  const getBackgroundColor = (type: 'symptom' | 'mood' | 'flow') => {
-    if (type === 'symptom') {
-      return '#F5E6D3'; // light brown background
-    } else if (type === 'mood') {
-      return '#FFF8E1'; // light yellow background
-    } else if (type === 'flow') {
-      return '#FFE6E6'; // light pink/red background
-    }
-    return '#F9F8D5'; // fallback
-  };
 
   // Navigate to notes editor
   const openNotesEditor = () => {
@@ -590,17 +568,17 @@ export default function SymptomTracking() {
                 <View
                   style={[
                     styles.itemIcon,
-                    { backgroundColor: getBackgroundColor('flow') },
+                    { backgroundColor: colors.flowsBackground },
                     flow.selected && {
                       ...styles.selectedItemIcon,
-                      borderColor: getIconColor('flow', flow.id),
+                      borderColor: colors.flowsIcon,
                     },
                   ]}
                 >
                   <CustomIcon 
                     name={flow.icon as any}
                     size={ICON_SIZE}
-                    color={getIconColor('flow', flow.id)}
+                    color={colors.flowsIcon}
                   />
                 </View>
                 <Text
@@ -633,17 +611,17 @@ export default function SymptomTracking() {
                 <View
                   style={[
                     styles.itemIcon,
-                    { backgroundColor: getBackgroundColor('symptom') },
+                    { backgroundColor: colors.symptomsBackground },
                     symptom.selected && {
                       ...styles.selectedItemIcon,
-                      borderColor: getIconColor('symptom', symptom.id),
+                      borderColor: colors.symptomsIcon,
                     },
                   ]}
                 >
                   <CustomIcon 
                     name={symptom.icon as any}
                     size={ICON_SIZE}
-                    color={getIconColor('symptom', symptom.id)}
+                    color={colors.symptomsIcon}
                   />
                 </View>
                 <Text
@@ -677,17 +655,17 @@ export default function SymptomTracking() {
                 <View
                   style={[
                     styles.itemIcon,
-                    { backgroundColor: getBackgroundColor('mood') },
+                    { backgroundColor: colors.moodsBackground },
                     mood.selected && {
                       ...styles.selectedItemIcon,
-                      borderColor: getIconColor('mood', mood.id),
+                      borderColor: colors.moodsIcon,
                     },
                   ]}
                 >
                   <CustomIcon 
                     name={mood.icon as any}
                     size={ICON_SIZE}
-                    color={getIconColor('mood', mood.id)}
+                    color={colors.moodsIcon}
                   />
                 </View>
                 <Text

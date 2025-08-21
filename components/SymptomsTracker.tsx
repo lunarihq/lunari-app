@@ -31,6 +31,20 @@ export const SymptomsTracker = ({
   const { colors } = useTheme();
   const [healthLogsForDate, setHealthLogsForDate] = useState<any[]>([]);
 
+  // Helper function to get background color from log type
+  const getBackgroundColorFromType = (type: string) => {
+    switch (type) {
+      case 'symptom':
+        return colors.symptomsBackground;
+      case 'mood':
+        return colors.moodsBackground;
+      case 'flow':
+        return colors.flowsBackground;
+      default:
+        return '#F9F8D5'; // fallback
+    }
+  };
+
   // Load health logs when component is focused or selectedDate changes
   useFocusEffect(
     useCallback(() => {
@@ -151,7 +165,10 @@ export const SymptomsTracker = ({
               }}
               activeOpacity={0.7}
             >
-              <View style={styles.itemIconContainer}>
+              <View style={[
+                styles.itemIconContainer,
+                { backgroundColor: getBackgroundColorFromType(log.type) }
+              ]}>
                 {getIconComponent(log)}
               </View>
               <Text
@@ -202,7 +219,6 @@ const styles = StyleSheet.create({
     width: 54,
     height: 54,
     borderRadius: 27,
-    backgroundColor: '#F9F8D5',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 8,
