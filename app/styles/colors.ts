@@ -22,7 +22,7 @@ export interface ColorScheme {
   textMuted: string;
   placeholder: string;
 
-  // icon colors
+  // Symptoms and Moodsicon colors
   symptomsIcon: string;
   symptomsBackground: string;
   moodsIcon: string;
@@ -59,9 +59,9 @@ export const lightColors: ColorScheme = {
   textMuted: '#A1ADD7', // muted / hint
   placeholder: '#5C5B63',
 
-  // icon colors
-  symptomsIcon: '#8B572A', // brown for symptoms
-  symptomsBackground: '#F5E6D3', // light brown background
+  // Symptoms and Moods icon colors
+  symptomsIcon: '#9268E8', // brown for symptoms
+  symptomsBackground: '#E8DFFF', // light brown background
   moodsIcon: '#FFCC00', // yellow for moods
   moodsBackground: '#FFF8E1', // light yellow background
   flowsIcon: '#FF597B', // pink/red for flows
