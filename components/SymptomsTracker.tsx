@@ -41,7 +41,7 @@ export const SymptomsTracker = ({
       case 'flow':
         return colors.flowsBackground;
       default:
-        return '#F9F8D5'; // fallback
+        return colors.surface; // fallback
     }
   };
 

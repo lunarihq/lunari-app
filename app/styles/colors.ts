@@ -29,6 +29,7 @@ export interface ColorScheme {
   moodsBackground: string;
   flowsIcon: string;
   flowsBackground: string;
+  notesIcon: string;
 
   white: string;
   black: string;
@@ -65,6 +66,7 @@ export const lightColors: ColorScheme = {
   moodsBackground: '#FFF8E1', // light yellow background
   flowsIcon: '#FF597B', // pink/red for flows
   flowsBackground: '#FFE6E6', // light pink background
+  notesIcon: '#4561D2', // blue for notes
 
   white: '#FFFFFF',
   black: '#000000',
@@ -101,6 +103,7 @@ export const darkColors: ColorScheme = {
   moodsBackground: '#FFF8E1', // light yellow background
   flowsIcon: '#FF597B', // pink/red for flows
   flowsBackground: '#FFE6E6', // light pink background
+  notesIcon: '#4561D2', // blue for notes
 
   white: '#FFFFFF',
   black: '#000000',

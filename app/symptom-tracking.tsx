@@ -463,7 +463,7 @@ export default function SymptomTracking() {
               item_id: '1',
               name: notes.trim(),
               icon: 'notes',
-              icon_color: '#4561D2',
+              icon_color: colors.notesIcon,
             },
           ]
         : [];
