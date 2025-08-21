@@ -16,11 +16,12 @@ import { eq } from 'drizzle-orm';
 import { useFocusEffect } from '@react-navigation/native';
 import defaultTheme, { useTheme } from './styles/theme';
 import { useNotes } from '../contexts/NotesContext';
+import { CustomIcon } from '../components/icons';
 
 // Symptom type definition
 type Item = {
   id: string;
-  icon: React.ReactNode | string;
+  icon: string;
   name: string;
   selected: boolean;
 };
@@ -35,6 +36,7 @@ export default function SymptomTracking() {
   const { colors } = useTheme();
   const params = useLocalSearchParams();
   const { notes, setNotes } = useNotes();
+  const ICON_SIZE = 48;
   const [selectedDate, setSelectedDate] = useState<string>(
     // Use the date from params if provided, otherwise use today's date
     typeof params.date === 'string' ? params.date : dayjs().format('YYYY-MM-DD')
@@ -96,49 +98,49 @@ export default function SymptomTracking() {
   const [symptoms, setSymptoms] = useState<Item[]>([
     {
       id: '1',
-      icon: '🍓',
+      icon: 'acne',
       name: 'Acne',
       selected: false,
     },
     {
       id: '2',
-      icon: '🔨',
+      icon: 'headache',
       name: 'Headache',
       selected: false,
     },
     {
       id: '3',
-      icon: '🦵',
+      icon: 'cramps',
       name: 'Cramps',
       selected: false,
     },
     {
       id: '4',
-      icon: '💫',
+      icon: 'dizziness',
       name: 'Dizziness',
       selected: false,
     },
     {
       id: '5',
-      icon: '💤',
+      icon: 'fatigue',
       name: 'Fatigue',
       selected: false,
     },
     {
       id: '6',
-      icon: '🫄',
+      icon: 'bloating',
       name: 'Bloating',
       selected: false,
     },
     {
       id: '7',
-      icon: '😬',
+      icon: 'constipation',
       name: 'Constipation',
       selected: false,
     },
     {
       id: '8',
-      icon: '🍔',
+      icon: 'cravings',
       name: 'Cravings',
       selected: false,
     },
@@ -148,56 +150,56 @@ export default function SymptomTracking() {
   const [moods, setMoods] = useState<Item[]>([
     {
       id: '1',
-      icon: '😌',
+      icon: 'calm',
       name: 'Calm',
       selected: false,
     },
     {
       id: '2',
-      icon: '😀',
+      icon: 'happy',
       name: 'Happy',
       selected: false,
     },
     {
       id: '3',
-      icon: '💪',
+      icon: 'energetic',
       name: 'Energetic',
       selected: false,
     },
     {
       id: '4',
-      icon: '😥',
+      icon: 'sad',
       name: 'Sad',
       selected: false,
     },
 
     {
       id: '5',
-      icon: '😰',
+      icon: 'anxious',
       name: 'Anxious',
       selected: false,
     },
     {
       id: '6',
-      icon: '😕',
+      icon: 'confused',
       name: 'Confused',
       selected: false,
     },
     {
       id: '7',
-      icon: '😖',
+      icon: 'irritated',
       name: 'Irritated',
       selected: false,
     },
     {
       id: '8',
-      icon: '😠',
+      icon: 'angry',
       name: 'Angry',
       selected: false,
     },
     {
       id: '9',
-      icon: '😭',
+      icon: 'emotional',
       name: 'Emotional',
       selected: false,
     },
@@ -207,25 +209,25 @@ export default function SymptomTracking() {
   const [flows, setFlows] = useState<Item[]>([
     {
       id: '1',
-      icon: '💧',
+      icon: 'light',
       name: 'Light',
       selected: false,
     },
     {
       id: '2',
-      icon: '💧',
+      icon: 'medium',
       name: 'Medium',
       selected: false,
     },
     {
       id: '3',
-      icon: '💧',
+      icon: 'heavy',
       name: 'Heavy',
       selected: false,
     },
     {
       id: '4',
-      icon: '💧',
+      icon: 'blood-clots',
       name: 'Blood clots',
       selected: false,
     },
@@ -416,8 +418,6 @@ export default function SymptomTracking() {
 
       // STEP 2: Prepare symptom records
       const symptomRecords = selectedSymptoms.map(symptom => {
-        // Get the emoji as string
-        const emoji = String(symptom.icon);
         let iconColor = '';
 
         if (symptom.id === '1') {
@@ -435,16 +435,13 @@ export default function SymptomTracking() {
           type: 'symptom',
           item_id: symptom.id,
           name: symptom.name,
-          icon: emoji,
+          icon: symptom.icon,
           icon_color: iconColor,
         };
       });
 
       // STEP 3: Prepare mood records
       const moodRecords = selectedMoods.map(mood => {
-        // Get the emoji as string
-        const emoji = String(mood.icon);
-
         // Use a standard color for all moods
         const iconColor = '#FFCC00';
 
@@ -453,16 +450,13 @@ export default function SymptomTracking() {
           type: 'mood',
           item_id: mood.id,
           name: mood.name,
-          icon: emoji,
+          icon: mood.icon,
           icon_color: iconColor,
         };
       });
 
       // STEP 4: Prepare flow records
       const flowRecords = selectedFlows.map(flow => {
-        // Get the emoji as string
-        const emoji = String(flow.icon);
-
         // Use a standard color for all flows
         const iconColor = '#FF597B';
 
@@ -471,7 +465,7 @@ export default function SymptomTracking() {
           type: 'flow',
           item_id: flow.id,
           name: flow.name,
-          icon: emoji,
+          icon: flow.icon,
           icon_color: iconColor,
         };
       });
@@ -484,7 +478,7 @@ export default function SymptomTracking() {
               type: 'notes',
               item_id: '1',
               name: notes.trim(),
-              icon: '📝',
+              icon: 'notes',
               icon_color: '#4561D2',
             },
           ]
@@ -579,7 +573,11 @@ export default function SymptomTracking() {
                     },
                   ]}
                 >
-                  <Text style={styles.emojiText}>{flow.icon}</Text>
+                  <CustomIcon 
+                    name={flow.icon as any}
+                    size={ICON_SIZE}
+                    color={flow.selected ? colors.primary : '#666'}
+                  />
                 </View>
                 <Text
                   style={[styles.itemText, { color: colors.textSecondary }]}
@@ -618,7 +616,11 @@ export default function SymptomTracking() {
                     },
                   ]}
                 >
-                  <Text style={styles.emojiText}>{symptom.icon}</Text>
+                  <CustomIcon 
+                    name={symptom.icon as any}
+                    size={ICON_SIZE}
+                    color={symptom.selected ? colors.primary : '#666'}
+                  />
                 </View>
                 <Text
                   style={[styles.itemText, { color: colors.textSecondary }]}
@@ -658,7 +660,11 @@ export default function SymptomTracking() {
                     },
                   ]}
                 >
-                  <Text style={styles.emojiText}>{mood.icon}</Text>
+                  <CustomIcon 
+                    name={mood.icon as any}
+                    size={ICON_SIZE}
+                    color={mood.selected ? colors.primary : '#666'}
+                  />
                 </View>
                 <Text
                   style={[styles.itemText, { color: colors.textSecondary }]}

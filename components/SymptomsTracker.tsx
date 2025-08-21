@@ -10,8 +10,6 @@ import {
 import { router, useFocusEffect } from 'expo-router';
 import {
   Ionicons,
-  FontAwesome5,
-  MaterialCommunityIcons,
 } from '@expo/vector-icons';
 import { db } from '../db';
 import { healthLogs } from '../db/schema';
@@ -19,6 +17,7 @@ import { eq } from 'drizzle-orm';
 import { useTheme } from '../app/styles/theme';
 import dayjs from 'dayjs';
 import { globalStyles } from '../app/styles/globalStyles';
+import { CustomIcon } from './icons';
 
 type SymptomsTrackerProps = {
   selectedDate?: string;
@@ -58,44 +57,23 @@ export const SymptomsTracker = ({
   const getIconComponent = (log: any) => {
     const { icon, icon_color, type } = log;
 
-    // Check if the icon is an emoji (starts with a non-ASCII character)
-    const isEmoji = /^[^\x00-\x7F]/.test(icon);
-
-    if (isEmoji) {
-      // Render emoji as text
-      return <Text style={{ fontSize: 30 }}>{icon}</Text>;
-    }
-
-    if (type === 'symptom') {
-      if (icon === 'strawberry') {
-        return <FontAwesome5 name="strawberry" size={18} color={icon_color} />;
-      } else if (icon === 'hammer') {
-        return <Ionicons name="hammer" size={18} color={icon_color} />;
-      } else if (icon === 'head-flash') {
-        return (
-          <MaterialCommunityIcons
-            name="head-flash"
-            size={18}
-            color={icon_color}
-          />
-        );
-      } else if (icon === 'rotate-orbit') {
-        return (
-          <MaterialCommunityIcons
-            name="rotate-orbit"
-            size={18}
-            color={icon_color}
-          />
-        );
+    // Use CustomIcon for symptoms, moods, and flows that have custom SVG icons
+    if (type === 'symptom' || type === 'mood' || type === 'flow') {
+      // Check if this icon name exists in our custom icon system
+      const customIconNames = [
+        'acne', 'headache', 'cramps', 'dizziness', 'fatigue', 'bloating', 
+        'constipation', 'cravings', 'calm', 'happy', 'energetic', 'sad', 
+        'anxious', 'confused', 'irritated', 'angry', 'emotional', 'light', 
+        'medium', 'heavy', 'blood-clots'
+      ];
+      
+      if (customIconNames.includes(icon)) {
+        return <CustomIcon name={icon as any} size={48} color={icon_color} />;
       }
-    } else if (type === 'mood') {
-      return <Ionicons name={icon} size={18} color={icon_color} />;
-    } else if (type === 'notes') {
-      // Use a note icon for notes
-      return <Ionicons name="document-text" size={18} color={icon_color} />;
     }
 
-    return <Ionicons name="help-circle" size={18} color="#888" />;
+    // For notes and any unrecognized icons, use AcneIcon as placeholder
+    return <CustomIcon name="acne" size={48} color={icon_color} />;
   };
 
   // Helper function to get display text for each log item
