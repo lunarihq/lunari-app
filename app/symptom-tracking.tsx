@@ -397,6 +397,18 @@ export default function SymptomTracking() {
     );
   };
 
+  // Get icon color based on type and id
+  const getIconColor = (type: 'symptom' | 'mood' | 'flow', id: string) => {
+    if (type === 'symptom') {
+      return '#8B572A'; // brown for all symptoms
+    } else if (type === 'mood') {
+      return '#FFCC00'; // standard mood color
+    } else if (type === 'flow') {
+      return '#FF597B'; // standard flow color
+    }
+    return '#666';
+  };
+
   // Navigate to notes editor
   const openNotesEditor = () => {
     router.push({
@@ -576,7 +588,7 @@ export default function SymptomTracking() {
                   <CustomIcon 
                     name={flow.icon as any}
                     size={ICON_SIZE}
-                    color={flow.selected ? colors.primary : '#666'}
+                    color={getIconColor('flow', flow.id)}
                   />
                 </View>
                 <Text
@@ -619,7 +631,7 @@ export default function SymptomTracking() {
                   <CustomIcon 
                     name={symptom.icon as any}
                     size={ICON_SIZE}
-                    color={symptom.selected ? colors.primary : '#666'}
+                    color={getIconColor('symptom', symptom.id)}
                   />
                 </View>
                 <Text
@@ -663,7 +675,7 @@ export default function SymptomTracking() {
                   <CustomIcon 
                     name={mood.icon as any}
                     size={ICON_SIZE}
-                    color={mood.selected ? colors.primary : '#666'}
+                    color={getIconColor('mood', mood.id)}
                   />
                 </View>
                 <Text
