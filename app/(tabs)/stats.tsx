@@ -6,8 +6,8 @@ import { periodDates } from '../../db/schema';
 import { PeriodPredictionService } from '../../services/periodPredictions';
 import { StatCard } from '../../components/StatCard';
 import { CycleHistory } from '../../components/CycleHistory';
-import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { DropIcon } from '../../components/icons/Drop';
+import { getCycleStatus, getPeriodStatus } from '../../utils/cycleUtils';
 import defaultTheme, { useTheme } from '../styles/theme';
 interface CycleData {
   startDate: string;
@@ -189,6 +189,7 @@ export default function Stats() {
               icon={
                 <DropIcon size={24} color={colors.textPrimary} />
               }
+              status={getCycleStatus(averageCycleLength).status}
             />
           </View>
           <View style={{ flex: 1 }}>
@@ -198,6 +199,7 @@ export default function Stats() {
               icon={
                 <DropIcon size={24} color={colors.textPrimary} />
               }
+              status={getPeriodStatus(averagePeriodLength).status}
             />
           </View>
         </View>
