@@ -31,19 +31,7 @@ export const SymptomsTracker = ({
   const { colors } = useTheme();
   const [healthLogsForDate, setHealthLogsForDate] = useState<any[]>([]);
 
-  // Helper function to get background color from log type
-  const getBackgroundColorFromType = (type: string) => {
-    switch (type) {
-      case 'symptom':
-        return colors.symptomsBackground;
-      case 'mood':
-        return colors.moodsBackground;
-      case 'flow':
-        return colors.flowsBackground;
-      default:
-        return colors.surface; // fallback
-    }
-  };
+
 
   // Load health logs when component is focused or selectedDate changes
   useFocusEffect(
@@ -82,12 +70,12 @@ export const SymptomsTracker = ({
       ];
       
       if (customIconNames.includes(icon)) {
-        return <CustomIcon name={icon as any} size={48} />;
+        return <CustomIcon name={icon as any} size={54} />;
       }
     }
 
     // For notes and any unrecognized icons, use AcneIcon as placeholder
-    return <CustomIcon name="acne" size={48} />;
+    return <CustomIcon name="acne" size={50} />;
   };
 
   // Helper function to get display text for each log item
@@ -165,10 +153,7 @@ export const SymptomsTracker = ({
               }}
               activeOpacity={0.7}
             >
-              <View style={[
-                styles.itemIconContainer,
-                { backgroundColor: getBackgroundColorFromType(log.type) }
-              ]}>
+              <View style={styles.itemIconContainer}>
                 {getIconComponent(log)}
               </View>
               <Text
@@ -218,7 +203,6 @@ const styles = StyleSheet.create({
   itemIconContainer: {
     width: 54,
     height: 54,
-    borderRadius: 27,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 8,

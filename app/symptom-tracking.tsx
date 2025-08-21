@@ -546,7 +546,6 @@ export default function SymptomTracking() {
                 <View
                   style={[
                     styles.itemIcon,
-                    { backgroundColor: colors.flowsBackground },
                     flow.selected && {
                       ...styles.selectedItemIcon,
                       borderColor: colors.accentPink,
@@ -588,7 +587,6 @@ export default function SymptomTracking() {
                 <View
                   style={[
                     styles.itemIcon,
-                    { backgroundColor: colors.symptomsBackground },
                     symptom.selected && {
                       ...styles.selectedItemIcon,
                       borderColor: colors.primary,
@@ -631,7 +629,6 @@ export default function SymptomTracking() {
                 <View
                   style={[
                     styles.itemIcon,
-                    { backgroundColor: colors.moodsBackground },
                     mood.selected && {
                       ...styles.selectedItemIcon,
                       borderColor: colors.neutral100,
@@ -781,13 +778,13 @@ const styles = StyleSheet.create({
   itemIcon: {
     width: 56,
     height: 56,
-    borderRadius: 30,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 8,
   },
   selectedItemIcon: {
-    borderWidth: 1.5,
+    borderWidth: 2,
+    borderRadius: 28,
   },
   itemText: {
     textAlign: 'center',

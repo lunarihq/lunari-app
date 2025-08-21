@@ -22,10 +22,7 @@ export interface ColorScheme {
   textMuted: string;
   placeholder: string;
 
-  // Symptoms and Moods background colors
-  symptomsBackground: string;
-  moodsBackground: string;
-  flowsBackground: string;
+
 
   white: string;
   black: string;
@@ -55,10 +52,7 @@ export const lightColors: ColorScheme = {
   textMuted: '#A1ADD7', // muted / hint
   placeholder: '#5C5B63',
 
-  // Symptoms and Moods background colors
-  symptomsBackground: '#E8DFFF', // light brown background
-  moodsBackground: '#FFF8E1', // light yellow background
-  flowsBackground: '#FFE6E6', // light pink background
+
 
   white: '#FFFFFF',
   black: '#000000',
@@ -88,10 +82,7 @@ export const darkColors: ColorScheme = {
   textMuted: '#8A8A8A', // muted gray for hints
   placeholder: '#6A6A6A', // placeholder text
 
-  // background colors (same for dark mode for now)
-  symptomsBackground: '#F5E6D3', // light brown background
-  moodsBackground: '#FFF8E1', // light yellow background
-  flowsBackground: '#FFE6E6', // light pink background
+
 
   white: '#FFFFFF',
   black: '#000000',
