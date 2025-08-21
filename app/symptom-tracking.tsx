@@ -36,7 +36,7 @@ export default function SymptomTracking() {
   const { colors } = useTheme();
   const params = useLocalSearchParams();
   const { notes, setNotes } = useNotes();
-  const ICON_SIZE = 48;
+  const ICON_SIZE = 50;
   const [selectedDate, setSelectedDate] = useState<string>(
     // Use the date from params if provided, otherwise use today's date
     typeof params.date === 'string' ? params.date : dayjs().format('YYYY-MM-DD')
@@ -556,6 +556,15 @@ export default function SymptomTracking() {
                     name={flow.icon as any}
                     size={ICON_SIZE}
                   />
+                  {flow.selected && (
+                    <View style={[styles.checkmarkContainer, { borderColor: colors.surface, backgroundColor: colors.accentPink }]}>
+                      <Ionicons 
+                        name="checkmark" 
+                        size={16} 
+                        color={colors.white} 
+                      />
+                    </View>
+                  )}
                 </View>
                 <Text
                   style={[styles.itemText, { color: colors.textSecondary }]}
@@ -597,6 +606,15 @@ export default function SymptomTracking() {
                     name={symptom.icon as any}
                     size={ICON_SIZE}
                   />
+                  {symptom.selected && (
+                    <View style={[styles.checkmarkContainer, { borderColor: colors.surface, backgroundColor: colors.primary }]}>
+                      <Ionicons 
+                        name="checkmark" 
+                        size={16} 
+                        color={colors.white} 
+                      />
+                    </View>
+                  )}
                 </View>
                 <Text
                   style={[styles.itemText, { color: colors.textSecondary }]}
@@ -639,6 +657,15 @@ export default function SymptomTracking() {
                     name={mood.icon as any}
                     size={ICON_SIZE}
                   />
+                  {mood.selected && (
+                    <View style={[styles.checkmarkContainer, { borderColor: colors.surface, backgroundColor: colors.neutral100 }]}>
+                      <Ionicons 
+                        name="checkmark" 
+                        size={16} 
+                        color={colors.white} 
+                      />
+                    </View>
+                  )}
                 </View>
                 <Text
                   style={[styles.itemText, { color: colors.textSecondary }]}
@@ -834,5 +861,17 @@ const styles = StyleSheet.create({
   saveButtonText: {
     fontSize: 18,
     fontWeight: '600',
+  },
+  checkmarkContainer: {
+    position: 'absolute',
+    top: -4,
+    right: -4,
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 2,
+    zIndex: 1,
   },
 });
