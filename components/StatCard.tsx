@@ -2,6 +2,9 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useTheme } from '../app/styles/theme';
+import { AlertIcon } from './icons/Alert';
+import { CheckCircleIcon } from './icons/Check_Circle';
+
 
 interface StatCardProps {
   title: string;
@@ -18,16 +21,14 @@ export function StatCard({ title, value, icon, status }: StatCardProps) {
     
     if (status === 'normal') {
       return (
-        <Feather 
-          name="check-circle" 
+        <CheckCircleIcon 
           size={16} 
           color="#10B981" 
         />
       );
     } else {
       return (
-        <Feather 
-          name="alert-circle" 
+        <AlertIcon 
           size={16} 
           color="#F59E0B" 
         />
@@ -62,6 +63,12 @@ export function StatCard({ title, value, icon, status }: StatCardProps) {
           </Text>
         </View>
       )}
+                <Feather 
+            name="info" 
+            size={20} 
+            color={colors.textMuted}
+            style={styles.infoIcon}
+          />
     </View>
   );
 }
@@ -72,6 +79,7 @@ const styles = StyleSheet.create({
     padding: 12,
     width: 168,
     alignItems: 'flex-start',
+    position: 'relative',
   },
   header: {
     flexDirection: 'row',
@@ -81,7 +89,7 @@ const styles = StyleSheet.create({
   value: {
     fontSize: 28,
     fontWeight: 'bold',
-    marginBottom: 8,
+    marginBottom: 16,
   },
   title: {
     fontSize: 16,
@@ -92,9 +100,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 4,
   },
+  infoIcon: {
+    position: 'absolute',
+    bottom: 12,
+    right: 12,
+  },
   statusText: {
     fontSize: 14,
-    fontWeight: '600',
+    fontWeight: '400',
+    marginLeft: 3,
   },
 });
 

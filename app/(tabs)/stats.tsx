@@ -187,7 +187,7 @@ export default function Stats() {
               title="Average cycle"
               value={`${averageCycleLength} days`}
               icon={
-                <DropIcon size={24} color={colors.textPrimary} />
+                <DropIcon size={20} color={colors.textPrimary} />
               }
               status={getCycleStatus(averageCycleLength).status}
             />
@@ -197,7 +197,7 @@ export default function Stats() {
               title="Average period"
               value={`${averagePeriodLength} days`}
               icon={
-                <DropIcon size={24} color={colors.textPrimary} />
+                <DropIcon size={20} color={colors.textPrimary} />
               }
               status={getPeriodStatus(averagePeriodLength).status}
             />
