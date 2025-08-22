@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 import { useTheme } from '../app/styles/theme';
 import { AlertIcon } from './icons/Alert';
 import { CheckCircleIcon } from './icons/Check_Circle';
@@ -11,10 +12,12 @@ interface StatCardProps {
   value: string | number;
   icon: React.ReactNode;
   status?: 'normal' | 'irregular';
+  type?: 'cycle' | 'period';
 }
 
-export function StatCard({ title, value, icon, status }: StatCardProps) {
+export function StatCard({ title, value, icon, status, type }: StatCardProps) {
   const { colors } = useTheme();
+  const router = useRouter();
 
   const getStatusIcon = () => {
     if (!status) return null;
@@ -46,6 +49,13 @@ export function StatCard({ title, value, icon, status }: StatCardProps) {
     return status === 'normal' ? '#10B981' : '#F59E0B';
   };
 
+  const handleInfoPress = () => {
+    if (type) {
+      const pathname = type === 'cycle' ? '/cycle-info' : '/period-info';
+      router.push(pathname);
+    }
+  };
+
   return (
     <View style={[styles.card, { backgroundColor: colors.panel }]}>
       <View style={styles.header}>
@@ -63,12 +73,19 @@ export function StatCard({ title, value, icon, status }: StatCardProps) {
           </Text>
         </View>
       )}
-                <Feather 
+      {type && (
+        <TouchableOpacity
+          onPress={handleInfoPress}
+          style={styles.infoIcon}
+          activeOpacity={0.7}
+        >
+          <Feather 
             name="info" 
             size={20} 
             color={colors.textMuted}
-            style={styles.infoIcon}
           />
+        </TouchableOpacity>
+      )}
     </View>
   );
 }

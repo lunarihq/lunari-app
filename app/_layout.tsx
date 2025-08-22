@@ -156,6 +156,22 @@ function AppContent() {
             headerShadowVisible: false,
           }}
         />
+        <Stack.Screen
+          name="cycle-info"
+          options={{
+            headerShown: true,
+            headerTitle: 'Cycle Length',
+            headerShadowVisible: false,
+          }}
+        />
+        <Stack.Screen
+          name="period-info"
+          options={{
+            headerShown: true,
+            headerTitle: 'Period Length',
+            headerShadowVisible: false,
+          }}
+        />
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style={isDark ? 'light' : 'dark'} />

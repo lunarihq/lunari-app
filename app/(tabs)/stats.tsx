@@ -184,22 +184,24 @@ export default function Stats() {
         <View style={styles.cardsContainer}>
           <View style={{ flex: 1 }}>
             <StatCard
-              title="Average cycle"
+              title="Cycle length"
               value={`${averageCycleLength} days`}
               icon={
                 <DropIcon size={20} color={colors.textPrimary} />
               }
               status={getCycleStatus(averageCycleLength).status}
+              type="cycle"
             />
           </View>
           <View style={{ flex: 1 }}>
             <StatCard
-              title="Average period"
+              title="Period length"
               value={`${averagePeriodLength} days`}
               icon={
                 <DropIcon size={20} color={colors.textPrimary} />
               }
               status={getPeriodStatus(averagePeriodLength).status}
+              type="period"
             />
           </View>
         </View>
