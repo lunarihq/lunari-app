@@ -140,22 +140,90 @@ export function useCalendarDates({
       const isPeriodDate =
         updatedMarkedDates[selectedDateParam]?.customStyles?.container
           ?.backgroundColor === colors.accentPink;
+      const isPredictionPeriodDate =
+        updatedMarkedDates[selectedDateParam]?.customStyles?.container
+          ?.backgroundColor === colors.accentPinkLight;
+      const isOvulationDate =
+        updatedMarkedDates[selectedDateParam]?.customStyles?.container
+          ?.borderStyle === 'dashed' &&
+        updatedMarkedDates[selectedDateParam]?.customStyles?.container
+          ?.borderColor === colors.primary;
 
       if (isPeriodDate) {
-        // For period dates, preserve the pink background but add a grey background behind it
+        // For period dates, create a layered effect with grey background and pink on top
         updatedMarkedDates[selectedDateParam] = {
           ...updatedMarkedDates[selectedDateParam],
+          customContainerStyle: {
+            backgroundColor: '#E2E5EF',
+            borderRadius: 20,
+            width: 40,
+            height: 40,
+            justifyContent: 'center',
+            alignItems: 'center',
+          },
           customStyles: {
             ...(updatedMarkedDates[selectedDateParam]?.customStyles || {}),
             container: {
               ...(updatedMarkedDates[selectedDateParam]?.customStyles
                 ?.container || {}),
-              backgroundColor: colors.primary,
+              backgroundColor: colors.accentPink,
               borderRadius: 16,
               width: 32,
               height: 32,
             },
             text: { color: colors.white },
+          },
+        };
+      } else if (isPredictionPeriodDate) {
+        // For prediction period dates, create a layered effect with grey background and light pink on top
+        updatedMarkedDates[selectedDateParam] = {
+          ...updatedMarkedDates[selectedDateParam],
+          customContainerStyle: {
+            backgroundColor: '#E2E5EF',
+            borderRadius: 20,
+            width: 40,
+            height: 40,
+            justifyContent: 'center',
+            alignItems: 'center',
+          },
+          customStyles: {
+            ...(updatedMarkedDates[selectedDateParam]?.customStyles || {}),
+            container: {
+              ...(updatedMarkedDates[selectedDateParam]?.customStyles
+                ?.container || {}),
+              backgroundColor: colors.accentPinkLight,
+              borderRadius: 16,
+              width: 32,
+              height: 32,
+            },
+            text: updatedMarkedDates[selectedDateParam]?.customStyles?.text,
+          },
+        };
+      } else if (isOvulationDate) {
+        // For ovulation dates, create a layered effect with grey background and dashed blue border on top
+        updatedMarkedDates[selectedDateParam] = {
+          ...updatedMarkedDates[selectedDateParam],
+          customContainerStyle: {
+            backgroundColor: '#E2E5EF',
+            borderRadius: 20,
+            width: 40,
+            height: 40,
+            justifyContent: 'center',
+            alignItems: 'center',
+          },
+          customStyles: {
+            ...(updatedMarkedDates[selectedDateParam]?.customStyles || {}),
+            container: {
+              ...(updatedMarkedDates[selectedDateParam]?.customStyles
+                ?.container || {}),
+              borderRadius: 16,
+              borderWidth: 1.6,
+              borderColor: colors.primary,
+              borderStyle: 'dashed',
+              width: 32,
+              height: 32,
+            },
+            text: updatedMarkedDates[selectedDateParam]?.customStyles?.text,
           },
         };
       } else {
@@ -179,7 +247,7 @@ export function useCalendarDates({
 
       return updatedMarkedDates;
     },
-    [baseMarkedDates, colors.accentPink, colors.primary, colors.white]
+    [baseMarkedDates, colors.accentPink, colors.accentPinkLight, colors.primary, colors.white]
   );
 
   const getSelectionMarkedDates = useCallback(

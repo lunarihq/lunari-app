@@ -40,7 +40,7 @@ export const lightColors: ColorScheme = {
   primary: '#4B61C7', // main action (primary buttons, text buttons, links, active tabs
   primaryLight: '#D6E8FE',
   accentPink: '#FB3192', // Pink for period day highlights
-  accentPinkLight: '#FFDFEE', // Lighter pink for backgrounds
+  accentPinkLight: '#FFE8F3', // Lighter pink for backgrounds
 
   //Neutrals
   neutral100: '#8682A3',
