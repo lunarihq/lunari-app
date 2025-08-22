@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Text,
   View,
@@ -9,10 +9,12 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import defaultTheme, { useTheme } from '../styles/theme';
-import { ThemeToggle } from '../../components/ThemeToggle';
+import { ThemeSelectionModal } from '../../components/ThemeSelectionModal';
+
 export default function Settings() {
   const router = useRouter();
-  const { colors } = useTheme();
+  const { colors, themeMode } = useTheme();
+  const [themeModalVisible, setThemeModalVisible] = useState(false);
 
   return (
     <ScrollView
@@ -22,8 +24,6 @@ export default function Settings() {
       ]}
       showsVerticalScrollIndicator={false}
     >
-      <ThemeToggle />
-
       <View style={[styles.section, { backgroundColor: colors.surface }]}>
         <TouchableOpacity
           style={[styles.settingRow, { borderBottomColor: colors.border }]}
@@ -87,7 +87,9 @@ export default function Settings() {
           />
         </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.settingRow, styles.lastRow]}>
+        <TouchableOpacity
+          style={[styles.settingRow, { borderBottomColor: colors.border }]}
+        >
           <View style={styles.iconContainer}>
             <Ionicons
               name="information-circle-outline"
@@ -104,7 +106,32 @@ export default function Settings() {
             color={colors.textPrimary}
           />
         </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.settingRow, styles.lastRow]}
+          onPress={() => setThemeModalVisible(true)}
+        >
+          <View style={styles.iconContainer}>
+            <Ionicons
+              name="color-palette-outline"
+              size={24}
+              color={colors.textPrimary}
+            />
+          </View>
+          <Text style={[styles.settingText, { color: colors.textPrimary }]}>
+            Theme
+          </Text>
+          <Text style={[styles.currentValue, { color: colors.textMuted }]}>
+            {themeMode === 'system' ? 'System default' : 
+             themeMode === 'light' ? 'Light' : 'Dark'}
+          </Text>
+        </TouchableOpacity>
       </View>
+
+      <ThemeSelectionModal
+        visible={themeModalVisible}
+        onClose={() => setThemeModalVisible(false)}
+      />
     </ScrollView>
   );
 }
@@ -131,5 +158,9 @@ const styles = StyleSheet.create({
   settingText: {
     fontSize: 18,
     flex: 1,
+  },
+  currentValue: {
+    fontSize: 16,
+    color: '#666',
   },
 });

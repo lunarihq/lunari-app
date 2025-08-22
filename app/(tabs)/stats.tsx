@@ -179,7 +179,7 @@ export default function Stats() {
         style={[styles.myCyclesContainer, { backgroundColor: colors.surface }]}
       >
         <Text style={[styles.heading, { color: colors.textPrimary }]}>
-          My cycles
+          Average values
         </Text>
         <View style={styles.cardsContainer}>
           <View style={{ flex: 1 }}>

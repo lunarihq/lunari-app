@@ -46,7 +46,7 @@ export function StatCard({ title, value, icon, status, type }: StatCardProps) {
 
   const getStatusColor = () => {
     if (!status) return colors.textPrimary;
-    return status === 'normal' ? '#10B981' : '#F59E0B';
+    return colors.textPrimary;
   };
 
   const handleInfoPress = () => {
@@ -82,7 +82,7 @@ export function StatCard({ title, value, icon, status, type }: StatCardProps) {
           <Feather 
             name="info" 
             size={20} 
-            color={colors.textMuted}
+            color={colors.textSecondary}
           />
         </TouchableOpacity>
       )}
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
   value: {
     fontSize: 28,
     fontWeight: 'bold',
-    marginBottom: 16,
+    marginBottom: 12,
   },
   title: {
     fontSize: 16,
