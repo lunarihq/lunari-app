@@ -5,15 +5,19 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import defaultTheme, { useTheme } from '../styles/theme';
 import { ThemeSelectionModal } from '../../components/ThemeSelectionModal';
+import { DataDeletionService } from '../../services/dataDeletionService';
+import { useNotes } from '../../contexts/NotesContext';
 
 export default function Settings() {
   const router = useRouter();
   const { colors, themeMode } = useTheme();
+  const { clearNotes } = useNotes();
   const [themeModalVisible, setThemeModalVisible] = useState(false);
 
   return (
@@ -108,7 +112,7 @@ export default function Settings() {
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={[styles.settingRow, styles.lastRow]}
+          style={[styles.settingRow, { borderBottomColor: colors.border }]}
           onPress={() => setThemeModalVisible(true)}
         >
           <View style={styles.iconContainer}>
@@ -125,6 +129,50 @@ export default function Settings() {
             {themeMode === 'system' ? 'System default' : 
              themeMode === 'light' ? 'Light' : 'Dark'}
           </Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={[styles.section, { backgroundColor: colors.surface }]}>
+        <TouchableOpacity
+          style={[styles.settingRow, styles.lastRow]}
+          onPress={() => {
+            Alert.alert(
+              'Delete All Data',
+              'This action cannot be undone. All your period tracking data, symptoms, reminders, and settings will be permanently deleted.',
+              [
+                { text: 'Cancel', style: 'cancel' },
+                {
+                  text: 'Delete All Data',
+                  style: 'destructive',
+                  onPress: async () => {
+                    try {
+                      await DataDeletionService.deleteAllUserData();
+                      clearNotes();
+                      Alert.alert('Success', 'All your data has been deleted.');
+                    } catch {
+                      Alert.alert('Error', 'Failed to delete data. Please try again.');
+                    }
+                  },
+                },
+              ]
+            );
+          }}
+        >
+          <View style={styles.iconContainer}>
+            <Ionicons
+              name="trash-outline"
+              size={24}
+              color="#FF6B6B"
+            />
+          </View>
+          <Text style={[styles.settingText, { color: '#FF6B6B' }]}>
+            Delete All Data
+          </Text>
+          <Ionicons
+            name="chevron-forward"
+            size={24}
+            color="#FF6B6B"
+          />
         </TouchableOpacity>
       </View>
 
