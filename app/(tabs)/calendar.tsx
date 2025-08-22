@@ -10,6 +10,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Text,
+  DeviceEventEmitter,
 } from 'react-native';
 import { useTheme } from '../styles/theme';
 import { DateData } from 'react-native-calendars';
@@ -65,6 +66,22 @@ export default function CalendarScreen() {
       router.push('/period-calendar');
     }
   }, [params.openPeriodModal]);
+
+  // Listen for data deletion events to refresh calendar
+  useEffect(() => {
+    const listener = DeviceEventEmitter.addListener('dataDeleted', async () => {
+      const result = await loadData();
+      if (result && result.dates && result.mostRecentStart && result.periods) {
+        generateMarkedDates(result.dates, result.mostRecentStart, result.periods);
+      }
+      const today = formatDateString(new Date());
+      setSelectedDate(today);
+      setDisplayedMonth(today);
+      setCalendarKey(Date.now());
+    });
+
+    return () => listener.remove();
+  }, [loadData, generateMarkedDates]);
 
 
 

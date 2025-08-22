@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Alert,
+  DeviceEventEmitter,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
@@ -148,6 +149,10 @@ export default function Settings() {
                     try {
                       await DataDeletionService.deleteAllUserData();
                       clearNotes();
+                      
+                      // Notify all components that data was deleted
+                      DeviceEventEmitter.emit('dataDeleted');
+                      
                       Alert.alert('Success', 'All your data has been deleted.');
                     } catch {
                       Alert.alert('Error', 'Failed to delete data. Please try again.');
