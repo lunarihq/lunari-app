@@ -231,24 +231,14 @@ export default function Index() {
                     </Text>
                   </>
                 ) : prediction.days === 0 ? (
-                  <>
-                    <Text
-                      style={[
-                        defaultTheme.globalStyles.predictionLabel,
-                        { color: colors.textPrimary },
-                      ]}
-                    >
-                      Your period is
-                    </Text>
-                    <Text
-                      style={[
-                        defaultTheme.globalStyles.predictionDays,
-                        { color: colors.textPrimary },
-                      ]}
-                    >
-                      expected today
-                    </Text>
-                  </>
+                  <Text
+                    style={[
+                      defaultTheme.globalStyles.predictionStatus,
+                      { color: colors.textPrimary },
+                    ]}
+                  >
+                    Your period is expected today
+                  </Text>
                 ) : (
                   <>
                     <Text

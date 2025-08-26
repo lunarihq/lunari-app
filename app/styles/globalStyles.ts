@@ -64,6 +64,14 @@ const globalStyles = StyleSheet.create({
     color: Colors.black,
     marginBottom: 24,
   },
+  predictionStatus: {
+    fontSize: 28,
+    fontWeight: '500',
+    color: Colors.black,
+    textAlign: 'center',
+    marginBottom: 32,
+    paddingHorizontal: 16,
+  },
 });
 
 export { globalStyles };
