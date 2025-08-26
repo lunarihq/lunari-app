@@ -12,10 +12,15 @@ export class DataDeletionService {
       // Delete all health logs (symptoms and mood data)
       await db.delete(healthLogs);
       
-      // Delete all settings except theme preferences
-      await db.delete(settings).where(
-        ne(settings.key, 'theme')
-      );
+      // Delete only user content settings, preserve app setup/preferences
+      const userContentSettingsToDelete = [
+        'notifications_period_before',
+        'notifications_period_day'
+      ];
+      
+      for (const settingKey of userContentSettingsToDelete) {
+        await db.delete(settings).where(eq(settings.key, settingKey));
+      }
       
       // Cancel all scheduled notifications
       await this.cancelAllNotifications();

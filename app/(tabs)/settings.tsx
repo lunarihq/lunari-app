@@ -138,8 +138,8 @@ export default function Settings() {
           style={[styles.settingRow, styles.lastRow]}
           onPress={() => {
             Alert.alert(
-              'Delete All Data',
-              'This action cannot be undone. All your period tracking data, symptoms, reminders, and settings will be permanently deleted.',
+              'Delete Tracking Data',
+              'This action cannot be undone. All your period tracking data, symptoms, and notification preferences will be permanently deleted. Your app settings and preferences will be preserved.',
               [
                 { text: 'Cancel', style: 'cancel' },
                 {
@@ -171,7 +171,7 @@ export default function Settings() {
             />
           </View>
           <Text style={[styles.settingText, { color: '#FF6B6B' }]}>
-            Delete All Data
+            Delete Tracking Data
           </Text>
           <Ionicons
             name="chevron-forward"

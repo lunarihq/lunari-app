@@ -70,8 +70,12 @@ export function useCalendarDates({
 
   // Generate all marked dates including predictions
   const generateMarkedDates = useCallback(
-    (periodDates: MarkedDates, startDate: string, allPeriods: string[][]) => {
-      if (!startDate) return;
+    (periodDates: MarkedDates, startDate: string | null, allPeriods: string[][]) => {
+      // If no data, clear all marked dates
+      if (!startDate || Object.keys(periodDates).length === 0) {
+        setBaseMarkedDates({});
+        return;
+      }
 
       const allMarkedDates = { ...periodDates };
       const cycleLength = PeriodPredictionService.getAverageCycleLength(

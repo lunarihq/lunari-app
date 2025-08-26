@@ -71,9 +71,12 @@ export default function CalendarScreen() {
   useEffect(() => {
     const listener = DeviceEventEmitter.addListener('dataDeleted', async () => {
       const result = await loadData();
-      if (result && result.dates && result.mostRecentStart && result.periods) {
-        generateMarkedDates(result.dates, result.mostRecentStart, result.periods);
-      }
+      // Always call generateMarkedDates, even with empty data to clear the calendar
+      generateMarkedDates(
+        result?.dates || {}, 
+        result?.mostRecentStart || null, 
+        result?.periods || []
+      );
       const today = formatDateString(new Date());
       setSelectedDate(today);
       setDisplayedMonth(today);
