@@ -222,28 +222,24 @@ export default function Stats() {
           Cycle statistics
         </Text>
         <View style={styles.cardsContainer}>
-          <View style={{ flex: 1 }}>
-            <StatCard
-              title="Cycle length"
-              value={`${averageCycleLength} days`}
-              icon={
-                <DropIcon size={20} color={colors.textPrimary} />
-              }
-              status={getCycleStatus(averageCycleLength).status}
-              type="cycle"
-            />
-          </View>
-          <View style={{ flex: 1 }}>
-            <StatCard
-              title="Period length"
-              value={`${averagePeriodLength} days`}
-              icon={
-                <DropIcon size={20} color={colors.textPrimary} />
-              }
-              status={getPeriodStatus(averagePeriodLength).status}
-              type="period"
-            />
-          </View>
+          <StatCard
+            title="Average cycle length"
+            value={`${averageCycleLength} days`}
+            icon={
+              <DropIcon size={24} color={colors.textPrimary} />
+            }
+            status={getCycleStatus(averageCycleLength).status}
+            type="cycle"
+          />
+          <StatCard
+            title="Average period length"
+            value={`${averagePeriodLength} days`}
+            icon={
+              <DropIcon size={24} color={colors.textPrimary} />
+            }
+            status={getPeriodStatus(averagePeriodLength).status}
+            type="period"
+          />
         </View>
       </View>
       <CycleHistory cycles={cycleHistory} />
@@ -263,9 +259,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   cardsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    gap: 8,
+    gap: 12,
   },
   emptyStateContainer: {
     marginVertical: 16,

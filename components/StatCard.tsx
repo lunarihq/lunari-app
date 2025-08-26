@@ -45,8 +45,8 @@ export function StatCard({ title, value, icon, status, type }: StatCardProps) {
   };
 
   const getStatusColor = () => {
-    if (!status) return colors.textPrimary;
-    return colors.textPrimary;
+    if (!status) return colors.textSecondary;
+    return colors.textSecondary;
   };
 
   const handleInfoPress = () => {
@@ -57,35 +57,39 @@ export function StatCard({ title, value, icon, status, type }: StatCardProps) {
   };
 
   return (
-    <View style={[styles.card, { backgroundColor: colors.panel }]}>
-      <View style={styles.header}>
+    <View style={[styles.card, { backgroundColor: '#F3F4FF' }]}>
+      <View style={styles.iconContainer}>
         {icon}
-        <Text style={[styles.title, { color: colors.textPrimary }]}>
+      </View>
+      <View style={styles.contentContainer}>
+        <Text style={[styles.title, { color: colors.textSecondary }]}>
           {title}
         </Text>
+        <Text style={[styles.value, { color: colors.textPrimary }]}>{value}</Text>
       </View>
-      <Text style={[styles.value, { color: colors.textPrimary }]}>{value}</Text>
-      {status && (
-        <View style={styles.statusContainer}>
-          {getStatusIcon()}
-          <Text style={[styles.statusText, { color: getStatusColor() }]}>
-            {getStatusText()}
-          </Text>
-        </View>
-      )}
-      {type && (
-        <TouchableOpacity
-          onPress={handleInfoPress}
-          style={styles.infoIcon}
-          activeOpacity={0.7}
-        >
-          <Feather 
-            name="info" 
-            size={20} 
-            color={colors.textSecondary}
-          />
-        </TouchableOpacity>
-      )}
+      <View style={styles.rightContainer}>
+        {type && (
+          <TouchableOpacity
+            onPress={handleInfoPress}
+            style={styles.infoIcon}
+            activeOpacity={0.7}
+          >
+            <Feather 
+              name="info" 
+              size={20} 
+              color={colors.textSecondary}
+            />
+          </TouchableOpacity>
+        )}
+        {status && (
+          <View style={styles.statusContainer}>
+            {getStatusIcon()}
+            <Text style={[styles.statusText, { color: getStatusColor() }]}>
+              {getStatusText()}
+            </Text>
+          </View>
+        )}
+      </View>
     </View>
   );
 }
@@ -93,24 +97,34 @@ export function StatCard({ title, value, icon, status, type }: StatCardProps) {
 const styles = StyleSheet.create({
   card: {
     borderRadius: 12,
-    padding: 12,
-    width: 168,
-    alignItems: 'flex-start',
-    position: 'relative',
-  },
-  header: {
+    padding: 16,
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 12,
+  },
+  iconContainer: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#E0E7FF',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 12,
+  },
+  contentContainer: {
+    flex: 1,
   },
   value: {
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 12,
+    marginTop: 2,
   },
   title: {
     fontSize: 16,
-    marginLeft: 4,
+    fontWeight: '400',
+  },
+  rightContainer: {
+    alignItems: 'flex-end',
+    gap: 8,
   },
   statusContainer: {
     flexDirection: 'row',
@@ -118,15 +132,16 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   infoIcon: {
-    position: 'absolute',
-    bottom: 12,
-    right: 12,
+    width: 24,
+    height: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   statusText: {
     fontSize: 14,
     fontWeight: '400',
-    marginLeft: 3,
   },
 });
 
 export default StatCard;
+

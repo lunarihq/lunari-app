@@ -34,7 +34,7 @@ export const lightColors: ColorScheme = {
   surface: '#FFFFFF', // cards / panels
   panel: '#F1F0F6', // subtle panel background
   card: '#F4F4F5', // card background (slightly different)
-  border: '#D9DAE6', // borders / dividers
+  border: '#EFEFF6', // borders / dividers
 
   // primary / main brand colors
   primary: '#4B61C7', // main action (primary buttons, text buttons, links, active tabs
