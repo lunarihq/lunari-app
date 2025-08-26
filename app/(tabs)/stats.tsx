@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, ScrollView, StyleSheet, Text } from 'react-native';
+import { View, ScrollView, StyleSheet, Text, Pressable } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
+import { router } from 'expo-router';
 import { db, getSetting } from '../../db';
 import { periodDates } from '../../db/schema';
 import { PeriodPredictionService } from '../../services/periodPredictions';
@@ -25,6 +26,7 @@ export default function Stats() {
   const [averagePeriodLength, setAveragePeriodLength] = useState<number>(0);
   const [cycleHistory, setCycleHistory] = useState<CycleData[]>([]);
   const [userCycleLength, setUserCycleLength] = useState<number>(28);
+  const [hasNoPeriodData, setHasNoPeriodData] = useState<boolean>(false);
 
   const loadStatistics = useCallback(async () => {
     try {
@@ -36,8 +38,12 @@ export default function Stats() {
         setAverageCycleLength(0);
         setAveragePeriodLength(0);
         setCycleHistory([]);
+        setHasNoPeriodData(true);
         return;
       }
+
+      // We have period data, so hide empty state
+      setHasNoPeriodData(false);
 
       const sortedDates = saved.map(s => s.date);
       const periods = PeriodPredictionService.groupDateIntoPeriods(sortedDates);
@@ -168,6 +174,40 @@ export default function Stats() {
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
   };
 
+  // Empty state component
+  const renderEmptyState = () => (
+    <View style={[styles.emptyStateContainer, { backgroundColor: colors.surface }]}>
+      <Text style={[styles.emptyStateTitle, { color: colors.textPrimary }]}>
+        No period data yet
+      </Text>
+      <Text style={[styles.emptyStateSubtitle, { color: colors.textSecondary }]}>
+        Start tracking your cycle to see personalized statistics and insights.
+      </Text>
+      <Pressable
+        onPress={() => router.push('/period-calendar')}
+        style={[defaultTheme.globalStyles.primaryButton, styles.emptyStateButton]}
+      >
+        <Text style={defaultTheme.globalStyles.buttonText}>
+          Log Period
+        </Text>
+      </Pressable>
+    </View>
+  );
+
+  // Show empty state if no period data
+  if (hasNoPeriodData) {
+    return (
+      <ScrollView
+        style={[
+          defaultTheme.globalStyles.container,
+          { backgroundColor: colors.background },
+        ]}
+      >
+        {renderEmptyState()}
+      </ScrollView>
+    );
+  }
+
   return (
     <ScrollView
       style={[
@@ -226,5 +266,29 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     gap: 8,
+  },
+  emptyStateContainer: {
+    marginVertical: 16,
+    padding: 32,
+    borderRadius: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 300,
+  },
+  emptyStateTitle: {
+    fontSize: 24,
+    fontWeight: '500',
+    marginBottom: 12,
+    textAlign: 'center',
+  },
+  emptyStateSubtitle: {
+    fontSize: 16,
+    lineHeight: 24,
+    textAlign: 'center',
+    marginBottom: 32,
+    paddingHorizontal: 16,
+  },
+  emptyStateButton: {
+    minWidth: 120,
   },
 });
