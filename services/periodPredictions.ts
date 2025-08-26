@@ -188,7 +188,8 @@ export class PeriodPredictionService {
 
     if (cycleDay <= follicularEnd) return 'Follicular';
     if (cycleDay <= ovulatoryEnd) return 'Ovulatory';
-    if (cycleDay <= averageCycleLength) return 'Luteal';
+    // Normal cycles can be 21-35 days, so only show "Extended" after day 35
+    if (cycleDay <= 35) return 'Luteal';
     return 'Extended';
   }
 
