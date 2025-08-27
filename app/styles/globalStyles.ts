@@ -14,6 +14,7 @@ const globalStyles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 24,
     alignItems: 'center',
+    marginVertical: 16,
   },
   buttonText: {
     color: '#fff',
