@@ -11,21 +11,19 @@ interface LinkButtonProps {
   style?: any;
 }
 
-export function LinkButton({ 
-  title, 
-  onPress, 
-  iconName = "chevron-forward",
+export function LinkButton({
+  title,
+  onPress,
+  iconName = 'chevron-forward',
   iconSize = 16,
-  style
+  style,
 }: LinkButtonProps) {
   const { colors } = useTheme();
 
   return (
     <Pressable onPress={onPress} style={[styles.button, style]}>
       <View style={styles.content}>
-        <Text style={[styles.text, { color: colors.primary }]}>
-          {title}
-        </Text>
+        <Text style={[styles.text, { color: colors.primary }]}>{title}</Text>
         <Ionicons
           name={iconName as any}
           size={iconSize}

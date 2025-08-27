@@ -13,9 +13,11 @@ export default function PeriodLength() {
         <Text style={[styles.title, { color: colors.textPrimary }]}>
           Understanding Your Period
         </Text>
-        
+
         <Text style={[styles.description, { color: colors.textSecondary }]}>
-          Your period is the number of days you experience menstrual bleeding each cycle. This is when your body sheds the uterine lining that built up during your cycle.
+          Your period is the number of days you experience menstrual bleeding
+          each cycle. This is when your body sheds the uterine lining that built
+          up during your cycle.
         </Text>
       </View>
 
@@ -27,7 +29,10 @@ export default function PeriodLength() {
           2-7 days
         </Text>
         <Text style={[styles.explanation, { color: colors.textSecondary }]}>
-          A normal period length of 2-7 days is typical for most people. The flow usually starts light, becomes heavier for a few days, then tapers off. Period length can vary from cycle to cycle, which is completely normal.
+          A normal period length of 2-7 days is typical for most people. The
+          flow usually starts light, becomes heavier for a few days, then tapers
+          off. Period length can vary from cycle to cycle, which is completely
+          normal.
         </Text>
       </View>
 
@@ -36,7 +41,9 @@ export default function PeriodLength() {
           Irregular Periods
         </Text>
         <Text style={[styles.explanation, { color: colors.textSecondary }]}>
-          Irregular periods (shorter than 2 days or longer than 7 days) may indicate hormonal imbalances, stress, or underlying health conditions. Very heavy bleeding or very light periods may need medical attention.
+          Irregular periods (shorter than 2 days or longer than 7 days) may
+          indicate hormonal imbalances, stress, or underlying health conditions.
+          Very heavy bleeding or very light periods may need medical attention.
         </Text>
       </View>
 
@@ -45,10 +52,10 @@ export default function PeriodLength() {
           Period Flow Patterns
         </Text>
         <Text style={[styles.explanation, { color: colors.textSecondary }]}>
-          • Light flow: Minimal bleeding, may only need panty liners{'\n'}
-          • Moderate flow: Regular tampon/pad changes every 4-6 hours{'\n'}
-          • Heavy flow: Frequent changes every 2-3 hours{'\n'}
-          • Very heavy: Soaking through protection in less than 2 hours
+          • Light flow: Minimal bleeding, may only need panty liners{'\n'}•
+          Moderate flow: Regular tampon/pad changes every 4-6 hours{'\n'}• Heavy
+          flow: Frequent changes every 2-3 hours{'\n'}• Very heavy: Soaking
+          through protection in less than 2 hours
         </Text>
       </View>
 
@@ -57,12 +64,11 @@ export default function PeriodLength() {
           Tips for Period Health
         </Text>
         <Text style={[styles.tips, { color: colors.textSecondary }]}>
-          • Track your period length and flow intensity{'\n'}
-          • Stay hydrated and maintain good nutrition{'\n'}
-          • Use appropriate period products for your flow{'\n'}
-          • Consider tracking symptoms like cramps or mood changes{'\n'}
-          • Consult a healthcare provider if periods are consistently irregular{'\n'}
-          • Rest when needed and listen to your body
+          • Track your period length and flow intensity{'\n'}• Stay hydrated and
+          maintain good nutrition{'\n'}• Use appropriate period products for
+          your flow{'\n'}• Consider tracking symptoms like cramps or mood
+          changes{'\n'}• Consult a healthcare provider if periods are
+          consistently irregular{'\n'}• Rest when needed and listen to your body
         </Text>
       </View>
     </ScrollView>

@@ -176,20 +176,25 @@ export default function Stats() {
 
   // Empty state component
   const renderEmptyState = () => (
-    <View style={[styles.emptyStateContainer, { backgroundColor: colors.surface }]}>
+    <View
+      style={[styles.emptyStateContainer, { backgroundColor: colors.surface }]}
+    >
       <Text style={[styles.emptyStateTitle, { color: colors.textPrimary }]}>
         No period data yet
       </Text>
-      <Text style={[styles.emptyStateSubtitle, { color: colors.textSecondary }]}>
+      <Text
+        style={[styles.emptyStateSubtitle, { color: colors.textSecondary }]}
+      >
         Start tracking your cycle to see personalized statistics and insights.
       </Text>
       <Pressable
         onPress={() => router.push('/period-calendar')}
-        style={[defaultTheme.globalStyles.primaryButton, styles.emptyStateButton]}
+        style={[
+          defaultTheme.globalStyles.primaryButton,
+          styles.emptyStateButton,
+        ]}
       >
-        <Text style={defaultTheme.globalStyles.buttonText}>
-          Log Period
-        </Text>
+        <Text style={defaultTheme.globalStyles.buttonText}>Log Period</Text>
       </Pressable>
     </View>
   );
@@ -225,18 +230,14 @@ export default function Stats() {
           <StatCard
             title="Average cycle length"
             value={`${averageCycleLength} days`}
-            icon={
-              <DropIcon size={32} color={colors.textPrimary} />
-            }
+            icon={<DropIcon size={32} color={colors.textPrimary} />}
             status={getCycleStatus(averageCycleLength).status}
             type="cycle"
           />
           <StatCard
             title="Average period length"
             value={`${averagePeriodLength} days`}
-            icon={
-              <DropIcon size={32} color={colors.textPrimary} />
-            }
+            icon={<DropIcon size={32} color={colors.textPrimary} />}
             status={getPeriodStatus(averagePeriodLength).status}
             type="period"
           />

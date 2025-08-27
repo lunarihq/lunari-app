@@ -15,7 +15,10 @@ interface ThemeSelectionModalProps {
   onClose: () => void;
 }
 
-export function ThemeSelectionModal({ visible, onClose }: ThemeSelectionModalProps) {
+export function ThemeSelectionModal({
+  visible,
+  onClose,
+}: ThemeSelectionModalProps) {
   const { colors, themeMode, setThemeMode } = useTheme();
   const { width } = useWindowDimensions();
 
@@ -38,22 +41,24 @@ export function ThemeSelectionModal({ visible, onClose }: ThemeSelectionModalPro
       onRequestClose={onClose}
       statusBarTranslucent
     >
-      <Pressable 
-        style={styles.backdrop} 
+      <Pressable
+        style={styles.backdrop}
         onPress={onClose}
         android_ripple={{ color: 'rgba(0, 0, 0, 0.1)' }}
       >
-        <View style={[
-          styles.modalContainer, 
-          { 
-            backgroundColor: colors.surface,
-            width: Math.min(width * 0.8, 320)
-          }
-        ]}>
+        <View
+          style={[
+            styles.modalContainer,
+            {
+              backgroundColor: colors.surface,
+              width: Math.min(width * 0.8, 320),
+            },
+          ]}
+        >
           <Text style={[styles.modalTitle, { color: colors.textPrimary }]}>
             Choose theme
           </Text>
-          
+
           {themeOptions.map((option, index) => (
             <TouchableOpacity
               key={option.mode}
@@ -69,12 +74,20 @@ export function ThemeSelectionModal({ visible, onClose }: ThemeSelectionModalPro
                     styles.radioButton,
                     {
                       borderColor: colors.border,
-                      backgroundColor: themeMode === option.mode ? colors.primary : 'transparent',
+                      backgroundColor:
+                        themeMode === option.mode
+                          ? colors.primary
+                          : 'transparent',
                     },
                   ]}
                 >
                   {themeMode === option.mode && (
-                    <View style={[styles.radioDot, { backgroundColor: colors.white }]} />
+                    <View
+                      style={[
+                        styles.radioDot,
+                        { backgroundColor: colors.white },
+                      ]}
+                    />
                   )}
                 </View>
               </View>

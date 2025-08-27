@@ -3,16 +3,15 @@ import React from 'react';
 import { HappyIcon } from './Happy';
 import { BloatedIcon } from './Bloated';
 
-
 interface IconProps {
   size?: number;
   color?: string;
 }
 
-export type IconName = 
-  | 'acne' 
-  | 'headache' 
-  | 'cramps' 
+export type IconName =
+  | 'acne'
+  | 'headache'
+  | 'cramps'
   | 'dizziness'
   | 'fatigue'
   | 'bloating'

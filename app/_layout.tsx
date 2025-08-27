@@ -113,9 +113,13 @@ function AppContent() {
             headerTitle: 'Reminders',
             headerShadowVisible: false,
             headerStyle: {
-              backgroundColor: isDark ? darkColors.background : lightColors.background,
+              backgroundColor: isDark
+                ? darkColors.background
+                : lightColors.background,
             },
-            headerTintColor: isDark ? darkColors.textPrimary : lightColors.textPrimary,
+            headerTintColor: isDark
+              ? darkColors.textPrimary
+              : lightColors.textPrimary,
           }}
         />
         <Stack.Screen
@@ -125,9 +129,13 @@ function AppContent() {
             headerTitle: 'App Lock',
             headerShadowVisible: false,
             headerStyle: {
-              backgroundColor: isDark ? darkColors.background : lightColors.background,
+              backgroundColor: isDark
+                ? darkColors.background
+                : lightColors.background,
             },
-            headerTintColor: isDark ? darkColors.textPrimary : lightColors.textPrimary,
+            headerTintColor: isDark
+              ? darkColors.textPrimary
+              : lightColors.textPrimary,
           }}
         />
         <Stack.Screen
@@ -140,9 +148,13 @@ function AppContent() {
                 : 'Set PIN',
             headerShadowVisible: false,
             headerStyle: {
-              backgroundColor: isDark ? darkColors.background : lightColors.background,
+              backgroundColor: isDark
+                ? darkColors.background
+                : lightColors.background,
             },
-            headerTintColor: isDark ? darkColors.textPrimary : lightColors.textPrimary,
+            headerTintColor: isDark
+              ? darkColors.textPrimary
+              : lightColors.textPrimary,
           })}
         />
         <Stack.Screen
@@ -152,9 +164,13 @@ function AppContent() {
             headerTitle: 'Symptom Tracking',
             headerShadowVisible: false,
             headerStyle: {
-              backgroundColor: isDark ? darkColors.background : lightColors.background,
+              backgroundColor: isDark
+                ? darkColors.background
+                : lightColors.background,
             },
-            headerTintColor: isDark ? darkColors.textPrimary : lightColors.textPrimary,
+            headerTintColor: isDark
+              ? darkColors.textPrimary
+              : lightColors.textPrimary,
           }}
         />
         <Stack.Screen
@@ -164,9 +180,13 @@ function AppContent() {
             headerTitle: 'Notes',
             headerShadowVisible: false,
             headerStyle: {
-              backgroundColor: isDark ? darkColors.background : lightColors.background,
+              backgroundColor: isDark
+                ? darkColors.background
+                : lightColors.background,
             },
-            headerTintColor: isDark ? darkColors.textPrimary : lightColors.textPrimary,
+            headerTintColor: isDark
+              ? darkColors.textPrimary
+              : lightColors.textPrimary,
           }}
         />
         <Stack.Screen
@@ -176,9 +196,13 @@ function AppContent() {
             headerTitle: 'Cycle Details',
             headerShadowVisible: false,
             headerStyle: {
-              backgroundColor: isDark ? darkColors.background : lightColors.background,
+              backgroundColor: isDark
+                ? darkColors.background
+                : lightColors.background,
             },
-            headerTintColor: isDark ? darkColors.textPrimary : lightColors.textPrimary,
+            headerTintColor: isDark
+              ? darkColors.textPrimary
+              : lightColors.textPrimary,
           }}
         />
         <Stack.Screen
@@ -188,9 +212,13 @@ function AppContent() {
             headerTitle: 'Cycle Length',
             headerShadowVisible: false,
             headerStyle: {
-              backgroundColor: isDark ? darkColors.background : lightColors.background,
+              backgroundColor: isDark
+                ? darkColors.background
+                : lightColors.background,
             },
-            headerTintColor: isDark ? darkColors.textPrimary : lightColors.textPrimary,
+            headerTintColor: isDark
+              ? darkColors.textPrimary
+              : lightColors.textPrimary,
           }}
         />
         <Stack.Screen
@@ -200,9 +228,13 @@ function AppContent() {
             headerTitle: 'Period Length',
             headerShadowVisible: false,
             headerStyle: {
-              backgroundColor: isDark ? darkColors.background : lightColors.background,
+              backgroundColor: isDark
+                ? darkColors.background
+                : lightColors.background,
             },
-            headerTintColor: isDark ? darkColors.textPrimary : lightColors.textPrimary,
+            headerTintColor: isDark
+              ? darkColors.textPrimary
+              : lightColors.textPrimary,
           }}
         />
         <Stack.Screen
@@ -212,9 +244,13 @@ function AppContent() {
             headerTitle: 'Late Period Information',
             headerShadowVisible: false,
             headerStyle: {
-              backgroundColor: isDark ? darkColors.background : lightColors.background,
+              backgroundColor: isDark
+                ? darkColors.background
+                : lightColors.background,
             },
-            headerTintColor: isDark ? darkColors.textPrimary : lightColors.textPrimary,
+            headerTintColor: isDark
+              ? darkColors.textPrimary
+              : lightColors.textPrimary,
           }}
         />
         <Stack.Screen name="+not-found" />

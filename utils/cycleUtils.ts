@@ -12,15 +12,15 @@ export function getCycleStatus(cycleLength: number): CycleStatus {
   if (cycleLength === 0) {
     return { status: 'irregular', reason: 'No data available' };
   }
-  
+
   if (cycleLength >= 21 && cycleLength <= 35) {
     return { status: 'normal' };
   }
-  
+
   if (cycleLength < 21) {
     return { status: 'irregular', reason: 'Too short' };
   }
-  
+
   return { status: 'irregular', reason: 'Too long' };
 }
 
@@ -33,14 +33,14 @@ export function getPeriodStatus(periodLength: number): CycleStatus {
   if (periodLength === 0) {
     return { status: 'irregular', reason: 'No data available' };
   }
-  
+
   if (periodLength >= 2 && periodLength <= 7) {
     return { status: 'normal' };
   }
-  
+
   if (periodLength < 2) {
     return { status: 'irregular', reason: 'Too short' };
   }
-  
+
   return { status: 'irregular', reason: 'Too long' };
 }

@@ -65,7 +65,7 @@ export function CalendarBottomSheet({
   return (
     <>
       {/* Floating Action Button */}
-      <Animated.View 
+      <Animated.View
         style={[styles.floatingButton, fabAnimatedStyle]}
         pointerEvents="box-none"
       >

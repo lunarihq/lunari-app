@@ -22,8 +22,6 @@ export interface ColorScheme {
   textMuted: string;
   placeholder: string;
 
-
-
   white: string;
   black: string;
 }
@@ -52,8 +50,6 @@ export const lightColors: ColorScheme = {
   textMuted: '#A1ADD7', // muted / hint
   placeholder: '#5C5B63',
 
-
-
   white: '#FFFFFF',
   black: '#000000',
 };
@@ -81,8 +77,6 @@ export const darkColors: ColorScheme = {
   textSecondary: '#E0E0E0', // light gray for secondary text
   textMuted: '#8A8A8A', // muted gray for hints
   placeholder: '#6A6A6A', // placeholder text
-
-
 
   white: '#FFFFFF',
   black: '#000000',

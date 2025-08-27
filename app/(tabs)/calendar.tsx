@@ -1,9 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  useCallback,
-  useMemo,
-} from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import {
   View,
   StyleSheet,
@@ -14,7 +9,11 @@ import {
 } from 'react-native';
 import { useTheme } from '../styles/theme';
 import { DateData } from 'react-native-calendars';
-import { useFocusEffect, useNavigation, useIsFocused } from '@react-navigation/native';
+import {
+  useFocusEffect,
+  useNavigation,
+  useIsFocused,
+} from '@react-navigation/native';
 import { useLocalSearchParams, router } from 'expo-router';
 import { BaseCalendar } from '../../components/BaseCalendar';
 import { CalendarBottomSheet } from '../../components/CalendarBottomSheet';
@@ -42,8 +41,11 @@ export default function CalendarScreen() {
     getSelectionMarkedDates,
   } = useCalendarDates({ colors, userCycleLength, userPeriodLength });
 
-  const { cycleDay, setCycleDay, calculateCycleDay } =
-    useCycleCalculations({ firstPeriodDate, allPeriodDates, userCycleLength });
+  const { cycleDay, setCycleDay, calculateCycleDay } = useCycleCalculations({
+    firstPeriodDate,
+    allPeriodDates,
+    userCycleLength,
+  });
 
   const [markedDates, setMarkedDates] = useState({});
   const [selectedDate, setSelectedDate] = useState(
@@ -58,8 +60,6 @@ export default function CalendarScreen() {
   const params = useLocalSearchParams();
   const navigation = useNavigation();
 
-
-
   // Check if we should navigate to the period calendar screen from URL params
   useEffect(() => {
     if (params.openPeriodModal === 'true') {
@@ -73,8 +73,8 @@ export default function CalendarScreen() {
       const result = await loadData();
       // Always call generateMarkedDates, even with empty data to clear the calendar
       generateMarkedDates(
-        result?.dates || {}, 
-        result?.mostRecentStart || null, 
+        result?.dates || {},
+        result?.mostRecentStart || null,
         result?.periods || []
       );
       const today = formatDateString(new Date());
@@ -86,8 +86,6 @@ export default function CalendarScreen() {
     return () => listener.remove();
   }, [loadData, generateMarkedDates]);
 
-
-
   const selectionMarkedDates = useMemo(
     () => getSelectionMarkedDates(selectedDate),
     [selectedDate, getSelectionMarkedDates]
@@ -98,8 +96,17 @@ export default function CalendarScreen() {
     useCallback(() => {
       const reloadData = async () => {
         const result = await loadData();
-        if (result && result.dates && result.mostRecentStart && result.periods) {
-          generateMarkedDates(result.dates, result.mostRecentStart, result.periods);
+        if (
+          result &&
+          result.dates &&
+          result.mostRecentStart &&
+          result.periods
+        ) {
+          generateMarkedDates(
+            result.dates,
+            result.mostRecentStart,
+            result.periods
+          );
         }
         const today = formatDateString(new Date());
         setSelectedDate(today);
@@ -229,5 +236,4 @@ const styles = StyleSheet.create({
   calendarContainer: {
     flex: 1,
   },
-
 });

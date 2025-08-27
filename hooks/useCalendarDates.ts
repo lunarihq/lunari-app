@@ -70,7 +70,11 @@ export function useCalendarDates({
 
   // Generate all marked dates including predictions
   const generateMarkedDates = useCallback(
-    (periodDates: MarkedDates, startDate: string | null, allPeriods: string[][]) => {
+    (
+      periodDates: MarkedDates,
+      startDate: string | null,
+      allPeriods: string[][]
+    ) => {
       // If no data, clear all marked dates
       if (!startDate || Object.keys(periodDates).length === 0) {
         setBaseMarkedDates({});
@@ -251,12 +255,20 @@ export function useCalendarDates({
 
       return updatedMarkedDates;
     },
-    [baseMarkedDates, colors.accentPink, colors.accentPinkLight, colors.primary, colors.white]
+    [
+      baseMarkedDates,
+      colors.accentPink,
+      colors.accentPinkLight,
+      colors.primary,
+      colors.white,
+    ]
   );
 
   const getSelectionMarkedDates = useCallback(
     (selectedDate: string) =>
-      selectedDate ? getMarkedDatesWithSelection(selectedDate) : baseMarkedDates,
+      selectedDate
+        ? getMarkedDatesWithSelection(selectedDate)
+        : baseMarkedDates,
     [baseMarkedDates, getMarkedDatesWithSelection]
   );
 

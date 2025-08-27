@@ -8,9 +8,7 @@ import {
   TextStyle,
 } from 'react-native';
 import { router, useFocusEffect } from 'expo-router';
-import {
-  Ionicons,
-} from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import { db } from '../db';
 import { healthLogs } from '../db/schema';
 import { eq } from 'drizzle-orm';
@@ -30,8 +28,6 @@ export const SymptomsTracker = ({
 }: SymptomsTrackerProps) => {
   const { colors } = useTheme();
   const [healthLogsForDate, setHealthLogsForDate] = useState<any[]>([]);
-
-
 
   // Load health logs when component is focused or selectedDate changes
   useFocusEffect(
@@ -63,12 +59,29 @@ export const SymptomsTracker = ({
     if (type === 'symptom' || type === 'mood' || type === 'flow') {
       // Check if this icon name exists in our custom icon system
       const customIconNames = [
-        'acne', 'headache', 'cramps', 'dizziness', 'fatigue', 'bloating', 
-        'constipation', 'cravings', 'calm', 'happy', 'energetic', 'sad', 
-        'anxious', 'confused', 'irritated', 'angry', 'emotional', 'light', 
-        'medium', 'heavy', 'blood-clots'
+        'acne',
+        'headache',
+        'cramps',
+        'dizziness',
+        'fatigue',
+        'bloating',
+        'constipation',
+        'cravings',
+        'calm',
+        'happy',
+        'energetic',
+        'sad',
+        'anxious',
+        'confused',
+        'irritated',
+        'angry',
+        'emotional',
+        'light',
+        'medium',
+        'heavy',
+        'blood-clots',
       ];
-      
+
       if (customIconNames.includes(icon)) {
         return <CustomIcon name={icon as any} size={54} />;
       }

@@ -6,7 +6,6 @@ import { useTheme } from '../app/styles/theme';
 import { AlertIcon } from './icons/Alert';
 import { CheckCircleIcon } from './icons/Check_Circle';
 
-
 interface StatCardProps {
   title: string;
   value: string | number;
@@ -21,21 +20,11 @@ export function StatCard({ title, value, icon, status, type }: StatCardProps) {
 
   const getStatusIcon = () => {
     if (!status) return null;
-    
+
     if (status === 'normal') {
-      return (
-        <CheckCircleIcon 
-          size={16} 
-          color="#10B981" 
-        />
-      );
+      return <CheckCircleIcon size={16} color="#10B981" />;
     } else {
-      return (
-        <AlertIcon 
-          size={16} 
-          color="#F59E0B" 
-        />
-      );
+      return <AlertIcon size={16} color="#F59E0B" />;
     }
   };
 
@@ -58,14 +47,14 @@ export function StatCard({ title, value, icon, status, type }: StatCardProps) {
 
   return (
     <View style={[styles.card, { backgroundColor: colors.neutral200 }]}>
-      <View style={styles.iconContainer}>
-        {icon}
-      </View>
+      <View style={styles.iconContainer}>{icon}</View>
       <View style={styles.contentContainer}>
         <Text style={[styles.title, { color: colors.textSecondary }]}>
           {title}
         </Text>
-        <Text style={[styles.value, { color: colors.textPrimary }]}>{value}</Text>
+        <Text style={[styles.value, { color: colors.textPrimary }]}>
+          {value}
+        </Text>
       </View>
       <View style={styles.rightContainer}>
         {type && (
@@ -74,11 +63,7 @@ export function StatCard({ title, value, icon, status, type }: StatCardProps) {
             style={styles.infoIcon}
             activeOpacity={0.7}
           >
-            <Feather 
-              name="info" 
-              size={20} 
-              color={colors.textSecondary}
-            />
+            <Feather name="info" size={20} color={colors.textSecondary} />
           </TouchableOpacity>
         )}
         {status && (
@@ -144,4 +129,3 @@ const styles = StyleSheet.create({
 });
 
 export default StatCard;
-

@@ -127,8 +127,11 @@ export default function Settings() {
             Theme
           </Text>
           <Text style={[styles.currentValue, { color: colors.textMuted }]}>
-            {themeMode === 'system' ? 'System default' : 
-             themeMode === 'light' ? 'Light' : 'Dark'}
+            {themeMode === 'system'
+              ? 'System default'
+              : themeMode === 'light'
+                ? 'Light'
+                : 'Dark'}
           </Text>
         </TouchableOpacity>
       </View>
@@ -149,13 +152,16 @@ export default function Settings() {
                     try {
                       await DataDeletionService.deleteAllUserData();
                       clearNotes();
-                      
+
                       // Notify all components that data was deleted
                       DeviceEventEmitter.emit('dataDeleted');
-                      
+
                       Alert.alert('Success', 'All your data has been deleted.');
                     } catch {
-                      Alert.alert('Error', 'Failed to delete data. Please try again.');
+                      Alert.alert(
+                        'Error',
+                        'Failed to delete data. Please try again.'
+                      );
                     }
                   },
                 },
@@ -164,20 +170,12 @@ export default function Settings() {
           }}
         >
           <View style={styles.iconContainer}>
-            <Ionicons
-              name="trash-outline"
-              size={24}
-              color="#FF6B6B"
-            />
+            <Ionicons name="trash-outline" size={24} color="#FF6B6B" />
           </View>
           <Text style={[styles.settingText, { color: '#FF6B6B' }]}>
             Delete Tracking Data
           </Text>
-          <Ionicons
-            name="chevron-forward"
-            size={24}
-            color="#FF6B6B"
-          />
+          <Ionicons name="chevron-forward" size={24} color="#FF6B6B" />
         </TouchableOpacity>
       </View>
 

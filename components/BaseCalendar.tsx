@@ -184,7 +184,10 @@ export function BaseCalendar({
       <View
         style={[
           styles.dayNamesContainer,
-          { borderBottomColor: colors.border, backgroundColor: colors.background },
+          {
+            borderBottomColor: colors.border,
+            backgroundColor: colors.background,
+          },
         ]}
       >
         {dayNames.map((day, index) => (

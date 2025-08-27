@@ -37,7 +37,7 @@ export default function StatusInfo() {
         <Text style={[styles.title, { color: colors.textPrimary }]}>
           {getTitle()}
         </Text>
-        
+
         <Text style={[styles.description, { color: colors.textSecondary }]}>
           {getDescription()}
         </Text>

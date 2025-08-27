@@ -397,8 +397,6 @@ export default function SymptomTracking() {
     );
   };
 
-
-
   // Navigate to notes editor
   const openNotesEditor = () => {
     router.push({
@@ -552,16 +550,21 @@ export default function SymptomTracking() {
                     },
                   ]}
                 >
-                  <CustomIcon 
-                    name={flow.icon as any}
-                    size={ICON_SIZE}
-                  />
+                  <CustomIcon name={flow.icon as any} size={ICON_SIZE} />
                   {flow.selected && (
-                    <View style={[styles.checkmarkContainer, { borderColor: colors.surface, backgroundColor: colors.accentPink }]}>
-                      <Ionicons 
-                        name="checkmark" 
-                        size={16} 
-                        color={colors.white} 
+                    <View
+                      style={[
+                        styles.checkmarkContainer,
+                        {
+                          borderColor: colors.surface,
+                          backgroundColor: colors.accentPink,
+                        },
+                      ]}
+                    >
+                      <Ionicons
+                        name="checkmark"
+                        size={16}
+                        color={colors.white}
                       />
                     </View>
                   )}
@@ -602,16 +605,21 @@ export default function SymptomTracking() {
                     },
                   ]}
                 >
-                  <CustomIcon 
-                    name={symptom.icon as any}
-                    size={ICON_SIZE}
-                  />
+                  <CustomIcon name={symptom.icon as any} size={ICON_SIZE} />
                   {symptom.selected && (
-                    <View style={[styles.checkmarkContainer, { borderColor: colors.surface, backgroundColor: colors.primary }]}>
-                      <Ionicons 
-                        name="checkmark" 
-                        size={16} 
-                        color={colors.white} 
+                    <View
+                      style={[
+                        styles.checkmarkContainer,
+                        {
+                          borderColor: colors.surface,
+                          backgroundColor: colors.primary,
+                        },
+                      ]}
+                    >
+                      <Ionicons
+                        name="checkmark"
+                        size={16}
+                        color={colors.white}
                       />
                     </View>
                   )}
@@ -653,16 +661,21 @@ export default function SymptomTracking() {
                     },
                   ]}
                 >
-                  <CustomIcon 
-                    name={mood.icon as any}
-                    size={ICON_SIZE}
-                  />
+                  <CustomIcon name={mood.icon as any} size={ICON_SIZE} />
                   {mood.selected && (
-                    <View style={[styles.checkmarkContainer, { borderColor: colors.surface, backgroundColor: colors.neutral100 }]}>
-                      <Ionicons 
-                        name="checkmark" 
-                        size={16} 
-                        color={colors.white} 
+                    <View
+                      style={[
+                        styles.checkmarkContainer,
+                        {
+                          borderColor: colors.surface,
+                          backgroundColor: colors.neutral100,
+                        },
+                      ]}
+                    >
+                      <Ionicons
+                        name="checkmark"
+                        size={16}
+                        color={colors.white}
                       />
                     </View>
                   )}
@@ -693,7 +706,11 @@ export default function SymptomTracking() {
                   onPress={() => setNotes('')}
                   activeOpacity={0.7}
                 >
-                  <Ionicons name="trash-outline" size={24} color={colors.textMuted} />
+                  <Ionicons
+                    name="trash-outline"
+                    size={24}
+                    color={colors.textMuted}
+                  />
                 </TouchableOpacity>
               )}
               <TouchableOpacity
@@ -701,7 +718,11 @@ export default function SymptomTracking() {
                 onPress={openNotesEditor}
                 activeOpacity={0.7}
               >
-                <Ionicons name="create-outline" size={24} color={colors.textMuted} />
+                <Ionicons
+                  name="create-outline"
+                  size={24}
+                  color={colors.textMuted}
+                />
               </TouchableOpacity>
             </View>
           </View>
@@ -733,11 +754,11 @@ export default function SymptomTracking() {
       {hasChanges && (
         <TouchableOpacity
           style={[
-            styles.saveButton, 
-            { 
+            styles.saveButton,
+            {
               backgroundColor: colors.primary,
               shadowColor: colors.black,
-            }
+            },
           ]}
           onPress={saveChanges}
           activeOpacity={0.8}
