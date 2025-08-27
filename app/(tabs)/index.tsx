@@ -178,6 +178,7 @@ export default function Index() {
           <View
             style={[
               defaultTheme.globalStyles.predictionInnerCircle,
+              { backgroundColor: colors.background },
             ]}
           >
             {isPeriodDay ? (

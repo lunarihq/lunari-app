@@ -57,7 +57,7 @@ export function StatCard({ title, value, icon, status, type }: StatCardProps) {
   };
 
   return (
-    <View style={[styles.card, { backgroundColor: '#F3F4FF' }]}>
+    <View style={[styles.card, { backgroundColor: colors.neutral200 }]}>
       <View style={styles.iconContainer}>
         {icon}
       </View>

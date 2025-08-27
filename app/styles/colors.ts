@@ -60,21 +60,21 @@ export const lightColors: ColorScheme = {
 
 export const darkColors: ColorScheme = {
   // surfaces
-  background: '#121212', // dark page background
-  surface: '#1E1E1E', // dark cards / panels
+  background: '#161530', // dark page background
+  surface: '#22213F', // dark cards / panels
   panel: '#252525', // dark subtle panel background
-  card: '#2A2A2A', // dark card background
-  border: '#404040', // dark borders / dividers
+  card: '#22213F', // dark card background
+  border: '#3A3A5E', // dark borders / dividers
 
   // primary / main brand colors (keep brand consistent but adjust for contrast)
-  primary: '#5B71D7', // slightly lighter for better contrast on dark
+  primary: '#5F7AF4', // slightly lighter for better contrast on dark
   primaryLight: '#1A2332', // dark version of light accent
   accentPink: '#FF4DA6', // slightly lighter pink for dark mode
   accentPinkLight: '#2A1520', // dark version of light pink background
 
   //Neutrals
-  neutral100: '#E2E5EF',
-  neutral200: '#5C5B63',
+  neutral100: '#5E5D7F',
+  neutral200: '#2B2A49',
 
   // text (inverted for dark mode)
   textPrimary: '#FFFFFF', // white text for dark backgrounds
