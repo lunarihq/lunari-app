@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Text, View, StyleSheet, Pressable, ScrollView } from 'react-native';
 import { useLocalSearchParams, router, useFocusEffect } from 'expo-router';
 import { SymptomsTracker } from '../../components/SymptomsTracker';
+import { LinkButton } from '../../components/LinkButton';
 import { db, getSetting } from '../../db';
 import { PeriodDate, periodDates } from '../../db/schema';
 import { PeriodPredictionService } from '../../services/periodPredictions';
@@ -177,7 +178,6 @@ export default function Index() {
           <View
             style={[
               defaultTheme.globalStyles.predictionInnerCircle,
-              { backgroundColor: colors.surface },
             ]}
           >
             {isPeriodDay ? (
@@ -258,22 +258,10 @@ export default function Index() {
                       {Math.abs(prediction.days)}{' '}
                       {Math.abs(prediction.days) === 1 ? 'day' : 'days'}
                     </Text>
-                    <Pressable
+                    <LinkButton
+                      title="Learn about late periods"
                       onPress={() => router.push('/late-period-info')}
-                      style={styles.learnMoreButton}
-                    >
-                      <View style={styles.learnMoreContent}>
-                        <Text style={[styles.learnMoreText, { color: colors.primary }]}>
-                          Learn about late periods
-                        </Text>
-                        <Ionicons
-                          name="chevron-forward"
-                          size={16}
-                          color={colors.primary}
-                          style={styles.learnMoreChevron}
-                        />
-                      </View>
-                    </Pressable>
+                    />
                   </>
                 )}
               </>
@@ -557,7 +545,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   currentDay: {
-    fontSize: 17,
+    fontSize: 16,
     fontWeight: '500',
     marginBottom: 16,
   },
@@ -567,22 +555,5 @@ const styles = StyleSheet.create({
   },
   chevronDisabled: {
     opacity: 0.5,
-  },
-  learnMoreButton: {
-    paddingVertical: 4,
-    marginBottom: 16,
-  },
-  learnMoreContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  learnMoreText: {
-    fontSize: 16,
-    fontWeight: '500',
-  },
-  learnMoreChevron: {
-    marginLeft: 3,
-    marginTop: 3,
   },
 });

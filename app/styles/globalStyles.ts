@@ -18,7 +18,7 @@ const globalStyles = StyleSheet.create({
   buttonText: {
     color: '#fff',
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: '500',
     textAlign: 'center',
   },
   fab: {
@@ -49,9 +49,9 @@ const globalStyles = StyleSheet.create({
     width: 310,
     height: 310,
     borderRadius: 155,
-    backgroundColor: Colors.white,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'white',
   },
   predictionLabel: {
     fontSize: 22,
