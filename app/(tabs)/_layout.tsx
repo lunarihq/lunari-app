@@ -50,7 +50,7 @@ export default function TabLayout() {
           headerShown: true,
           headerTitle: 'Calendar',
           headerStyle: {
-            backgroundColor: colors.surface,
+            backgroundColor: colors.background,
             height: 100,
           },
           headerTitleStyle: {

@@ -222,7 +222,7 @@ export default function PeriodCalendarScreen() {
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       {/* Header with padding for status bar, similar to symptom-tracking.tsx */}
-      <View style={[styles.header, { backgroundColor: colors.surface }]}>
+      <View style={[styles.header, { backgroundColor: colors.background }]}>
         <Text style={[styles.headerTitle, { color: colors.textPrimary }]}>
           Edit Period
         </Text>

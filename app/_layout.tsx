@@ -8,6 +8,7 @@ import { NotesProvider } from '../contexts/NotesContext';
 import { ThemeProvider, useTheme } from '../contexts/ThemeContext';
 import { LockScreen } from '../components/LockScreen';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { lightColors, darkColors } from './styles/colors';
 
 function AppContent() {
   const [isReady, setIsReady] = useState(false);
@@ -111,6 +112,10 @@ function AppContent() {
             headerShown: true,
             headerTitle: 'Reminders',
             headerShadowVisible: false,
+            headerStyle: {
+              backgroundColor: isDark ? darkColors.background : lightColors.background,
+            },
+            headerTintColor: isDark ? darkColors.textPrimary : lightColors.textPrimary,
           }}
         />
         <Stack.Screen
@@ -119,6 +124,10 @@ function AppContent() {
             headerShown: true,
             headerTitle: 'App Lock',
             headerShadowVisible: false,
+            headerStyle: {
+              backgroundColor: isDark ? darkColors.background : lightColors.background,
+            },
+            headerTintColor: isDark ? darkColors.textPrimary : lightColors.textPrimary,
           }}
         />
         <Stack.Screen
@@ -130,6 +139,10 @@ function AppContent() {
                 ? 'Change PIN'
                 : 'Set PIN',
             headerShadowVisible: false,
+            headerStyle: {
+              backgroundColor: isDark ? darkColors.background : lightColors.background,
+            },
+            headerTintColor: isDark ? darkColors.textPrimary : lightColors.textPrimary,
           })}
         />
         <Stack.Screen
@@ -138,6 +151,10 @@ function AppContent() {
             headerShown: true,
             headerTitle: 'Symptom Tracking',
             headerShadowVisible: false,
+            headerStyle: {
+              backgroundColor: isDark ? darkColors.background : lightColors.background,
+            },
+            headerTintColor: isDark ? darkColors.textPrimary : lightColors.textPrimary,
           }}
         />
         <Stack.Screen
@@ -146,6 +163,10 @@ function AppContent() {
             headerShown: true,
             headerTitle: 'Notes',
             headerShadowVisible: false,
+            headerStyle: {
+              backgroundColor: isDark ? darkColors.background : lightColors.background,
+            },
+            headerTintColor: isDark ? darkColors.textPrimary : lightColors.textPrimary,
           }}
         />
         <Stack.Screen
@@ -154,6 +175,10 @@ function AppContent() {
             headerShown: true,
             headerTitle: 'Cycle Details',
             headerShadowVisible: false,
+            headerStyle: {
+              backgroundColor: isDark ? darkColors.background : lightColors.background,
+            },
+            headerTintColor: isDark ? darkColors.textPrimary : lightColors.textPrimary,
           }}
         />
         <Stack.Screen
@@ -162,6 +187,10 @@ function AppContent() {
             headerShown: true,
             headerTitle: 'Cycle Length',
             headerShadowVisible: false,
+            headerStyle: {
+              backgroundColor: isDark ? darkColors.background : lightColors.background,
+            },
+            headerTintColor: isDark ? darkColors.textPrimary : lightColors.textPrimary,
           }}
         />
         <Stack.Screen
@@ -170,6 +199,10 @@ function AppContent() {
             headerShown: true,
             headerTitle: 'Period Length',
             headerShadowVisible: false,
+            headerStyle: {
+              backgroundColor: isDark ? darkColors.background : lightColors.background,
+            },
+            headerTintColor: isDark ? darkColors.textPrimary : lightColors.textPrimary,
           }}
         />
         <Stack.Screen
@@ -178,6 +211,10 @@ function AppContent() {
             headerShown: true,
             headerTitle: 'Late Period Information',
             headerShadowVisible: false,
+            headerStyle: {
+              backgroundColor: isDark ? darkColors.background : lightColors.background,
+            },
+            headerTintColor: isDark ? darkColors.textPrimary : lightColors.textPrimary,
           }}
         />
         <Stack.Screen name="+not-found" />
