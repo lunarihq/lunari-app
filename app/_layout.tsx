@@ -172,6 +172,14 @@ function AppContent() {
             headerShadowVisible: false,
           }}
         />
+        <Stack.Screen
+          name="late-period-info"
+          options={{
+            headerShown: true,
+            headerTitle: 'Late Period Information',
+            headerShadowVisible: false,
+          }}
+        />
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style={isDark ? 'light' : 'dark'} />

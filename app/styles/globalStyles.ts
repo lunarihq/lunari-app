@@ -62,7 +62,8 @@ const globalStyles = StyleSheet.create({
     fontSize: 48,
     fontWeight: 'bold',
     color: Colors.black,
-    marginBottom: 24,
+    marginBottom: 8,
+    paddingHorizontal: 8,
   },
   predictionStatus: {
     fontSize: 28,
