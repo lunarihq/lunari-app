@@ -12,6 +12,7 @@ export interface ColorScheme {
   primaryLight: string;
   accentPink: string;
   accentPinkLight: string;
+  accentBlue: string;
 
   //Neutrals
   neutral100: string;
@@ -44,6 +45,7 @@ export const lightColors: ColorScheme = {
   primaryLight: '#D6E8FE',
   accentPink: '#FB3192', // Pink for period day highlights
   accentPinkLight: '#FFE8F3', // Lighter pink for backgrounds
+  accentBlue: '#4B61C7', // For fertile days indicator 
 
   //Neutrals
   neutral100: '#8682A3',
@@ -76,6 +78,7 @@ export const darkColors: ColorScheme = {
   primaryLight: '#1A2332', // dark version of light accent
   accentPink: '#FF4DA6', // slightly lighter pink for dark mode
   accentPinkLight: '#FFDEEE', // dark version of light pink background
+  accentBlue: '#75AAFF', // For fertile days indicator 
 
   //Neutrals
   neutral100: '#5E5D7F',

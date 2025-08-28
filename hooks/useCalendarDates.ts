@@ -4,7 +4,7 @@ import { MarkedDates } from '../app/types/calendarTypes';
 
 interface UseCalendarDatesProps {
   colors: {
-    primary: string;
+    accentBlue: string;
     accentPinkLight: string;
     accentPink: string;
     white: string;
@@ -30,11 +30,11 @@ export function useCalendarDates({
               container: {
                 borderRadius: 16,
                 borderWidth: 1.6,
-                borderColor: colors.primary,
+                borderColor: colors.accentBlue,
                 borderStyle: 'dashed',
               },
               text: {
-                color: colors.primary,
+                color: colors.accentBlue,
               },
             },
           };
@@ -45,7 +45,7 @@ export function useCalendarDates({
                 borderRadius: 16,
               },
               text: {
-                color: colors.primary,
+                color: colors.accentBlue,
               },
             },
           };
@@ -65,7 +65,7 @@ export function useCalendarDates({
           return {};
       }
     },
-    [colors.primary, colors.accentPinkLight, colors.accentPink]
+    [colors.accentBlue, colors.accentPinkLight, colors.accentPink]
   );
 
   // Generate all marked dates including predictions
@@ -155,7 +155,7 @@ export function useCalendarDates({
         updatedMarkedDates[selectedDateParam]?.customStyles?.container
           ?.borderStyle === 'dashed' &&
         updatedMarkedDates[selectedDateParam]?.customStyles?.container
-          ?.borderColor === colors.primary;
+          ?.borderColor === colors.accentBlue;
 
       if (isPeriodDate) {
         // For period dates, create a layered effect with grey background and pink on top
@@ -226,7 +226,7 @@ export function useCalendarDates({
                 ?.container || {}),
               borderRadius: 16,
               borderWidth: 1.6,
-              borderColor: colors.primary,
+              borderColor: colors.accentBlue,
               borderStyle: 'dashed',
               width: 32,
               height: 32,
@@ -259,7 +259,7 @@ export function useCalendarDates({
       baseMarkedDates,
       colors.accentPink,
       colors.accentPinkLight,
-      colors.primary,
+      colors.accentBlue,
       colors.white,
     ]
   );
