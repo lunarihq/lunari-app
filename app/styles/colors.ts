@@ -5,7 +5,6 @@ export interface ColorScheme {
   surfaceVariant: string; // variant cards / panels
   surfaceTabBar: string; // tab bar background
   panel: string; // subtle panel background
-  card: string; // card background (slightly different)
   border: string; // borders / dividers
 
   // primary / main brand colors
@@ -38,7 +37,6 @@ export const lightColors: ColorScheme = {
   surfaceVariant: '#F7F8FF', // variant cards / panels
   surfaceTabBar: '#F1F0F6', // tabs / sheets / panels
   panel: '#FFFFFF', // subtle panel background
-  card: '#F4F4F5', // card background (slightly different)
   border: '#EFEFF6', // borders / dividers
 
   // primary / main brand colors
@@ -71,14 +69,13 @@ export const darkColors: ColorScheme = {
   surfaceVariant: '#282749', // dark variant cards / panels
   surfaceTabBar: '#22213F', // dark tab bar background
   panel: '#161530', // dark subtle panel background
-  card: '#22213F', // dark card background
   border: '#3A3A5E', // dark borders / dividers
 
   // primary / main brand colors (keep brand consistent but adjust for contrast)
   primary: '#5F7AF4', // slightly lighter for better contrast on dark
   primaryLight: '#1A2332', // dark version of light accent
   accentPink: '#FF4DA6', // slightly lighter pink for dark mode
-  accentPinkLight: '#2A1520', // dark version of light pink background
+  accentPinkLight: '#FFDEEE', // dark version of light pink background
 
   //Neutrals
   neutral100: '#5E5D7F',
