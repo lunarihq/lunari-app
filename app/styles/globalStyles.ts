@@ -4,7 +4,6 @@ import { Colors } from './colors';
 const globalStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.background,
     paddingHorizontal: 16,
   },
 

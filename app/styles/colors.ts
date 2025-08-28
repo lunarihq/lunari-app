@@ -1,10 +1,11 @@
 export interface ColorScheme {
   // surfaces
-  background: string;
-  surface: string;
-  panel: string;
-  card: string;
-  border: string;
+  background: string; // page background
+  surface: string; // main cards / panels
+  surfaceTabBar: string; // tab bar background
+  panel: string; // subtle panel background
+  card: string; // card background (slightly different)
+  border: string; // borders / dividers
 
   // primary / main brand colors
   primary: string;
@@ -29,8 +30,9 @@ export interface ColorScheme {
 export const lightColors: ColorScheme = {
   // surfaces
   background: '#ECEDFF', // page background
-  surface: '#FFFFFF', // cards / panels
-  panel: '#F1F0F6', // subtle panel background
+  surface: '#FFFFFF', // main cards / panels
+  surfaceTabBar: '#F1F0F6', // tabs / sheets / panels
+  panel: '#FFFFFF', // subtle panel background
   card: '#F4F4F5', // card background (slightly different)
   border: '#EFEFF6', // borders / dividers
 
@@ -58,7 +60,8 @@ export const darkColors: ColorScheme = {
   // surfaces
   background: '#161530', // dark page background
   surface: '#22213F', // dark cards / panels
-  panel: '#252525', // dark subtle panel background
+  surfaceTabBar: '#22213F', // dark tab bar background
+  panel: '#161530', // dark subtle panel background
   card: '#22213F', // dark card background
   border: '#3A3A5E', // dark borders / dividers
 

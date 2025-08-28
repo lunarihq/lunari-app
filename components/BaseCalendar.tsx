@@ -186,7 +186,7 @@ export function BaseCalendar({
           styles.dayNamesContainer,
           {
             borderBottomColor: colors.border,
-            backgroundColor: colors.background,
+            backgroundColor: colors.panel,
           },
         ]}
       >
@@ -223,8 +223,8 @@ export function BaseCalendar({
         scrollEnabled={true}
         showScrollIndicator={false}
         theme={{
-          backgroundColor: colors.background,
-          calendarBackground: colors.background,
+          backgroundColor: colors.panel,
+          calendarBackground: colors.panel,
           textDayHeaderFontSize: 14,
           // @ts-ignore: Known theme typing issue in react-native-calendars
           'stylesheet.calendar.header': {

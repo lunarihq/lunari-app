@@ -220,7 +220,7 @@ export default function PeriodCalendarScreen() {
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
+    <View style={[styles.container, { backgroundColor: colors.panel }]}>
       {/* Header with padding for status bar, similar to symptom-tracking.tsx */}
       <View style={styles.header}>
         <Text style={[styles.headerTitle, { color: colors.textPrimary }]}>
