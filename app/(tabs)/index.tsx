@@ -325,7 +325,7 @@ export default function Index() {
               style={[
                 styles.insightCard,
                 {
-                  backgroundColor: colors.primaryLight,
+                  backgroundColor: colors.background,
                   borderColor: colors.primary,
                 },
               ]}
@@ -367,7 +367,7 @@ export default function Index() {
               style={[
                 styles.insightCard,
                 {
-                  backgroundColor: colors.primaryLight,
+                  backgroundColor: colors.background,
                   borderColor: colors.primary,
                 },
               ]}
@@ -414,7 +414,7 @@ export default function Index() {
               style={[
                 styles.insightCard,
                 {
-                  backgroundColor: colors.primaryLight,
+                  backgroundColor: colors.background,
                   borderColor: colors.primary,
                 },
               ]}
