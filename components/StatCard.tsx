@@ -46,7 +46,7 @@ export function StatCard({ title, value, icon, status, type }: StatCardProps) {
   };
 
   return (
-    <View style={[styles.card, { backgroundColor: colors.neutral200 }]}>
+    <View style={[styles.card, { backgroundColor: colors.surfaceVariant }]}>
       <View style={styles.iconContainer}>{icon}</View>
       <View style={styles.contentContainer}>
         <Text style={[styles.title, { color: colors.textSecondary }]}>

@@ -2,6 +2,7 @@ export interface ColorScheme {
   // surfaces
   background: string; // page background
   surface: string; // main cards / panels
+  surfaceVariant: string; // variant cards / panels
   surfaceTabBar: string; // tab bar background
   panel: string; // subtle panel background
   card: string; // card background (slightly different)
@@ -25,12 +26,16 @@ export interface ColorScheme {
 
   white: string;
   black: string;
+
+  // prediction circle background
+  predictionCircleBackground: string;
 }
 
 export const lightColors: ColorScheme = {
   // surfaces
   background: '#ECEDFF', // page background
   surface: '#FFFFFF', // main cards / panels
+  surfaceVariant: '#F7F8FF', // variant cards / panels
   surfaceTabBar: '#F1F0F6', // tabs / sheets / panels
   panel: '#FFFFFF', // subtle panel background
   card: '#F4F4F5', // card background (slightly different)
@@ -54,12 +59,16 @@ export const lightColors: ColorScheme = {
 
   white: '#FFFFFF',
   black: '#000000',
+
+  // prediction circle background
+  predictionCircleBackground: '#FFFFFF',
 };
 
 export const darkColors: ColorScheme = {
   // surfaces
   background: '#161530', // dark page background
   surface: '#22213F', // dark cards / panels
+  surfaceVariant: '#282749', // dark variant cards / panels
   surfaceTabBar: '#22213F', // dark tab bar background
   panel: '#161530', // dark subtle panel background
   card: '#22213F', // dark card background
@@ -83,6 +92,9 @@ export const darkColors: ColorScheme = {
 
   white: '#FFFFFF',
   black: '#000000',
+
+  // prediction circle background
+  predictionCircleBackground: '#292848',
 };
 
 // Legacy export for backward compatibility
