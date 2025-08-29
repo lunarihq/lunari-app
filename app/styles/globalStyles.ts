@@ -7,6 +7,10 @@ const globalStyles = StyleSheet.create({
     paddingHorizontal: 16,
   },
 
+  scrollContentContainer: {
+    paddingBottom: 16,
+  },
+
   primaryButton: {
     backgroundColor: Colors.primary,
     paddingVertical: 10,

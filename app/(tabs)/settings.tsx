@@ -27,6 +27,7 @@ export default function Settings() {
         defaultTheme.globalStyles.container,
         { backgroundColor: colors.background },
       ]}
+      contentContainerStyle={defaultTheme.globalStyles.scrollContentContainer}
       showsVerticalScrollIndicator={false}
     >
       <View style={[styles.section, { backgroundColor: colors.surface }]}>

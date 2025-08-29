@@ -41,7 +41,7 @@ export default function CyclePhaseDetails() {
     >
       <ScrollView
         style={styles.content}
-        contentContainerStyle={styles.scrollContent}
+        contentContainerStyle={defaultTheme.globalStyles.scrollContentContainer}
         showsVerticalScrollIndicator={false}
       >
         <Text style={[styles.dateText, { color: colors.textPrimary }]}>
@@ -115,6 +115,23 @@ export default function CyclePhaseDetails() {
             {possibleSymptoms}
           </Text>
         </View>
+        <View style={[styles.phaseCard, { backgroundColor: colors.surface }]}>
+          <View style={styles.phaseHeader}>
+            <Ionicons
+              name="medical-outline"
+              size={24}
+              color={colors.textPrimary}
+            />
+            <Text style={[styles.cardTitle, { color: colors.textPrimary }]}>
+              Possible symptoms
+            </Text>
+          </View>
+          <Text
+            style={[styles.phaseDescription, { color: colors.textPrimary }]}
+          >
+            {possibleSymptoms}
+          </Text>
+        </View>
       </ScrollView>
     </View>
   );
@@ -124,10 +141,7 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
   },
-  scrollContent: {
-    paddingTop: 30,
-    paddingBottom: 40,
-  },
+
   dateText: {
     fontSize: 17,
     fontWeight: '500',

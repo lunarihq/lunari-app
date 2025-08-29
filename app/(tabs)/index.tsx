@@ -161,6 +161,7 @@ export default function Index() {
         defaultTheme.globalStyles.container,
         { backgroundColor: colors.background },
       ]}
+      contentContainerStyle={defaultTheme.globalStyles.scrollContentContainer}
       showsVerticalScrollIndicator={false}
     >
       <CycleOverviewWidget

@@ -219,6 +219,8 @@ export default function Stats() {
         defaultTheme.globalStyles.container,
         { backgroundColor: colors.background },
       ]}
+      contentContainerStyle={defaultTheme.globalStyles.scrollContentContainer}
+      showsVerticalScrollIndicator={false}
     >
       <View
         style={[styles.myCyclesContainer, { backgroundColor: colors.surface }]}
