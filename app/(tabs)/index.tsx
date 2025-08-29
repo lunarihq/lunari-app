@@ -11,6 +11,7 @@ import { NotificationService } from '../../services/notificationService';
 import { Ionicons } from '@expo/vector-icons';
 import defaultTheme, { useTheme } from '../styles/theme';
 import DashedCircle from '../../components/DashedCircle';
+import { DropIcon } from '../../components/icons/Drop';
 
 const getFormattedDate = (date: Date): string =>
   `Today, ${date.getDate()} ${date.toLocaleDateString('en-US', { month: 'short' })}`;
@@ -337,12 +338,12 @@ export default function Index() {
               }
             >
               <View style={styles.insightTop}>
-                <Ionicons
-                  name="calendar-outline"
-                  size={24}
-                  color={colors.textPrimary}
-                  style={styles.insightIcon}
-                />
+                <View style={styles.insightIconContainer}>
+                  <DropIcon
+                    size={24}
+                    color={colors.textPrimary}
+                  />
+                </View>
                 <Text
                   style={[styles.insightLabel, { color: colors.textPrimary }]}
                 >
@@ -379,12 +380,12 @@ export default function Index() {
               }
             >
               <View style={styles.insightTop}>
-                <Ionicons
-                  name="sync-outline"
-                  size={24}
-                  color={colors.textPrimary}
-                  style={styles.insightIcon}
-                />
+                <View style={styles.insightIconContainer}>
+                  <DropIcon
+                    size={24}
+                    color={colors.textPrimary}
+                  />
+                </View>
                 <Text
                   style={[styles.insightLabel, { color: colors.textPrimary }]}
                 >
@@ -426,12 +427,12 @@ export default function Index() {
               }
             >
               <View style={styles.insightTop}>
-                <Ionicons
-                  name="leaf-outline"
-                  size={24}
-                  color={colors.textPrimary}
-                  style={styles.insightIcon}
-                />
+                <View style={styles.insightIconContainer}>
+                  <DropIcon
+                    size={24}
+                    color={colors.textPrimary}
+                  />
+                </View>
                 <Text
                   style={[styles.insightLabel, { color: colors.textPrimary }]}
                 >
@@ -515,6 +516,15 @@ const styles = StyleSheet.create({
   insightIcon: {
     marginBottom: 6,
   },
+  insightIconContainer: {
+    backgroundColor: 'white',
+    borderRadius: 20,
+    width: 40,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 6,
+  },
   insightLabel: {
     fontSize: 15,
     color: '#332F49',
@@ -524,7 +534,7 @@ const styles = StyleSheet.create({
   insightValueContainer: {
     width: '100%',
     alignItems: 'center',
-    paddingVertical: 12,
+    paddingVertical: 8,
     marginTop: 8,
     borderBottomLeftRadius: 12,
     borderBottomRightRadius: 12,
