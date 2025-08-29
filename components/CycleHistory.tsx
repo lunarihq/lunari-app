@@ -324,10 +324,8 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 16,
     padding: 16,
     borderRadius: 16,
-    overflow: 'hidden',
   },
   title: {
     fontSize: 24,
@@ -347,7 +345,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 0,
     marginBottom: 16,
-    overflow: 'hidden',
   },
   cycleContainer: {
     paddingVertical: 20,
