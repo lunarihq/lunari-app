@@ -13,7 +13,6 @@ const globalStyles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 24,
     alignItems: 'center',
-    marginVertical: 16,
   },
   buttonText: {
     color: '#fff',
@@ -36,6 +35,7 @@ const globalStyles = StyleSheet.create({
     gap: 24,
     marginTop: 8,
     marginBottom: 24,
+    backgroundColor: 'red',
   },
   predictionOuterCircle: {
     width: 345,
@@ -51,7 +51,7 @@ const globalStyles = StyleSheet.create({
     borderRadius: 155,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: 'green',
   },
   predictionLabel: {
     fontSize: 22,

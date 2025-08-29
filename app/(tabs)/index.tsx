@@ -283,7 +283,7 @@ export default function Index() {
             )}
             <Pressable
               onPress={() => router.push('/period-calendar')}
-              style={defaultTheme.globalStyles.primaryButton}
+              style={[defaultTheme.globalStyles.primaryButton, { marginVertical: 16 }]}
             >
               <Text style={defaultTheme.globalStyles.buttonText}>
                 {Object.keys(selectedDates).length > 0
