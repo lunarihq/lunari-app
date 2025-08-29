@@ -1,13 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { useTheme } from './styles/theme';
+import defaultTheme, { useTheme } from './styles/theme';
 
 export default function PeriodLength() {
   const { colors } = useTheme();
 
   return (
     <ScrollView
-      style={[styles.container, { backgroundColor: colors.background }]}
+      style={[defaultTheme.globalStyles.container, { backgroundColor: colors.background }]}
+      contentContainerStyle={defaultTheme.globalStyles.scrollContentContainer}
+      showsVerticalScrollIndicator={false}
     >
       <View style={[styles.card, { backgroundColor: colors.surface }]}>
         <Text style={[styles.title, { color: colors.textPrimary }]}>
@@ -76,10 +78,7 @@ export default function PeriodLength() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
+
   card: {
     borderRadius: 16,
     padding: 20,
