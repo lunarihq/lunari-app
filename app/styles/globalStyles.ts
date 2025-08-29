@@ -41,7 +41,7 @@ const globalStyles = StyleSheet.create({
     width: 345,
     height: 345,
     borderRadius: 200,
-    backgroundColor: 'transparent',
+    backgroundColor: 'blue',
     justifyContent: 'center',
     alignItems: 'center',
   },
