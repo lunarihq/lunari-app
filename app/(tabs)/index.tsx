@@ -353,7 +353,7 @@ export default function Index() {
               <View
                 style={[
                   styles.insightValueContainer,
-                  { backgroundColor: 'red' },
+                  { backgroundColor: colors.surface },
                 ]}
               >
                 <Text
