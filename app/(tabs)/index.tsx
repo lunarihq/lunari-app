@@ -2,6 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { View, ScrollView } from 'react-native';
 import { useLocalSearchParams, router, useFocusEffect } from 'expo-router';
 import { CycleOverviewWidget } from '../../components/CycleOverviewWidget';
+import { CycleInsights } from '../../components/CycleInsights';
+import { SymptomsTracker } from '../../components/SymptomsTracker';
 import { db, getSetting } from '../../db';
 import { PeriodDate, periodDates } from '../../db/schema';
 import { PeriodPredictionService } from '../../services/periodPredictions';
@@ -171,7 +173,14 @@ export default function Index() {
         averageCycleLength={averageCycleLength}
       />
 
-      <View style={{ height: 20 }} />
+      <CycleInsights
+        currentCycleDay={currentCycleDay}
+        averageCycleLength={averageCycleLength}
+      />
+
+      <SymptomsTracker />
+
+      <View />
     </ScrollView>
   );
 }
