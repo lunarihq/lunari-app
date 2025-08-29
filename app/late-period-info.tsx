@@ -1,240 +1,115 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, SafeAreaView } from 'react-native';
-import { useTheme } from './styles/theme';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import defaultTheme, { useTheme } from './styles/theme';
 
-export default function LatePeriodInfo() {
+export default function PeriodLength() {
   const { colors } = useTheme();
 
   return (
-    <SafeAreaView
-      style={[styles.container, { backgroundColor: colors.background }]}
+    <ScrollView
+      style={[defaultTheme.globalStyles.container, { backgroundColor: colors.background }]}
+      contentContainerStyle={defaultTheme.globalStyles.scrollContentContainer}
+      showsVerticalScrollIndicator={false}
     >
-      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+      <View style={[styles.card, { backgroundColor: colors.surface }]}>
         <Text style={[styles.title, { color: colors.textPrimary }]}>
-          Why Your Period Might Be Late
+          Understanding Your Period
         </Text>
 
-        <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
-            Common Reasons
-          </Text>
+        <Text style={[styles.description, { color: colors.textSecondary }]}>
+          Your period is the number of days you experience menstrual bleeding
+          each cycle. This is when your body sheds the uterine lining that built
+          up during your cycle.
+        </Text>
+      </View>
 
-          <View style={styles.reasonItem}>
-            <Text style={[styles.reasonTitle, { color: colors.textPrimary }]}>
-              Stress
-            </Text>
-            <Text
-              style={[
-                styles.reasonDescription,
-                { color: colors.textSecondary },
-              ]}
-            >
-              Physical or emotional stress can affect your hormones and delay
-              your period. This includes work stress, relationship issues, or
-              major life changes.
-            </Text>
-          </View>
+      <View style={[styles.card, { backgroundColor: colors.surface }]}>
+        <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
+          Normal Period Length
+        </Text>
+        <Text style={[styles.normalRange, { color: colors.textSecondary }]}>
+          2-7 days
+        </Text>
+        <Text style={[styles.explanation, { color: colors.textSecondary }]}>
+          A normal period length of 2-7 days is typical for most people. The
+          flow usually starts light, becomes heavier for a few days, then tapers
+          off. Period length can vary from cycle to cycle, which is completely
+          normal.
+        </Text>
+      </View>
 
-          <View style={styles.reasonItem}>
-            <Text style={[styles.reasonTitle, { color: colors.textPrimary }]}>
-              Weight Changes
-            </Text>
-            <Text
-              style={[
-                styles.reasonDescription,
-                { color: colors.textSecondary },
-              ]}
-            >
-              Significant weight gain or loss can disrupt your hormonal balance
-              and affect your menstrual cycle.
-            </Text>
-          </View>
+      <View style={[styles.card, { backgroundColor: colors.surface }]}>
+        <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
+          Irregular Periods
+        </Text>
+        <Text style={[styles.explanation, { color: colors.textSecondary }]}>
+          Irregular periods (shorter than 2 days or longer than 7 days) may
+          indicate hormonal imbalances, stress, or underlying health conditions.
+          Very heavy bleeding or very light periods may need medical attention.
+        </Text>
+      </View>
 
-          <View style={styles.reasonItem}>
-            <Text style={[styles.reasonTitle, { color: colors.textPrimary }]}>
-              Exercise Changes
-            </Text>
-            <Text
-              style={[
-                styles.reasonDescription,
-                { color: colors.textSecondary },
-              ]}
-            >
-              Sudden increases in exercise intensity or training for events can
-              temporarily disrupt your cycle.
-            </Text>
-          </View>
+      <View style={[styles.card, { backgroundColor: colors.surface }]}>
+        <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
+          Period Flow Patterns
+        </Text>
+        <Text style={[styles.explanation, { color: colors.textSecondary }]}>
+          • Light flow: Minimal bleeding, may only need panty liners{'\n'}•
+          Moderate flow: Regular tampon/pad changes every 4-6 hours{'\n'}• Heavy
+          flow: Frequent changes every 2-3 hours{'\n'}• Very heavy: Soaking
+          through protection in less than 2 hours
+        </Text>
+      </View>
 
-          <View style={styles.reasonItem}>
-            <Text style={[styles.reasonTitle, { color: colors.textPrimary }]}>
-              Hormonal Changes
-            </Text>
-            <Text
-              style={[
-                styles.reasonDescription,
-                { color: colors.textSecondary },
-              ]}
-            >
-              Changes in birth control, thyroid issues, or other hormonal
-              imbalances can affect your cycle timing.
-            </Text>
-          </View>
-
-          <View style={styles.reasonItem}>
-            <Text style={[styles.reasonTitle, { color: colors.textPrimary }]}>
-              Sleep Pattern Changes
-            </Text>
-            <Text
-              style={[
-                styles.reasonDescription,
-                { color: colors.textSecondary },
-              ]}
-            >
-              Shift work, travel, or significant changes to your sleep schedule
-              can impact your menstrual cycle.
-            </Text>
-          </View>
-
-          <View style={styles.reasonItem}>
-            <Text style={[styles.reasonTitle, { color: colors.textPrimary }]}>
-              Illness or Medication
-            </Text>
-            <Text
-              style={[
-                styles.reasonDescription,
-                { color: colors.textSecondary },
-              ]}
-            >
-              Being sick, certain medications, or recent medical procedures can
-              temporarily delay your period.
-            </Text>
-          </View>
-        </View>
-
-        <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
-            Natural Cycle Variation
-          </Text>
-          <Text style={[styles.bodyText, { color: colors.textSecondary }]}>
-            It's normal for menstrual cycles to vary slightly from month to
-            month. A cycle that's 21-35 days long is considered normal, and
-            variation of a few days is completely typical.
-          </Text>
-        </View>
-
-        <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
-            When to See a Healthcare Provider
-          </Text>
-          <Text style={[styles.bodyText, { color: colors.textSecondary }]}>
-            Consider consulting a healthcare provider if:
-          </Text>
-          <View style={styles.bulletPoint}>
-            <Text style={[styles.bullet, { color: colors.textSecondary }]}>
-              •
-            </Text>
-            <Text style={[styles.bulletText, { color: colors.textSecondary }]}>
-              Your period is more than 7 days late and pregnancy is ruled out
-            </Text>
-          </View>
-          <View style={styles.bulletPoint}>
-            <Text style={[styles.bullet, { color: colors.textSecondary }]}>
-              •
-            </Text>
-            <Text style={[styles.bulletText, { color: colors.textSecondary }]}>
-              You've missed multiple periods in a row
-            </Text>
-          </View>
-          <View style={styles.bulletPoint}>
-            <Text style={[styles.bullet, { color: colors.textSecondary }]}>
-              •
-            </Text>
-            <Text style={[styles.bulletText, { color: colors.textSecondary }]}>
-              You have other concerning symptoms
-            </Text>
-          </View>
-          <View style={styles.bulletPoint}>
-            <Text style={[styles.bullet, { color: colors.textSecondary }]}>
-              •
-            </Text>
-            <Text style={[styles.bulletText, { color: colors.textSecondary }]}>
-              Your cycle suddenly becomes very irregular
-            </Text>
-          </View>
-        </View>
-
-        <View style={styles.section}>
-          <Text style={[styles.note, { color: colors.textSecondary }]}>
-            This information is for educational purposes only and should not
-            replace professional medical advice. Always consult with a
-            healthcare provider for personalized guidance.
-          </Text>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+      <View style={[styles.card, { backgroundColor: colors.surface }]}>
+        <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
+          Tips for Period Health
+        </Text>
+        <Text style={[styles.tips, { color: colors.textSecondary }]}>
+          • Track your period length and flow intensity{'\n'}• Stay hydrated and
+          maintain good nutrition{'\n'}• Use appropriate period products for
+          your flow{'\n'}• Consider tracking symptoms like cramps or mood
+          changes{'\n'}• Consult a healthcare provider if periods are
+          consistently irregular{'\n'}• Rest when needed and listen to your body
+        </Text>
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  content: {
-    flex: 1,
-    paddingHorizontal: 20,
-    paddingTop: 20,
+
+  card: {
+    borderRadius: 16,
+    padding: 20,
+    marginBottom: 16,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 24,
-    textAlign: 'center',
+    marginBottom: 12,
   },
-  section: {
-    marginBottom: 24,
+  description: {
+    fontSize: 16,
+    lineHeight: 24,
   },
   sectionTitle: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: '600',
     marginBottom: 12,
   },
-  reasonItem: {
-    marginBottom: 16,
-  },
-  reasonTitle: {
-    fontSize: 16,
+  normalRange: {
+    fontSize: 18,
     fontWeight: '600',
-    marginBottom: 4,
+    marginBottom: 12,
+    color: '#10B981',
   },
-  reasonDescription: {
-    fontSize: 14,
-    lineHeight: 20,
+  explanation: {
+    fontSize: 16,
+    lineHeight: 24,
   },
-  bodyText: {
-    fontSize: 14,
-    lineHeight: 20,
-    marginBottom: 8,
-  },
-  bulletPoint: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    marginBottom: 4,
-  },
-  bullet: {
-    fontSize: 14,
-    marginRight: 8,
-    marginTop: 2,
-  },
-  bulletText: {
-    fontSize: 14,
-    lineHeight: 20,
-    flex: 1,
-  },
-  note: {
-    fontSize: 12,
-    lineHeight: 16,
-    fontStyle: 'italic',
-    textAlign: 'center',
-    marginTop: 16,
+  tips: {
+    fontSize: 16,
+    lineHeight: 24,
   },
 });

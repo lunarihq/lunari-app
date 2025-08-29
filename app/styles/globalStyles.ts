@@ -9,6 +9,7 @@ const globalStyles = StyleSheet.create({
 
   scrollContentContainer: {
     paddingBottom: 16,
+    paddingTop: 8,
   },
 
   primaryButton: {
