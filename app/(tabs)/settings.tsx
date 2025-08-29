@@ -191,7 +191,7 @@ export default function Settings() {
 const styles = StyleSheet.create({
   section: {
     borderRadius: 8,
-    marginVertical: 16,
+    marginBottom: 8,
     overflow: 'hidden',
   },
   iconContainer: {

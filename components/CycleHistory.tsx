@@ -344,7 +344,6 @@ const styles = StyleSheet.create({
   card: {
     borderRadius: 12,
     padding: 0,
-    marginBottom: 16,
   },
   cycleContainer: {
     paddingVertical: 20,

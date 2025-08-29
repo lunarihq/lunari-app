@@ -252,7 +252,7 @@ export default function Stats() {
 
 const styles = StyleSheet.create({
   myCyclesContainer: {
-    marginVertical: 16,
+    marginBottom: 16,
     padding: 16,
     borderRadius: 16,
   },
