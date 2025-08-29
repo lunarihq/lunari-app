@@ -8,6 +8,7 @@ import DashedCircle from './DashedCircle';
 import { DropIcon } from './icons/Drop';
 import { PeriodPredictionService } from '../services/periodPredictions';
 import defaultTheme, { useTheme } from '../app/styles/theme';
+import { Colors } from '../app/styles/colors';
 
 interface CycleOverviewWidgetProps {
   currentDate: Date;
@@ -35,8 +36,8 @@ export function CycleOverviewWidget({
 
   return (
     <>
-      <View style={defaultTheme.globalStyles.predictionCard}>
-        <View style={defaultTheme.globalStyles.predictionOuterCircle}>
+      <View style={styles.predictionCard}>
+        <View style={styles.predictionOuterCircle}>
           <DashedCircle
             size={350}
             strokeWidth={3}
@@ -45,7 +46,7 @@ export function CycleOverviewWidget({
           />
           <View
             style={[
-              defaultTheme.globalStyles.predictionInnerCircle,
+              styles.predictionInnerCircle,
               { backgroundColor: colors.predictionCircleBackground },
             ]}
           >
@@ -58,7 +59,7 @@ export function CycleOverviewWidget({
                 </Text>
                 <Text
                   style={[
-                    defaultTheme.globalStyles.predictionLabel,
+                    styles.predictionLabel,
                     { color: colors.textPrimary },
                   ]}
                 >
@@ -66,7 +67,7 @@ export function CycleOverviewWidget({
                 </Text>
                 <Text
                   style={[
-                    defaultTheme.globalStyles.predictionDays,
+                    styles.predictionDays,
                     { color: colors.textPrimary },
                   ]}
                 >
@@ -84,7 +85,7 @@ export function CycleOverviewWidget({
                   <>
                     <Text
                       style={[
-                        defaultTheme.globalStyles.predictionLabel,
+                        styles.predictionLabel,
                         { color: colors.textPrimary },
                       ]}
                     >
@@ -92,7 +93,7 @@ export function CycleOverviewWidget({
                     </Text>
                     <Text
                       style={[
-                        defaultTheme.globalStyles.predictionDays,
+                        styles.predictionDays,
                         { color: colors.textPrimary },
                       ]}
                     >
@@ -102,7 +103,7 @@ export function CycleOverviewWidget({
                 ) : prediction.days === 0 ? (
                   <Text
                     style={[
-                      defaultTheme.globalStyles.predictionStatus,
+                      styles.predictionStatus,
                       { color: colors.textPrimary },
                     ]}
                   >
@@ -112,7 +113,7 @@ export function CycleOverviewWidget({
                   <>
                     <Text
                       style={[
-                        defaultTheme.globalStyles.predictionLabel,
+                        styles.predictionLabel,
                         { color: colors.textPrimary },
                       ]}
                     >
@@ -120,7 +121,7 @@ export function CycleOverviewWidget({
                     </Text>
                     <Text
                       style={[
-                        defaultTheme.globalStyles.predictionDays,
+                        styles.predictionDays,
                         { color: colors.textPrimary },
                       ]}
                     >
@@ -343,6 +344,49 @@ export function CycleOverviewWidget({
 }
 
 const styles = StyleSheet.create({
+  predictionCard: {
+    alignItems: 'center',
+    gap: 24,
+    marginTop: 8,
+    marginBottom: 24,
+    backgroundColor: 'red',
+  },
+  predictionOuterCircle: {
+    width: 345,
+    height: 345,
+    borderRadius: 200,
+    backgroundColor: 'blue',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  predictionInnerCircle: {
+    width: 310,
+    height: 310,
+    borderRadius: 155,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'green',
+  },
+  predictionLabel: {
+    fontSize: 22,
+    fontWeight: '500',
+    color: Colors.black,
+  },
+  predictionDays: {
+    fontSize: 48,
+    fontWeight: 'bold',
+    color: Colors.black,
+    marginBottom: 8,
+    paddingHorizontal: 8,
+  },
+  predictionStatus: {
+    fontSize: 28,
+    fontWeight: '500',
+    color: Colors.black,
+    textAlign: 'center',
+    marginBottom: 32,
+    paddingHorizontal: 16,
+  },
   insightsCard: {
     borderRadius: 12,
     padding: 16,
