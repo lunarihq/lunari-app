@@ -205,16 +205,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   emptyStateText: {
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: '500',
-    lineHeight: 26,
+    lineHeight: 28,
     textAlign: 'center',
-    paddingHorizontal: 20,
+    paddingHorizontal: 16,
+    marginBottom: 16,
   },
   currentDay: {
     fontSize: 16,
     fontWeight: '500',
-    marginBottom: 16,
+    marginBottom: 20,
   },
   primaryButton: {
     backgroundColor: Colors.primary,
