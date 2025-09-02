@@ -185,7 +185,7 @@ export default function Stats() {
       <Text
         style={[styles.emptyStateSubtitle, { color: colors.textSecondary }]}
       >
-        Start tracking your cycle to see personalized statistics and insights.
+        Log at least one cycle to see statistics and history.
       </Text>
       <Pressable
         onPress={() => router.push('/period-calendar')}
@@ -194,7 +194,7 @@ export default function Stats() {
           styles.emptyStateButton,
         ]}
       >
-        <Text style={defaultTheme.globalStyles.buttonText}>Log Period</Text>
+        <Text style={defaultTheme.globalStyles.buttonText}>Log period</Text>
       </Pressable>
     </View>
   );
