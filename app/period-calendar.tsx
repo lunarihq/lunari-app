@@ -214,6 +214,11 @@ export default function PeriodCalendarScreen() {
             )}
           </View>
         </TouchableOpacity>
+        {isToday && (
+          <Text style={[baseCalendarStyles.todayLabel, { color: colors.textSecondary }]}>
+            Today
+          </Text>
+        )}
       </View>
     );
   };

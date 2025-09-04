@@ -136,6 +136,11 @@ export function BaseCalendar({
     return (
       <View style={styles.dayContainer}>
         {dayButton}
+        {isToday && (
+          <Text style={[styles.todayLabel, { color: colors.textSecondary }]}>
+            Today
+          </Text>
+        )}
       </View>
     );
   };
@@ -244,6 +249,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     width: 40,
     height: 64,
+    backgroundColor: '#f2f2f2',
   },
   dayButton: {
     width: 32,
@@ -293,6 +299,11 @@ export const styles = StyleSheet.create({
   dayNameText: {
     fontSize: 12,
     fontWeight: '500',
+  },
+  todayLabel: {
+    fontSize: 11,
+    textAlign: 'center',
+    marginTop: 2,
   },
 });
 
