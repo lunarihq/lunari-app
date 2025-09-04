@@ -111,6 +111,7 @@ export function BaseCalendar({
       styles.dayButton,
       customMarking?.customStyles?.container,
       isToday && customMarking?.todayStyle,
+      isToday && { backgroundColor: colors.primaryLight },
       isDisabled ? styles.disabledDay : null,
     ];
 
@@ -270,7 +271,6 @@ export const styles = StyleSheet.create({
   },
   todayText: {
     fontWeight: 'bold',
-    color: 'red',
   },
   todayButtonText: {
     fontSize: 16,
@@ -302,8 +302,9 @@ export const styles = StyleSheet.create({
   },
   todayLabel: {
     fontSize: 11,
+    fontWeight: '500',
     textAlign: 'center',
-    marginTop: 2,
+    marginTop: 4,
   },
 });
 
