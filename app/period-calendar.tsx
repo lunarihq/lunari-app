@@ -227,7 +227,7 @@ export default function PeriodCalendarScreen() {
         </Text>
         {isTodayButtonVisible() && (
           <TouchableOpacity onPress={goToToday}>
-            <Text style={[styles.todayButtonText, { color: colors.primary }]}>
+            <Text style={[baseCalendarStyles.todayButtonText, styles.todayButtonText, { color: colors.primary }]}>
               Today
             </Text>
           </TouchableOpacity>
@@ -329,9 +329,7 @@ const styles = StyleSheet.create({
   },
 
   todayButtonText: {
-    fontSize: 16,
-    fontWeight: '500',
-    paddingTop: 63,
+    paddingTop: 64,
   },
 
   customDayText: {

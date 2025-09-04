@@ -15,7 +15,7 @@ import {
   useIsFocused,
 } from '@react-navigation/native';
 import { useLocalSearchParams, router } from 'expo-router';
-import { BaseCalendar } from '../../components/BaseCalendar';
+import { BaseCalendar, styles as baseCalendarStyles } from '../../components/BaseCalendar';
 import { CalendarBottomSheet } from '../../components/CalendarBottomSheet';
 import { formatDateString } from '../types/calendarTypes';
 import { useCalendarData } from '../../hooks/useCalendarData';
@@ -179,7 +179,7 @@ export default function CalendarScreen() {
       headerRight: isTodayButtonVisible()
         ? () => (
             <TouchableOpacity onPress={goToToday}>
-              <Text style={[styles.todayButtonText, { color: colors.primary }]}>
+              <Text style={[baseCalendarStyles.todayButtonText, styles.todayButtonText, { color: colors.primary }]}>
                 Today
               </Text>
             </TouchableOpacity>
@@ -229,8 +229,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   todayButtonText: {
-    fontSize: 16,
-    fontWeight: '500',
     marginRight: 16,
   },
   calendarContainer: {

@@ -266,6 +266,10 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'red',
   },
+  todayButtonText: {
+    fontSize: 16,
+    fontWeight: '500',
+  },
 
   headerContainer: {
     alignItems: 'center',
