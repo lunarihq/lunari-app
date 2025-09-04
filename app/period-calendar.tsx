@@ -188,7 +188,7 @@ export default function PeriodCalendarScreen() {
             style={[
               styles.customDayText,
               { color: colors.textPrimary },
-              isToday ? styles.todayText : null,
+              isToday ? baseCalendarStyles.todayText : null,
               isDisabled ? styles.disabledDayText : null,
               isSelected ? styles.selectedDayText : null,
             ]}
@@ -353,9 +353,6 @@ const styles = StyleSheet.create({
     borderColor: '#FB3192',
   },
 
-  todayText: {
-    fontWeight: 'bold',
-  },
   disabledDayText: {
     color: '#d9e1e8',
   },

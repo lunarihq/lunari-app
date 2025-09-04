@@ -264,6 +264,7 @@ export const styles = StyleSheet.create({
   },
   todayText: {
     fontWeight: 'bold',
+    color: 'red',
   },
 
   headerContainer: {
