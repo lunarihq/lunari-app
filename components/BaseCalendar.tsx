@@ -98,10 +98,6 @@ export function BaseCalendar({
     marking: CustomMarking;
   }) => {
     const customMarking = marking;
-    const isSelected =
-      customMarking?.selected ||
-      customMarking?.customStyles?.container?.backgroundColor ===
-        colors.accentPink;
     const isToday = state === 'today';
     const isDisabled = state === 'disabled';
 
@@ -110,13 +106,9 @@ export function BaseCalendar({
       customMarking?.customStyles?.container?.backgroundColor ===
       colors.accentPink;
 
-    // Check if this day has a custom container style (for selection background)
-    const hasCustomContainer = customMarking?.customContainerStyle;
-
     // Calculate styles once
     const buttonStyles = [
       styles.dayButton,
-      isSelected ? styles.selectedDay : null,
       customMarking?.customStyles?.container,
       isToday && customMarking?.todayStyle,
       isDisabled ? styles.disabledDay : null,
@@ -125,7 +117,6 @@ export function BaseCalendar({
     const textStyles = [
       styles.dayText,
       { color: colors.textPrimary },
-      isSelected && !isPeriodDay ? styles.selectedDayText : null,
       isPeriodDay ? { color: colors.white } : null,
       isDisabled ? styles.disabledDayText : null,
       isToday ? styles.todayText : null,
@@ -144,11 +135,7 @@ export function BaseCalendar({
 
     return (
       <View style={styles.dayContainer}>
-        {hasCustomContainer ? (
-          <View style={customMarking.customContainerStyle}>{dayButton}</View>
-        ) : (
-          dayButton
-        )}
+        {dayButton}
       </View>
     );
   };
@@ -257,14 +244,12 @@ export const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     width: 40,
     height: 64,
-    backgroundColor: '#f3f3f3',
   },
   dayButton: {
     width: 32,
     height: 32,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'transparent',
     borderRadius: 16,
   },
   dayText: {
@@ -281,15 +266,6 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 
-  selectedDay: {
-    backgroundColor: '#FFEAEE',
-    borderWidth: 2,
-    borderColor: '#FF597B',
-  },
-  selectedDayText: {
-    color: '#FF597B',
-    fontWeight: '500',
-  },
   headerContainer: {
     alignItems: 'center',
     justifyContent: 'center',
