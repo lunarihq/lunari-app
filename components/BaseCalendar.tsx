@@ -251,13 +251,13 @@ export function BaseCalendar({
 }
 
 // Shared styles for all calendar instances
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   dayContainer: {
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     width: 40,
-    height: 58,
-    backgroundColor: 'transparent',
+    height: 64,
+    backgroundColor: '#f3f3f3',
   },
   dayButton: {
     width: 32,

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { DateData } from 'react-native-calendars';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import { BaseCalendar, DAY_FONT_SIZE } from '../components/BaseCalendar';
+import { BaseCalendar, DAY_FONT_SIZE, styles as baseCalendarStyles } from '../components/BaseCalendar';
 import {
   CustomMarking,
   MarkedDates,
@@ -178,9 +178,8 @@ export default function PeriodCalendarScreen() {
     const isFuture = date ? new Date(date.dateString) > new Date(today) : false;
 
     return (
-      <View style={styles.customDayWrapper}>
+      <View style={baseCalendarStyles.dayContainer}>
         <TouchableOpacity
-          style={styles.customDayContainer}
           onPress={() => (date ? onDayPress(date) : null)}
           disabled={isDisabled}
         >
@@ -334,22 +333,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     paddingTop: 63,
   },
-  // Custom day styles
-  customDayWrapper: {
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    width: 40,
-    height: 58,
-    flexDirection: 'column',
-    marginBottom: 6,
-    backgroundColor: 'transparent',
-  },
-  customDayContainer: {
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    width: 32,
-    height: 32,
-  },
+
   customDayText: {
     fontSize: DAY_FONT_SIZE,
     textAlign: 'center',
