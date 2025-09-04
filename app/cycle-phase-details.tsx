@@ -115,23 +115,6 @@ export default function CyclePhaseDetails() {
             {possibleSymptoms}
           </Text>
         </View>
-        <View style={[styles.phaseCard, { backgroundColor: colors.surface }]}>
-          <View style={styles.phaseHeader}>
-            <Ionicons
-              name="medical-outline"
-              size={24}
-              color={colors.textPrimary}
-            />
-            <Text style={[styles.cardTitle, { color: colors.textPrimary }]}>
-              Possible symptoms
-            </Text>
-          </View>
-          <Text
-            style={[styles.phaseDescription, { color: colors.textPrimary }]}
-          >
-            {possibleSymptoms}
-          </Text>
-        </View>
       </ScrollView>
     </View>
   );

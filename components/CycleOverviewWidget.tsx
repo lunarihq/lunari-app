@@ -166,13 +166,11 @@ const styles = StyleSheet.create({
     gap: 24,
     marginTop: 8,
     marginBottom: 24,
-    backgroundColor: 'red',
   },
   predictionOuterCircle: {
     width: 345,
     height: 345,
     borderRadius: 200,
-    backgroundColor: 'blue',
     justifyContent: 'center',
     alignItems: 'center',
   },
