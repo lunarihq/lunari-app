@@ -19,7 +19,7 @@ import { BaseCalendar, styles as baseCalendarStyles } from '../../components/Bas
 import { CalendarBottomSheet } from '../../components/CalendarBottomSheet';
 import { formatDateString } from '../types/calendarTypes';
 import { useCalendarData } from '../../hooks/useCalendarData';
-import { useCalendarDates } from '../../hooks/useCalendarDates';
+import { useCalendarMarkedDates } from '../../hooks/useCalendarMarkedDates';
 import { useCycleCalculations } from '../../hooks/useCycleCalculations';
 
 export default function CalendarScreen() {
@@ -33,13 +33,13 @@ export default function CalendarScreen() {
     userPeriodLength,
     averageCycleLength,
     loadData,
-  } = useCalendarData(colors);
+  } = useCalendarData();
 
   const {
     generateMarkedDates,
     getMarkedDatesWithSelection,
     getSelectionMarkedDates,
-  } = useCalendarDates({ colors, userCycleLength, userPeriodLength });
+  } = useCalendarMarkedDates({ colors, userCycleLength, userPeriodLength });
 
   const { cycleDay, setCycleDay, calculateCycleDay } = useCycleCalculations({
     firstPeriodDate,
@@ -73,7 +73,7 @@ export default function CalendarScreen() {
       const result = await loadData();
       // Always call generateMarkedDates, even with empty data to clear the calendar
       generateMarkedDates(
-        result?.dates || {},
+        result?.periodDates || [],
         result?.mostRecentStart || null,
         result?.periods || []
       );
@@ -98,12 +98,12 @@ export default function CalendarScreen() {
         const result = await loadData();
         if (
           result &&
-          result.dates &&
+          result.periodDates &&
           result.mostRecentStart &&
           result.periods
         ) {
           generateMarkedDates(
-            result.dates,
+            result.periodDates,
             result.mostRecentStart,
             result.periods
           );

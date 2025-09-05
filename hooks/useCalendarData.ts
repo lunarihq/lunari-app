@@ -2,9 +2,8 @@ import { useState, useEffect, useCallback } from 'react';
 import { db, getSetting } from '../db';
 import { periodDates } from '../db/schema';
 import { PeriodPredictionService } from '../services/periodPredictions';
-import { MarkedDates } from '../app/types/calendarTypes';
 
-export function useCalendarData(colors: { accentPink: string; white: string }) {
+export function useCalendarData() {
   const [firstPeriodDate, setFirstPeriodDate] = useState<string | null>(null);
   const [allPeriodDates, setAllPeriodDates] = useState<string[]>([]);
   const [userCycleLength, setUserCycleLength] = useState<number>(28);
@@ -35,26 +34,12 @@ export function useCalendarData(colors: { accentPink: string; white: string }) {
   const loadData = useCallback(async () => {
     const saved = await db.select().from(periodDates);
 
-    const dates = saved.reduce((acc: MarkedDates, curr) => {
-      acc[curr.date] = {
-        selected: true,
-        customStyles: {
-          container: {
-            backgroundColor: colors.accentPink,
-            borderRadius: 16,
-          },
-          text: {
-            color: colors.white,
-          },
-        },
-      };
-      return acc;
-    }, {} as MarkedDates);
+    // Return raw period dates without styling
+    const periodDateStrings = saved.map(s => s.date);
 
     if (saved.length > 0) {
-      const sortedDates = saved.map(s => s.date);
-      setAllPeriodDates(sortedDates);
-      const periods = PeriodPredictionService.groupDateIntoPeriods(sortedDates);
+      setAllPeriodDates(periodDateStrings);
+      const periods = PeriodPredictionService.groupDateIntoPeriods(periodDateStrings);
 
       // Get the start date of the most recent period
       const mostRecentPeriod = periods[0];
@@ -64,19 +49,29 @@ export function useCalendarData(colors: { accentPink: string; white: string }) {
 
       // Calculate average cycle length
       const cycleLength = PeriodPredictionService.getAverageCycleLength(
-        Object.keys(dates),
+        periodDateStrings,
         userCycleLength
       );
       setAverageCycleLength(cycleLength);
 
-      return { dates, mostRecentStart, periods, cycleLength };
+      return { 
+        periodDates: periodDateStrings, 
+        mostRecentStart, 
+        periods, 
+        cycleLength 
+      };
     } else {
       setFirstPeriodDate(null);
       setAllPeriodDates([]);
       setAverageCycleLength(28);
-      return { dates: {}, mostRecentStart: null, periods: [], cycleLength: 28 };
+      return { 
+        periodDates: [], 
+        mostRecentStart: null, 
+        periods: [], 
+        cycleLength: 28 
+      };
     }
-  }, [colors.accentPink, colors.white, userCycleLength]);
+  }, [userCycleLength]);
 
   return {
     firstPeriodDate,
