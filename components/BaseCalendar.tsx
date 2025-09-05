@@ -241,7 +241,6 @@ export function BaseCalendar({
               marginBottom: 7,
               width: 32,
               textAlign: 'center',
-              fontSize: 14,
               color: colors.textPrimary,
             },
           },
@@ -264,7 +263,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     width: 48,
     height: 64,
-    backgroundColor: '#f2f2f2',
+    marginBottom: -4,
   },
   dayButton: {
     width: 32,
@@ -272,7 +271,6 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 48,
-    backgroundColor: 'red',
   },
   dayText: {
     fontSize: DAY_FONT_SIZE,
