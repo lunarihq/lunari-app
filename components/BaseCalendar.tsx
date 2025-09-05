@@ -62,7 +62,7 @@ const DefaultDay = memo<{
         <Text style={textStyles}>{date ? date.day : ''}</Text>
       </TouchableOpacity>
       {isSelected && (
-        <View style={styles.selectionIndicator} />
+        <View style={[styles.selectionIndicator, { borderColor: colors.primary }]} />
       )}
       {isToday && (
         <Text style={[styles.todayLabel, { color: colors.textSecondary }]}>
@@ -326,7 +326,6 @@ export const styles = StyleSheet.create({
     height: 38,
     borderRadius: 32,
     borderWidth: 1.5,
-    borderColor: '#000000',
     backgroundColor: 'transparent',
   },
   healthLogDot: {
