@@ -215,9 +215,9 @@ export default function PeriodCalendarScreen() {
           </View>
         </TouchableOpacity>
         {isToday && (
-          <Text style={[baseCalendarStyles.todayLabel, { color: colors.textSecondary }]}>
-            Today
-          </Text>
+          <Text style={[baseCalendarStyles.todayLabel, {marginTop: 2 }]}>
+          Today
+        </Text>
         )}
       </View>
     );
