@@ -19,7 +19,8 @@ const DefaultDay = memo<{
   marking: CustomMarking;
   colors: any;
   onDayPress: (date: DateData) => void;
-}>(({ date, state, marking, colors, onDayPress }) => {
+  customDayContainerStyle?: any;
+}>(({ date, state, marking, colors, onDayPress, customDayContainerStyle }) => {
   const customMarking = marking;
   const isToday = state === 'today';
   const isDisabled = state === 'disabled';
@@ -52,7 +53,7 @@ const DefaultDay = memo<{
   }, [date, onDayPress]);
 
   return (
-    <View style={styles.dayContainer}>
+    <View style={[styles.dayContainer, customDayContainerStyle]}>
       <TouchableOpacity
         style={buttonStyles}
         onPress={handlePress}
@@ -93,6 +94,8 @@ export type BaseCalendarProps = {
   renderHeader?: (month: string) => React.ReactNode;
   // Optional custom day component
   renderDay?: React.ComponentType<any>;
+  // Optional custom style for day container
+  customDayContainerStyle?: any;
 
   // Max amount of months allowed to scroll to the past
   pastScrollRange?: number;
@@ -114,6 +117,7 @@ export function BaseCalendar({
   calendarKey,
   renderHeader,
   renderDay,
+  customDayContainerStyle,
 
   pastScrollRange = 12,
   futureScrollRange = 12,
@@ -151,8 +155,8 @@ export function BaseCalendar({
 
   // Memoized day component wrapper that passes colors and handleDayPress
   const MemoizedDayComponent = useCallback((props: any) => (
-    <DefaultDay {...props} colors={colors} onDayPress={handleDayPress} />
-  ), [colors, handleDayPress]);
+    <DefaultDay {...props} colors={colors} onDayPress={handleDayPress} customDayContainerStyle={customDayContainerStyle} />
+  ), [colors, handleDayPress, customDayContainerStyle]);
 
   // Default header component if none provided
   const defaultRenderHeader = useCallback(
@@ -256,10 +260,8 @@ export const styles = StyleSheet.create({
   dayContainer: {
     alignItems: 'center',
     justifyContent: 'flex-start',
-    paddingTop: 6,
     width: 48,
     height: 64,
-    backgroundColor: '#f2f2f2',
   },
   dayButton: {
     width: 34,
@@ -267,7 +269,6 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 24,
-    backgroundColor: 'green',
   },
   dayText: {
     fontSize: DAY_FONT_SIZE,
@@ -314,11 +315,11 @@ export const styles = StyleSheet.create({
     fontSize: 11,
     fontWeight: '500',
     textAlign: 'center',
-    marginTop: 6,
+    marginTop: 5,
   },
   selectionIndicator: {
     position: 'absolute',
-    top: 2.2,
+    top: 0.5,
     width: 42,
     height: 42,
     borderRadius: 32,

@@ -343,8 +343,8 @@ const styles = StyleSheet.create({
     marginBottom: 1,
   },
   dayIndicator: {
-    width: 22,
-    height: 22,
+    width: 24,
+    height: 24,
     borderRadius: 12,
     borderWidth: 2,
     borderColor: '#E0E0E0',
