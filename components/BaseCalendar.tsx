@@ -69,6 +69,9 @@ const DefaultDay = memo<{
           Today
         </Text>
       )}
+      {customMarking?.hasHealthLogs && (
+        <View style={[styles.healthLogDot, { backgroundColor: colors.primary }]} />
+      )}
     </View>
   );
 });
@@ -315,7 +318,7 @@ export const styles = StyleSheet.create({
     fontSize: 11,
     fontWeight: '500',
     textAlign: 'center',
-    marginTop: 5,
+    marginTop: 3,
   },
   selectionIndicator: {
     position: 'absolute',
@@ -326,6 +329,14 @@ export const styles = StyleSheet.create({
     borderWidth: 1.5,
     borderColor: '#000000',
     backgroundColor: 'transparent',
+  },
+  healthLogDot: {
+    position: 'absolute',
+    bottom: 1,
+    right: 20,
+    width: 8,
+    height: 8,
+    borderRadius: 16,
   },
 });
 

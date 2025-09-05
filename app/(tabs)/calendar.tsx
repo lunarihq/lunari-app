@@ -72,7 +72,7 @@ export default function CalendarScreen() {
     const listener = DeviceEventEmitter.addListener('dataDeleted', async () => {
       const result = await loadData();
       // Always call generateMarkedDates, even with empty data to clear the calendar
-      generateMarkedDates(
+      await generateMarkedDates(
         result?.periodDates || [],
         result?.mostRecentStart || null,
         result?.periods || []
@@ -102,7 +102,7 @@ export default function CalendarScreen() {
           result.mostRecentStart &&
           result.periods
         ) {
-          generateMarkedDates(
+          await generateMarkedDates(
             result.periodDates,
             result.mostRecentStart,
             result.periods

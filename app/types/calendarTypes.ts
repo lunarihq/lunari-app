@@ -11,6 +11,7 @@ export type CustomMarking = {
   todayStyle?: {
     backgroundColor: string;
   };
+  hasHealthLogs?: boolean;
 };
 
 // Type for date markers
