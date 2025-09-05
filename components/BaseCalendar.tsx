@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { CalendarList, DateData } from 'react-native-calendars';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, memo } from 'react';
 import {
   CustomMarking,
   MarkedDates,
@@ -11,6 +11,64 @@ import { useTheme } from '../app/styles/theme';
 
 // Constants
 export const DAY_FONT_SIZE = 16;
+
+// Memoized DefaultDay component to prevent recreation on every render
+const DefaultDay = memo<{
+  date?: DateData;
+  state: string;
+  marking: CustomMarking;
+  colors: any;
+  onDayPress: (date: DateData) => void;
+}>(({ date, state, marking, colors, onDayPress }) => {
+  const customMarking = marking;
+  const isToday = state === 'today';
+  const isDisabled = state === 'disabled';
+
+  // Determine if this is a period day (has the pink background)
+  const isPeriodDay =
+    customMarking?.customStyles?.container?.backgroundColor === colors.accentPink;
+
+  // Memoize styles to prevent recalculation on every render
+  const buttonStyles = useMemo(() => [
+    styles.dayButton,
+    customMarking?.customStyles?.container,
+    isToday && customMarking?.todayStyle,
+    isToday && { backgroundColor: colors.primaryLight },
+    isDisabled ? styles.disabledDay : null,
+  ], [customMarking, isToday, isDisabled, colors.primaryLight]);
+
+  const textStyles = useMemo(() => [
+    styles.dayText,
+    { color: colors.textPrimary },
+    isPeriodDay ? { color: colors.white } : null,
+    isDisabled ? styles.disabledDayText : null,
+    isToday ? styles.todayText : null,
+    customMarking?.customStyles?.text,
+  ], [colors.textPrimary, colors.white, isPeriodDay, isDisabled, isToday, customMarking?.customStyles?.text]);
+
+  const handlePress = useCallback(() => {
+    if (date) onDayPress(date);
+  }, [date, onDayPress]);
+
+  return (
+    <View style={styles.dayContainer}>
+      <TouchableOpacity
+        style={buttonStyles}
+        onPress={handlePress}
+        disabled={isDisabled}
+      >
+        <Text style={textStyles}>{date ? date.day : ''}</Text>
+      </TouchableOpacity>
+      {isToday && (
+        <Text style={[styles.todayLabel, { color: colors.textSecondary }]}>
+          Today
+        </Text>
+      )}
+    </View>
+  );
+});
+
+DefaultDay.displayName = 'DefaultDay';
 
 export type BaseCalendarProps = {
   // Mode determines the calendar's primary purpose
@@ -87,64 +145,10 @@ export function BaseCalendar({
     [mode, onDayPress, selectionRules?.disableFuture, markedDates]
   );
 
-  // Default day component if none provided
-  const DefaultDay: React.FC<any> = ({
-    date,
-    state,
-    marking,
-  }: {
-    date?: DateData;
-    state: string;
-    marking: CustomMarking;
-  }) => {
-    const customMarking = marking;
-    const isToday = state === 'today';
-    const isDisabled = state === 'disabled';
-
-    // Determine if this is a period day (has the pink background)
-    const isPeriodDay =
-      customMarking?.customStyles?.container?.backgroundColor ===
-      colors.accentPink;
-
-    // Calculate styles once
-    const buttonStyles = [
-      styles.dayButton,
-      customMarking?.customStyles?.container,
-      isToday && customMarking?.todayStyle,
-      isToday && { backgroundColor: colors.primaryLight },
-      isDisabled ? styles.disabledDay : null,
-    ];
-
-    const textStyles = [
-      styles.dayText,
-      { color: colors.textPrimary },
-      isPeriodDay ? { color: colors.white } : null,
-      isDisabled ? styles.disabledDayText : null,
-      isToday ? styles.todayText : null,
-      customMarking?.customStyles?.text,
-    ];
-
-    const dayButton = (
-      <TouchableOpacity
-        style={buttonStyles}
-        onPress={() => (date ? handleDayPress(date) : null)}
-        disabled={isDisabled}
-      >
-        <Text style={textStyles}>{date ? date.day : ''}</Text>
-      </TouchableOpacity>
-    );
-
-    return (
-      <View style={styles.dayContainer}>
-        {dayButton}
-        {isToday && (
-          <Text style={[styles.todayLabel, { color: colors.textSecondary }]}>
-            Today
-          </Text>
-        )}
-      </View>
-    );
-  };
+  // Memoized day component wrapper that passes colors and handleDayPress
+  const MemoizedDayComponent = useCallback((props: any) => (
+    <DefaultDay {...props} colors={colors} onDayPress={handleDayPress} />
+  ), [colors, handleDayPress]);
 
   // Default header component if none provided
   const defaultRenderHeader = useCallback(
@@ -208,7 +212,7 @@ export function BaseCalendar({
         hideArrows={hideArrows}
         firstDay={1}
         hideDayNames={hideDayNames}
-        dayComponent={renderDay || DefaultDay}
+        dayComponent={renderDay || MemoizedDayComponent}
         renderHeader={renderHeader || defaultRenderHeader}
         calendarHeight={calendarHeight}
         pastScrollRange={pastScrollRange}

@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback } from 'react';
 import { MarkedDates } from '../app/types/calendarTypes';
 import { useCalendarPredictions } from './useCalendarPredictions';
 import { getCalendarDateStyle, getPeriodDateStyle } from '../utils/calendarStyles';
@@ -24,7 +24,7 @@ export function useCalendarMarkedDates({
 }: UseCalendarMarkedDatesProps) {
   const [baseMarkedDates, setBaseMarkedDates] = useState<MarkedDates>({});
 
-  const { predictions, generatePredictions } = useCalendarPredictions({
+  const {generatePredictions } = useCalendarPredictions({
     userCycleLength,
     userPeriodLength,
   });
