@@ -268,7 +268,7 @@ export const styles = StyleSheet.create({
     height: 34,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 24,
+    borderRadius: 32,
   },
   dayText: {
     fontSize: DAY_FONT_SIZE,
@@ -319,11 +319,11 @@ export const styles = StyleSheet.create({
   },
   selectionIndicator: {
     position: 'absolute',
-    top: 0.5,
+    top: 0.3,
     width: 42,
     height: 42,
     borderRadius: 32,
-    borderWidth: 2,
+    borderWidth: 1.5,
     borderColor: '#000000',
     backgroundColor: 'transparent',
   },

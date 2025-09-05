@@ -76,7 +76,6 @@ export function getCalendarDateStyle(
  */
 export function getPeriodDateStyle(colors: CalendarColors): CalendarDateStyle {
   return {
-    selected: true,
     customStyles: {
       container: {
         backgroundColor: colors.accentPink,
