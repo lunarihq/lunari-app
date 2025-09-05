@@ -125,7 +125,7 @@ export function BaseCalendar({
   pastScrollRange = 12,
   futureScrollRange = 12,
   hideDayNames = false,
-  calendarHeight,
+  calendarHeight = 495,
 }: BaseCalendarProps) {
   const { colors } = useTheme();
 

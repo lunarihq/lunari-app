@@ -207,7 +207,6 @@ export default function CalendarScreen() {
           onDayPress={onDayPress}
           onMonthChange={onMonthChange}
           hideDayNames={true}
-          calendarHeight={518}
           customDayContainerStyle={{ paddingTop: 4 }}
         />
       </View>
