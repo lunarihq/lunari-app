@@ -149,7 +149,7 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
       <Text style={[styles.title, { color: colors.textPrimary }]}>
         Cycle history
       </Text>
-      <Text style={[styles.subtitle, { color: colors.textMuted }]}>
+      <Text style={[styles.subtitle, { color: colors.textSecondary }]}>
         {cycles.length} logged cycles
       </Text>
 

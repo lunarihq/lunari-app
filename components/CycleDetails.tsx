@@ -55,7 +55,7 @@ export function CycleDetails({
             </Text>
             {cycleDay && (
               <Text
-                style={[styles.conceptionChance, { color: colors.textMuted }]}
+                style={[styles.conceptionChance, { color: colors.textSecondary }]}
               >
                 {getConceptionChance()}
               </Text>
