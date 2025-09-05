@@ -60,8 +60,8 @@ export const lightColors: ColorScheme = {
   // text
   textPrimary: '#353345', // main text
   textSecondary: '#353345', // secondary text (subtitle)
-  textMuted: '#A1ADD7', // muted / hint
-  placeholder: '#5C5B63',
+  textMuted: '#8A86A9', // muted / hint
+  placeholder: '#FFD21F',
 
   white: '#FFFFFF',
   black: '#000000',
@@ -96,7 +96,7 @@ export const darkColors: ColorScheme = {
   // text (inverted for dark mode)
   textPrimary: '#FFFFFF', // white text for dark backgrounds
   textSecondary: '#E0E0E0', // light gray for secondary text
-  textMuted: '#8A8A8A', // muted gray for hints
+  textMuted: '#A09CC2', // muted gray for hints
   placeholder: '#6A6A6A', // placeholder text
 
   white: '#FFFFFF',

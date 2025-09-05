@@ -741,7 +741,7 @@ export default function SymptomTracking() {
               </Text>
             ) : (
               <Text
-                style={[styles.notesPlaceholder, { color: colors.textMuted }]}
+                style={[styles.notesPlaceholder, { color: colors.placeholder }]}
               >
                 Add notes about your day...
               </Text>
