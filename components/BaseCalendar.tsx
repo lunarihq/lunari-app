@@ -23,6 +23,7 @@ const DefaultDay = memo<{
   const customMarking = marking;
   const isToday = state === 'today';
   const isDisabled = state === 'disabled';
+  const isSelected = customMarking?.selected;
 
   // Determine if this is a period day (has the pink background)
   const isPeriodDay =
@@ -59,6 +60,9 @@ const DefaultDay = memo<{
       >
         <Text style={textStyles}>{date ? date.day : ''}</Text>
       </TouchableOpacity>
+      {isSelected && (
+        <View style={styles.selectionIndicator} />
+      )}
       {isToday && (
         <Text style={[styles.todayLabel, { color: colors.textSecondary }]}>
           Today
@@ -252,16 +256,18 @@ export const styles = StyleSheet.create({
   dayContainer: {
     alignItems: 'center',
     justifyContent: 'flex-start',
-    width: 40,
+    paddingTop: 6,
+    width: 48,
     height: 64,
     backgroundColor: '#f2f2f2',
   },
   dayButton: {
-    width: 32,
-    height: 32,
+    width: 34,
+    height: 34,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 16,
+    borderRadius: 24,
+    backgroundColor: 'green',
   },
   dayText: {
     fontSize: DAY_FONT_SIZE,
@@ -308,7 +314,17 @@ export const styles = StyleSheet.create({
     fontSize: 11,
     fontWeight: '500',
     textAlign: 'center',
-    marginTop: 4,
+    marginTop: 6,
+  },
+  selectionIndicator: {
+    position: 'absolute',
+    top: 2.2,
+    width: 42,
+    height: 42,
+    borderRadius: 32,
+    borderWidth: 2,
+    borderColor: '#000000',
+    backgroundColor: 'transparent',
   },
 });
 

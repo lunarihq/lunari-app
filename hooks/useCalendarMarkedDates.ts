@@ -82,8 +82,18 @@ export function useCalendarMarkedDates({
   // Generate marked dates with highlighting for a specific selected date
   const getMarkedDatesWithSelection = useCallback(
     (selectedDateParam: string) => {
-      // Return base marked dates without any selection styling
-      return baseMarkedDates;
+      // Create a copy of base marked dates and add selection indicator
+      const markedDatesWithSelection = { ...baseMarkedDates };
+      
+      // Add selection indicator to the selected date
+      if (selectedDateParam) {
+        markedDatesWithSelection[selectedDateParam] = {
+          ...markedDatesWithSelection[selectedDateParam],
+          selected: true,
+        };
+      }
+      
+      return markedDatesWithSelection;
     },
     [baseMarkedDates]
   );
