@@ -47,33 +47,23 @@ export function CycleOverviewWidget({
         >
           {isPeriodDay ? (
             <>
-              <Text
-                style={[styles.currentDay, { color: colors.textPrimary }]}
-              >
+              <Text style={[styles.currentDay, { color: colors.textPrimary }]}>
                 {getFormattedDate(currentDate)}
               </Text>
               <Text
-                style={[
-                  styles.predictionLabel,
-                  { color: colors.textPrimary },
-                ]}
+                style={[styles.predictionLabel, { color: colors.textPrimary }]}
               >
                 Period
               </Text>
               <Text
-                style={[
-                  styles.predictionDays,
-                  { color: colors.textPrimary },
-                ]}
+                style={[styles.predictionDays, { color: colors.textPrimary }]}
               >
                 Day {periodDayNumber}
               </Text>
             </>
           ) : prediction ? (
             <>
-              <Text
-                style={[styles.currentDay, { color: colors.textPrimary }]}
-              >
+              <Text style={[styles.currentDay, { color: colors.textPrimary }]}>
                 {getFormattedDate(currentDate)}
               </Text>
               {prediction.days > 0 ? (
@@ -132,9 +122,7 @@ export function CycleOverviewWidget({
             </>
           ) : (
             <>
-              <Text
-                style={[styles.currentDay, { color: colors.textPrimary }]}
-              >
+              <Text style={[styles.currentDay, { color: colors.textPrimary }]}>
                 {getFormattedDate(currentDate)}
               </Text>
               <Text

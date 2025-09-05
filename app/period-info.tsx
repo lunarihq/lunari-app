@@ -7,7 +7,10 @@ export default function PeriodLength() {
 
   return (
     <ScrollView
-      style={[defaultTheme.globalStyles.container, { backgroundColor: colors.background }]}
+      style={[
+        defaultTheme.globalStyles.container,
+        { backgroundColor: colors.background },
+      ]}
       contentContainerStyle={defaultTheme.globalStyles.scrollContentContainer}
       showsVerticalScrollIndicator={false}
     >
@@ -78,7 +81,6 @@ export default function PeriodLength() {
 }
 
 const styles = StyleSheet.create({
-
   card: {
     borderRadius: 16,
     padding: 20,

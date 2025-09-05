@@ -12,7 +12,7 @@ export function useHealthLogDates() {
       const result = await db
         .selectDistinct({ date: healthLogs.date })
         .from(healthLogs);
-      
+
       const dates = result.map(row => row.date);
       setHealthLogDates(dates);
       return dates;

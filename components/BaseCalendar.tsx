@@ -28,25 +28,39 @@ const DefaultDay = memo<{
 
   // Determine if this is a period day (has the pink background)
   const isPeriodDay =
-    customMarking?.customStyles?.container?.backgroundColor === colors.accentPink;
+    customMarking?.customStyles?.container?.backgroundColor ===
+    colors.accentPink;
 
   // Memoize styles to prevent recalculation on every render
-  const buttonStyles = useMemo(() => [
-    styles.dayButton,
-    customMarking?.customStyles?.container,
-    isToday && customMarking?.todayStyle,
-    isToday && { backgroundColor: colors.primaryLight },
-    isDisabled ? styles.disabledDay : null,
-  ], [customMarking, isToday, isDisabled, colors.primaryLight]);
+  const buttonStyles = useMemo(
+    () => [
+      styles.dayButton,
+      customMarking?.customStyles?.container,
+      isToday && customMarking?.todayStyle,
+      isToday && { backgroundColor: colors.primaryLight },
+      isDisabled ? styles.disabledDay : null,
+    ],
+    [customMarking, isToday, isDisabled, colors.primaryLight]
+  );
 
-  const textStyles = useMemo(() => [
-    styles.dayText,
-    { color: colors.textPrimary },
-    isPeriodDay ? { color: colors.white } : null,
-    isDisabled ? styles.disabledDayText : null,
-    isToday ? styles.todayText : null,
-    customMarking?.customStyles?.text,
-  ], [colors.textPrimary, colors.white, isPeriodDay, isDisabled, isToday, customMarking?.customStyles?.text]);
+  const textStyles = useMemo(
+    () => [
+      styles.dayText,
+      { color: colors.textPrimary },
+      isPeriodDay ? { color: colors.white } : null,
+      isDisabled ? styles.disabledDayText : null,
+      isToday ? styles.todayText : null,
+      customMarking?.customStyles?.text,
+    ],
+    [
+      colors.textPrimary,
+      colors.white,
+      isPeriodDay,
+      isDisabled,
+      isToday,
+      customMarking?.customStyles?.text,
+    ]
+  );
 
   const handlePress = useCallback(() => {
     if (date) onDayPress(date);
@@ -62,7 +76,9 @@ const DefaultDay = memo<{
         <Text style={textStyles}>{date ? date.day : ''}</Text>
       </TouchableOpacity>
       {isSelected && (
-        <View style={[styles.selectionIndicator, { borderColor: colors.primary }]} />
+        <View
+          style={[styles.selectionIndicator, { borderColor: colors.primary }]}
+        />
       )}
       {isToday && (
         <Text style={[styles.todayLabel, { color: colors.textSecondary }]}>
@@ -70,7 +86,9 @@ const DefaultDay = memo<{
         </Text>
       )}
       {customMarking?.hasHealthLogs && (
-        <View style={[styles.healthLogDot, { backgroundColor: colors.primary }]} />
+        <View
+          style={[styles.healthLogDot, { backgroundColor: colors.primary }]}
+        />
       )}
     </View>
   );
@@ -157,9 +175,17 @@ export function BaseCalendar({
   );
 
   // Memoized day component wrapper that passes colors and handleDayPress
-  const MemoizedDayComponent = useCallback((props: any) => (
-    <DefaultDay {...props} colors={colors} onDayPress={handleDayPress} customDayContainerStyle={customDayContainerStyle} />
-  ), [colors, handleDayPress, customDayContainerStyle]);
+  const MemoizedDayComponent = useCallback(
+    (props: any) => (
+      <DefaultDay
+        {...props}
+        colors={colors}
+        onDayPress={handleDayPress}
+        customDayContainerStyle={customDayContainerStyle}
+      />
+    ),
+    [colors, handleDayPress, customDayContainerStyle]
+  );
 
   // Default header component if none provided
   const defaultRenderHeader = useCallback(

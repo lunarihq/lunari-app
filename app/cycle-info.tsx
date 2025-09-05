@@ -2,7 +2,6 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import defaultTheme, { useTheme } from './styles/theme';
 
-
 export default function StatusInfo() {
   const { colors } = useTheme();
 
@@ -32,7 +31,10 @@ export default function StatusInfo() {
 
   return (
     <ScrollView
-      style={[defaultTheme.globalStyles.container, { backgroundColor: colors.background }]}
+      style={[
+        defaultTheme.globalStyles.container,
+        { backgroundColor: colors.background },
+      ]}
       contentContainerStyle={defaultTheme.globalStyles.scrollContentContainer}
       showsVerticalScrollIndicator={false}
     >
@@ -80,7 +82,6 @@ export default function StatusInfo() {
 }
 
 const styles = StyleSheet.create({
-
   card: {
     borderRadius: 16,
     padding: 20,

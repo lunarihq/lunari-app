@@ -39,7 +39,8 @@ export function useCalendarData() {
 
     if (saved.length > 0) {
       setAllPeriodDates(periodDateStrings);
-      const periods = PeriodPredictionService.groupDateIntoPeriods(periodDateStrings);
+      const periods =
+        PeriodPredictionService.groupDateIntoPeriods(periodDateStrings);
 
       // Get the start date of the most recent period
       const mostRecentPeriod = periods[0];
@@ -54,21 +55,21 @@ export function useCalendarData() {
       );
       setAverageCycleLength(cycleLength);
 
-      return { 
-        periodDates: periodDateStrings, 
-        mostRecentStart, 
-        periods, 
-        cycleLength 
+      return {
+        periodDates: periodDateStrings,
+        mostRecentStart,
+        periods,
+        cycleLength,
       };
     } else {
       setFirstPeriodDate(null);
       setAllPeriodDates([]);
       setAverageCycleLength(28);
-      return { 
-        periodDates: [], 
-        mostRecentStart: null, 
-        periods: [], 
-        cycleLength: 28 
+      return {
+        periodDates: [],
+        mostRecentStart: null,
+        periods: [],
+        cycleLength: 28,
       };
     }
   }, [userCycleLength]);

@@ -4,7 +4,11 @@ import { useState, useEffect } from 'react';
 import { DateData } from 'react-native-calendars';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import { BaseCalendar, DAY_FONT_SIZE, styles as baseCalendarStyles } from '../components/BaseCalendar';
+import {
+  BaseCalendar,
+  DAY_FONT_SIZE,
+  styles as baseCalendarStyles,
+} from '../components/BaseCalendar';
 import {
   CustomMarking,
   MarkedDates,
@@ -215,9 +219,9 @@ export default function PeriodCalendarScreen() {
           </View>
         </TouchableOpacity>
         {isToday && (
-          <Text style={[baseCalendarStyles.todayLabel, {marginTop: 2 }]}>
-          Today
-        </Text>
+          <Text style={[baseCalendarStyles.todayLabel, { marginTop: 2 }]}>
+            Today
+          </Text>
         )}
       </View>
     );
@@ -232,7 +236,13 @@ export default function PeriodCalendarScreen() {
         </Text>
         {isTodayButtonVisible() && (
           <TouchableOpacity onPress={goToToday}>
-            <Text style={[baseCalendarStyles.todayButtonText, styles.todayButtonText, { color: colors.primary }]}>
+            <Text
+              style={[
+                baseCalendarStyles.todayButtonText,
+                styles.todayButtonText,
+                { color: colors.primary },
+              ]}
+            >
               Today
             </Text>
           </TouchableOpacity>

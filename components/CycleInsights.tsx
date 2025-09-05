@@ -16,7 +16,7 @@ export function CycleInsights({
   averageCycleLength,
 }: CycleInsightsProps) {
   const { colors } = useTheme();
-  
+
   const iconContainerStyle = {
     ...styles.insightIconContainer,
     backgroundColor: colors.surfaceVariant2,
@@ -67,10 +67,7 @@ export function CycleInsights({
           >
             <View style={styles.insightTop}>
               <View style={iconContainerStyle}>
-                <DropIcon
-                  size={24}
-                  color={colors.icon}
-                />
+                <DropIcon size={24} color={colors.icon} />
               </View>
               <Text
                 style={[styles.insightLabel, { color: colors.textPrimary }]}
@@ -81,7 +78,7 @@ export function CycleInsights({
             <View
               style={[
                 styles.insightValueContainer,
-                { backgroundColor: colors.surfaceVariant2},
+                { backgroundColor: colors.surfaceVariant2 },
               ]}
             >
               <Text
@@ -109,10 +106,7 @@ export function CycleInsights({
           >
             <View style={styles.insightTop}>
               <View style={iconContainerStyle}>
-                <DropIcon
-                  size={24}
-                  color={colors.icon}
-                />
+                <DropIcon size={24} color={colors.icon} />
               </View>
               <Text
                 style={[styles.insightLabel, { color: colors.textPrimary }]}
@@ -156,10 +150,7 @@ export function CycleInsights({
           >
             <View style={styles.insightTop}>
               <View style={iconContainerStyle}>
-                <DropIcon
-                  size={24}
-                  color={colors.icon}
-                />
+                <DropIcon size={24} color={colors.icon} />
               </View>
               <Text
                 style={[styles.insightLabel, { color: colors.textPrimary }]}

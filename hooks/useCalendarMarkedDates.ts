@@ -2,7 +2,10 @@ import { useState, useCallback } from 'react';
 import { MarkedDates } from '../app/types/calendarTypes';
 import { useCalendarPredictions } from './useCalendarPredictions';
 import { useHealthLogDates } from './useHealthLogDates';
-import { getCalendarDateStyle, getPeriodDateStyle } from '../utils/calendarStyles';
+import {
+  getCalendarDateStyle,
+  getPeriodDateStyle,
+} from '../utils/calendarStyles';
 
 interface UseCalendarMarkedDatesProps {
   colors: {
@@ -25,7 +28,7 @@ export function useCalendarMarkedDates({
 }: UseCalendarMarkedDatesProps) {
   const [baseMarkedDates, setBaseMarkedDates] = useState<MarkedDates>({});
 
-  const {generatePredictions } = useCalendarPredictions({
+  const { generatePredictions } = useCalendarPredictions({
     userCycleLength,
     userPeriodLength,
   });
@@ -62,7 +65,10 @@ export function useCalendarMarkedDates({
         Object.entries(fertilityDates).forEach(([dateString, prediction]) => {
           // Only apply fertility style if this is not an actual period date
           if (!allMarkedDates[dateString]?.selected) {
-            allMarkedDates[dateString] = getCalendarDateStyle(prediction.type, colors);
+            allMarkedDates[dateString] = getCalendarDateStyle(
+              prediction.type,
+              colors
+            );
           }
         });
 
@@ -70,7 +76,10 @@ export function useCalendarMarkedDates({
         Object.entries(predictedDates).forEach(([dateString, prediction]) => {
           // Only apply prediction style if this is not an actual period date and not already a fertility date
           if (!allMarkedDates[dateString]?.selected) {
-            allMarkedDates[dateString] = getCalendarDateStyle(prediction.type, colors);
+            allMarkedDates[dateString] = getCalendarDateStyle(
+              prediction.type,
+              colors
+            );
           }
         });
       }
@@ -99,7 +108,7 @@ export function useCalendarMarkedDates({
     (selectedDateParam: string) => {
       // Create a copy of base marked dates and add selection indicator
       const markedDatesWithSelection = { ...baseMarkedDates };
-      
+
       // Add selection indicator to the selected date
       if (selectedDateParam) {
         markedDatesWithSelection[selectedDateParam] = {
@@ -107,7 +116,7 @@ export function useCalendarMarkedDates({
           selected: true,
         };
       }
-      
+
       return markedDatesWithSelection;
     },
     [baseMarkedDates]
