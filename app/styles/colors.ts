@@ -61,7 +61,7 @@ export const lightColors: ColorScheme = {
   textPrimary: '#353345', // main text
   textSecondary: '#353345', // secondary text (subtitle)
   textMuted: '#8A86A9', // muted / hint
-  placeholder: '#FFD21F',
+  placeholder: '#8D8A99',
 
   white: '#FFFFFF',
   black: '#000000',
@@ -74,7 +74,7 @@ export const darkColors: ColorScheme = {
   // surfaces
   background: '#161530', // dark page background
   surface: '#22213F', // dark cards / panels
-  surfaceVariant: '#282749', // dark variant cards / panels
+  surfaceVariant: '#323154', // dark variant cards / panels
   surfaceVariant2: '#30304D', // dark variant cards / panels
   surfaceTabBar: '#22213F', // dark tab bar background
   panel: '#161530', // dark subtle panel background
@@ -97,7 +97,7 @@ export const darkColors: ColorScheme = {
   textPrimary: '#FFFFFF', // white text for dark backgrounds
   textSecondary: '#E0E0E0', // light gray for secondary text
   textMuted: '#A09CC2', // muted gray for hints
-  placeholder: '#6A6A6A', // placeholder text
+  placeholder: '#A5A4C2', // placeholder text
 
   white: '#FFFFFF',
   black: '#000000',

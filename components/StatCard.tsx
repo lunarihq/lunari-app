@@ -47,7 +47,7 @@ export function StatCard({ title, value, icon, status, type }: StatCardProps) {
 
   return (
     <View style={[styles.card, { backgroundColor: colors.surfaceVariant }]}>
-      <View style={styles.iconContainer}>{icon}</View>
+      <View style={[styles.iconContainer, { backgroundColor: colors.surfaceVariant2 }]}>{icon}</View>
       <View style={styles.contentContainer}>
         <Text style={[styles.title, { color: colors.textSecondary }]}>
           {title}
@@ -90,7 +90,6 @@ const styles = StyleSheet.create({
     width: 54,
     height: 54,
     borderRadius: 8,
-    backgroundColor: '#E0E7FF',
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 12,

@@ -83,7 +83,7 @@ export default function NotesEditor() {
           <TextInput
             style={[styles.notesInput, { color: colors.textPrimary }]}
             placeholder="Add notes, any extra symptoms, or how you've been feeling..."
-            placeholderTextColor={'colors.placeholder'}
+            placeholderTextColor={colors.placeholder}
             value={localNotes}
             onChangeText={setLocalNotes}
             multiline
