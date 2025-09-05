@@ -16,6 +16,11 @@ export function CycleInsights({
   averageCycleLength,
 }: CycleInsightsProps) {
   const { colors } = useTheme();
+  
+  const iconContainerStyle = {
+    ...styles.insightIconContainer,
+    backgroundColor: colors.surfaceVariant2,
+  };
 
   return (
     <View style={[styles.insightsCard, { backgroundColor: colors.surface }]}>
@@ -50,7 +55,7 @@ export function CycleInsights({
               styles.insightCard,
               {
                 backgroundColor: colors.background,
-                borderColor: colors.primary,
+                borderColor: colors.cardBorder,
               },
             ]}
             onPress={() =>
@@ -61,10 +66,10 @@ export function CycleInsights({
             }
           >
             <View style={styles.insightTop}>
-              <View style={styles.insightIconContainer}>
+              <View style={iconContainerStyle}>
                 <DropIcon
                   size={24}
-                  color={colors.textPrimary}
+                  color={colors.icon}
                 />
               </View>
               <Text
@@ -76,7 +81,7 @@ export function CycleInsights({
             <View
               style={[
                 styles.insightValueContainer,
-                { backgroundColor: colors.surface },
+                { backgroundColor: colors.surfaceVariant2},
               ]}
             >
               <Text
@@ -92,7 +97,7 @@ export function CycleInsights({
               styles.insightCard,
               {
                 backgroundColor: colors.background,
-                borderColor: colors.primary,
+                borderColor: colors.cardBorder,
               },
             ]}
             onPress={() =>
@@ -103,10 +108,10 @@ export function CycleInsights({
             }
           >
             <View style={styles.insightTop}>
-              <View style={styles.insightIconContainer}>
+              <View style={iconContainerStyle}>
                 <DropIcon
                   size={24}
-                  color={colors.textPrimary}
+                  color={colors.icon}
                 />
               </View>
               <Text
@@ -118,7 +123,7 @@ export function CycleInsights({
             <View
               style={[
                 styles.insightValueContainer,
-                { backgroundColor: colors.surface },
+                { backgroundColor: colors.surfaceVariant2 },
               ]}
             >
               <Text
@@ -139,7 +144,7 @@ export function CycleInsights({
               styles.insightCard,
               {
                 backgroundColor: colors.background,
-                borderColor: colors.primary,
+                borderColor: colors.cardBorder,
               },
             ]}
             onPress={() =>
@@ -150,10 +155,10 @@ export function CycleInsights({
             }
           >
             <View style={styles.insightTop}>
-              <View style={styles.insightIconContainer}>
+              <View style={iconContainerStyle}>
                 <DropIcon
                   size={24}
-                  color={colors.textPrimary}
+                  color={colors.icon}
                 />
               </View>
               <Text
@@ -170,7 +175,7 @@ export function CycleInsights({
             <View
               style={[
                 styles.insightValueContainer,
-                { backgroundColor: colors.surface },
+                { backgroundColor: colors.surfaceVariant2 },
               ]}
             >
               <Text
@@ -223,7 +228,7 @@ const styles = StyleSheet.create({
   insightCard: {
     flex: 1,
     borderRadius: 12,
-    borderWidth: 1,
+    borderWidth: 1.5,
     paddingVertical: 12,
     paddingBottom: 0,
     alignItems: 'center',
@@ -232,7 +237,6 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   insightIconContainer: {
-    backgroundColor: 'white',
     borderRadius: 20,
     width: 40,
     height: 40,

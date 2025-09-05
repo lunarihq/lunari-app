@@ -3,9 +3,12 @@ export interface ColorScheme {
   background: string; // page background
   surface: string; // main cards / panels
   surfaceVariant: string; // variant cards / panels
+  surfaceVariant2: string; // variant cards / panels
   surfaceTabBar: string; // tab bar background
   panel: string; // subtle panel background
   border: string; // borders / dividers
+  cardBorder: string; // card borders
+  icon: string; // icon color
 
   // primary / main brand colors
   primary: string;
@@ -36,9 +39,12 @@ export const lightColors: ColorScheme = {
   background: '#ECEDFF', // page background
   surface: '#FFFFFF', // main cards / panels
   surfaceVariant: '#F4F6FF', // variant cards / panels
+  surfaceVariant2: '#FFFFFF', // variant cards / panels
   surfaceTabBar: '#F1F0F6', // tabs / sheets / panels
   panel: '#FFFFFF', // subtle panel background
   border: '#EFEFF6', // borders / dividers
+  cardBorder: '#4B61C7', // card borders
+  icon: '#1A1A28', // icon color
 
   // primary / main brand colors
   primary: '#4B61C7', // main action (primary buttons, text buttons, links, active tabs
@@ -69,9 +75,12 @@ export const darkColors: ColorScheme = {
   background: '#161530', // dark page background
   surface: '#22213F', // dark cards / panels
   surfaceVariant: '#282749', // dark variant cards / panels
+  surfaceVariant2: '#30304D', // dark variant cards / panels
   surfaceTabBar: '#22213F', // dark tab bar background
   panel: '#161530', // dark subtle panel background
   border: '#3A3A5E', // dark borders / dividers
+  cardBorder: '#6E6E8F', // dark card borders
+  icon: '#D4D4F6', // dark icon color
 
   // primary / main brand colors (keep brand consistent but adjust for contrast)
   primary: '#5F7AF4', // slightly lighter for better contrast on dark
