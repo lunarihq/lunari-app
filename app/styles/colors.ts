@@ -84,7 +84,7 @@ export const darkColors: ColorScheme = {
 
   // primary / main brand colors (keep brand consistent but adjust for contrast)
   primary: '#5F7AF4', // slightly lighter for better contrast on dark
-  primaryLight: '#1A2332', // dark version of light accent
+  primaryLight: '#393959', // dark version of light accent
   accentPink: '#FF4DA6', // slightly lighter pink for dark mode
   accentPinkLight: '#FFDEEE', // dark version of light pink background
   accentBlue: '#75AAFF', // For fertile days indicator 
