@@ -54,7 +54,7 @@ export default function TabLayout() {
             backgroundColor: colors.panel,
           },
           headerTitleStyle: {
-            color: 'colors.textPrimary',
+            color: colors.textPrimary,
             fontSize: 18,
           },
           headerTintColor: colors.textPrimary,
