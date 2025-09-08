@@ -11,7 +11,7 @@ import { Ionicons } from '@expo/vector-icons';
 import dayjs from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek';
 import { db } from '../db';
-import { healthLogs } from '../db/schema';
+import { healthLogs, periodDates } from '../db/schema';
 import { eq } from 'drizzle-orm';
 import { useFocusEffect } from '@react-navigation/native';
 import defaultTheme, { useTheme } from './styles/theme';
@@ -48,6 +48,9 @@ export default function SymptomTracking() {
   const [originalFlows, setOriginalFlows] = useState<string[]>([]);
   const [originalNotes, setOriginalNotes] = useState<string>('');
   const [hasChanges, setHasChanges] = useState<boolean>(false);
+  
+  // Track if the selected date is a period date
+  const [isPeriodDate, setIsPeriodDate] = useState<boolean>(false);
 
   const scrollViewRef = useRef<ScrollView>(null);
   const notesSectionRef = useRef<View>(null);
@@ -233,10 +236,27 @@ export default function SymptomTracking() {
     },
   ]);
 
+  // Check if selected date is a period date
+  const checkIsPeriodDate = async (date: string) => {
+    try {
+      const result = await db
+        .select()
+        .from(periodDates)
+        .where(eq(periodDates.date, date));
+      setIsPeriodDate(result.length > 0);
+    } catch (error) {
+      console.error('Error checking period date:', error);
+      setIsPeriodDate(false);
+    }
+  };
+
   // Load existing health logs when the component mounts or selected date changes
   useEffect(() => {
     const loadExistingHealthLogs = async () => {
       try {
+        // Check if selected date is a period date
+        await checkIsPeriodDate(selectedDate);
+        
         // Fetch existing entries for the selected date
         const existingEntries = await db
           .select()
@@ -523,61 +543,63 @@ export default function SymptomTracking() {
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        {/* Flow */}
-        <View style={[styles.section, { backgroundColor: colors.surface }]}>
-          <View style={styles.sectionHeader}>
-            <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
-              Flow
-            </Text>
-          </View>
+        {/* Flow - Only show on period dates */}
+        {isPeriodDate && (
+          <View style={[styles.section, { backgroundColor: colors.surface }]}>
+            <View style={styles.sectionHeader}>
+              <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
+                Flow
+              </Text>
+            </View>
 
-          <View style={styles.itemsGrid}>
-            {flows.map(flow => (
-              <TouchableOpacity
-                key={flow.id}
-                style={[
-                  styles.itemButton,
-                  flow.selected && styles.selectedItemButton,
-                ]}
-                onPress={() => toggleFlow(flow.id)}
-              >
-                <View
+            <View style={styles.itemsGrid}>
+              {flows.map(flow => (
+                <TouchableOpacity
+                  key={flow.id}
                   style={[
-                    styles.itemIcon,
-                    flow.selected && {
-                      ...styles.selectedItemIcon,
-                      borderColor: colors.accentPink,
-                    },
+                    styles.itemButton,
+                    flow.selected && styles.selectedItemButton,
                   ]}
+                  onPress={() => toggleFlow(flow.id)}
                 >
-                  <CustomIcon name={flow.icon as any} size={ICON_SIZE} />
-                  {flow.selected && (
-                    <View
-                      style={[
-                        styles.checkmarkContainer,
-                        {
-                          borderColor: colors.surface,
-                          backgroundColor: colors.accentPink,
-                        },
-                      ]}
-                    >
-                      <Ionicons
-                        name="checkmark"
-                        size={16}
-                        color={colors.white}
-                      />
-                    </View>
-                  )}
-                </View>
-                <Text
-                  style={[styles.itemText, { color: colors.textSecondary }]}
-                >
-                  {flow.name}
-                </Text>
-              </TouchableOpacity>
-            ))}
+                  <View
+                    style={[
+                      styles.itemIcon,
+                      flow.selected && {
+                        ...styles.selectedItemIcon,
+                        borderColor: colors.accentPink,
+                      },
+                    ]}
+                  >
+                    <CustomIcon name={flow.icon as any} size={ICON_SIZE} />
+                    {flow.selected && (
+                      <View
+                        style={[
+                          styles.checkmarkContainer,
+                          {
+                            borderColor: colors.surface,
+                            backgroundColor: colors.accentPink,
+                          },
+                        ]}
+                      >
+                        <Ionicons
+                          name="checkmark"
+                          size={16}
+                          color={colors.white}
+                        />
+                      </View>
+                    )}
+                  </View>
+                  <Text
+                    style={[styles.itemText, { color: colors.textSecondary }]}
+                  >
+                    {flow.name}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
           </View>
-        </View>
+        )}
         {/* Symptoms */}
         <View style={[styles.section, { backgroundColor: colors.surface }]}>
           <View style={styles.sectionHeader}>
