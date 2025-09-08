@@ -253,6 +253,22 @@ function AppContent() {
               : lightColors.textPrimary,
           }}
         />
+        <Stack.Screen
+          name="prediction-info"
+          options={{
+            headerShown: true,
+            headerTitle: 'How Predictions Work',
+            headerShadowVisible: false,
+            headerStyle: {
+              backgroundColor: isDark
+                ? darkColors.background
+                : lightColors.background,
+            },
+            headerTintColor: isDark
+              ? darkColors.textPrimary
+              : lightColors.textPrimary,
+          }}
+        />
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style={isDark ? 'light' : 'dark'} />

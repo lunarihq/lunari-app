@@ -1,9 +1,11 @@
-import { Tabs } from 'expo-router';
+import { Tabs, useRouter } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { TouchableOpacity } from 'react-native';
 import { useTheme } from '../styles/theme';
 
 export default function TabLayout() {
   const { colors } = useTheme();
+  const router = useRouter();
 
   return (
     <Tabs
@@ -34,6 +36,18 @@ export default function TabLayout() {
         name="index"
         options={{
           headerTitle: 'Lunari',
+          headerRight: () => (
+            <TouchableOpacity
+              onPress={() => router.push('/prediction-info')}
+              style={{ marginRight: 16 }}
+            >
+              <Ionicons
+                name="information-circle-outline"
+                size={24}
+                color={colors.textPrimary}
+              />
+            </TouchableOpacity>
+          ),
           tabBarLabel: 'Today',
           tabBarIcon: ({ color, focused }) => (
             <Ionicons

@@ -1,6 +1,7 @@
+import { StyleSheet } from 'react-native';
 import { Colors } from './colors';
 
-export const Typography = {
+export const Typography = StyleSheet.create({
   heading1: {
     fontSize: 32,
     fontWeight: '700',
@@ -21,6 +22,6 @@ export const Typography = {
     fontWeight: '400',
     color: Colors.textSecondary,
   },
-};
+});
 
 export default Typography;
