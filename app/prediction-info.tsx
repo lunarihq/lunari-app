@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, ScrollView, Text } from 'react-native';
-import { useTheme } from '../contexts/ThemeContext';
-import defaultTheme from './styles/theme';
+import defaultTheme, { useTheme } from './styles/theme';
 
 export default function PredictionInfo() {
   const { colors } = useTheme();
@@ -19,7 +18,7 @@ export default function PredictionInfo() {
         <Text
           style={[
             defaultTheme.Typography.heading1,
-            { color: colors.textPrimary, marginBottom: 16 },
+            { color: colors.textPrimary, marginTop: 16 },
           ]}
         >
           How Lunari Predicts Your Period

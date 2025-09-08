@@ -75,6 +75,7 @@ export default function Settings() {
 
         <TouchableOpacity
           style={[styles.settingRow, { borderBottomColor: colors.border }]}
+          onPress={() => router.push('/privacy-policy')}
         >
           <View style={styles.iconContainer}>
             <Ionicons
