@@ -33,8 +33,12 @@ export default function Stats() {
       // Load period dates from the database
       const saved = await db.select().from(periodDates);
 
-      if (saved.length === 0) {
-        // Reset all states when there are no period dates
+      const sortedDates = saved.map(s => s.date);
+      const periods = PeriodPredictionService.groupDateIntoPeriods(sortedDates);
+
+      // Only show stats if we have at least 2 periods (to calculate real averages)
+      if (saved.length === 0 || periods.length < 2) {
+        // Reset all states when there's insufficient data
         setAverageCycleLength(0);
         setAveragePeriodLength(0);
         setCycleHistory([]);
@@ -42,11 +46,8 @@ export default function Stats() {
         return;
       }
 
-      // We have period data, so hide empty state
+      // We have sufficient period data, so hide empty state
       setHasNoPeriodData(false);
-
-      const sortedDates = saved.map(s => s.date);
-      const periods = PeriodPredictionService.groupDateIntoPeriods(sortedDates);
 
       // Calculate average cycle length
       const cycleLength = PeriodPredictionService.getAverageCycleLength(
@@ -185,7 +186,7 @@ export default function Stats() {
       <Text
         style={[styles.emptyStateSubtitle, { color: colors.textSecondary }]}
       >
-        Log at least one cycle to see statistics and history.
+        Log at least 2 periods to see your personal cycle statistics.
       </Text>
       <Pressable
         onPress={() => router.push('/period-calendar')}
