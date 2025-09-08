@@ -96,6 +96,7 @@ export default function Settings() {
 
         <TouchableOpacity
           style={[styles.settingRow, { borderBottomColor: colors.border }]}
+          onPress={() => router.push('/about')}
         >
           <View style={styles.iconContainer}>
             <Ionicons
