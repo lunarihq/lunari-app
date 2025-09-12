@@ -30,7 +30,8 @@ export default function PredictionInfo() {
             { color: colors.textSecondary, marginBottom: 24, lineHeight: 22 },
           ]}
         >
-          Lunari uses your period history to make predictions. Here's exactly how it works:
+          Lunari uses your period history to make predictions. Here's exactly
+          how it works:
         </Text>
 
         <View style={{ marginBottom: 32 }}>
@@ -48,7 +49,9 @@ export default function PredictionInfo() {
               { color: colors.textSecondary, lineHeight: 22, marginBottom: 16 },
             ]}
           >
-            We calculate your average cycle length using a weighted average of your last 6 cycles. Recent cycles have more influence on predictions than older ones.
+            We calculate your average cycle length using a weighted average of
+            your last 6 cycles. Recent cycles have more influence on predictions
+            than older ones.
           </Text>
           <Text
             style={[
@@ -56,10 +59,8 @@ export default function PredictionInfo() {
               { color: colors.textMuted, fontStyle: 'italic' },
             ]}
           >
-            • Most recent cycle: 100% weight
-            • 2nd cycle back: 80% weight  
-            • 3rd cycle back: 60% weight
-            • And so on...
+            • Most recent cycle: 100% weight • 2nd cycle back: 80% weight • 3rd
+            cycle back: 60% weight • And so on...
           </Text>
         </View>
 
@@ -78,7 +79,8 @@ export default function PredictionInfo() {
               { color: colors.textSecondary, lineHeight: 22 },
             ]}
           >
-            Your next period is predicted by adding your average cycle length to the start date of your most recent period.
+            Your next period is predicted by adding your average cycle length to
+            the start date of your most recent period.
           </Text>
         </View>
 
@@ -97,7 +99,8 @@ export default function PredictionInfo() {
               { color: colors.textSecondary, lineHeight: 22, marginBottom: 16 },
             ]}
           >
-            Ovulation is predicted to occur 14 days before your next expected period. Your fertile window includes:
+            Ovulation is predicted to occur 14 days before your next expected
+            period. Your fertile window includes:
           </Text>
           <Text
             style={[
@@ -105,9 +108,7 @@ export default function PredictionInfo() {
               { color: colors.textMuted, fontStyle: 'italic' },
             ]}
           >
-            • 5 days before ovulation
-            • Ovulation day
-            • 1 day after ovulation
+            • 5 days before ovulation • Ovulation day • 1 day after ovulation
           </Text>
         </View>
 
@@ -126,7 +127,9 @@ export default function PredictionInfo() {
               { color: colors.textSecondary, lineHeight: 22 },
             ]}
           >
-            The more periods you track, the more accurate predictions become. With 3+ cycles, Lunari can provide personalized predictions based on your unique patterns.
+            The more periods you track, the more accurate predictions become.
+            With 3+ cycles, Lunari can provide personalized predictions based on
+            your unique patterns.
           </Text>
         </View>
 
@@ -152,20 +155,25 @@ export default function PredictionInfo() {
               { color: colors.textSecondary, lineHeight: 20 },
             ]}
           >
-            All calculations happen locally on your device. Your period data never leaves your phone and is never shared with anyone.
+            All calculations happen locally on your device. Your period data
+            never leaves your phone and is never shared with anyone.
           </Text>
         </View>
 
         <Text
           style={[
             defaultTheme.Typography.caption,
-            { color: colors.textMuted, textAlign: 'center', fontStyle: 'italic' },
+            {
+              color: colors.textMuted,
+              textAlign: 'center',
+              fontStyle: 'italic',
+            },
           ]}
         >
-          Remember: These are predictions based on your patterns. Every body is different, and cycles can vary naturally.
+          Remember: These are predictions based on your patterns. Every body is
+          different, and cycles can vary naturally.
         </Text>
       </View>
-      
     </ScrollView>
   );
 }

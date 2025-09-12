@@ -48,7 +48,7 @@ export default function SymptomTracking() {
   const [originalFlows, setOriginalFlows] = useState<string[]>([]);
   const [originalNotes, setOriginalNotes] = useState<string>('');
   const [hasChanges, setHasChanges] = useState<boolean>(false);
-  
+
   // Track if the selected date is a period date
   const [isPeriodDate, setIsPeriodDate] = useState<boolean>(false);
 
@@ -256,7 +256,7 @@ export default function SymptomTracking() {
       try {
         // Check if selected date is a period date
         await checkIsPeriodDate(selectedDate);
-        
+
         // Fetch existing entries for the selected date
         const existingEntries = await db
           .select()
@@ -547,7 +547,9 @@ export default function SymptomTracking() {
         {isPeriodDate && (
           <View style={[styles.section, { backgroundColor: colors.surface }]}>
             <View style={styles.sectionHeader}>
-              <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
+              <Text
+                style={[styles.sectionTitle, { color: colors.textPrimary }]}
+              >
                 Flow
               </Text>
             </View>

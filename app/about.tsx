@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  ScrollView,
-} from 'react-native';
+import { Text, View, StyleSheet, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import defaultTheme, { useTheme } from './styles/theme';
 
@@ -31,30 +26,27 @@ export default function About() {
 
       <View style={[styles.section, { backgroundColor: colors.surface }]}>
         <View style={styles.sectionHeader}>
-          <Ionicons
-            name="heart-outline"
-            size={24}
-            color={colors.primary}
-          />
+          <Ionicons name="heart-outline" size={24} color={colors.primary} />
           <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
             What is Lunari?
           </Text>
         </View>
         <Text style={[styles.sectionContent, { color: colors.textPrimary }]}>
-          Lunari is a comprehensive period tracking app designed to help you understand and manage your menstrual cycle. Our app provides accurate predictions, cycle insights, and personalized tracking features to support your reproductive health journey.
+          Lunari is a comprehensive period tracking app designed to help you
+          understand and manage your menstrual cycle. Our app provides accurate
+          predictions, cycle insights, and personalized tracking features to
+          support your reproductive health journey.
         </Text>
         <Text style={[styles.sectionContent, { color: colors.textPrimary }]}>
-          Built with privacy and user control at its core, Lunari stores all your data locally on your device, ensuring your personal health information remains secure and private.
+          Built with privacy and user control at its core, Lunari stores all
+          your data locally on your device, ensuring your personal health
+          information remains secure and private.
         </Text>
       </View>
 
       <View style={[styles.section, { backgroundColor: colors.surface }]}>
         <View style={styles.sectionHeader}>
-          <Ionicons
-            name="calendar-outline"
-            size={24}
-            color={colors.primary}
-          />
+          <Ionicons name="calendar-outline" size={24} color={colors.primary} />
           <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
             Features
           </Text>
@@ -94,7 +86,8 @@ export default function About() {
           </Text>
         </View>
         <Text style={[styles.sectionContent, { color: colors.textPrimary }]}>
-          Your privacy is our top priority. Lunari is designed with a privacy-first approach:
+          Your privacy is our top priority. Lunari is designed with a
+          privacy-first approach:
         </Text>
         <Text style={[styles.bulletPoint, { color: colors.textPrimary }]}>
           • All data stored locally on your device
@@ -112,17 +105,14 @@ export default function About() {
 
       <View style={[styles.section, { backgroundColor: colors.surface }]}>
         <View style={styles.sectionHeader}>
-          <Ionicons
-            name="code-outline"
-            size={24}
-            color={colors.primary}
-          />
+          <Ionicons name="code-outline" size={24} color={colors.primary} />
           <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
             Technical Details
           </Text>
         </View>
         <Text style={[styles.sectionContent, { color: colors.textPrimary }]}>
-          Lunari is built using modern technologies to ensure reliability and performance:
+          Lunari is built using modern technologies to ensure reliability and
+          performance:
         </Text>
         <Text style={[styles.bulletPoint, { color: colors.textPrimary }]}>
           • <Text style={styles.bold}>Framework:</Text> React Native with Expo
@@ -140,7 +130,9 @@ export default function About() {
 
       <View style={[styles.footer, { backgroundColor: colors.surface }]}>
         <Text style={[styles.footerText, { color: colors.textMuted }]}>
-          Thank you for choosing Lunari for your period tracking needs. We're committed to providing you with a safe, private, and reliable experience.
+          Thank you for choosing Lunari for your period tracking needs. We're
+          committed to providing you with a safe, private, and reliable
+          experience.
         </Text>
         <Text style={[styles.footerText, { color: colors.textMuted }]}>
           For support or feedback, please contact us through the app settings.
