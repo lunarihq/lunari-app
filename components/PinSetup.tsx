@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, SafeAreaView, Alert } from 'react-native';
+import { View, StyleSheet, Alert } from 'react-native';
 import { PinInput } from './PinInput';
 import { useAuth } from '../contexts/AuthContext';
 import { AuthService } from '../services/authService';
@@ -86,7 +86,7 @@ export function PinSetup({ mode = 'setup' }: PinSetupProps) {
   };
 
   return (
-    <SafeAreaView
+    <View
       style={[styles.container, { backgroundColor: colors.background }]}
     >
       <View style={styles.content}>
@@ -120,7 +120,7 @@ export function PinSetup({ mode = 'setup' }: PinSetupProps) {
           />
         )}
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 

@@ -5,7 +5,6 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
-  SafeAreaView,
   KeyboardAvoidingView,
   Platform,
   Keyboard,
@@ -69,7 +68,7 @@ export default function NotesEditor() {
   // (Keeping UX simple here; remove if you want auto-save-on-unmount back.)
 
   return (
-    <SafeAreaView
+    <View
       style={[styles.container, { backgroundColor: colors.surface }]}
     >
       {/* Main Content with KeyboardAvoidingView */}
@@ -117,7 +116,7 @@ export default function NotesEditor() {
           </TouchableOpacity>
         </View>
       )}
-    </SafeAreaView>
+    </View>
   );
 }
 

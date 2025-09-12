@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import {
   View,
   StyleSheet,
-  SafeAreaView,
   TouchableOpacity,
   Text,
   DeviceEventEmitter,
@@ -204,7 +203,7 @@ export default function CalendarScreen() {
   ]);
 
   return (
-    <SafeAreaView
+    <View
       style={[styles.container, { backgroundColor: colors.background }]}
     >
       <View style={styles.calendarContainer}>
@@ -229,7 +228,7 @@ export default function CalendarScreen() {
           onOpenChange={setIsDrawerOpen}
         />
       )}
-    </SafeAreaView>
+    </View>
   );
 }
 

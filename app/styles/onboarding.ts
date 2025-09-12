@@ -60,6 +60,7 @@ export const onboardingStyles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     width: '100%',
+    marginBottom: 20,
   },
   fullWidthButtonText: {
     fontSize: 16,

@@ -8,6 +8,7 @@ import { NotesProvider } from '../contexts/NotesContext';
 import { ThemeProvider, useTheme } from '../contexts/ThemeContext';
 import { LockScreen } from '../components/LockScreen';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { lightColors, darkColors } from './styles/colors';
 import Toast, { BaseToast, ErrorToast } from 'react-native-toast-message';
 
@@ -309,13 +310,15 @@ function AppContent() {
 export default function RootLayout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <ThemeProvider>
-        <AuthProvider>
-          <NotesProvider>
-            <AppContent />
-          </NotesProvider>
-        </AuthProvider>
-      </ThemeProvider>
+      <SafeAreaProvider>
+        <ThemeProvider>
+          <AuthProvider>
+            <NotesProvider>
+              <AppContent />
+            </NotesProvider>
+          </AuthProvider>
+        </ThemeProvider>
+      </SafeAreaProvider>
     </GestureHandlerRootView>
   );
 }
