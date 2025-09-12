@@ -9,7 +9,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { setSetting } from '../../db';
-import { onboardingStyles } from '../styles/onboarding';
+import { onboardingStyles } from '../../styles/onboarding';
 
 export default function PeriodLengthScreen() {
   const router = useRouter();

@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
-import { onboardingStyles } from '../styles/onboarding';
+import { onboardingStyles } from '../../styles/onboarding';
 
 export default function WelcomeScreen() {
   const router = useRouter();
