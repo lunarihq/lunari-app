@@ -9,7 +9,7 @@ import {
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { setSetting } from '../../db';
-import { onboardingStyles } from './styles';
+import { onboardingStyles } from '../styles/onboarding';
 
 export default function CycleLengthScreen() {
   const router = useRouter();
