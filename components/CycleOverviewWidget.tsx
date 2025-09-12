@@ -138,7 +138,7 @@ export function CycleOverviewWidget({
           >
             <Text style={styles.buttonText}>
               {Object.keys(selectedDates).length > 0
-                ? 'Edit period dates'
+                ? 'Log or edit period dates'
                 : 'Log period'}
             </Text>
           </Pressable>
