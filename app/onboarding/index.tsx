@@ -18,13 +18,6 @@ export default function WelcomeScreen() {
   return (
     <SafeAreaView style={onboardingStyles.container}>
       <View style={onboardingStyles.header}>
-        <View style={onboardingStyles.headerSpacer} />
-        <View style={onboardingStyles.paginationContainer}>
-          <View style={[onboardingStyles.paginationDot, onboardingStyles.paginationDotActive]} />
-          <View style={onboardingStyles.paginationDot} />
-          <View style={onboardingStyles.paginationDot} />
-        </View>
-        <View style={onboardingStyles.headerSpacer} />
       </View>
 
       <View style={onboardingStyles.content}>

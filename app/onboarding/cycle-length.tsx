@@ -58,7 +58,6 @@ export default function CycleLengthScreen() {
         </TouchableOpacity>
         <View style={onboardingStyles.paginationContainer}>
           <View style={onboardingStyles.paginationDot} />
-          <View style={onboardingStyles.paginationDot} />
           <View style={[onboardingStyles.paginationDot, onboardingStyles.paginationDotActive]} />
         </View>
         <View style={onboardingStyles.headerSpacer} />

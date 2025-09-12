@@ -10,8 +10,7 @@ export const onboardingStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingTop: 64,
-    paddingBottom: 20,
-    backgroundColor: 'red',
+    padding: 8,
   },
   backButton: {
     padding: 8,
@@ -36,7 +35,7 @@ export const onboardingStyles = StyleSheet.create({
   content: {
     flex: 1,
     paddingHorizontal: 20,
-    paddingTop: 20,
+    paddingTop: 8,
   },
   title: {
     fontSize: 24,
