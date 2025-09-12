@@ -9,6 +9,7 @@ import {
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { setSetting } from '../../db';
+import { onboardingStyles } from './styles';
 
 export default function CycleLengthScreen() {
   const router = useRouter();
@@ -50,16 +51,22 @@ export default function CycleLengthScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.content}>
-        <Ionicons
-          name="calendar-outline"
-          size={100}
-          color="#4E74B9"
-          style={styles.icon}
-        />
-        <Text style={styles.title}>What's your typical cycle length?</Text>
-        <Text style={styles.message}>
+    <SafeAreaView style={onboardingStyles.container}>
+      <View style={onboardingStyles.header}>
+        <TouchableOpacity style={onboardingStyles.backButton} onPress={handleBack}>
+          <Ionicons name="chevron-back" size={24} color="#333" />
+        </TouchableOpacity>
+        <View style={onboardingStyles.paginationContainer}>
+          <View style={onboardingStyles.paginationDot} />
+          <View style={onboardingStyles.paginationDot} />
+          <View style={[onboardingStyles.paginationDot, onboardingStyles.paginationDotActive]} />
+        </View>
+        <View style={onboardingStyles.headerSpacer} />
+      </View>
+
+      <View style={onboardingStyles.content}>
+        <Text style={onboardingStyles.title}>How many days does your cycle last on average?</Text>
+        <Text style={onboardingStyles.message}>
           This is the number of days from the start of one period to the start
           of the next.
         </Text>
@@ -121,58 +128,19 @@ export default function CycleLengthScreen() {
         </Text>
       </View>
 
-      <View style={styles.footer}>
-        <View style={styles.paginationContainer}>
-          <View style={styles.paginationDot} />
-          <View style={styles.paginationDot} />
-          <View style={[styles.paginationDot, styles.paginationDotActive]} />
-        </View>
-
-        <View style={styles.buttonsContainer}>
-          <TouchableOpacity style={styles.backButton} onPress={handleBack}>
-            <Text style={styles.backButtonText}>Back</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.getStartedButton}
-            onPress={handleGetStarted}
-          >
-            <Text style={styles.getStartedButtonText}>Get Started</Text>
-          </TouchableOpacity>
-        </View>
+      <View style={onboardingStyles.footer}>
+        <TouchableOpacity
+          style={onboardingStyles.fullWidthButton}
+          onPress={handleGetStarted}
+        >
+          <Text style={onboardingStyles.fullWidthButtonText}>Get Started</Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  content: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-  },
-  icon: {
-    marginBottom: 40,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    textAlign: 'center',
-    color: '#333',
-  },
-  message: {
-    fontSize: 16,
-    textAlign: 'center',
-    color: '#666',
-    paddingHorizontal: 20,
-    marginBottom: 40,
-  },
   pickerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -246,50 +214,9 @@ const styles = StyleSheet.create({
   },
   subMessage: {
     fontSize: 14,
-    textAlign: 'center',
+    textAlign: 'left',
     color: '#999',
-    paddingHorizontal: 40,
     fontStyle: 'italic',
-  },
-  footer: {
-    padding: 40,
-  },
-  paginationContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginBottom: 20,
-  },
-  paginationDot: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    backgroundColor: '#ccc',
-    marginHorizontal: 4,
-  },
-  paginationDotActive: {
-    backgroundColor: '#4E74B9',
-  },
-  buttonsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  backButton: {
-    padding: 10,
-  },
-  backButtonText: {
-    fontSize: 16,
-    color: '#666',
-  },
-  getStartedButton: {
-    backgroundColor: '#4E74B9',
-    padding: 16,
-    borderRadius: 10,
-    alignItems: 'center',
-    minWidth: 120,
-  },
-  getStartedButtonText: {
-    fontSize: 16,
-    color: '#fff',
-    fontWeight: 'bold',
+    lineHeight: 20,
   },
 });
