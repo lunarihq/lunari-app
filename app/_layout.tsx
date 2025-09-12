@@ -9,6 +9,14 @@ import { ThemeProvider, useTheme } from '../contexts/ThemeContext';
 import { LockScreen } from '../components/LockScreen';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { lightColors, darkColors } from './styles/colors';
+import Toast, { BaseToast, ErrorToast } from 'react-native-toast-message';
+
+// Shared toast styles
+const toastConfig = {
+  style: { height: 50 },
+  contentContainerStyle: { paddingHorizontal: 16, paddingVertical: 0 },
+  text1Style: { fontSize: 16, fontWeight: '500' as const },
+};
 
 function AppContent() {
   const [isReady, setIsReady] = useState(false);
@@ -272,6 +280,28 @@ function AppContent() {
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style={isDark ? 'light' : 'dark'} />
+      <Toast 
+        position="bottom"
+        bottomOffset={80}
+        config={{
+          success: (props) => (
+            <BaseToast
+              {...props}
+              style={{ ...toastConfig.style, borderLeftColor: '#28a745' }}
+              contentContainerStyle={toastConfig.contentContainerStyle}
+              text1Style={toastConfig.text1Style}
+            />
+          ),
+          error: (props) => (
+            <ErrorToast
+              {...props}
+              style={{ ...toastConfig.style, borderLeftColor: '#dc3545' }}
+              contentContainerStyle={toastConfig.contentContainerStyle}
+              text1Style={toastConfig.text1Style}
+            />
+          ),
+        }}
+      />
     </>
   );
 }

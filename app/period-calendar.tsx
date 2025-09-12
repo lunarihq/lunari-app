@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { DateData } from 'react-native-calendars';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
+import Toast from 'react-native-toast-message';
 import {
   BaseCalendar,
   DAY_FONT_SIZE,
@@ -156,9 +157,25 @@ export default function PeriodCalendarScreen() {
       if (dateInserts.length > 0) {
         await db.insert(periodDates).values(dateInserts);
       }
+      
+      // Show success toast
+      Toast.show({
+        type: 'success',
+        text1: 'Period dates saved',
+        visibilityTime: 3000,
+      });
+      
       router.back();
     } catch (error) {
       console.error('Error saving dates:', error);
+      
+      // Show error toast
+      Toast.show({
+        type: 'error',
+        text1: 'Error. Please try again.',
+        visibilityTime: 3000,
+      });
+      
       router.back();
     }
   };

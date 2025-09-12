@@ -17,6 +17,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import defaultTheme, { useTheme } from './styles/theme';
 import { useNotes } from '../contexts/NotesContext';
 import { CustomIcon } from '../components/icons';
+import Toast from 'react-native-toast-message';
 
 // Symptom type definition
 type Item = {
@@ -495,10 +496,24 @@ export default function SymptomTracking() {
         await db.insert(healthLogs).values(allRecords);
       }
 
+      // Show success toast
+      Toast.show({
+        type: 'success',
+        text1: 'Health data saved',
+        visibilityTime: 3000,
+      });
+
       // STEP 8: Navigate back
       router.back();
     } catch (error) {
       console.error('Error saving health logs:', error);
+      
+      // Show error toast
+      Toast.show({
+        type: 'error',
+        text1: 'Error. Please try again.',
+        visibilityTime: 3000,
+      });
     }
   };
 
