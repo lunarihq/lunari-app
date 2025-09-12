@@ -53,9 +53,7 @@ function AppContent() {
     // Clean up notification listeners on unmount
     return () => {
       if (notificationResponseListener.current) {
-        Notifications.removeNotificationSubscription(
-          notificationResponseListener.current
-        );
+        notificationResponseListener.current.remove();
       }
     };
   }, [router]);
