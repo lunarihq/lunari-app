@@ -4,7 +4,7 @@ import { Platform } from 'react-native';
 import { PeriodPredictionService } from './periodPredictions';
 import { getSetting, setSetting, db } from '../db';
 import { periodDates } from '../db/schema';
-import Colors from '../app/styles/colors';
+import Colors from '../styles/colors';
 
 // Configure how notifications are handled when the app is in the foreground
 Notifications.setNotificationHandler({

@@ -6,7 +6,7 @@ import {
   Text,
   DeviceEventEmitter,
 } from 'react-native';
-import { useTheme } from '../styles/theme';
+import { useTheme } from '../../styles/theme';
 import { DateData } from 'react-native-calendars';
 import {
   useFocusEffect,

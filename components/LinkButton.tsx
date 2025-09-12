@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useTheme } from '../app/styles/theme';
+import { useTheme } from '../styles/theme';
 
 interface LinkButtonProps {
   title: string;

@@ -11,7 +11,7 @@ import {
   Linking,
 } from 'react-native';
 import { NotificationService } from '../services/notificationService';
-import defaultTheme, { useTheme } from './styles/theme';
+import defaultTheme, { useTheme } from '../styles/theme';
 export default function Reminders() {
   const { colors } = useTheme();
   const [beforePeriodEnabled, setBeforePeriodEnabled] = useState(false);

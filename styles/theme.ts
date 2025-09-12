@@ -12,4 +12,4 @@ export const theme = {
 export default theme;
 
 // Re-export theme context for convenience
-export { ThemeProvider, useTheme } from '../../contexts/ThemeContext';
+export { ThemeProvider, useTheme } from '../contexts/ThemeContext';

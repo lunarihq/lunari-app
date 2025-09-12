@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import { useTheme } from '../app/styles/theme';
+import { useTheme } from '../styles/theme';
 import { AlertIcon } from './icons/Alert';
 import { CheckCircleIcon } from './icons/Check_Circle';
 

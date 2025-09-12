@@ -10,9 +10,9 @@ import {
   Keyboard,
 } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
-import { useTheme } from './styles/theme';
+import { useTheme } from '../styles/theme';
 import { useNotes } from '../contexts/NotesContext';
-import { globalStyles } from './styles/globalStyles';
+import { globalStyles } from '../styles/globalStyles';
 
 export default function NotesEditor() {
   const { colors } = useTheme();

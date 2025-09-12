@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useColorScheme } from 'react-native';
 import { getSetting, setSetting } from '../db';
-import { lightColors, darkColors, ColorScheme } from '../app/styles/colors';
+import { lightColors, darkColors, ColorScheme } from '../styles/colors';
 
 export type ThemeMode = 'light' | 'dark' | 'system';
 

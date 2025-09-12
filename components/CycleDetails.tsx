@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { SymptomsTracker } from './SymptomsTracker';
 import { PeriodPredictionService } from '../services/periodPredictions';
 import { formatDateString } from '../app/types/calendarTypes';
-import { useTheme } from '../app/styles/theme';
+import { useTheme } from '../styles/theme';
 
 interface CycleDetailsProps {
   selectedDate: string;

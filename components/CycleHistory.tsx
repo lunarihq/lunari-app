@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { useTheme } from '../app/styles/theme';
+import { useTheme } from '../styles/theme';
 
 interface CycleData {
   startDate: string;

@@ -14,7 +14,7 @@ import { db } from '../db';
 import { healthLogs, periodDates } from '../db/schema';
 import { eq } from 'drizzle-orm';
 import { useFocusEffect } from '@react-navigation/native';
-import defaultTheme, { useTheme } from './styles/theme';
+import defaultTheme, { useTheme } from '../styles/theme';
 import { useNotes } from '../contexts/NotesContext';
 import { CustomIcon } from '../components/icons';
 import Toast from 'react-native-toast-message';

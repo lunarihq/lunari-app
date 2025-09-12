@@ -4,7 +4,7 @@ import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { DropIcon } from './icons/Drop';
 import { PeriodPredictionService } from '../services/periodPredictions';
-import { useTheme } from '../app/styles/theme';
+import { useTheme } from '../styles/theme';
 
 interface CycleInsightsProps {
   currentCycleDay: number | null;

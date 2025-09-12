@@ -3,8 +3,8 @@ import { Text, View, StyleSheet, Pressable } from 'react-native';
 import { router } from 'expo-router';
 import { LinkButton } from './LinkButton';
 import DashedCircle from './DashedCircle';
-import { useTheme } from '../app/styles/theme';
-import { Colors } from '../app/styles/colors';
+import { useTheme } from '../styles/theme';
+import { Colors } from '../styles/colors';
 
 interface CycleOverviewWidgetProps {
   currentDate: Date;

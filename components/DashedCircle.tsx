@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import Svg, { Line } from 'react-native-svg';
-import { useTheme } from '../app/styles/theme';
+import { useTheme } from '../styles/theme';
 
 interface DashedCircleProps {
   size: number;

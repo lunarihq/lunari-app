@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import defaultTheme, { useTheme } from './styles/theme';
+import defaultTheme, { useTheme } from '../styles/theme';
 
 export default function StatusInfo() {
   const { colors } = useTheme();

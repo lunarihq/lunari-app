@@ -7,7 +7,7 @@ import {
   SelectionRules,
   formatDateString,
 } from '../app/types/calendarTypes';
-import { useTheme } from '../app/styles/theme';
+import { useTheme } from '../styles/theme';
 
 // Constants
 export const DAY_FONT_SIZE = 16;

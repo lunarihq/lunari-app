@@ -12,9 +12,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { db } from '../db';
 import { healthLogs } from '../db/schema';
 import { eq } from 'drizzle-orm';
-import { useTheme } from '../app/styles/theme';
+import { useTheme } from '../styles/theme';
 import dayjs from 'dayjs';
-import { globalStyles } from '../app/styles/globalStyles';
+import { globalStyles } from '../styles/globalStyles';
 import { CustomIcon } from './icons';
 
 type SymptomsTrackerProps = {

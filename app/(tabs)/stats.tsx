@@ -9,7 +9,7 @@ import { StatCard } from '../../components/StatCard';
 import { CycleHistory } from '../../components/CycleHistory';
 import { DropIcon } from '../../components/icons/Drop';
 import { getCycleStatus, getPeriodStatus } from '../../utils/cycleUtils';
-import defaultTheme, { useTheme } from '../styles/theme';
+import defaultTheme, { useTheme } from '../../styles/theme';
 interface CycleData {
   startDate: string;
   cycleLength: string | number;

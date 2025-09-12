@@ -1,8 +1,8 @@
 import React, { useRef, useState, useCallback } from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { router } from 'expo-router';
-import { useTheme } from '../app/styles/theme';
-import { globalStyles } from '../app/styles/globalStyles';
+import { useTheme } from '../styles/theme';
+import { globalStyles } from '../styles/globalStyles';
 import { CycleDetails } from './CycleDetails';
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import Animated, {

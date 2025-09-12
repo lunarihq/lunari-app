@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, ScrollView, Text } from 'react-native';
-import defaultTheme, { useTheme } from './styles/theme';
+import defaultTheme, { useTheme } from '../styles/theme';
 
 export default function PredictionInfo() {
   const { colors } = useTheme();

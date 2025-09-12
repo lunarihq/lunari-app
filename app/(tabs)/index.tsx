@@ -9,7 +9,7 @@ import { PeriodDate, periodDates } from '../../db/schema';
 import { PeriodPredictionService } from '../../services/periodPredictions';
 import { NotificationService } from '../../services/notificationService';
 
-import defaultTheme, { useTheme } from '../styles/theme';
+import defaultTheme, { useTheme } from '../../styles/theme';
 
 export default function Index() {
   const { colors } = useTheme();

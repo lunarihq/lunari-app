@@ -4,7 +4,7 @@ import { PinInput } from './PinInput';
 import { useAuth } from '../contexts/AuthContext';
 import { AuthService } from '../services/authService';
 import { router } from 'expo-router';
-import { useTheme } from '../app/styles/theme';
+import { useTheme } from '../styles/theme';
 
 interface PinSetupProps {
   mode?: 'setup' | 'change';
