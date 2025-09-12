@@ -9,7 +9,6 @@ export const onboardingStyles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingTop: 64,
     padding: 8,
   },
   backButton: {
