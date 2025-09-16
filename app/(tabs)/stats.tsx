@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, ScrollView, StyleSheet, Text, Pressable } from 'react-native';
+import { View, ScrollView, StyleSheet, Text } from 'react-native';
+import { Button } from '../../components/Button';
 import { useFocusEffect } from '@react-navigation/native';
 import { router } from 'expo-router';
 import { db, getSetting } from '../../db';
@@ -188,15 +189,11 @@ export default function Stats() {
       >
         Log at least 2 periods to see your personal cycle statistics.
       </Text>
-      <Pressable
+      <Button
+        title="Log period"
         onPress={() => router.push('/period-calendar')}
-        style={[
-          defaultTheme.globalStyles.primaryButton,
-          styles.emptyStateButton,
-        ]}
-      >
-        <Text style={defaultTheme.globalStyles.buttonText}>Log period</Text>
-      </Pressable>
+        style={styles.emptyStateButton}
+      />
     </View>
   );
 
