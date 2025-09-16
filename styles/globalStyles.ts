@@ -12,19 +12,6 @@ const globalStyles = StyleSheet.create({
     paddingTop: 8,
   },
 
-  primaryButton: {
-    backgroundColor: Colors.primary,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 24,
-    alignItems: 'center',
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '500',
-    textAlign: 'center',
-  },
   fab: {
     width: 54,
     height: 54,

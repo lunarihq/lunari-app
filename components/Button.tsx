@@ -49,7 +49,6 @@ export function Button({ title, onPress, variant = 'contained', shadow = false, 
       style={({ pressed }) => [
         styles.button,
         getButtonStyle(),
-        shadow && styles.shadow,
         fullWidth && styles.fullWidth,
         disabled && styles.disabled,
         pressed && styles.pressed,
@@ -77,16 +76,6 @@ const styles = StyleSheet.create({
   },
   pressed: {
     opacity: 0.7,
-  },
-  shadow: {
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 8,
   },
   fullWidth: {
     width: '100%',

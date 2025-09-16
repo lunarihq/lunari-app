@@ -37,7 +37,7 @@ export function LinkButton({
 
 const styles = StyleSheet.create({
   button: {
-    marginBottom: 16,
+    marginBottom: 8,
   },
   content: {
     flexDirection: 'row',

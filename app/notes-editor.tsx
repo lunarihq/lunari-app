@@ -103,7 +103,6 @@ export default function NotesEditor() {
           <Button
             title="Done"
             onPress={handleSave}
-            shadow
             fullWidth
           />
         </View>
