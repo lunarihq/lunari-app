@@ -52,8 +52,8 @@ export default function PeriodLengthScreen() {
           <Ionicons name="chevron-back" size={24} color="#333" />
         </TouchableOpacity>
         <View style={onboardingStyles.paginationContainer}>
-          <View style={onboardingStyles.paginationDot} />
           <View style={[onboardingStyles.paginationDot, onboardingStyles.paginationDotActive]} />
+          <View style={onboardingStyles.paginationDot} />
           <View style={onboardingStyles.paginationDot} />
         </View>
         <View style={onboardingStyles.headerSpacer} />
