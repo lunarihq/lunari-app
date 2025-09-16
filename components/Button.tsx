@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   disabled: {
-    opacity: 0.6,
+    opacity: 0.3,
   },
   pressed: {
     opacity: 0.7,
