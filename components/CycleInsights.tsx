@@ -2,7 +2,9 @@ import React from 'react';
 import { Text, View, StyleSheet, Pressable } from 'react-native';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { DropIcon } from './icons/Drop';
+import { CalendarIcon } from './icons/Calendar';
+import { CycleIcon } from './icons/Cycle';
+import { LeafIcon } from './icons/Leaf';
 import { PeriodPredictionService } from '../services/periodPredictions';
 import { useTheme } from '../styles/theme';
 
@@ -67,7 +69,7 @@ export function CycleInsights({
           >
             <View style={styles.insightTop}>
               <View style={iconContainerStyle}>
-                <DropIcon size={24} color={colors.icon} />
+                <CalendarIcon size={26} color={colors.icon} />
               </View>
               <Text
                 style={[styles.insightLabel, { color: colors.textPrimary }]}
@@ -106,7 +108,7 @@ export function CycleInsights({
           >
             <View style={styles.insightTop}>
               <View style={iconContainerStyle}>
-                <DropIcon size={24} color={colors.icon} />
+                <CycleIcon size={26} color={colors.icon} />
               </View>
               <Text
                 style={[styles.insightLabel, { color: colors.textPrimary }]}
@@ -150,7 +152,7 @@ export function CycleInsights({
           >
             <View style={styles.insightTop}>
               <View style={iconContainerStyle}>
-                <DropIcon size={24} color={colors.icon} />
+                <LeafIcon size={28} color={colors.icon} />
               </View>
               <Text
                 style={[styles.insightLabel, { color: colors.textPrimary }]}

@@ -9,6 +9,7 @@ import { PeriodPredictionService } from '../../services/periodPredictions';
 import { StatCard } from '../../components/StatCard';
 import { CycleHistory } from '../../components/CycleHistory';
 import { DropIcon } from '../../components/icons/Drop';
+import { CycleIcon } from '../../components/icons/Cycle';
 import { getCycleStatus, getPeriodStatus } from '../../utils/cycleUtils';
 import defaultTheme, { useTheme } from '../../styles/theme';
 interface CycleData {
@@ -230,14 +231,14 @@ export default function Stats() {
           <StatCard
             title="Average cycle length"
             value={`${averageCycleLength} days`}
-            icon={<DropIcon size={32} color={colors.icon} />}
+            icon={<CycleIcon size={36} color={colors.icon} />}
             status={getCycleStatus(averageCycleLength).status}
             type="cycle"
           />
           <StatCard
             title="Average period length"
             value={`${averagePeriodLength} days`}
-            icon={<DropIcon size={32} color={colors.icon} />}
+            icon={<DropIcon size={34} color={colors.icon} />}
             status={getPeriodStatus(averagePeriodLength).status}
             type="period"
           />
