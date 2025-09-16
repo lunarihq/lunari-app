@@ -9,7 +9,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { Calendar, DateData } from 'react-native-calendars';
-import { setSetting } from '../../db';
+import { setSetting, getSetting, db } from '../../db';
+import { periodDates } from '../../db/schema';
 import { onboardingStyles } from '../../styles/onboarding';
 import { useTheme } from '../../styles/theme';
 import { formatDateString } from '../types/calendarTypes';
@@ -24,7 +25,20 @@ export default function LastPeriodDateScreen() {
     try {
       // Only save last period date if user didn't select "don't know"
       if (!dontKnow && selectedDate) {
-        await setSetting('lastPeriodStartDate', selectedDate);
+        // Save directly to periodDates table instead of settings
+        await db.insert(periodDates).values({ date: selectedDate });
+        
+        // Get period length and add the full period
+        const periodLengthSetting = await getSetting('userPeriodLength');
+        const periodLength = periodLengthSetting ? parseInt(periodLengthSetting, 10) : 5;
+        
+        const startDate = new Date(selectedDate);
+        for (let i = 1; i < periodLength; i++) {
+          const nextDate = new Date(startDate);
+          nextDate.setDate(startDate.getDate() + i);
+          const nextDateString = nextDate.toISOString().split('T')[0];
+          await db.insert(periodDates).values({ date: nextDateString });
+        }
       }
       
       // Complete onboarding and navigate to main app
