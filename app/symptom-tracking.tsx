@@ -899,8 +899,8 @@ const styles = StyleSheet.create({
   saveButtonContainer: {
     position: 'absolute',
     bottom: 30,
-    left: 40,
-    right: 40,
+    left: 16,
+    right: 16,
   },
   checkmarkContainer: {
     position: 'absolute',
