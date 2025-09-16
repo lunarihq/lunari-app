@@ -1,18 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
-  Text,
   StyleSheet,
-  TouchableOpacity,
   TextInput,
   KeyboardAvoidingView,
   Platform,
   Keyboard,
 } from 'react-native';
+import { Button } from '../components/Button';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useTheme } from '../styles/theme';
 import { useNotes } from '../contexts/NotesContext';
-import { globalStyles } from '../styles/globalStyles';
 
 export default function NotesEditor() {
   const { colors } = useTheme();
@@ -102,18 +100,11 @@ export default function NotesEditor() {
             isKeyboardVisible ? { bottom: keyboardHeight } : {},
           ]}
         >
-          <TouchableOpacity
-            style={[
-              globalStyles.primaryButton,
-              { backgroundColor: colors.primary },
-            ]}
+          <Button
+            title="Done"
             onPress={handleSave}
-            activeOpacity={0.8}
-          >
-            <Text style={[styles.saveButtonText, { color: colors.white }]}>
-              Done
-            </Text>
-          </TouchableOpacity>
+            shadow
+          />
         </View>
       )}
     </View>
@@ -163,20 +154,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  saveButton: {
-    paddingVertical: 12,
-    paddingHorizontal: 30,
-    borderRadius: 25,
-    alignItems: 'center',
-    justifyContent: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  saveButtonText: {
-    fontSize: 18,
-    fontWeight: '600',
-  },
 });
