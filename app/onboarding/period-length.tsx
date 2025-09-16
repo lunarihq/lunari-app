@@ -9,10 +9,15 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { setSetting } from '../../db';
-import { onboardingStyles } from '../../styles/onboarding';
+import { createOnboardingStyles } from '../../styles/onboarding';
+import { useTheme } from '../../contexts/ThemeContext';
+import { ColorScheme } from '../../styles/colors';
 
 export default function PeriodLengthScreen() {
   const router = useRouter();
+  const { colors } = useTheme();
+  const onboardingStyles = createOnboardingStyles(colors);
+  const styles = createStyles(colors);
   const [periodLength, setPeriodLength] = useState(5);
   const [dontKnow, setDontKnow] = useState(false);
 
@@ -49,7 +54,7 @@ export default function PeriodLengthScreen() {
     <SafeAreaView style={onboardingStyles.container}>
       <View style={onboardingStyles.header}>
         <TouchableOpacity style={onboardingStyles.backButton} onPress={handleBack}>
-          <Ionicons name="chevron-back" size={24} color="#333" />
+          <Ionicons name="chevron-back" size={24} color={colors.textPrimary} />
         </TouchableOpacity>
         <View style={onboardingStyles.paginationContainer}>
           <View style={[onboardingStyles.paginationDot, onboardingStyles.paginationDotActive]} />
@@ -76,7 +81,7 @@ export default function PeriodLengthScreen() {
             <Ionicons
               name="remove"
               size={24}
-              color={dontKnow ? '#ccc' : '#4E74B9'}
+              color={dontKnow ? colors.textMuted : colors.primary}
             />
           </TouchableOpacity>
 
@@ -97,7 +102,7 @@ export default function PeriodLengthScreen() {
             <Ionicons
               name="add"
               size={24}
-              color={dontKnow ? '#ccc' : '#4E74B9'}
+              color={dontKnow ? colors.textMuted : colors.primary}
             />
           </TouchableOpacity>
         </View>
@@ -107,8 +112,8 @@ export default function PeriodLengthScreen() {
           onPress={toggleDontKnow}
         >
           <View style={styles.checkboxContainer}>
-            <View style={[styles.checkbox, dontKnow && styles.checkboxChecked]}>
-              {dontKnow && <Ionicons name="checkmark" size={16} color="#fff" />}
+            <View style={[styles.checkbox, { borderColor: colors.primary, backgroundColor: dontKnow ? colors.primary : colors.surface }, dontKnow && styles.checkboxChecked]}>
+              {dontKnow && <Ionicons name="checkmark" size={16} color={colors.white} />}
             </View>
             <Text style={styles.dontKnowText}>
               Don't know - let the app learn
@@ -127,76 +132,72 @@ export default function PeriodLengthScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  pickerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 30,
-  },
-  pickerDisabled: {
-    opacity: 0.5,
-  },
-  pickerButton: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    backgroundColor: '#f0f0f0',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginHorizontal: 20,
-  },
-  buttonDisabled: {
-    backgroundColor: '#f8f8f8',
-  },
-  valueContainer: {
-    alignItems: 'center',
-    minWidth: 80,
-  },
-  valueText: {
-    fontSize: 48,
-    fontWeight: 'bold',
-    color: '#4E74B9',
-  },
-  textDisabled: {
-    color: '#ccc',
-  },
-  labelText: {
-    fontSize: 16,
-    color: '#666',
-    marginTop: 5,
-  },
-  dontKnowContainer: {
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  checkboxContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 5,
-  },
-  checkbox: {
-    width: 20,
-    height: 20,
-    borderWidth: 2,
-    borderColor: '#4E74B9',
-    borderRadius: 3,
-    marginRight: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-  },
-  checkboxChecked: {
-    backgroundColor: '#4E74B9',
-  },
-  dontKnowText: {
-    fontSize: 16,
-    color: '#333',
-    fontWeight: '500',
-  },
-  dontKnowSubText: {
-    fontSize: 14,
-    color: '#999',
-    fontStyle: 'italic',
-  },
+const createStyles = (colors: ColorScheme) => StyleSheet.create({
+    pickerContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginBottom: 30,
+    },
+    pickerDisabled: {
+      opacity: 0.5,
+    },
+    pickerButton: {
+      width: 50,
+      height: 50,
+      borderRadius: 25,
+      backgroundColor: colors.surfaceVariant,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginHorizontal: 20,
+    },
+    buttonDisabled: {
+      backgroundColor: colors.panel,
+    },
+    valueContainer: {
+      alignItems: 'center',
+      minWidth: 80,
+    },
+    valueText: {
+      fontSize: 48,
+      fontWeight: 'bold',
+      color: colors.primary,
+    },
+    textDisabled: {
+      color: colors.textMuted,
+    },
+    labelText: {
+      fontSize: 16,
+      color: colors.textSecondary,
+      marginTop: 5,
+    },
+    dontKnowContainer: {
+      alignItems: 'center',
+      marginBottom: 20,
+    },
+    checkboxContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginBottom: 5,
+    },
+    checkbox: {
+      width: 20,
+      height: 20,
+      borderWidth: 2,
+      borderRadius: 3,
+      marginRight: 10,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    checkboxChecked: {},
+    dontKnowText: {
+      fontSize: 16,
+      color: colors.textPrimary,
+      fontWeight: '500',
+    },
+    dontKnowSubText: {
+      fontSize: 14,
+      color: colors.textMuted,
+      fontStyle: 'italic',
+    },
 });

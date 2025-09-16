@@ -11,13 +11,16 @@ import { Ionicons } from '@expo/vector-icons';
 import { Calendar, DateData } from 'react-native-calendars';
 import { setSetting, getSetting, db } from '../../db';
 import { periodDates } from '../../db/schema';
-import { onboardingStyles } from '../../styles/onboarding';
-import { useTheme } from '../../styles/theme';
+import { createOnboardingStyles } from '../../styles/onboarding';
+import { useTheme } from '../../contexts/ThemeContext';
 import { formatDateString } from '../types/calendarTypes';
+import { ColorScheme } from '../../styles/colors';
 
 export default function LastPeriodDateScreen() {
   const router = useRouter();
   const { colors } = useTheme();
+  const onboardingStyles = createOnboardingStyles(colors);
+  const styles = createStyles(colors);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [dontKnow, setDontKnow] = useState(false);
 
@@ -71,8 +74,8 @@ export default function LastPeriodDateScreen() {
   const markedDates = selectedDate && !dontKnow ? {
     [selectedDate]: {
       selected: true,
-      selectedColor: '#4E74B9',
-      selectedTextColor: '#fff'
+      selectedColor: colors.primary,
+      selectedTextColor: colors.white
     }
   } : {};
 
@@ -83,7 +86,7 @@ export default function LastPeriodDateScreen() {
     <SafeAreaView style={onboardingStyles.container}>
       <View style={onboardingStyles.header}>
         <TouchableOpacity style={onboardingStyles.backButton} onPress={handleBack}>
-          <Ionicons name="chevron-back" size={24} color="#333" />
+          <Ionicons name="chevron-back" size={24} color={colors.textPrimary} />
         </TouchableOpacity>
         <View style={onboardingStyles.paginationContainer}>
           <View style={onboardingStyles.paginationDot} />
@@ -110,12 +113,12 @@ export default function LastPeriodDateScreen() {
               backgroundColor: colors.background,
               calendarBackground: colors.background,
               textSectionTitleColor: colors.textPrimary,
-              selectedDayBackgroundColor: '#4E74B9',
-              selectedDayTextColor: '#ffffff',
-              todayTextColor: '#4E74B9',
+              selectedDayBackgroundColor: colors.primary,
+              selectedDayTextColor: colors.white,
+              todayTextColor: colors.primary,
               dayTextColor: colors.textPrimary,
               textDisabledColor: colors.textSecondary,
-              arrowColor: '#4E74B9',
+              arrowColor: colors.primary,
               monthTextColor: colors.textPrimary,
               textDayFontWeight: '400',
               textMonthFontWeight: 'bold',
@@ -133,8 +136,8 @@ export default function LastPeriodDateScreen() {
           onPress={toggleDontKnow}
         >
           <View style={styles.checkboxContainer}>
-            <View style={[styles.checkbox, dontKnow && styles.checkboxChecked]}>
-              {dontKnow && <Ionicons name="checkmark" size={16} color="#fff" />}
+            <View style={[styles.checkbox, { borderColor: colors.primary, backgroundColor: dontKnow ? colors.primary : colors.surface }, dontKnow && styles.checkboxChecked]}>
+              {dontKnow && <Ionicons name="checkmark" size={16} color={colors.white} />}
             </View>
             <Text style={styles.dontKnowText}>
               Don't know - skip this step
@@ -167,12 +170,12 @@ export default function LastPeriodDateScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors: ColorScheme) => StyleSheet.create({
   calendarContainer: {
     marginBottom: 30,
     borderRadius: 12,
     overflow: 'hidden',
-    backgroundColor: '#f8f9fa',
+    backgroundColor: colors.surfaceVariant,
   },
   calendarDisabled: {
     opacity: 0.5,
@@ -182,7 +185,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   calendarDisabledStyle: {
-    backgroundColor: '#f8f8f8',
+    backgroundColor: colors.panel,
   },
   dontKnowContainer: {
     alignItems: 'center',
@@ -197,30 +200,26 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     borderWidth: 2,
-    borderColor: '#4E74B9',
     borderRadius: 3,
     marginRight: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
   },
-  checkboxChecked: {
-    backgroundColor: '#4E74B9',
-  },
+  checkboxChecked: {},
   dontKnowText: {
     fontSize: 16,
-    color: '#333',
+    color: colors.textPrimary,
     fontWeight: '500',
   },
   dontKnowSubText: {
     fontSize: 14,
-    color: '#999',
+    color: colors.textMuted,
     fontStyle: 'italic',
   },
   buttonDisabled: {
-    backgroundColor: '#ccc',
+    backgroundColor: colors.textMuted,
   },
   buttonTextDisabled: {
-    color: '#999',
+    color: colors.textSecondary,
   },
 });

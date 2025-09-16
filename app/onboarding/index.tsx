@@ -6,10 +6,13 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
-import { onboardingStyles } from '../../styles/onboarding';
+import { createOnboardingStyles } from '../../styles/onboarding';
+import { useTheme } from '../../contexts/ThemeContext';
 
 export default function WelcomeScreen() {
   const router = useRouter();
+  const { colors } = useTheme();
+  const onboardingStyles = createOnboardingStyles(colors);
 
   const handleNext = () => {
     router.push({ pathname: '/onboarding/period-length' });
