@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
+import { Button } from '../../components/Button';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { Colors } from '../../styles/colors';
@@ -24,9 +25,7 @@ export default function WelcomeScreen() {
           Track your health and wellness with our easy-to-use app.
         </Text>
         
-        <TouchableOpacity onPress={handleNext}>
-          <Text style={styles.buttonText}>Next</Text>
-        </TouchableOpacity>
+        <Button title="Next" onPress={handleNext} fullWidth />
       </View>
     </SafeAreaView>
   );
@@ -53,10 +52,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 40,
     lineHeight: 22,
-  },
-  buttonText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: Colors.primary,
   },
 });

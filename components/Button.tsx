@@ -7,11 +7,12 @@ interface ButtonProps {
   onPress: () => void;
   variant?: 'contained' | 'text' | 'outlined';
   shadow?: boolean;
+  fullWidth?: boolean;
   style?: any;
   disabled?: boolean;
 }
 
-export function Button({ title, onPress, variant = 'contained', shadow = false, style, disabled = false }: ButtonProps) {
+export function Button({ title, onPress, variant = 'contained', shadow = false, fullWidth = false, style, disabled = false }: ButtonProps) {
   const { colors } = useTheme();
 
   const getButtonStyle = () => {
@@ -49,6 +50,7 @@ export function Button({ title, onPress, variant = 'contained', shadow = false, 
         styles.button,
         getButtonStyle(),
         shadow && styles.shadow,
+        fullWidth && styles.fullWidth,
         disabled && styles.disabled,
         pressed && styles.pressed,
         style,
@@ -85,5 +87,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 8,
+  },
+  fullWidth: {
+    width: '100%',
   },
 });

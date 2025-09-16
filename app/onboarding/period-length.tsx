@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
+import { Button } from '../../components/Button';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -124,9 +125,7 @@ export default function PeriodLengthScreen() {
       </View>
 
       <View style={onboardingStyles.footer}>
-        <TouchableOpacity style={onboardingStyles.fullWidthButton} onPress={handleNext}>
-          <Text style={onboardingStyles.fullWidthButtonText}>Next</Text>
-        </TouchableOpacity>
+        <Button title="Next" onPress={handleNext} fullWidth />
       </View>
     </SafeAreaView>
   );

@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
+import { Button } from '../components/Button';
 import { router, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import dayjs from 'dayjs';
@@ -791,21 +792,13 @@ export default function SymptomTracking() {
 
       {/* Save button that appears only when changes are made */}
       {hasChanges && (
-        <TouchableOpacity
-          style={[
-            styles.saveButton,
-            {
-              backgroundColor: colors.primary,
-              shadowColor: colors.black,
-            },
-          ]}
-          onPress={saveChanges}
-          activeOpacity={0.8}
-        >
-          <Text style={[styles.saveButtonText, { color: colors.white }]}>
-            Save
-          </Text>
-        </TouchableOpacity>
+        <View style={styles.saveButtonContainer}>
+          <Button
+            title="Save"
+            onPress={saveChanges}
+            fullWidth
+          />
+        </View>
       )}
     </View>
   );
@@ -903,24 +896,11 @@ const styles = StyleSheet.create({
   notesIcon: {
     marginLeft: 16,
   },
-  saveButton: {
+  saveButtonContainer: {
     position: 'absolute',
     bottom: 30,
     left: 40,
     right: 40,
-    paddingVertical: 16,
-    borderRadius: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
-
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  saveButtonText: {
-    fontSize: 18,
-    fontWeight: '600',
   },
   checkmarkContainer: {
     position: 'absolute',
