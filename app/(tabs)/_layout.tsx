@@ -2,23 +2,11 @@ import { Tabs, useRouter } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { TouchableOpacity } from 'react-native';
 import { useTheme } from '../../styles/theme';
-import * as Haptics from 'expo-haptics';
 
 export default function TabLayout() {
   const { colors } = useTheme();
   const router = useRouter();
 
-  const HapticTab = (props: any) => {
-    return (
-      <TouchableOpacity
-        {...props}
-        onPress={(e) => {
-          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-          props.onPress?.(e);
-        }}
-      />
-    );
-  };
 
   return (
     <Tabs
@@ -40,7 +28,6 @@ export default function TabLayout() {
           height: 80,
           borderTopColor: colors.border,
         },
-        tabBarButton: HapticTab,
         tabBarItemStyle: {
           paddingTop: 6,
         },
