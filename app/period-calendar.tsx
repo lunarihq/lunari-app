@@ -1,4 +1,5 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { Button } from '../components/Button';
 import { useTheme } from '../styles/theme';
 import { useState, useEffect } from 'react';
 import { DateData } from 'react-native-calendars';
@@ -293,19 +294,18 @@ export default function PeriodCalendarScreen() {
           { backgroundColor: colors.surface, borderTopColor: colors.border },
         ]}
       >
-        <TouchableOpacity style={styles.cancelButton} onPress={handleCancel}>
-          <Text style={[styles.cancelButtonText, { color: colors.primary }]}>
-            Cancel
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.saveButton, { backgroundColor: colors.primary }]}
+        <Button
+          title="Cancel"
+          variant="text"
+          onPress={handleCancel}
+          style={styles.cancelButton}
+        />
+        <Button
+          title="Save"
+          variant="contained"
           onPress={handleSave}
-        >
-          <Text style={[styles.saveButtonText, { color: colors.white }]}>
-            Save
-          </Text>
-        </TouchableOpacity>
+          style={styles.saveButton}
+        />
       </View>
     </View>
   );
@@ -339,24 +339,11 @@ const styles = StyleSheet.create({
   },
   cancelButton: {
     flex: 1,
-    alignItems: 'center',
-    paddingVertical: 12,
     marginRight: 8,
-  },
-  cancelButtonText: {
-    fontSize: 16,
-    fontWeight: '500',
   },
   saveButton: {
     flex: 1,
-    alignItems: 'center',
-    paddingVertical: 12,
-    borderRadius: 80,
     marginLeft: 8,
-  },
-  saveButtonText: {
-    fontSize: 16,
-    fontWeight: '500',
   },
 
   todayButtonText: {

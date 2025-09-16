@@ -1,8 +1,8 @@
 import React, { useRef, useState, useCallback } from 'react';
-import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { router } from 'expo-router';
+import { Button } from './Button';
 import { useTheme } from '../styles/theme';
-import { globalStyles } from '../styles/globalStyles';
 import { CycleDetails } from './CycleDetails';
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import Animated, {
@@ -69,13 +69,12 @@ export function CalendarBottomSheet({
         style={[styles.floatingButton, fabAnimatedStyle]}
         pointerEvents="box-none"
       >
-        <TouchableOpacity
+        <Button
+          title="Edit period dates"
           onPress={() => router.push('/period-calendar')}
-          activeOpacity={0.8}
-          style={[globalStyles.primaryButton, styles.floatingButtonTouchable]}
-        >
-          <Text style={globalStyles.buttonText}>Edit period dates</Text>
-        </TouchableOpacity>
+          variant="contained"
+          shadow
+        />
       </Animated.View>
 
       <BottomSheet
@@ -119,18 +118,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     alignSelf: 'center',
     zIndex: 1,
-  },
-  floatingButtonTouchable: {
-    borderRadius: 80,
-    paddingHorizontal: 16,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 8,
   },
   sheetContent: {
     paddingTop: 8,

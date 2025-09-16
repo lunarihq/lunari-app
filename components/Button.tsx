@@ -5,12 +5,41 @@ import { useTheme } from '../styles/theme';
 interface ButtonProps {
   title: string;
   onPress: () => void;
+  variant?: 'contained' | 'text' | 'outlined';
+  shadow?: boolean;
   style?: any;
   disabled?: boolean;
 }
 
-export function Button({ title, onPress, style, disabled = false }: ButtonProps) {
+export function Button({ title, onPress, variant = 'contained', shadow = false, style, disabled = false }: ButtonProps) {
   const { colors } = useTheme();
+
+  const getButtonStyle = () => {
+    switch (variant) {
+      case 'text':
+        return { backgroundColor: 'transparent' };
+      case 'outlined':
+        return { 
+          backgroundColor: 'transparent', 
+          borderWidth: 1, 
+          borderColor: colors.primary 
+        };
+      case 'contained':
+      default:
+        return { backgroundColor: colors.primary };
+    }
+  };
+
+  const getTextColor = () => {
+    switch (variant) {
+      case 'text':
+      case 'outlined':
+        return colors.primary;
+      case 'contained':
+      default:
+        return colors.white;
+    }
+  };
 
   return (
     <Pressable
@@ -18,13 +47,14 @@ export function Button({ title, onPress, style, disabled = false }: ButtonProps)
       disabled={disabled}
       style={({ pressed }) => [
         styles.button,
-        { backgroundColor: colors.primary },
+        getButtonStyle(),
+        shadow && styles.shadow,
         disabled && styles.disabled,
         pressed && styles.pressed,
         style,
       ]}
     >
-      <Text style={[styles.text, { color: colors.white }]}>{title}</Text>
+      <Text style={[styles.text, { color: getTextColor() }]}>{title}</Text>
     </Pressable>
   );
 }
@@ -45,5 +75,15 @@ const styles = StyleSheet.create({
   },
   pressed: {
     opacity: 0.7,
+  },
+  shadow: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 8,
   },
 });
