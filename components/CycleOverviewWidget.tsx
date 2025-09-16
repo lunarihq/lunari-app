@@ -1,7 +1,8 @@
 import React from 'react';
-import { Text, View, StyleSheet, Pressable } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 import { router } from 'expo-router';
 import { LinkButton } from './LinkButton';
+import { Button } from './Button';
 import DashedCircle from './DashedCircle';
 import { useTheme } from '../styles/theme';
 import { Colors } from '../styles/colors';
@@ -132,16 +133,13 @@ export function CycleOverviewWidget({
               </Text>
             </>
           )}
-          <Pressable
+          <Button
+            title={Object.keys(selectedDates).length > 0
+              ? 'Log or edit period dates'
+              : 'Log period'}
             onPress={() => router.push('/period-calendar')}
-            style={[styles.primaryButton, { marginVertical: 16 }]}
-          >
-            <Text style={styles.buttonText}>
-              {Object.keys(selectedDates).length > 0
-                ? 'Log or edit period dates'
-                : 'Log period'}
-            </Text>
-          </Pressable>
+            style={{ marginVertical: 16 }}
+          />
         </View>
       </View>
     </View>
@@ -202,18 +200,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
     marginBottom: 20,
-  },
-  primaryButton: {
-    backgroundColor: Colors.primary,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 24,
-    alignItems: 'center',
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '500',
-    textAlign: 'center',
   },
 });
