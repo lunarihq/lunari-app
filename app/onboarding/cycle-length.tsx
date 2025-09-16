@@ -23,11 +23,8 @@ export default function CycleLengthScreen() {
         await setSetting('userCycleLength', cycleLength.toString());
       }
 
-      // Mark onboarding as completed
-      await setSetting('onboardingCompleted', 'true');
-
-      // Navigate to main app
-      router.replace('/(tabs)');
+      // Navigate to last period date screen
+      router.push({ pathname: '/onboarding/last-period-date' });
     } catch (error) {
       console.error('Error completing onboarding:', error);
       router.replace('/');
@@ -59,6 +56,7 @@ export default function CycleLengthScreen() {
         <View style={onboardingStyles.paginationContainer}>
           <View style={onboardingStyles.paginationDot} />
           <View style={[onboardingStyles.paginationDot, onboardingStyles.paginationDotActive]} />
+          <View style={onboardingStyles.paginationDot} />
         </View>
         <View style={onboardingStyles.headerSpacer} />
       </View>
@@ -132,7 +130,7 @@ export default function CycleLengthScreen() {
           style={onboardingStyles.fullWidthButton}
           onPress={handleGetStarted}
         >
-          <Text style={onboardingStyles.fullWidthButtonText}>Get Started</Text>
+          <Text style={onboardingStyles.fullWidthButtonText}>Next</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
