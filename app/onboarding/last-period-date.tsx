@@ -109,9 +109,18 @@ export default function LastPeriodDateScreen() {
             markedDates={markedDates}
             maxDate={today}
             firstDay={1}
+            renderHeader={(date) => {
+              const monthYear = new Date(date).toLocaleDateString('en-US', { 
+                month: 'long', 
+                year: 'numeric' 
+              });
+              return (
+                <Text style={styles.calendarHeader}>{monthYear}</Text>
+              );
+            }}
             theme={{
-              backgroundColor: colors.background,
-              calendarBackground: colors.background,
+              backgroundColor: colors.surfaceVariant2,
+              calendarBackground: colors.surfaceVariant2,
               textSectionTitleColor: colors.textPrimary,
               selectedDayBackgroundColor: colors.primary,
               selectedDayTextColor: colors.white,
@@ -175,7 +184,6 @@ const createStyles = (colors: ColorScheme) => StyleSheet.create({
     marginBottom: 30,
     borderRadius: 12,
     overflow: 'hidden',
-    backgroundColor: colors.surfaceVariant,
   },
   calendarDisabled: {
     opacity: 0.5,
@@ -221,5 +229,12 @@ const createStyles = (colors: ColorScheme) => StyleSheet.create({
   },
   buttonTextDisabled: {
     color: colors.textSecondary,
+  },
+  calendarHeader: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: colors.textPrimary,
+    textAlign: 'center',
+    marginVertical: 10,
   },
 });

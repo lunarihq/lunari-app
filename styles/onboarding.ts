@@ -58,7 +58,7 @@ export const createOnboardingStyles = (colors: ColorScheme) =>
     fullWidthButton: {
       backgroundColor: colors.primary,
       padding: 16,
-      borderRadius: 10,
+      borderRadius: 80,
       alignItems: 'center',
       width: '100%',
       marginBottom: 20,
