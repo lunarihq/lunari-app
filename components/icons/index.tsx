@@ -1,7 +1,8 @@
 // components/icons/index.tsx
 import React from 'react';
 import { HappyIcon } from './Happy';
-import { BloatedIcon } from './Bloated';
+import { BloatedIcon } from './symptoms/Bloated';
+import { AngryIcon } from './moods/Angry';
 
 interface IconProps {
   size?: number;
@@ -47,7 +48,7 @@ const iconMap: Record<IconName, React.FC<IconProps>> = {
   anxious: HappyIcon,
   confused: HappyIcon,
   irritated: HappyIcon,
-  angry: HappyIcon,
+  angry: AngryIcon,
   emotional: HappyIcon,
   light: HappyIcon,
   medium: HappyIcon,
