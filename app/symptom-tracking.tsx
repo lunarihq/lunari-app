@@ -204,8 +204,8 @@ export default function SymptomTracking() {
     },
     {
       id: '9',
-      icon: 'emotional',
-      name: 'Emotional',
+      icon: 'mood-swings',
+      name: 'Mood Swings',
       selected: false,
     },
     {
@@ -218,6 +218,12 @@ export default function SymptomTracking() {
       id: '11',
       icon: 'apathetic',
       name: 'Apathetic',
+      selected: false,
+    },
+    {
+      id: '12',
+      icon: 'bored',
+      name: 'Bored',
       selected: false,
     },
   ]);

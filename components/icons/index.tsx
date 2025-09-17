@@ -7,7 +7,11 @@ import { SadIcon } from './moods/Sad';
 import { AnxiousIcon } from './moods/Anxious';
 import { FriskyIcon } from './moods/Frisky';
 import { ConfusedIcon } from './moods/Confused';
-import { ApatheticIcon } from './moods/Apathetic';
+import { ApaticIcon } from './moods/Apathetic';
+import { MoodSwingsIcon } from './moods/MoodSwings';
+import { IrritatedIcon } from './moods/Irritated';
+import { CalmIcon } from './moods/Calm';
+import { BoredIcon } from './moods/Bored';
 
 interface IconProps {
   size?: number;
@@ -22,6 +26,7 @@ export type IconName =
   | 'dizziness'
   | 'fatigue'
   | 'bloating'
+  | 'bored'
   | 'constipation'
   | 'cravings'
   | 'calm'
@@ -32,7 +37,7 @@ export type IconName =
   | 'confused'
   | 'irritated'
   | 'angry'
-  | 'emotional'
+  | 'mood-swings'
   | 'frisky'
   | 'light'
   | 'medium'
@@ -41,23 +46,24 @@ export type IconName =
 
 const iconMap: Record<IconName, React.FC<IconProps>> = {
   acne: HappyIcon,
-  apathetic: ApatheticIcon,
+  apathetic: ApaticIcon,
   headache: BloatedIcon,
   cramps: HappyIcon,
   dizziness: HappyIcon,
   fatigue: HappyIcon,
   bloating: HappyIcon,
+  bored: BoredIcon,
   constipation: HappyIcon,
   cravings: HappyIcon,
-  calm: HappyIcon,
+  calm: CalmIcon,
   happy: HappyIcon,
   energetic: HappyIcon,
   sad: SadIcon,
   anxious: AnxiousIcon,
   confused: ConfusedIcon,
-  irritated: HappyIcon,
+  irritated: IrritatedIcon,
   angry: AngryIcon,
-  emotional: HappyIcon,
+  'mood-swings': MoodSwingsIcon,
   frisky: FriskyIcon,
   light: HappyIcon,
   medium: HappyIcon,
