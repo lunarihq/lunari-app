@@ -1,6 +1,6 @@
 import * as SQLite from 'expo-sqlite';
 import { drizzle } from 'drizzle-orm/expo-sqlite';
-import { periodDates, healthLogs, settings } from './schema';
+import { settings } from './schema';
 import { eq } from 'drizzle-orm';
 
 const MIGRATION_TABLES = `

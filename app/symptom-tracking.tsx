@@ -208,6 +208,18 @@ export default function SymptomTracking() {
       name: 'Emotional',
       selected: false,
     },
+    {
+      id: '10',
+      icon: 'frisky',
+      name: 'Frisky',
+      selected: false,
+    },
+    {
+      id: '11',
+      icon: 'apathetic',
+      name: 'Apathetic',
+      selected: false,
+    },
   ]);
 
   // Flows data
