@@ -32,6 +32,7 @@ export interface ColorScheme {
 
   // prediction circle background
   predictionCircleBackground: string;
+  insightsCardBackground: string;
 }
 
 export const lightColors: ColorScheme = {
@@ -68,6 +69,7 @@ export const lightColors: ColorScheme = {
 
   // prediction circle background
   predictionCircleBackground: '#FFFFFF',
+  insightsCardBackground: '#FFFFFF',
 };
 
 export const darkColors: ColorScheme = {
@@ -104,6 +106,7 @@ export const darkColors: ColorScheme = {
 
   // prediction circle background
   predictionCircleBackground: '#292848',
+  insightsCardBackground: '#1C1B39',
 };
 
 // Legacy export for backward compatibility

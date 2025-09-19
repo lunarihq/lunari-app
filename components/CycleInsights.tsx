@@ -24,6 +24,10 @@ export function CycleInsights({
     backgroundColor: colors.surfaceVariant2,
   };
 
+  const cardBorderStyle = {
+    borderColor: colors.cardBorder,
+  };
+
   return (
     <View style={[styles.insightsCard, { backgroundColor: colors.surface }]}>
       <View style={styles.insightsTitleContainer}>
@@ -55,10 +59,7 @@ export function CycleInsights({
           <Pressable
             style={[
               styles.insightCard,
-              {
-                backgroundColor: colors.background,
-                borderColor: colors.cardBorder,
-              },
+              cardBorderStyle,
             ]}
             onPress={() =>
               currentCycleDay &&
@@ -94,10 +95,7 @@ export function CycleInsights({
           <Pressable
             style={[
               styles.insightCard,
-              {
-                backgroundColor: colors.background,
-                borderColor: colors.cardBorder,
-              },
+              cardBorderStyle,
             ]}
             onPress={() =>
               currentCycleDay &&
@@ -138,10 +136,7 @@ export function CycleInsights({
           <Pressable
             style={[
               styles.insightCard,
-              {
-                backgroundColor: colors.background,
-                borderColor: colors.cardBorder,
-              },
+              cardBorderStyle,
             ]}
             onPress={() =>
               currentCycleDay &&
