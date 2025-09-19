@@ -878,7 +878,7 @@ const styles = StyleSheet.create({
     height: 56,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 8,
+    marginBottom: 3,
   },
   selectedItemIcon: {
     borderWidth: 2,
