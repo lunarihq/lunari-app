@@ -41,6 +41,7 @@ export default function SymptomTracking() {
   const ICON_SIZE = 50;
   const SYMPTOM_SELECTION_COLOR = '#9168EA';
   const MOOD_SELECTION_COLOR = '#F2C100';
+  const FLOW_SELECTION_COLOR = colors.accentPink;
   const [selectedDate, setSelectedDate] = useState<string>(
     // Use the date from params if provided, otherwise use today's date
     typeof params.date === 'string' ? params.date : dayjs().format('YYYY-MM-DD')
@@ -605,7 +606,7 @@ export default function SymptomTracking() {
                       styles.itemIcon,
                       flow.selected && {
                         ...styles.selectedItemIcon,
-                        borderColor: colors.accentPink,
+                        borderColor: FLOW_SELECTION_COLOR,
                       },
                     ]}
                   >
@@ -616,7 +617,7 @@ export default function SymptomTracking() {
                           styles.checkmarkContainer,
                           {
                             borderColor: colors.surface,
-                            backgroundColor: colors.accentPink,
+                            backgroundColor: FLOW_SELECTION_COLOR,
                           },
                         ]}
                       >

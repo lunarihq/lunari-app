@@ -12,6 +12,7 @@ import { MoodSwingsIcon } from './moods/MoodSwings';
 import { IrritatedIcon } from './moods/Irritated';
 import { CalmIcon } from './moods/Calm';
 import { BoredIcon } from './moods/Bored';
+import { LightFlowIcon } from './flows/LightFlow';
 
 interface IconProps {
   size?: number;
@@ -65,10 +66,10 @@ const iconMap: Record<IconName, React.FC<IconProps>> = {
   angry: AngryIcon,
   'mood-swings': MoodSwingsIcon,
   frisky: FriskyIcon,
-  light: HappyIcon,
-  medium: HappyIcon,
-  heavy: HappyIcon,
-  'blood-clots': HappyIcon,
+  light: LightFlowIcon,
+  medium: LightFlowIcon,
+  heavy: LightFlowIcon,
+  'blood-clots': LightFlowIcon,
 };
 
 interface CustomIconProps extends IconProps {
