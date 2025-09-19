@@ -45,16 +45,16 @@ export type IconName =
   | 'blood-clots';
 
 const iconMap: Record<IconName, React.FC<IconProps>> = {
-  acne: HappyIcon,
+  acne: BloatedIcon,
   apathetic: ApaticIcon,
   headache: BloatedIcon,
-  cramps: HappyIcon,
-  dizziness: HappyIcon,
-  fatigue: HappyIcon,
-  bloating: HappyIcon,
+  cramps: BloatedIcon,
+  dizziness: BloatedIcon,
+  fatigue: BloatedIcon,
+  bloating: BloatedIcon,
   bored: BoredIcon,
-  constipation: HappyIcon,
-  cravings: HappyIcon,
+  constipation: BloatedIcon,
+  cravings: BloatedIcon,
   calm: CalmIcon,
   happy: HappyIcon,
   energetic: HappyIcon,

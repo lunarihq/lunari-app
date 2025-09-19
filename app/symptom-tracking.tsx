@@ -39,6 +39,8 @@ export default function SymptomTracking() {
   const params = useLocalSearchParams();
   const { notes, setNotes } = useNotes();
   const ICON_SIZE = 50;
+  const SYMPTOM_SELECTION_COLOR = '#9168EA';
+  const MOOD_SELECTION_COLOR = '#F2C100';
   const [selectedDate, setSelectedDate] = useState<string>(
     // Use the date from params if provided, otherwise use today's date
     typeof params.date === 'string' ? params.date : dayjs().format('YYYY-MM-DD')
@@ -659,7 +661,7 @@ export default function SymptomTracking() {
                     styles.itemIcon,
                     symptom.selected && {
                       ...styles.selectedItemIcon,
-                      borderColor: colors.primary,
+                      borderColor: SYMPTOM_SELECTION_COLOR,
                     },
                   ]}
                 >
@@ -670,7 +672,7 @@ export default function SymptomTracking() {
                         styles.checkmarkContainer,
                         {
                           borderColor: colors.surface,
-                          backgroundColor: colors.primary,
+                          backgroundColor: SYMPTOM_SELECTION_COLOR,
                         },
                       ]}
                     >
@@ -715,7 +717,7 @@ export default function SymptomTracking() {
                     styles.itemIcon,
                     mood.selected && {
                       ...styles.selectedItemIcon,
-                      borderColor: colors.neutral100,
+                      borderColor: MOOD_SELECTION_COLOR,
                     },
                   ]}
                 >
@@ -726,7 +728,7 @@ export default function SymptomTracking() {
                         styles.checkmarkContainer,
                         {
                           borderColor: colors.surface,
-                          backgroundColor: colors.neutral100,
+                          backgroundColor: MOOD_SELECTION_COLOR,
                         },
                       ]}
                     >

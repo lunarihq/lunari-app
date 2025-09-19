@@ -8,7 +8,7 @@ interface IconProps {
 
 export const FriskyIcon: React.FC<IconProps> = ({
   size = 24,
-  color = '#F9DC30',
+  color = '#FFE549',
 }) => (
   <Svg width={size} height={size} viewBox="0 0 64 64" fill="none">
     <Path
