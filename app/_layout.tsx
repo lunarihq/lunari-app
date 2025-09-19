@@ -14,9 +14,9 @@ import Toast, { BaseToast, ErrorToast } from 'react-native-toast-message';
 
 // Shared toast styles
 const toastConfig = {
-  style: { height: 50 },
+  style: { height: 48 },
   contentContainerStyle: { paddingHorizontal: 16, paddingVertical: 0 },
-  text1Style: { fontSize: 16, fontWeight: '500' as const },
+  text1Style: { fontSize: 16, fontWeight: '400' as const },
 };
 
 function AppContent() {
@@ -280,8 +280,8 @@ function AppContent() {
       </Stack>
       <StatusBar style={isDark ? 'light' : 'dark'} />
       <Toast 
-        position="bottom"
-        bottomOffset={80}
+        position="top"
+        topOffset={80}
         config={{
           success: (props) => (
             <BaseToast
