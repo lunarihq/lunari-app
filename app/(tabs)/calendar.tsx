@@ -22,6 +22,7 @@ import { CalendarBottomSheet } from '../../components/CalendarBottomSheet';
 import { formatDateString } from '../types/calendarTypes';
 import { useCalendarData } from '../../hooks/useCalendarData';
 import { useCalendarMarkedDates } from '../../hooks/useCalendarMarkedDates';
+import { useCalendarPredictions } from '../../hooks/useCalendarPredictions';
 import { useCycleCalculations } from '../../hooks/useCycleCalculations';
 
 export default function CalendarScreen() {
@@ -42,6 +43,11 @@ export default function CalendarScreen() {
     getMarkedDatesWithSelection,
     getSelectionMarkedDates,
   } = useCalendarMarkedDates({ colors, userCycleLength, userPeriodLength });
+
+  const { predictions } = useCalendarPredictions({
+    userCycleLength,
+    userPeriodLength,
+  });
 
   const { cycleDay, setCycleDay, calculateCycleDay } = useCycleCalculations({
     firstPeriodDate,
@@ -224,6 +230,10 @@ export default function CalendarScreen() {
           selectedDate={selectedDate}
           cycleDay={cycleDay}
           averageCycleLength={averageCycleLength}
+          predictionData={
+            predictions.fertilityDates[selectedDate] ||
+            predictions.predictedDates[selectedDate]
+          }
           isOpen={isDrawerOpen}
           onOpenChange={setIsDrawerOpen}
         />

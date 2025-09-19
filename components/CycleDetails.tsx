@@ -10,6 +10,7 @@ interface CycleDetailsProps {
   selectedDate: string;
   cycleDay: number | null;
   averageCycleLength?: number;
+  predictionData?: { type: 'period' | 'fertile' | 'ovulation' };
   onClose?: () => void;
 }
 
@@ -17,6 +18,7 @@ export function CycleDetails({
   selectedDate,
   cycleDay,
   averageCycleLength = 28,
+  predictionData,
   onClose,
 }: CycleDetailsProps) {
   const { colors } = useTheme();
@@ -29,6 +31,13 @@ export function CycleDetails({
 
   const getConceptionChance = () => {
     if (!cycleDay) return '';
+    
+    // Use pre-computed prediction data instead of calculating
+    if (predictionData?.type === 'ovulation') {
+      return "You're likely to ovulate today";
+    }
+    
+    // Fall back to pregnancy chance calculation for other cases
     const chance = PeriodPredictionService.getPregnancyChance(
       cycleDay,
       averageCycleLength

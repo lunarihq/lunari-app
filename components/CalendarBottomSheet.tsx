@@ -16,6 +16,7 @@ interface CalendarBottomSheetProps {
   selectedDate: string;
   cycleDay: number | null;
   averageCycleLength: number;
+  predictionData?: { type: 'period' | 'fertile' | 'ovulation' };
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
 }
@@ -24,6 +25,7 @@ export function CalendarBottomSheet({
   selectedDate,
   cycleDay,
   averageCycleLength,
+  predictionData,
   isOpen,
   onOpenChange,
 }: CalendarBottomSheetProps) {
@@ -103,6 +105,7 @@ export function CalendarBottomSheet({
             selectedDate={selectedDate}
             cycleDay={cycleDay}
             averageCycleLength={averageCycleLength}
+            predictionData={predictionData}
             onClose={closeDrawer}
           />
         </BottomSheetView>
