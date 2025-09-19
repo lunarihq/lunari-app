@@ -876,15 +876,15 @@ const styles = StyleSheet.create({
     opacity: 1,
   },
   itemIcon: {
-    width: 56,
-    height: 56,
+    width: 60,
+    height: 60,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 3,
   },
   selectedItemIcon: {
     borderWidth: 2,
-    borderRadius: 28,
+    borderRadius: 30,
   },
   itemText: {
     textAlign: 'center',
