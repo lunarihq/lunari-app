@@ -13,6 +13,7 @@ import { useRouter } from 'expo-router';
 import defaultTheme, { useTheme, createTypography } from '../../styles/theme';
 import { ThemeSelectionModal } from '../../components/ThemeSelectionModal';
 import { DataDeletionService } from '../../services/dataDeletionService';
+import { NotificationService } from '../../services/notificationService';
 import { useNotes } from '../../contexts/NotesContext';
 
 export default function Settings() {
@@ -32,6 +33,25 @@ export default function Settings() {
       showsVerticalScrollIndicator={false}
     >
       <View style={[styles.section, { backgroundColor: colors.surface }]}>
+        <TouchableOpacity
+          style={[styles.settingRow, { borderBottomColor: colors.border }]}
+          onPress={async () => {
+            await NotificationService.scheduleTestNotification();
+            Alert.alert('Test Notification', 'A test notification has been scheduled!');
+          }}
+        >
+          <View style={styles.iconContainer}>
+            <Ionicons
+              name="notifications-outline"
+              size={24}
+              color={colors.textPrimary}
+            />
+          </View>
+          <Text style={[typography.body, { fontSize: 18, flex: 1 }]}>
+            Test Notification
+          </Text>
+        </TouchableOpacity>
+
         <TouchableOpacity
           style={[styles.settingRow, { borderBottomColor: colors.border }]}
           onPress={() => router.push('/reminders')}
