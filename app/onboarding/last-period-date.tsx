@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Button } from '../../components/Button';
+import { Checkbox } from '../../components/Checkbox';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -153,31 +154,12 @@ export default function LastPeriodDateScreen() {
           />
         </View>
 
-        <TouchableOpacity
-          style={styles.dontKnowContainer}
-          onPress={toggleDontKnow}
-        >
-          <View style={styles.checkboxContainer}>
-            <View
-              style={[
-                styles.checkbox,
-                {
-                  borderColor: colors.primary,
-                  backgroundColor: dontKnow ? colors.primary : colors.surface,
-                },
-                dontKnow && styles.checkboxChecked,
-              ]}
-            >
-              {dontKnow && (
-                <Ionicons name="checkmark" size={16} color={colors.white} />
-              )}
-            </View>
-            <Text style={styles.dontKnowText}>Don't know - skip this step</Text>
-          </View>
-          <Text style={styles.dontKnowSubText}>
-            We'll help you track from today
-          </Text>
-        </TouchableOpacity>
+        <Checkbox
+          checked={dontKnow}
+          onToggle={toggleDontKnow}
+          text="Don't know - skip this step"
+          subText="We'll help you track from today"
+        />
       </View>
 
       <View style={onboardingStyles.footer}>
@@ -208,35 +190,6 @@ const createStyles = (colors: ColorScheme) =>
     },
     calendarDisabledStyle: {
       backgroundColor: colors.panel,
-    },
-    dontKnowContainer: {
-      alignItems: 'center',
-      marginBottom: 20,
-    },
-    checkboxContainer: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      marginBottom: 5,
-    },
-    checkbox: {
-      width: 20,
-      height: 20,
-      borderWidth: 2,
-      borderRadius: 3,
-      marginRight: 10,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    checkboxChecked: {},
-    dontKnowText: {
-      fontSize: 16,
-      color: colors.textPrimary,
-      fontWeight: '500',
-    },
-    dontKnowSubText: {
-      fontSize: 14,
-      color: colors.textMuted,
-      fontStyle: 'italic',
     },
     calendarHeader: {
       fontSize: 18,
