@@ -15,7 +15,7 @@ import { db } from '../db';
 import { healthLogs, periodDates } from '../db/schema';
 import { eq } from 'drizzle-orm';
 import { useFocusEffect } from '@react-navigation/native';
-import defaultTheme, { useTheme } from '../styles/theme';
+import defaultTheme, { useTheme, createTypography } from '../styles/theme';
 import { useNotes } from '../contexts/NotesContext';
 import { CustomIcon } from '../components/icons';
 import Toast from 'react-native-toast-message';
@@ -36,6 +36,7 @@ dayjs.extend(isoWeek);
 
 export default function SymptomTracking() {
   const { colors } = useTheme();
+  const typography = createTypography(colors);
   const params = useLocalSearchParams();
   const { notes, setNotes } = useNotes();
   const ICON_SIZE = 50;
@@ -552,7 +553,7 @@ export default function SymptomTracking() {
           <Ionicons name="chevron-back" size={24} color={colors.textPrimary} />
         </TouchableOpacity>
 
-        <Text style={[styles.dateText, { color: colors.textPrimary }]}>
+        <Text style={[typography.body, { fontSize: 18, fontWeight: '600' }]}>
           {selectedDate === dayjs().format('YYYY-MM-DD')
             ? `Today, ${dayjs(selectedDate).format('MMMM D')}`
             : dayjs(selectedDate).format('dddd, MMMM D')}
@@ -585,7 +586,7 @@ export default function SymptomTracking() {
           <View style={[styles.section, { backgroundColor: colors.surface }]}>
             <View style={styles.sectionHeader}>
               <Text
-                style={[styles.sectionTitle, { color: colors.textPrimary }]}
+                style={[typography.heading2]}
               >
                 Flow
               </Text>
@@ -630,7 +631,7 @@ export default function SymptomTracking() {
                     )}
                   </View>
                   <Text
-                    style={[styles.itemText, { color: colors.textSecondary }]}
+                    style={[typography.caption, { textAlign: 'center' }]}
                   >
                     {flow.name}
                   </Text>
@@ -642,7 +643,7 @@ export default function SymptomTracking() {
         {/* Symptoms */}
         <View style={[styles.section, { backgroundColor: colors.surface }]}>
           <View style={styles.sectionHeader}>
-            <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
+            <Text style={[typography.heading2]}>
               Symptoms
             </Text>
           </View>
@@ -686,7 +687,7 @@ export default function SymptomTracking() {
                   )}
                 </View>
                 <Text
-                  style={[styles.itemText, { color: colors.textSecondary }]}
+                  style={[typography.caption, { textAlign: 'center' }]}
                 >
                   {symptom.name}
                 </Text>
@@ -698,7 +699,7 @@ export default function SymptomTracking() {
         {/* Moods */}
         <View style={[styles.section, { backgroundColor: colors.surface }]}>
           <View style={styles.sectionHeader}>
-            <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
+            <Text style={[typography.heading2]}>
               Moods
             </Text>
           </View>
@@ -742,7 +743,7 @@ export default function SymptomTracking() {
                   )}
                 </View>
                 <Text
-                  style={[styles.itemText, { color: colors.textSecondary }]}
+                  style={[typography.caption, { textAlign: 'center' }]}
                 >
                   {mood.name}
                 </Text>
@@ -757,7 +758,7 @@ export default function SymptomTracking() {
           style={[styles.section, { backgroundColor: colors.surface }]}
         >
           <View style={styles.sectionHeader}>
-            <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
+            <Text style={[typography.heading2]}>
               Notes
             </Text>
             <View style={styles.notesIconsContainer}>
@@ -795,14 +796,14 @@ export default function SymptomTracking() {
           >
             {notes.trim() ? (
               <Text
-                style={[styles.notesText, { color: colors.textPrimary }]}
+                style={[typography.body, { flex: 1, lineHeight: 22 }]}
                 numberOfLines={3}
               >
                 {notes}
               </Text>
             ) : (
               <Text
-                style={[styles.notesPlaceholder, { color: colors.placeholder }]}
+                style={[typography.body, { flex: 1, fontStyle: 'italic', color: colors.placeholder }]}
               >
                 Add notes about your day...
               </Text>
@@ -832,10 +833,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     alignItems: 'center',
   },
-  dateText: {
-    fontSize: 18,
-    fontWeight: '600',
-  },
   scrollView: {
     flex: 1,
   },
@@ -854,10 +851,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 16,
-  },
-  sectionTitle: {
-    fontSize: 22,
-    fontWeight: '600',
   },
   itemsGrid: {
     flexDirection: 'row',
@@ -883,10 +876,6 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 30,
   },
-  itemText: {
-    textAlign: 'center',
-    fontSize: 12,
-  },
   emojiText: {
     fontSize: 28,
   },
@@ -895,16 +884,6 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     borderRadius: 12,
     minHeight: 60,
-  },
-  notesText: {
-    flex: 1,
-    fontSize: 16,
-    lineHeight: 22,
-  },
-  notesPlaceholder: {
-    flex: 1,
-    fontSize: 16,
-    fontStyle: 'italic',
   },
   notesIconsContainer: {
     flexDirection: 'row',

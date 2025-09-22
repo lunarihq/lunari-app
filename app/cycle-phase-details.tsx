@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, ScrollView } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { PeriodPredictionService } from '../services/periodPredictions';
-import defaultTheme, { useTheme } from '../styles/theme';
+import defaultTheme, { useTheme, createTypography } from '../styles/theme';
 
 const getFormattedDate = (date: Date): string => {
   return `Today, ${date.toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}`;
@@ -11,6 +11,7 @@ const getFormattedDate = (date: Date): string => {
 
 export default function CyclePhaseDetails() {
   const { colors } = useTheme();
+  const typography = createTypography(colors);
   const params = useLocalSearchParams();
   const cycleDay = parseInt(params.cycleDay as string) || 0;
   const averageCycleLength =
@@ -44,11 +45,11 @@ export default function CyclePhaseDetails() {
         contentContainerStyle={defaultTheme.globalStyles.scrollContentContainer}
         showsVerticalScrollIndicator={false}
       >
-        <Text style={[styles.dateText, { color: colors.textPrimary }]}>
+        <Text style={[typography.body, { fontWeight: '500', marginBottom: 8, textAlign: 'center' }]}>
           {getFormattedDate(currentDate)}
         </Text>
 
-        <Text style={[styles.cycleTitle, { color: colors.textPrimary }]}>
+        <Text style={[typography.heading1, { textAlign: 'center', marginBottom: 32 }]}>
           Cycle day {cycleDay}
         </Text>
 
@@ -59,17 +60,17 @@ export default function CyclePhaseDetails() {
               size={24}
               color={colors.textPrimary}
             />
-            <Text style={[styles.cardTitle, { color: colors.textPrimary }]}>
+            <Text style={[typography.heading2, { marginLeft: 8 }]}>
               Cycle phase
             </Text>
           </View>
 
-          <Text style={[styles.phaseTitle, { color: colors.textPrimary }]}>
+          <Text style={[typography.body, { fontSize: 18, fontWeight: 'bold', marginBottom: 8 }]}>
             {cyclePhase}
           </Text>
 
           <Text
-            style={[styles.phaseDescription, { color: colors.textPrimary }]}
+            style={[typography.body, { fontSize: 18, lineHeight: 24 }]}
           >
             {phaseDescription}
           </Text>
@@ -82,17 +83,17 @@ export default function CyclePhaseDetails() {
               size={24}
               color={colors.textPrimary}
             />
-            <Text style={[styles.cardTitle, { color: colors.textPrimary }]}>
+            <Text style={[typography.heading2, { marginLeft: 8 }]}>
               Chance to conceive
             </Text>
           </View>
 
-          <Text style={[styles.phaseTitle, { color: colors.textPrimary }]}>
+          <Text style={[typography.body, { fontSize: 18, fontWeight: 'bold', marginBottom: 8 }]}>
             {pregnancyChance}
           </Text>
 
           <Text
-            style={[styles.phaseDescription, { color: colors.textPrimary }]}
+            style={[typography.body, { fontSize: 18, lineHeight: 24 }]}
           >
             {pregnancyDescription}
           </Text>
@@ -105,12 +106,12 @@ export default function CyclePhaseDetails() {
               size={24}
               color={colors.textPrimary}
             />
-            <Text style={[styles.cardTitle, { color: colors.textPrimary }]}>
+            <Text style={[typography.heading2, { marginLeft: 8 }]}>
               Possible symptoms
             </Text>
           </View>
           <Text
-            style={[styles.phaseDescription, { color: colors.textPrimary }]}
+            style={[typography.body, { fontSize: 18, lineHeight: 24 }]}
           >
             {possibleSymptoms}
           </Text>
@@ -124,19 +125,6 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
   },
-
-  dateText: {
-    fontSize: 17,
-    fontWeight: '500',
-    marginBottom: 8,
-    textAlign: 'center',
-  },
-  cycleTitle: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 32,
-  },
   phaseCard: {
     borderRadius: 16,
     padding: 16,
@@ -146,19 +134,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 16,
-  },
-  cardTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    marginLeft: 8,
-  },
-  phaseTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 8,
-  },
-  phaseDescription: {
-    fontSize: 18,
-    lineHeight: 24,
   },
 });

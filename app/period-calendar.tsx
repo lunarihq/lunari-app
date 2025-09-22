@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Button } from '../components/Button';
-import { useTheme } from '../styles/theme';
+import { useTheme, createTypography } from '../styles/theme';
 import { useState, useEffect } from 'react';
 import { DateData } from 'react-native-calendars';
 import { Ionicons } from '@expo/vector-icons';
@@ -23,6 +23,7 @@ import { periodDates } from '../db/schema';
 
 export default function PeriodCalendarScreen() {
   const { colors } = useTheme();
+  const typography = createTypography(colors);
   const [tempDates, setTempDates] = useState<MarkedDates>({});
   const [userPeriodLength, setUserPeriodLength] = useState<number>(5);
 
@@ -208,8 +209,8 @@ export default function PeriodCalendarScreen() {
           {/* Day number */}
           <Text
             style={[
+              typography.body,
               styles.customDayText,
-              { color: colors.textPrimary },
               isToday ? baseCalendarStyles.todayText : null,
               isDisabled ? styles.disabledDayText : null,
               isSelected ? styles.selectedDayText : null,
@@ -249,7 +250,7 @@ export default function PeriodCalendarScreen() {
     <View style={[styles.container, { backgroundColor: colors.panel }]}>
       {/* Header with padding for status bar, similar to symptom-tracking.tsx */}
       <View style={styles.header}>
-        <Text style={[styles.headerTitle, { color: colors.textPrimary }]}>
+        <Text style={[typography.body, { fontSize: 18, fontWeight: '600', paddingTop: 63 }]}>
           Edit Period
         </Text>
         {isTodayButtonVisible() && (
@@ -320,11 +321,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 18,
     height: 100,
-  },
-  headerTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    paddingTop: 63,
   },
   calendarContainer: {
     flex: 1,
