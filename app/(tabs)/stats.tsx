@@ -11,7 +11,7 @@ import { CycleHistory } from '../../components/CycleHistory';
 import { DropIcon } from '../../components/icons/Drop';
 import { CycleIcon } from '../../components/icons/Cycle';
 import { getCycleStatus, getPeriodStatus } from '../../utils/cycleUtils';
-import defaultTheme, { useTheme } from '../../styles/theme';
+import defaultTheme, { useTheme, createTypography } from '../../styles/theme';
 interface CycleData {
   startDate: string;
   cycleLength: string | number;
@@ -24,6 +24,7 @@ interface HistoryEntryWithDate extends CycleData {
 
 export default function Stats() {
   const { colors } = useTheme();
+  const typography = createTypography(colors);
   const [averageCycleLength, setAverageCycleLength] = useState<number>(0);
   const [averagePeriodLength, setAveragePeriodLength] = useState<number>(0);
   const [cycleHistory, setCycleHistory] = useState<CycleData[]>([]);
@@ -182,11 +183,11 @@ export default function Stats() {
     <View
       style={[styles.emptyStateContainer, { backgroundColor: colors.surface }]}
     >
-      <Text style={[styles.emptyStateTitle, { color: colors.textPrimary }]}>
+      <Text style={[typography.heading2, { fontSize: 24, fontWeight: '500', marginBottom: 12, textAlign: 'center' }]}>
         No period data yet
       </Text>
       <Text
-        style={[styles.emptyStateSubtitle, { color: colors.textSecondary }]}
+        style={[typography.body, { lineHeight: 24, textAlign: 'center', marginBottom: 32, paddingHorizontal: 16, color: colors.textSecondary }]}
       >
         Log at least 2 periods to see your personal cycle statistics.
       </Text>
@@ -224,7 +225,7 @@ export default function Stats() {
       <View
         style={[styles.myCyclesContainer, { backgroundColor: colors.surface }]}
       >
-        <Text style={[styles.heading, { color: colors.textPrimary }]}>
+        <Text style={[typography.heading2, { fontSize: 24, fontWeight: '500', marginBottom: 16 }]}>
           Cycle statistics
         </Text>
         <View style={styles.cardsContainer}>
@@ -255,11 +256,6 @@ const styles = StyleSheet.create({
     padding: 16,
     borderRadius: 16,
   },
-  heading: {
-    fontSize: 24,
-    fontWeight: '500',
-    marginBottom: 16,
-  },
   cardsContainer: {
     gap: 12,
   },
@@ -270,19 +266,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     minHeight: 300,
-  },
-  emptyStateTitle: {
-    fontSize: 24,
-    fontWeight: '500',
-    marginBottom: 12,
-    textAlign: 'center',
-  },
-  emptyStateSubtitle: {
-    fontSize: 16,
-    lineHeight: 24,
-    textAlign: 'center',
-    marginBottom: 32,
-    paddingHorizontal: 16,
   },
   emptyStateButton: {
     minWidth: 120,

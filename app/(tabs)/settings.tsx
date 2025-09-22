@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import defaultTheme, { useTheme } from '../../styles/theme';
+import defaultTheme, { useTheme, createTypography } from '../../styles/theme';
 import { ThemeSelectionModal } from '../../components/ThemeSelectionModal';
 import { DataDeletionService } from '../../services/dataDeletionService';
 import { useNotes } from '../../contexts/NotesContext';
@@ -18,6 +18,7 @@ import { useNotes } from '../../contexts/NotesContext';
 export default function Settings() {
   const router = useRouter();
   const { colors, themeMode } = useTheme();
+  const typography = createTypography(colors);
   const { clearNotes } = useNotes();
   const [themeModalVisible, setThemeModalVisible] = useState(false);
 
@@ -42,7 +43,7 @@ export default function Settings() {
               color={colors.textPrimary}
             />
           </View>
-          <Text style={[styles.settingText, { color: colors.textPrimary }]}>
+          <Text style={[typography.body, { fontSize: 18, flex: 1 }]}>
             Reminders
           </Text>
           <Ionicons
@@ -63,7 +64,7 @@ export default function Settings() {
               color={colors.textPrimary}
             />
           </View>
-          <Text style={[styles.settingText, { color: colors.textPrimary }]}>
+          <Text style={[typography.body, { fontSize: 18, flex: 1 }]}>
             App Lock
           </Text>
           <Ionicons
@@ -84,7 +85,7 @@ export default function Settings() {
               color={colors.textPrimary}
             />
           </View>
-          <Text style={[styles.settingText, { color: colors.textPrimary }]}>
+          <Text style={[typography.body, { fontSize: 18, flex: 1 }]}>
             Privacy policy
           </Text>
           <Ionicons
@@ -105,7 +106,7 @@ export default function Settings() {
               color={colors.textPrimary}
             />
           </View>
-          <Text style={[styles.settingText, { color: colors.textPrimary }]}>
+          <Text style={[typography.body, { fontSize: 18, flex: 1 }]}>
             About
           </Text>
           <Ionicons
@@ -126,10 +127,10 @@ export default function Settings() {
               color={colors.textPrimary}
             />
           </View>
-          <Text style={[styles.settingText, { color: colors.textPrimary }]}>
+          <Text style={[typography.body, { fontSize: 18, flex: 1 }]}>
             Theme
           </Text>
-          <Text style={[styles.currentValue, { color: colors.textMuted }]}>
+          <Text style={[typography.body, { color: colors.textMuted }]}>
             {themeMode === 'system'
               ? 'System default'
               : themeMode === 'light'
@@ -175,7 +176,7 @@ export default function Settings() {
           <View style={styles.iconContainer}>
             <Ionicons name="trash-outline" size={24} color="#FF6B6B" />
           </View>
-          <Text style={[styles.settingText, { color: '#FF6B6B' }]}>
+          <Text style={[typography.body, { fontSize: 18, flex: 1, color: '#FF6B6B' }]}>
             Delete Tracking Data
           </Text>
           <Ionicons name="chevron-forward" size={24} color="#FF6B6B" />
@@ -208,13 +209,5 @@ const styles = StyleSheet.create({
   },
   lastRow: {
     borderBottomWidth: 0,
-  },
-  settingText: {
-    fontSize: 18,
-    flex: 1,
-  },
-  currentValue: {
-    fontSize: 16,
-    color: '#666',
   },
 });
