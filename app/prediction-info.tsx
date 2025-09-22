@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ScrollView, Text } from 'react-native';
+import { View, ScrollView, Text, Image } from 'react-native';
 import defaultTheme, { useTheme } from '../styles/theme';
 
 export default function PredictionInfo() {
@@ -14,16 +14,16 @@ export default function PredictionInfo() {
       contentContainerStyle={defaultTheme.globalStyles.scrollContentContainer}
       showsVerticalScrollIndicator={false}
     >
+      <Image
+        source={require('../assets/images/prediction.png')}
+        style={{
+          width: '100%',
+          height: 200,
+          resizeMode: 'cover',
+          marginBottom: 24,
+        }}
+      />
       <View>
-        <Text
-          style={[
-            defaultTheme.Typography.heading1,
-            { color: colors.textPrimary, marginTop: 16 },
-          ]}
-        >
-          How Lunari Predicts Your Period
-        </Text>
-
         <Text
           style={[
             defaultTheme.Typography.body,
@@ -56,7 +56,6 @@ export default function PredictionInfo() {
           <Text
             style={[
               defaultTheme.Typography.caption,
-              { color: colors.textMuted, fontStyle: 'italic' },
             ]}
           >
             • Most recent cycle: 100% weight • 2nd cycle back: 80% weight • 3rd
@@ -105,7 +104,6 @@ export default function PredictionInfo() {
           <Text
             style={[
               defaultTheme.Typography.caption,
-              { color: colors.textMuted, fontStyle: 'italic' },
             ]}
           >
             • 5 days before ovulation • Ovulation day • 1 day after ovulation
@@ -133,13 +131,7 @@ export default function PredictionInfo() {
           </Text>
         </View>
 
-        <View
-          style={{
-            backgroundColor: colors.panel,
-            padding: 16,
-            borderRadius: 12,
-            marginBottom: 24,
-          }}
+        <View style={{ marginBottom: 32 }}
         >
           <Text
             style={[
@@ -151,7 +143,7 @@ export default function PredictionInfo() {
           </Text>
           <Text
             style={[
-              defaultTheme.Typography.caption,
+              defaultTheme.Typography.body,
               { color: colors.textSecondary, lineHeight: 20 },
             ]}
           >
@@ -159,20 +151,17 @@ export default function PredictionInfo() {
             never leaves your phone and is never shared with anyone.
           </Text>
         </View>
-
+        <View style={{ marginBottom: 32 }}>
         <Text
           style={[
             defaultTheme.Typography.caption,
-            {
-              color: colors.textMuted,
-              textAlign: 'center',
-              fontStyle: 'italic',
-            },
+            { backgroundColor: colors.panel, padding: 16, borderRadius: 12 },
           ]}
         >
           Remember: These are predictions based on your patterns. Every body is
           different, and cycles can vary naturally.
         </Text>
+        </View>
       </View>
     </ScrollView>
   );

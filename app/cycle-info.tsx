@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
 import defaultTheme, { useTheme } from '../styles/theme';
 
 export default function StatusInfo() {
@@ -38,7 +38,16 @@ export default function StatusInfo() {
       contentContainerStyle={defaultTheme.globalStyles.scrollContentContainer}
       showsVerticalScrollIndicator={false}
     >
-      <View style={[styles.card, { backgroundColor: colors.surface }]}>
+      <Image
+        source={require('../assets/images/prediction.png')}
+        style={{
+          width: '100%',
+          height: 200,
+          resizeMode: 'cover',
+          marginBottom: 24,
+        }}
+      />
+      <View style={{ marginBottom: 32 }}>
         <Text style={[styles.title, { color: colors.textPrimary }]}>
           {getTitle()}
         </Text>
@@ -48,7 +57,7 @@ export default function StatusInfo() {
         </Text>
       </View>
 
-      <View style={[styles.card, { backgroundColor: colors.surface }]}>
+      <View style={{ marginBottom: 32 }}>
         <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
           Normal Range
         </Text>
@@ -60,7 +69,7 @@ export default function StatusInfo() {
         </Text>
       </View>
 
-      <View style={[styles.card, { backgroundColor: colors.surface }]}>
+      <View style={{ marginBottom: 32 }}>
         <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
           Irregular Cycles
         </Text>
@@ -69,7 +78,7 @@ export default function StatusInfo() {
         </Text>
       </View>
 
-      <View style={[styles.card, { backgroundColor: colors.surface }]}>
+      <View style={{ marginBottom: 32 }}>
         <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
           Tips for Tracking
         </Text>

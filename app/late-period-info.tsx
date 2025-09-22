@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
 import defaultTheme, { useTheme } from '../styles/theme';
 
 export default function PeriodLength() {
@@ -14,7 +14,16 @@ export default function PeriodLength() {
       contentContainerStyle={defaultTheme.globalStyles.scrollContentContainer}
       showsVerticalScrollIndicator={false}
     >
-      <View style={[styles.card, { backgroundColor: colors.surface }]}>
+      <Image
+        source={require('../assets/images/prediction.png')}
+        style={{
+          width: '100%',
+          height: 200,
+          resizeMode: 'cover',
+          marginBottom: 24,
+        }}
+      />
+      <View style={{ marginBottom: 32 }}>
         <Text style={[styles.title, { color: colors.textPrimary }]}>
           Understanding Your Period
         </Text>
@@ -26,7 +35,7 @@ export default function PeriodLength() {
         </Text>
       </View>
 
-      <View style={[styles.card, { backgroundColor: colors.surface }]}>
+      <View style={{ marginBottom: 32 }}>
         <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
           Normal Period Length
         </Text>
@@ -41,7 +50,7 @@ export default function PeriodLength() {
         </Text>
       </View>
 
-      <View style={[styles.card, { backgroundColor: colors.surface }]}>
+      <View style={{ marginBottom: 32 }}>
         <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
           Irregular Periods
         </Text>
@@ -52,7 +61,7 @@ export default function PeriodLength() {
         </Text>
       </View>
 
-      <View style={[styles.card, { backgroundColor: colors.surface }]}>
+      <View style={{ marginBottom: 32 }}>
         <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
           Period Flow Patterns
         </Text>
@@ -64,7 +73,7 @@ export default function PeriodLength() {
         </Text>
       </View>
 
-      <View style={[styles.card, { backgroundColor: colors.surface }]}>
+      <View style={{ marginBottom: 32 }}>
         <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
           Tips for Period Health
         </Text>

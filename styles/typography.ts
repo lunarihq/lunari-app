@@ -8,7 +8,7 @@ export const Typography = StyleSheet.create({
     color: Colors.textPrimary,
   },
   heading2: {
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: '600',
     color: Colors.textPrimary,
   },
@@ -18,7 +18,7 @@ export const Typography = StyleSheet.create({
     color: Colors.textSecondary,
   },
   caption: {
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: '400',
     color: Colors.textSecondary,
   },
