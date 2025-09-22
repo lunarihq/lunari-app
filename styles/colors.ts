@@ -27,6 +27,12 @@ export interface ColorScheme {
   textMuted: string;
   placeholder: string;
 
+  // semantic status colors
+  success: string;
+  warning: string;
+  error: string;
+  info: string;
+
   white: string;
   black: string;
 
@@ -63,6 +69,12 @@ export const lightColors: ColorScheme = {
   textMuted: '#8A86A9', // muted / hint
   placeholder: '#8D8A99',
 
+  // semantic status colors
+  success: '#10B981', // Green for success states
+  warning: '#F59E0B', // Orange for warnings
+  error: '#EF4444', // Red for errors/destructive actions
+  info: '#3B82F6', // Blue for informational states
+
   white: '#FFFFFF',
   black: '#000000',
 
@@ -98,6 +110,12 @@ export const darkColors: ColorScheme = {
   textSecondary: '#DEDDE7', // light gray for secondary text
   textMuted: '#A09CC2', // muted gray for hints
   placeholder: '#A5A4C2', // placeholder text
+
+  // semantic status colors (lighter for dark mode contrast)
+  success: '#34D399', // Lighter green for dark mode
+  warning: '#FBBF24', // Lighter orange for dark mode
+  error: '#F87171', // Lighter red for dark mode
+  info: '#60A5FA', // Lighter blue for dark mode
 
   white: '#FFFFFF',
   black: '#000000',

@@ -23,9 +23,9 @@ export function StatCard({ title, value, icon, status, type }: StatCardProps) {
     if (!status) return null;
 
     if (status === 'normal') {
-      return <CheckCircleIcon size={16} color="#10B981" />;
+      return <CheckCircleIcon size={16} color={colors.success} />;
     } else {
-      return <AlertIcon size={16} color="#F59E0B" />;
+      return <AlertIcon size={16} color={colors.warning} />;
     }
   };
 
