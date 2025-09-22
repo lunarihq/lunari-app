@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { Button } from '../../components/Button';
+import { DayPicker } from '../../components/DayPicker';
+import { Checkbox } from '../../components/Checkbox';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { setSetting } from '../../db';
 import { createOnboardingStyles } from '../../styles/onboarding';
 import { useTheme } from '../../contexts/ThemeContext';
-import { ColorScheme } from '../../styles/colors';
 
 export default function PeriodLengthScreen() {
   const router = useRouter();
   const { colors } = useTheme();
   const onboardingStyles = createOnboardingStyles(colors);
-  const styles = createStyles(colors);
   const [periodLength, setPeriodLength] = useState(5);
   const [dontKnow, setDontKnow] = useState(false);
 
@@ -32,14 +32,6 @@ export default function PeriodLengthScreen() {
 
   const handleBack = () => {
     router.back();
-  };
-
-  const incrementPeriodLength = () => {
-    setPeriodLength(prev => Math.min(prev + 1, 10)); // Max 10 days
-  };
-
-  const decrementPeriodLength = () => {
-    setPeriodLength(prev => Math.max(prev - 1, 1)); // Min 1 day
   };
 
   const toggleDontKnow = () => {
@@ -74,68 +66,19 @@ export default function PeriodLengthScreen() {
           This helps us provide more accurate predictions for your cycle.
         </Text>
 
-        <View
-          style={[styles.pickerContainer, dontKnow && styles.pickerDisabled]}
-        >
-          <TouchableOpacity
-            style={[styles.pickerButton, dontKnow && styles.buttonDisabled]}
-            onPress={decrementPeriodLength}
-            disabled={dontKnow}
-          >
-            <Ionicons
-              name="remove"
-              size={24}
-              color={dontKnow ? colors.textMuted : colors.primary}
-            />
-          </TouchableOpacity>
+        <DayPicker
+          value={periodLength}
+          onChange={setPeriodLength}
+          min={1}
+          max={10}
+          disabled={dontKnow}
+        />
 
-          <View style={styles.valueContainer}>
-            <Text style={[styles.valueText, dontKnow && styles.textDisabled]}>
-              {periodLength}
-            </Text>
-            <Text style={[styles.labelText, dontKnow && styles.textDisabled]}>
-              days
-            </Text>
-          </View>
-
-          <TouchableOpacity
-            style={[styles.pickerButton, dontKnow && styles.buttonDisabled]}
-            onPress={incrementPeriodLength}
-            disabled={dontKnow}
-          >
-            <Ionicons
-              name="add"
-              size={24}
-              color={dontKnow ? colors.textMuted : colors.primary}
-            />
-          </TouchableOpacity>
-        </View>
-
-        <TouchableOpacity
-          style={styles.dontKnowContainer}
-          onPress={toggleDontKnow}
-        >
-          <View style={styles.checkboxContainer}>
-            <View
-              style={[
-                styles.checkbox,
-                {
-                  borderColor: colors.primary,
-                  backgroundColor: dontKnow ? colors.primary : colors.surface,
-                },
-                dontKnow && styles.checkboxChecked,
-              ]}
-            >
-              {dontKnow && (
-                <Ionicons name="checkmark" size={16} color={colors.white} />
-              )}
-            </View>
-            <Text style={styles.dontKnowText}>
-              Don't know - let the app learn
-            </Text>
-          </View>
-          <Text style={styles.dontKnowSubText}>Uses 5 days as default</Text>
-        </TouchableOpacity>
+        <Checkbox
+          checked={dontKnow}
+          onToggle={toggleDontKnow}
+          subText="Uses 5 days as default"
+        />
       </View>
 
       <View style={onboardingStyles.footer}>
@@ -145,73 +88,3 @@ export default function PeriodLengthScreen() {
   );
 }
 
-const createStyles = (colors: ColorScheme) =>
-  StyleSheet.create({
-    pickerContainer: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginBottom: 30,
-    },
-    pickerDisabled: {
-      opacity: 0.5,
-    },
-    pickerButton: {
-      width: 50,
-      height: 50,
-      borderRadius: 25,
-      backgroundColor: colors.surfaceVariant,
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginHorizontal: 20,
-    },
-    buttonDisabled: {
-      backgroundColor: colors.panel,
-    },
-    valueContainer: {
-      alignItems: 'center',
-      minWidth: 80,
-    },
-    valueText: {
-      fontSize: 48,
-      fontWeight: 'bold',
-      color: colors.primary,
-    },
-    textDisabled: {
-      color: colors.textMuted,
-    },
-    labelText: {
-      fontSize: 16,
-      color: colors.textSecondary,
-      marginTop: 5,
-    },
-    dontKnowContainer: {
-      alignItems: 'center',
-      marginBottom: 20,
-    },
-    checkboxContainer: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      marginBottom: 5,
-    },
-    checkbox: {
-      width: 20,
-      height: 20,
-      borderWidth: 2,
-      borderRadius: 3,
-      marginRight: 10,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    checkboxChecked: {},
-    dontKnowText: {
-      fontSize: 16,
-      color: colors.textPrimary,
-      fontWeight: '500',
-    },
-    dontKnowSubText: {
-      fontSize: 14,
-      color: colors.textMuted,
-      fontStyle: 'italic',
-    },
-  });
