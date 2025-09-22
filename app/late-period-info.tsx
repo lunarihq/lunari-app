@@ -1,9 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
-import defaultTheme, { useTheme } from '../styles/theme';
+import defaultTheme, { useTheme, createTypography } from '../styles/theme';
 
 export default function PeriodLength() {
   const { colors } = useTheme();
+  const typography = createTypography(colors);
 
   return (
     <ScrollView
@@ -24,11 +25,11 @@ export default function PeriodLength() {
         }}
       />
       <View style={{ marginBottom: 32 }}>
-        <Text style={[styles.title, { color: colors.textPrimary }]}>
+        <Text style={[typography.heading2, { marginBottom: 12 }]}>
           Understanding Your Period
         </Text>
 
-        <Text style={[styles.description, { color: colors.textSecondary }]}>
+        <Text style={[typography.body, { lineHeight: 24 }]}>
           Your period is the number of days you experience menstrual bleeding
           each cycle. This is when your body sheds the uterine lining that built
           up during your cycle.
@@ -36,13 +37,13 @@ export default function PeriodLength() {
       </View>
 
       <View style={{ marginBottom: 32 }}>
-        <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
+        <Text style={[typography.heading2, { marginBottom: 12 }]}>
           Normal Period Length
         </Text>
-        <Text style={[styles.normalRange, { color: colors.textSecondary }]}>
+        <Text style={[styles.normalRange]}>
           2-7 days
         </Text>
-        <Text style={[styles.explanation, { color: colors.textSecondary }]}>
+        <Text style={[typography.body, { lineHeight: 24 }]}>
           A normal period length of 2-7 days is typical for most people. The
           flow usually starts light, becomes heavier for a few days, then tapers
           off. Period length can vary from cycle to cycle, which is completely
@@ -51,10 +52,10 @@ export default function PeriodLength() {
       </View>
 
       <View style={{ marginBottom: 32 }}>
-        <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
+        <Text style={[typography.heading2, { marginBottom: 12 }]}>
           Irregular Periods
         </Text>
-        <Text style={[styles.explanation, { color: colors.textSecondary }]}>
+        <Text style={[typography.body, { lineHeight: 24 }]}>
           Irregular periods (shorter than 2 days or longer than 7 days) may
           indicate hormonal imbalances, stress, or underlying health conditions.
           Very heavy bleeding or very light periods may need medical attention.
@@ -62,10 +63,10 @@ export default function PeriodLength() {
       </View>
 
       <View style={{ marginBottom: 32 }}>
-        <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
+        <Text style={[typography.heading2, { marginBottom: 12 }]}>
           Period Flow Patterns
         </Text>
-        <Text style={[styles.explanation, { color: colors.textSecondary }]}>
+        <Text style={[typography.body, { lineHeight: 24 }]}>
           • Light flow: Minimal bleeding, may only need panty liners{'\n'}•
           Moderate flow: Regular tampon/pad changes every 4-6 hours{'\n'}• Heavy
           flow: Frequent changes every 2-3 hours{'\n'}• Very heavy: Soaking
@@ -74,10 +75,10 @@ export default function PeriodLength() {
       </View>
 
       <View style={{ marginBottom: 32 }}>
-        <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
+        <Text style={[typography.heading2, { marginBottom: 12 }]}>
           Tips for Period Health
         </Text>
-        <Text style={[styles.tips, { color: colors.textSecondary }]}>
+        <Text style={[typography.body, { lineHeight: 24 }]}>
           • Track your period length and flow intensity{'\n'}• Stay hydrated and
           maintain good nutrition{'\n'}• Use appropriate period products for
           your flow{'\n'}• Consider tracking symptoms like cramps or mood
@@ -90,37 +91,10 @@ export default function PeriodLength() {
 }
 
 const styles = StyleSheet.create({
-  card: {
-    borderRadius: 16,
-    padding: 20,
-    marginBottom: 16,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 12,
-  },
-  description: {
-    fontSize: 16,
-    lineHeight: 24,
-  },
-  sectionTitle: {
-    fontSize: 20,
-    fontWeight: '600',
-    marginBottom: 12,
-  },
   normalRange: {
     fontSize: 18,
     fontWeight: '600',
     marginBottom: 12,
     color: '#10B981',
-  },
-  explanation: {
-    fontSize: 16,
-    lineHeight: 24,
-  },
-  tips: {
-    fontSize: 16,
-    lineHeight: 24,
   },
 });

@@ -1,9 +1,10 @@
 import React from 'react';
 import { View, ScrollView, Text, Image } from 'react-native';
-import defaultTheme, { useTheme } from '../styles/theme';
+import defaultTheme, { useTheme, createTypography } from '../styles/theme';
 
 export default function PredictionInfo() {
   const { colors } = useTheme();
+  const typography = createTypography(colors);
 
   return (
     <ScrollView
@@ -26,7 +27,7 @@ export default function PredictionInfo() {
       <View>
         <Text
           style={[
-            defaultTheme.Typography.body,
+            typography.body,
             { marginBottom: 24 },
           ]}
         >
@@ -37,16 +38,16 @@ export default function PredictionInfo() {
         <View style={{ marginBottom: 32 }}>
           <Text
             style={[
-              defaultTheme.Typography.heading2,
-              {marginBottom: 12 },
+              typography.heading2,
+              { marginBottom: 12 },
             ]}
           >
             📊 Cycle Length Calculation
           </Text>
           <Text
             style={[
-              defaultTheme.Typography.body,
-              {lineHeight: 22, marginBottom: 16 },
+              typography.body,
+              { lineHeight: 22, marginBottom: 16 },
             ]}
           >
             We calculate your average cycle length using a weighted average of
@@ -55,7 +56,7 @@ export default function PredictionInfo() {
           </Text>
           <Text
             style={[
-              defaultTheme.Typography.caption,
+              typography.caption,
             ]}
           >
             • Most recent cycle: 100% weight • 2nd cycle back: 80% weight • 3rd
@@ -66,16 +67,16 @@ export default function PredictionInfo() {
         <View style={{ marginBottom: 32 }}>
           <Text
             style={[
-              defaultTheme.Typography.heading2,
-              {marginBottom: 12 },
+              typography.heading2,
+              { marginBottom: 12 },
             ]}
           >
             🗓️ Next Period Prediction
           </Text>
           <Text
             style={[
-              defaultTheme.Typography.body,
-              {lineHeight: 22 },
+              typography.body,
+              { lineHeight: 22 },
             ]}
           >
             Your next period is predicted by adding your average cycle length to
@@ -86,16 +87,16 @@ export default function PredictionInfo() {
         <View style={{ marginBottom: 32 }}>
           <Text
             style={[
-              defaultTheme.Typography.heading2,
-              {marginBottom: 12 },
+              typography.heading2,
+              { marginBottom: 12 },
             ]}
           >
             🥚 Ovulation & Fertility
           </Text>
           <Text
             style={[
-              defaultTheme.Typography.body,
-              {lineHeight: 22, marginBottom: 16 },
+              typography.body,
+              { lineHeight: 22, marginBottom: 16 },
             ]}
           >
             Ovulation is predicted to occur 14 days before your next expected
@@ -103,7 +104,7 @@ export default function PredictionInfo() {
           </Text>
           <Text
             style={[
-              defaultTheme.Typography.caption,
+              typography.caption,
             ]}
           >
             • 5 days before ovulation • Ovulation day • 1 day after ovulation
@@ -113,16 +114,16 @@ export default function PredictionInfo() {
         <View style={{ marginBottom: 32 }}>
           <Text
             style={[
-              defaultTheme.Typography.heading2,
-              {marginBottom: 12 },
+              typography.heading2,
+              { marginBottom: 12 },
             ]}
           >
             📈 Accuracy Improves Over Time
           </Text>
           <Text
             style={[
-              defaultTheme.Typography.body,
-              {lineHeight: 22 },
+              typography.body,
+              { lineHeight: 22 },
             ]}
           >
             The more periods you track, the more accurate predictions become.
@@ -135,7 +136,7 @@ export default function PredictionInfo() {
         >
           <Text
             style={[
-              defaultTheme.Typography.heading2,
+              typography.heading2,
               { marginBottom: 8 },
             ]}
           >
@@ -143,7 +144,7 @@ export default function PredictionInfo() {
           </Text>
           <Text
             style={[
-              defaultTheme.Typography.body,
+              typography.body,
               { lineHeight: 20 },
             ]}
           >
@@ -154,7 +155,7 @@ export default function PredictionInfo() {
         <View style={{ marginBottom: 32 }}>
         <Text
           style={[
-            defaultTheme.Typography.caption,
+            typography.caption,
             { backgroundColor: colors.panel, padding: 16, borderRadius: 12 },
           ]}
         >

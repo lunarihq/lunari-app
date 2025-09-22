@@ -1,9 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
-import defaultTheme, { useTheme } from '../styles/theme';
+import defaultTheme, { useTheme, createTypography } from '../styles/theme';
 
 export default function StatusInfo() {
   const { colors } = useTheme();
+  const typography = createTypography(colors);
 
   const getTitle = () => {
     return 'Understanding Your Cycle';
@@ -48,41 +49,41 @@ export default function StatusInfo() {
         }}
       />
       <View style={{ marginBottom: 32 }}>
-        <Text style={[styles.title, { color: colors.textPrimary }]}>
+        <Text style={[typography.heading2, { marginBottom: 12 }]}>
           {getTitle()}
         </Text>
 
-        <Text style={[styles.description, { color: colors.textSecondary }]}>
+        <Text style={[typography.body, { lineHeight: 24 }]}>
           {getDescription()}
         </Text>
       </View>
 
       <View style={{ marginBottom: 32 }}>
-        <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
+        <Text style={[typography.heading2, { marginBottom: 12 }]}>
           Normal Range
         </Text>
-        <Text style={[styles.normalRange, { color: colors.textSecondary }]}>
+        <Text style={[styles.normalRange]}>
           {getNormalRange()}
         </Text>
-        <Text style={[styles.explanation, { color: colors.textSecondary }]}>
+        <Text style={[typography.body, { lineHeight: 24 }]}>
           {getNormalExplanation()}
         </Text>
       </View>
 
       <View style={{ marginBottom: 32 }}>
-        <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
+        <Text style={[typography.heading2, { marginBottom: 12 }]}>
           Irregular Cycles
         </Text>
-        <Text style={[styles.explanation, { color: colors.textSecondary }]}>
+        <Text style={[typography.body, { lineHeight: 24 }]}>
           {getIrregularExplanation()}
         </Text>
       </View>
 
       <View style={{ marginBottom: 32 }}>
-        <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
+        <Text style={[typography.heading2, { marginBottom: 12 }]}>
           Tips for Tracking
         </Text>
-        <Text style={[styles.tips, { color: colors.textSecondary }]}>
+        <Text style={[typography.body, { lineHeight: 24 }]}>
           {getTips()}
         </Text>
       </View>
@@ -91,37 +92,10 @@ export default function StatusInfo() {
 }
 
 const styles = StyleSheet.create({
-  card: {
-    borderRadius: 16,
-    padding: 20,
-    marginBottom: 16,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 12,
-  },
-  description: {
-    fontSize: 16,
-    lineHeight: 24,
-  },
-  sectionTitle: {
-    fontSize: 20,
-    fontWeight: '600',
-    marginBottom: 12,
-  },
   normalRange: {
     fontSize: 18,
     fontWeight: '600',
     marginBottom: 12,
     color: '#10B981',
-  },
-  explanation: {
-    fontSize: 16,
-    lineHeight: 24,
-  },
-  tips: {
-    fontSize: 16,
-    lineHeight: 24,
   },
 });
