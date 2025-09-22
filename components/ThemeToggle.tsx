@@ -1,9 +1,11 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useTheme, ThemeMode } from '../contexts/ThemeContext';
+import { createTypography } from '../styles/typography';
 
 export function ThemeToggle() {
   const { colors, themeMode, setThemeMode, isDark } = useTheme();
+  const typography = createTypography(colors);
 
   const themeOptions: { mode: ThemeMode; label: string }[] = [
     { mode: 'light', label: 'Light' },
@@ -13,7 +15,7 @@ export function ThemeToggle() {
 
   return (
     <View style={[styles.container, { backgroundColor: colors.surface }]}>
-      <Text style={[styles.title, { color: colors.textPrimary }]}>Theme</Text>
+      <Text style={[typography.body, { fontSize: 18, fontWeight: '600', marginBottom: 12 }]}>Theme</Text>
       <View style={styles.optionsContainer}>
         {themeOptions.map(option => (
           <TouchableOpacity
@@ -30,8 +32,10 @@ export function ThemeToggle() {
           >
             <Text
               style={[
-                styles.optionText,
+                typography.caption,
                 {
+                  fontSize: 14,
+                  fontWeight: '500',
                   color:
                     themeMode === option.mode
                       ? colors.white
@@ -44,7 +48,7 @@ export function ThemeToggle() {
           </TouchableOpacity>
         ))}
       </View>
-      <Text style={[styles.currentTheme, { color: colors.textMuted }]}>
+      <Text style={[typography.caption, { color: colors.textMuted, textAlign: 'center' }]}>
         Current: {isDark ? 'Dark' : 'Light'} mode
       </Text>
     </View>
@@ -56,11 +60,6 @@ const styles = StyleSheet.create({
     padding: 16,
     borderRadius: 12,
     margin: 16,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: '600',
-    marginBottom: 12,
   },
   optionsContainer: {
     flexDirection: 'row',
@@ -74,13 +73,5 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
     alignItems: 'center',
-  },
-  optionText: {
-    fontSize: 14,
-    fontWeight: '500',
-  },
-  currentTheme: {
-    fontSize: 12,
-    textAlign: 'center',
   },
 });

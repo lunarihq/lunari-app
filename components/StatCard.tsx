@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import { useTheme } from '../styles/theme';
+import { useTheme, createTypography } from '../styles/theme';
 import { AlertIcon } from './icons/Alert';
 import { CheckCircleIcon } from './icons/Check_Circle';
 
@@ -16,6 +16,7 @@ interface StatCardProps {
 
 export function StatCard({ title, value, icon, status, type }: StatCardProps) {
   const { colors } = useTheme();
+  const typography = createTypography(colors);
   const router = useRouter();
 
   const getStatusIcon = () => {
@@ -56,10 +57,10 @@ export function StatCard({ title, value, icon, status, type }: StatCardProps) {
         {icon}
       </View>
       <View style={styles.contentContainer}>
-        <Text style={[styles.title, { color: colors.textSecondary }]}>
+        <Text style={[typography.body, { color: colors.textSecondary }]}>
           {title}
         </Text>
-        <Text style={[styles.value, { color: colors.textPrimary }]}>
+        <Text style={[typography.heading2, { fontSize: 24, fontWeight: 'bold', marginTop: 2 }]}>
           {value}
         </Text>
       </View>
@@ -76,7 +77,7 @@ export function StatCard({ title, value, icon, status, type }: StatCardProps) {
         {status && (
           <View style={styles.statusContainer}>
             {getStatusIcon()}
-            <Text style={[styles.statusText, { color: getStatusColor() }]}>
+            <Text style={[typography.caption, { color: getStatusColor() }]}>
               {getStatusText()}
             </Text>
           </View>
@@ -104,15 +105,6 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
   },
-  value: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginTop: 2,
-  },
-  title: {
-    fontSize: 16,
-    fontWeight: '400',
-  },
   rightContainer: {
     alignItems: 'flex-end',
     gap: 8,
@@ -127,10 +119,6 @@ const styles = StyleSheet.create({
     height: 24,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  statusText: {
-    fontSize: 14,
-    fontWeight: '400',
   },
 });
 

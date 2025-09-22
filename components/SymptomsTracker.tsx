@@ -12,7 +12,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { db } from '../db';
 import { healthLogs } from '../db/schema';
 import { eq } from 'drizzle-orm';
-import { useTheme } from '../styles/theme';
+import { useTheme, createTypography } from '../styles/theme';
 import dayjs from 'dayjs';
 import { globalStyles } from '../styles/globalStyles';
 import { CustomIcon } from './icons';
@@ -27,6 +27,7 @@ export const SymptomsTracker = ({
   titleStyle,
 }: SymptomsTrackerProps) => {
   const { colors } = useTheme();
+  const typography = createTypography(colors);
   const [healthLogsForDate, setHealthLogsForDate] = useState<any[]>([]);
 
   // Load health logs when component is focused or selectedDate changes
@@ -117,7 +118,7 @@ export const SymptomsTracker = ({
   return (
     <View style={[styles.symptomsCard, { backgroundColor: colors.surface }]}>
       <Text
-        style={[styles.symptomsText, titleStyle, { color: colors.textPrimary }]}
+        style={[typography.heading2, titleStyle, { marginBottom: 16 }]}
       >
         Symptoms & moods
       </Text>
@@ -141,7 +142,7 @@ export const SymptomsTracker = ({
           <View style={[globalStyles.fab, { backgroundColor: colors.primary }]}>
             <Ionicons name="add" size={32} color={colors.white} />
           </View>
-          <Text style={[styles.itemText, { color: colors.textSecondary }]}>
+          <Text style={[typography.caption, { fontSize: 12, fontWeight: '500', textAlign: 'center', color: colors.textSecondary }]}>
             Add
           </Text>
         </TouchableOpacity>
@@ -173,7 +174,7 @@ export const SymptomsTracker = ({
                 {getIconComponent(log)}
               </View>
               <Text
-                style={[styles.itemText, { color: colors.textSecondary }]}
+                style={[typography.caption, { fontSize: 12, fontWeight: '500', textAlign: 'center', color: colors.textSecondary }]}
                 numberOfLines={1}
               >
                 {getDisplayText(log)}
@@ -185,7 +186,7 @@ export const SymptomsTracker = ({
           <View style={styles.noItemsContainer}>
             <Text
               style={[
-                styles.noLoggedItemsText,
+                typography.caption,
                 { color: colors.textSecondary },
               ]}
             >
@@ -203,11 +204,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 16,
   },
-  symptomsText: {
-    fontSize: 22,
-    fontWeight: '500',
-    marginBottom: 16,
-  },
   scrollContainer: {
     flexDirection: 'row',
   },
@@ -223,17 +219,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 8,
   },
-  itemText: {
-    fontSize: 12,
-    fontWeight: '500',
-    textAlign: 'center',
-  },
   noItemsContainer: {
     justifyContent: 'center',
     paddingLeft: 8,
-  },
-  noLoggedItemsText: {
-    fontSize: 14,
   },
 });
 

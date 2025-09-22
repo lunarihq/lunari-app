@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, Pressable, StyleSheet } from 'react-native';
-import { useTheme } from '../styles/theme';
+import { useTheme, createTypography } from '../styles/theme';
 
 interface ButtonProps {
   title: string;
@@ -22,6 +22,7 @@ export function Button({
   disabled = false,
 }: ButtonProps) {
   const { colors } = useTheme();
+  const typography = createTypography(colors);
 
   const getButtonStyle = () => {
     switch (variant) {
@@ -63,7 +64,7 @@ export function Button({
         style,
       ]}
     >
-      <Text style={[styles.text, { color: getTextColor() }]}>{title}</Text>
+      <Text style={[typography.body, { fontWeight: '500', color: getTextColor() }]}>{title}</Text>
     </Pressable>
   );
 }
@@ -74,10 +75,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderRadius: 80,
     alignItems: 'center',
-  },
-  text: {
-    fontSize: 16,
-    fontWeight: '500',
   },
   disabled: {
     opacity: 0.3,

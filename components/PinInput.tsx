@@ -7,7 +7,7 @@ import {
   Vibration,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useTheme } from '../styles/theme';
+import { useTheme, createTypography } from '../styles/theme';
 
 interface PinInputProps {
   title: string;
@@ -33,6 +33,7 @@ export function PinInput({
   onStartTyping,
 }: PinInputProps) {
   const { colors } = useTheme();
+  const typography = createTypography(colors);
   const [pin, setPin] = useState('');
 
   const PIN_LENGTH = 4;
@@ -112,7 +113,7 @@ export function PinInput({
                   onPress={() => handleNumberPress(item)}
                 >
                   <Text
-                    style={[styles.numberText, { color: colors.textPrimary }]}
+                    style={[typography.heading2, { fontSize: 24, fontWeight: '600' }]}
                   >
                     {item}
                   </Text>
@@ -128,11 +129,11 @@ export function PinInput({
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.header}>
-        <Text style={[styles.title, { color: colors.textPrimary }]}>
+        <Text style={[typography.heading2, { textAlign: 'center', marginBottom: 8 }]}>
           {title}
         </Text>
         {subtitle && (
-          <Text style={[styles.subtitle, { color: colors.textSecondary }]}>
+          <Text style={[typography.body, { color: colors.textSecondary, textAlign: 'center' }]}>
             {subtitle}
           </Text>
         )}
@@ -155,7 +156,7 @@ export function PinInput({
         ))}
       </View>
 
-      {errorMessage && <Text style={styles.errorText}>{errorMessage}</Text>}
+      {errorMessage && <Text style={[typography.body, { color: '#ff4757', textAlign: 'center', marginBottom: 20 }]}>{errorMessage}</Text>}
 
       {renderNumberPad()}
 
@@ -169,7 +170,7 @@ export function PinInput({
             size={24}
             color={colors.primary}
           />
-          <Text style={[styles.biometricText, { color: colors.primary }]}>
+          <Text style={[typography.body, { color: colors.primary, marginLeft: 8, fontWeight: '500' }]}>
             {biometricLabel}
           </Text>
         </TouchableOpacity>
@@ -188,16 +189,6 @@ const styles = StyleSheet.create({
   header: {
     alignItems: 'center',
     marginBottom: 40,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: '600',
-    textAlign: 'center',
-    marginBottom: 8,
-  },
-  subtitle: {
-    fontSize: 16,
-    textAlign: 'center',
   },
   pinContainer: {
     flexDirection: 'row',
@@ -242,25 +233,10 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 2,
   },
-  numberText: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  errorText: {
-    color: '#ff4757',
-    fontSize: 16,
-    textAlign: 'center',
-    marginBottom: 20,
-  },
   biometricButton: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 12,
     paddingHorizontal: 20,
-  },
-  biometricText: {
-    marginLeft: 8,
-    fontSize: 16,
-    fontWeight: '500',
   },
 });
