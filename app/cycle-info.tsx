@@ -62,9 +62,7 @@ export default function StatusInfo() {
         <Text style={[typography.heading2, { marginBottom: 12 }]}>
           Normal Range
         </Text>
-        <Text style={[styles.normalRange]}>
-          {getNormalRange()}
-        </Text>
+        <Text style={[styles.normalRange]}>{getNormalRange()}</Text>
         <Text style={[typography.body, { lineHeight: 24 }]}>
           {getNormalExplanation()}
         </Text>
@@ -83,9 +81,7 @@ export default function StatusInfo() {
         <Text style={[typography.heading2, { marginBottom: 12 }]}>
           Tips for Tracking
         </Text>
-        <Text style={[typography.body, { lineHeight: 24 }]}>
-          {getTips()}
-        </Text>
+        <Text style={[typography.body, { lineHeight: 24 }]}>{getTips()}</Text>
       </View>
     </ScrollView>
   );

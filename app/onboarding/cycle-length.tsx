@@ -65,10 +65,22 @@ export default function CycleLengthScreen() {
       </View>
 
       <View style={onboardingStyles.content}>
-        <Text style={[typography.heading2, { marginBottom: 20, textAlign: 'left' }]}>
+        <Text
+          style={[typography.heading2, { marginBottom: 20, textAlign: 'left' }]}
+        >
           How many days does your cycle last on average?
         </Text>
-        <Text style={[typography.body, { textAlign: 'left', marginBottom: 40, lineHeight: 22, color: colors.textSecondary }]}>
+        <Text
+          style={[
+            typography.body,
+            {
+              textAlign: 'left',
+              marginBottom: 40,
+              lineHeight: 22,
+              color: colors.textSecondary,
+            },
+          ]}
+        >
           This is the number of days from the start of one period to the start
           of the next.
         </Text>
@@ -94,4 +106,3 @@ export default function CycleLengthScreen() {
     </SafeAreaView>
   );
 }
-

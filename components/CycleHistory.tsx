@@ -147,10 +147,20 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
 
   return (
     <View style={[styles.container, { backgroundColor: colors.surface }]}>
-      <Text style={[typography.heading2, { fontSize: 24, fontWeight: '500', marginBottom: 8 }]}>
+      <Text
+        style={[
+          typography.heading2,
+          { fontSize: 24, fontWeight: '500', marginBottom: 8 },
+        ]}
+      >
         Cycle history
       </Text>
-      <Text style={[typography.body, { marginBottom: 10, color: colors.textSecondary }]}>
+      <Text
+        style={[
+          typography.body,
+          { marginBottom: 10, color: colors.textSecondary },
+        ]}
+      >
         {cycles.length} logged cycles
       </Text>
 
@@ -273,19 +283,18 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
                 // Special layout for current cycle
                 <View>
                   <Text
-                    style={[typography.body, { fontSize: 18, fontWeight: 'bold', marginBottom: 8 }]}
+                    style={[
+                      typography.body,
+                      { fontSize: 18, fontWeight: 'bold', marginBottom: 8 },
+                    ]}
                   >
                     Current cycle
                   </Text>
                   <View style={styles.cycleInfoRow}>
-                    <Text
-                      style={[typography.body, { fontWeight: '600' }]}
-                    >
+                    <Text style={[typography.body, { fontWeight: '600' }]}>
                       {cycle.startDate} - Today
                     </Text>
-                    <Text
-                      style={[typography.body, { fontWeight: '600' }]}
-                    >
+                    <Text style={[typography.body, { fontWeight: '600' }]}>
                       {formattedCycleLength}
                     </Text>
                   </View>
@@ -293,16 +302,12 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
               ) : (
                 // Regular layout for past cycles
                 <View style={styles.cycleInfoRow}>
-                  <Text
-                    style={[typography.body, { fontWeight: '600' }]}
-                  >
+                  <Text style={[typography.body, { fontWeight: '600' }]}>
                     {cycle.endDate
                       ? `${cycle.startDate} - ${cycle.endDate}`
                       : `${cycle.startDate} - ${calculateEndDate(cycle.startDate, circleDays)}`}
                   </Text>
-                  <Text
-                    style={[typography.body, { fontWeight: '600' }]}
-                  >
+                  <Text style={[typography.body, { fontWeight: '600' }]}>
                     {formattedCycleLength}
                   </Text>
                 </View>

@@ -117,9 +117,7 @@ export const SymptomsTracker = ({
 
   return (
     <View style={[styles.symptomsCard, { backgroundColor: colors.surface }]}>
-      <Text
-        style={[typography.heading2, titleStyle, { marginBottom: 16 }]}
-      >
+      <Text style={[typography.heading2, titleStyle, { marginBottom: 16 }]}>
         Symptoms & moods
       </Text>
 
@@ -142,7 +140,17 @@ export const SymptomsTracker = ({
           <View style={[globalStyles.fab, { backgroundColor: colors.primary }]}>
             <Ionicons name="add" size={32} color={colors.white} />
           </View>
-          <Text style={[typography.caption, { fontSize: 12, fontWeight: '500', textAlign: 'center', color: colors.textSecondary }]}>
+          <Text
+            style={[
+              typography.caption,
+              {
+                fontSize: 12,
+                fontWeight: '500',
+                textAlign: 'center',
+                color: colors.textSecondary,
+              },
+            ]}
+          >
             Add
           </Text>
         </TouchableOpacity>
@@ -174,7 +182,15 @@ export const SymptomsTracker = ({
                 {getIconComponent(log)}
               </View>
               <Text
-                style={[typography.caption, { fontSize: 12, fontWeight: '500', textAlign: 'center', color: colors.textSecondary }]}
+                style={[
+                  typography.caption,
+                  {
+                    fontSize: 12,
+                    fontWeight: '500',
+                    textAlign: 'center',
+                    color: colors.textSecondary,
+                  },
+                ]}
                 numberOfLines={1}
               >
                 {getDisplayText(log)}
@@ -184,12 +200,7 @@ export const SymptomsTracker = ({
         ) : (
           // No items message
           <View style={styles.noItemsContainer}>
-            <Text
-              style={[
-                typography.caption,
-                { color: colors.textSecondary },
-              ]}
-            >
+            <Text style={[typography.caption, { color: colors.textSecondary }]}>
               No symptoms or moods logged {getDateText()}.
             </Text>
           </View>

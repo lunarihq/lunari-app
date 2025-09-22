@@ -25,143 +25,79 @@ export default function PredictionInfo() {
         }}
       />
       <View>
-        <Text
-          style={[
-            typography.body,
-            { marginBottom: 24 },
-          ]}
-        >
+        <Text style={[typography.body, { marginBottom: 24 }]}>
           Lunari uses your period history to make predictions. Here's exactly
           how it works:
         </Text>
 
         <View style={{ marginBottom: 32 }}>
-          <Text
-            style={[
-              typography.heading2,
-              { marginBottom: 12 },
-            ]}
-          >
+          <Text style={[typography.heading2, { marginBottom: 12 }]}>
             📊 Cycle Length Calculation
           </Text>
-          <Text
-            style={[
-              typography.body,
-              { lineHeight: 22, marginBottom: 16 },
-            ]}
-          >
+          <Text style={[typography.body, { lineHeight: 22, marginBottom: 16 }]}>
             We calculate your average cycle length using a weighted average of
             your last 6 cycles. Recent cycles have more influence on predictions
             than older ones.
           </Text>
-          <Text
-            style={[
-              typography.caption,
-            ]}
-          >
+          <Text style={[typography.caption]}>
             • Most recent cycle: 100% weight • 2nd cycle back: 80% weight • 3rd
             cycle back: 60% weight • And so on...
           </Text>
         </View>
 
         <View style={{ marginBottom: 32 }}>
-          <Text
-            style={[
-              typography.heading2,
-              { marginBottom: 12 },
-            ]}
-          >
+          <Text style={[typography.heading2, { marginBottom: 12 }]}>
             🗓️ Next Period Prediction
           </Text>
-          <Text
-            style={[
-              typography.body,
-              { lineHeight: 22 },
-            ]}
-          >
+          <Text style={[typography.body, { lineHeight: 22 }]}>
             Your next period is predicted by adding your average cycle length to
             the start date of your most recent period.
           </Text>
         </View>
 
         <View style={{ marginBottom: 32 }}>
-          <Text
-            style={[
-              typography.heading2,
-              { marginBottom: 12 },
-            ]}
-          >
+          <Text style={[typography.heading2, { marginBottom: 12 }]}>
             🥚 Ovulation & Fertility
           </Text>
-          <Text
-            style={[
-              typography.body,
-              { lineHeight: 22, marginBottom: 16 },
-            ]}
-          >
+          <Text style={[typography.body, { lineHeight: 22, marginBottom: 16 }]}>
             Ovulation is predicted to occur 14 days before your next expected
             period. Your fertile window includes:
           </Text>
-          <Text
-            style={[
-              typography.caption,
-            ]}
-          >
+          <Text style={[typography.caption]}>
             • 5 days before ovulation • Ovulation day • 1 day after ovulation
           </Text>
         </View>
 
         <View style={{ marginBottom: 32 }}>
-          <Text
-            style={[
-              typography.heading2,
-              { marginBottom: 12 },
-            ]}
-          >
+          <Text style={[typography.heading2, { marginBottom: 12 }]}>
             📈 Accuracy Improves Over Time
           </Text>
-          <Text
-            style={[
-              typography.body,
-              { lineHeight: 22 },
-            ]}
-          >
+          <Text style={[typography.body, { lineHeight: 22 }]}>
             The more periods you track, the more accurate predictions become.
             With 3+ cycles, Lunari can provide personalized predictions based on
             your unique patterns.
           </Text>
         </View>
 
-        <View style={{ marginBottom: 32 }}
-        >
-          <Text
-            style={[
-              typography.heading2,
-              { marginBottom: 8 },
-            ]}
-          >
+        <View style={{ marginBottom: 32 }}>
+          <Text style={[typography.heading2, { marginBottom: 8 }]}>
             🔒 Privacy First
           </Text>
-          <Text
-            style={[
-              typography.body,
-              { lineHeight: 20 },
-            ]}
-          >
+          <Text style={[typography.body, { lineHeight: 20 }]}>
             All calculations happen locally on your device. Your period data
             never leaves your phone and is never shared with anyone.
           </Text>
         </View>
         <View style={{ marginBottom: 32 }}>
-        <Text
-          style={[
-            typography.caption,
-            { backgroundColor: colors.panel, padding: 16, borderRadius: 12 },
-          ]}
-        >
-          Remember: These are predictions based on your patterns. Every body is
-          different, and cycles can vary naturally.
-        </Text>
+          <Text
+            style={[
+              typography.caption,
+              { backgroundColor: colors.panel, padding: 16, borderRadius: 12 },
+            ]}
+          >
+            Remember: These are predictions based on your patterns. Every body
+            is different, and cycles can vary naturally.
+          </Text>
         </View>
       </View>
     </ScrollView>

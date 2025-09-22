@@ -1,5 +1,5 @@
 import { Colors } from './colors';
-import { Typography} from './typography';
+import { Typography } from './typography';
 import { globalStyles } from './globalStyles';
 
 // Legacy theme object - use useTheme() hook for theme-aware colors

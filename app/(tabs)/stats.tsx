@@ -183,11 +183,30 @@ export default function Stats() {
     <View
       style={[styles.emptyStateContainer, { backgroundColor: colors.surface }]}
     >
-      <Text style={[typography.heading2, { fontSize: 24, fontWeight: '500', marginBottom: 12, textAlign: 'center' }]}>
+      <Text
+        style={[
+          typography.heading2,
+          {
+            fontSize: 24,
+            fontWeight: '500',
+            marginBottom: 12,
+            textAlign: 'center',
+          },
+        ]}
+      >
         No period data yet
       </Text>
       <Text
-        style={[typography.body, { lineHeight: 24, textAlign: 'center', marginBottom: 32, paddingHorizontal: 16, color: colors.textSecondary }]}
+        style={[
+          typography.body,
+          {
+            lineHeight: 24,
+            textAlign: 'center',
+            marginBottom: 32,
+            paddingHorizontal: 16,
+            color: colors.textSecondary,
+          },
+        ]}
       >
         Log at least 2 periods to see your personal cycle statistics.
       </Text>
@@ -225,7 +244,12 @@ export default function Stats() {
       <View
         style={[styles.myCyclesContainer, { backgroundColor: colors.surface }]}
       >
-        <Text style={[typography.heading2, { fontSize: 24, fontWeight: '500', marginBottom: 16 }]}>
+        <Text
+          style={[
+            typography.heading2,
+            { fontSize: 24, fontWeight: '500', marginBottom: 16 },
+          ]}
+        >
           Cycle statistics
         </Text>
         <View style={styles.cardsContainer}>

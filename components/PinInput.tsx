@@ -113,7 +113,10 @@ export function PinInput({
                   onPress={() => handleNumberPress(item)}
                 >
                   <Text
-                    style={[typography.heading2, { fontSize: 24, fontWeight: '600' }]}
+                    style={[
+                      typography.heading2,
+                      { fontSize: 24, fontWeight: '600' },
+                    ]}
                   >
                     {item}
                   </Text>
@@ -129,11 +132,21 @@ export function PinInput({
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.header}>
-        <Text style={[typography.heading2, { textAlign: 'center', marginBottom: 8 }]}>
+        <Text
+          style={[
+            typography.heading2,
+            { textAlign: 'center', marginBottom: 8 },
+          ]}
+        >
           {title}
         </Text>
         {subtitle && (
-          <Text style={[typography.body, { color: colors.textSecondary, textAlign: 'center' }]}>
+          <Text
+            style={[
+              typography.body,
+              { color: colors.textSecondary, textAlign: 'center' },
+            ]}
+          >
             {subtitle}
           </Text>
         )}
@@ -156,7 +169,16 @@ export function PinInput({
         ))}
       </View>
 
-      {errorMessage && <Text style={[typography.body, { color: '#ff4757', textAlign: 'center', marginBottom: 20 }]}>{errorMessage}</Text>}
+      {errorMessage && (
+        <Text
+          style={[
+            typography.body,
+            { color: '#ff4757', textAlign: 'center', marginBottom: 20 },
+          ]}
+        >
+          {errorMessage}
+        </Text>
+      )}
 
       {renderNumberPad()}
 
@@ -170,7 +192,12 @@ export function PinInput({
             size={24}
             color={colors.primary}
           />
-          <Text style={[typography.body, { color: colors.primary, marginLeft: 8, fontWeight: '500' }]}>
+          <Text
+            style={[
+              typography.body,
+              { color: colors.primary, marginLeft: 8, fontWeight: '500' },
+            ]}
+          >
             {biometricLabel}
           </Text>
         </TouchableOpacity>

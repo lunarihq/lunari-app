@@ -58,19 +58,44 @@ export default function PrivacyPolicy() {
         <Text style={[typography.body, { lineHeight: 24, marginBottom: 12 }]}>
           We collect and store the following information locally on your device:
         </Text>
-        <Text style={[typography.body, { lineHeight: 24, marginBottom: 8, marginLeft: 8 }]}>
+        <Text
+          style={[
+            typography.body,
+            { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
+          ]}
+        >
           • Period start and end dates
         </Text>
-        <Text style={[typography.body, { lineHeight: 24, marginBottom: 8, marginLeft: 8 }]}>
+        <Text
+          style={[
+            typography.body,
+            { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
+          ]}
+        >
           • Cycle length and period duration
         </Text>
-        <Text style={[typography.body, { lineHeight: 24, marginBottom: 8, marginLeft: 8 }]}>
+        <Text
+          style={[
+            typography.body,
+            { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
+          ]}
+        >
           • Symptoms and mood tracking data
         </Text>
-        <Text style={[typography.body, { lineHeight: 24, marginBottom: 8, marginLeft: 8 }]}>
+        <Text
+          style={[
+            typography.body,
+            { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
+          ]}
+        >
           • Notes and personal observations
         </Text>
-        <Text style={[typography.body, { lineHeight: 24, marginBottom: 8, marginLeft: 8 }]}>
+        <Text
+          style={[
+            typography.body,
+            { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
+          ]}
+        >
           • App preferences and settings
         </Text>
         <Text style={[typography.body, { lineHeight: 24, marginBottom: 12 }]}>
@@ -95,15 +120,30 @@ export default function PrivacyPolicy() {
         <Text style={[typography.body, { lineHeight: 24, marginBottom: 12 }]}>
           Lunari may request the following permissions:
         </Text>
-        <Text style={[typography.body, { lineHeight: 24, marginBottom: 8, marginLeft: 8 }]}>
+        <Text
+          style={[
+            typography.body,
+            { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
+          ]}
+        >
           • <Text style={styles.bold}>Notifications:</Text> To send you period
           reminders and cycle predictions
         </Text>
-        <Text style={[typography.body, { lineHeight: 24, marginBottom: 8, marginLeft: 8 }]}>
+        <Text
+          style={[
+            typography.body,
+            { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
+          ]}
+        >
           • <Text style={styles.bold}>Biometric Authentication:</Text> To secure
           your app with fingerprint or face recognition (optional)
         </Text>
-        <Text style={[typography.body, { lineHeight: 24, marginBottom: 8, marginLeft: 8 }]}>
+        <Text
+          style={[
+            typography.body,
+            { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
+          ]}
+        >
           • <Text style={styles.bold}>Device Storage:</Text> To store your
           tracking data locally on your device
         </Text>
@@ -124,19 +164,44 @@ export default function PrivacyPolicy() {
         <Text style={[typography.body, { lineHeight: 24, marginBottom: 12 }]}>
           We believe in complete transparency about how your data is handled:
         </Text>
-        <Text style={[typography.body, { lineHeight: 24, marginBottom: 8, marginLeft: 8 }]}>
+        <Text
+          style={[
+            typography.body,
+            { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
+          ]}
+        >
           • All your data is stored locally on your device
         </Text>
-        <Text style={[typography.body, { lineHeight: 24, marginBottom: 8, marginLeft: 8 }]}>
+        <Text
+          style={[
+            typography.body,
+            { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
+          ]}
+        >
           • No data is transmitted to external servers
         </Text>
-        <Text style={[typography.body, { lineHeight: 24, marginBottom: 8, marginLeft: 8 }]}>
+        <Text
+          style={[
+            typography.body,
+            { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
+          ]}
+        >
           • You can export or delete all your data at any time
         </Text>
-        <Text style={[typography.body, { lineHeight: 24, marginBottom: 8, marginLeft: 8 }]}>
+        <Text
+          style={[
+            typography.body,
+            { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
+          ]}
+        >
           • We do not use analytics or tracking services
         </Text>
-        <Text style={[typography.body, { lineHeight: 24, marginBottom: 8, marginLeft: 8 }]}>
+        <Text
+          style={[
+            typography.body,
+            { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
+          ]}
+        >
           • No third-party advertising or data collection
         </Text>
         <Text style={[typography.body, { lineHeight: 24, marginBottom: 12 }]}>
@@ -147,7 +212,12 @@ export default function PrivacyPolicy() {
       </View>
 
       <View style={[styles.footer, { backgroundColor: colors.surface }]}>
-        <Text style={[typography.body, { color: colors.textMuted, lineHeight: 24, textAlign: 'center' }]}>
+        <Text
+          style={[
+            typography.body,
+            { color: colors.textMuted, lineHeight: 24, textAlign: 'center' },
+          ]}
+        >
           If you have any questions about this privacy policy or how we handle
           your data, please contact us through the app settings.
         </Text>

@@ -63,10 +63,22 @@ export default function PeriodLengthScreen() {
       </View>
 
       <View style={onboardingStyles.content}>
-        <Text style={[typography.heading2, { marginBottom: 20, textAlign: 'left' }]}>
+        <Text
+          style={[typography.heading2, { marginBottom: 20, textAlign: 'left' }]}
+        >
           How long is your period?
         </Text>
-        <Text style={[typography.body, { textAlign: 'left', marginBottom: 40, lineHeight: 22, color: colors.textSecondary }]}>
+        <Text
+          style={[
+            typography.body,
+            {
+              textAlign: 'left',
+              marginBottom: 40,
+              lineHeight: 22,
+              color: colors.textSecondary,
+            },
+          ]}
+        >
           This helps us provide more accurate predictions for your cycle.
         </Text>
 
@@ -91,4 +103,3 @@ export default function PeriodLengthScreen() {
     </SafeAreaView>
   );
 }
-

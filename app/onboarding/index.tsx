@@ -19,10 +19,24 @@ export default function WelcomeScreen() {
 
   return (
     <SafeAreaView style={onboardingStyles.container}>
-      <View style={[onboardingStyles.content, { justifyContent: 'center', alignItems: 'center' }]}>
-        <Text style={[typography.heading1, { marginBottom: 20, textAlign: 'center' }]}>Your Body, Your Data</Text>
-        <Text style={[typography.body, { marginBottom: 40, textAlign: 'center' }]}>
-        Private period tracking that never leaves your phone.        
+      <View
+        style={[
+          onboardingStyles.content,
+          { justifyContent: 'center', alignItems: 'center' },
+        ]}
+      >
+        <Text
+          style={[
+            typography.heading1,
+            { marginBottom: 20, textAlign: 'center' },
+          ]}
+        >
+          Your Body, Your Data
+        </Text>
+        <Text
+          style={[typography.body, { marginBottom: 40, textAlign: 'center' }]}
+        >
+          Private period tracking that never leaves your phone.
         </Text>
       </View>
 
@@ -32,4 +46,3 @@ export default function WelcomeScreen() {
     </SafeAreaView>
   );
 }
-

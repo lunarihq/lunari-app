@@ -60,7 +60,12 @@ export function StatCard({ title, value, icon, status, type }: StatCardProps) {
         <Text style={[typography.body, { color: colors.textSecondary }]}>
           {title}
         </Text>
-        <Text style={[typography.heading2, { fontSize: 24, fontWeight: 'bold', marginTop: 2 }]}>
+        <Text
+          style={[
+            typography.heading2,
+            { fontSize: 24, fontWeight: 'bold', marginTop: 2 },
+          ]}
+        >
           {value}
         </Text>
       </View>

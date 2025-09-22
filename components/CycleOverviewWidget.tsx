@@ -48,53 +48,105 @@ export function CycleOverviewWidget({
         >
           {isPeriodDay ? (
             <>
-              <Text style={[typography.body, { fontWeight: '500', marginBottom: 20 }]}>
+              <Text
+                style={[
+                  typography.body,
+                  { fontWeight: '500', marginBottom: 20 },
+                ]}
+              >
                 {getFormattedDate(currentDate)}
               </Text>
               <Text
-                style={[typography.heading2, { fontSize: 22, fontWeight: '500' }]}
+                style={[
+                  typography.heading2,
+                  { fontSize: 22, fontWeight: '500' },
+                ]}
               >
                 Period
               </Text>
               <Text
-                style={[typography.heading1, { fontSize: 48, fontWeight: 'bold', marginBottom: 8, paddingHorizontal: 8 }]}
+                style={[
+                  typography.heading1,
+                  {
+                    fontSize: 48,
+                    fontWeight: 'bold',
+                    marginBottom: 8,
+                    paddingHorizontal: 8,
+                  },
+                ]}
               >
                 Day {periodDayNumber}
               </Text>
             </>
           ) : prediction ? (
             <>
-              <Text style={[typography.body, { fontWeight: '500', marginBottom: 20 }]}>
+              <Text
+                style={[
+                  typography.body,
+                  { fontWeight: '500', marginBottom: 20 },
+                ]}
+              >
                 {getFormattedDate(currentDate)}
               </Text>
               {prediction.days > 0 ? (
                 <>
                   <Text
-                    style={[typography.heading2, { fontSize: 22, fontWeight: '500' }]}
+                    style={[
+                      typography.heading2,
+                      { fontSize: 22, fontWeight: '500' },
+                    ]}
                   >
                     Expected period in
                   </Text>
                   <Text
-                    style={[typography.heading1, { fontSize: 48, fontWeight: 'bold', marginBottom: 8, paddingHorizontal: 8 }]}
+                    style={[
+                      typography.heading1,
+                      {
+                        fontSize: 48,
+                        fontWeight: 'bold',
+                        marginBottom: 8,
+                        paddingHorizontal: 8,
+                      },
+                    ]}
                   >
                     {prediction.days} {prediction.days === 1 ? 'day' : 'days'}
                   </Text>
                 </>
               ) : prediction.days === 0 ? (
                 <Text
-                  style={[typography.heading2, { fontSize: 28, fontWeight: '500', textAlign: 'center', marginBottom: 32, paddingHorizontal: 16 }]}
+                  style={[
+                    typography.heading2,
+                    {
+                      fontSize: 28,
+                      fontWeight: '500',
+                      textAlign: 'center',
+                      marginBottom: 32,
+                      paddingHorizontal: 16,
+                    },
+                  ]}
                 >
                   Your period is expected today
                 </Text>
               ) : (
                 <>
                   <Text
-                    style={[typography.heading2, { fontSize: 22, fontWeight: '500' }]}
+                    style={[
+                      typography.heading2,
+                      { fontSize: 22, fontWeight: '500' },
+                    ]}
                   >
                     Late for
                   </Text>
                   <Text
-                    style={[typography.heading1, { fontSize: 48, fontWeight: 'bold', marginBottom: 8, paddingHorizontal: 8 }]}
+                    style={[
+                      typography.heading1,
+                      {
+                        fontSize: 48,
+                        fontWeight: 'bold',
+                        marginBottom: 8,
+                        paddingHorizontal: 8,
+                      },
+                    ]}
                   >
                     {Math.abs(prediction.days)}{' '}
                     {Math.abs(prediction.days) === 1 ? 'day' : 'days'}
@@ -108,11 +160,26 @@ export function CycleOverviewWidget({
             </>
           ) : (
             <>
-              <Text style={[typography.body, { fontWeight: '500', marginBottom: 20 }]}>
+              <Text
+                style={[
+                  typography.body,
+                  { fontWeight: '500', marginBottom: 20 },
+                ]}
+              >
                 {getFormattedDate(currentDate)}
               </Text>
               <Text
-                style={[typography.body, { fontSize: 20, fontWeight: '500', lineHeight: 28, textAlign: 'center', paddingHorizontal: 16, marginBottom: 16 }]}
+                style={[
+                  typography.body,
+                  {
+                    fontSize: 20,
+                    fontWeight: '500',
+                    lineHeight: 28,
+                    textAlign: 'center',
+                    paddingHorizontal: 16,
+                    marginBottom: 16,
+                  },
+                ]}
               >
                 Log the first day of your last period for next prediction.
               </Text>

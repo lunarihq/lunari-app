@@ -211,7 +211,12 @@ export default function Reminders() {
 
       <View style={[styles.section, { backgroundColor: colors.surface }]}>
         <View style={[styles.settingRow, { borderBottomColor: colors.border }]}>
-          <Text style={[typography.body, { flexShrink: 1, paddingRight: 12, flex: 1 }]}>
+          <Text
+            style={[
+              typography.body,
+              { flexShrink: 1, paddingRight: 12, flex: 1 },
+            ]}
+          >
             Get a notification 3 days before your next period is likely to
             start.
           </Text>
@@ -226,7 +231,12 @@ export default function Reminders() {
         </View>
 
         <View style={[styles.settingRow, styles.lastRow]}>
-          <Text style={[typography.body, { flexShrink: 1, paddingRight: 12, flex: 1 }]}>
+          <Text
+            style={[
+              typography.body,
+              { flexShrink: 1, paddingRight: 12, flex: 1 },
+            ]}
+          >
             Get a notification the day of your period start.
           </Text>
           <Switch

@@ -250,7 +250,12 @@ export default function PeriodCalendarScreen() {
     <View style={[styles.container, { backgroundColor: colors.panel }]}>
       {/* Header with padding for status bar, similar to symptom-tracking.tsx */}
       <View style={styles.header}>
-        <Text style={[typography.body, { fontSize: 18, fontWeight: '600', paddingTop: 63 }]}>
+        <Text
+          style={[
+            typography.body,
+            { fontSize: 18, fontWeight: '600', paddingTop: 63 },
+          ]}
+        >
           Edit Period
         </Text>
         {isTodayButtonVisible() && (

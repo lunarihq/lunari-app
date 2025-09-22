@@ -45,11 +45,21 @@ export default function CyclePhaseDetails() {
         contentContainerStyle={defaultTheme.globalStyles.scrollContentContainer}
         showsVerticalScrollIndicator={false}
       >
-        <Text style={[typography.body, { fontWeight: '500', marginBottom: 8, textAlign: 'center' }]}>
+        <Text
+          style={[
+            typography.body,
+            { fontWeight: '500', marginBottom: 8, textAlign: 'center' },
+          ]}
+        >
           {getFormattedDate(currentDate)}
         </Text>
 
-        <Text style={[typography.heading1, { textAlign: 'center', marginBottom: 32 }]}>
+        <Text
+          style={[
+            typography.heading1,
+            { textAlign: 'center', marginBottom: 32 },
+          ]}
+        >
           Cycle day {cycleDay}
         </Text>
 
@@ -65,13 +75,16 @@ export default function CyclePhaseDetails() {
             </Text>
           </View>
 
-          <Text style={[typography.body, { fontSize: 18, fontWeight: 'bold', marginBottom: 8 }]}>
+          <Text
+            style={[
+              typography.body,
+              { fontSize: 18, fontWeight: 'bold', marginBottom: 8 },
+            ]}
+          >
             {cyclePhase}
           </Text>
 
-          <Text
-            style={[typography.body, { fontSize: 18, lineHeight: 24 }]}
-          >
+          <Text style={[typography.body, { fontSize: 18, lineHeight: 24 }]}>
             {phaseDescription}
           </Text>
         </View>
@@ -88,13 +101,16 @@ export default function CyclePhaseDetails() {
             </Text>
           </View>
 
-          <Text style={[typography.body, { fontSize: 18, fontWeight: 'bold', marginBottom: 8 }]}>
+          <Text
+            style={[
+              typography.body,
+              { fontSize: 18, fontWeight: 'bold', marginBottom: 8 },
+            ]}
+          >
             {pregnancyChance}
           </Text>
 
-          <Text
-            style={[typography.body, { fontSize: 18, lineHeight: 24 }]}
-          >
+          <Text style={[typography.body, { fontSize: 18, lineHeight: 24 }]}>
             {pregnancyDescription}
           </Text>
         </View>
@@ -110,9 +126,7 @@ export default function CyclePhaseDetails() {
               Possible symptoms
             </Text>
           </View>
-          <Text
-            style={[typography.body, { fontSize: 18, lineHeight: 24 }]}
-          >
+          <Text style={[typography.body, { fontSize: 18, lineHeight: 24 }]}>
             {possibleSymptoms}
           </Text>
         </View>

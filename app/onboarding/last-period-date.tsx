@@ -109,10 +109,22 @@ export default function LastPeriodDateScreen() {
       </View>
 
       <View style={onboardingStyles.content}>
-        <Text style={[typography.heading2, { marginBottom: 20, textAlign: 'left' }]}>
+        <Text
+          style={[typography.heading2, { marginBottom: 20, textAlign: 'left' }]}
+        >
           When was your last period?
         </Text>
-        <Text style={[typography.body, { textAlign: 'left', marginBottom: 40, lineHeight: 22, color: colors.textSecondary }]}>
+        <Text
+          style={[
+            typography.body,
+            {
+              textAlign: 'left',
+              marginBottom: 40,
+              lineHeight: 22,
+              color: colors.textSecondary,
+            },
+          ]}
+        >
           Select the start date of your most recent period to help us provide
           accurate predictions.
         </Text>
@@ -134,7 +146,16 @@ export default function LastPeriodDateScreen() {
                 month: 'long',
                 year: 'numeric',
               });
-              return <Text style={[typography.heading2, { textAlign: 'center', marginVertical: 10 }]}>{monthYear}</Text>;
+              return (
+                <Text
+                  style={[
+                    typography.heading2,
+                    { textAlign: 'center', marginVertical: 10 },
+                  ]}
+                >
+                  {monthYear}
+                </Text>
+              );
             }}
             theme={{
               backgroundColor: colors.surfaceVariant2,

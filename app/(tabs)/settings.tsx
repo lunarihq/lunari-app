@@ -176,7 +176,12 @@ export default function Settings() {
           <View style={styles.iconContainer}>
             <Ionicons name="trash-outline" size={24} color={colors.error} />
           </View>
-          <Text style={[typography.body, { fontSize: 18, flex: 1, color: colors.error }]}>
+          <Text
+            style={[
+              typography.body,
+              { fontSize: 18, flex: 1, color: colors.error },
+            ]}
+          >
             Delete Tracking Data
           </Text>
           <Ionicons name="chevron-forward" size={24} color={colors.error} />

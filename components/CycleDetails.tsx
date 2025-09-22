@@ -49,15 +49,16 @@ export function CycleDetails({
         <View style={styles.headerRow}>
           <View style={styles.titleContainer}>
             <Text
-              style={[typography.heading2, { fontSize: 23, fontWeight: 'bold', marginBottom: 6 }]}
+              style={[
+                typography.heading2,
+                { fontSize: 23, fontWeight: 'bold', marginBottom: 6 },
+              ]}
             >
               {selectedDateFormatted}
               {cycleDay ? ` • Cycle day ${cycleDay}` : ''}
             </Text>
             {cycleDay && (
-              <Text
-                style={[typography.body, { color: colors.textSecondary }]}
-              >
+              <Text style={[typography.body, { color: colors.textSecondary }]}>
                 {getConceptionChance()}
               </Text>
             )}

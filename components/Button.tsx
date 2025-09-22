@@ -64,7 +64,11 @@ export function Button({
         style,
       ]}
     >
-      <Text style={[typography.body, { fontWeight: '500', color: getTextColor() }]}>{title}</Text>
+      <Text
+        style={[typography.body, { fontWeight: '500', color: getTextColor() }]}
+      >
+        {title}
+      </Text>
     </Pressable>
   );
 }

@@ -15,7 +15,14 @@ export function ThemeToggle() {
 
   return (
     <View style={[styles.container, { backgroundColor: colors.surface }]}>
-      <Text style={[typography.body, { fontSize: 18, fontWeight: '600', marginBottom: 12 }]}>Theme</Text>
+      <Text
+        style={[
+          typography.body,
+          { fontSize: 18, fontWeight: '600', marginBottom: 12 },
+        ]}
+      >
+        Theme
+      </Text>
       <View style={styles.optionsContainer}>
         {themeOptions.map(option => (
           <TouchableOpacity
@@ -48,7 +55,12 @@ export function ThemeToggle() {
           </TouchableOpacity>
         ))}
       </View>
-      <Text style={[typography.caption, { color: colors.textMuted, textAlign: 'center' }]}>
+      <Text
+        style={[
+          typography.caption,
+          { color: colors.textMuted, textAlign: 'center' },
+        ]}
+      >
         Current: {isDark ? 'Dark' : 'Light'} mode
       </Text>
     </View>

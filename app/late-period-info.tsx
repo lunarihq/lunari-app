@@ -40,9 +40,7 @@ export default function PeriodLength() {
         <Text style={[typography.heading2, { marginBottom: 12 }]}>
           Normal Period Length
         </Text>
-        <Text style={[styles.normalRange]}>
-          2-7 days
-        </Text>
+        <Text style={[styles.normalRange]}>2-7 days</Text>
         <Text style={[typography.body, { lineHeight: 24 }]}>
           A normal period length of 2-7 days is typical for most people. The
           flow usually starts light, becomes heavier for a few days, then tapers

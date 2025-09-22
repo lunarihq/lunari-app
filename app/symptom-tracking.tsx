@@ -585,11 +585,7 @@ export default function SymptomTracking() {
         {isPeriodDate && (
           <View style={[styles.section, { backgroundColor: colors.surface }]}>
             <View style={styles.sectionHeader}>
-              <Text
-                style={[typography.heading2]}
-              >
-                Flow
-              </Text>
+              <Text style={[typography.heading2]}>Flow</Text>
             </View>
 
             <View style={styles.itemsGrid}>
@@ -630,9 +626,7 @@ export default function SymptomTracking() {
                       </View>
                     )}
                   </View>
-                  <Text
-                    style={[typography.caption, { textAlign: 'center' }]}
-                  >
+                  <Text style={[typography.caption, { textAlign: 'center' }]}>
                     {flow.name}
                   </Text>
                 </TouchableOpacity>
@@ -643,9 +637,7 @@ export default function SymptomTracking() {
         {/* Symptoms */}
         <View style={[styles.section, { backgroundColor: colors.surface }]}>
           <View style={styles.sectionHeader}>
-            <Text style={[typography.heading2]}>
-              Symptoms
-            </Text>
+            <Text style={[typography.heading2]}>Symptoms</Text>
           </View>
 
           <View style={styles.itemsGrid}>
@@ -686,9 +678,7 @@ export default function SymptomTracking() {
                     </View>
                   )}
                 </View>
-                <Text
-                  style={[typography.caption, { textAlign: 'center' }]}
-                >
+                <Text style={[typography.caption, { textAlign: 'center' }]}>
                   {symptom.name}
                 </Text>
               </TouchableOpacity>
@@ -699,9 +689,7 @@ export default function SymptomTracking() {
         {/* Moods */}
         <View style={[styles.section, { backgroundColor: colors.surface }]}>
           <View style={styles.sectionHeader}>
-            <Text style={[typography.heading2]}>
-              Moods
-            </Text>
+            <Text style={[typography.heading2]}>Moods</Text>
           </View>
 
           <View style={styles.itemsGrid}>
@@ -742,9 +730,7 @@ export default function SymptomTracking() {
                     </View>
                   )}
                 </View>
-                <Text
-                  style={[typography.caption, { textAlign: 'center' }]}
-                >
+                <Text style={[typography.caption, { textAlign: 'center' }]}>
                   {mood.name}
                 </Text>
               </TouchableOpacity>
@@ -758,9 +744,7 @@ export default function SymptomTracking() {
           style={[styles.section, { backgroundColor: colors.surface }]}
         >
           <View style={styles.sectionHeader}>
-            <Text style={[typography.heading2]}>
-              Notes
-            </Text>
+            <Text style={[typography.heading2]}>Notes</Text>
             <View style={styles.notesIconsContainer}>
               {notes.trim() && (
                 <TouchableOpacity
@@ -803,7 +787,10 @@ export default function SymptomTracking() {
               </Text>
             ) : (
               <Text
-                style={[typography.body, { flex: 1, fontStyle: 'italic', color: colors.placeholder }]}
+                style={[
+                  typography.body,
+                  { flex: 1, fontStyle: 'italic', color: colors.placeholder },
+                ]}
               >
                 Add notes about your day...
               </Text>
