@@ -15,7 +15,7 @@ export const Typography = StyleSheet.create({
   body: {
     fontSize: 16,
     fontWeight: '400',
-    color: Colors.textSecondary,
+    color: Colors.textPrimary,
   },
   caption: {
     fontSize: 14,

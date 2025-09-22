@@ -27,7 +27,7 @@ export default function PredictionInfo() {
         <Text
           style={[
             defaultTheme.Typography.body,
-            { color: colors.textSecondary, marginBottom: 24, lineHeight: 22 },
+            { marginBottom: 24 },
           ]}
         >
           Lunari uses your period history to make predictions. Here's exactly
@@ -38,7 +38,7 @@ export default function PredictionInfo() {
           <Text
             style={[
               defaultTheme.Typography.heading2,
-              { color: colors.textPrimary, marginBottom: 12 },
+              {marginBottom: 12 },
             ]}
           >
             📊 Cycle Length Calculation
@@ -46,7 +46,7 @@ export default function PredictionInfo() {
           <Text
             style={[
               defaultTheme.Typography.body,
-              { color: colors.textSecondary, lineHeight: 22, marginBottom: 16 },
+              {lineHeight: 22, marginBottom: 16 },
             ]}
           >
             We calculate your average cycle length using a weighted average of
@@ -67,7 +67,7 @@ export default function PredictionInfo() {
           <Text
             style={[
               defaultTheme.Typography.heading2,
-              { color: colors.textPrimary, marginBottom: 12 },
+              {marginBottom: 12 },
             ]}
           >
             🗓️ Next Period Prediction
@@ -75,7 +75,7 @@ export default function PredictionInfo() {
           <Text
             style={[
               defaultTheme.Typography.body,
-              { color: colors.textSecondary, lineHeight: 22 },
+              {lineHeight: 22 },
             ]}
           >
             Your next period is predicted by adding your average cycle length to
@@ -87,7 +87,7 @@ export default function PredictionInfo() {
           <Text
             style={[
               defaultTheme.Typography.heading2,
-              { color: colors.textPrimary, marginBottom: 12 },
+              {marginBottom: 12 },
             ]}
           >
             🥚 Ovulation & Fertility
@@ -95,7 +95,7 @@ export default function PredictionInfo() {
           <Text
             style={[
               defaultTheme.Typography.body,
-              { color: colors.textSecondary, lineHeight: 22, marginBottom: 16 },
+              {lineHeight: 22, marginBottom: 16 },
             ]}
           >
             Ovulation is predicted to occur 14 days before your next expected
@@ -114,7 +114,7 @@ export default function PredictionInfo() {
           <Text
             style={[
               defaultTheme.Typography.heading2,
-              { color: colors.textPrimary, marginBottom: 12 },
+              {marginBottom: 12 },
             ]}
           >
             📈 Accuracy Improves Over Time
@@ -122,7 +122,7 @@ export default function PredictionInfo() {
           <Text
             style={[
               defaultTheme.Typography.body,
-              { color: colors.textSecondary, lineHeight: 22 },
+              {lineHeight: 22 },
             ]}
           >
             The more periods you track, the more accurate predictions become.
@@ -136,7 +136,7 @@ export default function PredictionInfo() {
           <Text
             style={[
               defaultTheme.Typography.heading2,
-              { color: colors.textPrimary, marginBottom: 8 },
+              { marginBottom: 8 },
             ]}
           >
             🔒 Privacy First
@@ -144,7 +144,7 @@ export default function PredictionInfo() {
           <Text
             style={[
               defaultTheme.Typography.body,
-              { color: colors.textSecondary, lineHeight: 20 },
+              { lineHeight: 20 },
             ]}
           >
             All calculations happen locally on your device. Your period data
