@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { SymptomsTracker } from './SymptomsTracker';
 import { PeriodPredictionService } from '../services/periodPredictions';
 import { formatDateString } from '../app/types/calendarTypes';
-import { useTheme } from '../styles/theme';
+import { useTheme, createTypography } from '../styles/theme';
 
 interface CycleDetailsProps {
   selectedDate: string;
@@ -20,6 +20,7 @@ export function CycleDetails({
   onClose,
 }: CycleDetailsProps) {
   const { colors } = useTheme();
+  const typography = createTypography(colors);
   const selectedDateFormatted = selectedDate
     ? new Date(selectedDate).toLocaleDateString('en-US', {
         day: 'numeric',
@@ -48,17 +49,14 @@ export function CycleDetails({
         <View style={styles.headerRow}>
           <View style={styles.titleContainer}>
             <Text
-              style={[styles.cycleSummaryTitle, { color: colors.textPrimary }]}
+              style={[typography.heading2, { fontSize: 23, fontWeight: 'bold', marginBottom: 6 }]}
             >
               {selectedDateFormatted}
               {cycleDay ? ` • Cycle day ${cycleDay}` : ''}
             </Text>
             {cycleDay && (
               <Text
-                style={[
-                  styles.conceptionChance,
-                  { color: colors.textSecondary },
-                ]}
+                style={[typography.body, { color: colors.textSecondary }]}
               >
                 {getConceptionChance()}
               </Text>
@@ -95,14 +93,6 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     flex: 1,
-  },
-  cycleSummaryTitle: {
-    fontSize: 23,
-    fontWeight: 'bold',
-    marginBottom: 6,
-  },
-  conceptionChance: {
-    fontSize: 16,
   },
   closeButton: {
     padding: 8,

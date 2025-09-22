@@ -4,8 +4,7 @@ import { router } from 'expo-router';
 import { LinkButton } from './LinkButton';
 import { Button } from './Button';
 import DashedCircle from './DashedCircle';
-import { useTheme } from '../styles/theme';
-import { Colors } from '../styles/colors';
+import { useTheme, createTypography } from '../styles/theme';
 
 interface CycleOverviewWidgetProps {
   currentDate: Date;
@@ -30,6 +29,7 @@ export function CycleOverviewWidget({
   averageCycleLength,
 }: CycleOverviewWidgetProps) {
   const { colors } = useTheme();
+  const typography = createTypography(colors);
 
   return (
     <View style={styles.predictionCard}>
@@ -48,68 +48,53 @@ export function CycleOverviewWidget({
         >
           {isPeriodDay ? (
             <>
-              <Text style={[styles.currentDay, { color: colors.textPrimary }]}>
+              <Text style={[typography.body, { fontWeight: '500', marginBottom: 20 }]}>
                 {getFormattedDate(currentDate)}
               </Text>
               <Text
-                style={[styles.predictionLabel, { color: colors.textPrimary }]}
+                style={[typography.heading2, { fontSize: 22, fontWeight: '500' }]}
               >
                 Period
               </Text>
               <Text
-                style={[styles.predictionDays, { color: colors.textPrimary }]}
+                style={[typography.heading1, { fontSize: 48, fontWeight: 'bold', marginBottom: 8, paddingHorizontal: 8 }]}
               >
                 Day {periodDayNumber}
               </Text>
             </>
           ) : prediction ? (
             <>
-              <Text style={[styles.currentDay, { color: colors.textPrimary }]}>
+              <Text style={[typography.body, { fontWeight: '500', marginBottom: 20 }]}>
                 {getFormattedDate(currentDate)}
               </Text>
               {prediction.days > 0 ? (
                 <>
                   <Text
-                    style={[
-                      styles.predictionLabel,
-                      { color: colors.textPrimary },
-                    ]}
+                    style={[typography.heading2, { fontSize: 22, fontWeight: '500' }]}
                   >
                     Expected period in
                   </Text>
                   <Text
-                    style={[
-                      styles.predictionDays,
-                      { color: colors.textPrimary },
-                    ]}
+                    style={[typography.heading1, { fontSize: 48, fontWeight: 'bold', marginBottom: 8, paddingHorizontal: 8 }]}
                   >
                     {prediction.days} {prediction.days === 1 ? 'day' : 'days'}
                   </Text>
                 </>
               ) : prediction.days === 0 ? (
                 <Text
-                  style={[
-                    styles.predictionStatus,
-                    { color: colors.textPrimary },
-                  ]}
+                  style={[typography.heading2, { fontSize: 28, fontWeight: '500', textAlign: 'center', marginBottom: 32, paddingHorizontal: 16 }]}
                 >
                   Your period is expected today
                 </Text>
               ) : (
                 <>
                   <Text
-                    style={[
-                      styles.predictionLabel,
-                      { color: colors.textPrimary },
-                    ]}
+                    style={[typography.heading2, { fontSize: 22, fontWeight: '500' }]}
                   >
                     Late for
                   </Text>
                   <Text
-                    style={[
-                      styles.predictionDays,
-                      { color: colors.textPrimary },
-                    ]}
+                    style={[typography.heading1, { fontSize: 48, fontWeight: 'bold', marginBottom: 8, paddingHorizontal: 8 }]}
                   >
                     {Math.abs(prediction.days)}{' '}
                     {Math.abs(prediction.days) === 1 ? 'day' : 'days'}
@@ -123,11 +108,11 @@ export function CycleOverviewWidget({
             </>
           ) : (
             <>
-              <Text style={[styles.currentDay, { color: colors.textPrimary }]}>
+              <Text style={[typography.body, { fontWeight: '500', marginBottom: 20 }]}>
                 {getFormattedDate(currentDate)}
               </Text>
               <Text
-                style={[styles.emptyStateText, { color: colors.textPrimary }]}
+                style={[typography.body, { fontSize: 20, fontWeight: '500', lineHeight: 28, textAlign: 'center', paddingHorizontal: 16, marginBottom: 16 }]}
               >
                 Log the first day of your last period for next prediction.
               </Text>
@@ -168,39 +153,6 @@ const styles = StyleSheet.create({
     borderRadius: 155,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'green',
-  },
-  predictionLabel: {
-    fontSize: 22,
-    fontWeight: '500',
-    color: Colors.black,
-  },
-  predictionDays: {
-    fontSize: 48,
-    fontWeight: 'bold',
-    color: Colors.black,
-    marginBottom: 8,
-    paddingHorizontal: 8,
-  },
-  predictionStatus: {
-    fontSize: 28,
-    fontWeight: '500',
-    color: Colors.black,
-    textAlign: 'center',
-    marginBottom: 32,
-    paddingHorizontal: 16,
-  },
-  emptyStateText: {
-    fontSize: 20,
-    fontWeight: '500',
-    lineHeight: 28,
-    textAlign: 'center',
-    paddingHorizontal: 16,
-    marginBottom: 16,
-  },
-  currentDay: {
-    fontSize: 16,
-    fontWeight: '500',
-    marginBottom: 20,
+    // backgroundColor removed - now handled dynamically via colors.predictionCircleBackground
   },
 });

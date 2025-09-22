@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { useTheme } from '../styles/theme';
+import { useTheme, createTypography } from '../styles/theme';
 
 interface CycleData {
   startDate: string;
@@ -118,6 +118,7 @@ const calculateEndDate = (startDate: string, cycleLength: string | number) => {
 
 export function CycleHistory({ cycles }: CycleHistoryProps) {
   const { colors } = useTheme();
+  const typography = createTypography(colors);
 
   if (cycles.length === 0) {
     return null;
@@ -146,10 +147,10 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
 
   return (
     <View style={[styles.container, { backgroundColor: colors.surface }]}>
-      <Text style={[styles.title, { color: colors.textPrimary }]}>
+      <Text style={[typography.heading2, { fontSize: 24, fontWeight: '500', marginBottom: 8 }]}>
         Cycle history
       </Text>
-      <Text style={[styles.subtitle, { color: colors.textSecondary }]}>
+      <Text style={[typography.body, { marginBottom: 10, color: colors.textSecondary }]}>
         {cycles.length} logged cycles
       </Text>
 
@@ -272,21 +273,18 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
                 // Special layout for current cycle
                 <View>
                   <Text
-                    style={[
-                      styles.currentCycleTitle,
-                      { color: colors.textPrimary },
-                    ]}
+                    style={[typography.body, { fontSize: 18, fontWeight: 'bold', marginBottom: 8 }]}
                   >
                     Current cycle
                   </Text>
                   <View style={styles.cycleInfoRow}>
                     <Text
-                      style={[styles.dateText, { color: colors.textPrimary }]}
+                      style={[typography.body, { fontWeight: '600' }]}
                     >
                       {cycle.startDate} - Today
                     </Text>
                     <Text
-                      style={[styles.daysText, { color: colors.textPrimary }]}
+                      style={[typography.body, { fontWeight: '600' }]}
                     >
                       {formattedCycleLength}
                     </Text>
@@ -296,14 +294,14 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
                 // Regular layout for past cycles
                 <View style={styles.cycleInfoRow}>
                   <Text
-                    style={[styles.dateText, { color: colors.textPrimary }]}
+                    style={[typography.body, { fontWeight: '600' }]}
                   >
                     {cycle.endDate
                       ? `${cycle.startDate} - ${cycle.endDate}`
                       : `${cycle.startDate} - ${calculateEndDate(cycle.startDate, circleDays)}`}
                   </Text>
                   <Text
-                    style={[styles.daysText, { color: colors.textPrimary }]}
+                    style={[typography.body, { fontWeight: '600' }]}
                   >
                     {formattedCycleLength}
                   </Text>
@@ -327,20 +325,6 @@ const styles = StyleSheet.create({
     padding: 16,
     borderRadius: 16,
   },
-  title: {
-    fontSize: 24,
-    fontWeight: '500',
-    marginBottom: 8,
-  },
-  subtitle: {
-    fontSize: 16,
-    marginBottom: 10,
-  },
-  currentCycleTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 8,
-  },
   card: {
     borderRadius: 12,
     padding: 0,
@@ -353,14 +337,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 16,
-  },
-  dateText: {
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  daysText: {
-    fontSize: 16,
-    fontWeight: '600',
   },
   circleContainer: {
     flexDirection: 'row',
