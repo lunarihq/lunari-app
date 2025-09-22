@@ -11,9 +11,10 @@ import {
   Linking,
 } from 'react-native';
 import { NotificationService } from '../services/notificationService';
-import defaultTheme, { useTheme } from '../styles/theme';
+import defaultTheme, { useTheme, createTypography } from '../styles/theme';
 export default function Reminders() {
   const { colors } = useTheme();
+  const typography = createTypography(colors);
   const [beforePeriodEnabled, setBeforePeriodEnabled] = useState(false);
   const [dayOfPeriodEnabled, setDayOfPeriodEnabled] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -181,7 +182,7 @@ export default function Reminders() {
         ]}
       >
         <ActivityIndicator size="large" color={colors.primary} />
-        <Text style={[styles.loadingText, { color: colors.textPrimary }]}>
+        <Text style={[typography.body, { marginTop: 16 }]}>
           Loading notification settings...
         </Text>
       </View>
@@ -202,7 +203,7 @@ export default function Reminders() {
             statusMessage.isError ? styles.errorMessage : styles.successMessage,
           ]}
         >
-          <Text style={[styles.statusText, { color: colors.textPrimary }]}>
+          <Text style={[typography.body, { textAlign: 'center' }]}>
             {statusMessage.text}
           </Text>
         </View>
@@ -210,7 +211,7 @@ export default function Reminders() {
 
       <View style={[styles.section, { backgroundColor: colors.surface }]}>
         <View style={[styles.settingRow, { borderBottomColor: colors.border }]}>
-          <Text style={[styles.settingText, { color: colors.textPrimary }]}>
+          <Text style={[typography.body, { flexShrink: 1, paddingRight: 12, flex: 1 }]}>
             Get a notification 3 days before your next period is likely to
             start.
           </Text>
@@ -225,7 +226,7 @@ export default function Reminders() {
         </View>
 
         <View style={[styles.settingRow, styles.lastRow]}>
-          <Text style={[styles.settingText, { color: colors.textPrimary }]}>
+          <Text style={[typography.body, { flexShrink: 1, paddingRight: 12, flex: 1 }]}>
             Get a notification the day of your period start.
           </Text>
           <Switch
@@ -248,11 +249,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  loadingText: {
-    marginTop: 16,
-    fontSize: 16,
-  },
-
   section: {
     marginVertical: 16,
     borderRadius: 8,
@@ -269,12 +265,6 @@ const styles = StyleSheet.create({
   lastRow: {
     borderBottomWidth: 0,
   },
-  settingText: {
-    fontSize: 16,
-    flexShrink: 1,
-    paddingRight: 12,
-    flex: 1,
-  },
   statusMessage: {
     padding: 12,
     borderRadius: 8,
@@ -286,9 +276,5 @@ const styles = StyleSheet.create({
   },
   errorMessage: {
     backgroundColor: '#ffeded',
-  },
-  statusText: {
-    fontSize: 16,
-    textAlign: 'center',
   },
 });

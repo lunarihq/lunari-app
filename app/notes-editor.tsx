@@ -9,11 +9,12 @@ import {
 } from 'react-native';
 import { Button } from '../components/Button';
 import { router, useLocalSearchParams } from 'expo-router';
-import { useTheme } from '../styles/theme';
+import { useTheme, createTypography } from '../styles/theme';
 import { useNotes } from '../contexts/NotesContext';
 
 export default function NotesEditor() {
   const { colors } = useTheme();
+  const typography = createTypography(colors);
   const params = useLocalSearchParams();
   const { notes, setNotes } = useNotes();
   const [localNotes, setLocalNotes] = useState<string>('');
@@ -76,7 +77,7 @@ export default function NotesEditor() {
         {/* Notes Input */}
         <View style={styles.content}>
           <TextInput
-            style={[styles.notesInput, { color: colors.textPrimary }]}
+            style={[typography.body, styles.notesInput]}
             placeholder="Add notes, any extra symptoms, or how you've been feeling..."
             placeholderTextColor={colors.placeholder}
             value={localNotes}
@@ -118,8 +119,6 @@ const styles = StyleSheet.create({
   },
   notesInput: {
     maxHeight: 300,
-    fontSize: 16,
-    lineHeight: 24,
     textAlignVertical: 'top',
     padding: 0,
   },
