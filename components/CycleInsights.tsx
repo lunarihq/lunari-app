@@ -57,10 +57,7 @@ export function CycleInsights({
       {currentCycleDay ? (
         <View style={styles.insightsRow}>
           <Pressable
-            style={[
-              styles.insightCard,
-              cardBorderStyle,
-            ]}
+            style={[styles.insightCard, cardBorderStyle]}
             onPress={() =>
               currentCycleDay &&
               router.push(
@@ -93,10 +90,7 @@ export function CycleInsights({
           </Pressable>
 
           <Pressable
-            style={[
-              styles.insightCard,
-              cardBorderStyle,
-            ]}
+            style={[styles.insightCard, cardBorderStyle]}
             onPress={() =>
               currentCycleDay &&
               router.push(
@@ -134,10 +128,7 @@ export function CycleInsights({
           </Pressable>
 
           <Pressable
-            style={[
-              styles.insightCard,
-              cardBorderStyle,
-            ]}
+            style={[styles.insightCard, cardBorderStyle]}
             onPress={() =>
               currentCycleDay &&
               router.push(

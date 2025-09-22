@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-} from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { Button } from '../../components/Button';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
@@ -22,7 +18,7 @@ export default function WelcomeScreen() {
         <Text style={styles.message}>
           Track your health and wellness with our easy-to-use app.
         </Text>
-        
+
         <Button title="Next" onPress={handleNext} fullWidth />
       </View>
     </SafeAreaView>

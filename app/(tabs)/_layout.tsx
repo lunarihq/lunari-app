@@ -7,7 +7,6 @@ export default function TabLayout() {
   const { colors } = useTheme();
   const router = useRouter();
 
-
   return (
     <Tabs
       screenOptions={{

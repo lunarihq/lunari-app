@@ -1,10 +1,5 @@
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Button } from '../../components/Button';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
@@ -54,11 +49,19 @@ export default function PeriodLengthScreen() {
   return (
     <SafeAreaView style={onboardingStyles.container}>
       <View style={onboardingStyles.header}>
-        <TouchableOpacity style={onboardingStyles.backButton} onPress={handleBack}>
+        <TouchableOpacity
+          style={onboardingStyles.backButton}
+          onPress={handleBack}
+        >
           <Ionicons name="chevron-back" size={24} color={colors.textPrimary} />
         </TouchableOpacity>
         <View style={onboardingStyles.paginationContainer}>
-          <View style={[onboardingStyles.paginationDot, onboardingStyles.paginationDotActive]} />
+          <View
+            style={[
+              onboardingStyles.paginationDot,
+              onboardingStyles.paginationDotActive,
+            ]}
+          />
           <View style={onboardingStyles.paginationDot} />
           <View style={onboardingStyles.paginationDot} />
         </View>
@@ -113,8 +116,19 @@ export default function PeriodLengthScreen() {
           onPress={toggleDontKnow}
         >
           <View style={styles.checkboxContainer}>
-            <View style={[styles.checkbox, { borderColor: colors.primary, backgroundColor: dontKnow ? colors.primary : colors.surface }, dontKnow && styles.checkboxChecked]}>
-              {dontKnow && <Ionicons name="checkmark" size={16} color={colors.white} />}
+            <View
+              style={[
+                styles.checkbox,
+                {
+                  borderColor: colors.primary,
+                  backgroundColor: dontKnow ? colors.primary : colors.surface,
+                },
+                dontKnow && styles.checkboxChecked,
+              ]}
+            >
+              {dontKnow && (
+                <Ionicons name="checkmark" size={16} color={colors.white} />
+              )}
             </View>
             <Text style={styles.dontKnowText}>
               Don't know - let the app learn
@@ -131,7 +145,8 @@ export default function PeriodLengthScreen() {
   );
 }
 
-const createStyles = (colors: ColorScheme) => StyleSheet.create({
+const createStyles = (colors: ColorScheme) =>
+  StyleSheet.create({
     pickerContainer: {
       flexDirection: 'row',
       alignItems: 'center',
@@ -199,4 +214,4 @@ const createStyles = (colors: ColorScheme) => StyleSheet.create({
       color: colors.textMuted,
       fontStyle: 'italic',
     },
-});
+  });

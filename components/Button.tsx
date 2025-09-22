@@ -12,7 +12,15 @@ interface ButtonProps {
   disabled?: boolean;
 }
 
-export function Button({ title, onPress, variant = 'contained', shadow = false, fullWidth = false, style, disabled = false }: ButtonProps) {
+export function Button({
+  title,
+  onPress,
+  variant = 'contained',
+  shadow = false,
+  fullWidth = false,
+  style,
+  disabled = false,
+}: ButtonProps) {
   const { colors } = useTheme();
 
   const getButtonStyle = () => {
@@ -20,10 +28,10 @@ export function Button({ title, onPress, variant = 'contained', shadow = false, 
       case 'text':
         return { backgroundColor: 'transparent' };
       case 'outlined':
-        return { 
-          backgroundColor: 'transparent', 
-          borderWidth: 1, 
-          borderColor: colors.primary 
+        return {
+          backgroundColor: 'transparent',
+          borderWidth: 1,
+          borderColor: colors.primary,
         };
       case 'contained':
       default:

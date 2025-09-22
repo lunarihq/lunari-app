@@ -66,9 +66,7 @@ export default function NotesEditor() {
   // (Keeping UX simple here; remove if you want auto-save-on-unmount back.)
 
   return (
-    <View
-      style={[styles.container, { backgroundColor: colors.surface }]}
-    >
+    <View style={[styles.container, { backgroundColor: colors.surface }]}>
       {/* Main Content with KeyboardAvoidingView */}
       <KeyboardAvoidingView
         style={styles.keyboardAvoidingView}
@@ -100,11 +98,7 @@ export default function NotesEditor() {
             isKeyboardVisible ? { bottom: keyboardHeight } : {},
           ]}
         >
-          <Button
-            title="Done"
-            onPress={handleSave}
-            fullWidth
-          />
+          <Button title="Done" onPress={handleSave} fullWidth />
         </View>
       )}
     </View>
@@ -153,5 +147,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-
 });

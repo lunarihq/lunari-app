@@ -158,25 +158,25 @@ export default function PeriodCalendarScreen() {
       if (dateInserts.length > 0) {
         await db.insert(periodDates).values(dateInserts);
       }
-      
+
       // Show success toast
       Toast.show({
         type: 'success',
         text1: 'Period dates saved',
         visibilityTime: 3000,
       });
-      
+
       router.back();
     } catch (error) {
       console.error('Error saving dates:', error);
-      
+
       // Show error toast
       Toast.show({
         type: 'error',
         text1: 'Error. Please try again.',
         visibilityTime: 3000,
       });
-      
+
       router.back();
     }
   };

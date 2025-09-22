@@ -1,10 +1,5 @@
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Button } from '../../components/Button';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
@@ -31,11 +26,13 @@ export default function LastPeriodDateScreen() {
       if (!dontKnow && selectedDate) {
         // Save directly to periodDates table instead of settings
         await db.insert(periodDates).values({ date: selectedDate });
-        
+
         // Get period length and add the full period
         const periodLengthSetting = await getSetting('userPeriodLength');
-        const periodLength = periodLengthSetting ? parseInt(periodLengthSetting, 10) : 5;
-        
+        const periodLength = periodLengthSetting
+          ? parseInt(periodLengthSetting, 10)
+          : 5;
+
         const startDate = new Date(selectedDate);
         for (let i = 1; i < periodLength; i++) {
           const nextDate = new Date(startDate);
@@ -44,7 +41,7 @@ export default function LastPeriodDateScreen() {
           await db.insert(periodDates).values({ date: nextDateString });
         }
       }
-      
+
       // Complete onboarding and navigate to main app
       await setSetting('onboardingCompleted', 'true');
       router.replace('/');
@@ -72,13 +69,16 @@ export default function LastPeriodDateScreen() {
   };
 
   // Create marked dates object for the selected date
-  const markedDates = selectedDate && !dontKnow ? {
-    [selectedDate]: {
-      selected: true,
-      selectedColor: colors.primary,
-      selectedTextColor: colors.white
-    }
-  } : {};
+  const markedDates =
+    selectedDate && !dontKnow
+      ? {
+          [selectedDate]: {
+            selected: true,
+            selectedColor: colors.primary,
+            selectedTextColor: colors.white,
+          },
+        }
+      : {};
 
   // Get today's date to set as the initial month
   const today = formatDateString(new Date());
@@ -86,13 +86,21 @@ export default function LastPeriodDateScreen() {
   return (
     <SafeAreaView style={onboardingStyles.container}>
       <View style={onboardingStyles.header}>
-        <TouchableOpacity style={onboardingStyles.backButton} onPress={handleBack}>
+        <TouchableOpacity
+          style={onboardingStyles.backButton}
+          onPress={handleBack}
+        >
           <Ionicons name="chevron-back" size={24} color={colors.textPrimary} />
         </TouchableOpacity>
         <View style={onboardingStyles.paginationContainer}>
           <View style={onboardingStyles.paginationDot} />
           <View style={onboardingStyles.paginationDot} />
-          <View style={[onboardingStyles.paginationDot, onboardingStyles.paginationDotActive]} />
+          <View
+            style={[
+              onboardingStyles.paginationDot,
+              onboardingStyles.paginationDotActive,
+            ]}
+          />
         </View>
         <View style={onboardingStyles.headerSpacer} />
       </View>
@@ -100,24 +108,28 @@ export default function LastPeriodDateScreen() {
       <View style={onboardingStyles.content}>
         <Text style={onboardingStyles.title}>When was your last period?</Text>
         <Text style={onboardingStyles.message}>
-          Select the start date of your most recent period to help us provide accurate predictions.
+          Select the start date of your most recent period to help us provide
+          accurate predictions.
         </Text>
 
-        <View style={[styles.calendarContainer, dontKnow && styles.calendarDisabled]}>
+        <View
+          style={[
+            styles.calendarContainer,
+            dontKnow && styles.calendarDisabled,
+          ]}
+        >
           <Calendar
             current={today}
             onDayPress={onDayPress}
             markedDates={markedDates}
             maxDate={today}
             firstDay={1}
-            renderHeader={(date) => {
-              const monthYear = new Date(date).toLocaleDateString('en-US', { 
-                month: 'long', 
-                year: 'numeric' 
+            renderHeader={date => {
+              const monthYear = new Date(date).toLocaleDateString('en-US', {
+                month: 'long',
+                year: 'numeric',
               });
-              return (
-                <Text style={styles.calendarHeader}>{monthYear}</Text>
-              );
+              return <Text style={styles.calendarHeader}>{monthYear}</Text>;
             }}
             theme={{
               backgroundColor: colors.surfaceVariant2,
@@ -146,12 +158,21 @@ export default function LastPeriodDateScreen() {
           onPress={toggleDontKnow}
         >
           <View style={styles.checkboxContainer}>
-            <View style={[styles.checkbox, { borderColor: colors.primary, backgroundColor: dontKnow ? colors.primary : colors.surface }, dontKnow && styles.checkboxChecked]}>
-              {dontKnow && <Ionicons name="checkmark" size={16} color={colors.white} />}
+            <View
+              style={[
+                styles.checkbox,
+                {
+                  borderColor: colors.primary,
+                  backgroundColor: dontKnow ? colors.primary : colors.surface,
+                },
+                dontKnow && styles.checkboxChecked,
+              ]}
+            >
+              {dontKnow && (
+                <Ionicons name="checkmark" size={16} color={colors.white} />
+              )}
             </View>
-            <Text style={styles.dontKnowText}>
-              Don't know - skip this step
-            </Text>
+            <Text style={styles.dontKnowText}>Don't know - skip this step</Text>
           </View>
           <Text style={styles.dontKnowSubText}>
             We'll help you track from today
@@ -171,56 +192,57 @@ export default function LastPeriodDateScreen() {
   );
 }
 
-const createStyles = (colors: ColorScheme) => StyleSheet.create({
-  calendarContainer: {
-    marginBottom: 30,
-    borderRadius: 12,
-    overflow: 'hidden',
-  },
-  calendarDisabled: {
-    opacity: 0.5,
-  },
-  calendar: {
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-  },
-  calendarDisabledStyle: {
-    backgroundColor: colors.panel,
-  },
-  dontKnowContainer: {
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  checkboxContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 5,
-  },
-  checkbox: {
-    width: 20,
-    height: 20,
-    borderWidth: 2,
-    borderRadius: 3,
-    marginRight: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  checkboxChecked: {},
-  dontKnowText: {
-    fontSize: 16,
-    color: colors.textPrimary,
-    fontWeight: '500',
-  },
-  dontKnowSubText: {
-    fontSize: 14,
-    color: colors.textMuted,
-    fontStyle: 'italic',
-  },
-  calendarHeader: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: colors.textPrimary,
-    textAlign: 'center',
-    marginVertical: 10,
-  },
-});
+const createStyles = (colors: ColorScheme) =>
+  StyleSheet.create({
+    calendarContainer: {
+      marginBottom: 30,
+      borderRadius: 12,
+      overflow: 'hidden',
+    },
+    calendarDisabled: {
+      opacity: 0.5,
+    },
+    calendar: {
+      paddingHorizontal: 10,
+      paddingVertical: 10,
+    },
+    calendarDisabledStyle: {
+      backgroundColor: colors.panel,
+    },
+    dontKnowContainer: {
+      alignItems: 'center',
+      marginBottom: 20,
+    },
+    checkboxContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginBottom: 5,
+    },
+    checkbox: {
+      width: 20,
+      height: 20,
+      borderWidth: 2,
+      borderRadius: 3,
+      marginRight: 10,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    checkboxChecked: {},
+    dontKnowText: {
+      fontSize: 16,
+      color: colors.textPrimary,
+      fontWeight: '500',
+    },
+    dontKnowSubText: {
+      fontSize: 14,
+      color: colors.textMuted,
+      fontStyle: 'italic',
+    },
+    calendarHeader: {
+      fontSize: 18,
+      fontWeight: 'bold',
+      color: colors.textPrimary,
+      textAlign: 'center',
+      marginVertical: 10,
+    },
+  });

@@ -279,11 +279,11 @@ function AppContent() {
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style={isDark ? 'light' : 'dark'} />
-      <Toast 
+      <Toast
         position="top"
         topOffset={80}
         config={{
-          success: (props) => (
+          success: props => (
             <BaseToast
               {...props}
               style={{ ...toastConfig.style, borderLeftColor: '#28a745' }}
@@ -291,7 +291,7 @@ function AppContent() {
               text1Style={toastConfig.text1Style}
             />
           ),
-          error: (props) => (
+          error: props => (
             <ErrorToast
               {...props}
               style={{ ...toastConfig.style, borderLeftColor: '#dc3545' }}

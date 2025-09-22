@@ -86,9 +86,7 @@ export function PinSetup({ mode = 'setup' }: PinSetupProps) {
   };
 
   return (
-    <View
-      style={[styles.container, { backgroundColor: colors.background }]}
-    >
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.content}>
         {step === 'verify' ? (
           <PinInput

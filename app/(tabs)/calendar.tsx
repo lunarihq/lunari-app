@@ -203,9 +203,7 @@ export default function CalendarScreen() {
   ]);
 
   return (
-    <View
-      style={[styles.container, { backgroundColor: colors.background }]}
-    >
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.calendarContainer}>
         <BaseCalendar
           mode="view"

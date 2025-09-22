@@ -529,7 +529,7 @@ export default function SymptomTracking() {
       router.back();
     } catch (error) {
       console.error('Error saving health logs:', error);
-      
+
       // Show error toast
       Toast.show({
         type: 'error',
@@ -814,11 +814,7 @@ export default function SymptomTracking() {
       {/* Save button that appears only when changes are made */}
       {hasChanges && (
         <View style={styles.saveButtonContainer}>
-          <Button
-            title="Save"
-            onPress={saveChanges}
-            fullWidth
-          />
+          <Button title="Save" onPress={saveChanges} fullWidth />
         </View>
       )}
     </View>

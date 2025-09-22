@@ -134,9 +134,11 @@ export function CycleOverviewWidget({
             </>
           )}
           <Button
-            title={Object.keys(selectedDates).length > 0
-              ? 'Log or edit period dates'
-              : 'Log period'}
+            title={
+              Object.keys(selectedDates).length > 0
+                ? 'Log or edit period dates'
+                : 'Log period'
+            }
             onPress={() => router.push('/period-calendar')}
             style={{ marginVertical: 16 }}
           />
