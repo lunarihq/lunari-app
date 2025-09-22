@@ -14,7 +14,7 @@ interface CheckboxProps {
 export function Checkbox({
   checked,
   onToggle,
-  text = "Don't know - let the app learn",
+  text = "Don't know",
   subText,
 }: CheckboxProps) {
   const { colors } = useTheme();

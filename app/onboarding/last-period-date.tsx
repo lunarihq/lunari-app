@@ -9,6 +9,7 @@ import { Calendar, DateData } from 'react-native-calendars';
 import { setSetting, getSetting, db } from '../../db';
 import { periodDates } from '../../db/schema';
 import { createOnboardingStyles } from '../../styles/onboarding';
+import { createTypography } from '../../styles/typography';
 import { useTheme } from '../../contexts/ThemeContext';
 import { formatDateString } from '../types/calendarTypes';
 import { ColorScheme } from '../../styles/colors';
@@ -17,6 +18,7 @@ export default function LastPeriodDateScreen() {
   const router = useRouter();
   const { colors } = useTheme();
   const onboardingStyles = createOnboardingStyles(colors);
+  const typography = createTypography(colors);
   const styles = createStyles(colors);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [dontKnow, setDontKnow] = useState(false);
@@ -107,8 +109,10 @@ export default function LastPeriodDateScreen() {
       </View>
 
       <View style={onboardingStyles.content}>
-        <Text style={onboardingStyles.title}>When was your last period?</Text>
-        <Text style={onboardingStyles.message}>
+        <Text style={[typography.heading2, { marginBottom: 20, textAlign: 'left' }]}>
+          When was your last period?
+        </Text>
+        <Text style={[typography.body, { textAlign: 'left', marginBottom: 40, lineHeight: 22, color: colors.textSecondary }]}>
           Select the start date of your most recent period to help us provide
           accurate predictions.
         </Text>
@@ -130,7 +134,7 @@ export default function LastPeriodDateScreen() {
                 month: 'long',
                 year: 'numeric',
               });
-              return <Text style={styles.calendarHeader}>{monthYear}</Text>;
+              return <Text style={[typography.heading2, { textAlign: 'center', marginVertical: 10 }]}>{monthYear}</Text>;
             }}
             theme={{
               backgroundColor: colors.surfaceVariant2,
@@ -190,12 +194,5 @@ const createStyles = (colors: ColorScheme) =>
     },
     calendarDisabledStyle: {
       backgroundColor: colors.panel,
-    },
-    calendarHeader: {
-      fontSize: 18,
-      fontWeight: 'bold',
-      color: colors.textPrimary,
-      textAlign: 'center',
-      marginVertical: 10,
     },
   });

@@ -8,12 +8,14 @@ import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { setSetting } from '../../db';
 import { createOnboardingStyles } from '../../styles/onboarding';
+import { createTypography } from '../../styles/typography';
 import { useTheme } from '../../contexts/ThemeContext';
 
 export default function PeriodLengthScreen() {
   const router = useRouter();
   const { colors } = useTheme();
   const onboardingStyles = createOnboardingStyles(colors);
+  const typography = createTypography(colors);
   const [periodLength, setPeriodLength] = useState(5);
   const [dontKnow, setDontKnow] = useState(false);
 
@@ -61,8 +63,10 @@ export default function PeriodLengthScreen() {
       </View>
 
       <View style={onboardingStyles.content}>
-        <Text style={onboardingStyles.title}>How long is your period?</Text>
-        <Text style={onboardingStyles.message}>
+        <Text style={[typography.heading2, { marginBottom: 20, textAlign: 'left' }]}>
+          How long is your period?
+        </Text>
+        <Text style={[typography.body, { textAlign: 'left', marginBottom: 40, lineHeight: 22, color: colors.textSecondary }]}>
           This helps us provide more accurate predictions for your cycle.
         </Text>
 
@@ -77,7 +81,7 @@ export default function PeriodLengthScreen() {
         <Checkbox
           checked={dontKnow}
           onToggle={toggleDontKnow}
-          subText="Uses 5 days as default"
+          subText="We'll use 5 days as default"
         />
       </View>
 

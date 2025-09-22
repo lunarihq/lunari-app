@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { Button } from '../../components/Button';
 import { DayPicker } from '../../components/DayPicker';
 import { Checkbox } from '../../components/Checkbox';
@@ -8,14 +8,14 @@ import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { setSetting } from '../../db';
 import { createOnboardingStyles } from '../../styles/onboarding';
+import { createTypography } from '../../styles/typography';
 import { useTheme } from '../../contexts/ThemeContext';
-import { ColorScheme } from '../../styles/colors';
 
 export default function CycleLengthScreen() {
   const router = useRouter();
   const { colors } = useTheme();
   const onboardingStyles = createOnboardingStyles(colors);
-  const styles = createStyles(colors);
+  const typography = createTypography(colors);
   const [cycleLength, setCycleLength] = useState(28);
   const [dontKnow, setDontKnow] = useState(false);
 
@@ -65,10 +65,10 @@ export default function CycleLengthScreen() {
       </View>
 
       <View style={onboardingStyles.content}>
-        <Text style={onboardingStyles.title}>
+        <Text style={[typography.heading2, { marginBottom: 20, textAlign: 'left' }]}>
           How many days does your cycle last on average?
         </Text>
-        <Text style={onboardingStyles.message}>
+        <Text style={[typography.body, { textAlign: 'left', marginBottom: 40, lineHeight: 22, color: colors.textSecondary }]}>
           This is the number of days from the start of one period to the start
           of the next.
         </Text>
@@ -86,10 +86,6 @@ export default function CycleLengthScreen() {
           onToggle={toggleDontKnow}
           subText="Uses 28 days as default"
         />
-
-        <Text style={styles.subMessage}>
-          Don't worry, we'll learn your actual patterns as you track!
-        </Text>
       </View>
 
       <View style={onboardingStyles.footer}>
@@ -99,13 +95,3 @@ export default function CycleLengthScreen() {
   );
 }
 
-const createStyles = (colors: ColorScheme) =>
-  StyleSheet.create({
-    subMessage: {
-      fontSize: 14,
-      textAlign: 'left',
-      color: colors.textMuted,
-      fontStyle: 'italic',
-      lineHeight: 20,
-    },
-  });
