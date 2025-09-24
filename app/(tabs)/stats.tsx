@@ -212,7 +212,7 @@ export default function Stats() {
       </Text>
       <Button
         title="Log period"
-        onPress={() => router.push('/period-calendar')}
+        onPress={() => router.push('/edit-period')}
         style={styles.emptyStateButton}
       />
     </View>

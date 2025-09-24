@@ -71,7 +71,7 @@ export function CalendarBottomSheet({
       >
         <Button
           title="Edit period dates"
-          onPress={() => router.push('/period-calendar')}
+          onPress={() => router.push('/edit-period')}
         />
       </Animated.View>
 

@@ -65,7 +65,7 @@ export default function CalendarScreen() {
   // Check if we should navigate to the period calendar screen from URL params
   useEffect(() => {
     if (params.openPeriodModal === 'true') {
-      router.push('/period-calendar');
+      router.push('/edit-period');
     }
   }, [params.openPeriodModal]);
 

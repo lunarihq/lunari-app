@@ -191,7 +191,7 @@ export function CycleOverviewWidget({
                 ? 'Log or edit period dates'
                 : 'Log period'
             }
-            onPress={() => router.push('/period-calendar')}
+            onPress={() => router.push('/edit-period')}
             style={{ marginVertical: 16 }}
           />
         </View>

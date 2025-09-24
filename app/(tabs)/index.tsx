@@ -44,7 +44,7 @@ export default function Index() {
     return scheduleMidnightTick();
   }, []);
 
-  // Reload data whenever the screen is focused (after returning from period-calendar)
+  // Reload data whenever the screen is focused (after returning from edit-period)
   useFocusEffect(
     useCallback(() => {
       const reloadData = async () => {
@@ -58,7 +58,7 @@ export default function Index() {
   // Check if we should navigate to the period calendar (when coming from calendar screen)
   useEffect(() => {
     if (params.openPeriodModal === 'true') {
-      router.push('/period-calendar');
+      router.push('/edit-period');
     }
   }, [params.openPeriodModal]);
 

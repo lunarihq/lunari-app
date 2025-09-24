@@ -112,7 +112,7 @@ function AppContent() {
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="onboarding" options={{ headerShown: false }} />
-        <Stack.Screen name="period-calendar" options={{ headerShown: false }} />
+        <Stack.Screen name="edit-period" options={{ headerShown: false }} />
         <Stack.Screen
           name="reminders"
           options={{
