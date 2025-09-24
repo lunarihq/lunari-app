@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
+import { View, Text, ScrollView, Image } from 'react-native';
 import defaultTheme, { useTheme, createTypography } from '../../styles/theme';
 
 export default function PeriodLength() {
@@ -10,7 +10,7 @@ export default function PeriodLength() {
     <ScrollView
       style={[
         defaultTheme.globalStyles.container,
-        { backgroundColor: colors.background },
+        { backgroundColor: colors.surface },
       ]}
       contentContainerStyle={defaultTheme.globalStyles.scrollContentContainer}
       showsVerticalScrollIndicator={false}
@@ -22,6 +22,7 @@ export default function PeriodLength() {
           height: 200,
           resizeMode: 'cover',
           marginBottom: 24,
+          borderRadius: 16,
         }}
       />
       <View style={{ marginBottom: 32 }}>
@@ -40,7 +41,6 @@ export default function PeriodLength() {
         <Text style={[typography.heading2, { marginBottom: 12 }]}>
           Normal Period Length
         </Text>
-        <Text style={[styles.normalRange]}>2-7 days</Text>
         <Text style={[typography.body, { lineHeight: 24 }]}>
           A normal period length of 2-7 days is typical for most people. The
           flow usually starts light, becomes heavier for a few days, then tapers
@@ -87,14 +87,5 @@ export default function PeriodLength() {
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  normalRange: {
-    fontSize: 18,
-    fontWeight: '600',
-    marginBottom: 12,
-    color: '#10B981',
-  },
-});
 
 

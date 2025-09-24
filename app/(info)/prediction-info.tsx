@@ -10,7 +10,7 @@ export default function PredictionInfo() {
     <ScrollView
       style={[
         defaultTheme.globalStyles.container,
-        { backgroundColor: colors.background },
+        { backgroundColor: colors.surface },
       ]}
       contentContainerStyle={defaultTheme.globalStyles.scrollContentContainer}
       showsVerticalScrollIndicator={false}
@@ -22,6 +22,7 @@ export default function PredictionInfo() {
           height: 200,
           resizeMode: 'cover',
           marginBottom: 24,
+          borderRadius: 16,
         }}
       />
       <View>
@@ -32,7 +33,7 @@ export default function PredictionInfo() {
 
         <View style={{ marginBottom: 32 }}>
           <Text style={[typography.heading2, { marginBottom: 12 }]}>
-            📊 Cycle Length Calculation
+            Cycle Length Calculation
           </Text>
           <Text style={[typography.body, { lineHeight: 22, marginBottom: 16 }]}>
             We calculate your average cycle length using a weighted average of
@@ -47,7 +48,7 @@ export default function PredictionInfo() {
 
         <View style={{ marginBottom: 32 }}>
           <Text style={[typography.heading2, { marginBottom: 12 }]}>
-            🗓️ Next Period Prediction
+            Next Period Prediction
           </Text>
           <Text style={[typography.body, { lineHeight: 22 }]}>
             Your next period is predicted by adding your average cycle length to
@@ -57,7 +58,7 @@ export default function PredictionInfo() {
 
         <View style={{ marginBottom: 32 }}>
           <Text style={[typography.heading2, { marginBottom: 12 }]}>
-            🥚 Ovulation & Fertility
+            Ovulation & Fertility
           </Text>
           <Text style={[typography.body, { lineHeight: 22, marginBottom: 16 }]}>
             Ovulation is predicted to occur 14 days before your next expected
@@ -70,7 +71,7 @@ export default function PredictionInfo() {
 
         <View style={{ marginBottom: 32 }}>
           <Text style={[typography.heading2, { marginBottom: 12 }]}>
-            📈 Accuracy Improves Over Time
+            Accuracy Improves Over Time
           </Text>
           <Text style={[typography.body, { lineHeight: 22 }]}>
             The more periods you track, the more accurate predictions become.
@@ -81,7 +82,7 @@ export default function PredictionInfo() {
 
         <View style={{ marginBottom: 32 }}>
           <Text style={[typography.heading2, { marginBottom: 8 }]}>
-            🔒 Privacy First
+             Privacy First
           </Text>
           <Text style={[typography.body, { lineHeight: 20 }]}>
             All calculations happen locally on your device. Your period data
@@ -92,10 +93,10 @@ export default function PredictionInfo() {
           <Text
             style={[
               typography.caption,
-              { backgroundColor: colors.panel, padding: 16, borderRadius: 12 },
+              { backgroundColor: colors.background, padding: 16, borderRadius: 12 },
             ]}
           >
-            Remember: These are predictions based on your patterns. Every body
+            🛎️ <Text style={{ fontWeight: 'bold' }}>Remember:</Text> These are predictions based on your patterns. Every body
             is different, and cycles can vary naturally.
           </Text>
         </View>

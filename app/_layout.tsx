@@ -165,7 +165,7 @@ function AppContent() {
           name="settings/privacy-policy"
           options={{
             headerShown: true,
-            headerTitle: 'Privacy Policy',
+            headerTitle: 'Privacy policy',
             headerShadowVisible: false,
             headerStyle: {
               backgroundColor: isDark
@@ -200,7 +200,7 @@ function AppContent() {
           name="symptom-tracking"
           options={{
             headerShown: true,
-            headerTitle: 'Symptom Tracking',
+            headerTitle: 'Symptom tracking',
             headerShadowVisible: false,
             headerStyle: {
               backgroundColor: isDark
@@ -220,8 +220,8 @@ function AppContent() {
             headerShadowVisible: false,
             headerStyle: {
               backgroundColor: isDark
-                ? darkColors.background
-                : lightColors.background,
+                ? darkColors.surface
+                : lightColors.surface,
             },
             headerTintColor: isDark
               ? darkColors.textPrimary
@@ -232,7 +232,7 @@ function AppContent() {
           name="(info)/cycle-phase-details"
           options={{
             headerShown: true,
-            headerTitle: 'Cycle Details',
+            headerTitle: 'Cycle phase details',
             headerShadowVisible: false,
             headerStyle: {
               backgroundColor: isDark
@@ -248,12 +248,12 @@ function AppContent() {
           name="(info)/cycle-length-info"
           options={{
             headerShown: true,
-            headerTitle: 'Cycle Length',
+            headerTitle: 'Cycle length',
             headerShadowVisible: false,
             headerStyle: {
               backgroundColor: isDark
-                ? darkColors.background
-                : lightColors.background,
+                ? darkColors.surface
+                : lightColors.surface,
             },
             headerTintColor: isDark
               ? darkColors.textPrimary
@@ -264,12 +264,12 @@ function AppContent() {
           name="(info)/period-length-info"
           options={{
             headerShown: true,
-            headerTitle: 'Period Length',
+            headerTitle: 'Period length',
             headerShadowVisible: false,
             headerStyle: {
               backgroundColor: isDark
-                ? darkColors.background
-                : lightColors.background,
+                ? darkColors.surface
+                : lightColors.surface,
             },
             headerTintColor: isDark
               ? darkColors.textPrimary
@@ -280,12 +280,12 @@ function AppContent() {
           name="(info)/late-period-info"
           options={{
             headerShown: true,
-            headerTitle: 'Late Period Information',
+            headerTitle: 'Late period',
             headerShadowVisible: false,
             headerStyle: {
               backgroundColor: isDark
-                ? darkColors.background
-                : lightColors.background,
+                ? darkColors.surface
+                : lightColors.surface,
             },
             headerTintColor: isDark
               ? darkColors.textPrimary
@@ -296,12 +296,12 @@ function AppContent() {
           name="(info)/prediction-info"
           options={{
             headerShown: true,
-            headerTitle: 'How Predictions Work',
+            headerTitle: 'How predictions work',
             headerShadowVisible: false,
             headerStyle: {
               backgroundColor: isDark
-                ? darkColors.background
-                : lightColors.background,
+                ? darkColors.surface
+                : lightColors.surface,
             },
             headerTintColor: isDark
               ? darkColors.textPrimary

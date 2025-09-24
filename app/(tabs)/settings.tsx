@@ -85,7 +85,7 @@ export default function Settings() {
             />
           </View>
           <Text style={[typography.body, { fontSize: 18, flex: 1 }]}>
-            App Lock
+            App lock
           </Text>
           <Ionicons
             name="chevron-forward"
@@ -170,7 +170,7 @@ export default function Settings() {
               [
                 { text: 'Cancel', style: 'cancel' },
                 {
-                  text: 'Delete All Data',
+                  text: 'Delete all data',
                   style: 'destructive',
                   onPress: async () => {
                     try {
@@ -202,7 +202,7 @@ export default function Settings() {
               { fontSize: 18, flex: 1, color: colors.error },
             ]}
           >
-            Delete Tracking Data
+            Delete tracking data
           </Text>
           <Ionicons name="chevron-forward" size={24} color={colors.error} />
         </TouchableOpacity>
