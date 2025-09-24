@@ -8,11 +8,12 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useAuth } from '../../contexts/AuthContext';
-import { useTheme } from '../../styles/theme';
+import defaultTheme, { useTheme } from '../../styles/theme';
+
+
 
 export default function AppLockScreen() {
   const { colors } = useTheme();
@@ -92,14 +93,14 @@ export default function AppLockScreen() {
   };
 
   return (
-    <SafeAreaView
-      style={[styles.container, { backgroundColor: colors.background }]}
-      edges={['top']}
-    >
-      <ScrollView
-        style={styles.scrollView}
-        showsVerticalScrollIndicator={false}
-      >
+    <ScrollView
+    style={[
+      defaultTheme.globalStyles.container,
+      { backgroundColor: colors.background },
+    ]}
+    contentContainerStyle={defaultTheme.globalStyles.scrollContentContainer}
+    showsVerticalScrollIndicator={false}
+  >
         <View style={[styles.section, { backgroundColor: colors.surface }]}>
           <View
             style={[styles.settingRow, { borderBottomColor: colors.border }]}
@@ -189,7 +190,6 @@ export default function AppLockScreen() {
           </View>
         )}
       </ScrollView>
-    </SafeAreaView>
   );
 }
 
@@ -200,6 +200,7 @@ const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
     paddingHorizontal: 16,
+    backgroundColor: 'red'
   },
   section: {
     borderRadius: 12,
