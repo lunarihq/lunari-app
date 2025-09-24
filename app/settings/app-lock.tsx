@@ -54,7 +54,7 @@ export default function AppLockScreen() {
   const handlePinToggle = async (value: boolean) => {
     if (value) {
       // Navigate to PIN setup
-      router.push('/pin-setup?mode=setup');
+      router.push('/settings/pin-setup?mode=setup');
     } else {
       // Show confirmation dialog
       Alert.alert('Remove PIN', 'Are you sure you want to remove your PIN?', [
@@ -123,7 +123,7 @@ export default function AppLockScreen() {
           {isPinSet && (
             <TouchableOpacity
               style={[styles.settingRow, styles.lastRow]}
-              onPress={() => router.push('/pin-setup?mode=change')}
+              onPress={() => router.push('/settings/pin-setup?mode=change')}
             >
               <View style={styles.settingContent}>
                 <Text

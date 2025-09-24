@@ -178,7 +178,7 @@ function AppContent() {
           }}
         />
         <Stack.Screen
-          name="pin-setup"
+          name="settings/pin-setup"
           options={({ route }) => ({
             headerShown: true,
             headerTitle:

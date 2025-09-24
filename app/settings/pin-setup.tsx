@@ -1,4 +1,4 @@
-import { PinSetup } from '../components/PinSetup';
+import { PinSetup } from '../../components/PinSetup';
 import { useLocalSearchParams } from 'expo-router';
 
 export default function PinSetupScreen() {
