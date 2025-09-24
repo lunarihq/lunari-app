@@ -21,7 +21,7 @@ Core Technologies
 
 - React Native 0.79.5 - Supports both Android and iOS platforms
 - Drizzle ORM (SQLite) - Handles local data storage
-- Expo SDK 53 - Development platform and build tools
+- Expo SDK 54 - Development platform and build tools
 - TypeScript 5.8 - Type-safe JavaScript development
 - React 19 - Latest React features and optimizations
 
