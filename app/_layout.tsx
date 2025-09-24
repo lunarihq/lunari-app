@@ -245,7 +245,7 @@ function AppContent() {
           }}
         />
         <Stack.Screen
-          name="cycle-info"
+          name="cycle-length-info"
           options={{
             headerShown: true,
             headerTitle: 'Cycle Length',
@@ -261,7 +261,7 @@ function AppContent() {
           }}
         />
         <Stack.Screen
-          name="period-info"
+          name="period-length-info"
           options={{
             headerShown: true,
             headerTitle: 'Period Length',
