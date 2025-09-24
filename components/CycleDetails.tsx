@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { SymptomsTracker } from './SymptomsTracker';
 import { PeriodPredictionService } from '../services/periodPredictions';
-import { formatDateString } from '../app/types/calendarTypes';
+import { formatDateString } from '../types/calendarTypes';
 import { useTheme, createTypography } from '../styles/theme';
 
 interface CycleDetailsProps {

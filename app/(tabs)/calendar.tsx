@@ -19,7 +19,7 @@ import {
   styles as baseCalendarStyles,
 } from '../../components/BaseCalendar';
 import { CalendarBottomSheet } from '../../components/CalendarBottomSheet';
-import { formatDateString } from '../types/calendarTypes';
+import { formatDateString } from '../../types/calendarTypes';
 import { useCalendarData } from '../../hooks/useCalendarData';
 import { useCalendarMarkedDates } from '../../hooks/useCalendarMarkedDates';
 import { useCycleCalculations } from '../../hooks/useCycleCalculations';

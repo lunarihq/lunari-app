@@ -6,7 +6,7 @@ import {
   MarkedDates,
   SelectionRules,
   formatDateString,
-} from '../app/types/calendarTypes';
+} from '../types/calendarTypes';
 import { useTheme } from '../styles/theme';
 
 // Constants

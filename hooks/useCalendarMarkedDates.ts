@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { MarkedDates } from '../app/types/calendarTypes';
+import { MarkedDates } from '../types/calendarTypes';
 import { useCalendarPredictions } from './useCalendarPredictions';
 import { useHealthLogDates } from './useHealthLogDates';
 import {

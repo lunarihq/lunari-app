@@ -17,7 +17,7 @@ import {
   DEFAULT_SELECTED_STYLE,
   formatDateString,
   generateDateRange,
-} from './types/calendarTypes';
+} from '../types/calendarTypes';
 import { db, getSetting } from '../db';
 import { periodDates } from '../db/schema';
 

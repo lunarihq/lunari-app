@@ -11,7 +11,7 @@ import { periodDates } from '../../db/schema';
 import { createOnboardingStyles } from '../../styles/onboarding';
 import { createTypography } from '../../styles/typography';
 import { useTheme } from '../../contexts/ThemeContext';
-import { formatDateString } from '../types/calendarTypes';
+import { formatDateString } from '../../types/calendarTypes';
 import { ColorScheme } from '../../styles/colors';
 
 export default function LastPeriodDateScreen() {

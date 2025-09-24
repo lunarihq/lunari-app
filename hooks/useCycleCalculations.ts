@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { PeriodPredictionService } from '../services/periodPredictions';
-import { formatDateString } from '../app/types/calendarTypes';
+import { formatDateString } from '../types/calendarTypes';
 
 interface UseCycleCalculationsProps {
   firstPeriodDate: string | null;
