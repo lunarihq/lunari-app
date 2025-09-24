@@ -41,7 +41,7 @@ export default function WelcomeScreen() {
       </View>
 
       <View style={onboardingStyles.footer}>
-        <Button title="Next" onPress={handleNext} fullWidth />
+        <Button title="Continue" onPress={handleNext} fullWidth />
       </View>
     </SafeAreaView>
   );

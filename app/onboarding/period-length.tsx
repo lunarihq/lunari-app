@@ -93,7 +93,7 @@ export default function PeriodLengthScreen() {
         <Checkbox
           checked={dontKnow}
           onToggle={toggleDontKnow}
-          subText="We'll use 5 days as default"
+          subText="The app will use 5 days as default, and then it will be adjusted as you log your cycles."
         />
       </View>
 
