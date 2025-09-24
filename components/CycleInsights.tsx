@@ -39,7 +39,7 @@ export function CycleInsights({
           onPress={() =>
             currentCycleDay &&
             router.push(
-              `/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}`
+              `/(info)/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}`
             )
           }
           disabled={!currentCycleDay}
@@ -62,7 +62,7 @@ export function CycleInsights({
             onPress={() =>
               currentCycleDay &&
               router.push(
-                `/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}`
+                `/(info)/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}`
               )
             }
           >
@@ -95,7 +95,7 @@ export function CycleInsights({
             onPress={() =>
               currentCycleDay &&
               router.push(
-                `/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}`
+                `/(info)/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}`
               )
             }
           >
@@ -133,7 +133,7 @@ export function CycleInsights({
             onPress={() =>
               currentCycleDay &&
               router.push(
-                `/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}`
+                `/(info)/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}`
               )
             }
           >

@@ -153,7 +153,7 @@ export function CycleOverviewWidget({
                   </Text>
                   <LinkButton
                     title="Learn about late periods"
-                    onPress={() => router.push('/late-period-info')}
+                    onPress={() => router.push('/(info)/late-period-info')}
                   />
                 </>
               )}

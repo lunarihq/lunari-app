@@ -38,7 +38,7 @@ export default function TabLayout() {
           headerTitle: 'Lunari',
           headerRight: () => (
             <TouchableOpacity
-              onPress={() => router.push('/prediction-info')}
+              onPress={() => router.push('/(info)/prediction-info')}
               style={{ marginRight: 16 }}
             >
               <Ionicons

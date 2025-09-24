@@ -2,8 +2,8 @@ import React from 'react';
 import { Text, View, StyleSheet, ScrollView } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { PeriodPredictionService } from '../services/periodPredictions';
-import defaultTheme, { useTheme, createTypography } from '../styles/theme';
+import { PeriodPredictionService } from '../../services/periodPredictions';
+import defaultTheme, { useTheme, createTypography } from '../../styles/theme';
 
 const getFormattedDate = (date: Date): string => {
   return `Today, ${date.toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}`;

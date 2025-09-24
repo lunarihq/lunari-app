@@ -229,7 +229,7 @@ function AppContent() {
           }}
         />
         <Stack.Screen
-          name="cycle-phase-details"
+          name="(info)/cycle-phase-details"
           options={{
             headerShown: true,
             headerTitle: 'Cycle Details',
@@ -245,7 +245,7 @@ function AppContent() {
           }}
         />
         <Stack.Screen
-          name="cycle-length-info"
+          name="(info)/cycle-length-info"
           options={{
             headerShown: true,
             headerTitle: 'Cycle Length',
@@ -261,7 +261,7 @@ function AppContent() {
           }}
         />
         <Stack.Screen
-          name="period-length-info"
+          name="(info)/period-length-info"
           options={{
             headerShown: true,
             headerTitle: 'Period Length',
@@ -277,7 +277,7 @@ function AppContent() {
           }}
         />
         <Stack.Screen
-          name="late-period-info"
+          name="(info)/late-period-info"
           options={{
             headerShown: true,
             headerTitle: 'Late Period Information',
@@ -293,7 +293,7 @@ function AppContent() {
           }}
         />
         <Stack.Screen
-          name="prediction-info"
+          name="(info)/prediction-info"
           options={{
             headerShown: true,
             headerTitle: 'How Predictions Work',

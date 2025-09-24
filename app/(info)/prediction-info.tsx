@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, ScrollView, Text, Image } from 'react-native';
-import defaultTheme, { useTheme, createTypography } from '../styles/theme';
+import defaultTheme, { useTheme, createTypography } from '../../styles/theme';
 
 export default function PredictionInfo() {
   const { colors } = useTheme();
@@ -16,7 +16,7 @@ export default function PredictionInfo() {
       showsVerticalScrollIndicator={false}
     >
       <Image
-        source={require('../assets/images/prediction.png')}
+        source={require('../../assets/images/prediction.png')}
         style={{
           width: '100%',
           height: 200,

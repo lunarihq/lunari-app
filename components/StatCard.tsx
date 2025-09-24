@@ -42,7 +42,7 @@ export function StatCard({ title, value, icon, status, type }: StatCardProps) {
   const handleInfoPress = () => {
     if (type) {
       const pathname =
-        type === 'cycle' ? '/cycle-length-info' : '/period-length-info';
+        type === 'cycle' ? '/(info)/cycle-length-info' : '/(info)/period-length-info';
       router.push(pathname);
     }
   };
