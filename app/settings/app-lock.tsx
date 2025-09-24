@@ -11,8 +11,8 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import { useAuth } from '../contexts/AuthContext';
-import { useTheme } from '../styles/theme';
+import { useAuth } from '../../contexts/AuthContext';
+import { useTheme } from '../../styles/theme';
 
 export default function AppLockScreen() {
   const { colors } = useTheme();
@@ -36,7 +36,7 @@ export default function AppLockScreen() {
 
     const checkBiometricSupport = async () => {
       if (isPinSet) {
-        const { AuthService } = await import('../services/authService');
+        const { AuthService } = await import('../../services/authService');
         const supported = await AuthService.isBiometricSupported();
         const enrolled = await AuthService.isBiometricEnrolled();
         setBiometricSupported(supported && enrolled);

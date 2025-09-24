@@ -114,7 +114,7 @@ function AppContent() {
         <Stack.Screen name="onboarding" options={{ headerShown: false }} />
         <Stack.Screen name="edit-period" options={{ headerShown: false }} />
         <Stack.Screen
-          name="reminders"
+          name="settings/reminders"
           options={{
             headerShown: true,
             headerTitle: 'Reminders',
@@ -130,10 +130,42 @@ function AppContent() {
           }}
         />
         <Stack.Screen
-          name="app-lock"
+          name="settings/app-lock"
           options={{
             headerShown: true,
             headerTitle: 'App Lock',
+            headerShadowVisible: false,
+            headerStyle: {
+              backgroundColor: isDark
+                ? darkColors.background
+                : lightColors.background,
+            },
+            headerTintColor: isDark
+              ? darkColors.textPrimary
+              : lightColors.textPrimary,
+          }}
+        />
+        <Stack.Screen
+          name="settings/about"
+          options={{
+            headerShown: true,
+            headerTitle: 'About',
+            headerShadowVisible: false,
+            headerStyle: {
+              backgroundColor: isDark
+                ? darkColors.background
+                : lightColors.background,
+            },
+            headerTintColor: isDark
+              ? darkColors.textPrimary
+              : lightColors.textPrimary,
+          }}
+        />
+        <Stack.Screen
+          name="settings/privacy-policy"
+          options={{
+            headerShown: true,
+            headerTitle: 'Privacy Policy',
             headerShadowVisible: false,
             headerStyle: {
               backgroundColor: isDark

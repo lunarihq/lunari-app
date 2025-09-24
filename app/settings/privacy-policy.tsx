@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View, StyleSheet, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import defaultTheme, { useTheme, createTypography } from '../styles/theme';
+import defaultTheme, { useTheme, createTypography } from '../../styles/theme';
 
 export default function PrivacyPolicy() {
   const { colors } = useTheme();

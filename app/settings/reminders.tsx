@@ -10,8 +10,8 @@ import {
   Alert,
   Linking,
 } from 'react-native';
-import { NotificationService } from '../services/notificationService';
-import defaultTheme, { useTheme, createTypography } from '../styles/theme';
+import { NotificationService } from '../../services/notificationService';
+import defaultTheme, { useTheme, createTypography } from '../../styles/theme';
 export default function Reminders() {
   const { colors } = useTheme();
   const typography = createTypography(colors);

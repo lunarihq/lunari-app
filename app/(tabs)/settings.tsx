@@ -54,7 +54,7 @@ export default function Settings() {
 
         <TouchableOpacity
           style={[styles.settingRow, { borderBottomColor: colors.border }]}
-          onPress={() => router.push('/reminders')}
+          onPress={() => router.push('/settings/reminders')}
         >
           <View style={styles.iconContainer}>
             <Ionicons
@@ -75,7 +75,7 @@ export default function Settings() {
 
         <TouchableOpacity
           style={[styles.settingRow, { borderBottomColor: colors.border }]}
-          onPress={() => router.push('/app-lock')}
+          onPress={() => router.push('/settings/app-lock')}
         >
           <View style={styles.iconContainer}>
             <Ionicons
@@ -96,7 +96,7 @@ export default function Settings() {
 
         <TouchableOpacity
           style={[styles.settingRow, { borderBottomColor: colors.border }]}
-          onPress={() => router.push('/privacy-policy')}
+          onPress={() => router.push('/settings/privacy-policy')}
         >
           <View style={styles.iconContainer}>
             <Ionicons
@@ -117,7 +117,7 @@ export default function Settings() {
 
         <TouchableOpacity
           style={[styles.settingRow, { borderBottomColor: colors.border }]}
-          onPress={() => router.push('/about')}
+          onPress={() => router.push('/settings/about')}
         >
           <View style={styles.iconContainer}>
             <Ionicons
