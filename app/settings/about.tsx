@@ -11,7 +11,7 @@ export default function About() {
     <ScrollView
       style={[
         defaultTheme.globalStyles.container,
-        { backgroundColor: colors.background },
+        { backgroundColor: colors.panel},
       ]}
       contentContainerStyle={defaultTheme.globalStyles.scrollContentContainer}
       showsVerticalScrollIndicator={false}
@@ -20,7 +20,7 @@ export default function About() {
         <Text style={[typography.heading1, { marginBottom: 8 }]}>
           About Lunari
         </Text>
-        <Text style={[typography.body, { color: colors.textMuted }]}>
+        <Text style={[typography.body, { color: colors.textSecondary }]}>
           Version 1.0.0
         </Text>
       </View>
@@ -33,15 +33,8 @@ export default function About() {
           </Text>
         </View>
         <Text style={[typography.body, { lineHeight: 24, marginBottom: 12 }]}>
-          Lunari is a comprehensive period tracking app designed to help you
-          understand and manage your menstrual cycle. Our app provides accurate
-          predictions, cycle insights, and personalized tracking features to
-          support your reproductive health journey.
-        </Text>
-        <Text style={[typography.body, { lineHeight: 24, marginBottom: 12 }]}>
-          Built with privacy and user control at its core, Lunari stores all
-          your data locally on your device, ensuring your personal health
-          information remains secure and private.
+          Lunari is a privacy-first period tracking app designed to help you
+          understand and manage your menstrual cycle.
         </Text>
       </View>
 
@@ -58,7 +51,7 @@ export default function About() {
             { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
           ]}
         >
-          • Accurate period and cycle predictions
+          • Period and cycle predictions
         </Text>
         <Text
           style={[
@@ -122,8 +115,7 @@ export default function About() {
           </Text>
         </View>
         <Text style={[typography.body, { lineHeight: 24, marginBottom: 12 }]}>
-          Your privacy is our top priority. Lunari is designed with a
-          privacy-first approach:
+          Lunari is designed with a privacy-first approach:
         </Text>
         <Text
           style={[
@@ -209,29 +201,13 @@ export default function About() {
           style={[
             typography.body,
             {
-              color: colors.textMuted,
+              color: colors.textSecondary,
               lineHeight: 24,
               textAlign: 'center',
-              marginBottom: 8,
             },
           ]}
         >
-          Thank you for choosing Lunari for your period tracking needs. We're
-          committed to providing you with a safe, private, and reliable
-          experience.
-        </Text>
-        <Text
-          style={[
-            typography.body,
-            {
-              color: colors.textMuted,
-              lineHeight: 24,
-              textAlign: 'center',
-              marginBottom: 8,
-            },
-          ]}
-        >
-          For support or feedback, please contact us through the app settings.
+          For support or feedback, please contact us at lunari.appmail@gmail.app.
         </Text>
       </View>
     </ScrollView>
@@ -262,5 +238,6 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 12,
     marginTop: 8,
+    marginBottom: 16,
   },
 });

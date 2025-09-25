@@ -20,7 +20,7 @@ export default function PrivacyPolicy() {
         <Text style={[typography.heading1, { marginBottom: 8 }]}>
           Privacy Policy
         </Text>
-        <Text style={[typography.body, { color: colors.textMuted }]}>
+        <Text style={[typography.body, { color: colors.textSecondary }]}>
           Last updated: {new Date().toLocaleDateString()}
         </Text>
       </View>
@@ -99,7 +99,7 @@ export default function PrivacyPolicy() {
           • App preferences and settings
         </Text>
         <Text style={[typography.body, { lineHeight: 24, marginBottom: 12 }]}>
-          This data is used solely to provide you with accurate period
+          This data is used solely to provide you with period
           predictions, cycle insights, and personalized tracking features. We do
           not share, sell, or transmit your personal health data to any third
           parties.
@@ -215,11 +215,11 @@ export default function PrivacyPolicy() {
         <Text
           style={[
             typography.body,
-            { color: colors.textMuted, lineHeight: 24, textAlign: 'center' },
+            { color: colors.textSecondary, lineHeight: 24, textAlign: 'center' },
           ]}
         >
           If you have any questions about this privacy policy or how we handle
-          your data, please contact us through the app settings.
+          your data, please contact us at lunari.appmail@gmail.app.
         </Text>
       </View>
     </ScrollView>
@@ -250,5 +250,6 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 12,
     marginTop: 8,
+    marginBottom: 16,
   },
 });

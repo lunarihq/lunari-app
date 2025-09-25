@@ -26,12 +26,16 @@ export default function PredictionInfo() {
         }}
       />
       <View>
-        <Text style={[typography.body, { marginBottom: 24 }]}>
-          Lunari uses your period history to make predictions. Here's exactly
-          how it works:
-        </Text>
-
         <View style={{ marginBottom: 32 }}>
+        <View style={{ marginBottom: 32 }}>
+          <Text style={[typography.heading2, { marginBottom: 12 }]}>
+            Next Period Prediction
+          </Text>
+          <Text style={[typography.body, { lineHeight: 22 }]}>
+            Your next period is predicted by adding your average cycle length to
+            the start date of your most recent period.
+          </Text>
+        </View>
           <Text style={[typography.heading2, { marginBottom: 12 }]}>
             Cycle Length Calculation
           </Text>
@@ -43,16 +47,6 @@ export default function PredictionInfo() {
           <Text style={[typography.caption]}>
             • Most recent cycle: 100% weight • 2nd cycle back: 80% weight • 3rd
             cycle back: 60% weight • And so on...
-          </Text>
-        </View>
-
-        <View style={{ marginBottom: 32 }}>
-          <Text style={[typography.heading2, { marginBottom: 12 }]}>
-            Next Period Prediction
-          </Text>
-          <Text style={[typography.body, { lineHeight: 22 }]}>
-            Your next period is predicted by adding your average cycle length to
-            the start date of your most recent period.
           </Text>
         </View>
 
@@ -93,7 +87,7 @@ export default function PredictionInfo() {
           <Text
             style={[
               typography.caption,
-              { backgroundColor: colors.background, padding: 16, borderRadius: 12 },
+              { backgroundColor: colors.surface, padding: 16, borderRadius: 12 },
             ]}
           >
             🛎️ <Text style={{ fontWeight: 'bold' }}>Remember:</Text> These are predictions based on your patterns. Every body

@@ -170,7 +170,7 @@ export default function Settings() {
               [
                 { text: 'Cancel', style: 'cancel' },
                 {
-                  text: 'Delete all data',
+                  text: 'Delete data',
                   style: 'destructive',
                   onPress: async () => {
                     try {
