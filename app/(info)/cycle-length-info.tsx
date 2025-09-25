@@ -11,7 +11,7 @@ export default function StatusInfo() {
     <ScrollView
       style={[
         defaultTheme.globalStyles.container,
-        { backgroundColor: colors.surface },
+        { backgroundColor: colors.panel },
       ]}
       contentContainerStyle={defaultTheme.globalStyles.scrollContentContainer}
       showsVerticalScrollIndicator={false}

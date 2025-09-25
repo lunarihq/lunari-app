@@ -8,7 +8,7 @@ export interface ColorScheme {
   surfaceTabBar: string; // tab bar background
   panel: string; // subtle panel background
   border: string; // borders / dividers
-  cardBorder: string; // card borders
+
   icon: string; // icon colorlor
 
   // primary / main brand colors
@@ -17,6 +17,10 @@ export interface ColorScheme {
   accentPink: string;
   accentPinkLight: string;
   accentBlue: string;
+
+  //UI components
+  predictionCircleBackground: string;
+  cardBorder: string; // card borders
 
   //Neutrals
   neutral100: string;
@@ -36,9 +40,6 @@ export interface ColorScheme {
 
   white: string;
   black: string;
-
-  // prediction circle background
-  predictionCircleBackground: string;
 }
 
 export const lightColors: ColorScheme = {
@@ -51,7 +52,7 @@ export const lightColors: ColorScheme = {
   surfaceTabBar: '#F1F0F6', // tabs / sheets / panels
   panel: '#FFFFFF', // subtle panel background
   border: '#EFEFF6', // borders / dividers
-  cardBorder: '#4B61C7', // card borders
+
   icon: '#1A1A28', // icon color
 
   // primary / main brand colors
@@ -60,6 +61,10 @@ export const lightColors: ColorScheme = {
   accentPink: '#FB3192', // Pink for period day highlights
   accentPinkLight: '#FFE8F3', // Lighter pink for backgrounds
   accentBlue: '#4B61C7', // For fertile days indicator
+
+  //UI components
+  predictionCircleBackground: '#FFFFFF',
+  cardBorder: '#4B61C7', // card borders
 
   //Neutrals
   neutral100: '#8682A3',
@@ -80,21 +85,19 @@ export const lightColors: ColorScheme = {
   white: '#FFFFFF',
   black: '#000000',
 
-  // prediction circle background
-  predictionCircleBackground: '#FFFFFF',
 };
 
 export const darkColors: ColorScheme = {
   // surfaces
-  background: '#161530', // dark page background
-  surface: '#22213F', // dark cards / panels
-  surfaceVariant: '#323154', // dark variant cards / panels
+  background: '#0E0D23', // dark page background
+  surface: '#1C1B33', // dark cards / panels
+  surfaceVariant: '#26253E', // dark variant cards / panels
   surfaceVariant2: '#30304D', // dark variant cards / panels
   surfaceVariant3: '#242341', // dark variant cards / panels
   surfaceTabBar: '#22213F', // dark tab bar background
-  panel: '#161530', // dark subtle panel background
-  border: '#3A3A5E', // dark borders / dividers
-  cardBorder: '#6E6E8F', // dark card borders
+  panel: '#0E0D23', // dark subtle panel background
+  border: '#26253F', // dark borders / dividers
+
   icon: '#D4D4F6', // dark icon color
 
   // primary / main brand colors (keep brand consistent but adjust for contrast)
@@ -104,6 +107,10 @@ export const darkColors: ColorScheme = {
   accentPinkLight: '#FFDEEE', // dark version of light pink background
   accentBlue: '#75AAFF', // For fertile days indicator
 
+  //UI components
+  predictionCircleBackground: '#1C1B33',
+  cardBorder: '#6E6E8F', // dark card borders
+  
   //Neutrals
   neutral100: '#5E5D7F',
   neutral200: '#2B2A49',
@@ -121,10 +128,7 @@ export const darkColors: ColorScheme = {
   info: '#60A5FA', // Lighter blue for dark mode
 
   white: '#FFFFFF',
-  black: '#000000',
-
-  // prediction circle background
-  predictionCircleBackground: '#292848',
+  black: '#000000',  
 };
 
 // Legacy export for backward compatibility

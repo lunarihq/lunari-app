@@ -37,7 +37,7 @@ export default function CyclePhaseDetails() {
     <View
       style={[
         defaultTheme.globalStyles.container,
-        { backgroundColor: colors.background },
+        { backgroundColor: colors.panel },
       ]}
     >
       <ScrollView
