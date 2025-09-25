@@ -25,8 +25,8 @@ export function CycleInsights({
   };
 
   const cardBorderStyle = {
-    borderColor: colors.cardBorder,
-    backgroundColor: colors.background,
+    borderColor: colors.insightCardBorder,
+    backgroundColor: colors.insightCardBackground,
   };
 
   return (

@@ -4,12 +4,9 @@ export interface ColorScheme {
   surface: string; // main cards / panels
   surfaceVariant: string; // variant cards / panels
   surfaceVariant2: string; 
-  surfaceVariant3: string; // variant cards / panels
   surfaceTabBar: string; // tab bar background
   panel: string; // subtle panel background
   border: string; // borders / dividers
-
-  icon: string; // icon colorlor
 
   // primary / main brand colors
   primary: string;
@@ -20,7 +17,12 @@ export interface ColorScheme {
 
   //UI components
   predictionCircleBackground: string;
-  cardBorder: string; // card borders
+  insightCardBorder: string; // card borders
+  insightCardBackground: string; // card borders
+
+  //Icons
+  icon: string;
+  backgroundIcon: string;
 
   //Neutrals
   neutral100: string;
@@ -48,12 +50,9 @@ export const lightColors: ColorScheme = {
   surface: '#FFFFFF', // main cards / panels
   surfaceVariant: '#F4F6FF', // variant cards / panels
   surfaceVariant2: '#FFFFFF', // variant cards / panels
-  surfaceVariant3: '#FFFFFF', // variant cards / panels
   surfaceTabBar: '#F1F0F6', // tabs / sheets / panels
   panel: '#FFFFFF', // subtle panel background
   border: '#EFEFF6', // borders / dividers
-
-  icon: '#1A1A28', // icon color
 
   // primary / main brand colors
   primary: '#4B61C7', // main action (primary buttons, text buttons, links, active tabs
@@ -64,7 +63,12 @@ export const lightColors: ColorScheme = {
 
   //UI components
   predictionCircleBackground: '#FFFFFF',
-  cardBorder: '#4B61C7', // card borders
+  insightCardBorder: '#4B61C7', // card borders
+  insightCardBackground: '#ECEDFF', // card borders
+
+  //Icons
+  icon: '#1A1A28', // icon color
+  backgroundIcon: '#FFFFFF', // background icon color
 
   //Neutrals
   neutral100: '#8682A3',
@@ -93,12 +97,9 @@ export const darkColors: ColorScheme = {
   surface: '#1C1B33', // dark cards / panels
   surfaceVariant: '#26253E', // dark variant cards / panels
   surfaceVariant2: '#30304D', // dark variant cards / panels
-  surfaceVariant3: '#242341', // dark variant cards / panels
   surfaceTabBar: '#22213F', // dark tab bar background
   panel: '#0E0D23', // dark subtle panel background
   border: '#26253F', // dark borders / dividers
-
-  icon: '#D4D4F6', // dark icon color
 
   // primary / main brand colors (keep brand consistent but adjust for contrast)
   primary: '#5F7AF4', // slightly lighter for better contrast on dark
@@ -109,7 +110,12 @@ export const darkColors: ColorScheme = {
 
   //UI components
   predictionCircleBackground: '#1C1B33',
-  cardBorder: '#6E6E8F', // dark card borders
+  insightCardBorder: '#47465F', // dark card borders
+  insightCardBackground: '#26253E', // dark insight card borders
+
+  //Icons
+  icon: '#D4D4F6', // dark icon color
+  backgroundIcon: '#302F4C', // dark background icon color
   
   //Neutrals
   neutral100: '#5E5D7F',

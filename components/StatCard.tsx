@@ -52,7 +52,7 @@ export function StatCard({ title, value, icon, status, type }: StatCardProps) {
       <View
         style={[
           styles.iconContainer,
-          { backgroundColor: 'colors.surfaceVariant2' },
+          { backgroundColor: colors.surfaceVariant2 },
         ]}
       >
         {icon}
