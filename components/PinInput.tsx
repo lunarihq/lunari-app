@@ -81,7 +81,7 @@ export function PinInput({
           <View key={rowIndex} style={styles.numberRow}>
             {row.map((item, colIndex) => {
               if (item === '') {
-                return <View key={colIndex} style={styles.numberButton} />;
+                return <View key={colIndex} style={[styles.numberButton, { backgroundColor: colors.background, shadowOpacity: 0, elevation: 0 }]} />;
               }
 
               if (item === 'backspace') {
@@ -224,9 +224,9 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   pinDot: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
+    width: 24,
+    height: 24,
+    borderRadius: 14,
     backgroundColor: 'transparent',
     borderWidth: 2,
     marginHorizontal: 10,
