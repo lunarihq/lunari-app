@@ -136,7 +136,7 @@ export default function AppLockScreen() {
               <Ionicons
                 name="chevron-forward"
                 size={20}
-                color={colors.textMuted}
+                color={colors.textSecondary}
               />
             </TouchableOpacity>
           )}
@@ -152,7 +152,7 @@ export default function AppLockScreen() {
                   Use {biometricType}
                 </Text>
                 <Text
-                  style={[styles.settingSubtitle, { color: colors.textMuted }]}
+                  style={[styles.settingSubtitle, { color: colors.textSecondary }]}
                 >
                   Unlock app with {biometricType.toLowerCase()} instead of PIN
                 </Text>
@@ -171,15 +171,15 @@ export default function AppLockScreen() {
         {isPinSet && (
           <View style={styles.infoSection}>
             <View
-              style={[styles.infoContainer, { backgroundColor: colors.panel }]}
+              style={[styles.infoContainer, { backgroundColor: colors.surface }]}
             >
               <Ionicons
                 name="information-circle"
                 size={20}
-                color={colors.textMuted}
+                color={colors.textSecondary}
                 style={styles.infoIcon}
               />
-              <Text style={[styles.infoText, { color: colors.textMuted }]}>
+              <Text style={[styles.infoText, { color: colors.textSecondary}]}>
                 When app lock is enabled, you'll need to authenticate when the
                 app starts or returns from the background.
                 {biometricSupported &&
@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 16,
     paddingVertical: 16,
-    borderBottomWidth: 0.5,
+    borderBottomWidth: 1,
   },
   lastRow: {
     borderBottomWidth: 0,

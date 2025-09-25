@@ -291,7 +291,7 @@ export default function Reminders() {
           <Switch
             value={beforePeriodEnabled}
             onValueChange={toggleBeforePeriod}
-            trackColor={{ false: colors.border, true: colors.accentPink }}
+            trackColor={{ false: colors.border, true: colors.primary }}
             thumbColor={Platform.OS === 'ios' ? undefined : colors.white}
             ios_backgroundColor={colors.border}
             disabled={isSaving}
@@ -310,7 +310,7 @@ export default function Reminders() {
           <Switch
             value={dayOfPeriodEnabled}
             onValueChange={toggleDayOfPeriod}
-            trackColor={{ false: colors.border, true: colors.accentPink }}
+            trackColor={{ false: colors.border, true: colors.primary }}
             thumbColor={Platform.OS === 'ios' ? undefined : colors.white}
             ios_backgroundColor={colors.border}
             disabled={isSaving}
@@ -329,7 +329,7 @@ export default function Reminders() {
           <Switch
             value={latePeriodEnabled}
             onValueChange={toggleLatePeriod}
-            trackColor={{ false: colors.border, true: colors.accentPink }}
+            trackColor={{ false: colors.border, true: colors.primary }}
             thumbColor={Platform.OS === 'ios' ? undefined : colors.white}
             ios_backgroundColor={colors.border}
             disabled={isSaving}
