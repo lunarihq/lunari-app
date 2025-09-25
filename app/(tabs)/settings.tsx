@@ -165,8 +165,8 @@ export default function Settings() {
           style={[styles.settingRow, styles.lastRow]}
           onPress={() => {
             Alert.alert(
-              'Delete Tracking Data',
-              'This action cannot be undone. All your period tracking data, symptoms, and notification preferences will be permanently deleted. Your app settings and preferences will be preserved.',
+              'Delete all tracking data',
+              'All your period tracking data, symptoms, and notification preferences will be permanently deleted. Your app settings and preferences will be preserved.',
               [
                 { text: 'Cancel', style: 'cancel' },
                 {
