@@ -27,15 +27,15 @@ export default function PredictionInfo() {
       />
       <View>
         <View style={{ marginBottom: 32 }}>
-        <View style={{ marginBottom: 32 }}>
-          <Text style={[typography.heading2, { marginBottom: 12 }]}>
-            Next Period Prediction
-          </Text>
-          <Text style={[typography.body, { lineHeight: 22 }]}>
-            Your next period is predicted by adding your average cycle length to
-            the start date of your most recent period.
-          </Text>
-        </View>
+          <View style={{ marginBottom: 32 }}>
+            <Text style={[typography.heading2, { marginBottom: 12 }]}>
+              Next Period Prediction
+            </Text>
+            <Text style={[typography.body, { lineHeight: 22 }]}>
+              Your next period is predicted by adding your average cycle length
+              to the start date of your most recent period.
+            </Text>
+          </View>
           <Text style={[typography.heading2, { marginBottom: 12 }]}>
             Cycle Length Calculation
           </Text>
@@ -76,7 +76,7 @@ export default function PredictionInfo() {
 
         <View style={{ marginBottom: 32 }}>
           <Text style={[typography.heading2, { marginBottom: 8 }]}>
-             Privacy First
+            Privacy First
           </Text>
           <Text style={[typography.body, { lineHeight: 20 }]}>
             All calculations happen locally on your device. Your period data
@@ -87,11 +87,16 @@ export default function PredictionInfo() {
           <Text
             style={[
               typography.caption,
-              { backgroundColor: colors.surface, padding: 16, borderRadius: 12 },
+              {
+                backgroundColor: colors.surface,
+                padding: 16,
+                borderRadius: 12,
+              },
             ]}
           >
-            🛎️ <Text style={{ fontWeight: 'bold' }}>Remember:</Text> These are predictions based on your patterns. Every body
-            is different, and cycles can vary naturally.
+            🛎️ <Text style={{ fontWeight: 'bold' }}>Remember:</Text> These are
+            predictions based on your patterns. Every body is different, and
+            cycles can vary naturally.
           </Text>
         </View>
       </View>

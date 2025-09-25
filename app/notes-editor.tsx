@@ -93,12 +93,12 @@ export default function NotesEditor() {
 
       {/* Done Button - positioned above keyboard or at bottom */}
       {localNotes.trim() && (
-          <View
-            style={[
-              isKeyboardVisible ? styles.keyboardToolbar : styles.bottomToolbar,
-              { backgroundColor: colors.panel },
-              isKeyboardVisible ? { bottom: keyboardHeight } : {},
-            ]}
+        <View
+          style={[
+            isKeyboardVisible ? styles.keyboardToolbar : styles.bottomToolbar,
+            { backgroundColor: colors.panel },
+            isKeyboardVisible ? { bottom: keyboardHeight } : {},
+          ]}
         >
           <Button title="Done" onPress={handleSave} fullWidth />
         </View>

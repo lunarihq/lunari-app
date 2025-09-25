@@ -570,7 +570,9 @@ export default function SymptomTracking() {
           <Ionicons
             name="chevron-forward"
             size={24}
-            color={isNextDayDisabled() ? colors.textSecondary : colors.textPrimary}
+            color={
+              isNextDayDisabled() ? colors.textSecondary : colors.textPrimary
+            }
           />
         </TouchableOpacity>
       </View>

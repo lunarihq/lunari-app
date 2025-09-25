@@ -13,8 +13,6 @@ import { router } from 'expo-router';
 import { useAuth } from '../../contexts/AuthContext';
 import defaultTheme, { useTheme } from '../../styles/theme';
 
-
-
 export default function AppLockScreen() {
   const { colors } = useTheme();
   const {
@@ -94,102 +92,101 @@ export default function AppLockScreen() {
 
   return (
     <ScrollView
-    style={[
-      defaultTheme.globalStyles.container,
-      { backgroundColor: colors.background },
-    ]}
-    contentContainerStyle={defaultTheme.globalStyles.scrollContentContainer}
-    showsVerticalScrollIndicator={false}
-  >
-        <View style={[styles.section, { backgroundColor: colors.surface }]}>
-          <View
-            style={[styles.settingRow, { borderBottomColor: colors.border }]}
+      style={[
+        defaultTheme.globalStyles.container,
+        { backgroundColor: colors.background },
+      ]}
+      contentContainerStyle={defaultTheme.globalStyles.scrollContentContainer}
+      showsVerticalScrollIndicator={false}
+    >
+      <View style={[styles.section, { backgroundColor: colors.surface }]}>
+        <View style={[styles.settingRow, { borderBottomColor: colors.border }]}>
+          <View style={styles.settingContent}>
+            <Text style={[styles.settingTitle, { color: colors.textPrimary }]}>
+              Set up a PIN
+            </Text>
+          </View>
+          <Switch
+            value={pinEnabled}
+            onValueChange={handlePinToggle}
+            trackColor={{ false: colors.border, true: colors.primary }}
+            thumbColor={colors.white}
+            ios_backgroundColor={colors.border}
+          />
+        </View>
+
+        {isPinSet && (
+          <TouchableOpacity
+            style={[styles.settingRow, styles.lastRow]}
+            onPress={() => router.push('/settings/pin-setup?mode=change')}
           >
             <View style={styles.settingContent}>
               <Text
                 style={[styles.settingTitle, { color: colors.textPrimary }]}
               >
-                Set up a PIN
+                Change PIN
+              </Text>
+            </View>
+            <Ionicons
+              name="chevron-forward"
+              size={20}
+              color={colors.textSecondary}
+            />
+          </TouchableOpacity>
+        )}
+      </View>
+
+      {isPinSet && biometricSupported && (
+        <View style={[styles.section, { backgroundColor: colors.surface }]}>
+          <View style={[styles.settingRow, styles.lastRow]}>
+            <View style={styles.settingContent}>
+              <Text
+                style={[styles.settingTitle, { color: colors.textPrimary }]}
+              >
+                Use {biometricType}
+              </Text>
+              <Text
+                style={[
+                  styles.settingSubtitle,
+                  { color: colors.textSecondary },
+                ]}
+              >
+                Unlock app with {biometricType.toLowerCase()} instead of PIN
               </Text>
             </View>
             <Switch
-              value={pinEnabled}
-              onValueChange={handlePinToggle}
+              value={biometricEnabled}
+              onValueChange={handleBiometricToggle}
               trackColor={{ false: colors.border, true: colors.primary }}
               thumbColor={colors.white}
               ios_backgroundColor={colors.border}
             />
           </View>
-
-          {isPinSet && (
-            <TouchableOpacity
-              style={[styles.settingRow, styles.lastRow]}
-              onPress={() => router.push('/settings/pin-setup?mode=change')}
-            >
-              <View style={styles.settingContent}>
-                <Text
-                  style={[styles.settingTitle, { color: colors.textPrimary }]}
-                >
-                  Change PIN
-                </Text>
-              </View>
-              <Ionicons
-                name="chevron-forward"
-                size={20}
-                color={colors.textSecondary}
-              />
-            </TouchableOpacity>
-          )}
         </View>
+      )}
 
-        {isPinSet && biometricSupported && (
-          <View style={[styles.section, { backgroundColor: colors.surface }]}>
-            <View style={[styles.settingRow, styles.lastRow]}>
-              <View style={styles.settingContent}>
-                <Text
-                  style={[styles.settingTitle, { color: colors.textPrimary }]}
-                >
-                  Use {biometricType}
-                </Text>
-                <Text
-                  style={[styles.settingSubtitle, { color: colors.textSecondary }]}
-                >
-                  Unlock app with {biometricType.toLowerCase()} instead of PIN
-                </Text>
-              </View>
-              <Switch
-                value={biometricEnabled}
-                onValueChange={handleBiometricToggle}
-                trackColor={{ false: colors.border, true: colors.primary }}
-                thumbColor={colors.white}
-                ios_backgroundColor={colors.border}
-              />
-            </View>
+      {isPinSet && (
+        <View style={styles.infoSection}>
+          <View
+            style={[styles.infoContainer, { backgroundColor: colors.surface }]}
+          >
+            <Ionicons
+              name="information-circle"
+              size={20}
+              color={colors.textSecondary}
+              style={styles.infoIcon}
+            />
+            <Text style={[styles.infoText, { color: colors.textSecondary }]}>
+              When app lock is enabled, you'll need to authenticate when the app
+              starts or returns from the background.
+              {biometricSupported &&
+                biometricEnabled &&
+                ` You can use your ${biometricType.toLowerCase()} or PIN to unlock.`}
+            </Text>
           </View>
-        )}
-
-        {isPinSet && (
-          <View style={styles.infoSection}>
-            <View
-              style={[styles.infoContainer, { backgroundColor: colors.surface }]}
-            >
-              <Ionicons
-                name="information-circle"
-                size={20}
-                color={colors.textSecondary}
-                style={styles.infoIcon}
-              />
-              <Text style={[styles.infoText, { color: colors.textSecondary}]}>
-                When app lock is enabled, you'll need to authenticate when the
-                app starts or returns from the background.
-                {biometricSupported &&
-                  biometricEnabled &&
-                  ` You can use your ${biometricType.toLowerCase()} or PIN to unlock.`}
-              </Text>
-            </View>
-          </View>
-        )}
-      </ScrollView>
+        </View>
+      )}
+    </ScrollView>
   );
 }
 
@@ -200,7 +197,7 @@ const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
     paddingHorizontal: 16,
-    backgroundColor: 'red'
+    backgroundColor: 'red',
   },
   section: {
     borderRadius: 12,

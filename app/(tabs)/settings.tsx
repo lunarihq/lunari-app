@@ -37,7 +37,10 @@ export default function Settings() {
           style={[styles.settingRow, { borderBottomColor: colors.border }]}
           onPress={async () => {
             await NotificationService.scheduleTestNotification();
-            Alert.alert('Test Notification', 'A test notification has been scheduled!');
+            Alert.alert(
+              'Test Notification',
+              'A test notification has been scheduled!'
+            );
           }}
         >
           <View style={styles.iconContainer}>

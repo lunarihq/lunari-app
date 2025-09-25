@@ -99,10 +99,9 @@ export default function PrivacyPolicy() {
           • App preferences and settings
         </Text>
         <Text style={[typography.body, { lineHeight: 24, marginBottom: 12 }]}>
-          This data is used solely to provide you with period
-          predictions, cycle insights, and personalized tracking features. We do
-          not share, sell, or transmit your personal health data to any third
-          parties.
+          This data is used solely to provide you with period predictions, cycle
+          insights, and personalized tracking features. We do not share, sell,
+          or transmit your personal health data to any third parties.
         </Text>
       </View>
 
@@ -215,7 +214,11 @@ export default function PrivacyPolicy() {
         <Text
           style={[
             typography.body,
-            { color: colors.textSecondary, lineHeight: 24, textAlign: 'center' },
+            {
+              color: colors.textSecondary,
+              lineHeight: 24,
+              textAlign: 'center',
+            },
           ]}
         >
           If you have any questions about this privacy policy or how we handle

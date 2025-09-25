@@ -181,7 +181,8 @@ export default function LastPeriodDateScreen() {
         <Checkbox
           checked={dontKnow}
           onToggle={toggleDontKnow}
-          text="Don't know - skip this step"        />
+          text="Don't know - skip this step"
+        />
       </View>
 
       <View style={onboardingStyles.footer}>

@@ -81,7 +81,19 @@ export function PinInput({
           <View key={rowIndex} style={styles.numberRow}>
             {row.map((item, colIndex) => {
               if (item === '') {
-                return <View key={colIndex} style={[styles.numberButton, { backgroundColor: colors.background, shadowOpacity: 0, elevation: 0 }]} />;
+                return (
+                  <View
+                    key={colIndex}
+                    style={[
+                      styles.numberButton,
+                      {
+                        backgroundColor: colors.background,
+                        shadowOpacity: 0,
+                        elevation: 0,
+                      },
+                    ]}
+                  />
+                );
               }
 
               if (item === 'backspace') {

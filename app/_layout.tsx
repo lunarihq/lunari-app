@@ -219,9 +219,7 @@ function AppContent() {
             headerTitle: 'Notes',
             headerShadowVisible: false,
             headerStyle: {
-              backgroundColor: isDark
-                ? darkColors.panel
-                : lightColors.panel,
+              backgroundColor: isDark ? darkColors.panel : lightColors.panel,
             },
             headerTintColor: isDark
               ? darkColors.textPrimary
@@ -299,9 +297,7 @@ function AppContent() {
             headerTitle: 'How predictions work',
             headerShadowVisible: false,
             headerStyle: {
-              backgroundColor: isDark
-                ? darkColors.panel
-                : lightColors.panel,
+              backgroundColor: isDark ? darkColors.panel : lightColors.panel,
             },
             headerTintColor: isDark
               ? darkColors.textPrimary

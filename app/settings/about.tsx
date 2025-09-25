@@ -11,7 +11,7 @@ export default function About() {
     <ScrollView
       style={[
         defaultTheme.globalStyles.container,
-        { backgroundColor: colors.panel},
+        { backgroundColor: colors.panel },
       ]}
       contentContainerStyle={defaultTheme.globalStyles.scrollContentContainer}
       showsVerticalScrollIndicator={false}
@@ -207,7 +207,8 @@ export default function About() {
             },
           ]}
         >
-          For support or feedback, please contact us at lunari.appmail@gmail.app.
+          For support or feedback, please contact us at
+          lunari.appmail@gmail.app.
         </Text>
       </View>
     </ScrollView>

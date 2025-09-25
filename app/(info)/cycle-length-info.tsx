@@ -6,7 +6,6 @@ export default function StatusInfo() {
   const { colors } = useTheme();
   const typography = createTypography(colors);
 
-
   return (
     <ScrollView
       style={[
@@ -32,7 +31,9 @@ export default function StatusInfo() {
         </Text>
 
         <Text style={[typography.body, { lineHeight: 24 }]}>
-          Your menstrual cycle is the time from the first day of one period to the first day of the next period. This includes your period and the days between periods.
+          Your menstrual cycle is the time from the first day of one period to
+          the first day of the next period. This includes your period and the
+          days between periods.
         </Text>
       </View>
 
@@ -41,7 +42,9 @@ export default function StatusInfo() {
           Normal Range
         </Text>
         <Text style={[typography.body, { lineHeight: 24 }]}>
-          A normal cycle length of 21-35 days indicates regular ovulation and good reproductive health. Most people have cycles that vary by a few days each month, which is completely normal.
+          A normal cycle length of 21-35 days indicates regular ovulation and
+          good reproductive health. Most people have cycles that vary by a few
+          days each month, which is completely normal.
         </Text>
       </View>
 
@@ -50,7 +53,9 @@ export default function StatusInfo() {
           Irregular Cycles
         </Text>
         <Text style={[typography.body, { lineHeight: 24 }]}>
-          Irregular cycles (shorter than 21 days or longer than 35 days) can be caused by stress, hormonal changes, medical conditions, or lifestyle factors. Tracking your cycles can help identify patterns.
+          Irregular cycles (shorter than 21 days or longer than 35 days) can be
+          caused by stress, hormonal changes, medical conditions, or lifestyle
+          factors. Tracking your cycles can help identify patterns.
         </Text>
       </View>
 
@@ -59,7 +64,11 @@ export default function StatusInfo() {
           Tips for Tracking
         </Text>
         <Text style={[typography.body, { lineHeight: 24 }]}>
-          • Track your cycles for at least 3-6 months to establish a pattern{'\n'}• Factors like stress, travel, and illness can affect cycle length{'\n'}• Consult a healthcare provider if irregular cycles persist{'\n'}• Regular exercise and balanced nutrition support cycle health
+          • Track your cycles for at least 3-6 months to establish a pattern
+          {'\n'}• Factors like stress, travel, and illness can affect cycle
+          length{'\n'}• Consult a healthcare provider if irregular cycles
+          persist{'\n'}• Regular exercise and balanced nutrition support cycle
+          health
         </Text>
       </View>
     </ScrollView>

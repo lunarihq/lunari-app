@@ -38,10 +38,10 @@ export default function Reminders() {
         setBeforePeriodEnabled(settings.beforePeriodEnabled);
         setDayOfPeriodEnabled(settings.dayOfPeriodEnabled);
         setLatePeriodEnabled(settings.latePeriodEnabled);
-        
+
         // Load notification time (default to 9 AM)
-        const hour = await getSetting('notification_time_hour') || '9';
-        const minute = await getSetting('notification_time_minute') || '0';
+        const hour = (await getSetting('notification_time_hour')) || '9';
+        const minute = (await getSetting('notification_time_minute')) || '0';
         const timeDate = new Date();
         timeDate.setHours(parseInt(hour), parseInt(minute), 0, 0);
         setNotificationTime(timeDate);
@@ -208,8 +208,14 @@ export default function Reminders() {
     if (selectedTime) {
       setNotificationTime(selectedTime);
       // Save the time to database
-      await setSetting('notification_time_hour', selectedTime.getHours().toString());
-      await setSetting('notification_time_minute', selectedTime.getMinutes().toString());
+      await setSetting(
+        'notification_time_hour',
+        selectedTime.getHours().toString()
+      );
+      await setSetting(
+        'notification_time_minute',
+        selectedTime.getMinutes().toString()
+      );
     }
   };
 
@@ -219,7 +225,11 @@ export default function Reminders() {
   };
 
   // Save settings to database and update notification service
-  const saveSettings = async (before: boolean, dayOf: boolean, late: boolean) => {
+  const saveSettings = async (
+    before: boolean,
+    dayOf: boolean,
+    late: boolean
+  ) => {
     setIsSaving(true);
     try {
       await NotificationService.saveNotificationSettings(before, dayOf, late);
@@ -338,8 +348,8 @@ export default function Reminders() {
       </View>
 
       <View style={[styles.section, { backgroundColor: colors.surface }]}>
-        <TouchableOpacity 
-          style={[styles.settingRow, styles.lastRow]} 
+        <TouchableOpacity
+          style={[styles.settingRow, styles.lastRow]}
           onPress={() => setShowTimePicker(true)}
           disabled={isSaving}
         >

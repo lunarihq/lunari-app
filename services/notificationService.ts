@@ -25,7 +25,11 @@ export class NotificationService {
     const dayOfPeriodEnabled = await getSetting('notifications_period_day');
     const latePeriodEnabled = await getSetting('notifications_period_late');
 
-    return beforePeriodEnabled === 'true' || dayOfPeriodEnabled === 'true' || latePeriodEnabled === 'true';
+    return (
+      beforePeriodEnabled === 'true' ||
+      dayOfPeriodEnabled === 'true' ||
+      latePeriodEnabled === 'true'
+    );
   }
 
   // Check the status of specific notification types
@@ -198,8 +202,10 @@ export class NotificationService {
       : undefined;
 
     // Load user notification time preference (default to 9 AM)
-    const notificationHour = await getSetting('notification_time_hour') || '9';
-    const notificationMinute = await getSetting('notification_time_minute') || '0';
+    const notificationHour =
+      (await getSetting('notification_time_hour')) || '9';
+    const notificationMinute =
+      (await getSetting('notification_time_minute')) || '0';
 
     // Get prediction for next period date (YYYY-MM-DD string)
     const prediction = PeriodPredictionService.getPrediction(
@@ -208,7 +214,14 @@ export class NotificationService {
       userCycleLength
     );
     const [py, pm, pd] = prediction.date.split('-').map(Number);
-    const predictionDateLocal = new Date(py, pm - 1, pd, parseInt(notificationHour), parseInt(notificationMinute), 0);
+    const predictionDateLocal = new Date(
+      py,
+      pm - 1,
+      pd,
+      parseInt(notificationHour),
+      parseInt(notificationMinute),
+      0
+    );
 
     // Schedule before-period notification if enabled
     if (beforePeriodEnabled) {

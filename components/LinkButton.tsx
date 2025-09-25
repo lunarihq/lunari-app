@@ -21,13 +21,9 @@ export function LinkButton({
   const { colors } = useTheme();
 
   return (
-    <Pressable 
-      onPress={onPress} 
-      style={({ pressed }) => [
-        styles.button, 
-        pressed && styles.pressed,
-        style
-      ]}
+    <Pressable
+      onPress={onPress}
+      style={({ pressed }) => [styles.button, pressed && styles.pressed, style]}
     >
       <View style={styles.content}>
         <Text style={[styles.text, { color: colors.primary }]}>{title}</Text>

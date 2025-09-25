@@ -3,7 +3,7 @@ export interface ColorScheme {
   background: string; // page background
   surface: string; // main cards / panels
   surfaceVariant: string; // variant cards / panels
-  surfaceVariant2: string; 
+  surfaceVariant2: string;
   surfaceTabBar: string; // tab bar background
   panel: string; // subtle panel background
   border: string; // borders / dividers
@@ -90,7 +90,6 @@ export const lightColors: ColorScheme = {
 
   white: '#FFFFFF',
   black: '#000000',
-
 };
 
 export const darkColors: ColorScheme = {
@@ -119,7 +118,7 @@ export const darkColors: ColorScheme = {
   //Icons
   icon: '#D4D4F6', // dark icon color
   backgroundIcon: '#302F4C', // dark background icon color
-  
+
   //Neutrals
   neutral100: '#5E5D7F',
   neutral200: '#5A5A74',
@@ -138,7 +137,7 @@ export const darkColors: ColorScheme = {
   info: '#60A5FA', // Lighter blue for dark mode
 
   white: '#FFFFFF',
-  black: '#000000',  
+  black: '#000000',
 };
 
 // Legacy export for backward compatibility
