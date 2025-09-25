@@ -3,12 +3,13 @@ export interface ColorScheme {
   background: string; // page background
   surface: string; // main cards / panels
   surfaceVariant: string; // variant cards / panels
-  surfaceVariant2: string; // variant cards / panels
+  surfaceVariant2: string; 
+  surfaceVariant3: string; // variant cards / panels
   surfaceTabBar: string; // tab bar background
   panel: string; // subtle panel background
   border: string; // borders / dividers
   cardBorder: string; // card borders
-  icon: string; // icon color
+  icon: string; // icon colorlor
 
   // primary / main brand colors
   primary: string;
@@ -46,6 +47,7 @@ export const lightColors: ColorScheme = {
   surface: '#FFFFFF', // main cards / panels
   surfaceVariant: '#F4F6FF', // variant cards / panels
   surfaceVariant2: '#FFFFFF', // variant cards / panels
+  surfaceVariant3: '#FFFFFF', // variant cards / panels
   surfaceTabBar: '#F1F0F6', // tabs / sheets / panels
   panel: '#FFFFFF', // subtle panel background
   border: '#EFEFF6', // borders / dividers
@@ -88,6 +90,7 @@ export const darkColors: ColorScheme = {
   surface: '#22213F', // dark cards / panels
   surfaceVariant: '#323154', // dark variant cards / panels
   surfaceVariant2: '#30304D', // dark variant cards / panels
+  surfaceVariant3: '#242341', // dark variant cards / panels
   surfaceTabBar: '#22213F', // dark tab bar background
   panel: '#161530', // dark subtle panel background
   border: '#3A3A5E', // dark borders / dividers
@@ -107,7 +110,7 @@ export const darkColors: ColorScheme = {
 
   // text (inverted for dark mode)
   textPrimary: '#FFFFFF', // white text for dark backgrounds
-  textSecondary: '#DEDDE7', // light gray for secondary text
+  textSecondary: '#D7D7E3', // light gray for secondary text
   textMuted: '#A09CC2', // muted gray for hints
   placeholder: '#A5A4C2', // placeholder text
 

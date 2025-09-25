@@ -8,8 +8,7 @@ import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { setSetting } from '../../db';
 import { createOnboardingStyles } from '../../styles/onboarding';
-import { createTypography } from '../../styles/typography';
-import { useTheme } from '../../contexts/ThemeContext';
+import { useTheme, createTypography } from '../../styles/theme';
 
 export default function PeriodLengthScreen() {
   const router = useRouter();
@@ -73,9 +72,9 @@ export default function PeriodLengthScreen() {
             typography.body,
             {
               textAlign: 'left',
-              marginBottom: 40,
               lineHeight: 22,
               color: colors.textSecondary,
+              marginBottom: 40,
             },
           ]}
         >
@@ -93,12 +92,12 @@ export default function PeriodLengthScreen() {
         <Checkbox
           checked={dontKnow}
           onToggle={toggleDontKnow}
-          subText="The app will use 5 days as default, and then it will be adjusted as you log your cycles."
+          subText="Starts with 5 days, and then adjust as you log cycles."
         />
       </View>
 
       <View style={onboardingStyles.footer}>
-        <Button title="Next" onPress={handleNext} fullWidth />
+        <Button title="Continue" onPress={handleNext} fullWidth />
       </View>
     </SafeAreaView>
   );

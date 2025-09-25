@@ -96,7 +96,7 @@ export default function CycleLengthScreen() {
         <Checkbox
           checked={dontKnow}
           onToggle={toggleDontKnow}
-          subText="The app will use 28 days as default, and then it will be adjusted as you log your cycles."
+          subText="Starts with 28 days, and then adjust as you log cycles."
         />
       </View>
 

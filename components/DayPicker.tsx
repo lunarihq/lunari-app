@@ -39,8 +39,8 @@ export function DayPicker({
       >
         <Ionicons
           name="remove"
-          size={24}
-          color={disabled ? colors.textMuted : colors.primary}
+          size={32}
+          color={disabled ? colors.textMuted : colors.white}
         />
       </TouchableOpacity>
 
@@ -60,8 +60,8 @@ export function DayPicker({
       >
         <Ionicons
           name="add"
-          size={24}
-          color={disabled ? colors.textMuted : colors.primary}
+          size={32}
+          color={disabled ? colors.textMuted : colors.white}
         />
       </TouchableOpacity>
     </View>
@@ -74,15 +74,20 @@ const createStyles = (colors: ColorScheme) =>
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center',
-      marginBottom: 30,
+      marginBottom: 40,
+      backgroundColor: colors.surfaceVariant3,
+      paddingHorizontal: 16,
+      paddingBottom: 24,
+      paddingTop: 16,
+      borderRadius: 12,
     },
     pickerDisabled: {
       opacity: 0.5,
     },
     pickerButton: {
-      width: 50,
-      height: 50,
-      borderRadius: 25,
+      width: 54,
+      height: 54,
+      borderRadius: 32,
       backgroundColor: colors.surfaceVariant,
       justifyContent: 'center',
       alignItems: 'center',
@@ -96,7 +101,7 @@ const createStyles = (colors: ColorScheme) =>
       minWidth: 80,
     },
     valueText: {
-      fontSize: 48,
+      fontSize: 54,
       fontWeight: 'bold',
       color: colors.primary,
     },
@@ -104,8 +109,7 @@ const createStyles = (colors: ColorScheme) =>
       color: colors.textMuted,
     },
     labelText: {
-      fontSize: 16,
+      fontSize: 20,
       color: colors.textSecondary,
-      marginTop: 5,
     },
   });

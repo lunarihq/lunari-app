@@ -14,7 +14,7 @@ interface CheckboxProps {
 export function Checkbox({
   checked,
   onToggle,
-  text = "Don't know",
+  text = "Don't know - let the app learn",
   subText,
 }: CheckboxProps) {
   const { colors } = useTheme();
@@ -56,23 +56,25 @@ const createStyles = (colors: ColorScheme) =>
       marginBottom: 5,
     },
     checkbox: {
-      width: 20,
-      height: 20,
+      width: 24,
+      height: 24,
       borderWidth: 2,
-      borderRadius: 3,
+      borderRadius: 16,
       marginRight: 10,
       justifyContent: 'center',
       alignItems: 'center',
     },
     checkboxChecked: {},
     text: {
-      fontSize: 16,
+      fontSize: 18,
       color: colors.textPrimary,
       fontWeight: '500',
     },
     subText: {
       fontSize: 14,
-      color: colors.textMuted,
-      fontStyle: 'italic',
+      color: colors.textSecondary,
+      textAlign: 'center',
+      marginTop: 5,
+      lineHeight: 18,
     },
   });

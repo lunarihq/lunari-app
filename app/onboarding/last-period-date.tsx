@@ -112,7 +112,7 @@ export default function LastPeriodDateScreen() {
         <Text
           style={[typography.heading2, { marginBottom: 20, textAlign: 'left' }]}
         >
-          When was your last period?
+          When was the start of your last period?
         </Text>
         <Text
           style={[
@@ -125,8 +125,7 @@ export default function LastPeriodDateScreen() {
             },
           ]}
         >
-          Select the start date of your most recent period to help us provide
-          accurate predictions.
+          This will help us to predict your next period.
         </Text>
 
         <View
@@ -182,9 +181,7 @@ export default function LastPeriodDateScreen() {
         <Checkbox
           checked={dontKnow}
           onToggle={toggleDontKnow}
-          text="Don't know - skip this step"
-          subText="We'll help you track from today"
-        />
+          text="Don't know - skip this step"        />
       </View>
 
       <View style={onboardingStyles.footer}>
