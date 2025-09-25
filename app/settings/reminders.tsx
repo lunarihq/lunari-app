@@ -17,6 +17,7 @@ export default function Reminders() {
   const typography = createTypography(colors);
   const [beforePeriodEnabled, setBeforePeriodEnabled] = useState(false);
   const [dayOfPeriodEnabled, setDayOfPeriodEnabled] = useState(false);
+  const [latePeriodEnabled, setLatePeriodEnabled] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [statusMessage, setStatusMessage] = useState<{
@@ -31,6 +32,7 @@ export default function Reminders() {
         const settings = await NotificationService.getNotificationSettings();
         setBeforePeriodEnabled(settings.beforePeriodEnabled);
         setDayOfPeriodEnabled(settings.dayOfPeriodEnabled);
+        setLatePeriodEnabled(settings.latePeriodEnabled);
       } catch (error) {
         console.error('Failed to load notification settings:', error);
         setStatusMessage({
@@ -79,7 +81,7 @@ export default function Reminders() {
     // If turning notifications off, no need to check permissions
     if (!value) {
       setBeforePeriodEnabled(value);
-      await saveSettings(value, dayOfPeriodEnabled);
+      await saveSettings(value, dayOfPeriodEnabled, latePeriodEnabled);
       return;
     }
 
@@ -96,7 +98,7 @@ export default function Reminders() {
       if (hasPermission) {
         // Only update UI and save setting if permission granted
         setBeforePeriodEnabled(value);
-        await saveSettings(value, dayOfPeriodEnabled);
+        await saveSettings(value, dayOfPeriodEnabled, latePeriodEnabled);
       } else {
         // Show settings dialog instead of error message
         showPermissionSettingsDialog();
@@ -117,7 +119,7 @@ export default function Reminders() {
     // If turning notifications off, no need to check permissions
     if (!value) {
       setDayOfPeriodEnabled(value);
-      await saveSettings(beforePeriodEnabled, value);
+      await saveSettings(beforePeriodEnabled, value, latePeriodEnabled);
       return;
     }
 
@@ -134,7 +136,45 @@ export default function Reminders() {
       if (hasPermission) {
         // Only update UI and save setting if permission granted
         setDayOfPeriodEnabled(value);
-        await saveSettings(beforePeriodEnabled, value);
+        await saveSettings(beforePeriodEnabled, value, latePeriodEnabled);
+      } else {
+        // Show settings dialog instead of error message
+        showPermissionSettingsDialog();
+      }
+    } catch (error) {
+      console.error('Error toggling notification:', error);
+      setStatusMessage({
+        text: 'Failed to update notification settings',
+        isError: true,
+      });
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  // Handle toggle for late period notification
+  const toggleLatePeriod = async (value: boolean) => {
+    // If turning notifications off, no need to check permissions
+    if (!value) {
+      setLatePeriodEnabled(value);
+      await saveSettings(beforePeriodEnabled, dayOfPeriodEnabled, value);
+      return;
+    }
+
+    setIsSaving(true);
+    try {
+      // Check if we already have permissions
+      let hasPermission = await NotificationService.checkPermissionStatus();
+
+      // If no permission, request it
+      if (!hasPermission) {
+        hasPermission = await NotificationService.requestPermissions();
+      }
+
+      if (hasPermission) {
+        // Only update UI and save setting if permission granted
+        setLatePeriodEnabled(value);
+        await saveSettings(beforePeriodEnabled, dayOfPeriodEnabled, value);
       } else {
         // Show settings dialog instead of error message
         showPermissionSettingsDialog();
@@ -151,10 +191,10 @@ export default function Reminders() {
   };
 
   // Save settings to database and update notification service
-  const saveSettings = async (before: boolean, dayOf: boolean) => {
+  const saveSettings = async (before: boolean, dayOf: boolean, late: boolean) => {
     setIsSaving(true);
     try {
-      await NotificationService.saveNotificationSettings(before, dayOf);
+      await NotificationService.saveNotificationSettings(before, dayOf, late);
 
       // Removed notification success/disable messages
     } catch (error) {
@@ -163,6 +203,7 @@ export default function Reminders() {
       const settings = await NotificationService.getNotificationSettings();
       setBeforePeriodEnabled(settings.beforePeriodEnabled);
       setDayOfPeriodEnabled(settings.dayOfPeriodEnabled);
+      setLatePeriodEnabled(settings.latePeriodEnabled);
 
       setStatusMessage({
         text: 'Failed to update notification settings',
@@ -217,12 +258,30 @@ export default function Reminders() {
               { flexShrink: 1, paddingRight: 12, flex: 1 },
             ]}
           >
-            Get a notification 3 days before your next period is likely to
-            start.
+            Remind me 3 days before my next period is likely to start.
           </Text>
           <Switch
             value={beforePeriodEnabled}
             onValueChange={toggleBeforePeriod}
+            trackColor={{ false: colors.border, true: colors.accentPink }}
+            thumbColor={Platform.OS === 'ios' ? undefined : colors.white}
+            ios_backgroundColor={colors.border}
+            disabled={isSaving}
+          />
+        </View>
+
+        <View style={[styles.settingRow, { borderBottomColor: colors.border }]}>
+          <Text
+            style={[
+              typography.body,
+              { flexShrink: 1, paddingRight: 12, flex: 1 },
+            ]}
+          >
+            Remind me the day of my period start.
+          </Text>
+          <Switch
+            value={dayOfPeriodEnabled}
+            onValueChange={toggleDayOfPeriod}
             trackColor={{ false: colors.border, true: colors.accentPink }}
             thumbColor={Platform.OS === 'ios' ? undefined : colors.white}
             ios_backgroundColor={colors.border}
@@ -237,11 +296,11 @@ export default function Reminders() {
               { flexShrink: 1, paddingRight: 12, flex: 1 },
             ]}
           >
-            Get a notification the day of your period start.
+            Remind me when my period is 1 day late.
           </Text>
           <Switch
-            value={dayOfPeriodEnabled}
-            onValueChange={toggleDayOfPeriod}
+            value={latePeriodEnabled}
+            onValueChange={toggleLatePeriod}
             trackColor={{ false: colors.border, true: colors.accentPink }}
             thumbColor={Platform.OS === 'ios' ? undefined : colors.white}
             ios_backgroundColor={colors.border}

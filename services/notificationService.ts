@@ -4,7 +4,7 @@ import { Platform } from 'react-native';
 import { PeriodPredictionService } from './periodPredictions';
 import { getSetting, setSetting, db } from '../db';
 import { periodDates } from '../db/schema';
-import Colors from '../styles/colors';
+import { Colors } from '../styles/colors';
 
 // Configure how notifications are handled when the app is in the foreground
 Notifications.setNotificationHandler({
@@ -23,30 +23,36 @@ export class NotificationService {
   static async areNotificationsEnabled(): Promise<boolean> {
     const beforePeriodEnabled = await getSetting('notifications_period_before');
     const dayOfPeriodEnabled = await getSetting('notifications_period_day');
+    const latePeriodEnabled = await getSetting('notifications_period_late');
 
-    return beforePeriodEnabled === 'true' || dayOfPeriodEnabled === 'true';
+    return beforePeriodEnabled === 'true' || dayOfPeriodEnabled === 'true' || latePeriodEnabled === 'true';
   }
 
   // Check the status of specific notification types
   static async getNotificationSettings(): Promise<{
     beforePeriodEnabled: boolean;
     dayOfPeriodEnabled: boolean;
+    latePeriodEnabled: boolean;
   }> {
     const beforePeriodEnabled =
       (await getSetting('notifications_period_before')) === 'true';
     const dayOfPeriodEnabled =
       (await getSetting('notifications_period_day')) === 'true';
+    const latePeriodEnabled =
+      (await getSetting('notifications_period_late')) === 'true';
 
     return {
       beforePeriodEnabled,
       dayOfPeriodEnabled,
+      latePeriodEnabled,
     };
   }
 
   // Save notification settings
   static async saveNotificationSettings(
     beforePeriodEnabled: boolean,
-    dayOfPeriodEnabled: boolean
+    dayOfPeriodEnabled: boolean,
+    latePeriodEnabled: boolean
   ): Promise<void> {
     // Save settings to database
     await setSetting(
@@ -57,15 +63,19 @@ export class NotificationService {
       'notifications_period_day',
       dayOfPeriodEnabled ? 'true' : 'false'
     );
+    await setSetting(
+      'notifications_period_late',
+      latePeriodEnabled ? 'true' : 'false'
+    );
 
     // If notifications were just enabled, initialize them
-    if (beforePeriodEnabled || dayOfPeriodEnabled) {
+    if (beforePeriodEnabled || dayOfPeriodEnabled || latePeriodEnabled) {
       await this.init();
 
       // Immediately schedule notifications if there's period data
       await this.scheduleNotificationsIfDataExists();
     } else {
-      // If both are disabled, cancel all notifications
+      // If all are disabled, cancel all notifications
       await this.cancelPeriodNotifications();
     }
   }
@@ -171,10 +181,10 @@ export class NotificationService {
     daysBefore: number = 3
   ) {
     // Check if notifications are enabled
-    const { beforePeriodEnabled, dayOfPeriodEnabled } =
+    const { beforePeriodEnabled, dayOfPeriodEnabled, latePeriodEnabled } =
       await this.getNotificationSettings();
 
-    if (!beforePeriodEnabled && !dayOfPeriodEnabled) {
+    if (!beforePeriodEnabled && !dayOfPeriodEnabled && !latePeriodEnabled) {
       return;
     }
 
@@ -245,6 +255,31 @@ export class NotificationService {
         });
       }
     }
+
+    // Schedule late period notification if enabled
+    if (latePeriodEnabled) {
+      const latePeriodDate = new Date(predictionDateLocal);
+      latePeriodDate.setDate(latePeriodDate.getDate() + 1); // 1 day after expected period
+
+      // Don't schedule if the notification date is in the past
+      if (latePeriodDate > new Date()) {
+        await Notifications.scheduleNotificationAsync({
+          content: {
+            title: 'Period is Late',
+            body: `Your period was expected yesterday. Don't worry, this can be normal!`,
+            data: { type: 'period_late' },
+            color: Colors.accentPink,
+          },
+          trigger: {
+            type: Notifications.SchedulableTriggerInputTypes.DATE,
+            channelId:
+              Platform.OS === 'android' ? 'period-notifications' : undefined,
+            date: latePeriodDate,
+          },
+          identifier: 'period-late',
+        });
+      }
+    }
   }
 
   // Cancel previously scheduled period notifications
@@ -255,7 +290,8 @@ export class NotificationService {
     for (const notification of scheduledNotifications) {
       if (
         notification.identifier === 'period-reminder' ||
-        notification.identifier === 'period-start'
+        notification.identifier === 'period-start' ||
+        notification.identifier === 'period-late'
       ) {
         await Notifications.cancelScheduledNotificationAsync(
           notification.identifier
