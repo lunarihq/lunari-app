@@ -27,7 +27,7 @@ export const createOnboardingStyles = (colors: ColorScheme) =>
       width: 10,
       height: 10,
       borderRadius: 5,
-      backgroundColor: colors.surfaceVariant,
+      backgroundColor: colors.neutral300,
       marginHorizontal: 4,
     },
     paginationDotActive: {

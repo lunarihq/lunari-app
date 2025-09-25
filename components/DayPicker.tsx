@@ -40,7 +40,7 @@ export function DayPicker({
         <Ionicons
           name="remove"
           size={32}
-          color={disabled ? colors.textMuted : colors.white}
+          color={disabled ? colors.textSecondary : colors.white}
         />
       </TouchableOpacity>
 
@@ -61,7 +61,7 @@ export function DayPicker({
         <Ionicons
           name="add"
           size={32}
-          color={disabled ? colors.textMuted : colors.white}
+          color={disabled ? colors.textSecondary : colors.white}
         />
       </TouchableOpacity>
     </View>
@@ -75,7 +75,7 @@ const createStyles = (colors: ColorScheme) =>
       alignItems: 'center',
       justifyContent: 'center',
       marginBottom: 40,
-      backgroundColor: colors.surfaceVariant3,
+      backgroundColor: colors.surface,
       paddingHorizontal: 16,
       paddingBottom: 24,
       paddingTop: 16,
@@ -88,7 +88,7 @@ const createStyles = (colors: ColorScheme) =>
       width: 54,
       height: 54,
       borderRadius: 32,
-      backgroundColor: colors.surfaceVariant,
+      backgroundColor: colors.primary,
       justifyContent: 'center',
       alignItems: 'center',
       marginHorizontal: 20,
@@ -103,10 +103,10 @@ const createStyles = (colors: ColorScheme) =>
     valueText: {
       fontSize: 54,
       fontWeight: 'bold',
-      color: colors.primary,
+      color: colors.textPrimary,
     },
     textDisabled: {
-      color: colors.textMuted,
+      color: colors.textSecondary,
     },
     labelText: {
       fontSize: 20,

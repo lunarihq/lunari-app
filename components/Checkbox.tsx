@@ -28,7 +28,7 @@ export function Checkbox({
             styles.checkbox,
             {
               borderColor: colors.primary,
-              backgroundColor: checked ? colors.primary : colors.surface,
+              backgroundColor: checked ? colors.primary : 'transparent',
             },
             checked && styles.checkboxChecked,
           ]}
@@ -58,7 +58,7 @@ const createStyles = (colors: ColorScheme) =>
     checkbox: {
       width: 24,
       height: 24,
-      borderWidth: 2,
+      borderWidth: 2.5,
       borderRadius: 16,
       marginRight: 10,
       justifyContent: 'center',
