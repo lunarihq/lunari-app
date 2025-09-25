@@ -19,7 +19,7 @@ export default function DashedCircle({
   dashCount = 120,
 }: DashedCircleProps) {
   const { colors } = useTheme();
-  const finalStrokeColor = strokeColor || colors.neutral100;
+  const finalStrokeColor = strokeColor || colors.predicitionCircleOuter;
   const center = size / 2;
   const radius = center - dashLength - 10;
 

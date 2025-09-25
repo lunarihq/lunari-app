@@ -51,7 +51,7 @@ export function CycleInsights({
           <Ionicons
             name="chevron-forward"
             size={24}
-            color={currentCycleDay ? colors.textPrimary : colors.textMuted}
+            color={currentCycleDay ? colors.textPrimary : colors.neutral200}
           />
         </Pressable>
       </View>

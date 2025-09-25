@@ -65,7 +65,7 @@ export function CycleDetails({
           </View>
           {onClose && (
             <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-              <Ionicons name="close" size={28} color={colors.textMuted} />
+              <Ionicons name="close" size={28} color={colors.textSecondary} />
             </TouchableOpacity>
           )}
         </View>
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     padding: 8,
-    marginTop: -4,
+    marginTop: -5,
   },
 });
 

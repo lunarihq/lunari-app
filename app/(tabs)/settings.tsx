@@ -150,7 +150,7 @@ export default function Settings() {
           <Text style={[typography.body, { fontSize: 18, flex: 1 }]}>
             Theme
           </Text>
-          <Text style={[typography.body, { color: colors.textMuted }]}>
+          <Text style={[typography.body, { color: colors.textSecondary }]}>
             {themeMode === 'system'
               ? 'System default'
               : themeMode === 'light'

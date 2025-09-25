@@ -17,6 +17,7 @@ export interface ColorScheme {
 
   //UI components
   predictionCircleBackground: string;
+  predicitionCircleOuter: string;
   insightCardBorder: string; // card borders
   insightCardBackground: string; // card borders
 
@@ -31,7 +32,6 @@ export interface ColorScheme {
   // text
   textPrimary: string;
   textSecondary: string;
-  textMuted: string;
   placeholder: string;
 
   // semantic status colors
@@ -63,6 +63,7 @@ export const lightColors: ColorScheme = {
 
   //UI components
   predictionCircleBackground: '#FFFFFF',
+  predicitionCircleOuter: '#CDCFEA',
   insightCardBorder: '#4B61C7', // card borders
   insightCardBackground: '#ECEDFF', // card borders
 
@@ -72,12 +73,11 @@ export const lightColors: ColorScheme = {
 
   //Neutrals
   neutral100: '#DADAE4',
-  neutral200: '#5C5B63',
+  neutral200: '#8A86A9',
 
   // text
   textPrimary: '#353345', // main text
   textSecondary: '#585470', // secondary text (subtitle)
-  textMuted: '#8A86A9', // muted / hint
   placeholder: '#8D8A99',
 
   // semantic status colors
@@ -110,6 +110,7 @@ export const darkColors: ColorScheme = {
 
   //UI components
   predictionCircleBackground: '#1C1B33',
+  predicitionCircleOuter: '#26253E',
   insightCardBorder: '#47465F', // dark card borders
   insightCardBackground: '#26253E', // dark insight card borders
 
@@ -119,12 +120,12 @@ export const darkColors: ColorScheme = {
   
   //Neutrals
   neutral100: '#5E5D7F',
-  neutral200: '#2B2A49',
+  neutral200: '#5A5A74',
 
   // text (inverted for dark mode)
   textPrimary: '#FFFFFF', // white text for dark backgrounds
   textSecondary: '#D7D7E3', // light gray for secondary text
-  textMuted: '#A09CC2', // muted gray for hints
+
   placeholder: '#A5A4C2', // placeholder text
 
   // semantic status colors (lighter for dark mode contrast)
