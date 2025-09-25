@@ -6,7 +6,7 @@ import { PeriodPredictionService } from '../../services/periodPredictions';
 import defaultTheme, { useTheme, createTypography } from '../../styles/theme';
 
 const getFormattedDate = (date: Date): string => {
-  return `Today, ${date.toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}`;
+  return `Today, ${date.getDate()} ${date.toLocaleDateString('en-US', { month: 'short' })}`;
 };
 
 export default function CyclePhaseDetails() {
@@ -37,7 +37,7 @@ export default function CyclePhaseDetails() {
     <View
       style={[
         defaultTheme.globalStyles.container,
-        { backgroundColor: colors.background},
+        { backgroundColor: colors.background, paddingTop: 16 },
       ]}
     >
       <ScrollView

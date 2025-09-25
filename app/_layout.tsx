@@ -236,8 +236,8 @@ function AppContent() {
             headerShadowVisible: false,
             headerStyle: {
               backgroundColor: isDark
-                ? darkColors.background
-                : lightColors.background,
+                ? darkColors.surface
+                : lightColors.surfaceVariant,
             },
             headerTintColor: isDark
               ? darkColors.textPrimary
