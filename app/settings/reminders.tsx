@@ -9,8 +9,11 @@ import {
   ActivityIndicator,
   Alert,
   Linking,
+  TouchableOpacity,
 } from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { NotificationService } from '../../services/notificationService';
+import { getSetting, setSetting } from '../../db';
 import defaultTheme, { useTheme, createTypography } from '../../styles/theme';
 export default function Reminders() {
   const { colors } = useTheme();
@@ -18,6 +21,8 @@ export default function Reminders() {
   const [beforePeriodEnabled, setBeforePeriodEnabled] = useState(false);
   const [dayOfPeriodEnabled, setDayOfPeriodEnabled] = useState(false);
   const [latePeriodEnabled, setLatePeriodEnabled] = useState(false);
+  const [notificationTime, setNotificationTime] = useState(new Date());
+  const [showTimePicker, setShowTimePicker] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [statusMessage, setStatusMessage] = useState<{
@@ -33,6 +38,13 @@ export default function Reminders() {
         setBeforePeriodEnabled(settings.beforePeriodEnabled);
         setDayOfPeriodEnabled(settings.dayOfPeriodEnabled);
         setLatePeriodEnabled(settings.latePeriodEnabled);
+        
+        // Load notification time (default to 9 AM)
+        const hour = await getSetting('notification_time_hour') || '9';
+        const minute = await getSetting('notification_time_minute') || '0';
+        const timeDate = new Date();
+        timeDate.setHours(parseInt(hour), parseInt(minute), 0, 0);
+        setNotificationTime(timeDate);
       } catch (error) {
         console.error('Failed to load notification settings:', error);
         setStatusMessage({
@@ -190,6 +202,22 @@ export default function Reminders() {
     }
   };
 
+  // Handle time picker change
+  const handleTimeChange = async (event: any, selectedTime?: Date) => {
+    setShowTimePicker(false);
+    if (selectedTime) {
+      setNotificationTime(selectedTime);
+      // Save the time to database
+      await setSetting('notification_time_hour', selectedTime.getHours().toString());
+      await setSetting('notification_time_minute', selectedTime.getMinutes().toString());
+    }
+  };
+
+  // Format time for display
+  const formatTime = (date: Date) => {
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  };
+
   // Save settings to database and update notification service
   const saveSettings = async (before: boolean, dayOf: boolean, late: boolean) => {
     setIsSaving(true);
@@ -296,7 +324,7 @@ export default function Reminders() {
               { flexShrink: 1, paddingRight: 12, flex: 1 },
             ]}
           >
-            Remind me when my period is 1 day late.
+            Remind me if my period is late.
           </Text>
           <Switch
             value={latePeriodEnabled}
@@ -308,6 +336,40 @@ export default function Reminders() {
           />
         </View>
       </View>
+
+      <View style={[styles.section, { backgroundColor: colors.surface }]}>
+        <TouchableOpacity 
+          style={[styles.settingRow, styles.lastRow]} 
+          onPress={() => setShowTimePicker(true)}
+          disabled={isSaving}
+        >
+          <Text
+            style={[
+              typography.body,
+              { flexShrink: 1, paddingRight: 12, flex: 1 },
+            ]}
+          >
+            Reminder time
+          </Text>
+          <Text
+            style={[
+              typography.body,
+              { color: colors.primary, fontWeight: '500' },
+            ]}
+          >
+            {formatTime(notificationTime)}
+          </Text>
+        </TouchableOpacity>
+      </View>
+
+      {showTimePicker && (
+        <DateTimePicker
+          value={notificationTime}
+          mode="time"
+          is24Hour={false}
+          onChange={handleTimeChange}
+        />
+      )}
     </ScrollView>
   );
 }
