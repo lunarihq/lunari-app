@@ -570,7 +570,7 @@ export default function SymptomTracking() {
           <Ionicons
             name="chevron-forward"
             size={24}
-            color={isNextDayDisabled() ? colors.textMuted : colors.textPrimary}
+            color={isNextDayDisabled() ? colors.textSecondary : colors.textPrimary}
           />
         </TouchableOpacity>
       </View>
@@ -755,7 +755,7 @@ export default function SymptomTracking() {
                   <Ionicons
                     name="trash-outline"
                     size={24}
-                    color={colors.textMuted}
+                    color={colors.textSecondary}
                   />
                 </TouchableOpacity>
               )}
@@ -767,7 +767,7 @@ export default function SymptomTracking() {
                 <Ionicons
                   name="create-outline"
                   size={24}
-                  color={colors.textMuted}
+                  color={colors.textSecondary}
                 />
               </TouchableOpacity>
             </View>
