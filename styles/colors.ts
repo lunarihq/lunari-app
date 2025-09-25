@@ -71,7 +71,7 @@ export const lightColors: ColorScheme = {
   backgroundIcon: '#FFFFFF', // background icon color
 
   //Neutrals
-  neutral100: '#8682A3',
+  neutral100: '#DADAE4',
   neutral200: '#5C5B63',
 
   // text

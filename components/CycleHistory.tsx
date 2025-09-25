@@ -31,7 +31,7 @@ const DayCircles = ({
         style={[
           styles.circle,
           {
-            backgroundColor: i < periodDays ? colors.accentPink : colors.border,
+            backgroundColor: i < periodDays ? colors.accentPink : colors.neutral100,
           },
         ]}
       />
