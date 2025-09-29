@@ -16,6 +16,10 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#4B61C7"
       },
+      "notification": {
+        "icon": "./assets/images/notification-icon.png",
+        "color": "#4B61C7"
+      },
       "permissions": [
         "NOTIFICATIONS",
         "POST_NOTIFICATIONS",
