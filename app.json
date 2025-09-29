@@ -16,10 +16,6 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#4B61C7"
       },
-      "notification": {
-        "icon": "./assets/images/notification-icon.png",
-        "color": "#4B61C7"
-      },
       "permissions": [
         "NOTIFICATIONS",
         "POST_NOTIFICATIONS",
@@ -27,7 +23,8 @@
         "USE_FINGERPRINT",
         "USE_FACE_ID",
         "VIBRATE"
-      ]
+      ],
+      "package": "com.mariandre.lunari"
     },
     "plugins": [
       "expo-router",
@@ -40,11 +37,24 @@
           "backgroundColor": "#4B61C7"
         }
       ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/images/notification-icon.png",
+          "color": "#4B61C7"
+        }
+      ],
       "expo-sqlite",
       "expo-font"
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "780e149e-3515-4b7a-bfb0-b0b575b2331b"
+      }
     }
   }
 }
