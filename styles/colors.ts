@@ -69,8 +69,8 @@ export const lightColors: ColorScheme = {
   //UI components
   predictionCircleBackground: '#FFFFFF',
   predicitionCircleOuter: '#CDCFEA',
-  insightCardBorder: '#4B61C7', // card borders
-  insightCardBackground: '#ECEDFF', // card borders
+  insightCardBorder: '#475FC3', // card borders
+  insightCardBackground: '#DEE4FC', // card borders
 
   //Icons
   icon: '#1A1A28', // icon color
@@ -86,7 +86,7 @@ export const lightColors: ColorScheme = {
   neutral300: '#D8DAFF',
 
   // text
-  textPrimary: '#353345', // main text
+  textPrimary: '#25253F', // main text
   textSecondary: '#585470', // secondary text (subtitle)
   placeholder: '#8D8A99',
 
