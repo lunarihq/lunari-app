@@ -31,5 +31,3 @@ export const HeavyFlowIcon: React.FC<IconProps> = ({
     />
   </Svg>
 );
-
-

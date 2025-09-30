@@ -207,7 +207,7 @@ export default function About() {
             },
           ]}
         >
-          For support or feedback, please contact us at: 
+          For support or feedback, please contact us at:
           <Text style={styles.bold}>lunari.appmail@gmail.app.</Text>
         </Text>
       </View>

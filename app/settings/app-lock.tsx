@@ -120,7 +120,6 @@ export default function AppLockScreen() {
           />
         </View>
 
-
         {isPinSet && (
           <TouchableOpacity
             style={[styles.settingRow, styles.lastRow]}
@@ -154,7 +153,8 @@ export default function AppLockScreen() {
               style={styles.infoIcon}
             />
             <Text style={[styles.infoText, { color: colors.textSecondary }]}>
-              Once you set up a PIN, you can also set up biometric authentication.
+              Once you set up a PIN, you can also set up biometric
+              authentication.
             </Text>
           </View>
         </View>
@@ -164,8 +164,11 @@ export default function AppLockScreen() {
         <View style={[styles.section, { backgroundColor: colors.surface }]}>
           <View style={[styles.settingRow, styles.lastRow]}>
             <View style={styles.settingContent}>
-              <Text style={[styles.settingTitle, { color: colors.textPrimary }]}>
-                Biometric authentication {biometricType ? `(${biometricType})` : ''}
+              <Text
+                style={[styles.settingTitle, { color: colors.textPrimary }]}
+              >
+                Biometric authentication{' '}
+                {biometricType ? `(${biometricType})` : ''}
               </Text>
               <Text
                 style={[
@@ -186,8 +189,6 @@ export default function AppLockScreen() {
           </View>
         </View>
       )}
-
-      
     </ScrollView>
   );
 }

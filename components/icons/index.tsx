@@ -14,14 +14,13 @@ import { BoredIcon } from './moods/Bored';
 import { LightFlowIcon } from './flows/LightFlow';
 import { MediumFlowIcon } from './flows/MediumFlow';
 import { HeavyFlowIcon } from './flows/HeavyFlow';
-import { BloodClotsIcon } from './flows/BloodClots';  
+import { BloodClotsIcon } from './flows/BloodClots';
 import { CrampsIcon } from './symptoms/Cramps';
 import { DiarheaIcon } from './symptoms/Diarhea';
 import { FatigueIcon } from './symptoms/Fatigue';
 import { GoodIcon } from './symptoms/Good';
 import { CravingsIcon } from './symptoms/Cravings';
 import { BloatedIcon } from './symptoms/Bloated';
-
 
 interface IconProps {
   size?: number;

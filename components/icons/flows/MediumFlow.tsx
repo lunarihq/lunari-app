@@ -27,5 +27,3 @@ export const MediumFlowIcon: React.FC<IconProps> = ({
     />
   </Svg>
 );
-
-

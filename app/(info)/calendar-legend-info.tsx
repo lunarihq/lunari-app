@@ -123,7 +123,6 @@ export default function CalendarLegendInfo() {
       contentContainerStyle={defaultTheme.globalStyles.scrollContentContainer}
       showsVerticalScrollIndicator={false}
     >
-
       {legendItems.map((item, index) => (
         <View
           key={index}
@@ -133,7 +132,9 @@ export default function CalendarLegendInfo() {
             alignItems: 'flex-start',
           }}
         >
-          <View style={{ marginRight: 16, marginTop: 4 }}>{item.indicator}</View>
+          <View style={{ marginRight: 16, marginTop: 4 }}>
+            {item.indicator}
+          </View>
           <View style={{ flex: 1 }}>
             <Text style={[typography.heading3, { marginBottom: 8 }]}>
               {item.title}
@@ -150,9 +151,10 @@ export default function CalendarLegendInfo() {
           About predictions
         </Text>
         <Text style={[typography.body, { lineHeight: 24 }]}>
-          Predictions are based on your average cycle length and period patterns.
-          The more data you track, the more accurate your predictions become.
-          Remember that predictions are estimates and your actual cycle may vary.
+          Predictions are based on your average cycle length and period
+          patterns. The more data you track, the more accurate your predictions
+          become. Remember that predictions are estimates and your actual cycle
+          may vary.
         </Text>
       </View>
     </ScrollView>

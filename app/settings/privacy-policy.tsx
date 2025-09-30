@@ -37,7 +37,8 @@ export default function PrivacyPolicy() {
           </Text>
         </View>
         <Text style={[typography.body, { lineHeight: 24, marginBottom: 12 }]}>
-         This Privacy Policy sets out how the app Lunari uses and protects your personal data that you generate and store within the app. 
+          This Privacy Policy sets out how the app Lunari uses and protects your
+          personal data that you generate and store within the app.
         </Text>
       </View>
 
@@ -49,7 +50,11 @@ export default function PrivacyPolicy() {
           </Text>
         </View>
         <Text style={[typography.body, { lineHeight: 24, marginBottom: 12 }]}>
-          Lunari respects and celebrates your privacy. There is no collection of usage data or personal information, no ads, no spyware. Lunari can store data related to your menstrual heatlh <Text style={styles.bold}>locally on your phone</Text>, and this inludes:
+          Lunari respects and celebrates your privacy. There is no collection of
+          usage data or personal information, no ads, no spyware. Lunari can
+          store data related to your menstrual heatlh{' '}
+          <Text style={styles.bold}>locally on your phone</Text>, and this
+          inludes:
         </Text>
         <Text
           style={[
@@ -97,7 +102,9 @@ export default function PrivacyPolicy() {
           or transmit your personal health data to any third parties.
         </Text>
         <Text style={[typography.body, { lineHeight: 24, marginBottom: 12 }]}>
-          If you wish to delete all your app data, you can do so by going to the settings menu and selecting "Delete data". This can also be done by uninstalling the app.
+          If you wish to delete all your app data, you can do so by going to the
+          settings menu and selecting "Delete data". This can also be done by
+          uninstalling the app.
         </Text>
       </View>
 
@@ -134,7 +141,8 @@ export default function PrivacyPolicy() {
           your app with fingerprint or face recognition (optional).
         </Text>
         <Text style={[typography.body, { lineHeight: 24, marginBottom: 12 }]}>
-          If you don't want to use any of these permissions, you can revoke them at any time through your device settings.
+          If you don't want to use any of these permissions, you can revoke them
+          at any time through your device settings.
         </Text>
       </View>
 
@@ -207,7 +215,8 @@ export default function PrivacyPolicy() {
           ]}
         >
           If you have any questions about this privacy policy or how we handle
-          your data, please contact us at <Text style={styles.bold}>lunari.appmail@gmail.app</Text>.
+          your data, please contact us at{' '}
+          <Text style={styles.bold}>lunari.appmail@gmail.app</Text>.
         </Text>
       </View>
     </ScrollView>
