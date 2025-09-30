@@ -37,14 +37,7 @@ export default function PrivacyPolicy() {
           </Text>
         </View>
         <Text style={[typography.body, { lineHeight: 24, marginBottom: 12 }]}>
-          Lunari is a period tracking app designed to help you understand your
-          menstrual cycle. We are committed to protecting your privacy and
-          ensuring your personal health data remains secure and private.
-        </Text>
-        <Text style={[typography.body, { lineHeight: 24, marginBottom: 12 }]}>
-          This privacy policy explains how we collect, use, and protect your
-          information when you use our app. By using Lunari, you agree to the
-          collection and use of information in accordance with this policy.
+         This Privacy Policy sets out how the app Lunari uses and protects your personal data that you generate and store within the app. 
         </Text>
       </View>
 
@@ -56,7 +49,7 @@ export default function PrivacyPolicy() {
           </Text>
         </View>
         <Text style={[typography.body, { lineHeight: 24, marginBottom: 12 }]}>
-          We collect and store the following information locally on your device:
+          Lunari respects and celebrates your privacy. There is no collection of usage data or personal information, no ads, no spyware. Lunari can store data related to your menstrual heatlh locally on your phone, and this inludes:
         </Text>
         <Text
           style={[
@@ -103,6 +96,9 @@ export default function PrivacyPolicy() {
           insights, and personalized tracking features. We do not share, sell,
           or transmit your personal health data to any third parties.
         </Text>
+        <Text style={[typography.body, { lineHeight: 24, marginBottom: 12 }]}>
+          If you wish to delete all your app data, you can do so by going to the settings menu and selecting "Delete data". This can also be done by uninstalling the app.
+        </Text>
       </View>
 
       <View style={[styles.section, { backgroundColor: colors.surface }]}>
@@ -125,8 +121,8 @@ export default function PrivacyPolicy() {
             { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
           ]}
         >
-          • <Text style={styles.bold}>Notifications:</Text> To send you period
-          reminders and cycle predictions
+          • <Text style={styles.bold}>Reminders:</Text> To send you period
+          reminders and cycle predictions.
         </Text>
         <Text
           style={[
@@ -134,22 +130,11 @@ export default function PrivacyPolicy() {
             { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
           ]}
         >
-          • <Text style={styles.bold}>Biometric Authentication:</Text> To secure
-          your app with fingerprint or face recognition (optional)
-        </Text>
-        <Text
-          style={[
-            typography.body,
-            { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
-          ]}
-        >
-          • <Text style={styles.bold}>Device Storage:</Text> To store your
-          tracking data locally on your device
+          • <Text style={styles.bold}>Biometric authentication:</Text> To secure
+          your app with fingerprint or face recognition (optional).
         </Text>
         <Text style={[typography.body, { lineHeight: 24, marginBottom: 12 }]}>
-          All permissions are optional and can be revoked at any time through
-          your device settings. The app will continue to function with limited
-          features if permissions are denied.
+          If you don't want to use any of these permissions, you can revoke them at any time through your device settings.
         </Text>
       </View>
 
@@ -185,7 +170,7 @@ export default function PrivacyPolicy() {
             { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
           ]}
         >
-          • You can export or delete all your data at any time
+          • You can delete all your data at any time
         </Text>
         <Text
           style={[
