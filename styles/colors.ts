@@ -25,6 +25,10 @@ export interface ColorScheme {
   icon: string;
   backgroundIcon: string;
 
+  //Shapes
+  shape1: string;
+  shape2: string;
+
   //Neutrals
   neutral100: string;
   neutral200: string;
@@ -72,6 +76,10 @@ export const lightColors: ColorScheme = {
   icon: '#1A1A28', // icon color
   backgroundIcon: '#FFFFFF', // background icon color
 
+  //Shapes
+  shape1: '#E8ECFF',
+  shape2: '#FFEBF6',
+
   //Neutrals
   neutral100: '#DADAE4',
   neutral200: '#8A86A9',
@@ -118,6 +126,10 @@ export const darkColors: ColorScheme = {
   //Icons
   icon: '#D4D4F6', // dark icon color
   backgroundIcon: '#302F4C', // dark background icon color
+
+  //Shapes
+  shape1: '#28263D',
+  shape2: '#28263D',
 
   //Neutrals
   neutral100: '#5E5D7F',
