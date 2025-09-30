@@ -103,7 +103,12 @@ export default function AppLockScreen() {
         <View style={[styles.settingRow, { borderBottomColor: colors.border }]}>
           <View style={styles.settingContent}>
             <Text style={[styles.settingTitle, { color: colors.textPrimary }]}>
-              Set up a PIN
+              PIN
+            </Text>
+            <Text
+              style={[styles.settingSubtitle, { color: colors.textSecondary }]}
+            >
+              Set up a PIN to unlock the app
             </Text>
           </View>
           <Switch
@@ -162,7 +167,7 @@ export default function AppLockScreen() {
               <Text
                 style={[styles.settingTitle, { color: colors.textPrimary }]}
               >
-                Use {biometricType}
+                Biometric authentication
               </Text>
               <Text
                 style={[
@@ -170,7 +175,7 @@ export default function AppLockScreen() {
                   { color: colors.textSecondary },
                 ]}
               >
-                Unlock app with {biometricType.toLowerCase()} instead of PIN
+                Use device biometrics to unlock the app.
               </Text>
             </View>
             <Switch
