@@ -49,7 +49,7 @@ export default function PrivacyPolicy() {
           </Text>
         </View>
         <Text style={[typography.body, { lineHeight: 24, marginBottom: 12 }]}>
-          Lunari respects and celebrates your privacy. There is no collection of usage data or personal information, no ads, no spyware. Lunari can store data related to your menstrual heatlh locally on your phone, and this inludes:
+          Lunari respects and celebrates your privacy. There is no collection of usage data or personal information, no ads, no spyware. Lunari can store data related to your menstrual heatlh <Text style={styles.bold}>locally on your phone</Text>, and this inludes:
         </Text>
         <Text
           style={[
@@ -207,7 +207,7 @@ export default function PrivacyPolicy() {
           ]}
         >
           If you have any questions about this privacy policy or how we handle
-          your data, please contact us at lunari.appmail@gmail.app.
+          your data, please contact us at <Text style={styles.bold}>lunari.appmail@gmail.app</Text>.
         </Text>
       </View>
     </ScrollView>
