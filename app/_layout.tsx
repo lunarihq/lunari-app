@@ -231,7 +231,7 @@ function AppContent() {
           options={{
             headerShown: true,
             headerTitle: 'Cycle phase details',
-            headerShadowVisible: false,
+            headerShadowVisible: true,
             headerStyle: {
               backgroundColor: isDark
                 ? darkColors.surface
@@ -309,7 +309,7 @@ function AppContent() {
           options={{
             headerShown: true,
             headerTitle: 'Calendar legend',
-            headerShadowVisible: false,
+            headerShadowVisible: true,
             headerStyle: {
               backgroundColor: isDark ? darkColors.panel : lightColors.panel,
             },
