@@ -164,10 +164,8 @@ export default function AppLockScreen() {
         <View style={[styles.section, { backgroundColor: colors.surface }]}>
           <View style={[styles.settingRow, styles.lastRow]}>
             <View style={styles.settingContent}>
-              <Text
-                style={[styles.settingTitle, { color: colors.textPrimary }]}
-              >
-                Biometric authentication
+              <Text style={[styles.settingTitle, { color: colors.textPrimary }]}>
+                Biometric authentication {biometricType ? `(${biometricType})` : ''}
               </Text>
               <Text
                 style={[
