@@ -8,14 +8,14 @@ interface IconProps {
 
 export const BloatedIcon: React.FC<IconProps> = ({
   size = 24,
-  color = '#6580E2',
+  color = '#C7D3FF',
 }) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
     <Path
       d="M24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12Z"
       fill={color}
     />
-    <Circle cx="11.9082" cy="10.3262" r="7.3457" fill="#9168EA" />
+    <Circle cx="11.9082" cy="10.3262" r="7.3457" fill="#6580E2" />
     <Path
       d="M11.5703 6.318C12.5159 6.20675 14.4072 6.32296 15.2415 8.98836"
       stroke="white"

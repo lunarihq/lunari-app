@@ -16,6 +16,7 @@ import { useTheme, createTypography } from '../styles/theme';
 import dayjs from 'dayjs';
 import { globalStyles } from '../styles/globalStyles';
 import { CustomIcon } from './icons';
+import { NoteIcon } from './icons/Note';
 
 type SymptomsTrackerProps = {
   selectedDate?: string;
@@ -56,6 +57,10 @@ export const SymptomsTracker = ({
   const getIconComponent = (log: any) => {
     const { icon, type } = log;
 
+    if (type === 'notes') {
+      return <NoteIcon size={54} />;
+    }
+
     // Use CustomIcon for symptoms, moods, and flows that have custom SVG icons
     if (type === 'symptom' || type === 'mood' || type === 'flow') {
       // Check if this icon name exists in our custom icon system
@@ -64,6 +69,7 @@ export const SymptomsTracker = ({
         'headache',
         'cramps',
         'dizziness',
+        'diarhea',
         'fatigue',
         'bloating',
         'constipation',
@@ -91,7 +97,7 @@ export const SymptomsTracker = ({
       }
     }
 
-    // For notes and any unrecognized icons, use AcneIcon as placeholder
+    // For any unrecognized icons, use AcneIcon as placeholder
     return <CustomIcon name="acne" size={54} />;
   };
 
