@@ -39,8 +39,8 @@ export default function Reminders() {
         setDayOfPeriodEnabled(settings.dayOfPeriodEnabled);
         setLatePeriodEnabled(settings.latePeriodEnabled);
 
-        // Load notification time (default to 9 AM)
-        const hour = (await getSetting('notification_time_hour')) || '9';
+        // Load notification time (default to 10 AM)
+        const hour = (await getSetting('notification_time_hour')) || '10';
         const minute = (await getSetting('notification_time_minute')) || '0';
         const timeDate = new Date();
         timeDate.setHours(parseInt(hour), parseInt(minute), 0, 0);
