@@ -25,65 +25,60 @@ export default function PeriodLength() {
           borderRadius: 16,
         }}
       />
-      <View style={{ marginBottom: 32 }}>
+      <View style={{ marginBottom: 28 }}>
         <Text style={[typography.heading2, { marginBottom: 12 }]}>
-          Understanding Your Period
+          Understanding your period
         </Text>
 
         <Text style={[typography.body, { lineHeight: 24 }]}>
-          Your period is the number of days you experience menstrual bleeding
-          each cycle. This is when your body sheds the uterine lining that built
-          up during your cycle.
+        <Text style={{ fontWeight: 'bold' }}>Period length</Text> is counted from the first until the last day of menstrual bleeding of any volume. 
         </Text>
       </View>
 
-      <View style={{ marginBottom: 32 }}>
+      <View style={{ marginBottom: 28 }}>
         <Text style={[typography.heading2, { marginBottom: 12 }]}>
-          Normal Period Length
+          Normal period length
+        </Text>
+          <Text style={[typography.body, { lineHeight: 24 }]}>
+          According to the <Text style={{ fontWeight: 'bold' }}>American College of Obstetricians and Gynecologists (ACOG)¹</Text>, a normal period length typically lasts between <Text style={{ fontWeight: 'bold' }}>2 and 7 days</Text>. 
+          </Text>
+          <Text style={[typography.body, { lineHeight: 24, marginTop: 12 }]}>
+          Period length can vary from cycle to cycle, which is completely normal.  
+          </Text>
+      </View>
+
+      <View style={{ marginBottom: 28 }}>
+        <Text style={[typography.heading2, { marginBottom: 12 }]}>
+          Irregular periods
         </Text>
         <Text style={[typography.body, { lineHeight: 24 }]}>
-          A normal period length of 2-7 days is typical for most people. The
-          flow usually starts light, becomes heavier for a few days, then tapers
-          off. Period length can vary from cycle to cycle, which is completely
-          normal.
+        Irregular periods (shorter than 2 days or longer than 7 days) might be caused by lifestyle changes, medication, stress, travel, and a few other factors that can affect hormone levels.
+        </Text>
+        <Text style={[typography.body, { lineHeight: 24, marginTop: 12 }]}>
+        <Text style={{ fontWeight: 'bold' }}>Incorrectly entered period data</Text> could be the reason your period length is labeled prolonged or shortened. You can always correct any event of you cycle retrospectively on the calendar menu.           </Text>
+      </View>
+      <View style={{ marginBottom: 28 }}>
+      <Text style={[typography.heading2, { marginBottom: 12 }]}>
+          When to see a doctor?
+        </Text>
+        <Text style={[typography.body, { lineHeight: 24 }]}>
+        If your period length is frequently abnormal in length, or/and accompanied by other concerning symptoms, it’s best to talk to your health care provider. They can help you figure out the cause and suggest treatment, if necessary.
+        </Text>
+      </View>
+      <View style={{ marginBottom: 28 }}>
+        <Text style={[typography.body, { lineHeight: 24 }]}>
+        <Text style={{ fontWeight: 'bold' }}>IMPORTANT! </Text>Lunari is not a diagnostic tool. The information from Lunari does not replace advice from a health care provider. Always seek the advice of your doctor or other qualified health provider with any questions you may have regarding your cycle.
+        </Text>
+      </View>
+      <View style={{ marginBottom: 28 }}>
+      <Text style={[typography.heading3, { marginBottom: 12 }]}>
+          References
+        </Text>
+        <Text style={[typography.caption]}>
+        1. Your First Period. American College of Obstetricians and Gynecologists. FAQ for patients.
         </Text>
       </View>
 
-      <View style={{ marginBottom: 32 }}>
-        <Text style={[typography.heading2, { marginBottom: 12 }]}>
-          Irregular Periods
-        </Text>
-        <Text style={[typography.body, { lineHeight: 24 }]}>
-          Irregular periods (shorter than 2 days or longer than 7 days) may
-          indicate hormonal imbalances, stress, or underlying health conditions.
-          Very heavy bleeding or very light periods may need medical attention.
-        </Text>
-      </View>
-
-      <View style={{ marginBottom: 32 }}>
-        <Text style={[typography.heading2, { marginBottom: 12 }]}>
-          Period Flow Patterns
-        </Text>
-        <Text style={[typography.body, { lineHeight: 24 }]}>
-          • Light flow: Minimal bleeding, may only need panty liners{'\n'}•
-          Moderate flow: Regular tampon/pad changes every 4-6 hours{'\n'}• Heavy
-          flow: Frequent changes every 2-3 hours{'\n'}• Very heavy: Soaking
-          through protection in less than 2 hours
-        </Text>
-      </View>
-
-      <View style={{ marginBottom: 32 }}>
-        <Text style={[typography.heading2, { marginBottom: 12 }]}>
-          Tips for Period Health
-        </Text>
-        <Text style={[typography.body, { lineHeight: 24 }]}>
-          • Track your period length and flow intensity{'\n'}• Stay hydrated and
-          maintain good nutrition{'\n'}• Use appropriate period products for
-          your flow{'\n'}• Consider tracking symptoms like cramps or mood
-          changes{'\n'}• Consult a healthcare provider if periods are
-          consistently irregular{'\n'}• Rest when needed and listen to your body
-        </Text>
-      </View>
     </ScrollView>
   );
 }
