@@ -47,17 +47,21 @@ const DefaultDay = memo<{
     () => [
       styles.dayText,
       { color: colors.textPrimary },
-      isPeriodDay ? { color: colors.white } : null,
+      // Apply any explicit text color provided by markings first
+      customMarking?.customStyles?.text,
+      // Use white text only when the period-day pink background is actually applied
+      isPeriodDay && !isToday ? { color: colors.white } : null,
       isDisabled ? styles.disabledDayText : null,
       isToday ? styles.todayText : null,
-      customMarking?.customStyles?.text,
+      // Ensure today always uses readable color in light mode
+      isToday ? { color: colors.textPrimary } : null,
     ],
     [
       colors.textPrimary,
       colors.white,
       isPeriodDay,
-      isDisabled,
       isToday,
+      isDisabled,
       customMarking?.customStyles?.text,
     ]
   );
