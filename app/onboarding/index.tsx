@@ -32,7 +32,7 @@ export default function WelcomeScreen() {
         />
         <Text
           style={[
-            typography.heading1,
+            typography.heading1, { color: colors.textPrimary },
             { fontSize: 36, lineHeight: 44, marginBottom: 20, textAlign: 'center' },
           ]}
         >
