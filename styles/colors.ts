@@ -53,7 +53,7 @@ export const lightColors: ColorScheme = {
   // surfaces
   background: '#ECEDFF', // page background
   surface: '#FFFFFF', // main cards / panels
-  surfaceVariant: '#F4F6FF', // variant cards / panels
+  surfaceVariant: '#F0F1FF', // variant cards / panels
   surfaceVariant2: '#FFFFFF', // variant cards / panels
   surfaceTabBar: '#F1F0F6', // tabs / sheets / panels
   panel: '#FFFFFF', // subtle panel background
