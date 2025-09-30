@@ -62,7 +62,19 @@ export default function TabLayout() {
         name="calendar"
         options={{
           headerShown: true,
-          headerTitle: 'Calendar',
+          headerTitle: '',
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => router.push('/(info)/calendar-legend-info')}
+              style={{ marginLeft: 16 }}
+            >
+              <Ionicons
+                name="information-circle-outline"
+                size={24}
+                color={colors.textPrimary}
+              />
+            </TouchableOpacity>
+          ),
           headerStyle: {
             height: 100,
             backgroundColor: colors.panel,

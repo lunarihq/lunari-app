@@ -13,6 +13,11 @@ export const Typography = StyleSheet.create({
     fontWeight: '600',
     color: Colors.textPrimary,
   },
+  heading3: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: Colors.textPrimary,
+  },
   body: {
     fontSize: 16,
     fontWeight: '400',
@@ -35,6 +40,11 @@ export const createTypography = (colors: ColorScheme) =>
     },
     heading2: {
       fontSize: 22,
+      fontWeight: '600',
+      color: colors.textPrimary,
+    },
+    heading3: {
+      fontSize: 18,
       fontWeight: '600',
       color: colors.textPrimary,
     },

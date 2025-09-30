@@ -304,6 +304,20 @@ function AppContent() {
               : lightColors.textPrimary,
           }}
         />
+        <Stack.Screen
+          name="(info)/calendar-legend-info"
+          options={{
+            headerShown: true,
+            headerTitle: 'Calendar legend',
+            headerShadowVisible: false,
+            headerStyle: {
+              backgroundColor: isDark ? darkColors.panel : lightColors.panel,
+            },
+            headerTintColor: isDark
+              ? darkColors.textPrimary
+              : lightColors.textPrimary,
+          }}
+        />
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style={isDark ? 'light' : 'dark'} />
