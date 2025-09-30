@@ -115,6 +115,7 @@ export default function AppLockScreen() {
           />
         </View>
 
+
         {isPinSet && (
           <TouchableOpacity
             style={[styles.settingRow, styles.lastRow]}
@@ -135,6 +136,24 @@ export default function AppLockScreen() {
           </TouchableOpacity>
         )}
       </View>
+
+      {!isPinSet && (
+        <View style={styles.infoSection}>
+          <View
+            style={[styles.infoContainer, { backgroundColor: colors.surface }]}
+          >
+            <Ionicons
+              name="information-circle"
+              size={20}
+              color={colors.textSecondary}
+              style={styles.infoIcon}
+            />
+            <Text style={[styles.infoText, { color: colors.textSecondary }]}>
+              Once you set up a PIN, you can also set up biometric authentication.
+            </Text>
+          </View>
+        </View>
+      )}
 
       {isPinSet && biometricSupported && (
         <View style={[styles.section, { backgroundColor: colors.surface }]}>
@@ -165,27 +184,7 @@ export default function AppLockScreen() {
         </View>
       )}
 
-      {isPinSet && (
-        <View style={styles.infoSection}>
-          <View
-            style={[styles.infoContainer, { backgroundColor: colors.surface }]}
-          >
-            <Ionicons
-              name="information-circle"
-              size={20}
-              color={colors.textSecondary}
-              style={styles.infoIcon}
-            />
-            <Text style={[styles.infoText, { color: colors.textSecondary }]}>
-              When app lock is enabled, you'll need to authenticate when the app
-              starts or returns from the background.
-              {biometricSupported &&
-                biometricEnabled &&
-                ` You can use your ${biometricType.toLowerCase()} or PIN to unlock.`}
-            </Text>
-          </View>
-        </View>
-      )}
+      
     </ScrollView>
   );
 }
