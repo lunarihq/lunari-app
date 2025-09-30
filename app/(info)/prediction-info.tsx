@@ -88,7 +88,7 @@ export default function PredictionInfo() {
             style={[
               typography.caption,
               {
-                backgroundColor: colors.surface,
+                backgroundColor: colors.surfaceVariant,
                 padding: 16,
                 borderRadius: 12,
               },
