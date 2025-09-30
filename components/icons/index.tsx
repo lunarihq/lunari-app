@@ -1,7 +1,6 @@
 // components/icons/index.tsx
 import React from 'react';
 import { HappyIcon } from './moods/Happy';
-import { BloatedIcon } from './symptoms/Bloated';
 import { AngryIcon } from './moods/Angry';
 import { SadIcon } from './moods/Sad';
 import { AnxiousIcon } from './moods/Anxious';
@@ -13,6 +12,16 @@ import { IrritatedIcon } from './moods/Irritated';
 import { CalmIcon } from './moods/Calm';
 import { BoredIcon } from './moods/Bored';
 import { LightFlowIcon } from './flows/LightFlow';
+import { MediumFlowIcon } from './flows/MediumFlow';
+import { HeavyFlowIcon } from './flows/HeavyFlow';
+import { BloodClotsIcon } from './flows/BloodClots';  
+import { CrampsIcon } from './symptoms/Cramps';
+import { DiarheaIcon } from './symptoms/Diarhea';
+import { FatigueIcon } from './symptoms/Fatigue';
+import { GoodIcon } from './symptoms/Good';
+import { CravingsIcon } from './symptoms/Cravings';
+import { BloatedIcon } from './symptoms/Bloated';
+
 
 interface IconProps {
   size?: number;
@@ -25,6 +34,9 @@ export type IconName =
   | 'headache'
   | 'cramps'
   | 'dizziness'
+  | 'diarhea'
+  | 'good'
+  | 'cramping'
   | 'fatigue'
   | 'bloating'
   | 'bored'
@@ -49,13 +61,13 @@ const iconMap: Record<IconName, React.FC<IconProps>> = {
   acne: BloatedIcon,
   apathetic: ApaticIcon,
   headache: BloatedIcon,
-  cramps: BloatedIcon,
+  cramps: CrampsIcon,
   dizziness: BloatedIcon,
-  fatigue: BloatedIcon,
+  fatigue: FatigueIcon,
   bloating: BloatedIcon,
   bored: BoredIcon,
   constipation: BloatedIcon,
-  cravings: BloatedIcon,
+  cravings: CravingsIcon,
   calm: CalmIcon,
   happy: HappyIcon,
   energetic: HappyIcon,
@@ -66,10 +78,13 @@ const iconMap: Record<IconName, React.FC<IconProps>> = {
   angry: AngryIcon,
   'mood-swings': MoodSwingsIcon,
   frisky: FriskyIcon,
+  good: GoodIcon,
+  diarhea: DiarheaIcon,
+  cramping: CrampsIcon,
   light: LightFlowIcon,
-  medium: LightFlowIcon,
-  heavy: LightFlowIcon,
-  'blood-clots': LightFlowIcon,
+  medium: MediumFlowIcon,
+  heavy: HeavyFlowIcon,
+  'blood-clots': BloodClotsIcon,
 };
 
 interface CustomIconProps extends IconProps {

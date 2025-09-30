@@ -149,6 +149,12 @@ export default function SymptomTracking() {
     },
     {
       id: '8',
+      icon: 'diarhea',
+      name: 'Diarhea',
+      selected: false,
+    },
+    {
+      id: '9',
       icon: 'cravings',
       name: 'Cravings',
       selected: false,

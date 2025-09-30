@@ -8,7 +8,7 @@ interface IconProps {
 
 export const BloatedIcon: React.FC<IconProps> = ({
   size = 24,
-  color = '#DFD0F9',
+  color = '#6580E2',
 }) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
     <Path
