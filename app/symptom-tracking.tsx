@@ -40,7 +40,7 @@ export default function SymptomTracking() {
   const params = useLocalSearchParams();
   const { notes, setNotes } = useNotes();
   const ICON_SIZE = 50;
-  const SYMPTOM_SELECTION_COLOR = '#9168EA';
+  const SYMPTOM_SELECTION_COLOR = '#6580E2';
   const MOOD_SELECTION_COLOR = '#F2C100';
   const FLOW_SELECTION_COLOR = colors.accentPink;
   const [selectedDate, setSelectedDate] = useState<string>(
