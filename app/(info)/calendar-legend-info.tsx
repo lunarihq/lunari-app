@@ -8,7 +8,7 @@ export default function CalendarLegendInfo() {
 
   const legendItems = [
     {
-      title: 'Period Days (Logged)',
+      title: 'Period days (logged)',
       description: 'Days you marked as period days in your cycle.',
       indicator: (
         <View
@@ -26,7 +26,7 @@ export default function CalendarLegendInfo() {
       ),
     },
     {
-      title: 'Predicted Period Days',
+      title: 'Predicted period days',
       description:
         'Expected period days based on your cycle patterns. These are predictions for future cycles.',
       indicator: (
@@ -45,7 +45,7 @@ export default function CalendarLegendInfo() {
       ),
     },
     {
-      title: 'Ovulation Day',
+      title: 'Ovulation day',
       description:
         'Your predicted ovulation day - typically occurs 14 days before your next period.',
       indicator: (
@@ -66,7 +66,7 @@ export default function CalendarLegendInfo() {
       ),
     },
     {
-      title: 'Fertile Window',
+      title: 'Fertile window',
       description:
         'Your fertile days - typically 5 days before ovulation and the day of ovulation.',
       indicator: (
@@ -84,9 +84,9 @@ export default function CalendarLegendInfo() {
       ),
     },
     {
-      title: 'Health Log Indicator',
+      title: 'Health log indicator',
       description:
-        'Small dot below the date number indicates you tracked symptoms, mood, or flow on that day.',
+        'Small dot below the date number indicates you tracked symptoms on that day.',
       indicator: (
         <View
           style={{
@@ -147,7 +147,7 @@ export default function CalendarLegendInfo() {
 
       <View style={{ marginBottom: 32 }}>
         <Text style={[typography.heading2, { marginBottom: 12 }]}>
-          About Predictions
+          About predictions
         </Text>
         <Text style={[typography.body, { lineHeight: 24 }]}>
           Predictions are based on your average cycle length and period patterns.
