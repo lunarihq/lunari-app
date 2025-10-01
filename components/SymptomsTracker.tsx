@@ -124,7 +124,7 @@ export const SymptomsTracker = ({
   return (
     <View style={[styles.symptomsCard, { backgroundColor: colors.surface }]}>
       <Text style={[typography.heading2, titleStyle, { marginBottom: 16 }]}>
-        Symptoms & moods
+        How do you feel today?
       </Text>
 
       <ScrollView
