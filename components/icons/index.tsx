@@ -17,8 +17,8 @@ import { HeavyFlowIcon } from './flows/HeavyFlow';
 import { BloodClotsIcon } from './flows/BloodClots';
 import { CrampsIcon } from './symptoms/Cramps';
 import { DiarheaIcon } from './symptoms/Diarhea';
+import { OkeyIcon } from './symptoms/Okey';
 import { FatigueIcon } from './symptoms/Fatigue';
-import { GoodIcon } from './symptoms/Good';
 import { CravingsIcon } from './symptoms/Cravings';
 import { BloatedIcon } from './symptoms/Bloated';
 
@@ -35,7 +35,6 @@ export type IconName =
   | 'cramps'
   | 'dizziness'
   | 'diarhea'
-  | 'good'
   | 'cramping'
   | 'fatigue'
   | 'bloating'
@@ -59,7 +58,7 @@ export type IconName =
 
 const iconMap: Record<IconName, React.FC<IconProps>> = {
   acne: BloatedIcon,
-  'im-okay': GoodIcon,
+  'im-okay': OkeyIcon,
   apathetic: ApaticIcon,
   headache: BloatedIcon,
   cramps: CrampsIcon,
@@ -79,7 +78,6 @@ const iconMap: Record<IconName, React.FC<IconProps>> = {
   angry: AngryIcon,
   'mood-swings': MoodSwingsIcon,
   frisky: FriskyIcon,
-  good: GoodIcon,
   diarhea: DiarheaIcon,
   cramping: CrampsIcon,
   light: LightFlowIcon,
