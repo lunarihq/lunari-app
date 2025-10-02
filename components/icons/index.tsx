@@ -29,6 +29,7 @@ interface IconProps {
 
 export type IconName =
   | 'acne'
+  | 'im-okay'
   | 'apathetic'
   | 'headache'
   | 'cramps'
@@ -58,6 +59,7 @@ export type IconName =
 
 const iconMap: Record<IconName, React.FC<IconProps>> = {
   acne: BloatedIcon,
+  'im-okay': GoodIcon,
   apathetic: ApaticIcon,
   headache: BloatedIcon,
   cramps: CrampsIcon,
