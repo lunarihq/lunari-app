@@ -21,6 +21,11 @@ import { OkeyIcon } from './symptoms/Okey';
 import { FatigueIcon } from './symptoms/Fatigue';
 import { CravingsIcon } from './symptoms/Cravings';
 import { BloatedIcon } from './symptoms/Bloated';
+import { NauseaIcon } from './symptoms/Nausea';
+import { DischargeIcon } from './symptoms/Discharge';
+import { UrinationIcon } from './symptoms/Urination';
+import { HeadacheIcon } from './symptoms/Headache';
+import { SweatsIcon } from './symptoms/Sweats';
 
 interface IconProps {
   size?: number;
@@ -30,6 +35,10 @@ interface IconProps {
 export type IconName =
   | 'acne'
   | 'im-okay'
+  | 'nausea'
+  | 'night-sweats'
+  | 'vaginal dryness'
+  | 'frequent-urination'
   | 'apathetic'
   | 'headache'
   | 'cramps'
@@ -59,8 +68,12 @@ export type IconName =
 const iconMap: Record<IconName, React.FC<IconProps>> = {
   acne: BloatedIcon,
   'im-okay': OkeyIcon,
+  nausea: NauseaIcon,
+  'vaginal dryness': DischargeIcon,
+  'night-sweats': SweatsIcon,
+  'frequent-urination': UrinationIcon,
   apathetic: ApaticIcon,
-  headache: BloatedIcon,
+  headache: HeadacheIcon,
   cramps: CrampsIcon,
   dizziness: BloatedIcon,
   fatigue: FatigueIcon,

@@ -131,8 +131,8 @@ export default function SymptomTracking() {
     },
     {
       id: '5',
-      icon: 'dizziness',
-      name: 'Dizziness',
+      icon: 'nausea',
+      name: 'Nausea',
       selected: false,
     },
     {
@@ -149,8 +149,8 @@ export default function SymptomTracking() {
     },
     {
       id: '8',
-      icon: 'constipation',
-      name: 'Constipation',
+      icon: 'frequent-urination',
+      name: 'Frequent urination',
       selected: false,
     },
     {
@@ -163,6 +163,18 @@ export default function SymptomTracking() {
       id: '10',
       icon: 'cravings',
       name: 'Cravings',
+      selected: false,
+    },
+    {
+      id: '11',
+      icon: 'vaginal dryness',
+      name: 'Vaginal dryness',
+      selected: false,
+    },
+    {
+      id: '12',
+      icon: 'night-sweats',
+      name: 'Night sweats',
       selected: false,
     },
   ]);
