@@ -65,7 +65,7 @@ export const SymptomsTracker = ({
     if (type === 'symptom' || type === 'mood' || type === 'flow') {
       // Check if this icon name exists in our custom icon system
       const customIconNames = [
-        'acne',
+        'joint-pain',
         'headache',
         'cramps',
         'nausea',
@@ -100,7 +100,7 @@ export const SymptomsTracker = ({
     }
 
     // For any unrecognized icons, use AcneIcon as placeholder
-    return <CustomIcon name="acne" size={54} />;
+    return <CustomIcon name="joint-pain" size={54} />;
   };
 
   // Helper function to get display text for each log item

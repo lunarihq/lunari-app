@@ -113,8 +113,8 @@ export default function SymptomTracking() {
     },
     {
       id: '2',
-      icon: 'acne',
-      name: 'Acne',
+      icon: 'joint-pain',
+      name: 'Joint pain',
       selected: false,
     },
     {
