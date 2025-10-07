@@ -704,7 +704,13 @@ export default function SymptomTracking() {
                     </View>
                   )}
                 </View>
-                <Text style={[typography.caption, { lineHeight: 18 }, { textAlign: 'center' }]}>
+                <Text
+                  style={[
+                    typography.caption,
+                    { lineHeight: 18 },
+                    { textAlign: 'center' },
+                  ]}
+                >
                   {symptom.name}
                 </Text>
               </TouchableOpacity>
@@ -756,7 +762,13 @@ export default function SymptomTracking() {
                     </View>
                   )}
                 </View>
-                <Text style={[typography.caption, { lineHeight: 18 }, { textAlign: 'center' }]}>
+                <Text
+                  style={[
+                    typography.caption,
+                    { lineHeight: 18 },
+                    { textAlign: 'center' },
+                  ]}
+                >
                   {mood.name}
                 </Text>
               </TouchableOpacity>

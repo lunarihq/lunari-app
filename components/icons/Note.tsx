@@ -30,5 +30,3 @@ export const NoteIcon: React.FC<IconProps> = ({
 );
 
 export default NoteIcon;
-
-

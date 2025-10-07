@@ -19,7 +19,9 @@ export default function WelcomeScreen() {
   };
 
   return (
-    <SafeAreaView style={[onboardingStyles.container, { backgroundColor: colors.panel }]}>
+    <SafeAreaView
+      style={[onboardingStyles.container, { backgroundColor: colors.panel }]}
+    >
       <Shape1 style={styles.shape1} color={colors.shape1} />
       <Shape2 style={styles.shape2} color={colors.shape2} />
 
@@ -38,7 +40,12 @@ export default function WelcomeScreen() {
           style={[
             typography.heading1,
             { color: colors.primary },
-            { fontSize: 36, lineHeight: 44, marginBottom: 20, textAlign: 'center' },
+            {
+              fontSize: 36,
+              lineHeight: 44,
+              marginBottom: 20,
+              textAlign: 'center',
+            },
           ]}
         >
           Your body, your data
