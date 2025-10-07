@@ -116,6 +116,13 @@ export const SymptomsTracker = ({
     return name;
   };
 
+  const formatDisplayText = (log: any) => {
+    const text = getDisplayText(log);
+    const words = String(text).trim().split(/\s+/);
+    if (words.length === 2) return `${words[0]}\n${words[1]}`;
+    return text;
+  };
+
   // Get date text for display
   const getDateText = () => {
     const dateToUse = selectedDate || dayjs().format('YYYY-MM-DD');
@@ -150,7 +157,6 @@ export const SymptomsTracker = ({
           </View>
           <Text
             style={[
-              typography.caption,
               {
                 fontSize: 12,
                 fontWeight: '500',
@@ -191,17 +197,15 @@ export const SymptomsTracker = ({
               </View>
               <Text
                 style={[
-                  typography.caption,
                   {
                     fontSize: 12,
-                    fontWeight: '500',
                     textAlign: 'center',
                     color: colors.textSecondary,
                   },
                 ]}
-                numberOfLines={1}
+                numberOfLines={2}
               >
-                {getDisplayText(log)}
+                {formatDisplayText(log)}
               </Text>
             </TouchableOpacity>
           ))

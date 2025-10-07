@@ -704,7 +704,7 @@ export default function SymptomTracking() {
                     </View>
                   )}
                 </View>
-                <Text style={[typography.caption, { textAlign: 'center' }]}>
+                <Text style={[typography.caption, { lineHeight: 18 }, { textAlign: 'center' }]}>
                   {symptom.name}
                 </Text>
               </TouchableOpacity>
@@ -756,7 +756,7 @@ export default function SymptomTracking() {
                     </View>
                   )}
                 </View>
-                <Text style={[typography.caption, { textAlign: 'center' }]}>
+                <Text style={[typography.caption, { lineHeight: 18 }, { textAlign: 'center' }]}>
                   {mood.name}
                 </Text>
               </TouchableOpacity>
@@ -858,6 +858,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     marginBottom: 16,
     padding: 16,
+    paddingBottom: 8,
   },
   sectionHeader: {
     flexDirection: 'row',
@@ -888,9 +889,6 @@ const styles = StyleSheet.create({
   selectedItemIcon: {
     borderWidth: 2,
     borderRadius: 30,
-  },
-  emojiText: {
-    fontSize: 28,
   },
   notesContainer: {
     flexDirection: 'row',
