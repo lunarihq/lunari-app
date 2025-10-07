@@ -113,26 +113,26 @@ export default function SymptomTracking() {
     },
     {
       id: '2',
-      icon: 'joint-pain',
-      name: 'Joint pain',
-      selected: false,
-    },
-    {
-      id: '3',
       icon: 'headache',
       name: 'Headache',
       selected: false,
     },
     {
-      id: '4',
+      id: '3',
       icon: 'cramps',
       name: 'Cramps',
       selected: false,
     },
     {
-      id: '5',
+      id: '4',
       icon: 'nausea',
       name: 'Nausea',
+      selected: false,
+    },
+    {
+      id: '5',
+      icon: 'joint-pain',
+      name: 'Joint pain',
       selected: false,
     },
     {
