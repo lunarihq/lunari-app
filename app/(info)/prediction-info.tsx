@@ -40,13 +40,10 @@ export default function PredictionInfo() {
             Cycle Length Calculation
           </Text>
           <Text style={[typography.body, { lineHeight: 22, marginBottom: 16 }]}>
-            We calculate your average cycle length using a weighted average of
-            your last 6 cycles. Recent cycles have more influence on predictions
-            than older ones.
+          Lunari calculates your average cycle length using a weighted average of your last 6 cycles, a commonly used approach in cycle tracking.
           </Text>
-          <Text style={[typography.caption]}>
-            • Most recent cycle: 100% weight • 2nd cycle back: 80% weight • 3rd
-            cycle back: 60% weight • And so on...
+          <Text style={[typography.body, { lineHeight: 22 }]}>
+          Recent cycles have more influence on predictions than older ones. For example, most recent cycle: 100%, second most recent: 80%, third most recent: 60%, and so on.
           </Text>
         </View>
 
