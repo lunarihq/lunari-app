@@ -48,7 +48,7 @@ const createStyles = (colors: ColorScheme) =>
   StyleSheet.create({
     container: {
       alignItems: 'center',
-      marginBottom: 20,
+      marginBottom: 4,
     },
     checkboxContainer: {
       flexDirection: 'row',

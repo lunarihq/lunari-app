@@ -183,7 +183,11 @@ export default function LastPeriodDateScreen() {
           onToggle={toggleDontKnow}
           text="I don't remember"
         />
-        <Text style={[typography.body, { textAlign: 'center', marginTop: 10 }]}>It's okay, you can do it later.</Text>
+        {dontKnow && (
+          <Text style={[typography.caption, { textAlign: 'center'}]}>
+            It's okay, you can do it later inside the app.
+          </Text>
+        )}
       </View>
 
       <View style={onboardingStyles.footer}>
