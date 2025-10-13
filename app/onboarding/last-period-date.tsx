@@ -23,7 +23,7 @@ export default function LastPeriodDateScreen() {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [dontKnow, setDontKnow] = useState(false);
 
-  const handleGetStarted = async () => {
+  const handleNext = async () => {
     try {
       // Only save last period date if user didn't select "don't know"
       if (!dontKnow && selectedDate) {
@@ -45,12 +45,12 @@ export default function LastPeriodDateScreen() {
         }
       }
 
-      // Complete onboarding and navigate to main app
+      // Complete onboarding and navigate to success screen
       await setSetting('onboardingCompleted', 'true');
-      router.replace('/');
+      router.push('/onboarding/success');
     } catch (error) {
       console.error('Error completing onboarding:', error);
-      router.replace('/');
+      router.push('/onboarding/success');
     }
   };
 
@@ -192,8 +192,8 @@ export default function LastPeriodDateScreen() {
 
       <View style={onboardingStyles.footer}>
         <Button
-          title="Start tracking"
-          onPress={handleGetStarted}
+          title="Continue"
+          onPress={handleNext}
           disabled={!selectedDate && !dontKnow}
           fullWidth
         />
