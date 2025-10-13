@@ -84,14 +84,15 @@ export default function CalendarLegendInfo() {
             alignItems: 'center',
             justifyContent: 'center',
             position: 'relative',
+            marginTop: -6,
           }}
         >
           <View
             style={{
               position: 'absolute',
               bottom: 2,
-              width: 6,
-              height: 6,
+              width: 7,
+              height: 7,
               borderRadius: 8,
               backgroundColor: colors.primary,
             }}
