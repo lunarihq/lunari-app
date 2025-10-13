@@ -65,20 +65,7 @@ export default function PeriodLengthScreen() {
         <Text
           style={[typography.heading2, { marginBottom: 20, textAlign: 'left' }]}
         >
-          How long is usually your period?
-        </Text>
-        <Text
-          style={[
-            typography.body,
-            {
-              textAlign: 'left',
-              lineHeight: 22,
-              color: colors.textSecondary,
-              marginBottom: 40,
-            },
-          ]}
-        >
-          Improves your cycle predictions.
+          How long does your period usually last?
         </Text>
 
         <DayPicker
