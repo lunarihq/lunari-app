@@ -101,7 +101,7 @@ export default function CycleLengthScreen() {
       </View>
 
       <View style={onboardingStyles.footer}>
-        <Button title="Next" onPress={handleGetStarted} fullWidth />
+        <Button title="Continue" onPress={handleGetStarted} fullWidth />
       </View>
     </SafeAreaView>
   );

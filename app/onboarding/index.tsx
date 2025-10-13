@@ -48,7 +48,7 @@ export default function WelcomeScreen() {
             },
           ]}
         >
-          Your body, your data
+          Your period, your data.
         </Text>
         <Text
           style={[
@@ -66,7 +66,7 @@ export default function WelcomeScreen() {
       </View>
 
       <View style={onboardingStyles.footer}>
-        <Button title="Get Started" onPress={handleNext} fullWidth />
+        <Button title="Get started" onPress={handleNext} fullWidth />
       </View>
     </SafeAreaView>
   );

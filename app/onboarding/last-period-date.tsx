@@ -192,7 +192,7 @@ export default function LastPeriodDateScreen() {
 
       <View style={onboardingStyles.footer}>
         <Button
-          title="Get Started"
+          title="Start tracking"
           onPress={handleGetStarted}
           disabled={!selectedDate && !dontKnow}
           fullWidth
