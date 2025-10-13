@@ -157,8 +157,8 @@ export default function LastPeriodDateScreen() {
               );
             }}
             theme={{
-              backgroundColor: colors.surfaceVariant2,
-              calendarBackground: colors.surfaceVariant2,
+              backgroundColor: colors.surfaceVariant,
+              calendarBackground: colors.surfaceVariant,
               textSectionTitleColor: colors.textPrimary,
               selectedDayBackgroundColor: colors.primary,
               selectedDayTextColor: colors.white,

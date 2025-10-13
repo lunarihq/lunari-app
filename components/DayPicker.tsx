@@ -75,7 +75,7 @@ const createStyles = (colors: ColorScheme) =>
       alignItems: 'center',
       justifyContent: 'center',
       marginBottom: 40,
-      backgroundColor: colors.surface,
+      backgroundColor: colors.surfaceVariant,
       paddingHorizontal: 16,
       paddingBottom: 24,
       paddingTop: 16,

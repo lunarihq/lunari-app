@@ -5,7 +5,7 @@ export const createOnboardingStyles = (colors: ColorScheme) =>
   StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colors.background,
+      backgroundColor: colors.panel,
     },
     header: {
       flexDirection: 'row',
