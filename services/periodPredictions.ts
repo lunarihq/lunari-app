@@ -240,15 +240,15 @@ export class PeriodPredictionService {
   static getPossibleSymptoms(phase: string): string {
     switch (phase) {
       case 'Menstrual':
-        return 'Cramps, bloating, fatigue, headaches, mood swings, back pain, breast tenderness, and heavy or light bleeding.';
+        return 'Your period is here. Cramps, fatigue, and mood swings are common. Estrogen and progesterone are at their lowest. Rest up and be gentle with yourself.';
       case 'Follicular':
-        return 'Increased energy, improved mood, clearer skin, higher motivation, and generally feeling more positive and active.';
+        return 'Your body is preparing to release an egg. Rising estrogen brings more energy, better mood, and clearer skin. Great time to tackle new projects or intense workouts.';
       case 'Ovulatory':
-        return 'Increased libido, mild pelvic pain, changes in cervical mucus, breast tenderness, and heightened energy levels.';
+        return 'Ovulation is happening or about to. Peak fertility window. You might feel more energetic, social, and notice increased sex drive. Estrogen peaks right before ovulation.';
       case 'Luteal':
-        return 'PMS symptoms including bloating, mood changes, irritability, food cravings, breast tenderness, fatigue, and acne.';
+        return 'After ovulation, progesterone rises to prepare for potential pregnancy. PMS symptoms like bloating, mood swings, cravings, and fatigue are common. Your body temperature is slightly higher.';
       case 'Extended':
-        return 'Irregular symptoms may occur. You might experience fatigue, mood changes, or other cycle-related symptoms.';
+        return 'Your cycle is running longer than usual (past day 35). This can be normal occasionally, but if it happens often, consider tracking patterns and chatting with a healthcare provider.';
       default:
         return '';
     }
