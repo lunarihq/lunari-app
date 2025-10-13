@@ -28,8 +28,12 @@ export function CycleOverviewWidget({
   currentCycleDay,
   averageCycleLength,
 }: CycleOverviewWidgetProps) {
-  const { colors } = useTheme();
+  const { colors, isDark } = useTheme();
   const typography = createTypography(colors);
+
+  const isPredictedPeriodDay = prediction?.days === 0;
+  const isSpecialDay = isPeriodDay || isPredictedPeriodDay;
+  const circleTextColor = isSpecialDay && isDark ? colors.black : colors.textPrimary;
 
   return (
     <View style={styles.predictionCard}>
@@ -39,11 +43,16 @@ export function CycleOverviewWidget({
           strokeWidth={3}
           dashLength={3}
           dashCount={120}
+          strokeColor={isSpecialDay ? colors.predictionCirclePeriodOuter : undefined}
         />
         <View
           style={[
             styles.predictionInnerCircle,
-            { backgroundColor: colors.predictionCircleBackground },
+            {
+              backgroundColor: isSpecialDay
+                ? colors.predictionCirclePeriodBackground
+                : colors.predictionCircleBackground,
+            },
           ]}
         >
           {isPeriodDay ? (
@@ -52,6 +61,7 @@ export function CycleOverviewWidget({
                 style={[
                   typography.body,
                   { fontWeight: '500', marginBottom: 20 },
+                  { color: circleTextColor },
                 ]}
               >
                 {getFormattedDate(currentDate)}
@@ -60,6 +70,7 @@ export function CycleOverviewWidget({
                 style={[
                   typography.heading2,
                   { fontSize: 22, fontWeight: '500' },
+                  { color: circleTextColor },
                 ]}
               >
                 Period
@@ -73,6 +84,7 @@ export function CycleOverviewWidget({
                     marginBottom: 8,
                     paddingHorizontal: 8,
                   },
+                  { color: circleTextColor },
                 ]}
               >
                 Day {periodDayNumber}
@@ -84,6 +96,7 @@ export function CycleOverviewWidget({
                 style={[
                   typography.body,
                   { fontWeight: '500', marginBottom: 20 },
+                  { color: circleTextColor },
                 ]}
               >
                 {getFormattedDate(currentDate)}
@@ -94,6 +107,7 @@ export function CycleOverviewWidget({
                     style={[
                       typography.heading2,
                       { fontSize: 22, fontWeight: '500' },
+                      { color: circleTextColor },
                     ]}
                   >
                     Expected period in
@@ -107,6 +121,7 @@ export function CycleOverviewWidget({
                         marginBottom: 8,
                         paddingHorizontal: 8,
                       },
+                      { color: circleTextColor },
                     ]}
                   >
                     {prediction.days} {prediction.days === 1 ? 'day' : 'days'}
@@ -123,6 +138,7 @@ export function CycleOverviewWidget({
                       marginBottom: 32,
                       paddingHorizontal: 16,
                     },
+                    { color: circleTextColor },
                   ]}
                 >
                   Your period is expected today
@@ -133,6 +149,7 @@ export function CycleOverviewWidget({
                     style={[
                       typography.heading2,
                       { fontSize: 22, fontWeight: '500' },
+                      { color: circleTextColor },
                     ]}
                   >
                     Late for
@@ -146,6 +163,7 @@ export function CycleOverviewWidget({
                         marginBottom: 8,
                         paddingHorizontal: 8,
                       },
+                      { color: circleTextColor },
                     ]}
                   >
                     {Math.abs(prediction.days)}{' '}
@@ -164,6 +182,7 @@ export function CycleOverviewWidget({
                 style={[
                   typography.body,
                   { fontWeight: '500', marginBottom: 20 },
+                  { color: circleTextColor },
                 ]}
               >
                 {getFormattedDate(currentDate)}
@@ -179,6 +198,7 @@ export function CycleOverviewWidget({
                     paddingHorizontal: 16,
                     marginBottom: 16,
                   },
+                  { color: circleTextColor },
                 ]}
               >
                 Log the first day of your last period for next prediction.
@@ -192,7 +212,11 @@ export function CycleOverviewWidget({
                 : 'Log period'
             }
             onPress={() => router.push('/edit-period')}
-            style={{ marginVertical: 16 }}
+            style={
+              isSpecialDay
+                ? { marginVertical: 16, backgroundColor: colors.accentPink }
+                : { marginVertical: 16 }
+            }
           />
         </View>
       </View>
