@@ -34,6 +34,27 @@ export default function Settings() {
       <View style={[styles.section, { backgroundColor: colors.surface }]}>
         <TouchableOpacity
           style={[styles.settingRow, { borderBottomColor: colors.border }]}
+          onPress={() => router.push('/settings/calendar-view')}
+        >
+          <View style={styles.iconContainer}>
+            <Ionicons
+              name="calendar-outline"
+              size={24}
+              color={colors.textPrimary}
+            />
+          </View>
+          <Text style={[typography.body, { fontSize: 18, flex: 1 }]}>
+            Calendar view
+          </Text>
+          <Ionicons
+            name="chevron-forward"
+            size={24}
+            color={colors.textPrimary}
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.settingRow, { borderBottomColor: colors.border }]}
           onPress={() => router.push('/settings/reminders')}
         >
           <View style={styles.iconContainer}>

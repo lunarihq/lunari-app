@@ -2,6 +2,7 @@
 import React from 'react';
 import { HappyIcon } from './moods/Happy';
 import { AngryIcon } from './moods/Angry';
+import { EnergeticIcon } from './moods/Energetic';
 import { SadIcon } from './moods/Sad';
 import { AnxiousIcon } from './moods/Anxious';
 import { FriskyIcon } from './moods/Frisky';
@@ -44,7 +45,7 @@ export type IconName =
   | 'headache'
   | 'cramps'
   | 'dizziness'
-  | 'diarhea'
+  | 'diarrhea'
   | 'cramping'
   | 'fatigue'
   | 'bloating'
@@ -84,7 +85,7 @@ const iconMap: Record<IconName, React.FC<IconProps>> = {
   cravings: CravingsIcon,
   calm: CalmIcon,
   happy: HappyIcon,
-  energetic: HappyIcon,
+  energetic: EnergeticIcon,
   sad: SadIcon,
   anxious: AnxiousIcon,
   confused: ConfusedIcon,
@@ -92,7 +93,7 @@ const iconMap: Record<IconName, React.FC<IconProps>> = {
   angry: AngryIcon,
   'mood-swings': MoodSwingsIcon,
   frisky: FriskyIcon,
-  diarhea: DiarheaIcon,
+  diarrhea: DiarheaIcon,
   cramping: CrampsIcon,
   light: LightFlowIcon,
   medium: MediumFlowIcon,

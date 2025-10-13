@@ -23,10 +23,13 @@ import { formatDateString } from '../../types/calendarTypes';
 import { useCalendarData } from '../../hooks/useCalendarData';
 import { useCalendarMarkedDates } from '../../hooks/useCalendarMarkedDates';
 import { useCycleCalculations } from '../../hooks/useCycleCalculations';
+import { getSetting } from '../../db';
 
 export default function CalendarScreen() {
   const { colors } = useTheme();
   const isFocused = useIsFocused();
+  const [showOvulation, setShowOvulation] = useState(true);
+  const [showFuturePeriods, setShowFuturePeriods] = useState(true);
 
   const {
     firstPeriodDate,
@@ -41,7 +44,13 @@ export default function CalendarScreen() {
     generateMarkedDates,
     getMarkedDatesWithSelection,
     getSelectionMarkedDates,
-  } = useCalendarMarkedDates({ colors, userCycleLength, userPeriodLength });
+  } = useCalendarMarkedDates({
+    colors,
+    userCycleLength,
+    userPeriodLength,
+    showOvulation,
+    showFuturePeriods,
+  });
 
   const { cycleDay, setCycleDay, calculateCycleDay } = useCycleCalculations({
     firstPeriodDate,
@@ -61,6 +70,50 @@ export default function CalendarScreen() {
   );
   const params = useLocalSearchParams();
   const navigation = useNavigation();
+
+  // Load calendar view settings on mount
+  useEffect(() => {
+    async function loadCalendarSettings() {
+      const ovulationSetting = await getSetting('show_ovulation');
+      const futurePeriodsSetting = await getSetting('show_future_periods');
+
+      setShowOvulation(ovulationSetting !== 'false');
+      setShowFuturePeriods(futurePeriodsSetting !== 'false');
+    }
+
+    loadCalendarSettings();
+  }, []);
+
+  // Listen for calendar settings changes
+  useEffect(() => {
+    const listener = DeviceEventEmitter.addListener(
+      'calendarSettingsChanged',
+      async () => {
+        const ovulationSetting = await getSetting('show_ovulation');
+        const futurePeriodsSetting = await getSetting('show_future_periods');
+
+        setShowOvulation(ovulationSetting !== 'false');
+        setShowFuturePeriods(futurePeriodsSetting !== 'false');
+
+        // Reload calendar data to apply new settings
+        const result = await loadData();
+        if (
+          result &&
+          result.periodDates &&
+          result.mostRecentStart &&
+          result.periods
+        ) {
+          await generateMarkedDates(
+            result.periodDates,
+            result.mostRecentStart,
+            result.periods
+          );
+        }
+      }
+    );
+
+    return () => listener.remove();
+  }, [loadData, generateMarkedDates]);
 
   // Check if we should navigate to the period calendar screen from URL params
   useEffect(() => {

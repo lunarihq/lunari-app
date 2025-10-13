@@ -155,8 +155,8 @@ export default function SymptomTracking() {
     },
     {
       id: '9',
-      icon: 'diarhea',
-      name: 'Diarhea',
+      icon: 'diarrhea',
+      name: 'Diarrhea',
       selected: false,
     },
     {

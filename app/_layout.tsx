@@ -114,6 +114,22 @@ function AppContent() {
         <Stack.Screen name="onboarding" options={{ headerShown: false }} />
         <Stack.Screen name="edit-period" options={{ headerShown: false }} />
         <Stack.Screen
+          name="settings/calendar-view"
+          options={{
+            headerShown: true,
+            headerTitle: 'Calendar view',
+            headerShadowVisible: false,
+            headerStyle: {
+              backgroundColor: isDark
+                ? darkColors.background
+                : lightColors.background,
+            },
+            headerTintColor: isDark
+              ? darkColors.textPrimary
+              : lightColors.textPrimary,
+          }}
+        />
+        <Stack.Screen
           name="settings/reminders"
           options={{
             headerShown: true,

@@ -16,6 +16,8 @@ interface UseCalendarMarkedDatesProps {
   };
   userCycleLength: number;
   userPeriodLength: number;
+  showOvulation?: boolean;
+  showFuturePeriods?: boolean;
 }
 
 /**
@@ -25,6 +27,8 @@ export function useCalendarMarkedDates({
   colors,
   userCycleLength,
   userPeriodLength,
+  showOvulation = true,
+  showFuturePeriods = true,
 }: UseCalendarMarkedDatesProps) {
   const [baseMarkedDates, setBaseMarkedDates] = useState<MarkedDates>({});
 
@@ -61,19 +65,34 @@ export function useCalendarMarkedDates({
           allPeriods
         );
 
-        // Apply styling to fertility dates (past and present cycles)
-        Object.entries(fertilityDates).forEach(([dateString, prediction]) => {
-          // Only apply fertility style if this is not an actual period date
-          if (!allMarkedDates[dateString]?.selected) {
-            allMarkedDates[dateString] = getCalendarDateStyle(
-              prediction.type,
-              colors
-            );
-          }
-        });
+        // Apply styling to fertility dates (past and present cycles) - only if ovulation is enabled
+        if (showOvulation) {
+          Object.entries(fertilityDates).forEach(([dateString, prediction]) => {
+            // Only apply fertility style if this is not an actual period date
+            if (!allMarkedDates[dateString]?.selected) {
+              allMarkedDates[dateString] = getCalendarDateStyle(
+                prediction.type,
+                colors
+              );
+            }
+          });
+        }
 
-        // Apply styling to predicted dates (future cycles only)
+        // Apply styling to predicted dates (future cycles only) - filter based on settings
         Object.entries(predictedDates).forEach(([dateString, prediction]) => {
+          // Skip ovulation/fertile dates if ovulation is disabled
+          if (
+            !showOvulation &&
+            (prediction.type === 'ovulation' || prediction.type === 'fertile')
+          ) {
+            return;
+          }
+
+          // Skip future period dates if future periods is disabled
+          if (!showFuturePeriods && prediction.type === 'period') {
+            return;
+          }
+
           // Only apply prediction style if this is not an actual period date and not already a fertility date
           if (!allMarkedDates[dateString]?.selected) {
             allMarkedDates[dateString] = getCalendarDateStyle(
@@ -100,7 +119,7 @@ export function useCalendarMarkedDates({
       // Store base marked dates (without selection highlight)
       setBaseMarkedDates(allMarkedDates);
     },
-    [colors, generatePredictions, loadHealthLogDates]
+    [colors, generatePredictions, loadHealthLogDates, showOvulation, showFuturePeriods]
   );
 
   // Generate marked dates with highlighting for a specific selected date

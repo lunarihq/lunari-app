@@ -72,7 +72,7 @@ export const SymptomsTracker = ({
         'night-sweats',
         'vaginal dryness',
         'frequent-urination',
-        'diarhea',
+        'diarrhea',
         'fatigue',
         'bloating',
         'cravings',
