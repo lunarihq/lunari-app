@@ -200,7 +200,7 @@ export class PeriodPredictionService {
       case 'Follicular':
         return 'The follicular phase is the first part of the menstrual cycle, starting with the first day of your period and ending with ovulation. Energy levels start to rise with increasing estrogen. Good time for starting new projects and physical activity.';
       case 'Ovulatory':
-        return 'Ovulation is the release of an egg from the ovary. This is the peak fertility window. It typically occurs around day 14 of your cycle. You might notice increased energy, better mood, and heightened sex drive.';
+        return 'Ovulation is the release of an egg from the ovary. This is the peak fertility window, and it typically occurs around day 14 of your cycle.';
       case 'Luteal':
         return 'The luteal phase is the second part of the menstrual cycle, lasting from ovulation until the start of your next period, and typically lasts about 12–14 days.\n\nDuring this time, the body prepares for a potential pregnancy by thickening the uterine lining. If fertilization does not occur, hormone levels drop, and menstruation begins.';
       case 'Extended':
