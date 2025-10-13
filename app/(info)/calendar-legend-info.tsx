@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, Image } from 'react-native';
 import defaultTheme, { useTheme, createTypography } from '../../styles/theme';
 
 export default function CalendarLegendInfo() {
@@ -8,51 +8,44 @@ export default function CalendarLegendInfo() {
 
   const legendItems = [
     {
-      title: 'Period days (logged)',
-      description: 'Days you marked as period days in your cycle.',
+      title: 'Period days',
       indicator: (
         <View
           style={{
-            width: 40,
-            height: 40,
+            width: 24,
+            height: 24,
             borderRadius: 24,
             backgroundColor: colors.accentPink,
             alignItems: 'center',
             justifyContent: 'center',
           }}
         >
-          <Text style={{ color: colors.white, fontSize: 16 }}>15</Text>
         </View>
       ),
     },
     {
-      title: 'Predicted period days',
-      description:
-        'Expected period days based on your cycle patterns. These are predictions for future cycles.',
+      title: 'Predicted future period days',
       indicator: (
         <View
           style={{
-            width: 40,
-            height: 40,
+            width: 24,
+            height: 24,
             borderRadius: 24,
             backgroundColor: colors.accentPinkLight,
             alignItems: 'center',
             justifyContent: 'center',
           }}
         >
-          <Text style={{ color: colors.accentPink, fontSize: 16 }}>22</Text>
         </View>
       ),
     },
     {
       title: 'Ovulation day',
-      description:
-        'Your predicted ovulation day - typically occurs 14 days before your next period.',
       indicator: (
         <View
           style={{
-            width: 40,
-            height: 40,
+            width: 24,
+            height: 24,
             borderRadius: 24,
             borderWidth: 1.6,
             borderColor: colors.accentBlue,
@@ -61,19 +54,16 @@ export default function CalendarLegendInfo() {
             justifyContent: 'center',
           }}
         >
-          <Text style={{ color: colors.accentBlue, fontSize: 16 }}>14</Text>
         </View>
       ),
     },
     {
       title: 'Fertile window',
-      description:
-        'Your fertile days - typically 5 days before ovulation and the day of ovulation.',
       indicator: (
         <View
           style={{
-            width: 40,
-            height: 40,
+            width: 24,
+            height: 24,
             borderRadius: 16,
             alignItems: 'center',
             justifyContent: 'center',
@@ -84,21 +74,18 @@ export default function CalendarLegendInfo() {
       ),
     },
     {
-      title: 'Health log indicator',
-      description:
-        'Small dot below the date number indicates you tracked symptoms on that day.',
+      title: 'Symptoms log indicator',
       indicator: (
         <View
           style={{
-            width: 40,
-            height: 40,
+            width: 24,
+            height: 24,
             borderRadius: 16,
             alignItems: 'center',
             justifyContent: 'center',
             position: 'relative',
           }}
         >
-          <Text style={{ color: colors.textPrimary, fontSize: 16 }}>8</Text>
           <View
             style={{
               position: 'absolute',
@@ -123,6 +110,19 @@ export default function CalendarLegendInfo() {
       contentContainerStyle={defaultTheme.globalStyles.scrollContentContainer}
       showsVerticalScrollIndicator={false}
     >
+      <Image
+        source={require('../../assets/images/calendar.png')}
+        style={{
+          width: '100%',
+          height: 300,
+          marginBottom: 24,
+          resizeMode: 'stretch',
+          borderRadius: 16,
+          borderWidth: 1,
+          borderColor: colors.border,
+
+        }}
+      />
       {legendItems.map((item, index) => (
         <View
           key={index}
@@ -132,15 +132,12 @@ export default function CalendarLegendInfo() {
             alignItems: 'flex-start',
           }}
         >
-          <View style={{ marginRight: 16, marginTop: 4 }}>
+          <View style={{ marginRight: 12}}>
             {item.indicator}
           </View>
           <View style={{ flex: 1 }}>
-            <Text style={[typography.heading3, { marginBottom: 8 }]}>
+            <Text style={[typography.body]}>
               {item.title}
-            </Text>
-            <Text style={[typography.body, { lineHeight: 24 }]}>
-              {item.description}
             </Text>
           </View>
         </View>
