@@ -24,7 +24,7 @@ export default function CalendarLegendInfo() {
       ),
     },
     {
-      title: 'Predicted future period days',
+      title: 'Future period prediction',
       indicator: (
         <View
           style={{
