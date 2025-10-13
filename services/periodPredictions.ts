@@ -196,15 +196,15 @@ export class PeriodPredictionService {
   static getPhaseDescription(phase: string): string {
     switch (phase) {
       case 'Menstrual':
-        return 'Your period is happening. You might experience cramps, fatigue, and mood changes. Focus on rest and self-care.';
+        return 'The period, or menstruation, is when the lining of the uterus sheds and leaves the body through vaginal bleeding. It typically lasts 3–7 days, but can vary widely. During this time, the body prepares for a potential pregnancy by thickening the uterine lining. If fertilization does not occur, hormone levels drop, and menstruation begins.';
       case 'Follicular':
-        return 'Energy levels start to rise with increasing estrogen. Good time for starting new projects and physical activity.';
+        return 'The follicular phase is the first part of the menstrual cycle, starting with the first day of your period and ending with ovulation. Energy levels start to rise with increasing estrogen. Good time for starting new projects and physical activity.';
       case 'Ovulatory':
-        return 'Peak fertility window. You might notice increased energy, better mood, and heightened sex drive.';
+        return 'Ovulation is the release of an egg from the ovary. This is the peak fertility window. It typically occurs around day 14 of your cycle. You might notice increased energy, better mood, and heightened sex drive.';
       case 'Luteal':
-        return 'Progesterone rises. You might experience PMS symptoms like bloating or mood changes. Focus on gentle exercise and comfort.';
+        return 'The luteal phase is the second part of the menstrual cycle, lasting from ovulation until the start of your next period, and typically lasts about 12–14 days.\n\nDuring this time, the body prepares for a potential pregnancy by thickening the uterine lining. If fertilization does not occur, hormone levels drop, and menstruation begins.';
       case 'Extended':
-        return 'Your cycle has gone longer than typical. Consider tracking any symptoms and consulting your healthcare provider if this persists.';
+        return 'Your cycle is running longer than usual (past day 35). This can be normal occasionally, but if it happens often, consider tracking patterns and chatting with a healthcare provider.';
       default:
         return '';
     }
@@ -240,15 +240,15 @@ export class PeriodPredictionService {
   static getPossibleSymptoms(phase: string): string {
     switch (phase) {
       case 'Menstrual':
-        return 'Your period is here. Cramps, fatigue, and mood swings are common. Estrogen and progesterone are at their lowest. Rest up and be gentle with yourself.';
+        return 'Cramps, fatigue, mood swings, bloating, headaches, and lower back pain. Your energy and mood may be lower than usual.';
       case 'Follicular':
-        return 'Your body is preparing to release an egg. Rising estrogen brings more energy, better mood, and clearer skin. Great time to tackle new projects or intense workouts.';
+        return 'Rising energy, improved mood, clearer skin, and increased motivation. You may feel more social and confident.';
       case 'Ovulatory':
-        return 'Ovulation is happening or about to. Peak fertility window. You might feel more energetic, social, and notice increased sex drive. Estrogen peaks right before ovulation.';
+        return 'Peak energy, heightened sex drive, increased confidence, and possible mild cramping or spotting. You may feel your most attractive.';
       case 'Luteal':
-        return 'After ovulation, progesterone rises to prepare for potential pregnancy. PMS symptoms like bloating, mood swings, cravings, and fatigue are common. Your body temperature is slightly higher.';
+        return 'Bloating, mood swings, food cravings, fatigue, breast tenderness, and irritability. These PMS symptoms typically worsen as your period approaches.';
       case 'Extended':
-        return 'Your cycle is running longer than usual (past day 35). This can be normal occasionally, but if it happens often, consider tracking patterns and chatting with a healthcare provider.';
+        return '';
       default:
         return '';
     }

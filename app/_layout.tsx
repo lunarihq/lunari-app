@@ -246,7 +246,7 @@ function AppContent() {
           name="(info)/cycle-phase-details"
           options={{
             headerShown: true,
-            headerTitle: 'Cycle phase details',
+            headerTitle: 'Today\'s insights',
             headerShadowVisible: true,
             headerStyle: {
               backgroundColor: isDark

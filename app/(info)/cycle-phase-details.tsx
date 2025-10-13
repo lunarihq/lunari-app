@@ -9,6 +9,29 @@ const getFormattedDate = (date: Date): string => {
   return `Today, ${date.getDate()} ${date.toLocaleDateString('en-US', { month: 'short' })}`;
 };
 
+const getCycleStartDate = (cycleDay: number): Date => {
+  const today = new Date();
+  const cycleStartDate = new Date(today);
+  cycleStartDate.setDate(today.getDate() - (cycleDay - 1));
+  return cycleStartDate;
+};
+
+const getFormattedCycleStart = (cycleDay: number): string => {
+  if (cycleDay === 1) {
+    return 'Your cycle started today';
+  }
+  
+  const cycleStartDate = getCycleStartDate(cycleDay);
+  const today = new Date();
+  const isToday = cycleStartDate.toDateString() === today.toDateString();
+  
+  if (isToday) {
+    return 'Your cycle started today';
+  }
+  
+  return `This cycle started on ${cycleStartDate.getDate()} ${cycleStartDate.toLocaleDateString('en-US', { month: 'short' })}`;
+};
+
 export default function CyclePhaseDetails() {
   const { colors } = useTheme();
   const typography = createTypography(colors);
@@ -57,10 +80,24 @@ export default function CyclePhaseDetails() {
         <Text
           style={[
             typography.heading1,
-            { textAlign: 'center', marginBottom: 24 },
+            { textAlign: 'center', marginBottom: 8 },
           ]}
         >
           Cycle day {cycleDay}
+        </Text>
+
+        <Text
+          style={[
+            typography.body,
+            { 
+              textAlign: 'center', 
+              marginBottom: 24, 
+              color: colors.textSecondary,
+              fontSize: 16 
+            },
+          ]}
+        >
+          {getFormattedCycleStart(cycleDay)}
         </Text>
 
         <View style={[styles.phaseCard, { backgroundColor: colors.surface }]}>
