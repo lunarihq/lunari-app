@@ -65,7 +65,7 @@ export default function PeriodLengthScreen() {
         <Text
           style={[typography.heading2, { marginBottom: 20, textAlign: 'left' }]}
         >
-          How long is your period?
+          How long is usually your period?
         </Text>
         <Text
           style={[
@@ -78,7 +78,7 @@ export default function PeriodLengthScreen() {
             },
           ]}
         >
-          This helps us provide more accurate predictions for your cycle.
+          Improves your cycle predictions.
         </Text>
 
         <DayPicker
@@ -92,7 +92,7 @@ export default function PeriodLengthScreen() {
         <Checkbox
           checked={dontKnow}
           onToggle={toggleDontKnow}
-          subText="Starts with 5 days, and then adjust as you log cycles."
+          subText="The app will use 5 days as a default, and then adjust as you log cycles."
         />
       </View>
 

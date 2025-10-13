@@ -187,24 +187,12 @@ export default function Stats() {
         style={[
           typography.heading2,
           {
-            fontSize: 24,
-            fontWeight: '500',
-            marginBottom: 12,
-            textAlign: 'center',
-          },
-        ]}
-      >
-        No period data yet
-      </Text>
-      <Text
-        style={[
-          typography.body,
-          {
-            lineHeight: 24,
-            textAlign: 'center',
+            fontSize: 22,
+            fontWeight: '400',
+            lineHeight: 32,
             marginBottom: 32,
-            paddingHorizontal: 16,
-            color: colors.textSecondary,
+            textAlign: 'center',
+            paddingHorizontal: 8,
           },
         ]}
       >
