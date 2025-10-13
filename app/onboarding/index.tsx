@@ -38,13 +38,13 @@ export default function WelcomeScreen() {
         />
         <Text
           style={[
-            typography.heading1,
             { color: colors.primary },
             {
-              fontSize: 36,
+              fontSize: 33,
               lineHeight: 44,
               marginBottom: 20,
               textAlign: 'center',
+              fontFamily: 'BricolageGrotesque_700Bold',
             },
           ]}
         >
@@ -58,10 +58,11 @@ export default function WelcomeScreen() {
               lineHeight: 24,
               marginBottom: 40,
               textAlign: 'center',
+              paddingHorizontal: 16,
             },
           ]}
         >
-          Period tracking that never leaves your phone.
+          Track your menstrual cycle without giving up your privacy.
         </Text>
       </View>
 

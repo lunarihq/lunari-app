@@ -11,6 +11,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { lightColors, darkColors } from '../styles/colors';
 import Toast, { BaseToast, ErrorToast } from 'react-native-toast-message';
+import { useFonts, BricolageGrotesque_700Bold } from '@expo-google-fonts/bricolage-grotesque';
 
 // Shared toast styles
 const toastConfig = {
@@ -30,6 +31,11 @@ function AppContent() {
     useRef<Notifications.Subscription | null>(null);
   const { isLocked, isAuthenticated } = useAuth();
   const { isDark } = useTheme();
+
+  // Load fonts
+  const [fontsLoaded] = useFonts({
+    BricolageGrotesque_700Bold,
+  });
 
   // Initialize notification response listener only (don't request permissions yet)
   useEffect(() => {
@@ -93,7 +99,7 @@ function AppContent() {
     }
   }, [isReady, onboardingCompleted, pathname, router, initialRender]);
 
-  if (!isReady) {
+  if (!isReady || !fontsLoaded) {
     return null;
   }
 

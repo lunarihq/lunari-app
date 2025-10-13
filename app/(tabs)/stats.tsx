@@ -188,7 +188,7 @@ export default function Stats() {
           typography.heading2,
           {
             fontSize: 22,
-            fontWeight: '400',
+            fontWeight: '500',
             lineHeight: 32,
             marginBottom: 32,
             textAlign: 'center',

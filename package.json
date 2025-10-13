@@ -16,6 +16,7 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "@expo-google-fonts/bricolage-grotesque": "^0.4.1",
     "@expo/metro-runtime": "~6.1.2",
     "@expo/vector-icons": "^15.0.2",
     "@gorhom/bottom-sheet": "^5.1.8",
