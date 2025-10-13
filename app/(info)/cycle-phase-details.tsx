@@ -57,7 +57,7 @@ export default function CyclePhaseDetails() {
         <Text
           style={[
             typography.heading1,
-            { textAlign: 'center', marginBottom: 32 },
+            { textAlign: 'center', marginBottom: 24 },
           ]}
         >
           Cycle day {cycleDay}
@@ -65,12 +65,14 @@ export default function CyclePhaseDetails() {
 
         <View style={[styles.phaseCard, { backgroundColor: colors.surface }]}>
           <View style={styles.phaseHeader}>
-            <Ionicons
-              name="sync-outline"
-              size={24}
-              color={colors.textPrimary}
-            />
-            <Text style={[typography.heading2, { marginLeft: 8 }]}>
+            <View style={[styles.iconCircle, { backgroundColor: colors.accentPinkLight }]}>
+              <Ionicons
+                name="sync-outline"
+                size={28}
+                color={colors.accentPink}
+              />
+            </View>
+            <Text style={[typography.heading2, { marginLeft: 12 }]}>
               Cycle phase
             </Text>
           </View>
@@ -84,19 +86,21 @@ export default function CyclePhaseDetails() {
             {cyclePhase}
           </Text>
 
-          <Text style={[typography.body, { fontSize: 18, lineHeight: 24 }]}>
+          <Text style={[typography.body, { fontSize: 17, lineHeight: 23 }]}>
             {phaseDescription}
           </Text>
         </View>
 
         <View style={[styles.phaseCard, { backgroundColor: colors.surface }]}>
           <View style={styles.phaseHeader}>
-            <Ionicons
-              name="leaf-outline"
-              size={24}
-              color={colors.textPrimary}
-            />
-            <Text style={[typography.heading2, { marginLeft: 8 }]}>
+            <View style={[styles.iconCircle, { backgroundColor: colors.accentPinkLight }]}>
+              <Ionicons
+                name="leaf-outline"
+                size={28}
+                color={colors.accentPink}
+              />
+            </View>
+            <Text style={[typography.heading2, { marginLeft: 12 }]}>
               Chance to conceive
             </Text>
           </View>
@@ -110,23 +114,25 @@ export default function CyclePhaseDetails() {
             {pregnancyChance}
           </Text>
 
-          <Text style={[typography.body, { fontSize: 18, lineHeight: 24 }]}>
+          <Text style={[typography.body, { fontSize: 17, lineHeight: 23 }]}>
             {pregnancyDescription}
           </Text>
         </View>
 
         <View style={[styles.phaseCard, { backgroundColor: colors.surface }]}>
           <View style={styles.phaseHeader}>
-            <Ionicons
-              name="medical-outline"
-              size={24}
-              color={colors.textPrimary}
-            />
-            <Text style={[typography.heading2, { marginLeft: 8 }]}>
+            <View style={[styles.iconCircle, { backgroundColor: colors.accentPinkLight }]}>
+              <Ionicons
+                name="thermometer-outline"
+                size={28}
+                color={colors.accentPink}
+              />
+            </View>
+            <Text style={[typography.heading2, { marginLeft: 12 }]}>
               Possible symptoms
             </Text>
           </View>
-          <Text style={[typography.body, { fontSize: 18, lineHeight: 24 }]}>
+          <Text style={[typography.body, { fontSize: 17, lineHeight: 23 }]}>
             {possibleSymptoms}
           </Text>
         </View>
@@ -148,5 +154,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 16,
+  },
+  iconCircle: {
+    width: 48,
+    height: 48,
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
