@@ -33,7 +33,8 @@ export function CycleOverviewWidget({
 
   const isPredictedPeriodDay = prediction?.days === 0;
   const isSpecialDay = isPeriodDay || isPredictedPeriodDay;
-  const circleTextColor = isSpecialDay && isDark ? colors.black : colors.textPrimary;
+  const circleTextColor =
+    isSpecialDay && isDark ? colors.black : colors.textPrimary;
 
   return (
     <View style={styles.predictionCard}>
@@ -43,7 +44,9 @@ export function CycleOverviewWidget({
           strokeWidth={3}
           dashLength={3}
           dashCount={120}
-          strokeColor={isSpecialDay ? colors.predictionCirclePeriodOuter : undefined}
+          strokeColor={
+            isSpecialDay ? colors.predictionCirclePeriodOuter : undefined
+          }
         />
         <View
           style={[

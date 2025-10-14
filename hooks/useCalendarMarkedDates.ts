@@ -119,7 +119,13 @@ export function useCalendarMarkedDates({
       // Store base marked dates (without selection highlight)
       setBaseMarkedDates(allMarkedDates);
     },
-    [colors, generatePredictions, loadHealthLogDates, showOvulation, showFuturePeriods]
+    [
+      colors,
+      generatePredictions,
+      loadHealthLogDates,
+      showOvulation,
+      showFuturePeriods,
+    ]
   );
 
   // Generate marked dates with highlighting for a specific selected date

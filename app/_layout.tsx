@@ -11,7 +11,10 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { lightColors, darkColors } from '../styles/colors';
 import Toast, { BaseToast, ErrorToast } from 'react-native-toast-message';
-import { useFonts, BricolageGrotesque_700Bold } from '@expo-google-fonts/bricolage-grotesque';
+import {
+  useFonts,
+  BricolageGrotesque_700Bold,
+} from '@expo-google-fonts/bricolage-grotesque';
 
 // Shared toast styles
 const toastConfig = {
@@ -252,7 +255,7 @@ function AppContent() {
           name="(info)/cycle-phase-details"
           options={{
             headerShown: true,
-            headerTitle: 'Today\'s insights',
+            headerTitle: "Today's insights",
             headerShadowVisible: true,
             headerStyle: {
               backgroundColor: isDark

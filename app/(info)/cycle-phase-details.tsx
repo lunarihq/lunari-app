@@ -20,15 +20,15 @@ const getFormattedCycleStart = (cycleDay: number): string => {
   if (cycleDay === 1) {
     return 'Your cycle started today';
   }
-  
+
   const cycleStartDate = getCycleStartDate(cycleDay);
   const today = new Date();
   const isToday = cycleStartDate.toDateString() === today.toDateString();
-  
+
   if (isToday) {
     return 'Your cycle started today';
   }
-  
+
   return `This cycle started on ${cycleStartDate.getDate()} ${cycleStartDate.toLocaleDateString('en-US', { month: 'short' })}`;
 };
 
@@ -89,11 +89,11 @@ export default function CyclePhaseDetails() {
         <Text
           style={[
             typography.body,
-            { 
-              textAlign: 'center', 
-              marginBottom: 24, 
+            {
+              textAlign: 'center',
+              marginBottom: 24,
               color: colors.textSecondary,
-              fontSize: 16 
+              fontSize: 16,
             },
           ]}
         >
@@ -102,7 +102,12 @@ export default function CyclePhaseDetails() {
 
         <View style={[styles.phaseCard, { backgroundColor: colors.surface }]}>
           <View style={styles.phaseHeader}>
-            <View style={[styles.iconCircle, { backgroundColor: colors.accentPinkLight }]}>
+            <View
+              style={[
+                styles.iconCircle,
+                { backgroundColor: colors.accentPinkLight },
+              ]}
+            >
               <Ionicons
                 name="sync-outline"
                 size={28}
@@ -130,7 +135,12 @@ export default function CyclePhaseDetails() {
 
         <View style={[styles.phaseCard, { backgroundColor: colors.surface }]}>
           <View style={styles.phaseHeader}>
-            <View style={[styles.iconCircle, { backgroundColor: colors.accentPinkLight }]}>
+            <View
+              style={[
+                styles.iconCircle,
+                { backgroundColor: colors.accentPinkLight },
+              ]}
+            >
               <Ionicons
                 name="leaf-outline"
                 size={28}
@@ -158,7 +168,12 @@ export default function CyclePhaseDetails() {
 
         <View style={[styles.phaseCard, { backgroundColor: colors.surface }]}>
           <View style={styles.phaseHeader}>
-            <View style={[styles.iconCircle, { backgroundColor: colors.accentPinkLight }]}>
+            <View
+              style={[
+                styles.iconCircle,
+                { backgroundColor: colors.accentPinkLight },
+              ]}
+            >
               <Ionicons
                 name="thermometer-outline"
                 size={28}

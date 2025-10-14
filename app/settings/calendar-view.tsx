@@ -75,8 +75,13 @@ export default function CalendarView() {
       <View style={[styles.section, { backgroundColor: colors.surface }]}>
         <View style={[styles.settingRow, { borderBottomColor: colors.border }]}>
           <View style={styles.settingContent}>
-            <Text style={[typography.body, { flexShrink: 1, paddingRight: 12, flex: 1 }]}>
-            Show predicted ovulation and fertile days on the calendar
+            <Text
+              style={[
+                typography.body,
+                { flexShrink: 1, paddingRight: 12, flex: 1 },
+              ]}
+            >
+              Show predicted ovulation and fertile days on the calendar
             </Text>
           </View>
           <Switch
@@ -90,7 +95,12 @@ export default function CalendarView() {
 
         <View style={[styles.settingRow, styles.lastRow]}>
           <View style={styles.settingContent}>
-            <Text style={[typography.body, { flexShrink: 1, paddingRight: 12, flex: 1 }]}>
+            <Text
+              style={[
+                typography.body,
+                { flexShrink: 1, paddingRight: 12, flex: 1 },
+              ]}
+            >
               Show predicted future periods on the calendar
             </Text>
           </View>
@@ -137,4 +147,3 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
 });
-

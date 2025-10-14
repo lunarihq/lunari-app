@@ -19,8 +19,7 @@ export default function CalendarLegendInfo() {
             alignItems: 'center',
             justifyContent: 'center',
           }}
-        >
-        </View>
+        ></View>
       ),
     },
     {
@@ -35,8 +34,7 @@ export default function CalendarLegendInfo() {
             alignItems: 'center',
             justifyContent: 'center',
           }}
-        >
-        </View>
+        ></View>
       ),
     },
     {
@@ -53,8 +51,7 @@ export default function CalendarLegendInfo() {
             alignItems: 'center',
             justifyContent: 'center',
           }}
-        >
-        </View>
+        ></View>
       ),
     },
     {
@@ -121,7 +118,6 @@ export default function CalendarLegendInfo() {
           borderRadius: 16,
           borderWidth: 1,
           borderColor: colors.border,
-
         }}
       />
       {legendItems.map((item, index) => (
@@ -133,13 +129,9 @@ export default function CalendarLegendInfo() {
             alignItems: 'flex-start',
           }}
         >
-          <View style={{ marginRight: 12}}>
-            {item.indicator}
-          </View>
+          <View style={{ marginRight: 12 }}>{item.indicator}</View>
           <View style={{ flex: 1 }}>
-            <Text style={[typography.body]}>
-              {item.title}
-            </Text>
+            <Text style={[typography.body]}>{item.title}</Text>
           </View>
         </View>
       ))}

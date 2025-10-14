@@ -184,7 +184,7 @@ export default function LastPeriodDateScreen() {
           text="I don't remember"
         />
         {dontKnow && (
-          <Text style={[typography.caption, { textAlign: 'center'}]}>
+          <Text style={[typography.caption, { textAlign: 'center' }]}>
             It's okay, you can do it later inside the app.
           </Text>
         )}

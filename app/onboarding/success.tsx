@@ -18,7 +18,7 @@ export default function SuccessScreen() {
   const router = useRouter();
   const { colors } = useTheme();
   const typography = createTypography(colors);
-  
+
   const scale = useSharedValue(0);
   const opacity = useSharedValue(0);
 
@@ -41,7 +41,9 @@ export default function SuccessScreen() {
   };
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: colors.background }]}
+    >
       <View style={styles.content}>
         <Animated.View
           style={[
@@ -79,7 +81,11 @@ export default function SuccessScreen() {
       </View>
 
       <View style={styles.footer}>
-        <Button title="Start tracking" onPress={handleStartTracking} fullWidth />
+        <Button
+          title="Start tracking"
+          onPress={handleStartTracking}
+          fullWidth
+        />
       </View>
     </SafeAreaView>
   );
@@ -107,4 +113,3 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
 });
-
