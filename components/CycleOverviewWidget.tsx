@@ -228,7 +228,6 @@ const styles = StyleSheet.create({
   predictionCard: {
     alignItems: 'center',
     gap: 24,
-    marginTop: 8,
     marginBottom: 24,
   },
   predictionOuterCircle: {
