@@ -6,14 +6,17 @@ A private-first period tracking app designed to be a delight to use whilst prese
 
 # ⚙️ Features
 
-- Period and ovulation tracking and statistics.
+- Period & ovulation predictions.
 - Symptoms and moods tracking.
-- Cycle prediction with average period calculation.
-- Cycle prediction with average luteal phase calculation for irregular cycles.
-- Customisable period reminder text.
-- Data export and import for backups or moving to another device.
-- No tracking. No sign-up. Your data is yours. No data is sent anywhere.
-- No bloat. No useless or complex features. No emails.
+- Cycle statistics & history.
+- Cycle phase insights.
+- Period reminders.
+- PIN/biometric app lock
+- Dark & light themes
+- Completely offline - All data is stored locally on your device.
+- No account required.
+- No ads ever.
+- No third‑party trackers
 
 # 👩🏻‍💻 Technologies used:
 
@@ -30,7 +33,6 @@ Development & Quality
 - ESLint + Prettier - Code formatting and quality
 - Jest - Unit testing with 80%+ coverage requirement
 - GitHub Actions - CI/CD pipeline with automated testing
-- Windsurf IDE + Claude AI - AI-assisted development workflow
 
 Accessibility & Compliance
 
@@ -38,3 +40,11 @@ Accessibility & Compliance
 - Custom WCAG Audit Tools - Automated accessibility testing
 - Color Vision Deficiency Support - Protanopia, Deuteranopia, Tritanopia
 - Multiple Indication Methods - Color + Icon + Text patterns
+
+# 📄 License
+
+Copyright © 2025 Lunari  
+This project is licensed under the [GNU General Public License v3.0](LICENSE).
+
+You are free to use, modify, and distribute this software under the terms of the GPL-3.0 license.  
+If you distribute a modified version, you must also make your source code available under the same license.
