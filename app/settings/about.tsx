@@ -1,11 +1,13 @@
 import React from 'react';
-import { Text, View, StyleSheet, ScrollView } from 'react-native';
+import { Text, View, StyleSheet, ScrollView, Linking } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import defaultTheme, { useTheme, createTypography } from '../../styles/theme';
 
 export default function About() {
   const { colors } = useTheme();
   const typography = createTypography(colors);
+  const GITHUB_URL = 'https://github.com/lunari-app/lunari';
+  const GPL_URL = 'https://www.gnu.org/licenses/gpl-3.0.en.html';
 
   return (
     <ScrollView
@@ -13,7 +15,7 @@ export default function About() {
         defaultTheme.globalStyles.container,
         { backgroundColor: colors.background },
       ]}
-      contentContainerStyle={defaultTheme.globalStyles.scrollContentContainer}
+      contentContainerStyle={[defaultTheme.globalStyles.scrollContentContainer, { paddingTop: 0 }]}
       showsVerticalScrollIndicator={false}
     >
       <View style={[styles.header, { backgroundColor: colors.surface }]}>
@@ -67,7 +69,7 @@ export default function About() {
             { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
           ]}
         >
-          • Personal notes and observations
+          • Cycle statistics & history
         </Text>
         <Text
           style={[
@@ -75,7 +77,7 @@ export default function About() {
             { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
           ]}
         >
-          • Cycle insights and statistics
+          • Cycle phase insights
         </Text>
         <Text
           style={[
@@ -83,7 +85,7 @@ export default function About() {
             { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
           ]}
         >
-          • Customizable reminders
+          • Period reminders
         </Text>
         <Text
           style={[
@@ -91,7 +93,7 @@ export default function About() {
             { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
           ]}
         >
-          • App lock for privacy protection
+          • PIN/biometric app lock
         </Text>
         <Text
           style={[
@@ -123,7 +125,7 @@ export default function About() {
             { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
           ]}
         >
-          • All data stored locally on your device
+          • All data is stored locally on your device
         </Text>
         <Text
           style={[
@@ -147,7 +149,46 @@ export default function About() {
             { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
           ]}
         >
-          • Complete control over your data
+          • No ads
+        </Text>
+        <Text
+          style={[
+            typography.body,
+            { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
+          ]}
+        >
+          • No account required
+        </Text>
+      </View>
+
+      <View style={[styles.section, { backgroundColor: colors.surface }]}>
+        <View style={styles.sectionHeader}>
+          <Ionicons name="document-text-outline" size={24} color={colors.primary} />
+          <Text style={[typography.heading2, { marginLeft: 12 }]}>Open Source</Text>
+        </View>
+        <Text style={[typography.body, { lineHeight: 24, marginBottom: 12 }]}>
+          Lunari is open-source and licensed under the{' '}
+          <Text
+            onPress={() => Linking.openURL(GPL_URL)}
+            accessibilityRole="link"
+            style={[
+              typography.body,
+              { color: colors.primary, textDecorationLine: 'underline' },
+            ]}
+          >
+            GNU GPL v3
+          </Text>
+          .
+        </Text>
+        <Text style={[typography.body, { lineHeight: 24, marginBottom: 12 }]}>
+          Lunari is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+        </Text>
+        <Text
+          onPress={() => Linking.openURL(GITHUB_URL)}
+          accessibilityRole="link"
+          style={[typography.body, { color: colors.primary, textDecorationLine: 'underline' }]}
+        >
+          View the source on GitHub
         </Text>
       </View>
 
