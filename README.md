@@ -2,7 +2,8 @@
 
 A private-first period tracking app designed to be a delight to use whilst preserving the users’ privacy by using local-only data storage.
 
-<img width="1116" height="711" alt="lunari-thumbnail" src="https://github.com/user-attachments/assets/6930cc7d-a914-4433-91b8-58f464442200" />
+<img width="1024" height="500" alt="featured-graphic" src="https://github.com/user-attachments/assets/4ea1062d-e439-4053-b8b9-df9b8c414660" />
+
 
 # ⚙️ Features
 
