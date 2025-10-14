@@ -16,7 +16,8 @@ A private-first period tracking app designed to be a delight to use whilst prese
 - Completely offline - All data is stored locally on your device.
 - No account required.
 - No ads ever.
-- No third‑party trackers
+- No third‑party trackers.
+- Open-source code.
 
 # 👩🏻‍💻 Technologies used:
 
