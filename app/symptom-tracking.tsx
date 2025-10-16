@@ -177,6 +177,54 @@ export default function SymptomTracking() {
       name: 'Night sweats',
       selected: false,
     },
+    {
+      id: '13',
+      icon: 'brain-fog',
+      name: 'Brain fog',
+      selected: false,
+    },
+    {
+      id: '14',
+      icon: 'insomnia',
+      name: 'Insomnia',
+      selected: false,
+    },
+    {
+      id: '15',
+      icon: 'hot flashes',
+      name: 'Hot flashes',
+      selected: false,
+    },
+    {
+      id: '16',
+      icon: 'dizziness',
+      name: 'Dizziness',
+      selected: false,
+    },
+    {
+      id: '17',
+      icon: 'constipation',
+      name: 'Constipation',
+      selected: false,
+    },
+    {
+      id: '18',
+      icon: 'acne',
+      name: 'Acne',
+      selected: false,
+    },
+    {
+      id: '19',
+      icon: 'tender-breasts',
+      name: 'Tender breasts',
+      selected: false,
+    },
+    {
+      id: '20',
+      icon: 'backacke',
+      name: 'Backache',
+      selected: false,
+    },
   ]);
 
   // Moods data

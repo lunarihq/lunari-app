@@ -92,6 +92,14 @@ export const SymptomsTracker = ({
         'medium',
         'heavy',
         'blood-clots',
+        'brain-fog',
+        'insomnia',
+        'hot flashes',
+        'dizziness',
+        'constipation',
+        'acne',
+        'tender-breasts',
+        'backacke',
       ];
 
       if (customIconNames.includes(icon)) {
