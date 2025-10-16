@@ -339,7 +339,6 @@ export default function SymptomTracking() {
 
   // Vaginal discharge data
   const [discharges, setDischarges] = useState<Item[]>([
-    
     {
       id: '1',
       icon: 'no-discharge',
@@ -529,7 +528,9 @@ export default function SymptomTracking() {
     const currentSelectedFlows = flows.filter(f => f.selected).map(f => f.id);
 
     // Get current selected discharge IDs
-    const currentSelectedDischarges = discharges.filter(d => d.selected).map(d => d.id);
+    const currentSelectedDischarges = discharges
+      .filter(d => d.selected)
+      .map(d => d.id);
 
     // Check if the selections have changed
     const symptomsChanged = !(
@@ -555,7 +556,11 @@ export default function SymptomTracking() {
     const notesChanged = notes !== originalNotes;
 
     setHasChanges(
-      symptomsChanged || moodsChanged || flowsChanged || dischargesChanged || notesChanged
+      symptomsChanged ||
+        moodsChanged ||
+        flowsChanged ||
+        dischargesChanged ||
+        notesChanged
     );
   }, [
     symptoms,
@@ -603,7 +608,9 @@ export default function SymptomTracking() {
   const toggleDischarge = (id: string) => {
     setDischarges(
       discharges.map(discharge =>
-        discharge.id === id ? { ...discharge, selected: !discharge.selected } : discharge
+        discharge.id === id
+          ? { ...discharge, selected: !discharge.selected }
+          : discharge
       )
     );
   };

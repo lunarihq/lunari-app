@@ -15,7 +15,10 @@ export default function About() {
         defaultTheme.globalStyles.container,
         { backgroundColor: colors.background },
       ]}
-      contentContainerStyle={[defaultTheme.globalStyles.scrollContentContainer, { paddingTop: 0 }]}
+      contentContainerStyle={[
+        defaultTheme.globalStyles.scrollContentContainer,
+        { paddingTop: 0 },
+      ]}
       showsVerticalScrollIndicator={false}
     >
       <View style={[styles.header, { backgroundColor: colors.surface }]}>
@@ -163,8 +166,14 @@ export default function About() {
 
       <View style={[styles.section, { backgroundColor: colors.surface }]}>
         <View style={styles.sectionHeader}>
-          <Ionicons name="document-text-outline" size={24} color={colors.primary} />
-          <Text style={[typography.heading2, { marginLeft: 12 }]}>Open Source</Text>
+          <Ionicons
+            name="document-text-outline"
+            size={24}
+            color={colors.primary}
+          />
+          <Text style={[typography.heading2, { marginLeft: 12 }]}>
+            Open Source
+          </Text>
         </View>
         <Text style={[typography.body, { lineHeight: 24, marginBottom: 12 }]}>
           Lunari is open-source and licensed under the{' '}
@@ -181,12 +190,17 @@ export default function About() {
           .
         </Text>
         <Text style={[typography.body, { lineHeight: 24, marginBottom: 12 }]}>
-          Lunari is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+          Lunari is distributed in the hope that it will be useful, but WITHOUT
+          ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+          FITNESS FOR A PARTICULAR PURPOSE.
         </Text>
         <Text
           onPress={() => Linking.openURL(GITHUB_URL)}
           accessibilityRole="link"
-          style={[typography.body, { color: colors.primary, textDecorationLine: 'underline' }]}
+          style={[
+            typography.body,
+            { color: colors.primary, textDecorationLine: 'underline' },
+          ]}
         >
           View the source on GitHub
         </Text>

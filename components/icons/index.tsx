@@ -46,7 +46,6 @@ import { StickyIcon } from './discharge/Sticky';
 import { UnusualIcon } from './discharge/Unusual';
 import { WateryIcon } from './discharge/Watery';
 
-
 interface IconProps {
   size?: number;
   color?: string;
@@ -139,14 +138,14 @@ const iconMap: Record<IconName, React.FC<IconProps>> = {
   heavy: HeavyFlowIcon,
   'blood-clots': BloodClotsIcon,
   'clumpy-white': ClumpyWhiteIcon,
-  'creamy': CreamyIcon,
+  creamy: CreamyIcon,
   'egg-white': EggWhiteIcon,
   'grey-discharge': GreyDischargeIcon,
   'no-discharge': NoDischargeIcon,
-  'spotting': SpottingIcon,
-  'sticky': StickyIcon,
-  'unusual': UnusualIcon,
-  'watery': WateryIcon,
+  spotting: SpottingIcon,
+  sticky: StickyIcon,
+  unusual: UnusualIcon,
+  watery: WateryIcon,
 };
 
 interface CustomIconProps extends IconProps {

@@ -4,7 +4,6 @@ A private-first period tracking app designed to be a delight to use whilst prese
 
 <img width="1024" height="500" alt="featured-graphic" src="https://github.com/user-attachments/assets/4ea1062d-e439-4053-b8b9-df9b8c414660" />
 
-
 # ⚙️ Features
 
 - Period & ovulation predictions.

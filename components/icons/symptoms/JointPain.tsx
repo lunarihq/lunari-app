@@ -1,5 +1,12 @@
 import React from 'react';
-import Svg, { Ellipse, Path, G, Defs, RadialGradient, Stop } from 'react-native-svg';
+import Svg, {
+  Ellipse,
+  Path,
+  G,
+  Defs,
+  RadialGradient,
+  Stop,
+} from 'react-native-svg';
 
 interface IconProps {
   size?: number;

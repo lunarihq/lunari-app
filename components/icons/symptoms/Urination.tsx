@@ -1,5 +1,18 @@
 import React from 'react';
-import Svg, { Path, G, Defs, ClipPath, Rect, Filter, FeFlood, FeColorMatrix, FeOffset, FeGaussianBlur, FeComposite, FeBlend } from 'react-native-svg';
+import Svg, {
+  Path,
+  G,
+  Defs,
+  ClipPath,
+  Rect,
+  Filter,
+  FeFlood,
+  FeColorMatrix,
+  FeOffset,
+  FeGaussianBlur,
+  FeComposite,
+  FeBlend,
+} from 'react-native-svg';
 
 interface IconProps {
   size?: number;
@@ -67,8 +80,17 @@ export const UrinationIcon: React.FC<IconProps> = ({
           type="matrix"
           values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
         />
-        <FeBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_702_10152" />
-        <FeBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_702_10152" result="shape" />
+        <FeBlend
+          mode="normal"
+          in2="BackgroundImageFix"
+          result="effect1_dropShadow_702_10152"
+        />
+        <FeBlend
+          mode="normal"
+          in="SourceGraphic"
+          in2="effect1_dropShadow_702_10152"
+          result="shape"
+        />
       </Filter>
       <ClipPath id="clip0_702_10152">
         <Rect width="64" height="64" fill="white" />

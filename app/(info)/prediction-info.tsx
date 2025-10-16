@@ -95,8 +95,8 @@ export default function PredictionInfo() {
             ]}
           >
             🛎️ <Text style={{ fontWeight: 'bold' }}>Remember:</Text> These are
-            predictions based on your historical data. Every body is different, and
-            cycles can vary naturally.
+            predictions based on your historical data. Every body is different,
+            and cycles can vary naturally.
           </Text>
         </View>
       </View>

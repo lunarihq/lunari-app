@@ -141,10 +141,11 @@ export default function CalendarLegendInfo() {
           Customize your calendar
         </Text>
         <Text style={[typography.body, { lineHeight: 24 }]}>
-          You can hide ovulation and fertility indicators in <Text style={{ fontWeight: 'bold' }}>Settings → Calendar View</Text> if you prefer a simpler calendar display.
+          You can hide ovulation and fertility indicators in{' '}
+          <Text style={{ fontWeight: 'bold' }}>Settings → Calendar View</Text>{' '}
+          if you prefer a simpler calendar display.
         </Text>
       </View>
-
     </ScrollView>
   );
 }

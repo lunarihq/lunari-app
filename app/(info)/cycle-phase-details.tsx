@@ -110,10 +110,7 @@ export default function CyclePhaseDetails() {
                 { backgroundColor: colors.accentPinkLight },
               ]}
             >
-              <CycleIcon
-                size={36}
-                color={colors.accentPink}
-              />
+              <CycleIcon size={36} color={colors.accentPink} />
             </View>
             <Text style={[typography.heading2, { marginLeft: 12 }]}>
               Cycle phase
@@ -142,10 +139,7 @@ export default function CyclePhaseDetails() {
                 { backgroundColor: colors.accentPinkLight },
               ]}
             >
-              <LeafIcon
-                size={38}
-                color={colors.accentPink}
-              />
+              <LeafIcon size={38} color={colors.accentPink} />
             </View>
             <Text style={[typography.heading2, { marginLeft: 12 }]}>
               Chance to conceive

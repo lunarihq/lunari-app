@@ -62,7 +62,12 @@ export const SymptomsTracker = ({
     }
 
     // Use CustomIcon for symptoms, moods, flows, and discharge that have custom SVG icons
-    if (type === 'symptom' || type === 'mood' || type === 'flow' || type === 'discharge') {
+    if (
+      type === 'symptom' ||
+      type === 'mood' ||
+      type === 'flow' ||
+      type === 'discharge'
+    ) {
       // Check if this icon name exists in our custom icon system
       const customIconNames = [
         'joint-pain',
