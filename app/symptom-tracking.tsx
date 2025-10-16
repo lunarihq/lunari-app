@@ -113,116 +113,119 @@ export default function SymptomTracking() {
     },
     {
       id: '2',
-      icon: 'headache',
-      name: 'Headache',
-      selected: false,
-    },
-    {
-      id: '3',
       icon: 'cramps',
       name: 'Cramps',
       selected: false,
     },
     {
-      id: '4',
-      icon: 'nausea',
-      name: 'Nausea',
-      selected: false,
-    },
-    {
-      id: '5',
-      icon: 'joint-pain',
-      name: 'Joint pain',
-      selected: false,
-    },
-    {
-      id: '6',
-      icon: 'fatigue',
-      name: 'Fatigue',
-      selected: false,
-    },
-    {
-      id: '7',
-      icon: 'bloating',
-      name: 'Bloating',
-      selected: false,
-    },
-    {
-      id: '8',
-      icon: 'frequent-urination',
-      name: 'Frequent urination',
-      selected: false,
-    },
-    {
-      id: '9',
-      icon: 'diarrhea',
-      name: 'Diarrhea',
-      selected: false,
-    },
-    {
-      id: '10',
-      icon: 'cravings',
-      name: 'Cravings',
-      selected: false,
-    },
-    {
-      id: '11',
-      icon: 'vaginal dryness',
-      name: 'Vaginal dryness',
-      selected: false,
-    },
-    {
-      id: '12',
-      icon: 'night-sweats',
-      name: 'Night sweats',
-      selected: false,
-    },
-    {
-      id: '13',
-      icon: 'brain-fog',
-      name: 'Brain fog',
-      selected: false,
-    },
-    {
-      id: '14',
-      icon: 'insomnia',
-      name: 'Insomnia',
-      selected: false,
-    },
-    {
-      id: '15',
-      icon: 'hot flashes',
-      name: 'Hot flashes',
-      selected: false,
-    },
-    {
-      id: '16',
-      icon: 'dizziness',
-      name: 'Dizziness',
-      selected: false,
-    },
-    {
-      id: '17',
-      icon: 'constipation',
-      name: 'Constipation',
-      selected: false,
-    },
-    {
-      id: '18',
-      icon: 'acne',
-      name: 'Acne',
-      selected: false,
-    },
-    {
-      id: '19',
+      id: '3',
       icon: 'tender-breasts',
       name: 'Tender breasts',
       selected: false,
     },
     {
-      id: '20',
+      id: '4',
+      icon: 'headache',
+      name: 'Headache',
+      selected: false,
+    },
+
+    {
+      id: '5',
+      icon: 'nausea',
+      name: 'Nausea',
+      selected: false,
+    },
+    {
+      id: '6',
+      icon: 'acne',
+      name: 'Acne',
+      selected: false,
+    },
+
+    {
+      id: '7',
       icon: 'backacke',
       name: 'Backache',
+      selected: false,
+    },
+    {
+      id: '8',
+      icon: 'fatigue',
+      name: 'Fatigue',
+      selected: false,
+    },
+    {
+      id: '9',
+      icon: 'hot flashes',
+      name: 'Hot flashes',
+      selected: false,
+    },
+    {
+      id: '10',
+      icon: 'night-sweats',
+      name: 'Night sweats',
+      selected: false,
+    },
+    {
+      id: '11',
+      icon: 'brain-fog',
+      name: 'Brain fog',
+      selected: false,
+    },
+
+    {
+      id: '12',
+      icon: 'joint-pain',
+      name: 'Joint pain',
+      selected: false,
+    },
+    {
+      id: '13',
+      icon: 'dizziness',
+      name: 'Dizziness',
+      selected: false,
+    },
+    {
+      id: '14',
+      icon: 'cravings',
+      name: 'Cravings',
+      selected: false,
+    },
+    {
+      id: '15',
+      icon: 'bloating',
+      name: 'Bloating',
+      selected: false,
+    },
+    {
+      id: '16',
+      icon: 'constipation',
+      name: 'Constipation',
+      selected: false,
+    },
+    {
+      id: '17',
+      icon: 'diarrhea',
+      name: 'Diarrhea',
+      selected: false,
+    },
+    {
+      id: '18',
+      icon: 'frequent-urination',
+      name: 'Frequent urination',
+      selected: false,
+    },
+    {
+      id: '19',
+      icon: 'vaginal dryness',
+      name: 'Vaginal dryness',
+      selected: false,
+    },
+    {
+      id: '20',
+      icon: 'insomnia',
+      name: 'Insomnia',
       selected: false,
     },
   ]);
@@ -659,7 +662,7 @@ export default function SymptomTracking() {
         {isPeriodDate && (
           <View style={[styles.section, { backgroundColor: colors.surface }]}>
             <View style={styles.sectionHeader}>
-              <Text style={[typography.heading2]}>Flow</Text>
+              <Text style={[typography.heading2]}>Menstrual flow</Text>
             </View>
 
             <View style={styles.itemsGrid}>
@@ -755,7 +758,7 @@ export default function SymptomTracking() {
                 <Text
                   style={[
                     typography.caption,
-                    { lineHeight: 18 },
+                    { lineHeight: 17 },
                     { textAlign: 'center' },
                   ]}
                 >
@@ -813,7 +816,7 @@ export default function SymptomTracking() {
                 <Text
                   style={[
                     typography.caption,
-                    { lineHeight: 18 },
+                    { lineHeight: 17 },
                     { textAlign: 'center' },
                   ]}
                 >
