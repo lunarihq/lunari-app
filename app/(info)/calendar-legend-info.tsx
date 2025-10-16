@@ -117,7 +117,7 @@ export default function CalendarLegendInfo() {
           resizeMode: 'stretch',
           borderRadius: 16,
           borderWidth: 1,
-          borderColor: colors.border,
+          borderColor: '#DADEE7',
         }}
       />
       {legendItems.map((item, index) => (
@@ -138,15 +138,13 @@ export default function CalendarLegendInfo() {
 
       <View style={{ marginBottom: 32 }}>
         <Text style={[typography.heading2, { marginBottom: 12 }]}>
-          About predictions
+          Customize your calendar
         </Text>
         <Text style={[typography.body, { lineHeight: 24 }]}>
-          Predictions are based on your average cycle length and period
-          patterns. The more data you track, the more accurate your predictions
-          become. Remember that predictions are estimates and your actual cycle
-          may vary.
+          You can hide ovulation and fertility indicators in <Text style={{ fontWeight: 'bold' }}>Settings → Calendar View</Text> if you prefer a simpler calendar display.
         </Text>
       </View>
+
     </ScrollView>
   );
 }

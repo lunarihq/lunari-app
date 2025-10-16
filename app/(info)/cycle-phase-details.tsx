@@ -4,6 +4,8 @@ import { useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { PeriodPredictionService } from '../../services/periodPredictions';
 import defaultTheme, { useTheme, createTypography } from '../../styles/theme';
+import { CycleIcon } from '../../components/icons/Cycle';
+import { LeafIcon } from '../../components/icons/Leaf';
 
 const getFormattedDate = (date: Date): string => {
   return `Today, ${date.getDate()} ${date.toLocaleDateString('en-US', { month: 'short' })}`;
@@ -108,9 +110,8 @@ export default function CyclePhaseDetails() {
                 { backgroundColor: colors.accentPinkLight },
               ]}
             >
-              <Ionicons
-                name="sync-outline"
-                size={28}
+              <CycleIcon
+                size={36}
                 color={colors.accentPink}
               />
             </View>
@@ -141,9 +142,8 @@ export default function CyclePhaseDetails() {
                 { backgroundColor: colors.accentPinkLight },
               ]}
             >
-              <Ionicons
-                name="leaf-outline"
-                size={28}
+              <LeafIcon
+                size={38}
                 color={colors.accentPink}
               />
             </View>
@@ -176,7 +176,7 @@ export default function CyclePhaseDetails() {
             >
               <Ionicons
                 name="thermometer-outline"
-                size={28}
+                size={34}
                 color={colors.accentPink}
               />
             </View>

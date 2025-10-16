@@ -113,7 +113,7 @@ export function CycleOverviewWidget({
                       { color: circleTextColor },
                     ]}
                   >
-                    Expected period in
+                    Next period in
                   </Text>
                   <Text
                     style={[
