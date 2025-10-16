@@ -1041,10 +1041,10 @@ export default function SymptomTracking() {
               <Text
                 style={[
                   typography.body,
-                  { flex: 1, fontStyle: 'italic', color: colors.placeholder },
+                  { flex: 1, color: colors.placeholder },
                 ]}
               >
-                Add notes about your day...
+                Add notes, any extra symptoms, etc.
               </Text>
             )}
           </TouchableOpacity>
