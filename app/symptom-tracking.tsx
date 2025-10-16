@@ -43,6 +43,7 @@ export default function SymptomTracking() {
   const SYMPTOM_SELECTION_COLOR = '#6580E2';
   const MOOD_SELECTION_COLOR = '#F2C100';
   const FLOW_SELECTION_COLOR = colors.accentPink;
+  const DISCHARGE_SELECTION_COLOR = '#9B6BE2';
   const [selectedDate, setSelectedDate] = useState<string>(
     // Use the date from params if provided, otherwise use today's date
     typeof params.date === 'string' ? params.date : dayjs().format('YYYY-MM-DD')
@@ -52,6 +53,7 @@ export default function SymptomTracking() {
   const [originalSymptoms, setOriginalSymptoms] = useState<string[]>([]);
   const [originalMoods, setOriginalMoods] = useState<string[]>([]);
   const [originalFlows, setOriginalFlows] = useState<string[]>([]);
+  const [originalDischarges, setOriginalDischarges] = useState<string[]>([]);
   const [originalNotes, setOriginalNotes] = useState<string>('');
   const [hasChanges, setHasChanges] = useState<boolean>(false);
 
@@ -335,6 +337,65 @@ export default function SymptomTracking() {
     },
   ]);
 
+  // Vaginal discharge data
+  const [discharges, setDischarges] = useState<Item[]>([
+    
+    {
+      id: '1',
+      icon: 'no-discharge',
+      name: 'No discharge',
+      selected: false,
+    },
+    {
+      id: '2',
+      icon: 'watery',
+      name: 'Watery',
+      selected: false,
+    },
+    {
+      id: '3',
+      icon: 'creamy',
+      name: 'Creamy',
+      selected: false,
+    },
+    {
+      id: '4',
+      icon: 'egg-white',
+      name: 'Egg white',
+      selected: false,
+    },
+    {
+      id: '5',
+      icon: 'sticky',
+      name: 'Sticky',
+      selected: false,
+    },
+    {
+      id: '6',
+      icon: 'spotting',
+      name: 'Spotting',
+      selected: false,
+    },
+    {
+      id: '7',
+      icon: 'unusual',
+      name: 'Unusual',
+      selected: false,
+    },
+    {
+      id: '8',
+      icon: 'clumpy-white',
+      name: 'Clumpy white',
+      selected: false,
+    },
+    {
+      id: '9',
+      icon: 'grey-discharge',
+      name: 'Grey discharge',
+      selected: false,
+    },
+  ]);
+
   // Check if selected date is a period date
   const checkIsPeriodDate = async (date: string) => {
     try {
@@ -366,6 +427,7 @@ export default function SymptomTracking() {
         const symptomIds = new Set();
         const moodIds = new Set();
         const flowIds = new Set();
+        const dischargeIds = new Set();
         let notesText = '';
 
         // Populate the sets
@@ -376,6 +438,8 @@ export default function SymptomTracking() {
             moodIds.add(entry.item_id);
           } else if (entry.type === 'flow') {
             flowIds.add(entry.item_id);
+          } else if (entry.type === 'discharge') {
+            dischargeIds.add(entry.item_id);
           } else if (entry.type === 'notes') {
             notesText = entry.name || '';
           }
@@ -405,6 +469,14 @@ export default function SymptomTracking() {
           }))
         );
 
+        // Update discharges state
+        setDischarges(prevDischarges =>
+          prevDischarges.map(discharge => ({
+            ...discharge,
+            selected: dischargeIds.has(discharge.id),
+          }))
+        );
+
         // Update notes state
         setNotes(notesText);
 
@@ -412,6 +484,7 @@ export default function SymptomTracking() {
         setOriginalSymptoms(Array.from(symptomIds) as string[]);
         setOriginalMoods(Array.from(moodIds) as string[]);
         setOriginalFlows(Array.from(flowIds) as string[]);
+        setOriginalDischarges(Array.from(dischargeIds) as string[]);
         setOriginalNotes(notesText);
         setHasChanges(false);
       } catch (error) {
@@ -455,6 +528,9 @@ export default function SymptomTracking() {
     // Get current selected flow IDs
     const currentSelectedFlows = flows.filter(f => f.selected).map(f => f.id);
 
+    // Get current selected discharge IDs
+    const currentSelectedDischarges = discharges.filter(d => d.selected).map(d => d.id);
+
     // Check if the selections have changed
     const symptomsChanged = !(
       currentSelectedSymptoms.length === originalSymptoms.length &&
@@ -471,19 +547,26 @@ export default function SymptomTracking() {
       currentSelectedFlows.every(id => originalFlows.includes(id))
     );
 
+    const dischargesChanged = !(
+      currentSelectedDischarges.length === originalDischarges.length &&
+      currentSelectedDischarges.every(id => originalDischarges.includes(id))
+    );
+
     const notesChanged = notes !== originalNotes;
 
     setHasChanges(
-      symptomsChanged || moodsChanged || flowsChanged || notesChanged
+      symptomsChanged || moodsChanged || flowsChanged || dischargesChanged || notesChanged
     );
   }, [
     symptoms,
     moods,
     flows,
+    discharges,
     notes,
     originalSymptoms,
     originalMoods,
     originalFlows,
+    originalDischarges,
     originalNotes,
   ]);
 
@@ -516,6 +599,15 @@ export default function SymptomTracking() {
     );
   };
 
+  // Toggle discharge selection
+  const toggleDischarge = (id: string) => {
+    setDischarges(
+      discharges.map(discharge =>
+        discharge.id === id ? { ...discharge, selected: !discharge.selected } : discharge
+      )
+    );
+  };
+
   // Navigate to notes editor
   const openNotesEditor = () => {
     router.push({
@@ -531,6 +623,7 @@ export default function SymptomTracking() {
       const selectedSymptoms = symptoms.filter(s => s.selected);
       const selectedMoods = moods.filter(m => m.selected);
       const selectedFlows = flows.filter(f => f.selected);
+      const selectedDischarges = discharges.filter(d => d.selected);
 
       // STEP 1: Delete ALL existing entries for this date
       await db.delete(healthLogs).where(eq(healthLogs.date, selectedDate));
@@ -568,7 +661,18 @@ export default function SymptomTracking() {
         };
       });
 
-      // STEP 5: Prepare notes record (only if notes exist)
+      // STEP 5: Prepare discharge records
+      const dischargeRecords = selectedDischarges.map(discharge => {
+        return {
+          date: selectedDate,
+          type: 'discharge',
+          item_id: discharge.id,
+          name: discharge.name,
+          icon: discharge.icon,
+        };
+      });
+
+      // STEP 6: Prepare notes record (only if notes exist)
       const notesRecords = notes.trim()
         ? [
             {
@@ -581,15 +685,16 @@ export default function SymptomTracking() {
           ]
         : [];
 
-      // STEP 6: Combine all records to insert
+      // STEP 7: Combine all records to insert
       const allRecords = [
         ...symptomRecords,
         ...moodRecords,
         ...flowRecords,
+        ...dischargeRecords,
         ...notesRecords,
       ];
 
-      // STEP 7: Insert new records (only if there are any)
+      // STEP 8: Insert new records (only if there are any)
       if (allRecords.length > 0) {
         await db.insert(healthLogs).values(allRecords);
       }
@@ -601,7 +706,7 @@ export default function SymptomTracking() {
         visibilityTime: 3000,
       });
 
-      // STEP 8: Navigate back
+      // STEP 9: Navigate back
       router.back();
     } catch (error) {
       console.error('Error saving health logs:', error);
@@ -821,6 +926,64 @@ export default function SymptomTracking() {
                   ]}
                 >
                   {mood.name}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
+
+        {/* Vaginal discharge */}
+        <View style={[styles.section, { backgroundColor: colors.surface }]}>
+          <View style={styles.sectionHeader}>
+            <Text style={[typography.heading2]}>Vaginal discharge</Text>
+          </View>
+
+          <View style={styles.itemsGrid}>
+            {discharges.map(discharge => (
+              <TouchableOpacity
+                key={discharge.id}
+                style={[
+                  styles.itemButton,
+                  discharge.selected && styles.selectedItemButton,
+                ]}
+                onPress={() => toggleDischarge(discharge.id)}
+              >
+                <View
+                  style={[
+                    styles.itemIcon,
+                    discharge.selected && {
+                      ...styles.selectedItemIcon,
+                      borderColor: DISCHARGE_SELECTION_COLOR,
+                    },
+                  ]}
+                >
+                  <CustomIcon name={discharge.icon as any} size={ICON_SIZE} />
+                  {discharge.selected && (
+                    <View
+                      style={[
+                        styles.checkmarkContainer,
+                        {
+                          borderColor: colors.surface,
+                          backgroundColor: DISCHARGE_SELECTION_COLOR,
+                        },
+                      ]}
+                    >
+                      <Ionicons
+                        name="checkmark"
+                        size={16}
+                        color={colors.white}
+                      />
+                    </View>
+                  )}
+                </View>
+                <Text
+                  style={[
+                    typography.caption,
+                    { lineHeight: 17 },
+                    { textAlign: 'center' },
+                  ]}
+                >
+                  {discharge.name}
                 </Text>
               </TouchableOpacity>
             ))}

@@ -1,0 +1,31 @@
+import React from 'react';
+import Svg, { Path } from 'react-native-svg';
+
+interface IconProps {
+  size?: number;
+  color?: string;
+}
+
+export const ClumpyWhiteIcon: React.FC<IconProps> = ({
+  size = 24,
+  color = '#9063E2',
+}) => (
+  <Svg width={size} height={size} viewBox="0 0 62 62" fill="none">
+    <Path
+      d="M62 31C62 48.1208 48.1208 62 31 62C13.8792 62 0 48.1208 0 31C0 13.8792 13.8792 0 31 0C48.1208 0 62 13.8792 62 31Z"
+      fill="#DED2FA"
+    />
+    <Path
+      d="M29 38.5C29 44.8513 34.1487 50 40.5 50C46.8513 50 52 44.8513 52 38.5C52 32.1487 46.8513 27 40.5 27C34.1487 27 29 32.1487 29 38.5Z"
+      fill={color}
+    />
+    <Path
+      d="M16 21C16 25.9706 20.0294 30 25 30C29.9706 30 34 25.9706 34 21C34 16.0294 29.9706 12 25 12C20.0294 12 16 16.0294 16 21Z"
+      fill={color}
+    />
+    <Path
+      d="M11 40.5C11 44.0899 13.9101 47 17.5 47C21.0899 47 24 44.0899 24 40.5C24 36.9101 21.0899 34 17.5 34C13.9101 34 11 36.9101 11 40.5Z"
+      fill={color}
+    />
+  </Svg>
+);

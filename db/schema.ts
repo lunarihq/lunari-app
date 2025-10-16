@@ -10,7 +10,7 @@ export const periodDates = sqliteTable('period_dates', {
 export const healthLogs = sqliteTable('health_logs', {
   id: integer('id').primaryKey(),
   date: text('date').notNull(),
-  type: text('type').notNull(), // 'symptom' or 'mood'
+  type: text('type').notNull(), // 'symptom', 'mood', 'flow', 'discharge', 'notes'
   item_id: text('item_id').notNull(),
   name: text('name').notNull(),
   icon: text('icon').notNull(), // Store icon name

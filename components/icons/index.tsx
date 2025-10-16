@@ -36,6 +36,15 @@ import { InsomniaIcon } from './symptoms/Insomnia';
 import { AcneIcon } from './symptoms/Acne';
 import { TenderBreastsIcon } from './symptoms/TenderBreasts';
 import { BackacheIcon } from './symptoms/Backache';
+import { ClumpyWhiteIcon } from './discharge/ClumpyWhite';
+import { CreamyIcon } from './discharge/Creamy';
+import { EggWhiteIcon } from './discharge/EggWhite';
+import { GreyDischargeIcon } from './discharge/GreyDischarge';
+import { NoDischargeIcon } from './discharge/NoDischarge';
+import { SpottingIcon } from './discharge/Spotting';
+import { StickyIcon } from './discharge/Sticky';
+import { UnusualIcon } from './discharge/Unusual';
+import { WateryIcon } from './discharge/Watery';
 
 
 interface IconProps {
@@ -80,7 +89,16 @@ export type IconName =
   | 'light'
   | 'medium'
   | 'heavy'
-  | 'blood-clots';
+  | 'blood-clots'
+  | 'clumpy-white'
+  | 'creamy'
+  | 'egg-white'
+  | 'grey-discharge'
+  | 'no-discharge'
+  | 'spotting'
+  | 'sticky'
+  | 'unusual'
+  | 'watery';
 
 const iconMap: Record<IconName, React.FC<IconProps>> = {
   'joint-pain': JointPainIcon,
@@ -120,6 +138,15 @@ const iconMap: Record<IconName, React.FC<IconProps>> = {
   medium: MediumFlowIcon,
   heavy: HeavyFlowIcon,
   'blood-clots': BloodClotsIcon,
+  'clumpy-white': ClumpyWhiteIcon,
+  'creamy': CreamyIcon,
+  'egg-white': EggWhiteIcon,
+  'grey-discharge': GreyDischargeIcon,
+  'no-discharge': NoDischargeIcon,
+  'spotting': SpottingIcon,
+  'sticky': StickyIcon,
+  'unusual': UnusualIcon,
+  'watery': WateryIcon,
 };
 
 interface CustomIconProps extends IconProps {

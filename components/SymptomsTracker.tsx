@@ -61,8 +61,8 @@ export const SymptomsTracker = ({
       return <NoteIcon size={54} />;
     }
 
-    // Use CustomIcon for symptoms, moods, and flows that have custom SVG icons
-    if (type === 'symptom' || type === 'mood' || type === 'flow') {
+    // Use CustomIcon for symptoms, moods, flows, and discharge that have custom SVG icons
+    if (type === 'symptom' || type === 'mood' || type === 'flow' || type === 'discharge') {
       // Check if this icon name exists in our custom icon system
       const customIconNames = [
         'joint-pain',
@@ -100,6 +100,10 @@ export const SymptomsTracker = ({
         'acne',
         'tender-breasts',
         'backacke',
+        'discharge-placeholder-1',
+        'discharge-placeholder-2',
+        'discharge-placeholder-3',
+        'discharge-placeholder-4',
       ];
 
       if (customIconNames.includes(icon)) {
