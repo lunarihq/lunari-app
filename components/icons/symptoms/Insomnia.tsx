@@ -1,8 +1,6 @@
 import React from 'react';
 import Svg, {
-  Defs,
   Path,
-  Stop,
 } from 'react-native-svg';
 
 interface IconProps {

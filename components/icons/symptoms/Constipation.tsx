@@ -1,7 +1,6 @@
 import React from 'react';
 import Svg, {
   Circle,
-  Defs,
   G,
   Mask,
   Path,

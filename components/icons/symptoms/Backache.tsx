@@ -3,7 +3,6 @@ import Svg, {
   Circle,
   Defs,
   G,
-  LinearGradient,
   Mask,
   Path,
   RadialGradient,
