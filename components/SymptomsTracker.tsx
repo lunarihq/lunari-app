@@ -100,10 +100,15 @@ export const SymptomsTracker = ({
         'acne',
         'tender-breasts',
         'backacke',
-        'discharge-placeholder-1',
-        'discharge-placeholder-2',
-        'discharge-placeholder-3',
-        'discharge-placeholder-4',
+        'no-discharge',
+        'watery',
+        'creamy',
+        'egg-white',
+        'sticky',
+        'spotting',
+        'unusual',
+        'clumpy-white',
+        'grey-discharge',
       ];
 
       if (customIconNames.includes(icon)) {
