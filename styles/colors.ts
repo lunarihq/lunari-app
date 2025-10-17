@@ -139,7 +139,7 @@ export const darkColors: ColorScheme = {
 
   //Neutrals
   neutral100: '#5E5D7F',
-  neutral200: '#5A5A74',
+  neutral200: '#696981',
   neutral300: '#26253E',
 
   // text (inverted for dark mode)
