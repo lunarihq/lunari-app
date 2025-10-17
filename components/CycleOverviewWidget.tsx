@@ -5,6 +5,7 @@ import { LinkButton } from './LinkButton';
 import { Button } from './Button';
 import DashedCircle from './DashedCircle';
 import { useTheme, createTypography } from '../styles/theme';
+import { formatTodayShort } from '../utils/localeUtils';
 
 interface CycleOverviewWidgetProps {
   currentDate: Date;
@@ -16,8 +17,7 @@ interface CycleOverviewWidgetProps {
   averageCycleLength: number;
 }
 
-const getFormattedDate = (date: Date): string =>
-  `Today, ${date.getDate()} ${date.toLocaleDateString('en-US', { month: 'short' })}`;
+const getFormattedDate = (date: Date): string => formatTodayShort(date);
 
 export function CycleOverviewWidget({
   currentDate,

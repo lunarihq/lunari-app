@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, View, StyleSheet, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import defaultTheme, { useTheme, createTypography } from '../../styles/theme';
+import * as Localization from 'expo-localization';
 
 export default function PrivacyPolicy() {
   const { colors } = useTheme();
@@ -21,7 +22,7 @@ export default function PrivacyPolicy() {
           Privacy Policy
         </Text>
         <Text style={[typography.body, { color: colors.textSecondary }]}>
-          Last updated: {new Date().toLocaleDateString()}
+          Last updated: {new Date().toLocaleDateString(Localization.getLocales()[0].languageTag)}
         </Text>
       </View>
 

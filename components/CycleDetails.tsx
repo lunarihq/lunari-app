@@ -5,6 +5,7 @@ import { SymptomsTracker } from './SymptomsTracker';
 import { PeriodPredictionService } from '../services/periodPredictions';
 import { formatDateString } from '../types/calendarTypes';
 import { useTheme, createTypography } from '../styles/theme';
+import { formatDateLong } from '../utils/localeUtils';
 
 interface CycleDetailsProps {
   selectedDate: string;
@@ -22,10 +23,7 @@ export function CycleDetails({
   const { colors } = useTheme();
   const typography = createTypography(colors);
   const selectedDateFormatted = selectedDate
-    ? new Date(selectedDate).toLocaleDateString('en-US', {
-        day: 'numeric',
-        month: 'long',
-      })
+    ? formatDateLong(selectedDate)
     : '';
 
   const getConceptionChance = () => {

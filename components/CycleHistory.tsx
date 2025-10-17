@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useTheme, createTypography } from '../styles/theme';
+import { formatDateShort } from '../utils/localeUtils';
 
 interface CycleData {
   startDate: string;
@@ -106,11 +107,8 @@ const calculateEndDate = (startDate: string, cycleLength: string | number) => {
     const endDateObj = new Date(startDateObj);
     endDateObj.setDate(startDateObj.getDate() + cycleDays - 1); // -1 because start date is included
 
-    // Format the end date in the same format as the input (MMM DD)
-    return endDateObj.toLocaleDateString('en-US', {
-      month: 'short',
-      day: 'numeric',
-    });
+    // Format the end date using device locale
+    return formatDateShort(endDateObj);
   } catch {
     // Return fallback if any error occurs
     return 'Unknown';

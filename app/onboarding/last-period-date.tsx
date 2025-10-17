@@ -13,6 +13,7 @@ import { createTypography } from '../../styles/typography';
 import { useTheme } from '../../contexts/ThemeContext';
 import { formatDateString } from '../../types/calendarTypes';
 import { ColorScheme } from '../../styles/colors';
+import * as Localization from 'expo-localization';
 
 export default function LastPeriodDateScreen() {
   const router = useRouter();
@@ -141,10 +142,13 @@ export default function LastPeriodDateScreen() {
             maxDate={today}
             firstDay={1}
             renderHeader={date => {
-              const monthYear = new Date(date).toLocaleDateString('en-US', {
-                month: 'long',
-                year: 'numeric',
-              });
+              const monthYear = new Date(date).toLocaleDateString(
+                Localization.getLocales()[0].languageTag,
+                {
+                  month: 'long',
+                  year: 'numeric',
+                }
+              );
               return (
                 <Text
                   style={[

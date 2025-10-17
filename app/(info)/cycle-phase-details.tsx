@@ -6,9 +6,10 @@ import { PeriodPredictionService } from '../../services/periodPredictions';
 import defaultTheme, { useTheme, createTypography } from '../../styles/theme';
 import { CycleIcon } from '../../components/icons/Cycle';
 import { LeafIcon } from '../../components/icons/Leaf';
+import { formatTodayShort, formatDateShort } from '../../utils/localeUtils';
 
 const getFormattedDate = (date: Date): string => {
-  return `Today, ${date.getDate()} ${date.toLocaleDateString('en-US', { month: 'short' })}`;
+  return formatTodayShort(date);
 };
 
 const getCycleStartDate = (cycleDay: number): Date => {
@@ -31,7 +32,7 @@ const getFormattedCycleStart = (cycleDay: number): string => {
     return 'Your cycle started today';
   }
 
-  return `This cycle started on ${cycleStartDate.getDate()} ${cycleStartDate.toLocaleDateString('en-US', { month: 'short' })}`;
+  return `This cycle started on ${formatDateShort(cycleStartDate)}`;
 };
 
 export default function CyclePhaseDetails() {

@@ -15,6 +15,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { NotificationService } from '../../services/notificationService';
 import { getSetting, setSetting } from '../../db';
 import defaultTheme, { useTheme, createTypography } from '../../styles/theme';
+import { formatTime } from '../../utils/localeUtils';
 export default function Reminders() {
   const { colors } = useTheme();
   const typography = createTypography(colors);
@@ -219,9 +220,9 @@ export default function Reminders() {
     }
   };
 
-  // Format time for display
-  const formatTime = (date: Date) => {
-    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  // Format time for display (using locale-aware helper)
+  const formatTimeDisplay = (date: Date) => {
+    return formatTime(date);
   };
 
   // Save settings to database and update notification service
@@ -367,7 +368,7 @@ export default function Reminders() {
               { color: colors.primary, fontWeight: '500' },
             ]}
           >
-            {formatTime(notificationTime)}
+            {formatTimeDisplay(notificationTime)}
           </Text>
         </TouchableOpacity>
       </View>
@@ -376,7 +377,6 @@ export default function Reminders() {
         <DateTimePicker
           value={notificationTime}
           mode="time"
-          is24Hour={false}
           onChange={handleTimeChange}
         />
       )}

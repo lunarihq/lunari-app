@@ -19,6 +19,7 @@ import defaultTheme, { useTheme, createTypography } from '../styles/theme';
 import { useNotes } from '../contexts/NotesContext';
 import { CustomIcon } from '../components/icons';
 import Toast from 'react-native-toast-message';
+import { formatTodayOrDate } from '../utils/localeUtils';
 
 // Symptom type definition
 type Item = {
@@ -66,10 +67,7 @@ export default function SymptomTracking() {
   // Update header title on focused
   useFocusEffect(
     React.useCallback(() => {
-      const isToday = selectedDate === dayjs().format('YYYY-MM-DD');
-      const formattedDate = isToday
-        ? `Today, ${dayjs(selectedDate).format('MMMM D')}`
-        : dayjs(selectedDate).format('dddd, MMMM D');
+      const formattedDate = formatTodayOrDate(selectedDate);
 
       // If possible, update the header title
       if (router.canGoBack()) {
@@ -741,9 +739,7 @@ export default function SymptomTracking() {
         </TouchableOpacity>
 
         <Text style={[typography.body, { fontSize: 18, fontWeight: '600' }]}>
-          {selectedDate === dayjs().format('YYYY-MM-DD')
-            ? `Today, ${dayjs(selectedDate).format('MMMM D')}`
-            : dayjs(selectedDate).format('dddd, MMMM D')}
+          {formatTodayOrDate(selectedDate)}
         </Text>
 
         <TouchableOpacity

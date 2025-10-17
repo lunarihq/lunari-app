@@ -12,6 +12,7 @@ import { DropIcon } from '../../components/icons/Drop';
 import { CycleIcon } from '../../components/icons/Cycle';
 import { getCycleStatus, getPeriodStatus } from '../../utils/cycleUtils';
 import defaultTheme, { useTheme, createTypography } from '../../styles/theme';
+import { formatDateShort } from '../../utils/localeUtils';
 interface CycleData {
   startDate: string;
   cycleLength: string | number;
@@ -172,10 +173,9 @@ export default function Stats() {
     loadUserSettings();
   }, []);
 
-  // Format date as "MMM DD" (e.g., "Apr 10")
+  // Format date using device locale
   const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    return formatDateShort(dateString);
   };
 
   // Empty state component
