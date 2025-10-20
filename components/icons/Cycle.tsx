@@ -1,7 +1,8 @@
 import React from 'react';
-import Svg, { Path, Circle } from 'react-native-svg';
+import { SvgProps } from 'react-native-svg';
+import CycleSvg from './cycle.svg';
 
-interface IconProps {
+interface IconProps extends SvgProps {
   size?: number;
   color?: string;
 }
@@ -9,28 +10,7 @@ interface IconProps {
 export const CycleIcon: React.FC<IconProps> = ({
   size = 24,
   color = '#1C1B1F',
-}) => (
-  <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-    <Path
-      d="M22.8089 12.0684C22.8089 11.6203 22.4457 11.257 21.9976 11.257C21.5495 11.257 21.1862 11.6203 21.1862 12.0684H21.9976H22.8089ZM11.9748 22.0911V21.2797C9.24474 21.2797 6.79286 20.093 5.10491 18.2047L4.5 18.7455L3.89509 19.2862C5.87786 21.5043 8.76361 22.9025 11.9748 22.9025V22.0911ZM21.9976 12.0684H21.1862C21.1862 17.1557 17.0621 21.2797 11.9748 21.2797V22.0911V22.9025C17.9584 22.9025 22.8089 18.0519 22.8089 12.0684H21.9976Z"
-      fill={color}
-    />
-    <Path
-      d="M7.15145 4.22008C7.53296 3.98503 7.65168 3.48521 7.41663 3.1037C7.18158 2.72219 6.68176 2.60347 6.30025 2.83852L6.72585 3.5293L7.15145 4.22008ZM2.41081 15.0718L3.18499 14.829C2.91197 13.9585 2.76449 13.0316 2.76449 12.0687H1.95312H1.14176C1.14176 13.1982 1.31489 14.2888 1.63664 15.3146L2.41081 15.0718ZM1.95312 12.0687H2.76449C2.76449 8.75142 4.51745 5.84291 7.15145 4.22008L6.72585 3.5293L6.30025 2.83852C3.20684 4.7444 1.14176 8.16502 1.14176 12.0687H1.95312Z"
-      fill={color}
-    />
-    <Path
-      d="M13.4102 3C18.2673 3.69476 22.0011 7.87196 22.0011 12.9212"
-      stroke={color}
-      strokeWidth="3.2"
-      strokeLinecap="round"
-    />
-    <Circle
-      cx="3.2"
-      cy="17.3"
-      r="2.53636"
-      stroke={color}
-      strokeWidth="1.52727"
-    />
-  </Svg>
-);
+  ...props
+}) => {
+  return <CycleSvg width={size} height={size} stroke={color} fill={color} {...props} />;
+};

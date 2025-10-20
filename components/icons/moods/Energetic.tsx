@@ -1,7 +1,8 @@
 import React from 'react';
-import Svg, { Path } from 'react-native-svg';
+import { SvgProps } from 'react-native-svg';
+import EnergeticSvg from './energetic.svg';
 
-interface IconProps {
+interface IconProps extends SvgProps {
   size?: number;
   color?: string;
 }
@@ -9,31 +10,7 @@ interface IconProps {
 export const EnergeticIcon: React.FC<IconProps> = ({
   size = 24,
   color = '#FFEC7A',
-}) => (
-  <Svg width={size} height={size} viewBox="0 0 64 64" fill="none">
-    <Path
-      d="M32 64C49.6731 64 64 49.6731 64 32C64 14.3269 49.6731 0 32 0C14.3269 0 0 14.3269 0 32C0 49.6731 14.3269 64 32 64Z"
-      fill={color}
-    />
-    <Path
-      d="M26 11L19.155 20.4118C18.6743 21.0728 19.1465 22 19.9638 22H26.5657C26.9651 22 27.2033 22.4451 26.9818 22.7774L21.5 31"
-      stroke="black"
-      strokeWidth="2.46"
-      strokeLinecap="round"
-    />
-    <Path
-      d="M44 11L37.155 20.4118C36.6743 21.0728 37.1465 22 37.9638 22H44.5657C44.9651 22 45.2033 22.4451 44.9818 22.7774L39.5 31"
-      stroke="black"
-      strokeWidth="2.46"
-      strokeLinecap="round"
-    />
-    <Path
-      d="M16.9062 49.3092C20.3468 52.9132 25.244 55.5767 31.4931 55.8857C37.9456 56.2045 43.3448 53.7013 47.2603 49.5287C34.8991 43.4585 22.8062 46.8634 16.9062 49.3092Z"
-      fill="#E30051"
-    />
-    <Path
-      d="M11.0099 35C10.8397 39.5519 12.8699 45.0781 16.9074 49.3075C22.8074 46.8616 34.9003 43.4568 47.2614 49.5264C50.7933 45.7633 53.1182 40.6422 53.915 35C41.9214 39.3687 24.7901 38.3024 11.0099 35Z"
-      fill="black"
-    />
-  </Svg>
-);
+  ...props
+}) => {
+  return <EnergeticSvg width={size} height={size} fill={color} {...props} />;
+};

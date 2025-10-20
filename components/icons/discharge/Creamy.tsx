@@ -1,7 +1,8 @@
 import React from 'react';
-import Svg, { Path } from 'react-native-svg';
+import { SvgProps } from 'react-native-svg';
+import CreamySvg from './creamy.svg';
 
-interface IconProps {
+interface IconProps extends SvgProps {
   size?: number;
   color?: string;
 }
@@ -9,15 +10,7 @@ interface IconProps {
 export const CreamyIcon: React.FC<IconProps> = ({
   size = 24,
   color = '#9268E8',
-}) => (
-  <Svg width={size} height={size} viewBox="0 0 62 62" fill="none">
-    <Path
-      d="M62 31C62 48.1208 48.1208 62 31 62C13.8792 62 0 48.1208 0 31C0 13.8792 13.8792 0 31 0C48.1208 0 62 13.8792 62 31Z"
-      fill="#DED2FA"
-    />
-    <Path
-      d="M13.0516 37.2805C14.2189 20.9865 34.9255 15.9444 45.2504 15.0976C46.1482 15.024 46.9668 15.5611 47.3013 16.3975C47.5752 17.0821 47.4687 17.8576 47.0454 18.4614C42.9671 24.2803 40.5547 31.1847 40.2389 34.5C40.0674 35.815 39.8121 37.0299 39.5005 38.1464C37.4323 45.5573 30.1384 51.8281 22.6333 50.1336C19.716 49.4749 17.4295 47.8062 15.7831 45.9529C13.7018 43.6098 12.8276 40.4065 13.0516 37.2805Z"
-      fill={color}
-    />
-  </Svg>
-);
+  ...props
+}) => {
+  return <CreamySvg width={size} height={size} fill={color} {...props} />;
+};

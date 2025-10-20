@@ -23,7 +23,7 @@ import { FatigueIcon } from './symptoms/Fatigue';
 import { CravingsIcon } from './symptoms/Cravings';
 import { BloatedIcon } from './symptoms/Bloated';
 import { NauseaIcon } from './symptoms/Nausea';
-import { DischargeIcon } from './symptoms/Discharge';
+import { DischargeIcon } from './symptoms/VaginalDryness';
 import { UrinationIcon } from './symptoms/Urination';
 import { HeadacheIcon } from './symptoms/Headache';
 import { SweatsIcon } from './symptoms/Sweats';
