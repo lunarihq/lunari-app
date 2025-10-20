@@ -101,7 +101,7 @@ export function CycleInsights({
           >
             <View style={styles.insightTop}>
               <View style={iconContainerStyle}>
-                <CycleIcon size={30} color={colors.icon} />
+                <CycleIcon size={28} color={colors.icon} />
               </View>
               <Text
                 style={[styles.insightLabel, { color: colors.textPrimary }]}

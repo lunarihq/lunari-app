@@ -1,6 +1,6 @@
 import React from 'react';
 import { SvgProps } from 'react-native-svg';
-import BrainFogSvg from './brain-frog.svg';
+import BrainFogSvg from './brain-fog.svg';
 
 interface IconProps extends SvgProps {
   size?: number;
