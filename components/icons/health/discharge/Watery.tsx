@@ -12,5 +12,5 @@ export const WateryIcon: React.FC<IconProps> = ({
   color = '#9268E8',
   ...props
 }) => {
-  return <WaterySvg width={size} height={size} stroke={color} {...props} />;
+  return <WaterySvg width={size} height={size} {...props} />;
 };

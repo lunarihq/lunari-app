@@ -12,5 +12,5 @@ export const EggWhiteIcon: React.FC<IconProps> = ({
   color = '#9268E8',
   ...props
 }) => {
-  return <EggWhiteSvg width={size} height={size} stroke={color} {...props} />;
+  return <EggWhiteSvg width={size} height={size} {...props} />;
 };
