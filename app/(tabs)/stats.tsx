@@ -244,14 +244,14 @@ export default function Stats() {
           <StatCard
             title="Average cycle length"
             value={`${averageCycleLength} days`}
-            icon={<CycleIcon size={36} color={colors.icon} />}
+            icon={<CycleIcon size={40} color={colors.icon} />}
             status={getCycleStatus(averageCycleLength).status}
             type="cycle"
           />
           <StatCard
             title="Average period length"
             value={`${averagePeriodLength} days`}
-            icon={<DropIcon size={42} color={colors.icon} />}
+            icon={<DropIcon size={48} color={colors.icon} />}
             status={getPeriodStatus(averagePeriodLength).status}
             type="period"
           />

@@ -12,5 +12,5 @@ export const CycleIcon: React.FC<IconProps> = ({
   color = '#1C1B1F',
   ...props
 }) => {
-  return <CycleSvg width={size} height={size} stroke={color} fill={color} {...props} />;
+  return <CycleSvg width={size} height={size} fill={color} {...props} />;
 };
