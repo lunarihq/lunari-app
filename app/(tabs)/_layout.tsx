@@ -2,7 +2,7 @@ import { Tabs, useRouter } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { TouchableOpacity } from 'react-native';
 import { useTheme } from '../../styles/theme';
-import { InfoIcon } from '../../components/icons/info';
+import { InfoIcon } from '../../components/icons/general/info';
 
 export default function TabLayout() {
   const { colors } = useTheme();

@@ -4,8 +4,8 @@ import { useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { PeriodPredictionService } from '../../services/periodPredictions';
 import defaultTheme, { useTheme, createTypography } from '../../styles/theme';
-import { CycleIcon } from '../../components/icons/Cycle';
-import { LeafIcon } from '../../components/icons/Leaf';
+import { CycleIcon } from '../../components/icons/general/Cycle';
+import { LeafIcon } from '../../components/icons/general/Leaf';
 import { formatTodayShort, formatDateShort } from '../../utils/localeUtils';
 
 const getFormattedDate = (date: Date): string => {

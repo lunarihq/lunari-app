@@ -2,9 +2,9 @@ import React from 'react';
 import { Text, View, StyleSheet, Pressable } from 'react-native';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { CalendarIcon } from './icons/Calendar';
-import { CycleIcon } from './icons/Cycle';
-import { LeafIcon } from './icons/Leaf';
+import { CalendarIcon } from './icons/general/Calendar';
+import { CycleIcon } from './icons/general/Cycle';
+import { LeafIcon } from './icons/general/Leaf';
 import { PeriodPredictionService } from '../services/periodPredictions';
 import { useTheme } from '../styles/theme';
 

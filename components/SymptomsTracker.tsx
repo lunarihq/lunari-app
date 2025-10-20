@@ -15,8 +15,8 @@ import { eq } from 'drizzle-orm';
 import { useTheme, createTypography } from '../styles/theme';
 import dayjs from 'dayjs';
 import { globalStyles } from '../styles/globalStyles';
-import { CustomIcon } from './icons';
-import { NoteIcon } from './icons/Note';
+import { CustomIcon } from './icons/health';
+import { NoteIcon } from './icons/health/Note';
 
 type SymptomsTrackerProps = {
   selectedDate?: string;

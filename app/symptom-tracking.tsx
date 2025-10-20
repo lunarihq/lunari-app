@@ -17,7 +17,7 @@ import { eq } from 'drizzle-orm';
 import { useFocusEffect } from '@react-navigation/native';
 import defaultTheme, { useTheme, createTypography } from '../styles/theme';
 import { useNotes } from '../contexts/NotesContext';
-import { CustomIcon } from '../components/icons';
+import { CustomIcon } from '../components/icons/health';
 import Toast from 'react-native-toast-message';
 import { formatTodayOrDate } from '../utils/localeUtils';
 
