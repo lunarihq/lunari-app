@@ -43,8 +43,8 @@ export default function TabLayout() {
               style={{ marginRight: 16 }}
             >
               <InfoIcon
-                size={24}
-                color={colors.textPrimary}
+                size={26}
+                color={colors.neutral400}
               />
             </TouchableOpacity>
           ),
@@ -69,8 +69,8 @@ export default function TabLayout() {
               style={{ marginLeft: 16 }}
             >
               <InfoIcon
-                size={24}
-                color={colors.textPrimary}
+                size={26}
+                color={colors.neutral400}
               />
             </TouchableOpacity>
           ),

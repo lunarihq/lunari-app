@@ -35,6 +35,7 @@ export interface ColorScheme {
   neutral100: string;
   neutral200: string;
   neutral300: string;
+  neutral400: string;
 
   // text
   textPrimary: string;
@@ -88,6 +89,7 @@ export const lightColors: ColorScheme = {
   neutral100: '#DADAE4',
   neutral200: '#8A86A9',
   neutral300: '#D8DAFF',
+  neutral400: '#706D8C',
 
   // text
   textPrimary: '#25253F', // main text
@@ -141,6 +143,7 @@ export const darkColors: ColorScheme = {
   neutral100: '#5E5D7F',
   neutral200: '#696981',
   neutral300: '#26253E',
+  neutral400: '#706D8C',
 
   // text (inverted for dark mode)
   textPrimary: '#FFFFFF', // white text for dark backgrounds
