@@ -12,5 +12,5 @@ export const DropIcon: React.FC<IconProps> = ({
   color = 'black',
   ...props
 }) => {
-  return <DropSvg width={size} height={size} fill={color} {...props} />;
+  return <DropSvg width={size} height={size} fill={color} color={color} {...props} />;
 };

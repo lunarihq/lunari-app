@@ -12,5 +12,5 @@ export const InfoIcon: React.FC<IconProps> = ({
   color = '#666666',
   ...props
 }) => {
-  return <InfoSvg width={size} height={size} fill={color} {...props} />;
+  return <InfoSvg width={size} height={size} fill={color} color={color} {...props} />;
 };

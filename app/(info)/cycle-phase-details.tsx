@@ -140,7 +140,7 @@ export default function CyclePhaseDetails() {
                 { backgroundColor: colors.accentPinkLight },
               ]}
             >
-              <LeafIcon size={38} color={colors.accentPink} />
+              <LeafIcon size={40} color={colors.accentPink} />
             </View>
             <Text style={[typography.heading2, { marginLeft: 12 }]}>
               Chance to conceive
