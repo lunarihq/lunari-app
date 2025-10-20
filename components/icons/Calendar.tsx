@@ -9,8 +9,8 @@ interface IconProps extends SvgProps {
 
 export const CalendarIcon: React.FC<IconProps> = ({
   size = 24,
-  color = 'black',
+  color = '#1C1B1F',
   ...props
 }) => {
-  return <CalendarSvg width={size} height={size} fill={color} {...props} />;
+  return <CalendarSvg width={size} height={size} fill={color} color={color} {...props} />;
 };

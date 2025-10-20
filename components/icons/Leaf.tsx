@@ -9,8 +9,8 @@ interface IconProps extends SvgProps {
 
 export const LeafIcon: React.FC<IconProps> = ({
   size = 24,
-  color = 'black',
+  color = '#1C1B1F',
   ...props
 }) => {
-  return <LeafSvg width={size} height={size} fill={color} {...props} />;
+  return <LeafSvg width={size} height={size} fill={color} color={color} {...props} />;
 };
