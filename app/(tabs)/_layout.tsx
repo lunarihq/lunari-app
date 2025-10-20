@@ -2,6 +2,7 @@ import { Tabs, useRouter } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { TouchableOpacity } from 'react-native';
 import { useTheme } from '../../styles/theme';
+import { InfoIcon } from '../../components/icons/info';
 
 export default function TabLayout() {
   const { colors } = useTheme();
@@ -41,8 +42,7 @@ export default function TabLayout() {
               onPress={() => router.push('/(info)/prediction-info')}
               style={{ marginRight: 16 }}
             >
-              <Ionicons
-                name="information-circle-outline"
+              <InfoIcon
                 size={24}
                 color={colors.textPrimary}
               />
@@ -68,8 +68,7 @@ export default function TabLayout() {
               onPress={() => router.push('/(info)/calendar-legend-info')}
               style={{ marginLeft: 16 }}
             >
-              <Ionicons
-                name="information-circle-outline"
+              <InfoIcon
                 size={24}
                 color={colors.textPrimary}
               />
