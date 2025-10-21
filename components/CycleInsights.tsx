@@ -121,10 +121,10 @@ export function CycleInsights({
                 style={[styles.insightValue, { color: colors.textPrimary }]}
               >
                 {currentCycleDay
-                  ? PeriodPredictionService.getCyclePhase(
+                  ? t(`cycleInsights.${PeriodPredictionService.getCyclePhase(
                       currentCycleDay,
                       averageCycleLength
-                    )
+                    )}`)
                   : '-'}
               </Text>
             </View>
@@ -159,10 +159,10 @@ export function CycleInsights({
                 style={[styles.insightValue, { color: colors.textPrimary }]}
               >
                 {currentCycleDay
-                  ? PeriodPredictionService.getPregnancyChance(
+                  ? t(`cycleInsights.${PeriodPredictionService.getPregnancyChance(
                       currentCycleDay,
                       averageCycleLength
-                    )
+                    )}`)
                   : '-'}
               </Text>
             </View>

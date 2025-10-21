@@ -180,17 +180,17 @@ export class PeriodPredictionService {
     cycleDay: number,
     averageCycleLength: number = 28
   ): string {
-    if (cycleDay <= 5) return 'Menstrual';
+    if (cycleDay <= 5) return 'menstrual';
 
     // Scale phases based on actual cycle length
     const follicularEnd = Math.round(10 * (averageCycleLength / 28));
     const ovulatoryEnd = Math.round(14 * (averageCycleLength / 28));
 
-    if (cycleDay <= follicularEnd) return 'Follicular';
-    if (cycleDay <= ovulatoryEnd) return 'Ovulatory';
+    if (cycleDay <= follicularEnd) return 'follicular';
+    if (cycleDay <= ovulatoryEnd) return 'ovulation';
     // Normal cycles can be 21-35 days, so only show "Extended" after day 35
-    if (cycleDay <= 35) return 'Luteal';
-    return 'Extended';
+    if (cycleDay <= 35) return 'luteal';
+    return 'extended';
   }
 
   static getPhaseDescription(phase: string): string {
@@ -218,10 +218,10 @@ export class PeriodPredictionService {
     const fertilityStart = ovulationDay - 5;
     const fertilityEnd = ovulationDay + 1;
 
-    if (cycleDay >= fertilityStart && cycleDay <= fertilityEnd) return 'High';
+    if (cycleDay >= fertilityStart && cycleDay <= fertilityEnd) return 'high';
     if (cycleDay >= fertilityStart - 2 && cycleDay <= fertilityEnd + 2)
-      return 'Medium';
-    return 'Low';
+      return 'medium';
+    return 'low';
   }
 
   static getPregnancyChanceDescription(chance: string): string {

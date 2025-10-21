@@ -24,6 +24,10 @@
     "ovulation": "Ovulation",
     "luteal": "Luteal",
     "menstrual": "Menstrual",
+    "extended": "Extended",
+    "high": "High",
+    "medium": "Medium",
+    "low": "Low",
     "dayOfCycle": "Day {{day}} of {{total}}",
     "averageCycle": "Average cycle: {{days}} days",
     "nextPeriod": "Next period: {{date}}"
