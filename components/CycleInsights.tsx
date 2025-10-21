@@ -226,6 +226,7 @@ const styles = StyleSheet.create({
     color: '#332F49',
     textAlign: 'center',
     lineHeight: 18,
+    paddingHorizontal: 8,
   },
   insightValueContainer: {
     width: '100%',
