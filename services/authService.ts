@@ -4,6 +4,9 @@ import * as Crypto from 'expo-crypto';
 
 const PIN_KEY = 'app_pin';
 const BIOMETRIC_ENABLED_KEY = 'biometric_enabled';
+const LOCK_MODE_KEY = 'lock_mode';
+
+type LockMode = 'none' | 'pin' | 'biometric';
 
 export class AuthService {
   // Check if PIN is set
@@ -26,6 +29,7 @@ export class AuthService {
         `lunari_v1:${pin}`
       );
       await SecureStore.setItemAsync(PIN_KEY, hash);
+      await this.setLockMode('pin');
       return true;
     } catch (error) {
       console.error('Error setting PIN:', error);
@@ -53,6 +57,7 @@ export class AuthService {
   static async removePin(): Promise<boolean> {
     try {
       await SecureStore.deleteItemAsync(PIN_KEY);
+      await this.setLockMode('none');
       return true;
     } catch (error) {
       console.error('Error removing PIN:', error);
@@ -94,17 +99,19 @@ export class AuthService {
     }
   }
 
-  static async authenticateWithBiometric(): Promise<{
+  static async authenticateWithBiometric(
+    disableDeviceFallback: boolean = false
+  ): Promise<{
     success: boolean;
     error?: string;
   }> {
     try {
       const result = await LocalAuthentication.authenticateAsync({
         promptMessage: 'Unlock Lunari',
-        cancelLabel: 'Use PIN',
-        disableDeviceFallback: true,
+        cancelLabel: 'Cancel',
+        disableDeviceFallback,
         requireConfirmation: false,
-        fallbackLabel: 'Use PIN instead',
+        fallbackLabel: disableDeviceFallback ? '' : 'Use device passcode',
       });
 
       if (result.success) {
@@ -137,6 +144,11 @@ export class AuthService {
   static async setBiometricEnabled(enabled: boolean): Promise<boolean> {
     try {
       await SecureStore.setItemAsync(BIOMETRIC_ENABLED_KEY, enabled.toString());
+      if (enabled) {
+        await this.setLockMode('biometric');
+      } else {
+        await this.setLockMode('none');
+      }
       return true;
     } catch (error) {
       console.error('Error setting biometric enabled status:', error);
@@ -148,8 +160,32 @@ export class AuthService {
     const supported = await this.isBiometricSupported();
     const enrolled = await this.isBiometricEnrolled();
     const enabled = await this.isBiometricEnabled();
-    const pinSet = await this.isPinSet();
 
-    return supported && enrolled && enabled && pinSet;
+    return supported && enrolled && enabled;
+  }
+
+  static async getLockMode(): Promise<LockMode> {
+    try {
+      const mode = await SecureStore.getItemAsync(LOCK_MODE_KEY);
+      return (mode as LockMode) || 'none';
+    } catch (error) {
+      console.error('Error getting lock mode:', error);
+      return 'none';
+    }
+  }
+
+  static async setLockMode(mode: LockMode): Promise<boolean> {
+    try {
+      await SecureStore.setItemAsync(LOCK_MODE_KEY, mode);
+      return true;
+    } catch (error) {
+      console.error('Error setting lock mode:', error);
+      return false;
+    }
+  }
+
+  static async isLockEnabled(): Promise<boolean> {
+    const mode = await this.getLockMode();
+    return mode !== 'none';
   }
 }

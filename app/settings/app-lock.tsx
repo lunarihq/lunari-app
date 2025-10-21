@@ -19,9 +19,9 @@ export default function AppLockScreen() {
     isPinSet,
     removePin,
     refreshPinStatus,
-    canUseBiometric,
     setBiometricEnabled,
     getBiometricType,
+    lockMode,
   } = useAuth();
 
   const [pinEnabled, setPinEnabled] = useState(false);
@@ -31,31 +31,35 @@ export default function AppLockScreen() {
 
   useEffect(() => {
     setPinEnabled(isPinSet);
-    setBiometricEnabledState(canUseBiometric);
+    setBiometricEnabledState(lockMode === 'biometric');
 
     const checkBiometricSupport = async () => {
-      if (isPinSet) {
-        const { AuthService } = await import('../../services/authService');
-        const supported = await AuthService.isBiometricSupported();
-        const enrolled = await AuthService.isBiometricEnrolled();
-        setBiometricSupported(supported && enrolled);
+      const { AuthService } = await import('../../services/authService');
+      const supported = await AuthService.isBiometricSupported();
+      const enrolled = await AuthService.isBiometricEnrolled();
+      setBiometricSupported(supported && enrolled);
 
-        if (supported && enrolled) {
-          const type = await getBiometricType();
-          setBiometricType(type);
-        }
+      if (supported && enrolled) {
+        const type = await getBiometricType();
+        setBiometricType(type);
       }
     };
 
     checkBiometricSupport();
-  }, [isPinSet, canUseBiometric, getBiometricType]);
+  }, [isPinSet, lockMode, getBiometricType]);
 
   const handlePinToggle = async (value: boolean) => {
     if (value) {
-      // Navigate to PIN setup
+      if (biometricEnabled) {
+        Alert.alert(
+          'Remove Biometric First',
+          'You currently have biometric authentication enabled. Please disable it before enabling PIN.',
+          [{ text: 'OK' }]
+        );
+        return;
+      }
       router.push('/settings/pin-setup?mode=setup');
     } else {
-      // Show confirmation dialog
       Alert.alert('Remove PIN', 'Are you sure you want to remove your PIN?', [
         {
           text: 'Cancel',
@@ -79,14 +83,37 @@ export default function AppLockScreen() {
   };
 
   const handleBiometricToggle = async (value: boolean) => {
-    const success = await setBiometricEnabled(value);
-    if (success) {
-      setBiometricEnabledState(value);
-    } else {
+    if (value && isPinSet) {
       Alert.alert(
-        'Error',
-        'Failed to update biometric settings. Please try again.'
+        'Remove PIN First',
+        'You currently have PIN enabled. Please disable PIN before enabling biometric authentication.',
+        [{ text: 'OK' }]
       );
+      return;
+    }
+
+    if (value) {
+      const success = await setBiometricEnabled(true);
+      if (success) {
+        setBiometricEnabledState(true);
+        await refreshPinStatus();
+      } else {
+        Alert.alert(
+          'Error',
+          'Failed to enable biometric lock. Please try again.'
+        );
+      }
+    } else {
+      const success = await setBiometricEnabled(false);
+      if (success) {
+        setBiometricEnabledState(false);
+        await refreshPinStatus();
+      } else {
+        Alert.alert(
+          'Error',
+          'Failed to disable biometric lock. Please try again.'
+        );
+      }
     }
   };
 
@@ -141,26 +168,7 @@ export default function AppLockScreen() {
         )}
       </View>
 
-      {!isPinSet && (
-        <View style={styles.infoSection}>
-          <View
-            style={[styles.infoContainer, { backgroundColor: colors.surface }]}
-          >
-            <Ionicons
-              name="information-circle"
-              size={20}
-              color={colors.textSecondary}
-              style={styles.infoIcon}
-            />
-            <Text style={[styles.infoText, { color: colors.textSecondary }]}>
-              Once you set up a PIN, you can also set up biometric
-              authentication.
-            </Text>
-          </View>
-        </View>
-      )}
-
-      {isPinSet && biometricSupported && (
+      {biometricSupported && (
         <View style={[styles.section, { backgroundColor: colors.surface }]}>
           <View style={[styles.settingRow, styles.lastRow]}>
             <View style={styles.settingContent}>
@@ -194,14 +202,6 @@ export default function AppLockScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  scrollView: {
-    flex: 1,
-    paddingHorizontal: 16,
-    backgroundColor: 'red',
-  },
   section: {
     borderRadius: 12,
     marginVertical: 8,
@@ -228,23 +228,5 @@ const styles = StyleSheet.create({
   settingSubtitle: {
     fontSize: 14,
     marginTop: 2,
-  },
-  infoSection: {
-    marginVertical: 16,
-  },
-  infoContainer: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    padding: 16,
-    borderRadius: 12,
-  },
-  infoIcon: {
-    marginRight: 12,
-    marginTop: 2,
-  },
-  infoText: {
-    flex: 1,
-    fontSize: 14,
-    lineHeight: 20,
   },
 });

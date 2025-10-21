@@ -8,11 +8,14 @@ import React, {
 import { AppState, AppStateStatus } from 'react-native';
 import { AuthService } from '../services/authService';
 
+type LockMode = 'none' | 'pin' | 'biometric';
+
 interface AuthContextType {
   isLocked: boolean;
   isPinSet: boolean;
   isAuthenticated: boolean;
   canUseBiometric: boolean;
+  lockMode: LockMode;
   lockApp: () => void;
   unlockApp: () => void;
   setupPin: (pin: string) => Promise<boolean>;
@@ -37,6 +40,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [appStateBackground, setAppStateBackground] = useState(false);
   const [canUseBiometric, setCanUseBiometric] = useState(false);
+  const [lockMode, setLockMode] = useState<LockMode>('none');
 
   // Initialize auth state
   useEffect(() => {
@@ -50,18 +54,34 @@ export function AuthProvider({ children }: AuthProviderProps) {
       handleAppStateChange
     );
     return () => subscription?.remove();
-  }, [isPinSet]);
+  }, [lockMode]);
 
   const initializeAuth = async () => {
     try {
+      const mode = await AuthService.getLockMode();
       const pinSet = await AuthService.isPinSet();
       const biometricAvailable = await AuthService.canUseBiometric();
 
+      setLockMode(mode);
       setIsPinSet(pinSet);
       setCanUseBiometric(biometricAvailable);
 
-      // If PIN is set, app should be locked initially
-      if (pinSet) {
+      // Check for biometric enrollment loss
+      if (mode === 'biometric') {
+        const enrolled = await AuthService.isBiometricEnrolled();
+        if (!enrolled) {
+          // Biometric was enabled but device enrollment removed
+          await AuthService.setBiometricEnabled(false);
+          setLockMode('none');
+          setIsLocked(false);
+          setIsAuthenticated(true);
+          console.warn('App lock disabled - biometric data removed from device');
+          return;
+        }
+      }
+
+      // If lock is enabled, app should be locked initially
+      if (mode !== 'none') {
         setIsLocked(true);
         setIsAuthenticated(false);
       } else {
@@ -73,11 +93,25 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   };
 
-  const handleAppStateChange = (nextAppState: AppStateStatus) => {
+  const handleAppStateChange = async (nextAppState: AppStateStatus) => {
     if (nextAppState === 'background' || nextAppState === 'inactive') {
       setAppStateBackground(true);
-    } else if (nextAppState === 'active' && appStateBackground && isPinSet) {
-      // Lock app when returning from background if PIN is set
+    } else if (nextAppState === 'active' && appStateBackground && lockMode !== 'none') {
+      // Check for biometric enrollment loss when app becomes active
+      if (lockMode === 'biometric') {
+        const enrolled = await AuthService.isBiometricEnrolled();
+        if (!enrolled) {
+          await AuthService.setBiometricEnabled(false);
+          setLockMode('none');
+          setIsLocked(false);
+          setIsAuthenticated(true);
+          setAppStateBackground(false);
+          console.warn('App lock disabled - biometric data removed from device');
+          return;
+        }
+      }
+
+      // Lock app when returning from background if lock is enabled
       setIsLocked(true);
       setIsAuthenticated(false);
       setAppStateBackground(false);
@@ -85,7 +119,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   };
 
   const lockApp = () => {
-    if (isPinSet) {
+    if (lockMode !== 'none') {
       setIsLocked(true);
       setIsAuthenticated(false);
     }
@@ -154,7 +188,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const authenticateWithBiometric = async (): Promise<boolean> => {
     try {
-      const result = await AuthService.authenticateWithBiometric();
+      // For biometric-only mode, allow device fallback
+      const disableDeviceFallback = lockMode === 'pin';
+      const result = await AuthService.authenticateWithBiometric(disableDeviceFallback);
       if (result.success) {
         unlockApp();
         return true;
@@ -198,6 +234,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     isPinSet,
     isAuthenticated,
     canUseBiometric,
+    lockMode,
     lockApp,
     unlockApp,
     setupPin,

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { PinInput } from './PinInput';
 import { useAuth } from '../contexts/AuthContext';
@@ -7,7 +7,7 @@ import { useTheme } from '../styles/theme';
 
 export function LockScreen() {
   const { colors } = useTheme();
-  const { verifyPin, canUseBiometric, authenticateWithBiometric } = useAuth();
+  const { verifyPin, authenticateWithBiometric, lockMode } = useAuth();
 
   const [errorMessage, setErrorMessage] = useState('');
   const [biometricAttempted, setBiometricAttempted] = useState(false);
@@ -16,7 +16,7 @@ export function LockScreen() {
     try {
       const success = await authenticateWithBiometric();
       if (!success) {
-        // Biometric failed; user can use PIN
+        // Biometric failed with device fallback enabled, so this is final
       }
     } catch (error) {
       console.error('Biometric authentication error:', error);
@@ -25,11 +25,11 @@ export function LockScreen() {
 
   // Automatically attempt biometric authentication when screen loads
   useEffect(() => {
-    if (canUseBiometric && !biometricAttempted) {
+    if (lockMode === 'biometric' && !biometricAttempted) {
       setBiometricAttempted(true);
       handleBiometricAuth();
     }
-  }, [canUseBiometric, biometricAttempted, handleBiometricAuth]);
+  }, [lockMode, biometricAttempted, handleBiometricAuth]);
 
   const handlePinComplete = async (pin: string) => {
     const isValid = await verifyPin(pin);
@@ -51,13 +51,22 @@ export function LockScreen() {
       style={[styles.container, { backgroundColor: colors.background }]}
     >
       <View style={styles.content}>
-        <PinInput
-          title="Enter PIN"
-          subtitle="Enter your 4-digit PIN to unlock"
-          onPinComplete={handlePinComplete}
-          errorMessage={errorMessage}
-          onStartTyping={handleStartTyping}
-        />
+        {lockMode === 'pin' && (
+          <PinInput
+            title="Enter PIN"
+            subtitle="Enter your 4-digit PIN to unlock"
+            onPinComplete={handlePinComplete}
+            errorMessage={errorMessage}
+            onStartTyping={handleStartTyping}
+          />
+        )}
+        {lockMode === 'biometric' && (
+          <View style={styles.biometricContainer}>
+            <Text style={[styles.biometricTitle, { color: colors.textPrimary }]}>
+              Unlock Lunari
+            </Text>
+          </View>
+        )}
       </View>
     </SafeAreaView>
   );
@@ -69,5 +78,17 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
+  },
+  biometricContainer: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    paddingHorizontal: 32,
+    paddingTop: 100,
+  },
+  biometricTitle: {
+    fontSize: 28,
+    fontWeight: '600',
+    marginBottom: 8,
   },
 });
