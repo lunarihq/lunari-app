@@ -57,22 +57,26 @@
     "clumpyWhite": "Blanco grumoso"
   },
   "tracking": {
-    "howDoYouFeel": "¿Cómo te sientes hoy?",
-    "add": "Agregar",
-    "note": "Nota",
-    "notes": "Notas",
-    "notesPlaceholder": "Agrega notas, síntomas adicionales, etc.",
-    "notesEditorPlaceholder": "Agrega notas, síntomas adicionales, o cómo te has sentido...",
-    "noSymptoms": "No se han registrado síntomas o estados de ánimo {{dateText}}.",
-    "today": "hoy",
-    "thisDate": "en esta fecha",
+    "title": "Registra tu salud",
+    "selectAll": "Selecciona todas las que apliquen",
     "save": "Guardar",
-    "successMessage": "Datos de salud guardados",
-    "errorMessage": "Error. Por favor, inténtalo de nuevo.",
+    "cancel": "Cancelar",
     "flow": "Flujo menstrual",
     "symptoms": "Síntomas",
     "moods": "Estados de ánimo",
-    "discharge": "Flujo vaginal"
+    "discharge": "Flujo vaginal",
+    "notes": "Notas",
+    "notesPlaceholder": "Agrega notas, síntomas adicionales, etc.",
+    "notesEditorPlaceholder": "Agrega notas, síntomas adicionales, o cómo te has sentido...",
+    "successMessage": "Datos de salud guardados",
+    "errorMessage": "Error. Por favor, inténtalo de nuevo."
+  },
+  "symptomsTracker": {
+    "title": "¿Cómo te sientes hoy?",
+    "add": "Agregar",
+    "note": "Nota",
+    "noSymptomsToday": "Nada registrado hoy.",
+    "noSymptomsThisDate": "Nada registrado en esta fecha."
   }
 }
 

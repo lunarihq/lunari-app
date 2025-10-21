@@ -71,6 +71,13 @@
     "notesEditorPlaceholder": "Add notes, any extra symptoms, or how you've been feeling...",
     "successMessage": "Health data saved",
     "errorMessage": "Error. Please try again."
+  },
+  "symptomsTracker": {
+    "title": "How do you feel today?",
+    "add": "Add",
+    "note": "Note",
+    "noSymptomsToday": "No symptoms or moods logged today.",
+    "noSymptomsThisDate": "No symptoms or moods logged this date."
   }
 }
 

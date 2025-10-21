@@ -1,5 +1,6 @@
 import React, { useRef, useState, useCallback } from 'react';
 import { StyleSheet } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
 import { Button } from './Button';
 import { useTheme } from '../styles/theme';
@@ -28,6 +29,7 @@ export function CalendarBottomSheet({
   onOpenChange,
 }: CalendarBottomSheetProps) {
   const { colors } = useTheme();
+  const { t } = useTranslation('calendar');
   const bottomSheetRef = useRef<any>(null);
   const animatedIndex = useSharedValue(0);
   const contentHeightSv = useSharedValue(0);
@@ -70,7 +72,7 @@ export function CalendarBottomSheet({
         pointerEvents="box-none"
       >
         <Button
-          title="Edit period dates"
+          title={t('editPeriod.editPeriodDates')}
           onPress={() => router.push('/edit-period')}
         />
       </Animated.View>

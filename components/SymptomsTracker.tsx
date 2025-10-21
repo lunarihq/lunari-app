@@ -7,6 +7,7 @@ import {
   ScrollView,
   TextStyle,
 } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { router, useFocusEffect } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { db } from '../db';
@@ -29,6 +30,7 @@ export const SymptomsTracker = ({
 }: SymptomsTrackerProps) => {
   const { colors } = useTheme();
   const typography = createTypography(colors);
+  const { t } = useTranslation('health');
   const [healthLogsForDate, setHealthLogsForDate] = useState<any[]>([]);
 
   // Load health logs when component is focused or selectedDate changes
@@ -131,7 +133,7 @@ export const SymptomsTracker = ({
 
     // For notes, always show "Note" instead of the actual note text
     if (type === 'notes') {
-      return 'Note';
+      return t('symptomsTracker.note');
     }
 
     // For other types, show the original name
@@ -145,17 +147,10 @@ export const SymptomsTracker = ({
     return text;
   };
 
-  // Get date text for display
-  const getDateText = () => {
-    const dateToUse = selectedDate || dayjs().format('YYYY-MM-DD');
-    const isToday = dateToUse === dayjs().format('YYYY-MM-DD');
-    return isToday ? 'today' : 'this date';
-  };
-
   return (
     <View style={[styles.symptomsCard, { backgroundColor: colors.surface }]}>
       <Text style={[typography.heading2, titleStyle, { marginBottom: 16 }]}>
-        How do you feel today?
+        {t('symptomsTracker.title')}
       </Text>
 
       <ScrollView
@@ -187,7 +182,7 @@ export const SymptomsTracker = ({
               },
             ]}
           >
-            Add
+            {t('symptomsTracker.add')}
           </Text>
         </TouchableOpacity>
 
@@ -235,7 +230,9 @@ export const SymptomsTracker = ({
           // No items message
           <View style={styles.noItemsContainer}>
             <Text style={[typography.caption, { color: colors.textSecondary }]}>
-              No symptoms or moods logged {getDateText()}.
+              {selectedDate && selectedDate !== dayjs().format('YYYY-MM-DD')
+                ? t('symptomsTracker.noSymptomsThisDate')
+                : t('symptomsTracker.noSymptomsToday')}
             </Text>
           </View>
         )}

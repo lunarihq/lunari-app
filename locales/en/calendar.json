@@ -8,6 +8,7 @@
   "today": "Today",
   "editPeriod": {
     "title": "Edit Period",
+    "editPeriodDates": "Edit period dates",
     "selectDates": "Select the dates of your period",
     "instructions": "Tap on the calendar to select or deselect dates",
     "save": "Save",
