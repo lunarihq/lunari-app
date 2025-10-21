@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { router } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { LinkButton } from './LinkButton';
 import { Button } from './Button';
 import DashedCircle from './DashedCircle';
@@ -30,6 +31,7 @@ export function CycleOverviewWidget({
 }: CycleOverviewWidgetProps) {
   const { colors, isDark } = useTheme();
   const typography = createTypography(colors);
+  const { t } = useTranslation('home');
 
   const isPredictedPeriodDay = prediction?.days === 0;
   const isSpecialDay = isPeriodDay || isPredictedPeriodDay;
@@ -76,7 +78,7 @@ export function CycleOverviewWidget({
                   { color: circleTextColor },
                 ]}
               >
-                Period
+                {t('period')}
               </Text>
               <Text
                 style={[
@@ -90,7 +92,7 @@ export function CycleOverviewWidget({
                   { color: circleTextColor },
                 ]}
               >
-                Day {periodDayNumber}
+                {t('periodDay', { number: periodDayNumber })}
               </Text>
             </>
           ) : prediction ? (
@@ -113,7 +115,7 @@ export function CycleOverviewWidget({
                       { color: circleTextColor },
                     ]}
                   >
-                    Next period in
+                    {t('nextPeriodIn')}
                   </Text>
                   <Text
                     style={[
@@ -127,7 +129,7 @@ export function CycleOverviewWidget({
                       { color: circleTextColor },
                     ]}
                   >
-                    {prediction.days} {prediction.days === 1 ? 'day' : 'days'}
+                    {t('daysCount', { count: prediction.days })}
                   </Text>
                 </>
               ) : prediction.days === 0 ? (
@@ -144,7 +146,7 @@ export function CycleOverviewWidget({
                     { color: circleTextColor },
                   ]}
                 >
-                  Your period is expected today
+                  {t('expectedToday')}
                 </Text>
               ) : (
                 <>
@@ -155,7 +157,7 @@ export function CycleOverviewWidget({
                       { color: circleTextColor },
                     ]}
                   >
-                    Late for
+                    {t('lateFor')}
                   </Text>
                   <Text
                     style={[
@@ -169,11 +171,10 @@ export function CycleOverviewWidget({
                       { color: circleTextColor },
                     ]}
                   >
-                    {Math.abs(prediction.days)}{' '}
-                    {Math.abs(prediction.days) === 1 ? 'day' : 'days'}
+                    {t('daysCount', { count: Math.abs(prediction.days) })}
                   </Text>
                   <LinkButton
-                    title="Learn about late periods"
+                    title={t('learnAboutLatePeriods')}
                     onPress={() => router.push('/(info)/late-period-info')}
                   />
                 </>
@@ -204,15 +205,15 @@ export function CycleOverviewWidget({
                   { color: circleTextColor },
                 ]}
               >
-                Log the first day of your last period for next prediction.
+                {t('noDataPrompt')}
               </Text>
             </>
           )}
           <Button
             title={
               Object.keys(selectedDates).length > 0
-                ? 'Log or edit period dates'
-                : 'Log period'
+                ? t('logOrEdit')
+                : t('logPeriod')
             }
             onPress={() => router.push('/edit-period')}
             style={

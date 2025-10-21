@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import defaultTheme, { useTheme, createTypography } from '../../styles/theme';
 import { ThemeSelectionModal } from '../../components/ThemeSelectionModal';
 import { DataDeletionService } from '../../services/dataDeletionService';
@@ -20,6 +21,7 @@ export default function Settings() {
   const { colors, themeMode } = useTheme();
   const typography = createTypography(colors);
   const { clearNotes } = useNotes();
+  const { t } = useTranslation('settings');
   const [themeModalVisible, setThemeModalVisible] = useState(false);
 
   return (
@@ -44,7 +46,7 @@ export default function Settings() {
             />
           </View>
           <Text style={[typography.body, { fontSize: 18, flex: 1 }]}>
-            Reminders
+            {t('reminders')}
           </Text>
           <Ionicons
             name="chevron-forward"
@@ -65,7 +67,7 @@ export default function Settings() {
             />
           </View>
           <Text style={[typography.body, { fontSize: 18, flex: 1 }]}>
-            App lock
+            {t('appLock')}
           </Text>
           <Ionicons
             name="chevron-forward"
@@ -86,7 +88,7 @@ export default function Settings() {
             />
           </View>
           <Text style={[typography.body, { fontSize: 18, flex: 1 }]}>
-            Privacy policy
+            {t('privacyPolicy')}
           </Text>
           <Ionicons
             name="chevron-forward"
@@ -107,7 +109,7 @@ export default function Settings() {
             />
           </View>
           <Text style={[typography.body, { fontSize: 18, flex: 1 }]}>
-            About
+            {t('about')}
           </Text>
           <Ionicons
             name="chevron-forward"
@@ -128,14 +130,14 @@ export default function Settings() {
             />
           </View>
           <Text style={[typography.body, { fontSize: 18, flex: 1 }]}>
-            Theme
+            {t('theme')}
           </Text>
           <Text style={[typography.body, { color: colors.textSecondary }]}>
             {themeMode === 'system'
-              ? 'System default'
+              ? t('themeOptions.system')
               : themeMode === 'light'
-                ? 'Light'
-                : 'Dark'}
+                ? t('themeOptions.light')
+                : t('themeOptions.dark')}
           </Text>
         </TouchableOpacity>
       </View>
@@ -145,26 +147,28 @@ export default function Settings() {
           style={[styles.settingRow, styles.lastRow]}
           onPress={() => {
             Alert.alert(
-              'Delete all tracking data',
-              'All your period tracking data, symptoms, and notification preferences will be permanently deleted. Your app settings and preferences will be preserved.',
+              t('deleteDataConfirm.title'),
+              t('deleteDataConfirm.message'),
               [
-                { text: 'Cancel', style: 'cancel' },
+                { text: t('deleteDataConfirm.cancel'), style: 'cancel' },
                 {
-                  text: 'Delete data',
+                  text: t('deleteDataConfirm.delete'),
                   style: 'destructive',
                   onPress: async () => {
                     try {
                       await DataDeletionService.deleteAllUserData();
                       clearNotes();
 
-                      // Notify all components that data was deleted
                       DeviceEventEmitter.emit('dataDeleted');
 
-                      Alert.alert('Success', 'All your data has been deleted.');
+                      Alert.alert(
+                        t('deleteDataConfirm.success'),
+                        t('deleteDataConfirm.successMessage')
+                      );
                     } catch {
                       Alert.alert(
-                        'Error',
-                        'Failed to delete data. Please try again.'
+                        t('deleteDataConfirm.error'),
+                        t('deleteDataConfirm.errorMessage')
                       );
                     }
                   },
@@ -182,7 +186,7 @@ export default function Settings() {
               { fontSize: 18, flex: 1, color: colors.error },
             ]}
           >
-            Delete tracking data
+            {t('deleteData')}
           </Text>
           <Ionicons name="chevron-forward" size={24} color={colors.error} />
         </TouchableOpacity>

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Button } from '../../components/Button';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
@@ -18,6 +19,7 @@ export default function SuccessScreen() {
   const router = useRouter();
   const { colors } = useTheme();
   const typography = createTypography(colors);
+  const { t } = useTranslation('onboarding');
 
   const scale = useSharedValue(0);
   const opacity = useSharedValue(0);
@@ -61,7 +63,7 @@ export default function SuccessScreen() {
             { marginTop: 32, marginBottom: 16, textAlign: 'center' },
           ]}
         >
-          You're all set!
+          {t('success.title')}
         </Text>
 
         <Text
@@ -76,13 +78,13 @@ export default function SuccessScreen() {
             },
           ]}
         >
-          Log periods regularly to get the most accurate predictions.
+          {t('success.subtitle')}
         </Text>
       </View>
 
       <View style={styles.footer}>
         <Button
-          title="Start tracking"
+          title={t('success.button')}
           onPress={handleStartTracking}
           fullWidth
         />

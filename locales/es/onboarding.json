@@ -1,0 +1,31 @@
+{
+  "welcome": {
+    "title": "Tu periodo, tus datos.",
+    "subtitle": "Rastrea tu ciclo menstrual sin renunciar a tu privacidad."
+  },
+  "periodLength": {
+    "title": "¿Cuánto dura normalmente tu periodo?",
+    "checkboxText": "No lo sé - dejar que la app aprenda",
+    "checkboxSubtext": "La app usará 5 días como predeterminado y luego se ajustará a medida que registres ciclos."
+  },
+  "cycleLength": {
+    "title": "¿Cuántos días dura tu ciclo en promedio?",
+    "subtitle": "Este es el número de días desde el inicio de un periodo hasta el inicio del siguiente.",
+    "checkboxText": "No lo sé - dejar que la app aprenda",
+    "checkboxSubtext": "La app usará 28 días como predeterminado y luego se ajustará a medida que registres ciclos."
+  },
+  "lastPeriod": {
+    "title": "¿Cuándo fue el inicio de tu último periodo?",
+    "subtitle": "Esto nos ayudará a predecir tu próximo periodo.",
+    "checkboxText": "No lo recuerdo",
+    "checkboxSubtext": "No hay problema, puedes hacerlo más tarde dentro de la app.",
+    "continue": "Continuar"
+  },
+  "success": {
+    "title": "¡Todo listo!",
+    "subtitle": "Registra periodos regularmente para obtener las predicciones más precisas.",
+    "button": "Comenzar a rastrear"
+  },
+  "continue": "Continuar"
+}
+

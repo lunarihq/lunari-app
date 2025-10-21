@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Button } from '../../components/Button';
 import { DayPicker } from '../../components/DayPicker';
 import { Checkbox } from '../../components/Checkbox';
@@ -15,6 +16,7 @@ export default function PeriodLengthScreen() {
   const { colors } = useTheme();
   const onboardingStyles = createOnboardingStyles(colors);
   const typography = createTypography(colors);
+  const { t } = useTranslation('onboarding');
   const [periodLength, setPeriodLength] = useState(5);
   const [dontKnow, setDontKnow] = useState(false);
 
@@ -65,7 +67,7 @@ export default function PeriodLengthScreen() {
         <Text
           style={[typography.heading2, { marginBottom: 20, textAlign: 'left' }]}
         >
-          How long does your period usually last?
+          {t('periodLength.title')}
         </Text>
 
         <DayPicker
@@ -79,12 +81,13 @@ export default function PeriodLengthScreen() {
         <Checkbox
           checked={dontKnow}
           onToggle={toggleDontKnow}
-          subText="The app will use 5 days as a default, and then adjust as you log cycles."
+          text={t('periodLength.checkboxText')}
+          subText={t('periodLength.checkboxSubtext')}
         />
       </View>
 
       <View style={onboardingStyles.footer}>
-        <Button title="Continue" onPress={handleNext} fullWidth />
+        <Button title={t('continue')} onPress={handleNext} fullWidth />
       </View>
     </SafeAreaView>
   );

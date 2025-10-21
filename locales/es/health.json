@@ -1,0 +1,73 @@
+{
+  "symptoms": {
+    "title": "Síntomas",
+    "imOkay": "Estoy bien",
+    "headache": "Dolor de cabeza",
+    "cramps": "Cólicos",
+    "bloating": "Hinchazón",
+    "backache": "Dolor de espalda",
+    "acne": "Acné",
+    "tenderBreasts": "Sensibilidad en los senos",
+    "nausea": "Náuseas",
+    "fatigue": "Fatiga",
+    "insomnia": "Insomnio",
+    "diarrhea": "Diarrea",
+    "constipation": "Estreñimiento",
+    "hotFlashes": "Sofocos",
+    "nightSweats": "Sudores nocturnos",
+    "brainFog": "Niebla mental",
+    "jointPain": "Dolor en las articulaciones",
+    "dizziness": "Mareos",
+    "cravings": "Antojos",
+    "frequentUrination": "Micción frecuente",
+    "vaginalDryness": "Sequedad vaginal"
+  },
+  "moods": {
+    "title": "Estados de ánimo",
+    "happy": "Feliz",
+    "sad": "Triste",
+    "anxious": "Ansiosa",
+    "calm": "Tranquila",
+    "energetic": "Energética",
+    "confused": "Confundida",
+    "irritated": "Irritada",
+    "angry": "Enojada",
+    "moodSwings": "Cambios de humor",
+    "frisky": "Juguetona",
+    "apathetic": "Apática",
+    "bored": "Aburrida"
+  },
+  "flows": {
+    "title": "Flujo menstrual",
+    "light": "Ligero",
+    "medium": "Moderado",
+    "heavy": "Abundante",
+    "bloodClots": "Coágulos de sangre"
+  },
+  "discharge": {
+    "title": "Flujo vaginal",
+    "none": "Sin flujo",
+    "creamy": "Cremoso",
+    "eggWhite": "Clara de huevo",
+    "watery": "Acuoso",
+    "sticky": "Pegajoso",
+    "spotting": "Manchado",
+    "unusual": "Inusual",
+    "grey": "Flujo gris",
+    "clumpyWhite": "Blanco grumoso"
+  },
+  "tracking": {
+    "howDoYouFeel": "¿Cómo te sientes hoy?",
+    "add": "Agregar",
+    "note": "Nota",
+    "notes": "Notas",
+    "notesPlaceholder": "Agrega notas, síntomas adicionales, etc.",
+    "noSymptoms": "No se han registrado síntomas o estados de ánimo {{dateText}}.",
+    "today": "hoy",
+    "thisDate": "en esta fecha",
+    "save": "Guardar",
+    "successMessage": "Datos de salud guardados",
+    "errorMessage": "Error. Por favor, inténtalo de nuevo."
+  }
+}
+

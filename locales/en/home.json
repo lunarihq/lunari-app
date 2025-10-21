@@ -1,0 +1,32 @@
+{
+  "period": "Period",
+  "periodDay": "Day {{number}}",
+  "nextPeriodIn": "Next period in",
+  "day": "day",
+  "days": "days",
+  "daysCount": "{{count}} day",
+  "daysCount_other": "{{count}} days",
+  "expectedToday": "Your period is expected today",
+  "lateFor": "Late for",
+  "logPeriod": "Log period",
+  "logOrEdit": "Log or edit period dates",
+  "noDataPrompt": "Log the first day of your last period for next prediction.",
+  "learnAboutLatePeriods": "Learn about late periods",
+  "cycleInsights": {
+    "title": "Cycle insights",
+    "currentPhase": "Current phase",
+    "follicular": "Follicular",
+    "ovulation": "Ovulation",
+    "luteal": "Luteal",
+    "menstrual": "Menstrual",
+    "dayOfCycle": "Day {{day}} of {{total}}",
+    "averageCycle": "Average cycle: {{days}} days",
+    "nextPeriod": "Next period: {{date}}"
+  },
+  "symptoms": {
+    "title": "How are you feeling today?",
+    "logSymptoms": "Log symptoms",
+    "noSymptoms": "No symptoms logged today"
+  }
+}
+

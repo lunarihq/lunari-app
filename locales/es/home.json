@@ -1,0 +1,32 @@
+{
+  "period": "Periodo",
+  "periodDay": "Día {{number}}",
+  "nextPeriodIn": "Próximo periodo en",
+  "day": "día",
+  "days": "días",
+  "daysCount": "{{count}} día",
+  "daysCount_other": "{{count}} días",
+  "expectedToday": "Se espera tu periodo hoy",
+  "lateFor": "Retrasado por",
+  "logPeriod": "Registrar periodo",
+  "logOrEdit": "Registrar o editar fechas del periodo",
+  "noDataPrompt": "Registra el primer día de tu último periodo para obtener predicciones.",
+  "learnAboutLatePeriods": "Información sobre periodos retrasados",
+  "cycleInsights": {
+    "title": "Información del ciclo",
+    "currentPhase": "Fase actual",
+    "follicular": "Folicular",
+    "ovulation": "Ovulación",
+    "luteal": "Lútea",
+    "menstrual": "Menstrual",
+    "dayOfCycle": "Día {{day}} de {{total}}",
+    "averageCycle": "Ciclo promedio: {{days}} días",
+    "nextPeriod": "Próximo periodo: {{date}}"
+  },
+  "symptoms": {
+    "title": "¿Cómo te sientes hoy?",
+    "logSymptoms": "Registrar síntomas",
+    "noSymptoms": "No se han registrado síntomas hoy"
+  }
+}
+

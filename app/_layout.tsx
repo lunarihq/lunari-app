@@ -15,6 +15,7 @@ import {
   useFonts,
   BricolageGrotesque_700Bold,
 } from '@expo-google-fonts/bricolage-grotesque';
+import '../i18n/config';
 
 // Shared toast styles
 const toastConfig = {

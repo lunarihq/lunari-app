@@ -1,0 +1,67 @@
+{
+  "symptoms": {
+    "title": "Symptoms",
+    "headache": "Headache",
+    "cramps": "Cramps",
+    "bloating": "Bloating",
+    "backache": "Backache",
+    "acne": "Acne",
+    "tenderBreasts": "Tender breasts",
+    "nausea": "Nausea",
+    "fatigue": "Fatigue",
+    "insomnia": "Insomnia",
+    "diarrhea": "Diarrhea",
+    "constipation": "Constipation",
+    "hotFlashes": "Hot flashes",
+    "dizziness": "Dizziness",
+    "appetiteChanges": "Appetite changes",
+    "cravings": "Cravings",
+    "anxiety": "Anxiety",
+    "irritability": "Irritability",
+    "moodSwings": "Mood swings",
+    "depression": "Depression",
+    "lowLibido": "Low libido"
+  },
+  "moods": {
+    "title": "Mood",
+    "happy": "Happy",
+    "sad": "Sad",
+    "anxious": "Anxious",
+    "calm": "Calm",
+    "energetic": "Energetic",
+    "tired": "Tired",
+    "irritable": "Irritable",
+    "stressed": "Stressed",
+    "confident": "Confident",
+    "overwhelmed": "Overwhelmed",
+    "focused": "Focused",
+    "distracted": "Distracted"
+  },
+  "flows": {
+    "title": "Flow",
+    "light": "Light",
+    "medium": "Medium",
+    "heavy": "Heavy",
+    "spotting": "Spotting",
+    "bloodClots": "Blood clots"
+  },
+  "discharge": {
+    "title": "Discharge",
+    "none": "No discharge",
+    "creamy": "Creamy",
+    "eggWhite": "Egg white",
+    "watery": "Watery",
+    "sticky": "Sticky",
+    "spotting": "Spotting",
+    "unusual": "Unusual",
+    "grey": "Grey discharge",
+    "clumpyWhite": "Clumpy white"
+  },
+  "tracking": {
+    "title": "Track your health",
+    "selectAll": "Select all that apply",
+    "save": "Save",
+    "cancel": "Cancel"
+  }
+}
+

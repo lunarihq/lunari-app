@@ -1,0 +1,25 @@
+{
+  "title": "Estadísticas",
+  "cycleHistory": {
+    "title": "Historial de ciclos",
+    "noCycles": "Aún no hay suficientes datos",
+    "cycleLength": "Duración del ciclo: {{days}} días",
+    "periodLength": "Duración del periodo: {{days}} días",
+    "days": "{{count}} día",
+    "days_other": "{{count}} días"
+  },
+  "averages": {
+    "title": "Promedios",
+    "cycleLength": "Duración promedio del ciclo",
+    "periodLength": "Duración promedio del periodo",
+    "days": "{{count}} día",
+    "days_other": "{{count}} días"
+  },
+  "predictions": {
+    "title": "Predicciones",
+    "nextPeriod": "Próximo periodo",
+    "nextOvulation": "Próxima ovulación",
+    "fertileWindow": "Ventana fértil"
+  }
+}
+

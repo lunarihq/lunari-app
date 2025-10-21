@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../contexts/ThemeContext';
 import { ColorScheme } from '../styles/colors';
@@ -14,11 +15,14 @@ interface CheckboxProps {
 export function Checkbox({
   checked,
   onToggle,
-  text = "Don't know - let the app learn",
+  text,
   subText,
 }: CheckboxProps) {
   const { colors } = useTheme();
+  const { t } = useTranslation('onboarding');
   const styles = createStyles(colors);
+  
+  const defaultText = text || t('periodLength.checkboxText');
 
   return (
     <TouchableOpacity style={styles.container} onPress={onToggle}>
@@ -37,7 +41,7 @@ export function Checkbox({
             <Ionicons name="checkmark" size={16} color={colors.white} />
           )}
         </View>
-        <Text style={styles.text}>{text}</Text>
+        <Text style={styles.text}>{defaultText}</Text>
       </View>
       {subText && <Text style={styles.subText}>{subText}</Text>}
     </TouchableOpacity>

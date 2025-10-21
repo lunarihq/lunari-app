@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Button } from '../../components/Button';
 import { DayPicker } from '../../components/DayPicker';
 import { Checkbox } from '../../components/Checkbox';
@@ -16,6 +17,7 @@ export default function CycleLengthScreen() {
   const { colors } = useTheme();
   const onboardingStyles = createOnboardingStyles(colors);
   const typography = createTypography(colors);
+  const { t } = useTranslation('onboarding');
   const [cycleLength, setCycleLength] = useState(28);
   const [dontKnow, setDontKnow] = useState(false);
 
@@ -68,7 +70,7 @@ export default function CycleLengthScreen() {
         <Text
           style={[typography.heading2, { marginBottom: 20, textAlign: 'left' }]}
         >
-          How many days does your cycle last on average?
+          {t('cycleLength.title')}
         </Text>
         <Text
           style={[
@@ -81,8 +83,7 @@ export default function CycleLengthScreen() {
             },
           ]}
         >
-          This is the number of days from the start of one period to the start
-          of the next.
+          {t('cycleLength.subtitle')}
         </Text>
 
         <DayPicker
@@ -96,12 +97,13 @@ export default function CycleLengthScreen() {
         <Checkbox
           checked={dontKnow}
           onToggle={toggleDontKnow}
-          subText="The app will use 28 days as a default, and then adjust as you log cycles."
+          text={t('cycleLength.checkboxText')}
+          subText={t('cycleLength.checkboxSubtext')}
         />
       </View>
 
       <View style={onboardingStyles.footer}>
-        <Button title="Continue" onPress={handleGetStarted} fullWidth />
+        <Button title={t('continue')} onPress={handleGetStarted} fullWidth />
       </View>
     </SafeAreaView>
   );

@@ -1,5 +1,6 @@
 import * as Localization from 'expo-localization';
 import dayjs from 'dayjs';
+import i18n from '../i18n/config';
 import 'dayjs/locale/es';
 import 'dayjs/locale/fr';
 import 'dayjs/locale/de';
@@ -104,7 +105,7 @@ export const formatTodayOrDate = (dateString: string): string => {
       month: 'long',
       day: 'numeric',
     });
-    return `Today, ${monthDay}`;
+    return `${i18n.t('common:time.today')}, ${monthDay}`;
   }
   
   return dateObj.toLocaleDateString(localeTag, {
@@ -121,7 +122,7 @@ export const formatTodayShort = (date: Date): string => {
     day: 'numeric',
   });
   
-  return `Today, ${monthDay}`;
+  return `${i18n.t('common:time.today')}, ${monthDay}`;
 };
 
 getDeviceLocale();

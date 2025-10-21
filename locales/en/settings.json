@@ -1,0 +1,45 @@
+{
+  "title": "Settings",
+  "reminders": "Reminders",
+  "appLock": "App lock",
+  "privacyPolicy": "Privacy policy",
+  "about": "About",
+  "theme": "Theme",
+  "calendarView": "Calendar view",
+  "deleteData": "Delete tracking data",
+  "deleteDataConfirm": {
+    "title": "Delete all tracking data",
+    "message": "All your period tracking data, symptoms, and notification preferences will be permanently deleted. Your app settings and preferences will be preserved.",
+    "delete": "Delete data",
+    "cancel": "Cancel",
+    "success": "Success",
+    "successMessage": "All your data has been deleted.",
+    "error": "Error",
+    "errorMessage": "Failed to delete data. Please try again."
+  },
+  "themeModal": {
+    "title": "Choose theme"
+  },
+  "themeOptions": {
+    "system": "System default",
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "appLockSettings": {
+    "title": "App lock",
+    "enable": "Enable app lock",
+    "description": "Protect your data with biometric authentication or PIN",
+    "setupPin": "Set up PIN",
+    "changePin": "Change PIN",
+    "removePin": "Remove PIN"
+  },
+  "reminderSettings": {
+    "title": "Reminders",
+    "periodReminder": "Period reminder",
+    "description": "Get notified before your next period",
+    "daysBeforePeriod": "Days before period",
+    "days": "{{count}} day",
+    "days_other": "{{count}} days"
+  }
+}
+

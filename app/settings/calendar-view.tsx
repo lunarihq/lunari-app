@@ -9,12 +9,14 @@ import {
   ActivityIndicator,
   DeviceEventEmitter,
 } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { getSetting, setSetting } from '../../db';
 import defaultTheme, { useTheme, createTypography } from '../../styles/theme';
 
 export default function CalendarView() {
   const { colors } = useTheme();
   const typography = createTypography(colors);
+  const { t } = useTranslation('calendar');
   const [showOvulation, setShowOvulation] = useState(true);
   const [showFuturePeriods, setShowFuturePeriods] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
@@ -59,7 +61,7 @@ export default function CalendarView() {
       >
         <ActivityIndicator size="large" color={colors.primary} />
         <Text style={[typography.body, { marginTop: 16 }]}>
-          Loading calendar settings...
+          {t('view.loadingSettings')}
         </Text>
       </View>
     );
@@ -67,7 +69,7 @@ export default function CalendarView() {
 
   const legendItems = [
     {
-      title: 'Period days',
+      title: t('legend.periodDays'),
       indicator: (
         <View
           style={{
@@ -82,7 +84,7 @@ export default function CalendarView() {
       ),
     },
     {
-      title: 'Future period prediction',
+      title: t('legend.futurePrediction'),
       indicator: (
         <View
           style={{
@@ -99,7 +101,7 @@ export default function CalendarView() {
       isEnabled: showFuturePeriods,
     },
     {
-      title: 'Ovulation day',
+      title: t('legend.ovulationDay'),
       indicator: (
         <View
           style={{
@@ -118,7 +120,7 @@ export default function CalendarView() {
       isEnabled: showOvulation,
     },
     {
-      title: 'Fertile window',
+      title: t('legend.fertileWindow'),
       indicator: (
         <View
           style={{
@@ -136,7 +138,7 @@ export default function CalendarView() {
       isEnabled: showOvulation,
     },
     {
-      title: 'Symptoms log indicator',
+      title: t('legend.symptomsIndicator'),
       indicator: (
         <View
           style={{
@@ -172,7 +174,7 @@ export default function CalendarView() {
       ]}
     >
       <Text style={[typography.heading3, { marginBottom: 12}]}>
-        Display options
+        {t('view.displayOptions')}
       </Text>
       <View style={[styles.section, { backgroundColor: colors.surface }]}>
         <View style={[styles.settingRow, { borderBottomColor: colors.border }]}>
@@ -183,7 +185,7 @@ export default function CalendarView() {
                 { flexShrink: 1, paddingRight: 12, flex: 1 },
               ]}
             >
-              Show ovulation day and fertile window on the calendar
+              {t('view.showOvulation')}
             </Text>
           </View>
           <Switch
@@ -203,7 +205,7 @@ export default function CalendarView() {
                 { flexShrink: 1, paddingRight: 12, flex: 1 },
               ]}
             >
-              Show future periods prediction on the calendar
+              {t('view.showFuturePeriods')}
             </Text>
           </View>
           <Switch
@@ -217,7 +219,7 @@ export default function CalendarView() {
       </View>
 
       <Text style={[typography.heading3, { marginBottom: 12}]}>
-        Icons shown on calendar
+        {t('view.iconsShown')}
       </Text>
       <View style={[styles.section, { backgroundColor: colors.surface }]}>
         {legendItems.map((item, index) => (

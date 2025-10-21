@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Button } from '../../components/Button';
 import { Checkbox } from '../../components/Checkbox';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -20,6 +21,7 @@ export default function LastPeriodDateScreen() {
   const { colors } = useTheme();
   const onboardingStyles = createOnboardingStyles(colors);
   const typography = createTypography(colors);
+  const { t } = useTranslation('onboarding');
   const styles = createStyles(colors);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [dontKnow, setDontKnow] = useState(false);
@@ -113,7 +115,7 @@ export default function LastPeriodDateScreen() {
         <Text
           style={[typography.heading2, { marginBottom: 20, textAlign: 'left' }]}
         >
-          When was the start of your last period?
+          {t('lastPeriod.title')}
         </Text>
         <Text
           style={[
@@ -126,7 +128,7 @@ export default function LastPeriodDateScreen() {
             },
           ]}
         >
-          This will help us to predict your next period.
+          {t('lastPeriod.subtitle')}
         </Text>
 
         <View
@@ -185,18 +187,18 @@ export default function LastPeriodDateScreen() {
         <Checkbox
           checked={dontKnow}
           onToggle={toggleDontKnow}
-          text="I don't remember"
+          text={t('lastPeriod.checkboxText')}
         />
         {dontKnow && (
           <Text style={[typography.caption, { textAlign: 'center' }]}>
-            It's okay, you can do it later inside the app.
+            {t('lastPeriod.checkboxSubtext')}
           </Text>
         )}
       </View>
 
       <View style={onboardingStyles.footer}>
         <Button
-          title="Continue"
+          title={t('continue')}
           onPress={handleNext}
           disabled={!selectedDate && !dontKnow}
           fullWidth

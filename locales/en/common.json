@@ -1,0 +1,37 @@
+{
+  "buttons": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "getStarted": "Get started",
+    "next": "Next",
+    "back": "Back",
+    "done": "Done",
+    "edit": "Edit",
+    "close": "Close",
+    "confirm": "Confirm",
+    "continue": "Continue"
+  },
+  "errors": {
+    "generic": "Something went wrong. Please try again.",
+    "loadFailed": "Failed to load data",
+    "saveFailed": "Failed to save",
+    "deleteFailed": "Failed to delete"
+  },
+  "time": {
+    "today": "Today",
+    "day": "day",
+    "days": "days",
+    "daysCount": "{{count}} day",
+    "daysCount_other": "{{count}} days"
+  },
+  "navigation": {
+    "today": "Today",
+    "calendar": "Calendar",
+    "stats": "Stats",
+    "settings": "Settings",
+    "appName": "Lunari"
+  },
+  "loading": "Loading..."
+}
+

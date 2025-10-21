@@ -1,0 +1,36 @@
+{
+  "title": "Calendar",
+  "selectDate": "Select a date",
+  "periodDates": "Period dates",
+  "ovulationDay": "Ovulation day",
+  "fertileWindow": "Fertile window",
+  "prediction": "Prediction",
+  "today": "Today",
+  "editPeriod": {
+    "title": "Edit Period",
+    "selectDates": "Select the dates of your period",
+    "instructions": "Tap on the calendar to select or deselect dates",
+    "save": "Save",
+    "cancel": "Cancel",
+    "successMessage": "Period dates saved",
+    "errorMessage": "Error. Please try again.",
+    "delete": "Delete period",
+    "confirmDelete": "Are you sure you want to delete this period?"
+  },
+  "view": {
+    "title": "Calendar view",
+    "displayOptions": "Display options",
+    "showOvulation": "Show ovulation day and fertile window on the calendar",
+    "showFuturePeriods": "Show future periods prediction on the calendar",
+    "iconsShown": "Icons shown on calendar",
+    "loadingSettings": "Loading calendar settings..."
+  },
+  "legend": {
+    "periodDays": "Period days",
+    "futurePrediction": "Future period prediction",
+    "ovulationDay": "Ovulation day",
+    "fertileWindow": "Fertile window",
+    "symptomsIndicator": "Symptoms log indicator"
+  }
+}
+

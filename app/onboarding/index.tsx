@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Button } from '../../components/Button';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
@@ -13,6 +14,7 @@ export default function WelcomeScreen() {
   const { colors } = useTheme();
   const typography = createTypography(colors);
   const onboardingStyles = createOnboardingStyles(colors);
+  const { t } = useTranslation('onboarding');
 
   const handleNext = () => {
     router.push({ pathname: '/onboarding/period-length' });
@@ -48,7 +50,7 @@ export default function WelcomeScreen() {
             },
           ]}
         >
-          Your period, your data.
+          {t('welcome.title')}
         </Text>
         <Text
           style={[
@@ -62,12 +64,12 @@ export default function WelcomeScreen() {
             },
           ]}
         >
-          Track your menstrual cycle without giving up your privacy.
+          {t('welcome.subtitle')}
         </Text>
       </View>
 
       <View style={onboardingStyles.footer}>
-        <Button title="Get started" onPress={handleNext} fullWidth />
+        <Button title={t('common:buttons.getStarted')} onPress={handleNext} fullWidth />
       </View>
     </SafeAreaView>
   );

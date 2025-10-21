@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../contexts/ThemeContext';
 import { ColorScheme } from '../styles/colors';
@@ -20,6 +21,7 @@ export function DayPicker({
   disabled = false,
 }: DayPickerProps) {
   const { colors } = useTheme();
+  const { t } = useTranslation('common');
   const styles = createStyles(colors);
 
   const increment = () => {
@@ -49,7 +51,7 @@ export function DayPicker({
           {value}
         </Text>
         <Text style={[styles.labelText, disabled && styles.textDisabled]}>
-          days
+          {t('time.days')}
         </Text>
       </View>
 

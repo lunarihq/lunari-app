@@ -1,0 +1,25 @@
+{
+  "title": "Statistics",
+  "cycleHistory": {
+    "title": "Cycle history",
+    "noCycles": "Not enough data yet",
+    "cycleLength": "Cycle length: {{days}} days",
+    "periodLength": "Period length: {{days}} days",
+    "days": "{{count}} day",
+    "days_other": "{{count}} days"
+  },
+  "averages": {
+    "title": "Averages",
+    "cycleLength": "Average cycle length",
+    "periodLength": "Average period length",
+    "days": "{{count}} day",
+    "days_other": "{{count}} days"
+  },
+  "predictions": {
+    "title": "Predictions",
+    "nextPeriod": "Next period",
+    "nextOvulation": "Next ovulation",
+    "fertileWindow": "Fertile window"
+  }
+}
+

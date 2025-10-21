@@ -1,0 +1,30 @@
+{
+  "cyclePhase": {
+    "title": "Cycle phases",
+    "menstrual": {
+      "title": "Menstrual phase",
+      "description": "The first day of your period marks the beginning of your menstrual cycle."
+    },
+    "follicular": {
+      "title": "Follicular phase",
+      "description": "This phase starts on the first day of your period and lasts until ovulation."
+    },
+    "ovulation": {
+      "title": "Ovulation",
+      "description": "This is when an egg is released from your ovary."
+    },
+    "luteal": {
+      "title": "Luteal phase",
+      "description": "This phase begins after ovulation and ends when your next period starts."
+    }
+  },
+  "latePeriod": {
+    "title": "Late period",
+    "description": "A late period can be caused by stress, changes in weight, or hormonal changes. If your period is more than a week late, consider taking a pregnancy test or consulting your healthcare provider."
+  },
+  "prediction": {
+    "title": "How predictions work",
+    "description": "Lunari predicts your next period based on your cycle history. The more data you log, the more accurate the predictions become."
+  }
+}
+

@@ -1,0 +1,31 @@
+{
+  "welcome": {
+    "title": "Your period, your data.",
+    "subtitle": "Track your menstrual cycle without giving up your privacy."
+  },
+  "periodLength": {
+    "title": "How long does your period usually last?",
+    "checkboxText": "Don't know - let the app learn",
+    "checkboxSubtext": "The app will use 5 days as a default, and then adjust as you log cycles."
+  },
+  "cycleLength": {
+    "title": "How many days does your cycle last on average?",
+    "subtitle": "This is the number of days from the start of one period to the start of the next.",
+    "checkboxText": "Don't know - let the app learn",
+    "checkboxSubtext": "The app will use 28 days as a default, and then adjust as you log cycles."
+  },
+  "lastPeriod": {
+    "title": "When was the start of your last period?",
+    "subtitle": "This will help us to predict your next period.",
+    "checkboxText": "I don't remember",
+    "checkboxSubtext": "It's okay, you can do it later inside the app.",
+    "continue": "Continue"
+  },
+  "success": {
+    "title": "You're all set!",
+    "subtitle": "Log periods regularly to get the most accurate predictions.",
+    "button": "Start tracking"
+  },
+  "continue": "Continue"
+}
+
