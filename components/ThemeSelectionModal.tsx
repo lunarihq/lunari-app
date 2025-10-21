@@ -8,6 +8,7 @@ import {
   Pressable,
   useWindowDimensions,
 } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { useTheme, ThemeMode } from '../contexts/ThemeContext';
 
 interface ThemeSelectionModalProps {
@@ -21,11 +22,12 @@ export function ThemeSelectionModal({
 }: ThemeSelectionModalProps) {
   const { colors, themeMode, setThemeMode } = useTheme();
   const { width } = useWindowDimensions();
+  const { t } = useTranslation('settings');
 
   const themeOptions: { mode: ThemeMode; label: string }[] = [
-    { mode: 'system', label: 'System default' },
-    { mode: 'light', label: 'Light' },
-    { mode: 'dark', label: 'Dark' },
+    { mode: 'system', label: t('themeOptions.system') },
+    { mode: 'light', label: t('themeOptions.light') },
+    { mode: 'dark', label: t('themeOptions.dark') },
   ];
 
   const handleThemeSelect = (mode: ThemeMode) => {
@@ -56,7 +58,7 @@ export function ThemeSelectionModal({
           ]}
         >
           <Text style={[styles.modalTitle, { color: colors.textPrimary }]}>
-            Choose theme
+            {t('themeModal.title')}
           </Text>
 
           {themeOptions.map((option, index) => (
