@@ -161,28 +161,30 @@ export default function CyclePhaseDetails() {
           </Text>
         </View>
 
-        <View style={[styles.phaseCard, { backgroundColor: colors.surface }]}>
-          <View style={styles.phaseHeader}>
-            <View
-              style={[
-                styles.iconCircle,
-                { backgroundColor: colors.accentPinkLight },
-              ]}
-            >
-              <Ionicons
-                name="thermometer-outline"
-                size={34}
-                color={colors.accentPink}
-              />
+        {possibleSymptoms && (
+          <View style={[styles.phaseCard, { backgroundColor: colors.surface }]}>
+            <View style={styles.phaseHeader}>
+              <View
+                style={[
+                  styles.iconCircle,
+                  { backgroundColor: colors.accentPinkLight },
+                ]}
+              >
+                <Ionicons
+                  name="thermometer-outline"
+                  size={34}
+                  color={colors.accentPink}
+                />
+              </View>
+              <Text style={[typography.heading2, { marginLeft: 12 }]}>
+                Possible symptoms
+              </Text>
             </View>
-            <Text style={[typography.heading2, { marginLeft: 12 }]}>
-              Possible symptoms
+            <Text style={[typography.body, { fontSize: 17, lineHeight: 23 }]}>
+              {possibleSymptoms}
             </Text>
           </View>
-          <Text style={[typography.body, { fontSize: 17, lineHeight: 23 }]}>
-            {possibleSymptoms}
-          </Text>
-        </View>
+        )}
       </ScrollView>
     </View>
   );
