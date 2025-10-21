@@ -65,6 +65,105 @@ export default function CalendarView() {
     );
   }
 
+  const legendItems = [
+    {
+      title: 'Period days',
+      indicator: (
+        <View
+          style={{
+            width: 24,
+            height: 24,
+            borderRadius: 24,
+            backgroundColor: colors.accentPink,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        ></View>
+      ),
+    },
+    {
+      title: 'Future period prediction',
+      indicator: (
+        <View
+          style={{
+            width: 24,
+            height: 24,
+            borderRadius: 24,
+            backgroundColor: colors.accentPinkLight,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        ></View>
+      ),
+      isToggleable: true,
+      isEnabled: showFuturePeriods,
+    },
+    {
+      title: 'Ovulation day',
+      indicator: (
+        <View
+          style={{
+            width: 24,
+            height: 24,
+            borderRadius: 24,
+            borderWidth: 1.6,
+            borderColor: colors.accentBlue,
+            borderStyle: 'dashed',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        ></View>
+      ),
+      isToggleable: true,
+      isEnabled: showOvulation,
+    },
+    {
+      title: 'Fertile window',
+      indicator: (
+        <View
+          style={{
+            width: 24,
+            height: 24,
+            borderRadius: 16,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Text style={{ color: colors.accentBlue, fontSize: 16 }}>12</Text>
+        </View>
+      ),
+      isToggleable: true,
+      isEnabled: showOvulation,
+    },
+    {
+      title: 'Symptoms log indicator',
+      indicator: (
+        <View
+          style={{
+            width: 24,
+            height: 24,
+            borderRadius: 16,
+            alignItems: 'center',
+            justifyContent: 'center',
+            position: 'relative',
+            marginTop: -6,
+          }}
+        >
+          <View
+            style={{
+              position: 'absolute',
+              bottom: 2,
+              width: 7,
+              height: 7,
+              borderRadius: 8,
+              backgroundColor: colors.primary,
+            }}
+          />
+        </View>
+      ),
+    },
+  ];
+
   return (
     <ScrollView
       style={[
@@ -72,6 +171,9 @@ export default function CalendarView() {
         { backgroundColor: colors.background },
       ]}
     >
+      <Text style={[typography.heading2, styles.sectionTitle]}>
+        Display options
+      </Text>
       <View style={[styles.section, { backgroundColor: colors.surface }]}>
         <View style={[styles.settingRow, { borderBottomColor: colors.border }]}>
           <View style={styles.settingContent}>
@@ -113,6 +215,29 @@ export default function CalendarView() {
           />
         </View>
       </View>
+
+      <Text style={[typography.heading2, styles.sectionTitle]}>
+        Icons shown on calendar
+      </Text>
+      <View style={[styles.section, { backgroundColor: colors.surface }]}>
+        {legendItems.map((item, index) => (
+          <View
+            key={index}
+            style={[
+              styles.legendItem,
+              {
+                opacity:
+                  item.isToggleable && !item.isEnabled ? 0.4 : 1,
+              },
+            ]}
+          >
+            <View style={styles.legendIndicator}>{item.indicator}</View>
+            <View style={styles.legendContent}>
+              <Text style={[typography.body]}>{item.title}</Text>
+            </View>
+          </View>
+        ))}
+      </View>
     </ScrollView>
   );
 }
@@ -123,8 +248,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  sectionTitle: {
+    marginTop: 16,
+    marginBottom: 8,
+    paddingHorizontal: 16,
+  },
   section: {
-    marginVertical: 16,
+    marginBottom: 16,
     borderRadius: 8,
     overflow: 'hidden',
   },
@@ -145,5 +275,17 @@ const styles = StyleSheet.create({
   settingTitle: {
     fontSize: 16,
     fontWeight: '500',
+  },
+  legendItem: {
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  legendIndicator: {
+    marginRight: 12,
+  },
+  legendContent: {
+    flex: 1,
   },
 });

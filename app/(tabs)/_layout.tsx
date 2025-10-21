@@ -65,7 +65,7 @@ export default function TabLayout() {
           headerTitle: '',
           headerLeft: () => (
             <TouchableOpacity
-              onPress={() => router.push('/(info)/calendar-legend-info')}
+              onPress={() => router.push('/settings/calendar-view')}
               style={{ marginLeft: 16 }}
             >
               <InfoIcon
