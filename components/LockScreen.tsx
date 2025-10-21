@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { PinInput } from './PinInput';
 import { useAuth } from '../contexts/AuthContext';
@@ -7,6 +8,7 @@ import { useTheme } from '../styles/theme';
 
 export function LockScreen() {
   const { colors } = useTheme();
+  const { t } = useTranslation('settings');
   const { verifyPin, authenticateWithBiometric, lockMode } = useAuth();
 
   const [errorMessage, setErrorMessage] = useState('');
@@ -35,7 +37,7 @@ export function LockScreen() {
     const isValid = await verifyPin(pin);
 
     if (!isValid) {
-      setErrorMessage('Incorrect PIN. Please try again.');
+      setErrorMessage(t('lockScreen.incorrectPin'));
       setTimeout(() => setErrorMessage(''), 3000);
     }
   };
@@ -53,8 +55,8 @@ export function LockScreen() {
       <View style={styles.content}>
         {lockMode === 'pin' && (
           <PinInput
-            title="Enter PIN"
-            subtitle="Enter your 4-digit PIN to unlock"
+            title={t('lockScreen.enterPin')}
+            subtitle={t('lockScreen.enterPinSubtitle')}
             onPinComplete={handlePinComplete}
             errorMessage={errorMessage}
             onStartTyping={handleStartTyping}
@@ -63,7 +65,7 @@ export function LockScreen() {
         {lockMode === 'biometric' && (
           <View style={styles.biometricContainer}>
             <Text style={[styles.biometricTitle, { color: colors.textPrimary }]}>
-              Unlock Lunari
+              {t('lockScreen.unlockApp')}
             </Text>
           </View>
         )}

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Alert } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { PinInput } from './PinInput';
 import { useAuth } from '../contexts/AuthContext';
 import { AuthService } from '../services/authService';
@@ -12,6 +13,7 @@ interface PinSetupProps {
 
 export function PinSetup({ mode = 'setup' }: PinSetupProps) {
   const { colors } = useTheme();
+  const { t } = useTranslation('settings');
   const { setupPin } = useAuth();
   const [step, setStep] = useState<'verify' | 'initial' | 'confirm'>(
     mode === 'change' ? 'verify' : 'initial'
@@ -23,7 +25,7 @@ export function PinSetup({ mode = 'setup' }: PinSetupProps) {
     const isValid = await AuthService.verifyPin(pin);
 
     if (!isValid) {
-      setErrorMessage('Incorrect current PIN. Please try again.');
+      setErrorMessage(t('pinSetup.verifyPin.error'));
       setTimeout(() => setErrorMessage(''), 3000);
       return;
     }
@@ -40,7 +42,7 @@ export function PinSetup({ mode = 'setup' }: PinSetupProps) {
 
   const handleConfirmPinComplete = async (pin: string) => {
     if (pin !== initialPin) {
-      setErrorMessage('PINs do not match. Please try again.');
+      setErrorMessage(t('pinSetup.confirmPin.mismatch'));
       setTimeout(() => {
         setErrorMessage('');
         setStep('initial');
@@ -54,20 +56,20 @@ export function PinSetup({ mode = 'setup' }: PinSetupProps) {
       if (success) {
         Alert.alert(
           mode === 'change'
-            ? 'PIN Changed Successfully'
-            : 'PIN Set Successfully',
+            ? t('pinSetup.success.titleChange')
+            : t('pinSetup.success.title'),
           mode === 'change'
-            ? 'Your PIN has been changed successfully.'
-            : 'Your PIN has been set up. You can now use it to secure your app.',
+            ? t('pinSetup.success.messageChange')
+            : t('pinSetup.success.message'),
           [
             {
-              text: 'OK',
+              text: t('pinSetup.success.ok'),
               onPress: () => router.back(),
             },
           ]
         );
       } else {
-        setErrorMessage('Failed to set PIN. Please try again.');
+        setErrorMessage(t('pinSetup.confirmPin.failed'));
         setTimeout(() => {
           setErrorMessage('');
           setStep(mode === 'change' ? 'verify' : 'initial');
@@ -76,7 +78,7 @@ export function PinSetup({ mode = 'setup' }: PinSetupProps) {
       }
     } catch (error) {
       console.error('Error setting up PIN:', error);
-      setErrorMessage('Failed to set PIN. Please try again.');
+      setErrorMessage(t('pinSetup.confirmPin.failed'));
       setTimeout(() => {
         setErrorMessage('');
         setStep(mode === 'change' ? 'verify' : 'initial');
@@ -91,19 +93,23 @@ export function PinSetup({ mode = 'setup' }: PinSetupProps) {
         {step === 'verify' ? (
           <PinInput
             key="verify-pin"
-            title="Enter Current PIN"
-            subtitle="Enter your current PIN to continue"
+            title={t('pinSetup.verifyPin.title')}
+            subtitle={t('pinSetup.verifyPin.subtitle')}
             onPinComplete={handleCurrentPinComplete}
             errorMessage={errorMessage}
           />
         ) : step === 'initial' ? (
           <PinInput
             key="initial-pin"
-            title={mode === 'change' ? 'Set New PIN' : 'Set PIN'}
+            title={
+              mode === 'change'
+                ? t('pinSetup.setPin.titleChange')
+                : t('pinSetup.setPin.title')
+            }
             subtitle={
               mode === 'change'
-                ? 'Choose a new 4-digit PIN'
-                : 'Choose a 4-digit PIN to secure your app'
+                ? t('pinSetup.setPin.subtitleChange')
+                : t('pinSetup.setPin.subtitle')
             }
             onPinComplete={handleInitialPinComplete}
             errorMessage={errorMessage}
@@ -111,8 +117,8 @@ export function PinSetup({ mode = 'setup' }: PinSetupProps) {
         ) : (
           <PinInput
             key="confirm-pin"
-            title="Confirm PIN"
-            subtitle="Enter your PIN again to confirm"
+            title={t('pinSetup.confirmPin.title')}
+            subtitle={t('pinSetup.confirmPin.subtitle')}
             onPinComplete={handleConfirmPinComplete}
             errorMessage={errorMessage}
           />

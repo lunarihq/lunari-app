@@ -31,7 +31,72 @@
     "description": "Protege tus datos con autenticación biométrica o PIN",
     "setupPin": "Configurar PIN",
     "changePin": "Cambiar PIN",
-    "removePin": "Eliminar PIN"
+    "removePin": "Eliminar PIN",
+    "pin": "PIN",
+    "pinDescription": "Configura un PIN para desbloquear la aplicación",
+    "biometricAuth": "Autenticación biométrica",
+    "biometricDescription": "Usa la biometría del dispositivo para desbloquear la aplicación.",
+    "removeBiometricFirst": {
+      "title": "Elimina la biometría primero",
+      "message": "Actualmente tienes la autenticación biométrica activada. Por favor desactívala antes de habilitar el PIN.",
+      "ok": "OK"
+    },
+    "removePinConfirm": {
+      "title": "Eliminar PIN",
+      "message": "¿Estás segura de que quieres eliminar tu PIN?",
+      "cancel": "Cancelar",
+      "remove": "Eliminar"
+    },
+    "removePinError": {
+      "title": "Error",
+      "message": "Error al eliminar el PIN. Por favor, inténtalo de nuevo."
+    },
+    "removePinFirst": {
+      "title": "Elimina el PIN primero",
+      "message": "Actualmente tienes el PIN activado. Por favor desactívalo antes de habilitar la autenticación biométrica.",
+      "ok": "OK"
+    },
+    "biometricEnableError": {
+      "title": "Error",
+      "message": "Error al activar el bloqueo biométrico. Por favor, inténtalo de nuevo."
+    },
+    "biometricDisableError": {
+      "title": "Error",
+      "message": "Error al desactivar el bloqueo biométrico. Por favor, inténtalo de nuevo."
+    }
+  },
+  "pinSetup": {
+    "verifyPin": {
+      "title": "Ingresa tu PIN actual",
+      "subtitle": "Ingresa tu PIN actual para continuar",
+      "error": "PIN actual incorrecto. Por favor, inténtalo de nuevo."
+    },
+    "setPin": {
+      "title": "Configurar PIN",
+      "titleChange": "Configurar nuevo PIN",
+      "subtitle": "Elige un PIN de 4 dígitos para proteger tu aplicación",
+      "subtitleChange": "Elige un nuevo PIN de 4 dígitos"
+    },
+    "confirmPin": {
+      "title": "Confirmar PIN",
+      "subtitle": "Ingresa tu PIN nuevamente para confirmar",
+      "mismatch": "Los PINs no coinciden. Por favor, inténtalo de nuevo.",
+      "failed": "Error al configurar el PIN. Por favor, inténtalo de nuevo."
+    },
+    "success": {
+      "title": "PIN configurado exitosamente",
+      "titleChange": "PIN cambiado exitosamente",
+      "message": "Tu PIN ha sido configurado. Ahora puedes usarlo para proteger tu aplicación.",
+      "messageChange": "Tu PIN ha sido cambiado exitosamente.",
+      "ok": "OK"
+    }
+  },
+  "lockScreen": {
+    "enterPin": "Ingresa tu PIN",
+    "enterPinSubtitle": "Ingresa tu PIN de 4 dígitos para desbloquear",
+    "unlockApp": "Desbloquear Lunari",
+    "incorrectPin": "PIN incorrecto. Por favor, inténtalo de nuevo.",
+    "useBiometric": "Usar biometría"
   },
   "reminderSettings": {
     "title": "Recordatorios",

@@ -8,6 +8,7 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useAuth } from '../../contexts/AuthContext';
@@ -15,6 +16,7 @@ import defaultTheme, { useTheme } from '../../styles/theme';
 
 export default function AppLockScreen() {
   const { colors } = useTheme();
+  const { t } = useTranslation('settings');
   const {
     isPinSet,
     removePin,
@@ -52,42 +54,49 @@ export default function AppLockScreen() {
     if (value) {
       if (biometricEnabled) {
         Alert.alert(
-          'Remove Biometric First',
-          'You currently have biometric authentication enabled. Please disable it before enabling PIN.',
-          [{ text: 'OK' }]
+          t('appLockSettings.removeBiometricFirst.title'),
+          t('appLockSettings.removeBiometricFirst.message'),
+          [{ text: t('appLockSettings.removeBiometricFirst.ok') }]
         );
         return;
       }
       router.push('/settings/pin-setup?mode=setup');
     } else {
-      Alert.alert('Remove PIN', 'Are you sure you want to remove your PIN?', [
-        {
-          text: 'Cancel',
-          style: 'cancel',
-        },
-        {
-          text: 'Remove',
-          style: 'destructive',
-          onPress: async () => {
-            const success = await removePin();
-            if (success) {
-              setPinEnabled(false);
-              await refreshPinStatus();
-            } else {
-              Alert.alert('Error', 'Failed to remove PIN. Please try again.');
-            }
+      Alert.alert(
+        t('appLockSettings.removePinConfirm.title'),
+        t('appLockSettings.removePinConfirm.message'),
+        [
+          {
+            text: t('appLockSettings.removePinConfirm.cancel'),
+            style: 'cancel',
           },
-        },
-      ]);
+          {
+            text: t('appLockSettings.removePinConfirm.remove'),
+            style: 'destructive',
+            onPress: async () => {
+              const success = await removePin();
+              if (success) {
+                setPinEnabled(false);
+                await refreshPinStatus();
+              } else {
+                Alert.alert(
+                  t('appLockSettings.removePinError.title'),
+                  t('appLockSettings.removePinError.message')
+                );
+              }
+            },
+          },
+        ]
+      );
     }
   };
 
   const handleBiometricToggle = async (value: boolean) => {
     if (value && isPinSet) {
       Alert.alert(
-        'Remove PIN First',
-        'You currently have PIN enabled. Please disable PIN before enabling biometric authentication.',
-        [{ text: 'OK' }]
+        t('appLockSettings.removePinFirst.title'),
+        t('appLockSettings.removePinFirst.message'),
+        [{ text: t('appLockSettings.removePinFirst.ok') }]
       );
       return;
     }
@@ -99,8 +108,8 @@ export default function AppLockScreen() {
         await refreshPinStatus();
       } else {
         Alert.alert(
-          'Error',
-          'Failed to enable biometric lock. Please try again.'
+          t('appLockSettings.biometricEnableError.title'),
+          t('appLockSettings.biometricEnableError.message')
         );
       }
     } else {
@@ -110,8 +119,8 @@ export default function AppLockScreen() {
         await refreshPinStatus();
       } else {
         Alert.alert(
-          'Error',
-          'Failed to disable biometric lock. Please try again.'
+          t('appLockSettings.biometricDisableError.title'),
+          t('appLockSettings.biometricDisableError.message')
         );
       }
     }
@@ -130,12 +139,12 @@ export default function AppLockScreen() {
         <View style={[styles.settingRow, { borderBottomColor: colors.border }]}>
           <View style={styles.settingContent}>
             <Text style={[styles.settingTitle, { color: colors.textPrimary }]}>
-              PIN
+              {t('appLockSettings.pin')}
             </Text>
             <Text
               style={[styles.settingSubtitle, { color: colors.textSecondary }]}
             >
-              Set up a PIN to unlock the app
+              {t('appLockSettings.pinDescription')}
             </Text>
           </View>
           <Switch
@@ -156,7 +165,7 @@ export default function AppLockScreen() {
               <Text
                 style={[styles.settingTitle, { color: colors.textPrimary }]}
               >
-                Change PIN
+                {t('appLockSettings.changePin')}
               </Text>
             </View>
             <Ionicons
@@ -175,7 +184,7 @@ export default function AppLockScreen() {
               <Text
                 style={[styles.settingTitle, { color: colors.textPrimary }]}
               >
-                Biometric authentication{' '}
+                {t('appLockSettings.biometricAuth')}{' '}
                 {biometricType ? `(${biometricType})` : ''}
               </Text>
               <Text
@@ -184,7 +193,7 @@ export default function AppLockScreen() {
                   { color: colors.textSecondary },
                 ]}
               >
-                Use device biometrics to unlock the app.
+                {t('appLockSettings.biometricDescription')}
               </Text>
             </View>
             <Switch

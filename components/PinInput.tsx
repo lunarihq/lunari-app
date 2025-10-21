@@ -28,7 +28,7 @@ export function PinInput({
   showBiometric = false,
   onBiometricPress,
   biometricIcon = 'finger-print',
-  biometricLabel = 'Use Biometric',
+  biometricLabel,
   errorMessage,
   onStartTyping,
 }: PinInputProps) {
