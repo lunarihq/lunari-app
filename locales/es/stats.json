@@ -1,12 +1,21 @@
 {
   "title": "Estadísticas",
+  "cycleStatistics": "Estadísticas del ciclo",
+  "emptyState": {
+    "message": "Registra al menos 2 periodos para ver tus estadísticas personales del ciclo.",
+    "logPeriodButton": "Registrar periodo"
+  },
   "cycleHistory": {
     "title": "Historial de ciclos",
     "noCycles": "Aún no hay suficientes datos",
     "cycleLength": "Duración del ciclo: {{days}} días",
     "periodLength": "Duración del periodo: {{days}} días",
     "days": "{{count}} día",
-    "days_other": "{{count}} días"
+    "days_other": "{{count}} días",
+    "inProgress": "En progreso",
+    "loggedCycles": "ciclos registrados",
+    "currentCycle": "Ciclo actual",
+    "unknown": "Desconocido"
   },
   "averages": {
     "title": "Promedios",

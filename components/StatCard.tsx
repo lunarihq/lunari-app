@@ -5,6 +5,7 @@ import { useRouter } from 'expo-router';
 import { useTheme, createTypography } from '../styles/theme';
 import { AlertIcon } from './icons/general/Alert';
 import { CheckCircleIcon } from './icons/general/Check_Circle';
+import { useTranslation } from 'react-i18next';
 
 interface StatCardProps {
   title: string;
@@ -18,6 +19,7 @@ export function StatCard({ title, value, icon, status, type }: StatCardProps) {
   const { colors } = useTheme();
   const typography = createTypography(colors);
   const router = useRouter();
+  const { t } = useTranslation('common');
 
   const getStatusIcon = () => {
     if (!status) return null;
@@ -31,7 +33,7 @@ export function StatCard({ title, value, icon, status, type }: StatCardProps) {
 
   const getStatusText = () => {
     if (!status) return null;
-    return status === 'normal' ? 'Normal' : 'Irregular';
+    return status === 'normal' ? t('status.normal') : t('status.irregular');
   };
 
   const getStatusColor = () => {

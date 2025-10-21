@@ -25,6 +25,10 @@
     "daysCount": "{{count}} día",
     "daysCount_other": "{{count}} días"
   },
+  "status": {
+    "normal": "Normal",
+    "irregular": "Irregular"
+  },
   "navigation": {
     "today": "Hoy",
     "calendar": "Calendario",

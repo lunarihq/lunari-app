@@ -1,12 +1,21 @@
 {
   "title": "Statistics",
+  "cycleStatistics": "Cycle statistics",
+  "emptyState": {
+    "message": "Log at least 2 periods to see your personal cycle statistics.",
+    "logPeriodButton": "Log period"
+  },
   "cycleHistory": {
     "title": "Cycle history",
     "noCycles": "Not enough data yet",
     "cycleLength": "Cycle length: {{days}} days",
     "periodLength": "Period length: {{days}} days",
     "days": "{{count}} day",
-    "days_other": "{{count}} days"
+    "days_other": "{{count}} days",
+    "inProgress": "In progress",
+    "loggedCycles": "logged cycles",
+    "currentCycle": "Current cycle",
+    "unknown": "Unknown"
   },
   "averages": {
     "title": "Averages",

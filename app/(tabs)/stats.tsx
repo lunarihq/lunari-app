@@ -12,7 +12,7 @@ import { DropIcon } from '../../components/icons/general/Drop';
 import { CycleIcon } from '../../components/icons/general/Cycle';
 import { getCycleStatus, getPeriodStatus } from '../../utils/cycleUtils';
 import defaultTheme, { useTheme, createTypography } from '../../styles/theme';
-import { formatDateShort } from '../../utils/localeUtils';
+import { useTranslation } from 'react-i18next';
 interface CycleData {
   startDate: string;
   cycleLength: string | number;
@@ -26,6 +26,7 @@ interface HistoryEntryWithDate extends CycleData {
 export default function Stats() {
   const { colors } = useTheme();
   const typography = createTypography(colors);
+  const { t } = useTranslation('stats');
   const [averageCycleLength, setAverageCycleLength] = useState<number>(0);
   const [averagePeriodLength, setAveragePeriodLength] = useState<number>(0);
   const [cycleHistory, setCycleHistory] = useState<CycleData[]>([]);
@@ -111,7 +112,7 @@ export default function Stats() {
 
         // Check if this is the most recent period (last in the array after sorting)
         if (i === chronologicalPeriods.length - 1) {
-          cycleLengthValue = 'In progress';
+          cycleLengthValue = t('cycleHistory.inProgress');
         } else {
           const currentStartDate = periodStartDates[i];
           const nextStartDate = periodStartDates[i + 1];
@@ -126,9 +127,9 @@ export default function Stats() {
           cycleLengthValue = daysBetween;
         }
 
-        // Add to history with the original date for sorting
+        // Add to history with ISO date (keep it unformatted)
         const historyEntry = {
-          startDate: formatDate(startDate),
+          startDate: startDate, // Keep as ISO string for the component
           originalDate: startDate, // Store original date for sorting
           cycleLength: cycleLengthValue,
           periodLength: period.length,
@@ -149,7 +150,7 @@ export default function Stats() {
     } catch (error) {
       console.error('Error loading statistics:', error);
     }
-  }, [userCycleLength]);
+  }, [userCycleLength, t]);
 
   useFocusEffect(
     useCallback(() => {
@@ -173,11 +174,6 @@ export default function Stats() {
     loadUserSettings();
   }, []);
 
-  // Format date using device locale
-  const formatDate = (dateString: string) => {
-    return formatDateShort(dateString);
-  };
-
   // Empty state component
   const renderEmptyState = () => (
     <View
@@ -196,10 +192,10 @@ export default function Stats() {
           },
         ]}
       >
-        Log at least 2 periods to see your personal cycle statistics.
+        {t('emptyState.message')}
       </Text>
       <Button
-        title="Log period"
+        title={t('emptyState.logPeriodButton')}
         onPress={() => router.push('/edit-period')}
         style={styles.emptyStateButton}
       />
@@ -238,19 +234,19 @@ export default function Stats() {
             { fontSize: 24, fontWeight: '500', marginBottom: 16 },
           ]}
         >
-          Cycle statistics
+          {t('cycleStatistics')}
         </Text>
         <View style={styles.cardsContainer}>
           <StatCard
-            title="Average cycle length"
-            value={`${averageCycleLength} days`}
+            title={t('averages.cycleLength')}
+            value={`${averageCycleLength} ${t('common:time.days')}`}
             icon={<CycleIcon size={40} color={colors.icon} />}
             status={getCycleStatus(averageCycleLength).status}
             type="cycle"
           />
           <StatCard
-            title="Average period length"
-            value={`${averagePeriodLength} days`}
+            title={t('averages.periodLength')}
+            value={`${averagePeriodLength} ${t('common:time.days')}`}
             icon={<DropIcon size={48} color={colors.icon} />}
             status={getPeriodStatus(averagePeriodLength).status}
             type="period"
