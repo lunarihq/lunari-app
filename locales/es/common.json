@@ -36,6 +36,14 @@
     "settings": "Configuración",
     "appName": "Lunari"
   },
+  "cycleDetails": {
+    "cycleDay": "Día {{number}} del ciclo",
+    "conceptionChance": {
+      "low": "Baja probabilidad de concebir",
+      "medium": "Probabilidad media de concebir",
+      "high": "Alta probabilidad de concebir"
+    }
+  },
   "loading": "Cargando..."
 }
 

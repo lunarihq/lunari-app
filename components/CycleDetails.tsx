@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
 import { SymptomsTracker } from './SymptomsTracker';
 import { PeriodPredictionService } from '../services/periodPredictions';
@@ -22,6 +23,7 @@ export function CycleDetails({
 }: CycleDetailsProps) {
   const { colors } = useTheme();
   const typography = createTypography(colors);
+  const { t } = useTranslation('common');
   const selectedDateFormatted = selectedDate
     ? formatDateLong(selectedDate)
     : '';
@@ -31,8 +33,10 @@ export function CycleDetails({
     const chance = PeriodPredictionService.getPregnancyChance(
       cycleDay,
       averageCycleLength
-    );
-    return `${chance.charAt(0).toUpperCase()}${chance.slice(1).toLowerCase()} chance to conceive`;
+    ).toLowerCase();
+    
+    // Map the chance to translation key
+    return t(`cycleDetails.conceptionChance.${chance}`);
   };
 
   // Check if selected date is today or in the past
@@ -53,7 +57,7 @@ export function CycleDetails({
               ]}
             >
               {selectedDateFormatted}
-              {cycleDay ? ` • Cycle day ${cycleDay}` : ''}
+              {cycleDay ? ` • ${t('cycleDetails.cycleDay', { number: cycleDay })}` : ''}
             </Text>
             {cycleDay && (
               <Text style={[typography.body, { color: colors.textSecondary }]}>
