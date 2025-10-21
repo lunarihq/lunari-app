@@ -60,7 +60,7 @@ export default function Reminders() {
     }
 
     loadSettings();
-  }, []);
+  }, [t]);
 
   // Clear status message after 3 seconds
   useEffect(() => {
