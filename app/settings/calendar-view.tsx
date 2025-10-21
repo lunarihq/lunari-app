@@ -183,7 +183,7 @@ export default function CalendarView() {
                 { flexShrink: 1, paddingRight: 12, flex: 1 },
               ]}
             >
-              Show predicted ovulation and fertile days on the calendar
+              Show ovulation day and fertile window on the calendar
             </Text>
           </View>
           <Switch
@@ -203,7 +203,7 @@ export default function CalendarView() {
                 { flexShrink: 1, paddingRight: 12, flex: 1 },
               ]}
             >
-              Show predicted future periods on the calendar
+              Show future periods prediction on the calendar
             </Text>
           </View>
           <Switch
