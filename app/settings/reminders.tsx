@@ -11,6 +11,7 @@ import {
   Linking,
   TouchableOpacity,
 } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { NotificationService } from '../../services/notificationService';
 import { getSetting, setSetting } from '../../db';
@@ -19,6 +20,7 @@ import { formatTime } from '../../utils/localeUtils';
 export default function Reminders() {
   const { colors } = useTheme();
   const typography = createTypography(colors);
+  const { t } = useTranslation('settings');
   const [beforePeriodEnabled, setBeforePeriodEnabled] = useState(false);
   const [dayOfPeriodEnabled, setDayOfPeriodEnabled] = useState(false);
   const [latePeriodEnabled, setLatePeriodEnabled] = useState(false);
@@ -49,7 +51,7 @@ export default function Reminders() {
       } catch (error) {
         console.error('Failed to load notification settings:', error);
         setStatusMessage({
-          text: 'Could not load notification settings',
+          text: t('reminderSettings.loadError'),
           isError: true,
         });
       } finally {
@@ -74,15 +76,15 @@ export default function Reminders() {
   // Show permission settings dialog
   const showPermissionSettingsDialog = () => {
     Alert.alert(
-      'Enable Notifications',
-      'To receive period reminders, please enable notifications for Lunari in your device settings.',
+      t('reminderSettings.permissionDialog.title'),
+      t('reminderSettings.permissionDialog.message'),
       [
         {
-          text: 'Cancel',
+          text: t('reminderSettings.permissionDialog.cancel'),
           style: 'cancel',
         },
         {
-          text: 'Open Settings',
+          text: t('reminderSettings.permissionDialog.openSettings'),
           onPress: () => Linking.openSettings(),
         },
       ]
@@ -119,7 +121,7 @@ export default function Reminders() {
     } catch (error) {
       console.error('Error toggling notification:', error);
       setStatusMessage({
-        text: 'Failed to update notification settings',
+        text: t('reminderSettings.updateError'),
         isError: true,
       });
     } finally {
@@ -157,7 +159,7 @@ export default function Reminders() {
     } catch (error) {
       console.error('Error toggling notification:', error);
       setStatusMessage({
-        text: 'Failed to update notification settings',
+        text: t('reminderSettings.updateError'),
         isError: true,
       });
     } finally {
@@ -195,7 +197,7 @@ export default function Reminders() {
     } catch (error) {
       console.error('Error toggling notification:', error);
       setStatusMessage({
-        text: 'Failed to update notification settings',
+        text: t('reminderSettings.updateError'),
         isError: true,
       });
     } finally {
@@ -245,7 +247,7 @@ export default function Reminders() {
       setLatePeriodEnabled(settings.latePeriodEnabled);
 
       setStatusMessage({
-        text: 'Failed to update notification settings',
+        text: t('reminderSettings.updateError'),
         isError: true,
       });
     } finally {
@@ -263,7 +265,7 @@ export default function Reminders() {
       >
         <ActivityIndicator size="large" color={colors.primary} />
         <Text style={[typography.body, { marginTop: 16 }]}>
-          Loading notification settings...
+          {t('reminderSettings.loading')}
         </Text>
       </View>
     );
@@ -297,7 +299,7 @@ export default function Reminders() {
               { flexShrink: 1, paddingRight: 12, flex: 1 },
             ]}
           >
-            Remind me 3 days before my next period is likely to start.
+            {t('reminderSettings.beforePeriod')}
           </Text>
           <Switch
             value={beforePeriodEnabled}
@@ -316,7 +318,7 @@ export default function Reminders() {
               { flexShrink: 1, paddingRight: 12, flex: 1 },
             ]}
           >
-            Remind me the day of my period start.
+            {t('reminderSettings.dayOfPeriod')}
           </Text>
           <Switch
             value={dayOfPeriodEnabled}
@@ -335,7 +337,7 @@ export default function Reminders() {
               { flexShrink: 1, paddingRight: 12, flex: 1 },
             ]}
           >
-            Remind me if my period is late.
+            {t('reminderSettings.latePeriod')}
           </Text>
           <Switch
             value={latePeriodEnabled}
@@ -360,7 +362,7 @@ export default function Reminders() {
               { flexShrink: 1, paddingRight: 12, flex: 1 },
             ]}
           >
-            Reminder time
+            {t('reminderSettings.reminderTime')}
           </Text>
           <Text
             style={[

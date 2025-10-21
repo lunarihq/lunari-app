@@ -39,7 +39,20 @@
     "description": "Get notified before your next period",
     "daysBeforePeriod": "Days before period",
     "days": "{{count}} day",
-    "days_other": "{{count}} days"
+    "days_other": "{{count}} days",
+    "beforePeriod": "Remind me 3 days before my next period is likely to start.",
+    "dayOfPeriod": "Remind me the day of my period start.",
+    "latePeriod": "Remind me if my period is late.",
+    "reminderTime": "Reminder time",
+    "loading": "Loading notification settings...",
+    "loadError": "Could not load notification settings",
+    "updateError": "Failed to update notification settings",
+    "permissionDialog": {
+      "title": "Enable Notifications",
+      "message": "To receive period reminders, please enable notifications for Lunari in your device settings.",
+      "cancel": "Cancel",
+      "openSettings": "Open Settings"
+    }
   }
 }
 

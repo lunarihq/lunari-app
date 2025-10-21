@@ -39,7 +39,20 @@
     "description": "Recibe notificaciones antes de tu próximo periodo",
     "daysBeforePeriod": "Días antes del periodo",
     "days": "{{count}} día",
-    "days_other": "{{count}} días"
+    "days_other": "{{count}} días",
+    "beforePeriod": "Recuérdame 3 días antes de que probablemente comience mi próximo periodo.",
+    "dayOfPeriod": "Recuérdame el día de inicio de mi periodo.",
+    "latePeriod": "Recuérdame si mi periodo se retrasa.",
+    "reminderTime": "Hora del recordatorio",
+    "loading": "Cargando configuración de notificaciones...",
+    "loadError": "No se pudo cargar la configuración de notificaciones",
+    "updateError": "Error al actualizar la configuración de notificaciones",
+    "permissionDialog": {
+      "title": "Habilitar notificaciones",
+      "message": "Para recibir recordatorios de periodo, por favor habilita las notificaciones para Lunari en la configuración de tu dispositivo.",
+      "cancel": "Cancelar",
+      "openSettings": "Abrir configuración"
+    }
   }
 }
 
