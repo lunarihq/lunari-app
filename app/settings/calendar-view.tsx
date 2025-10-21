@@ -168,10 +168,10 @@ export default function CalendarView() {
     <ScrollView
       style={[
         defaultTheme.globalStyles.container,
-        { backgroundColor: colors.background },
+        { backgroundColor: colors.background, paddingTop: 16},
       ]}
     >
-      <Text style={[typography.heading2, styles.sectionTitle]}>
+      <Text style={[typography.heading3, { marginBottom: 12}]}>
         Display options
       </Text>
       <View style={[styles.section, { backgroundColor: colors.surface }]}>
@@ -216,7 +216,7 @@ export default function CalendarView() {
         </View>
       </View>
 
-      <Text style={[typography.heading2, styles.sectionTitle]}>
+      <Text style={[typography.heading3, { marginBottom: 12}]}>
         Icons shown on calendar
       </Text>
       <View style={[styles.section, { backgroundColor: colors.surface }]}>
@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   section: {
-    marginBottom: 16,
+    marginBottom: 24,
     borderRadius: 8,
     overflow: 'hidden',
   },
