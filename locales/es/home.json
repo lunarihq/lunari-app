@@ -14,6 +14,11 @@
   "learnAboutLatePeriods": "Aprende sobre periodos retrasados",
   "cycleInsights": {
     "title": "Información del ciclo",
+    "todaysInsights": "Información de hoy",
+    "cycleDay": "Día del ciclo",
+    "cyclePhase": "Fase del ciclo",
+    "chanceToConceive": "Probabilidad de concebir",
+    "emptyState": "Registra al menos un periodo para ver la información de tu ciclo.",
     "currentPhase": "Fase actual",
     "follicular": "Folicular",
     "ovulation": "Ovulación",

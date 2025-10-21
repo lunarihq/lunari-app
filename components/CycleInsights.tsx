@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, View, StyleSheet, Pressable } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { CalendarIcon } from './icons/general/Calendar';
@@ -18,6 +19,7 @@ export function CycleInsights({
   averageCycleLength,
 }: CycleInsightsProps) {
   const { colors } = useTheme();
+  const { t } = useTranslation('home');
 
   const iconContainerStyle = {
     ...styles.insightIconContainer,
@@ -33,7 +35,7 @@ export function CycleInsights({
     <View style={[styles.insightsCard, { backgroundColor: colors.surface }]}>
       <View style={styles.insightsTitleContainer}>
         <Text style={[styles.insightsTitle, { color: colors.textPrimary }]}>
-          Today's insights
+          {t('cycleInsights.todaysInsights')}
         </Text>
         <Pressable
           onPress={() =>
@@ -73,7 +75,7 @@ export function CycleInsights({
               <Text
                 style={[styles.insightLabel, { color: colors.textPrimary }]}
               >
-                Cycle day
+                {t('cycleInsights.cycleDay')}
               </Text>
             </View>
             <View
@@ -106,7 +108,7 @@ export function CycleInsights({
               <Text
                 style={[styles.insightLabel, { color: colors.textPrimary }]}
               >
-                Cycle phase
+                {t('cycleInsights.cyclePhase')}
               </Text>
             </View>
             <View
@@ -144,12 +146,7 @@ export function CycleInsights({
               <Text
                 style={[styles.insightLabel, { color: colors.textPrimary }]}
               >
-                Chance to
-              </Text>
-              <Text
-                style={[styles.insightLabel, { color: colors.textPrimary }]}
-              >
-                conceive
+                {t('cycleInsights.chanceToConceive')}
               </Text>
             </View>
             <View
@@ -173,7 +170,7 @@ export function CycleInsights({
         </View>
       ) : (
         <Text style={[styles.insightsText, { color: colors.textPrimary }]}>
-          Please log at least one period to view your cycle insights.
+          {t('cycleInsights.emptyState')}
         </Text>
       )}
     </View>

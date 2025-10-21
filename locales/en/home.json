@@ -14,6 +14,11 @@
   "learnAboutLatePeriods": "Learn about late periods",
   "cycleInsights": {
     "title": "Cycle insights",
+    "todaysInsights": "Today's insights",
+    "cycleDay": "Cycle day",
+    "cyclePhase": "Cycle phase",
+    "chanceToConceive": "Chance to conceive",
+    "emptyState": "Please log at least one period to view your cycle insights.",
     "currentPhase": "Current phase",
     "follicular": "Follicular",
     "ovulation": "Ovulation",
