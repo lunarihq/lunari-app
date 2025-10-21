@@ -61,7 +61,16 @@
     "title": "Track your health",
     "selectAll": "Select all that apply",
     "save": "Save",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "flow": "Menstrual flow",
+    "symptoms": "Symptoms",
+    "moods": "Moods",
+    "discharge": "Vaginal discharge",
+    "notes": "Notes",
+    "notesPlaceholder": "Add notes, any extra symptoms, etc.",
+    "notesEditorPlaceholder": "Add notes, any extra symptoms, or how you've been feeling...",
+    "successMessage": "Health data saved",
+    "errorMessage": "Error. Please try again."
   }
 }
 

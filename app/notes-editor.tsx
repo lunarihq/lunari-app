@@ -11,10 +11,12 @@ import { Button } from '../components/Button';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useTheme, createTypography } from '../styles/theme';
 import { useNotes } from '../contexts/NotesContext';
+import { useTranslation } from 'react-i18next';
 
 export default function NotesEditor() {
   const { colors } = useTheme();
   const typography = createTypography(colors);
+  const { t } = useTranslation(['common', 'health']);
   const params = useLocalSearchParams();
   const { notes, setNotes } = useNotes();
   const [localNotes, setLocalNotes] = useState<string>('');
@@ -78,7 +80,7 @@ export default function NotesEditor() {
         <View style={styles.content}>
           <TextInput
             style={[typography.body, styles.notesInput]}
-            placeholder="Add notes, any extra symptoms, or how you've been feeling..."
+            placeholder={t('health:tracking.notesEditorPlaceholder')}
             placeholderTextColor={colors.placeholder}
             value={localNotes}
             onChangeText={setLocalNotes}
@@ -100,7 +102,7 @@ export default function NotesEditor() {
             isKeyboardVisible ? { bottom: keyboardHeight } : {},
           ]}
         >
-          <Button title="Done" onPress={handleSave} fullWidth />
+          <Button title={t('buttons.done')} onPress={handleSave} fullWidth />
         </View>
       )}
     </View>

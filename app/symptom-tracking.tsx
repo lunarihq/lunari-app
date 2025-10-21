@@ -20,6 +20,7 @@ import { useNotes } from '../contexts/NotesContext';
 import { CustomIcon } from '../components/icons/health';
 import Toast from 'react-native-toast-message';
 import { formatTodayOrDate } from '../utils/localeUtils';
+import { useTranslation } from 'react-i18next';
 
 // Symptom type definition
 type Item = {
@@ -38,6 +39,7 @@ dayjs.extend(isoWeek);
 export default function SymptomTracking() {
   const { colors } = useTheme();
   const typography = createTypography(colors);
+  const { t } = useTranslation(['common', 'health']);
   const params = useLocalSearchParams();
   const { notes, setNotes } = useNotes();
   const ICON_SIZE = 50;
@@ -707,7 +709,7 @@ export default function SymptomTracking() {
       // Show success toast
       Toast.show({
         type: 'success',
-        text1: 'Health data saved',
+        text1: t('health:tracking.successMessage'),
         visibilityTime: 3000,
       });
 
@@ -719,7 +721,7 @@ export default function SymptomTracking() {
       // Show error toast
       Toast.show({
         type: 'error',
-        text1: 'Error. Please try again.',
+        text1: t('health:tracking.errorMessage'),
         visibilityTime: 3000,
       });
     }
@@ -770,7 +772,7 @@ export default function SymptomTracking() {
         {isPeriodDate && (
           <View style={[styles.section, { backgroundColor: colors.surface }]}>
             <View style={styles.sectionHeader}>
-              <Text style={[typography.heading2]}>Menstrual flow</Text>
+              <Text style={[typography.heading2]}>{t('health:tracking.flow')}</Text>
             </View>
 
             <View style={styles.itemsGrid}>
@@ -822,7 +824,7 @@ export default function SymptomTracking() {
         {/* Symptoms */}
         <View style={[styles.section, { backgroundColor: colors.surface }]}>
           <View style={styles.sectionHeader}>
-            <Text style={[typography.heading2]}>Symptoms</Text>
+            <Text style={[typography.heading2]}>{t('health:tracking.symptoms')}</Text>
           </View>
 
           <View style={styles.itemsGrid}>
@@ -880,7 +882,7 @@ export default function SymptomTracking() {
         {/* Moods */}
         <View style={[styles.section, { backgroundColor: colors.surface }]}>
           <View style={styles.sectionHeader}>
-            <Text style={[typography.heading2]}>Moods</Text>
+            <Text style={[typography.heading2]}>{t('health:tracking.moods')}</Text>
           </View>
 
           <View style={styles.itemsGrid}>
@@ -938,7 +940,7 @@ export default function SymptomTracking() {
         {/* Vaginal discharge */}
         <View style={[styles.section, { backgroundColor: colors.surface }]}>
           <View style={styles.sectionHeader}>
-            <Text style={[typography.heading2]}>Vaginal discharge</Text>
+            <Text style={[typography.heading2]}>{t('health:tracking.discharge')}</Text>
           </View>
 
           <View style={styles.itemsGrid}>
@@ -999,7 +1001,7 @@ export default function SymptomTracking() {
           style={[styles.section, { backgroundColor: colors.surface }]}
         >
           <View style={styles.sectionHeader}>
-            <Text style={[typography.heading2]}>Notes</Text>
+            <Text style={[typography.heading2]}>{t('health:tracking.notes')}</Text>
             <View style={styles.notesIconsContainer}>
               {notes.trim() && (
                 <TouchableOpacity
@@ -1047,7 +1049,7 @@ export default function SymptomTracking() {
                   { flex: 1, color: colors.placeholder },
                 ]}
               >
-                Add notes, any extra symptoms, etc.
+                {t('health:tracking.notesPlaceholder')}
               </Text>
             )}
           </TouchableOpacity>
@@ -1057,7 +1059,7 @@ export default function SymptomTracking() {
       {/* Save button that appears only when changes are made */}
       {hasChanges && (
         <View style={styles.saveButtonContainer}>
-          <Button title="Save" onPress={saveChanges} fullWidth />
+          <Button title={t('buttons.save')} onPress={saveChanges} fullWidth />
         </View>
       )}
     </View>

@@ -6,6 +6,7 @@ import { DateData } from 'react-native-calendars';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import Toast from 'react-native-toast-message';
+import { useTranslation } from 'react-i18next';
 import {
   BaseCalendar,
   DAY_FONT_SIZE,
@@ -24,6 +25,7 @@ import { periodDates } from '../db/schema';
 export default function PeriodCalendarScreen() {
   const { colors } = useTheme();
   const typography = createTypography(colors);
+  const { t } = useTranslation(['common', 'calendar']);
   const [tempDates, setTempDates] = useState<MarkedDates>({});
   const [userPeriodLength, setUserPeriodLength] = useState<number>(5);
 
@@ -163,7 +165,7 @@ export default function PeriodCalendarScreen() {
       // Show success toast
       Toast.show({
         type: 'success',
-        text1: 'Period dates saved',
+        text1: t('calendar:editPeriod.successMessage'),
         visibilityTime: 3000,
       });
 
@@ -174,7 +176,7 @@ export default function PeriodCalendarScreen() {
       // Show error toast
       Toast.show({
         type: 'error',
-        text1: 'Error. Please try again.',
+        text1: t('calendar:editPeriod.errorMessage'),
         visibilityTime: 3000,
       });
 
@@ -239,7 +241,7 @@ export default function PeriodCalendarScreen() {
         </TouchableOpacity>
         {isToday && (
           <Text style={[baseCalendarStyles.todayLabel, { marginTop: 2 }]}>
-            Today
+            {t('time.today')}
           </Text>
         )}
       </View>
@@ -256,7 +258,7 @@ export default function PeriodCalendarScreen() {
             { fontSize: 18, fontWeight: '600', paddingTop: 63 },
           ]}
         >
-          Edit Period
+          {t('calendar:editPeriod.title')}
         </Text>
         {isTodayButtonVisible() && (
           <TouchableOpacity onPress={goToToday}>
@@ -267,7 +269,7 @@ export default function PeriodCalendarScreen() {
                 { color: colors.primary },
               ]}
             >
-              Today
+              {t('time.today')}
             </Text>
           </TouchableOpacity>
         )}
@@ -301,13 +303,13 @@ export default function PeriodCalendarScreen() {
         ]}
       >
         <Button
-          title="Cancel"
+          title={t('buttons.cancel')}
           variant="text"
           onPress={handleCancel}
           style={styles.cancelButton}
         />
         <Button
-          title="Save"
+          title={t('buttons.save')}
           variant="contained"
           onPress={handleSave}
           style={styles.saveButton}
