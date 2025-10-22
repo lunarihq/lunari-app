@@ -14,7 +14,8 @@ import { db } from '../db';
 import { healthLogs, periodDates } from '../db/schema';
 import { eq } from 'drizzle-orm';
 import { useFocusEffect } from '@react-navigation/native';
-import defaultTheme, { useTheme, createTypography } from '../styles/theme';
+import { useTheme, createTypography } from '../styles/theme';
+import { commonStyles } from '../styles/commonStyles';
 import { useNotes } from '../contexts/NotesContext';
 import Toast from 'react-native-toast-message';
 import { formatTodayOrDate } from '../utils/localeUtils';
@@ -339,7 +340,7 @@ export default function HealthTracking() {
   return (
     <View
       style={[
-        defaultTheme.globalStyles.container,
+        commonStyles.container,
         { backgroundColor: colors.background },
       ]}
     >
@@ -352,13 +353,13 @@ export default function HealthTracking() {
 
       <ScrollView
         ref={scrollViewRef}
-        style={styles.scrollView}
-        contentContainerStyle={styles.scrollContent}
+        style={commonStyles.scrollView}
+        contentContainerStyle={commonStyles.scrollContentContainer}
         showsVerticalScrollIndicator={false}
       >
         {isPeriodDate && (
-          <View style={[styles.section, { backgroundColor: colors.surface }]}>
-            <View style={styles.sectionHeader}>
+          <View style={[commonStyles.section, { backgroundColor: colors.surface }]}>
+            <View style={commonStyles.sectionHeader}>
               <Text style={[typography.heading2]}>
                 {t('health:tracking.flow')}
               </Text>
@@ -374,8 +375,8 @@ export default function HealthTracking() {
             />
           </View>
         )}
-        <View style={[styles.section, { backgroundColor: colors.surface }]}>
-          <View style={styles.sectionHeader}>
+        <View style={[commonStyles.section, { backgroundColor: colors.surface }]}>
+          <View style={commonStyles.sectionHeader}>
             <Text style={[typography.heading2]}>
               {t('health:tracking.symptoms')}
             </Text>
@@ -391,8 +392,8 @@ export default function HealthTracking() {
           />
         </View>
 
-        <View style={[styles.section, { backgroundColor: colors.surface }]}>
-          <View style={styles.sectionHeader}>
+        <View style={[commonStyles.section, { backgroundColor: colors.surface }]}>
+          <View style={commonStyles.sectionHeader}>
             <Text style={[typography.heading2]}>
               {t('health:tracking.moods')}
             </Text>
@@ -408,8 +409,8 @@ export default function HealthTracking() {
           />
         </View>
 
-        <View style={[styles.section, { backgroundColor: colors.surface }]}>
-          <View style={styles.sectionHeader}>
+        <View style={[commonStyles.section, { backgroundColor: colors.surface }]}>
+          <View style={commonStyles.sectionHeader}>
             <Text style={[typography.heading2]}>
               {t('health:tracking.discharge')}
             </Text>
@@ -428,9 +429,9 @@ export default function HealthTracking() {
         {/* Notes */}
         <View
           ref={notesSectionRef}
-          style={[styles.section, { backgroundColor: colors.surface }]}
+          style={[commonStyles.section, { backgroundColor: colors.surface }]}
         >
-          <View style={styles.sectionHeader}>
+          <View style={commonStyles.sectionHeader}>
             <Text style={[typography.heading2]}>{t('health:tracking.notes')}</Text>
             <View style={styles.notesIconsContainer}>
               {notes.trim() && (
@@ -493,25 +494,6 @@ export default function HealthTracking() {
 }
 
 const styles = StyleSheet.create({
-  scrollView: {
-    flex: 1,
-  },
-  scrollContent: {
-    paddingTop: 16,
-    paddingBottom: 80,
-  },
-  section: {
-    borderRadius: 16,
-    marginBottom: 16,
-    padding: 16,
-    paddingBottom: 8,
-  },
-  sectionHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 16,
-  },
   notesContainer: {
     flexDirection: 'row',
     alignItems: 'flex-start',

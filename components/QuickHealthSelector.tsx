@@ -15,7 +15,7 @@ import { healthLogs } from '../db/schema';
 import { eq } from 'drizzle-orm';
 import { useTheme, createTypography } from '../styles/theme';
 import dayjs from 'dayjs';
-import { globalStyles } from '../styles/globalStyles';
+import { commonStyles } from '../styles/commonStyles';
 import { CustomIcon } from './icons/health';
 import { NoteIcon } from './icons/health/Note';
 import { SYMPTOMS, MOODS, FLOWS, DISCHARGES } from '../constants/healthTracking';
@@ -131,7 +131,7 @@ export const QuickHealthSelector = ({
           }
           style={styles.itemContainer}
         >
-          <View style={[globalStyles.fab, { backgroundColor: colors.primary }]}>
+          <View style={[commonStyles.fab, { backgroundColor: colors.primary }]}>
             <Ionicons name="add" size={32} color={colors.white} />
           </View>
           <Text

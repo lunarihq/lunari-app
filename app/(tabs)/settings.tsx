@@ -11,7 +11,8 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import defaultTheme, { useTheme, createTypography } from '../../styles/theme';
+import { useTheme, createTypography } from '../../styles/theme';
+import { commonStyles } from '../../styles/commonStyles';
 import { ThemeSelectionModal } from '../../components/ThemeSelectionModal';
 import { DataDeletionService } from '../../services/dataDeletionService';
 import { useNotes } from '../../contexts/NotesContext';
@@ -27,10 +28,10 @@ export default function Settings() {
   return (
     <ScrollView
       style={[
-        defaultTheme.globalStyles.container,
+        commonStyles.container,
         { backgroundColor: colors.background },
       ]}
-      contentContainerStyle={defaultTheme.globalStyles.scrollContentContainer}
+      contentContainerStyle={commonStyles.scrollContentContainer}
       showsVerticalScrollIndicator={false}
     >
       <View style={[styles.section, { backgroundColor: colors.surface }]}>

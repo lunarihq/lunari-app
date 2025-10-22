@@ -2,7 +2,8 @@ import React from 'react';
 import { Text, View, StyleSheet, ScrollView } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
-import defaultTheme, { useTheme, createTypography } from '../../styles/theme';
+import { useTheme, createTypography } from '../../styles/theme';
+import { commonStyles } from '@/styles/commonStyles';
 import * as Localization from 'expo-localization';
 
 export default function PrivacyPolicy() {
@@ -13,10 +14,10 @@ export default function PrivacyPolicy() {
   return (
     <ScrollView
       style={[
-        defaultTheme.globalStyles.container,
+        commonStyles.container,
         { backgroundColor: colors.background },
       ]}
-      contentContainerStyle={defaultTheme.globalStyles.scrollContentContainer}
+      contentContainerStyle={commonStyles.scrollContentContainer}
       showsVerticalScrollIndicator={false}
     >
       <View style={[styles.header, { backgroundColor: colors.surface }]}>

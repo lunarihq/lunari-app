@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Text, ScrollView, Image } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import defaultTheme, { useTheme, createTypography } from '../../styles/theme';
+import { useTheme, createTypography } from '../../styles/theme';
+import { commonStyles } from '../../styles/commonStyles';
 
 export default function PeriodLength() {
   const { colors } = useTheme();
@@ -11,10 +12,10 @@ export default function PeriodLength() {
   return (
     <ScrollView
       style={[
-        defaultTheme.globalStyles.container,
+        commonStyles.container,
         { backgroundColor: colors.panel },
       ]}
-      contentContainerStyle={defaultTheme.globalStyles.scrollContentContainer}
+      contentContainerStyle={commonStyles.scrollContentContainer}
       showsVerticalScrollIndicator={false}
     >
       <Image

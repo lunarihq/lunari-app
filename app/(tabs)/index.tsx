@@ -8,8 +8,8 @@ import { db, getSetting } from '../../db';
 import { PeriodDate, periodDates } from '../../db/schema';
 import { PeriodPredictionService } from '../../services/periodPredictions';
 import { NotificationService } from '../../services/notificationService';
-
-import defaultTheme, { useTheme } from '../../styles/theme';
+import { useTheme } from '../../styles/theme';
+import { commonStyles } from '../../styles/commonStyles';
 
 export default function Index() {
   const { colors } = useTheme();
@@ -158,10 +158,10 @@ export default function Index() {
   return (
     <ScrollView
       style={[
-        defaultTheme.globalStyles.container,
+        commonStyles.container,
         { backgroundColor: colors.background },
       ]}
-      contentContainerStyle={defaultTheme.globalStyles.scrollContentContainer}
+      contentContainerStyle={commonStyles.scrollContentContainer}
       showsVerticalScrollIndicator={false}
     >
       <CycleOverviewWidget

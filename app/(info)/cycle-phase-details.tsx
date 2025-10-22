@@ -3,8 +3,8 @@ import { Text, View, StyleSheet, ScrollView } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { PeriodPredictionService } from '../../services/periodPredictions';
-import defaultTheme, { useTheme, createTypography } from '../../styles/theme';
-import { CycleIcon } from '../../components/icons/general/Cycle';
+import { useTheme, createTypography } from '../../styles/theme';
+import { commonStyles } from '../../styles/commonStyles';import { CycleIcon } from '../../components/icons/general/Cycle';
 import { LeafIcon } from '../../components/icons/general/Leaf';
 import { formatTodayShort, formatDateShort } from '../../utils/localeUtils';
 import { useTranslation } from 'react-i18next';
@@ -58,13 +58,13 @@ export default function CyclePhaseDetails() {
   return (
     <View
       style={[
-        defaultTheme.globalStyles.container,
+        commonStyles.container,
         { backgroundColor: colors.background, paddingTop: 16 },
       ]}
     >
       <ScrollView
         style={styles.content}
-        contentContainerStyle={defaultTheme.globalStyles.scrollContentContainer}
+        contentContainerStyle={commonStyles.scrollContentContainer}
         showsVerticalScrollIndicator={false}
       >
         <Text

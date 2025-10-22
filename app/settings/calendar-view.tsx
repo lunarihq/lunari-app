@@ -11,7 +11,8 @@ import {
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { getSetting, setSetting } from '../../db';
-import defaultTheme, { useTheme, createTypography } from '../../styles/theme';
+import { useTheme, createTypography } from '../../styles/theme';
+import { commonStyles } from '@/styles/commonStyles';
 
 export default function CalendarView() {
   const { colors } = useTheme();
@@ -169,9 +170,10 @@ export default function CalendarView() {
   return (
     <ScrollView
       style={[
-        defaultTheme.globalStyles.container,
+        commonStyles.container,
         { backgroundColor: colors.background, paddingTop: 16},
       ]}
+      contentContainerStyle={commonStyles.scrollContentContainer}
     >
       <Text style={[typography.heading3, { marginBottom: 12}]}>
         {t('view.displayOptions')}

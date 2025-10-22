@@ -15,7 +15,8 @@ import { useTranslation } from 'react-i18next';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { NotificationService } from '../../services/notificationService';
 import { getSetting, setSetting } from '../../db';
-import defaultTheme, { useTheme, createTypography } from '../../styles/theme';
+import { useTheme, createTypography } from '../../styles/theme';
+import { commonStyles } from '@/styles/commonStyles';
 import { formatTime } from '../../utils/localeUtils';
 export default function Reminders() {
   const { colors } = useTheme();
@@ -274,9 +275,10 @@ export default function Reminders() {
   return (
     <ScrollView
       style={[
-        defaultTheme.globalStyles.container,
+        commonStyles.container,
         { backgroundColor: colors.background },
       ]}
+      contentContainerStyle={commonStyles.scrollContentContainer}
     >
       {statusMessage && (
         <View

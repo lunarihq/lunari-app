@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, ScrollView, Text, Image } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import defaultTheme, { useTheme, createTypography } from '../../styles/theme';
-
+import { useTheme, createTypography } from '../../styles/theme';
+import { commonStyles } from '../../styles/commonStyles';
 export default function PredictionInfo() {
   const { colors } = useTheme();
   const typography = createTypography(colors);
@@ -11,10 +11,10 @@ export default function PredictionInfo() {
   return (
     <ScrollView
       style={[
-        defaultTheme.globalStyles.container,
+        commonStyles.container,
         { backgroundColor: colors.panel },
       ]}
-      contentContainerStyle={defaultTheme.globalStyles.scrollContentContainer}
+      contentContainerStyle={commonStyles.scrollContentContainer}
       showsVerticalScrollIndicator={false}
     >
       <Image

@@ -12,8 +12,8 @@ import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useAuth } from '../../contexts/AuthContext';
-import defaultTheme, { useTheme } from '../../styles/theme';
-
+import { useTheme } from '../../styles/theme';
+import { commonStyles } from '@/styles/commonStyles';
 export default function AppLockScreen() {
   const { colors } = useTheme();
   const { t } = useTranslation('settings');
@@ -129,10 +129,10 @@ export default function AppLockScreen() {
   return (
     <ScrollView
       style={[
-        defaultTheme.globalStyles.container,
+        commonStyles.container,
         { backgroundColor: colors.background },
       ]}
-      contentContainerStyle={defaultTheme.globalStyles.scrollContentContainer}
+      contentContainerStyle={commonStyles.scrollContentContainer}
       showsVerticalScrollIndicator={false}
     >
       <View style={[styles.section, { backgroundColor: colors.surface }]}>

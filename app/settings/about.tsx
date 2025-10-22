@@ -2,7 +2,8 @@ import React from 'react';
 import { Text, View, StyleSheet, ScrollView, Linking } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
-import defaultTheme, { useTheme, createTypography } from '../../styles/theme';
+import { useTheme, createTypography } from '../../styles/theme';
+import { commonStyles } from '@/styles/commonStyles';
 
 export default function About() {
   const { colors } = useTheme();
@@ -14,11 +15,11 @@ export default function About() {
   return (
     <ScrollView
       style={[
-        defaultTheme.globalStyles.container,
+        commonStyles.container,
         { backgroundColor: colors.background },
       ]}
       contentContainerStyle={[
-        defaultTheme.globalStyles.scrollContentContainer,
+        commonStyles.scrollContentContainer,
         { paddingTop: 0 },
       ]}
       showsVerticalScrollIndicator={false}

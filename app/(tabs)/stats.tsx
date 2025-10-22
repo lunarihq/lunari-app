@@ -11,7 +11,8 @@ import { CycleHistory } from '../../components/CycleHistory';
 import { DropIcon } from '../../components/icons/general/Drop';
 import { CycleIcon } from '../../components/icons/general/Cycle';
 import { getCycleStatus, getPeriodStatus } from '../../utils/cycleUtils';
-import defaultTheme, { useTheme, createTypography } from '../../styles/theme';
+import { useTheme, createTypography } from '../../styles/theme';
+import { commonStyles } from '../../styles/commonStyles';
 import { useTranslation } from 'react-i18next';
 interface CycleData {
   startDate: string;
@@ -207,7 +208,7 @@ export default function Stats() {
     return (
       <ScrollView
         style={[
-          defaultTheme.globalStyles.container,
+          commonStyles.container,
           { backgroundColor: colors.background },
         ]}
       >
@@ -219,10 +220,10 @@ export default function Stats() {
   return (
     <ScrollView
       style={[
-        defaultTheme.globalStyles.container,
+        commonStyles.container,
         { backgroundColor: colors.background },
       ]}
-      contentContainerStyle={defaultTheme.globalStyles.scrollContentContainer}
+      contentContainerStyle={commonStyles.scrollContentContainer}
       showsVerticalScrollIndicator={false}
     >
       <View
