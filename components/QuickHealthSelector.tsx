@@ -125,8 +125,8 @@ export const QuickHealthSelector = ({
           onPress={() =>
             router.push(
               selectedDate
-                ? `/HealthTracking?date=${selectedDate}`
-                : '/HealthTracking'
+                ? `/health-tracking?date=${selectedDate}`
+                : '/health-tracking'
             )
           }
           style={styles.itemContainer}
@@ -165,7 +165,7 @@ export const QuickHealthSelector = ({
                 }
 
                 router.push({
-                  pathname: '/HealthTracking',
+                  pathname: '/health-tracking',
                   params,
                 });
               }}

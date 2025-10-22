@@ -110,7 +110,7 @@ const { t } = useTranslation('settings');
 
 ### Other Screens
 
-#### 23. `app/HealthTracking.tsx`
+#### 23. `app/health-tracking.tsx`
 #### 24. `app/notes-editor.tsx`
 
 ## 🔄 Translation Workflow
