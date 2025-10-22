@@ -36,7 +36,7 @@ function AppContent() {
     useRef<Notifications.Subscription | null>(null);
   const { isLocked, isAuthenticated } = useAuth();
   const { isDark } = useTheme();
-  const { t } = useTranslation(['settings', 'health']);
+  const { t } = useTranslation(['settings', 'health', 'info']);
 
   // Load fonts
   const [fontsLoaded] = useFonts({
@@ -258,7 +258,7 @@ function AppContent() {
           name="(info)/cycle-phase-details"
           options={{
             headerShown: true,
-            headerTitle: "Today's insights",
+            headerTitle: t('info:screenTitles.todaysInsights'),
             headerShadowVisible: true,
             headerStyle: {
               backgroundColor: isDark
@@ -274,7 +274,7 @@ function AppContent() {
           name="(info)/cycle-length-info"
           options={{
             headerShown: true,
-            headerTitle: 'Cycle length',
+            headerTitle: t('info:screenTitles.cycleLength'),
             headerShadowVisible: false,
             headerStyle: {
               backgroundColor: isDark
@@ -290,7 +290,7 @@ function AppContent() {
           name="(info)/period-length-info"
           options={{
             headerShown: true,
-            headerTitle: 'Period length',
+            headerTitle: t('info:screenTitles.periodLength'),
             headerShadowVisible: false,
             headerStyle: {
               backgroundColor: isDark
@@ -306,7 +306,7 @@ function AppContent() {
           name="(info)/late-period-info"
           options={{
             headerShown: true,
-            headerTitle: 'Late period',
+            headerTitle: t('info:screenTitles.latePeriod'),
             headerShadowVisible: false,
             headerStyle: {
               backgroundColor: isDark
@@ -322,7 +322,7 @@ function AppContent() {
           name="(info)/prediction-info"
           options={{
             headerShown: true,
-            headerTitle: 'How predictions work',
+            headerTitle: t('info:screenTitles.howPredictionsWork'),
             headerShadowVisible: false,
             headerStyle: {
               backgroundColor: isDark ? darkColors.panel : lightColors.panel,

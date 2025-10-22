@@ -1,6 +1,19 @@
 {
+  "screenTitles": {
+    "todaysInsights": "Información de hoy",
+    "cycleLength": "Duración del ciclo",
+    "periodLength": "Duración del periodo",
+    "latePeriod": "Periodo tardío",
+    "howPredictionsWork": "Cómo funcionan las predicciones"
+  },
   "cyclePhase": {
     "title": "Fases del ciclo",
+    "cycleDay": "Día del ciclo",
+    "cycleStartedToday": "Tu ciclo comenzó hoy",
+    "cycleStartedOn": "Este ciclo comenzó el",
+    "cyclePhaseTitle": "Fase del ciclo",
+    "chanceToConceive": "Probabilidad de concebir",
+    "possibleSymptoms": "Posibles síntomas",
     "menstrual": {
       "title": "Fase menstrual",
       "description": "El primer día de tu periodo marca el inicio de tu ciclo menstrual."

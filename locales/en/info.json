@@ -1,6 +1,19 @@
 {
+  "screenTitles": {
+    "todaysInsights": "Today's insights",
+    "cycleLength": "Cycle length",
+    "periodLength": "Period length",
+    "latePeriod": "Late period",
+    "howPredictionsWork": "How predictions work"
+  },
   "cyclePhase": {
     "title": "Cycle phases",
+    "cycleDay": "Cycle day",
+    "cycleStartedToday": "Your cycle started today",
+    "cycleStartedOn": "This cycle started on",
+    "cyclePhaseTitle": "Cycle phase",
+    "chanceToConceive": "Chance to conceive",
+    "possibleSymptoms": "Possible symptoms",
     "menstrual": {
       "title": "Menstrual phase",
       "description": "The first day of your period marks the beginning of your menstrual cycle."

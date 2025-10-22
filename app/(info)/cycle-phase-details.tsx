@@ -7,6 +7,7 @@ import defaultTheme, { useTheme, createTypography } from '../../styles/theme';
 import { CycleIcon } from '../../components/icons/general/Cycle';
 import { LeafIcon } from '../../components/icons/general/Leaf';
 import { formatTodayShort, formatDateShort } from '../../utils/localeUtils';
+import { useTranslation } from 'react-i18next';
 
 const getFormattedDate = (date: Date): string => {
   return formatTodayShort(date);
@@ -19,9 +20,9 @@ const getCycleStartDate = (cycleDay: number): Date => {
   return cycleStartDate;
 };
 
-const getFormattedCycleStart = (cycleDay: number): string => {
+const getFormattedCycleStart = (cycleDay: number, t: any): string => {
   if (cycleDay === 1) {
-    return 'Your cycle started today';
+    return t('info:cyclePhase.cycleStartedToday');
   }
 
   const cycleStartDate = getCycleStartDate(cycleDay);
@@ -29,15 +30,16 @@ const getFormattedCycleStart = (cycleDay: number): string => {
   const isToday = cycleStartDate.toDateString() === today.toDateString();
 
   if (isToday) {
-    return 'Your cycle started today';
+    return t('info:cyclePhase.cycleStartedToday');
   }
 
-  return `This cycle started on ${formatDateShort(cycleStartDate)}`;
+  return `${t('info:cyclePhase.cycleStartedOn')} ${formatDateShort(cycleStartDate)}`;
 };
 
 export default function CyclePhaseDetails() {
   const { colors } = useTheme();
   const typography = createTypography(colors);
+  const { t } = useTranslation('info');
   const params = useLocalSearchParams();
   const cycleDay = parseInt(params.cycleDay as string) || 0;
   const averageCycleLength =
@@ -86,7 +88,7 @@ export default function CyclePhaseDetails() {
             { textAlign: 'center', marginBottom: 8 },
           ]}
         >
-          Cycle day {cycleDay}
+          {t('cyclePhase.cycleDay')} {cycleDay}
         </Text>
 
         <Text
@@ -100,7 +102,7 @@ export default function CyclePhaseDetails() {
             },
           ]}
         >
-          {getFormattedCycleStart(cycleDay)}
+          {getFormattedCycleStart(cycleDay, t)}
         </Text>
 
         <View style={[styles.phaseCard, { backgroundColor: colors.surface }]}>
@@ -114,7 +116,7 @@ export default function CyclePhaseDetails() {
               <CycleIcon size={36} color={colors.accentPink} />
             </View>
             <Text style={[typography.heading2, { marginLeft: 12 }]}>
-              Cycle phase
+              {t('cyclePhase.cyclePhaseTitle')}
             </Text>
           </View>
 
@@ -143,7 +145,7 @@ export default function CyclePhaseDetails() {
               <LeafIcon size={40} color={colors.accentPink} />
             </View>
             <Text style={[typography.heading2, { marginLeft: 12 }]}>
-              Chance to conceive
+              {t('cyclePhase.chanceToConceive')}
             </Text>
           </View>
 
@@ -177,7 +179,7 @@ export default function CyclePhaseDetails() {
                 />
               </View>
               <Text style={[typography.heading2, { marginLeft: 12 }]}>
-                Possible symptoms
+                {t('cyclePhase.possibleSymptoms')}
               </Text>
             </View>
             <Text style={[typography.body]}>
