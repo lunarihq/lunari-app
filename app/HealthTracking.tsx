@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 import { Button } from '../components/Button';
 import { router, useLocalSearchParams } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
 import dayjs from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek';
 import { db } from '../db';
@@ -29,6 +28,8 @@ import {
 } from '../constants/healthTracking';
 import { HealthItemGrid } from '../components/HealthItemGrid';
 import { DateNavigator } from '../components/DateNavigator';
+import { CycleIcon as DeleteIcon } from '../components/icons/general/delete';
+import { CycleIcon as EditIcon } from '../components/icons/general/edit';
 
 dayjs.extend(isoWeek);
 
@@ -438,10 +439,8 @@ export default function HealthTracking() {
                   onPress={() => setNotes('')}
                   activeOpacity={0.7}
                 >
-                  <Ionicons
-                    name="trash-outline"
-                    size={24}
-                    color={colors.textSecondary}
+                  <DeleteIcon
+                    color={colors.neutral400}
                   />
                 </TouchableOpacity>
               )}
@@ -450,10 +449,8 @@ export default function HealthTracking() {
                 onPress={openNotesEditor}
                 activeOpacity={0.7}
               >
-                <Ionicons
-                  name="create-outline"
-                  size={24}
-                  color={colors.textSecondary}
+                <EditIcon
+                  color={colors.neutral400}
                 />
               </TouchableOpacity>
             </View>
