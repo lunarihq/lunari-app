@@ -41,35 +41,16 @@ export default function PeriodLength() {
         <Text style={[typography.heading2, { marginBottom: 12 }]}>
           {t('latePeriod.causes.title')}
         </Text>
-        <Text style={[typography.body]}>
-          {t('latePeriod.causes.stress')}
-          <Text style={typography.bodyBold}>{t('latePeriod.causes.stressBold')}</Text>
-          {t('latePeriod.causes.stressSuffix')}{'\n'}
-          {t('latePeriod.causes.weight')}
-          <Text style={typography.bodyBold}>{t('latePeriod.causes.weightBold')}</Text>
-          {t('latePeriod.causes.weightSuffix')}{'\n'}
-          {t('latePeriod.causes.exercise')}
-          <Text style={typography.bodyBold}>{t('latePeriod.causes.exerciseBold')}</Text>
-          {t('latePeriod.causes.exerciseSuffix')}{'\n'}
-          {t('latePeriod.causes.sleep')}
-          <Text style={typography.bodyBold}>{t('latePeriod.causes.sleepBold')}</Text>
-          {t('latePeriod.causes.sleepSuffix')}{'\n'}
-          {t('latePeriod.causes.illness')}
-          <Text style={typography.bodyBold}>{t('latePeriod.causes.illnessBold')}</Text>
-          {t('latePeriod.causes.illnessSuffix')}{'\n'}
-          {t('latePeriod.causes.medications')}
-          <Text style={typography.bodyBold}>{t('latePeriod.causes.medicationsBold')}</Text>
-          {t('latePeriod.causes.medicationsSuffix')}{'\n'}
-          {t('latePeriod.causes.pcos')}
-          <Text style={typography.bodyBold}>{t('latePeriod.causes.pcosBold')}</Text>
-          {t('latePeriod.causes.pcosSuffix')}{'\n'}
-          {t('latePeriod.causes.pregnancy')}
-          <Text style={typography.bodyBold}>{t('latePeriod.causes.pregnancyBold')}</Text>
-          {t('latePeriod.causes.pregnancySuffix')}{'\n'}
-          {t('latePeriod.causes.perimenopause')}
-          <Text style={typography.bodyBold}>{t('latePeriod.causes.perimenopauseBold')}</Text>
-          {t('latePeriod.causes.perimenopauseSuffix')}
-        </Text>
+        {[
+          'stress', 'weight', 'exercise', 'sleep', 
+          'illness', 'medications', 'pcos', 'pregnancy', 'perimenopause'
+        ].map((cause, index) => (
+          <Text key={cause} style={[typography.body, { marginBottom: index === 8 ? 0 : 12 }]}>
+            {t(`latePeriod.causes.${cause}`)}
+            <Text style={typography.bodyBold}>{t(`latePeriod.causes.${cause}Bold`)}</Text>
+            {t(`latePeriod.causes.${cause}Suffix`)}
+          </Text>
+        ))}
       </View>
 
       <View style={{ marginBottom: 32 }}>
@@ -85,14 +66,11 @@ export default function PeriodLength() {
         <Text style={[typography.heading2, { marginBottom: 12 }]}>
           {t('latePeriod.whatToDo.title')}
         </Text>
-        <Text style={[typography.body]}>
-          {t('latePeriod.whatToDo.pregnancy')}{'\n'}
-          {t('latePeriod.whatToDo.stress')}{'\n'}
-          {t('latePeriod.whatToDo.weight')}{'\n'}
-          {t('latePeriod.whatToDo.sleep')}{'\n'}
-          {t('latePeriod.whatToDo.track')}{'\n'}
-          {t('latePeriod.whatToDo.patience')}
-        </Text>
+        {['pregnancy', 'stress', 'weight', 'sleep', 'track', 'patience'].map((item, index) => (
+          <Text key={item} style={[typography.body, { marginBottom: index === 5 ? 0 : 12 }]}>
+            {t(`latePeriod.whatToDo.${item}`)}
+          </Text>
+        ))}
       </View>
     </ScrollView>
   );

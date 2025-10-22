@@ -69,84 +69,21 @@ export default function StatusInfo() {
           {t('cycleLength.irregular.descriptionSuffix')}
         </Text>
         <View style={{ marginTop: 12 }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'flex-start',
-              marginBottom: 6,
-            }}
-          >
-            <Text style={{ marginRight: 8 }}>{'\u2022'}</Text>
-            <Text style={[typography.body, { flex: 1 }]}>
-              {t('cycleLength.irregular.causes.hormonal')}
-            </Text>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'flex-start',
-              marginBottom: 6,
-            }}
-          >
-            <Text style={{ marginRight: 8 }}>{'\u2022'}</Text>
-            <Text style={[typography.body, { flex: 1 }]}>
-              {t('cycleLength.irregular.causes.stress')}
-            </Text>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'flex-start',
-              marginBottom: 6,
-            }}
-          >
-            <Text style={{ marginRight: 8 }}>{'\u2022'}</Text>
-            <Text style={[typography.body, { flex: 1 }]}>
-              {t('cycleLength.irregular.causes.medical')}
-            </Text>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'flex-start',
-              marginBottom: 6,
-            }}
-          >
-            <Text style={{ marginRight: 8 }}>{'\u2022'}</Text>
-            <Text style={[typography.body, { flex: 1 }]}>
-              {t('cycleLength.irregular.causes.pcos')}
-            </Text>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'flex-start',
-              marginBottom: 6,
-            }}
-          >
-            <Text style={{ marginRight: 8 }}>{'\u2022'}</Text>
-            <Text style={[typography.body, { flex: 1 }]}>
-              {t('cycleLength.irregular.causes.weight')}
-            </Text>
-          </View>
-          <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-            <Text style={{ marginRight: 8 }}>{'\u2022'}</Text>
-            <Text style={[typography.body, { flex: 1 }]}>
-              {t('cycleLength.irregular.causes.lifestage')}
-            </Text>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'flex-start',
-              marginTop: 6,
-            }}
-          >
-            <Text style={{ marginRight: 8 }}>{'\u2022'}</Text>
-            <Text style={[typography.body, { flex: 1 }]}>
-              {t('cycleLength.irregular.causes.postpartum')}
-            </Text>
-          </View>
+          {['hormonal', 'stress', 'medical', 'pcos', 'weight', 'lifestage', 'postpartum'].map((cause, index) => (
+            <View
+              key={cause}
+              style={{
+                flexDirection: 'row',
+                alignItems: 'flex-start',
+                marginBottom: index === 6 ? 0 : 6,
+              }}
+            >
+              <Text style={{ marginRight: 8 }}>{'\u2022'}</Text>
+              <Text style={[typography.body, { flex: 1 }]}>
+                {t(`cycleLength.irregular.causes.${cause}`)}
+              </Text>
+            </View>
+          ))}
           <Text style={[typography.body, { marginTop: 12 }]}>
             <Text style={{ fontWeight: 'bold' }}>
               {t('cycleLength.irregular.dataNoteBold')}

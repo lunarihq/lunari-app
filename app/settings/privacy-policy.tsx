@@ -56,46 +56,17 @@ export default function PrivacyPolicy() {
           <Text style={styles.bold}>{t('privacyPolicyScreen.dataUse.descriptionBold')}</Text>
           {t('privacyPolicyScreen.dataUse.descriptionSuffix')}
         </Text>
-        <Text
-          style={[
-            typography.body,
-            { marginBottom: 8, marginLeft: 8 },
-          ]}
-        >
-          {t('privacyPolicyScreen.dataUse.periodDates')}
-        </Text>
-        <Text
-          style={[
-            typography.body,
-            { marginBottom: 8, marginLeft: 8 },
-          ]}
-        >
-          {t('privacyPolicyScreen.dataUse.cycleLength')}
-        </Text>
-        <Text
-          style={[
-            typography.body,
-            { marginBottom: 8, marginLeft: 8 },
-          ]}
-        >
-          {t('privacyPolicyScreen.dataUse.symptoms')}
-        </Text>
-        <Text
-          style={[
-            typography.body,
-            { marginBottom: 8, marginLeft: 8 },
-          ]}
-        >
-          {t('privacyPolicyScreen.dataUse.notes')}
-        </Text>
-        <Text
-          style={[
-            typography.body,
-            { marginBottom: 8, marginLeft: 8 },
-          ]}
-        >
-          {t('privacyPolicyScreen.dataUse.settings')}
-        </Text>
+        {['periodDates', 'cycleLength', 'symptoms', 'notes', 'settings'].map((item) => (
+          <Text
+            key={item}
+            style={[
+              typography.body,
+              { marginBottom: 8, marginLeft: 8 },
+            ]}
+          >
+            {t(`privacyPolicyScreen.dataUse.${item}`)}
+          </Text>
+        ))}
         <Text style={[typography.body, { marginBottom: 12 }]}>
           {t('privacyPolicyScreen.dataUse.usage')}
         </Text>
@@ -118,26 +89,19 @@ export default function PrivacyPolicy() {
         <Text style={[typography.body, { marginBottom: 12 }]}>
           {t('privacyPolicyScreen.permissions.description')}
         </Text>
-        <Text
-          style={[
-            typography.body,
-            { marginBottom: 8, marginLeft: 8 },
-          ]}
-        >
-          {t('privacyPolicyScreen.permissions.reminders')}
-          <Text style={typography.bodyBold}>{t('privacyPolicyScreen.permissions.remindersBold')}</Text>
-          {t('privacyPolicyScreen.permissions.remindersSuffix')}
-        </Text>
-        <Text
-          style={[
-            typography.body,
-            { marginBottom: 8, marginLeft: 8 },
-          ]}
-        >
-          {t('privacyPolicyScreen.permissions.biometric')}
-          <Text style={typography.bodyBold}>{t('privacyPolicyScreen.permissions.biometricBold')}</Text>
-          {t('privacyPolicyScreen.permissions.biometricSuffix')}
-        </Text>
+        {['reminders', 'biometric'].map((permission) => (
+          <Text
+            key={permission}
+            style={[
+              typography.body,
+              { marginBottom: 8, marginLeft: 8 },
+            ]}
+          >
+            {t(`privacyPolicyScreen.permissions.${permission}`)}
+            <Text style={typography.bodyBold}>{t(`privacyPolicyScreen.permissions.${permission}Bold`)}</Text>
+            {t(`privacyPolicyScreen.permissions.${permission}Suffix`)}
+          </Text>
+        ))}
         <Text style={[typography.body, { marginBottom: 12 }]}>
           {t('privacyPolicyScreen.permissions.revoke')}
         </Text>
@@ -153,46 +117,17 @@ export default function PrivacyPolicy() {
         <Text style={[typography.body, { marginBottom: 12 }]}>
           {t('privacyPolicyScreen.transparency.description')}
         </Text>
-        <Text
-          style={[
-            typography.body,
-            { marginBottom: 8, marginLeft: 8 },
-          ]}
-        >
-          {t('privacyPolicyScreen.transparency.localStorage')}
-        </Text>
-        <Text
-          style={[
-            typography.body,
-            { marginBottom: 8, marginLeft: 8 },
-          ]}
-        >
-          {t('privacyPolicyScreen.transparency.noTransmission')}
-        </Text>
-        <Text
-          style={[
-            typography.body,
-            { marginBottom: 8, marginLeft: 8 },
-          ]}
-        >
-          {t('privacyPolicyScreen.transparency.deleteAnytime')}
-        </Text>
-        <Text
-          style={[
-            typography.body,
-            { marginBottom: 8, marginLeft: 8 },
-          ]}
-        >
-          {t('privacyPolicyScreen.transparency.noAnalytics')}
-        </Text>
-        <Text
-          style={[
-            typography.body,
-            { marginBottom: 8, marginLeft: 8 },
-          ]}
-        >
-          {t('privacyPolicyScreen.transparency.noAds')}
-        </Text>
+        {['localStorage', 'noTransmission', 'deleteAnytime', 'noAnalytics', 'noAds'].map((item) => (
+          <Text
+            key={item}
+            style={[
+              typography.body,
+              { marginBottom: 8, marginLeft: 8 },
+            ]}
+          >
+            {t(`privacyPolicyScreen.transparency.${item}`)}
+          </Text>
+        ))}
         <Text style={[typography.body, { marginBottom: 12 }]}>
           {t('privacyPolicyScreen.transparency.control')}
         </Text>

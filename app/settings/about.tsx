@@ -51,62 +51,17 @@ export default function About() {
             {t('aboutScreen.features.title')}
           </Text>
         </View>
-        <Text
-          style={[
-            typography.body,
-            {marginBottom: 8, marginLeft: 8 },
-          ]}
-        >
-          {t('aboutScreen.features.predictions')}
-        </Text>
-        <Text
-          style={[
-            typography.body,
-            {marginBottom: 8, marginLeft: 8 },
-          ]}
-        >
-          {t('aboutScreen.features.tracking')}
-        </Text>
-        <Text
-          style={[
-            typography.body,
-            {marginBottom: 8, marginLeft: 8 },
-          ]}
-        >
-          {t('aboutScreen.features.statistics')}
-        </Text>
-        <Text
-          style={[
-            typography.body,
-            {marginBottom: 8, marginLeft: 8 },
-          ]}
-        >
-          {t('aboutScreen.features.insights')}
-        </Text>
-        <Text
-          style={[
-            typography.body,
-            {marginBottom: 8, marginLeft: 8 },
-          ]}
-        >
-          {t('aboutScreen.features.reminders')}
-        </Text>
-        <Text
-          style={[
-            typography.body,
-            {marginBottom: 8, marginLeft: 8 },
-          ]}
-        >
-          {t('aboutScreen.features.lock')}
-        </Text>
-        <Text
-          style={[
-            typography.body,
-            {marginBottom: 8, marginLeft: 8 },
-          ]}
-        >
-          {t('aboutScreen.features.theme')}
-        </Text>
+        {['predictions', 'tracking', 'statistics', 'insights', 'reminders', 'lock', 'theme'].map((feature) => (
+          <Text
+            key={feature}
+            style={[
+              typography.body,
+              {marginBottom: 8, marginLeft: 8 },
+            ]}
+          >
+            {t(`aboutScreen.features.${feature}`)}
+          </Text>
+        ))}
       </View>
 
       <View style={[styles.section, { backgroundColor: colors.surface }]}>
@@ -123,46 +78,17 @@ export default function About() {
         <Text style={[typography.body, { marginBottom: 12 }]}>
           {t('aboutScreen.privacyFirst.description')}
         </Text>
-        <Text
-          style={[
-            typography.body,
-            {marginBottom: 8, marginLeft: 8 },
-          ]}
-        >
-          {t('aboutScreen.privacyFirst.local')}
-        </Text>
-        <Text
-          style={[
-            typography.body,
-            {marginBottom: 8, marginLeft: 8 },
-          ]}
-        >
-          {t('aboutScreen.privacyFirst.noTransmission')}
-        </Text>
-        <Text
-          style={[
-            typography.body,
-            {marginBottom: 8, marginLeft: 8 },
-          ]}
-        >
-          {t('aboutScreen.privacyFirst.noTracking')}
-        </Text>
-        <Text
-          style={[
-            typography.body,
-            {marginBottom: 8, marginLeft: 8 },
-          ]}
-        >
-          {t('aboutScreen.privacyFirst.noAds')}
-        </Text>
-        <Text
-          style={[
-            typography.body,
-            {marginBottom: 8, marginLeft: 8 },
-          ]}
-        >
-          {t('aboutScreen.privacyFirst.noAccount')}
-        </Text>
+        {['local', 'noTransmission', 'noTracking', 'noAds', 'noAccount'].map((item) => (
+          <Text
+            key={item}
+            style={[
+              typography.body,
+              {marginBottom: 8, marginLeft: 8 },
+            ]}
+          >
+            {t(`aboutScreen.privacyFirst.${item}`)}
+          </Text>
+        ))}
       </View>
 
       <View style={[styles.section, { backgroundColor: colors.surface }]}>
@@ -215,38 +141,17 @@ export default function About() {
         <Text style={[typography.body, { marginBottom: 12 }]}>
           {t('aboutScreen.technical.description')}
         </Text>
-        <Text
-          style={[
-            typography.body,
-            {marginBottom: 8, marginLeft: 8 },
-          ]}
-        >
-          {t('aboutScreen.technical.framework')}
-        </Text>
-        <Text
-          style={[
-            typography.body,
-            {marginBottom: 8, marginLeft: 8 },
-          ]}
-        >
-          {t('aboutScreen.technical.database')}
-        </Text>
-        <Text
-          style={[
-            typography.body,
-            {marginBottom: 8, marginLeft: 8 },
-          ]}
-        >
-          {t('aboutScreen.technical.language')}
-        </Text>
-        <Text
-          style={[
-            typography.body,
-            {marginBottom: 8, marginLeft: 8 },
-          ]}
-        >
-          {t('aboutScreen.technical.platform')}
-        </Text>
+        {['framework', 'database', 'language', 'platform'].map((item) => (
+          <Text
+            key={item}
+            style={[
+              typography.body,
+              {marginBottom: 8, marginLeft: 8 },
+            ]}
+          >
+            {t(`aboutScreen.technical.${item}`)}
+          </Text>
+        ))}
       </View>
 
       <View style={[styles.footer, { backgroundColor: colors.surface }]}>
