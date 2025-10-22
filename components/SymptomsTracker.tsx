@@ -125,8 +125,8 @@ export const SymptomsTracker = ({
           onPress={() =>
             router.push(
               selectedDate
-                ? `/symptom-tracking?date=${selectedDate}`
-                : '/symptom-tracking'
+                ? `/HealthTracking?date=${selectedDate}`
+                : '/HealthTracking'
             )
           }
           style={styles.itemContainer}
@@ -165,7 +165,7 @@ export const SymptomsTracker = ({
                 }
 
                 router.push({
-                  pathname: '/symptom-tracking',
+                  pathname: '/HealthTracking',
                   params,
                 });
               }}

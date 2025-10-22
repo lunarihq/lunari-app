@@ -33,7 +33,7 @@ dayjs.extend(isoWeek);
 
 // leftover types used to render week data were removed
 
-export default function SymptomTracking() {
+export default function HealthTracking() {
   const { colors } = useTheme();
   const typography = createTypography(colors);
   const { t } = useTranslation(['common', 'health']);

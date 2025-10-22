@@ -188,10 +188,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 16,
+    backgroundColor: 'red',
   },
   insightsTitle: {
     fontSize: 22,
     fontWeight: '600',
+    backgroundColor: 'blue',
   },
   insightsText: {
     fontSize: 16,

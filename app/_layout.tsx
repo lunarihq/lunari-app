@@ -225,7 +225,7 @@ function AppContent() {
           })}
         />
         <Stack.Screen
-          name="symptom-tracking"
+          name="HealthTracking"
           options={{
             headerShown: true,
             headerTitle: t('health:tracking.screenTitle'),
