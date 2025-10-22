@@ -19,16 +19,16 @@ export default function PrivacyPolicy() {
       contentContainerStyle={commonStyles.scrollContentContainer}
       showsVerticalScrollIndicator={false}
     >
-      <View style={[styles.header, { backgroundColor: colors.surface }]}>
-        <Text style={[typography.heading1, { marginBottom: 8 }]}>
+      <View style={[commonStyles.sectionContainer]}>
+        <Text style={[typography.heading1, { marginBottom: 8, textAlign: 'center' }]}>
           {t('privacyPolicyScreen.title')}
         </Text>
-        <Text style={[typography.body, { color: colors.textSecondary }]}>
+        <Text style={[typography.body, { color: colors.textSecondary, textAlign: 'center' }]}>
           {t('privacyPolicyScreen.lastUpdated')} {new Date().toLocaleDateString(Localization.getLocales()[0].languageTag)}
         </Text>
       </View>
 
-      <View style={[styles.section, { backgroundColor: colors.surface }]}>
+      <View style={[commonStyles.sectionContainer]}>
         <View style={styles.sectionHeader}>
           <Ionicons
             name="information-circle-outline"
@@ -44,7 +44,7 @@ export default function PrivacyPolicy() {
         </Text>
       </View>
 
-      <View style={[styles.section, { backgroundColor: colors.surface }]}>
+      <View style={[commonStyles.sectionContainer]}>
         <View style={styles.sectionHeader}>
           <Ionicons name="analytics-outline" size={24} color={colors.primary} />
           <Text style={[typography.heading2, { marginLeft: 12 }]}>
@@ -75,7 +75,7 @@ export default function PrivacyPolicy() {
         </Text>
       </View>
 
-      <View style={[styles.section, { backgroundColor: colors.surface }]}>
+      <View style={[commonStyles.sectionContainer]}>
         <View style={styles.sectionHeader}>
           <Ionicons
             name="shield-checkmark-outline"
@@ -107,7 +107,7 @@ export default function PrivacyPolicy() {
         </Text>
       </View>
 
-      <View style={[styles.section, { backgroundColor: colors.surface }]}>
+      <View style={[commonStyles.sectionContainer]}>
         <View style={styles.sectionHeader}>
           <Ionicons name="eye-outline" size={24} color={colors.primary} />
           <Text style={[typography.heading2, { marginLeft: 12 }]}>
@@ -133,7 +133,7 @@ export default function PrivacyPolicy() {
         </Text>
       </View>
 
-      <View style={[styles.footer, { backgroundColor: colors.surface }]}>
+      <View style={[commonStyles.sectionContainer]}>
         <Text
           style={[
             typography.body,
@@ -151,18 +151,7 @@ export default function PrivacyPolicy() {
 }
 
 const styles = StyleSheet.create({
-  header: {
-    padding: 20,
-    borderRadius: 12,
-    marginVertical: 16,
-    alignItems: 'center',
-  },
-  section: {
-    padding: 20,
-    borderRadius: 12,
-    marginBottom: 16,
-  },
-  sectionHeader: {
+sectionHeader: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 16,
@@ -170,10 +159,5 @@ const styles = StyleSheet.create({
   bold: {
     fontWeight: '600',
   },
-  footer: {
-    padding: 20,
-    borderRadius: 12,
-    marginTop: 8,
-    marginBottom: 16,
-  },
+
 });
