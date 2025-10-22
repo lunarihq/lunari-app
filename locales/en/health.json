@@ -59,6 +59,7 @@
   },
   "tracking": {
     "title": "Track your health",
+    "screenTitle": "Symptom tracking",
     "selectAll": "Select all that apply",
     "save": "Save",
     "cancel": "Cancel",

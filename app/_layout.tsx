@@ -16,6 +16,7 @@ import {
   BricolageGrotesque_700Bold,
 } from '@expo-google-fonts/bricolage-grotesque';
 import '../i18n/config';
+import { useTranslation } from 'react-i18next';
 
 // Shared toast styles
 const toastConfig = {
@@ -35,6 +36,7 @@ function AppContent() {
     useRef<Notifications.Subscription | null>(null);
   const { isLocked, isAuthenticated } = useAuth();
   const { isDark } = useTheme();
+  const { t } = useTranslation(['settings', 'health']);
 
   // Load fonts
   const [fontsLoaded] = useFonts({
@@ -143,7 +145,7 @@ function AppContent() {
           name="settings/reminders"
           options={{
             headerShown: true,
-            headerTitle: 'Reminders',
+            headerTitle: t('settings:screenTitles.reminders'),
             headerShadowVisible: false,
             headerStyle: {
               backgroundColor: isDark
@@ -159,7 +161,7 @@ function AppContent() {
           name="settings/app-lock"
           options={{
             headerShown: true,
-            headerTitle: 'App Lock',
+            headerTitle: t('settings:screenTitles.appLock'),
             headerShadowVisible: false,
             headerStyle: {
               backgroundColor: isDark
@@ -175,7 +177,7 @@ function AppContent() {
           name="settings/about"
           options={{
             headerShown: true,
-            headerTitle: 'About',
+            headerTitle: t('settings:screenTitles.about'),
             headerShadowVisible: false,
             headerStyle: {
               backgroundColor: isDark
@@ -191,7 +193,7 @@ function AppContent() {
           name="settings/privacy-policy"
           options={{
             headerShown: true,
-            headerTitle: 'Privacy policy',
+            headerTitle: t('settings:screenTitles.privacyPolicy'),
             headerShadowVisible: false,
             headerStyle: {
               backgroundColor: isDark
@@ -209,8 +211,8 @@ function AppContent() {
             headerShown: true,
             headerTitle:
               (route.params as any)?.mode === 'change'
-                ? 'Change PIN'
-                : 'Set PIN',
+                ? t('settings:screenTitles.pinChange')
+                : t('settings:screenTitles.pinSetup'),
             headerShadowVisible: false,
             headerStyle: {
               backgroundColor: isDark
@@ -226,7 +228,7 @@ function AppContent() {
           name="symptom-tracking"
           options={{
             headerShown: true,
-            headerTitle: 'Symptom tracking',
+            headerTitle: t('health:tracking.screenTitle'),
             headerShadowVisible: false,
             headerStyle: {
               backgroundColor: isDark

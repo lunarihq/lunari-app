@@ -7,6 +7,14 @@
   "theme": "Theme",
   "calendarView": "Calendar view",
   "deleteData": "Delete tracking data",
+  "screenTitles": {
+    "reminders": "Reminders",
+    "appLock": "App Lock",
+    "about": "About",
+    "privacyPolicy": "Privacy policy",
+    "pinSetup": "Set PIN",
+    "pinChange": "Change PIN"
+  },
   "deleteDataConfirm": {
     "title": "Delete all tracking data",
     "message": "All your period tracking data, symptoms, and notification preferences will be permanently deleted. Your app settings and preferences will be preserved.",

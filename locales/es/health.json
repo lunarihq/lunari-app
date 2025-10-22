@@ -58,6 +58,7 @@
   },
   "tracking": {
     "title": "Registra tu salud",
+    "screenTitle": "Seguimiento de síntomas",
     "selectAll": "Selecciona todas las que apliquen",
     "save": "Guardar",
     "cancel": "Cancelar",

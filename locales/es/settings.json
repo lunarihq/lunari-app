@@ -7,6 +7,14 @@
   "theme": "Tema",
   "calendarView": "Vista del calendario",
   "deleteData": "Eliminar datos de seguimiento",
+  "screenTitles": {
+    "reminders": "Recordatorios",
+    "appLock": "Bloqueo de aplicación",
+    "about": "Acerca de",
+    "privacyPolicy": "Política de privacidad",
+    "pinSetup": "Configurar PIN",
+    "pinChange": "Cambiar PIN"
+  },
   "deleteDataConfirm": {
     "title": "Eliminar todos los datos de seguimiento",
     "message": "Todos tus datos de seguimiento del periodo, síntomas y preferencias de notificación se eliminarán permanentemente. Tus ajustes y preferencias de la aplicación se conservarán.",
