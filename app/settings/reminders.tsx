@@ -275,8 +275,7 @@ export default function Reminders() {
   return (
     <ScrollView
       style={[
-        commonStyles.container,
-        { backgroundColor: colors.background },
+        commonStyles.scrollView,
       ]}
       contentContainerStyle={commonStyles.scrollContentContainer}
     >
