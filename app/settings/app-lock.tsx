@@ -5,7 +5,6 @@ import {
   StyleSheet,
   Switch,
   TouchableOpacity,
-  ScrollView,
   Alert,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
