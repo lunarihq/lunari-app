@@ -7,7 +7,8 @@ import { CalendarIcon } from './icons/general/Calendar';
 import { CycleIcon } from './icons/general/Cycle';
 import { LeafIcon } from './icons/general/Leaf';
 import { PeriodPredictionService } from '../services/periodPredictions';
-import { useTheme } from '../styles/theme';
+import { useTheme, createTypography } from '../styles/theme';
+import { commonStyles } from '../styles/commonStyles';
 
 interface CycleInsightsProps {
   currentCycleDay: number | null;
@@ -19,6 +20,7 @@ export function CycleInsights({
   averageCycleLength,
 }: CycleInsightsProps) {
   const { colors } = useTheme();
+  const typography = createTypography(colors);
   const { t } = useTranslation('home');
 
   const iconContainerStyle = {
@@ -32,9 +34,9 @@ export function CycleInsights({
   };
 
   return (
-    <View style={[styles.insightsCard, { backgroundColor: colors.surface }]}>
-      <View style={styles.insightsTitleContainer}>
-        <Text style={[styles.insightsTitle, { color: colors.textPrimary }]}>
+    <View style={[commonStyles.sectionContainer]}>
+      <View style={[commonStyles.sectionTitleContainer]}>
+        <Text style={[typography.heading2]}>
           {t('cycleInsights.todaysInsights')}
         </Text>
         <Pressable
@@ -182,18 +184,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 16,
     marginBottom: 16,
-  },
-  insightsTitleContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 16,
-    backgroundColor: 'red',
-  },
-  insightsTitle: {
-    fontSize: 22,
-    fontWeight: '600',
-    backgroundColor: 'green',
   },
   insightsText: {
     fontSize: 16,

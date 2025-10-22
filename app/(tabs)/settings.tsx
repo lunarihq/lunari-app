@@ -34,7 +34,7 @@ export default function Settings() {
       contentContainerStyle={commonStyles.scrollContentContainer}
       showsVerticalScrollIndicator={false}
     >
-      <View style={[styles.section, { backgroundColor: colors.surface }]}>
+      <View style={[commonStyles.sectionContainer, {padding: 0}]}>
         <TouchableOpacity
           style={[styles.settingRow, { borderBottomColor: colors.border }]}
           onPress={() => router.push('/settings/reminders')}
@@ -143,7 +143,7 @@ export default function Settings() {
         </TouchableOpacity>
       </View>
 
-      <View style={[styles.section, { backgroundColor: colors.surface }]}>
+      <View style={[commonStyles.sectionContainer, {padding: 0}]}>
         <TouchableOpacity
           style={[styles.settingRow, styles.lastRow]}
           onPress={() => {

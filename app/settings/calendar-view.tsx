@@ -170,15 +170,14 @@ export default function CalendarView() {
   return (
     <ScrollView
       style={[
-        commonStyles.container,
-        { backgroundColor: colors.background, paddingTop: 16},
+        commonStyles.container
       ]}
       contentContainerStyle={commonStyles.scrollContentContainer}
     >
-      <Text style={[typography.heading3, { marginBottom: 12}]}>
+      <Text style={[commonStyles.sectionTitleContainer, typography.heading3]}>
         {t('view.displayOptions')}
       </Text>
-      <View style={[styles.section, { backgroundColor: colors.surface }]}>
+      <View style={[commonStyles.sectionContainer, {padding: 0}]}>
         <View style={[styles.settingRow, { borderBottomColor: colors.border }]}>
           <View style={styles.settingContent}>
             <Text
@@ -220,10 +219,10 @@ export default function CalendarView() {
         </View>
       </View>
 
-      <Text style={[typography.heading3, { marginBottom: 12}]}>
+      <Text style={[commonStyles.sectionTitleContainer, typography.heading3]}>
         {t('view.iconsShown')}
       </Text>
-      <View style={[styles.section, { backgroundColor: colors.surface }]}>
+      <View style={[commonStyles.sectionContainer, {padding: 0}]}>
         {legendItems.map((item, index) => (
           <View
             key={index}
@@ -241,6 +240,31 @@ export default function CalendarView() {
             </View>
           </View>
         ))}
+      </View>
+      <View style={[commonStyles.sectionContainer, {padding: 0}]}>
+        <Text style={[commonStyles.sectionTitleContainer, typography.heading3]}>
+          {t('view.iconsShown')}
+        </Text>
+      </View>
+      <View style={[commonStyles.sectionContainer, {padding: 0}]}>
+        <Text style={[commonStyles.sectionTitleContainer, typography.heading3]}>
+          {t('view.iconsShown')}
+        </Text>
+      </View>
+      <View style={[commonStyles.sectionContainer, {padding: 0}]}>
+        <Text style={[commonStyles.sectionTitleContainer, typography.heading3]}>
+          {t('view.iconsShown')}
+        </Text>
+      </View>
+      <View style={[commonStyles.sectionContainer, {padding: 0}]}>
+        <Text style={[commonStyles.sectionTitleContainer, typography.heading3]}>
+          {t('view.iconsShown')}
+        </Text>
+      </View>
+      <View style={[commonStyles.sectionContainer, {padding: 0}]}>
+        <Text style={[commonStyles.sectionTitleContainer, typography.heading3]}>
+          {t('view.iconsShown')}
+        </Text>
       </View>
     </ScrollView>
   );

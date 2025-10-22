@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useTheme, createTypography } from '../styles/theme';
 import { formatDateShort } from '../utils/localeUtils';
+import { commonStyles } from '@/styles/commonStyles';
 
 interface CycleData {
   startDate: string; // ISO date string (YYYY-MM-DD)
@@ -69,11 +70,11 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.surface }]}>
+    <View style={[commonStyles.sectionContainer]}>
       <Text
         style={[
           typography.heading2,
-          { fontSize: 24, fontWeight: '500', marginBottom: 8 },
+          commonStyles.sectionTitleContainer,
         ]}
       >
         {t('stats:cycleHistory.title')}
@@ -185,10 +186,7 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 16,
-    borderRadius: 16,
-  },
+
   card: {
     borderRadius: 12,
     padding: 0,

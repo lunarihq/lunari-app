@@ -6,26 +6,27 @@ const commonStyles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 16,
+    paddingBottom: 16,
   },
 
   scrollView: {
     flex: 1,
-    backgroundColor: 'blue',  },
+    backgroundColor: 'pink',},
 
   scrollContentContainer: {
     paddingBottom: 16,
-    paddingTop: 8,
+    backgroundColor: 'blue',
   },
 
-section: {
+sectionContainer: {
   borderRadius: 16,
   marginBottom: 16,
   padding: 16,
-  paddingBottom: 8,
-  backgroundColor: 'red',
+  backgroundColor: 'yellow',
 },
-sectionHeader: {
+sectionTitleContainer: {
   flexDirection: 'row',
+  flex: 1,
   justifyContent: 'space-between',
   alignItems: 'center',
   marginBottom: 16,

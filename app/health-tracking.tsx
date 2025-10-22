@@ -358,8 +358,8 @@ export default function HealthTracking() {
         showsVerticalScrollIndicator={false}
       >
         {isPeriodDate && (
-          <View style={[commonStyles.section, { backgroundColor: colors.surface }]}>
-            <View style={commonStyles.sectionHeader}>
+          <View style={[commonStyles.sectionContainer]}>
+            <View style={commonStyles.sectionTitleContainer}>
               <Text style={[typography.heading2]}>
                 {t('health:tracking.flow')}
               </Text>
@@ -375,8 +375,8 @@ export default function HealthTracking() {
             />
           </View>
         )}
-        <View style={[commonStyles.section, { backgroundColor: colors.surface }]}>
-          <View style={commonStyles.sectionHeader}>
+        <View style={[commonStyles.sectionContainer]}>
+          <View style={commonStyles.sectionTitleContainer}>
             <Text style={[typography.heading2]}>
               {t('health:tracking.symptoms')}
             </Text>
@@ -392,8 +392,8 @@ export default function HealthTracking() {
           />
         </View>
 
-        <View style={[commonStyles.section, { backgroundColor: colors.surface }]}>
-          <View style={commonStyles.sectionHeader}>
+        <View style={[commonStyles.sectionContainer]}>
+          <View style={commonStyles.sectionTitleContainer}>
             <Text style={[typography.heading2]}>
               {t('health:tracking.moods')}
             </Text>
@@ -409,8 +409,8 @@ export default function HealthTracking() {
           />
         </View>
 
-        <View style={[commonStyles.section, { backgroundColor: colors.surface }]}>
-          <View style={commonStyles.sectionHeader}>
+        <View style={[commonStyles.sectionContainer]}>
+          <View style={commonStyles.sectionTitleContainer}>
             <Text style={[typography.heading2]}>
               {t('health:tracking.discharge')}
             </Text>
@@ -429,9 +429,9 @@ export default function HealthTracking() {
         {/* Notes */}
         <View
           ref={notesSectionRef}
-          style={[commonStyles.section, { backgroundColor: colors.surface }]}
+          style={[commonStyles.sectionContainer]}
         >
-          <View style={commonStyles.sectionHeader}>
+          <View style={commonStyles.sectionTitleContainer}>
             <Text style={[typography.heading2]}>{t('health:tracking.notes')}</Text>
             <View style={styles.notesIconsContainer}>
               {notes.trim() && (

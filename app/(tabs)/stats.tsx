@@ -178,7 +178,7 @@ export default function Stats() {
   // Empty state component
   const renderEmptyState = () => (
     <View
-      style={[styles.emptyStateContainer, { backgroundColor: colors.surface }]}
+      style={[styles.emptyStateContainer, { backgroundColor: 'colors.surface' }]}
     >
       <Text
         style={[
@@ -227,12 +227,12 @@ export default function Stats() {
       showsVerticalScrollIndicator={false}
     >
       <View
-        style={[styles.myCyclesContainer, { backgroundColor: colors.surface }]}
+        style={[commonStyles.sectionContainer]}
       >
         <Text
           style={[
+            commonStyles.sectionTitleContainer,
             typography.heading2,
-            { fontSize: 24, fontWeight: '500', marginBottom: 16 },
           ]}
         >
           {t('cycleStatistics')}
@@ -264,6 +264,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     padding: 16,
     borderRadius: 16,
+    backgroundColor: 'red'
   },
   cardsContainer: {
     gap: 12,
