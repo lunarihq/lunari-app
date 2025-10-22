@@ -25,9 +25,13 @@
     "Luteal": "Luteal",
     "Menstrual": "Menstrual",
     "Extended": "Extended",
+    "extended": "Extended",
     "High": "High",
+    "high": "High",
     "Medium": "Medium",
+    "medium": "Medium",
     "Low": "Low",
+    "low": "Low",
     "dayOfCycle": "Day {{day}} of {{total}}",
     "averageCycle": "Average cycle: {{days}} days",
     "nextPeriod": "Next period: {{date}}"
