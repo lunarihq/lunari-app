@@ -17,20 +17,17 @@ import { eq } from 'drizzle-orm';
 import { useFocusEffect } from '@react-navigation/native';
 import defaultTheme, { useTheme, createTypography } from '../styles/theme';
 import { useNotes } from '../contexts/NotesContext';
-import { CustomIcon } from '../components/icons/health';
 import Toast from 'react-native-toast-message';
 import { formatTodayOrDate } from '../utils/localeUtils';
 import { useTranslation } from 'react-i18next';
-
-// Symptom type definition
-type Item = {
-  id: string;
-  icon: string;
-  name: string;
-  selected: boolean;
-};
-
-//
+import {
+  SYMPTOMS,
+  MOODS,
+  FLOWS,
+  DISCHARGES,
+  SELECTION_COLORS,
+} from '../constants/healthTracking';
+import { HealthItemGrid } from '../components/HealthItemGrid';
 
 dayjs.extend(isoWeek);
 
@@ -43,24 +40,31 @@ export default function SymptomTracking() {
   const params = useLocalSearchParams();
   const { notes, setNotes } = useNotes();
   const ICON_SIZE = 50;
-  const SYMPTOM_SELECTION_COLOR = '#6580E2';
-  const MOOD_SELECTION_COLOR = '#F2C100';
-  const FLOW_SELECTION_COLOR = colors.accentPink;
-  const DISCHARGE_SELECTION_COLOR = '#9B6BE2';
+
   const [selectedDate, setSelectedDate] = useState<string>(
-    // Use the date from params if provided, otherwise use today's date
     typeof params.date === 'string' ? params.date : dayjs().format('YYYY-MM-DD')
   );
 
-  // Track original state to detect changes
-  const [originalSymptoms, setOriginalSymptoms] = useState<string[]>([]);
-  const [originalMoods, setOriginalMoods] = useState<string[]>([]);
-  const [originalFlows, setOriginalFlows] = useState<string[]>([]);
-  const [originalDischarges, setOriginalDischarges] = useState<string[]>([]);
+  const [selectedSymptoms, setSelectedSymptoms] = useState<Set<string>>(
+    new Set()
+  );
+  const [selectedMoods, setSelectedMoods] = useState<Set<string>>(new Set());
+  const [selectedFlows, setSelectedFlows] = useState<Set<string>>(new Set());
+  const [selectedDischarges, setSelectedDischarges] = useState<Set<string>>(
+    new Set()
+  );
+
+  const [originalSymptoms, setOriginalSymptoms] = useState<Set<string>>(
+    new Set()
+  );
+  const [originalMoods, setOriginalMoods] = useState<Set<string>>(new Set());
+  const [originalFlows, setOriginalFlows] = useState<Set<string>>(new Set());
+  const [originalDischarges, setOriginalDischarges] = useState<Set<string>>(
+    new Set()
+  );
   const [originalNotes, setOriginalNotes] = useState<string>('');
   const [hasChanges, setHasChanges] = useState<boolean>(false);
 
-  // Track if the selected date is a period date
   const [isPeriodDate, setIsPeriodDate] = useState<boolean>(false);
 
   const scrollViewRef = useRef<ScrollView>(null);
@@ -98,304 +102,11 @@ export default function SymptomTracking() {
     }
   };
 
-  // Check if next day would be in the future
   const isNextDayDisabled = () => {
     const nextDay = dayjs(selectedDate).add(1, 'day');
     const today = dayjs();
     return nextDay.isAfter(today, 'day');
   };
-
-  // Symptoms data
-  const [symptoms, setSymptoms] = useState<Item[]>([
-    {
-      id: '1',
-      icon: 'im-okay',
-      name: "I'm okay",
-      selected: false,
-    },
-    {
-      id: '2',
-      icon: 'cramps',
-      name: 'Cramps',
-      selected: false,
-    },
-    {
-      id: '3',
-      icon: 'tender-breasts',
-      name: 'Tender breasts',
-      selected: false,
-    },
-    {
-      id: '4',
-      icon: 'headache',
-      name: 'Headache',
-      selected: false,
-    },
-
-    {
-      id: '5',
-      icon: 'nausea',
-      name: 'Nausea',
-      selected: false,
-    },
-    {
-      id: '6',
-      icon: 'acne',
-      name: 'Acne',
-      selected: false,
-    },
-
-    {
-      id: '7',
-      icon: 'backacke',
-      name: 'Backache',
-      selected: false,
-    },
-    {
-      id: '8',
-      icon: 'fatigue',
-      name: 'Fatigue',
-      selected: false,
-    },
-    {
-      id: '9',
-      icon: 'hot flashes',
-      name: 'Hot flashes',
-      selected: false,
-    },
-    {
-      id: '10',
-      icon: 'night-sweats',
-      name: 'Night sweats',
-      selected: false,
-    },
-    {
-      id: '11',
-      icon: 'brain-fog',
-      name: 'Brain fog',
-      selected: false,
-    },
-
-    {
-      id: '12',
-      icon: 'joint-pain',
-      name: 'Joint pain',
-      selected: false,
-    },
-    {
-      id: '13',
-      icon: 'dizziness',
-      name: 'Dizziness',
-      selected: false,
-    },
-    {
-      id: '14',
-      icon: 'cravings',
-      name: 'Cravings',
-      selected: false,
-    },
-    {
-      id: '15',
-      icon: 'bloating',
-      name: 'Bloating',
-      selected: false,
-    },
-    {
-      id: '16',
-      icon: 'constipation',
-      name: 'Constipation',
-      selected: false,
-    },
-    {
-      id: '17',
-      icon: 'diarrhea',
-      name: 'Diarrhea',
-      selected: false,
-    },
-    {
-      id: '18',
-      icon: 'frequent-urination',
-      name: 'Frequent urination',
-      selected: false,
-    },
-    {
-      id: '19',
-      icon: 'vaginal dryness',
-      name: 'Vaginal dryness',
-      selected: false,
-    },
-    {
-      id: '20',
-      icon: 'insomnia',
-      name: 'Insomnia',
-      selected: false,
-    },
-  ]);
-
-  // Moods data
-  const [moods, setMoods] = useState<Item[]>([
-    {
-      id: '1',
-      icon: 'calm',
-      name: 'Calm',
-      selected: false,
-    },
-    {
-      id: '2',
-      icon: 'happy',
-      name: 'Happy',
-      selected: false,
-    },
-    {
-      id: '3',
-      icon: 'energetic',
-      name: 'Energetic',
-      selected: false,
-    },
-    {
-      id: '4',
-      icon: 'sad',
-      name: 'Sad',
-      selected: false,
-    },
-
-    {
-      id: '5',
-      icon: 'anxious',
-      name: 'Anxious',
-      selected: false,
-    },
-    {
-      id: '6',
-      icon: 'confused',
-      name: 'Confused',
-      selected: false,
-    },
-    {
-      id: '7',
-      icon: 'irritated',
-      name: 'Irritated',
-      selected: false,
-    },
-    {
-      id: '8',
-      icon: 'angry',
-      name: 'Angry',
-      selected: false,
-    },
-    {
-      id: '9',
-      icon: 'mood-swings',
-      name: 'Mood Swings',
-      selected: false,
-    },
-    {
-      id: '10',
-      icon: 'frisky',
-      name: 'Frisky',
-      selected: false,
-    },
-    {
-      id: '11',
-      icon: 'apathetic',
-      name: 'Apathetic',
-      selected: false,
-    },
-    {
-      id: '12',
-      icon: 'bored',
-      name: 'Bored',
-      selected: false,
-    },
-  ]);
-
-  // Flows data
-  const [flows, setFlows] = useState<Item[]>([
-    {
-      id: '1',
-      icon: 'light',
-      name: 'Light',
-      selected: false,
-    },
-    {
-      id: '2',
-      icon: 'medium',
-      name: 'Medium',
-      selected: false,
-    },
-    {
-      id: '3',
-      icon: 'heavy',
-      name: 'Heavy',
-      selected: false,
-    },
-    {
-      id: '4',
-      icon: 'blood-clots',
-      name: 'Blood clots',
-      selected: false,
-    },
-  ]);
-
-  // Vaginal discharge data
-  const [discharges, setDischarges] = useState<Item[]>([
-    {
-      id: '1',
-      icon: 'no-discharge',
-      name: 'No discharge',
-      selected: false,
-    },
-    {
-      id: '2',
-      icon: 'watery',
-      name: 'Watery',
-      selected: false,
-    },
-    {
-      id: '3',
-      icon: 'creamy',
-      name: 'Creamy',
-      selected: false,
-    },
-    {
-      id: '4',
-      icon: 'egg-white',
-      name: 'Egg white',
-      selected: false,
-    },
-    {
-      id: '5',
-      icon: 'sticky',
-      name: 'Sticky',
-      selected: false,
-    },
-    {
-      id: '6',
-      icon: 'spotting',
-      name: 'Spotting',
-      selected: false,
-    },
-    {
-      id: '7',
-      icon: 'unusual',
-      name: 'Unusual',
-      selected: false,
-    },
-    {
-      id: '8',
-      icon: 'clumpy-white',
-      name: 'Clumpy white',
-      selected: false,
-    },
-    {
-      id: '9',
-      icon: 'grey-discharge',
-      name: 'Grey discharge',
-      selected: false,
-    },
-  ]);
-
-  // Check if selected date is a period date
   const checkIsPeriodDate = async (date: string) => {
     try {
       const result = await db
@@ -409,27 +120,22 @@ export default function SymptomTracking() {
     }
   };
 
-  // Load existing health logs when the component mounts or selected date changes
   useEffect(() => {
     const loadExistingHealthLogs = async () => {
       try {
-        // Check if selected date is a period date
         await checkIsPeriodDate(selectedDate);
 
-        // Fetch existing entries for the selected date
         const existingEntries = await db
           .select()
           .from(healthLogs)
           .where(eq(healthLogs.date, selectedDate));
 
-        // Create sets for quick lookup
-        const symptomIds = new Set();
-        const moodIds = new Set();
-        const flowIds = new Set();
-        const dischargeIds = new Set();
+        const symptomIds = new Set<string>();
+        const moodIds = new Set<string>();
+        const flowIds = new Set<string>();
+        const dischargeIds = new Set<string>();
         let notesText = '';
 
-        // Populate the sets
         existingEntries.forEach(entry => {
           if (entry.type === 'symptom') {
             symptomIds.add(entry.item_id);
@@ -444,46 +150,16 @@ export default function SymptomTracking() {
           }
         });
 
-        // Update symptoms state
-        setSymptoms(prevSymptoms =>
-          prevSymptoms.map(symptom => ({
-            ...symptom,
-            selected: symptomIds.has(symptom.id),
-          }))
-        );
-
-        // Update moods state
-        setMoods(prevMoods =>
-          prevMoods.map(mood => ({
-            ...mood,
-            selected: moodIds.has(mood.id),
-          }))
-        );
-
-        // Update flows state
-        setFlows(prevFlows =>
-          prevFlows.map(flow => ({
-            ...flow,
-            selected: flowIds.has(flow.id),
-          }))
-        );
-
-        // Update discharges state
-        setDischarges(prevDischarges =>
-          prevDischarges.map(discharge => ({
-            ...discharge,
-            selected: dischargeIds.has(discharge.id),
-          }))
-        );
-
-        // Update notes state
+        setSelectedSymptoms(symptomIds);
+        setSelectedMoods(moodIds);
+        setSelectedFlows(flowIds);
+        setSelectedDischarges(dischargeIds);
         setNotes(notesText);
 
-        // Store original state for comparison
-        setOriginalSymptoms(Array.from(symptomIds) as string[]);
-        setOriginalMoods(Array.from(moodIds) as string[]);
-        setOriginalFlows(Array.from(flowIds) as string[]);
-        setOriginalDischarges(Array.from(dischargeIds) as string[]);
+        setOriginalSymptoms(new Set(symptomIds));
+        setOriginalMoods(new Set(moodIds));
+        setOriginalFlows(new Set(flowIds));
+        setOriginalDischarges(new Set(dischargeIds));
         setOriginalNotes(notesText);
         setHasChanges(false);
       } catch (error) {
@@ -514,45 +190,22 @@ export default function SymptomTracking() {
     }
   }, [params.scrollTo]);
 
-  // Check for changes compared to original state
   useEffect(() => {
-    // Get current selected symptom IDs
-    const currentSelectedSymptoms = symptoms
-      .filter(s => s.selected)
-      .map(s => s.id);
+    const areSetsEqual = (a: Set<string>, b: Set<string>) => {
+      if (a.size !== b.size) return false;
+      for (const item of a) {
+        if (!b.has(item)) return false;
+      }
+      return true;
+    };
 
-    // Get current selected mood IDs
-    const currentSelectedMoods = moods.filter(m => m.selected).map(m => m.id);
-
-    // Get current selected flow IDs
-    const currentSelectedFlows = flows.filter(f => f.selected).map(f => f.id);
-
-    // Get current selected discharge IDs
-    const currentSelectedDischarges = discharges
-      .filter(d => d.selected)
-      .map(d => d.id);
-
-    // Check if the selections have changed
-    const symptomsChanged = !(
-      currentSelectedSymptoms.length === originalSymptoms.length &&
-      currentSelectedSymptoms.every(id => originalSymptoms.includes(id))
+    const symptomsChanged = !areSetsEqual(selectedSymptoms, originalSymptoms);
+    const moodsChanged = !areSetsEqual(selectedMoods, originalMoods);
+    const flowsChanged = !areSetsEqual(selectedFlows, originalFlows);
+    const dischargesChanged = !areSetsEqual(
+      selectedDischarges,
+      originalDischarges
     );
-
-    const moodsChanged = !(
-      currentSelectedMoods.length === originalMoods.length &&
-      currentSelectedMoods.every(id => originalMoods.includes(id))
-    );
-
-    const flowsChanged = !(
-      currentSelectedFlows.length === originalFlows.length &&
-      currentSelectedFlows.every(id => originalFlows.includes(id))
-    );
-
-    const dischargesChanged = !(
-      currentSelectedDischarges.length === originalDischarges.length &&
-      currentSelectedDischarges.every(id => originalDischarges.includes(id))
-    );
-
     const notesChanged = notes !== originalNotes;
 
     setHasChanges(
@@ -563,10 +216,10 @@ export default function SymptomTracking() {
         notesChanged
     );
   }, [
-    symptoms,
-    moods,
-    flows,
-    discharges,
+    selectedSymptoms,
+    selectedMoods,
+    selectedFlows,
+    selectedDischarges,
     notes,
     originalSymptoms,
     originalMoods,
@@ -575,44 +228,52 @@ export default function SymptomTracking() {
     originalNotes,
   ]);
 
-  // Toggle symptom selection
   const toggleSymptom = (id: string) => {
-    setSymptoms(
-      symptoms.map(symptom =>
-        symptom.id === id
-          ? { ...symptom, selected: !symptom.selected }
-          : symptom
-      )
-    );
+    setSelectedSymptoms(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
   };
 
-  // Toggle mood selection
   const toggleMood = (id: string) => {
-    setMoods(
-      moods.map(mood =>
-        mood.id === id ? { ...mood, selected: !mood.selected } : mood
-      )
-    );
+    setSelectedMoods(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
   };
 
-  // Toggle flow selection
   const toggleFlow = (id: string) => {
-    setFlows(
-      flows.map(flow =>
-        flow.id === id ? { ...flow, selected: !flow.selected } : flow
-      )
-    );
+    setSelectedFlows(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
   };
 
-  // Toggle discharge selection
   const toggleDischarge = (id: string) => {
-    setDischarges(
-      discharges.map(discharge =>
-        discharge.id === id
-          ? { ...discharge, selected: !discharge.selected }
-          : discharge
-      )
-    );
+    setSelectedDischarges(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
   };
 
   // Navigate to notes editor
@@ -623,102 +284,88 @@ export default function SymptomTracking() {
     });
   };
 
-  // Save changes
   const saveChanges = async () => {
     try {
-      // Get all selected symptoms and moods
-      const selectedSymptoms = symptoms.filter(s => s.selected);
-      const selectedMoods = moods.filter(m => m.selected);
-      const selectedFlows = flows.filter(f => f.selected);
-      const selectedDischarges = discharges.filter(d => d.selected);
-
-      // STEP 1: Delete ALL existing entries for this date
       await db.delete(healthLogs).where(eq(healthLogs.date, selectedDate));
 
-      // STEP 2: Prepare symptom records
-      const symptomRecords = selectedSymptoms.map(symptom => {
-        return {
+      const allRecords = [];
+
+      for (const id of selectedSymptoms) {
+        const item = SYMPTOMS.find(s => s.id === id);
+        if (item) {
+          allRecords.push({
+            date: selectedDate,
+            type: 'symptom',
+            item_id: id,
+            name: t(`health:symptoms.${id}`),
+            icon: item.icon,
+          });
+        }
+      }
+
+      for (const id of selectedMoods) {
+        const item = MOODS.find(m => m.id === id);
+        if (item) {
+          allRecords.push({
+            date: selectedDate,
+            type: 'mood',
+            item_id: id,
+            name: t(`health:moods.${id}`),
+            icon: item.icon,
+          });
+        }
+      }
+
+      for (const id of selectedFlows) {
+        const item = FLOWS.find(f => f.id === id);
+        if (item) {
+          allRecords.push({
+            date: selectedDate,
+            type: 'flow',
+            item_id: id,
+            name: t(`health:flows.${id}`),
+            icon: item.icon,
+          });
+        }
+      }
+
+      for (const id of selectedDischarges) {
+        const item = DISCHARGES.find(d => d.id === id);
+        if (item) {
+          allRecords.push({
+            date: selectedDate,
+            type: 'discharge',
+            item_id: id,
+            name: t(`health:discharge.${id}`),
+            icon: item.icon,
+          });
+        }
+      }
+
+      if (notes.trim()) {
+        allRecords.push({
           date: selectedDate,
-          type: 'symptom',
-          item_id: symptom.id,
-          name: symptom.name,
-          icon: symptom.icon,
-        };
-      });
+          type: 'notes',
+          item_id: '1',
+          name: notes.trim(),
+          icon: 'notes',
+        });
+      }
 
-      // STEP 3: Prepare mood records
-      const moodRecords = selectedMoods.map(mood => {
-        return {
-          date: selectedDate,
-          type: 'mood',
-          item_id: mood.id,
-          name: mood.name,
-          icon: mood.icon,
-        };
-      });
-
-      // STEP 4: Prepare flow records
-      const flowRecords = selectedFlows.map(flow => {
-        return {
-          date: selectedDate,
-          type: 'flow',
-          item_id: flow.id,
-          name: flow.name,
-          icon: flow.icon,
-        };
-      });
-
-      // STEP 5: Prepare discharge records
-      const dischargeRecords = selectedDischarges.map(discharge => {
-        return {
-          date: selectedDate,
-          type: 'discharge',
-          item_id: discharge.id,
-          name: discharge.name,
-          icon: discharge.icon,
-        };
-      });
-
-      // STEP 6: Prepare notes record (only if notes exist)
-      const notesRecords = notes.trim()
-        ? [
-            {
-              date: selectedDate,
-              type: 'notes',
-              item_id: '1',
-              name: notes.trim(),
-              icon: 'notes',
-            },
-          ]
-        : [];
-
-      // STEP 7: Combine all records to insert
-      const allRecords = [
-        ...symptomRecords,
-        ...moodRecords,
-        ...flowRecords,
-        ...dischargeRecords,
-        ...notesRecords,
-      ];
-
-      // STEP 8: Insert new records (only if there are any)
       if (allRecords.length > 0) {
         await db.insert(healthLogs).values(allRecords);
       }
 
-      // Show success toast
       Toast.show({
         type: 'success',
         text1: t('health:tracking.successMessage'),
         visibilityTime: 3000,
       });
 
-      // STEP 9: Navigate back
       router.back();
     } catch (error) {
       console.error('Error saving health logs:', error);
 
-      // Show error toast
       Toast.show({
         type: 'error',
         text1: t('health:tracking.errorMessage'),
@@ -768,228 +415,73 @@ export default function SymptomTracking() {
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        {/* Flow - Only show on period dates */}
         {isPeriodDate && (
           <View style={[styles.section, { backgroundColor: colors.surface }]}>
             <View style={styles.sectionHeader}>
-              <Text style={[typography.heading2]}>{t('health:tracking.flow')}</Text>
+              <Text style={[typography.heading2]}>
+                {t('health:tracking.flow')}
+              </Text>
             </View>
 
-            <View style={styles.itemsGrid}>
-              {flows.map(flow => (
-                <TouchableOpacity
-                  key={flow.id}
-                  style={[
-                    styles.itemButton,
-                    flow.selected && styles.selectedItemButton,
-                  ]}
-                  onPress={() => toggleFlow(flow.id)}
-                >
-                  <View
-                    style={[
-                      styles.itemIcon,
-                      flow.selected && {
-                        ...styles.selectedItemIcon,
-                        borderColor: FLOW_SELECTION_COLOR,
-                      },
-                    ]}
-                  >
-                    <CustomIcon name={flow.icon as any} size={ICON_SIZE} />
-                    {flow.selected && (
-                      <View
-                        style={[
-                          styles.checkmarkContainer,
-                          {
-                            borderColor: colors.surface,
-                            backgroundColor: FLOW_SELECTION_COLOR,
-                          },
-                        ]}
-                      >
-                        <Ionicons
-                          name="checkmark"
-                          size={16}
-                          color={colors.white}
-                        />
-                      </View>
-                    )}
-                  </View>
-                  <Text style={[typography.caption, { textAlign: 'center' }]}>
-                    {flow.name}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </View>
+            <HealthItemGrid
+              items={FLOWS}
+              selectedIds={selectedFlows}
+              onToggle={toggleFlow}
+              translationKey="health:flows"
+              selectionColor={SELECTION_COLORS.flow}
+              iconSize={ICON_SIZE}
+            />
           </View>
         )}
-        {/* Symptoms */}
         <View style={[styles.section, { backgroundColor: colors.surface }]}>
           <View style={styles.sectionHeader}>
-            <Text style={[typography.heading2]}>{t('health:tracking.symptoms')}</Text>
+            <Text style={[typography.heading2]}>
+              {t('health:tracking.symptoms')}
+            </Text>
           </View>
 
-          <View style={styles.itemsGrid}>
-            {symptoms.map(symptom => (
-              <TouchableOpacity
-                key={symptom.id}
-                style={[
-                  styles.itemButton,
-                  symptom.selected && styles.selectedItemButton,
-                ]}
-                onPress={() => toggleSymptom(symptom.id)}
-              >
-                <View
-                  style={[
-                    styles.itemIcon,
-                    symptom.selected && {
-                      ...styles.selectedItemIcon,
-                      borderColor: SYMPTOM_SELECTION_COLOR,
-                    },
-                  ]}
-                >
-                  <CustomIcon name={symptom.icon as any} size={ICON_SIZE} />
-                  {symptom.selected && (
-                    <View
-                      style={[
-                        styles.checkmarkContainer,
-                        {
-                          borderColor: colors.surface,
-                          backgroundColor: SYMPTOM_SELECTION_COLOR,
-                        },
-                      ]}
-                    >
-                      <Ionicons
-                        name="checkmark"
-                        size={16}
-                        color={colors.white}
-                      />
-                    </View>
-                  )}
-                </View>
-                <Text
-                  style={[
-                    typography.caption,
-                    { textAlign: 'center' },
-                  ]}
-                >
-                  {symptom.name}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </View>
+          <HealthItemGrid
+            items={SYMPTOMS}
+            selectedIds={selectedSymptoms}
+            onToggle={toggleSymptom}
+            translationKey="health:symptoms"
+            selectionColor={SELECTION_COLORS.symptom}
+            iconSize={ICON_SIZE}
+          />
         </View>
 
-        {/* Moods */}
         <View style={[styles.section, { backgroundColor: colors.surface }]}>
           <View style={styles.sectionHeader}>
-            <Text style={[typography.heading2]}>{t('health:tracking.moods')}</Text>
+            <Text style={[typography.heading2]}>
+              {t('health:tracking.moods')}
+            </Text>
           </View>
 
-          <View style={styles.itemsGrid}>
-            {moods.map(mood => (
-              <TouchableOpacity
-                key={mood.id}
-                style={[
-                  styles.itemButton,
-                  mood.selected && styles.selectedItemButton,
-                ]}
-                onPress={() => toggleMood(mood.id)}
-              >
-                <View
-                  style={[
-                    styles.itemIcon,
-                    mood.selected && {
-                      ...styles.selectedItemIcon,
-                      borderColor: MOOD_SELECTION_COLOR,
-                    },
-                  ]}
-                >
-                  <CustomIcon name={mood.icon as any} size={ICON_SIZE} />
-                  {mood.selected && (
-                    <View
-                      style={[
-                        styles.checkmarkContainer,
-                        {
-                          borderColor: colors.surface,
-                          backgroundColor: MOOD_SELECTION_COLOR,
-                        },
-                      ]}
-                    >
-                      <Ionicons
-                        name="checkmark"
-                        size={16}
-                        color={colors.white}
-                      />
-                    </View>
-                  )}
-                </View>
-                <Text
-                  style={[
-                    typography.caption,
-                    { textAlign: 'center' },
-                  ]}
-                >
-                  {mood.name}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </View>
+          <HealthItemGrid
+            items={MOODS}
+            selectedIds={selectedMoods}
+            onToggle={toggleMood}
+            translationKey="health:moods"
+            selectionColor={SELECTION_COLORS.mood}
+            iconSize={ICON_SIZE}
+          />
         </View>
 
-        {/* Vaginal discharge */}
         <View style={[styles.section, { backgroundColor: colors.surface }]}>
           <View style={styles.sectionHeader}>
-            <Text style={[typography.heading2]}>{t('health:tracking.discharge')}</Text>
+            <Text style={[typography.heading2]}>
+              {t('health:tracking.discharge')}
+            </Text>
           </View>
 
-          <View style={styles.itemsGrid}>
-            {discharges.map(discharge => (
-              <TouchableOpacity
-                key={discharge.id}
-                style={[
-                  styles.itemButton,
-                  discharge.selected && styles.selectedItemButton,
-                ]}
-                onPress={() => toggleDischarge(discharge.id)}
-              >
-                <View
-                  style={[
-                    styles.itemIcon,
-                    discharge.selected && {
-                      ...styles.selectedItemIcon,
-                      borderColor: DISCHARGE_SELECTION_COLOR,
-                    },
-                  ]}
-                >
-                  <CustomIcon name={discharge.icon as any} size={ICON_SIZE} />
-                  {discharge.selected && (
-                    <View
-                      style={[
-                        styles.checkmarkContainer,
-                        {
-                          borderColor: colors.surface,
-                          backgroundColor: DISCHARGE_SELECTION_COLOR,
-                        },
-                      ]}
-                    >
-                      <Ionicons
-                        name="checkmark"
-                        size={16}
-                        color={colors.white}
-                      />
-                    </View>
-                  )}
-                </View>
-                <Text
-                  style={[
-                    typography.caption,
-                    { textAlign: 'center' },
-                  ]}
-                >
-                  {discharge.name}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </View>
+          <HealthItemGrid
+            items={DISCHARGES}
+            selectedIds={selectedDischarges}
+            onToggle={toggleDischarge}
+            translationKey="health:discharge"
+            selectionColor={SELECTION_COLORS.discharge}
+            iconSize={ICON_SIZE}
+          />
         </View>
 
         {/* Notes */}
@@ -1081,7 +573,6 @@ const styles = StyleSheet.create({
     paddingTop: 16,
     paddingBottom: 80,
   },
-
   section: {
     borderRadius: 16,
     marginBottom: 16,
@@ -1093,30 +584,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 16,
-  },
-  itemsGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-  },
-  itemButton: {
-    width: '23%',
-    alignItems: 'center',
-    marginBottom: 16,
-  },
-  selectedItemButton: {
-    opacity: 1,
-  },
-  itemIcon: {
-    width: 60,
-    height: 60,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 3,
-  },
-  selectedItemIcon: {
-    borderWidth: 2,
-    borderRadius: 30,
   },
   notesContainer: {
     flexDirection: 'row',
@@ -1136,17 +603,5 @@ const styles = StyleSheet.create({
     bottom: 30,
     left: 16,
     right: 16,
-  },
-  checkmarkContainer: {
-    position: 'absolute',
-    top: -4,
-    right: -4,
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 2,
-    zIndex: 1,
   },
 });
