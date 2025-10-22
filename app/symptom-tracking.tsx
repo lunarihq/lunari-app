@@ -291,64 +291,43 @@ export default function SymptomTracking() {
       const allRecords = [];
 
       for (const id of selectedSymptoms) {
-        const item = SYMPTOMS.find(s => s.id === id);
-        if (item) {
-          allRecords.push({
-            date: selectedDate,
-            type: 'symptom',
-            item_id: id,
-            name: t(`health:symptoms.${id}`),
-            icon: item.icon,
-          });
-        }
+        allRecords.push({
+          date: selectedDate,
+          type: 'symptom',
+          item_id: id,
+        });
       }
 
       for (const id of selectedMoods) {
-        const item = MOODS.find(m => m.id === id);
-        if (item) {
-          allRecords.push({
-            date: selectedDate,
-            type: 'mood',
-            item_id: id,
-            name: t(`health:moods.${id}`),
-            icon: item.icon,
-          });
-        }
+        allRecords.push({
+          date: selectedDate,
+          type: 'mood',
+          item_id: id,
+        });
       }
 
       for (const id of selectedFlows) {
-        const item = FLOWS.find(f => f.id === id);
-        if (item) {
-          allRecords.push({
-            date: selectedDate,
-            type: 'flow',
-            item_id: id,
-            name: t(`health:flows.${id}`),
-            icon: item.icon,
-          });
-        }
+        allRecords.push({
+          date: selectedDate,
+          type: 'flow',
+          item_id: id,
+        });
       }
 
       for (const id of selectedDischarges) {
-        const item = DISCHARGES.find(d => d.id === id);
-        if (item) {
-          allRecords.push({
-            date: selectedDate,
-            type: 'discharge',
-            item_id: id,
-            name: t(`health:discharge.${id}`),
-            icon: item.icon,
-          });
-        }
+        allRecords.push({
+          date: selectedDate,
+          type: 'discharge',
+          item_id: id,
+        });
       }
 
       if (notes.trim()) {
         allRecords.push({
           date: selectedDate,
           type: 'notes',
-          item_id: '1',
+          item_id: 'note',
           name: notes.trim(),
-          icon: 'notes',
         });
       }
 

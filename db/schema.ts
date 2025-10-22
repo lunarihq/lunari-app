@@ -12,9 +12,7 @@ export const healthLogs = sqliteTable('health_logs', {
   date: text('date').notNull(),
   type: text('type').notNull(), // 'symptom', 'mood', 'flow', 'discharge', 'notes'
   item_id: text('item_id').notNull(),
-  name: text('name').notNull(),
-  icon: text('icon').notNull(), // Store icon name
-  icon_color: text('icon_color'), // Store icon color
+  name: text('name'), // Only used for 'notes' type to store actual note text
   createdAt: text('created_at').default(sql`CURRENT_TIMESTAMP`),
 });
 

@@ -11,14 +11,13 @@ CREATE TABLE IF NOT EXISTS period_dates (
 );
 CREATE UNIQUE INDEX IF NOT EXISTS idx_period_dates_date ON period_dates(date);
 
-CREATE TABLE IF NOT EXISTS health_logs (
+DROP TABLE IF EXISTS health_logs;
+CREATE TABLE health_logs (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   date TEXT NOT NULL,
   type TEXT NOT NULL,
   item_id TEXT NOT NULL,
-  name TEXT NOT NULL,
-  icon TEXT NOT NULL,
-  icon_color TEXT,
+  name TEXT,
   created_at TEXT DEFAULT CURRENT_TIMESTAMP
 );
 

@@ -18,6 +18,7 @@ import dayjs from 'dayjs';
 import { globalStyles } from '../styles/globalStyles';
 import { CustomIcon } from './icons/health';
 import { NoteIcon } from './icons/health/Note';
+import { SYMPTOMS, MOODS, FLOWS, DISCHARGES } from '../constants/healthTracking';
 
 type SymptomsTrackerProps = {
   selectedDate?: string;
@@ -55,89 +56,50 @@ export const SymptomsTracker = ({
     }, [selectedDate])
   );
 
-  // Helper function to get the appropriate icon component
   const getIconComponent = (log: any) => {
-    const { icon, type } = log;
+    const { item_id, type } = log;
 
     if (type === 'notes') {
       return <NoteIcon size={54} />;
     }
 
-    // Use CustomIcon for symptoms, moods, flows, and discharge that have custom SVG icons
-    if (
-      type === 'symptom' ||
-      type === 'mood' ||
-      type === 'flow' ||
-      type === 'discharge'
-    ) {
-      // Check if this icon name exists in our custom icon system
-      const customIconNames = [
-        'joint-pain',
-        'headache',
-        'cramps',
-        'nausea',
-        'night-sweats',
-        'vaginal dryness',
-        'frequent-urination',
-        'diarrhea',
-        'fatigue',
-        'bloating',
-        'cravings',
-        'calm',
-        'happy',
-        'energetic',
-        'sad',
-        'anxious',
-        'confused',
-        'irritated',
-        'angry',
-        'mood-swings',
-        'frisky',
-        'apathetic',
-        'bored',
-        'light',
-        'medium',
-        'heavy',
-        'blood-clots',
-        'brain-fog',
-        'insomnia',
-        'hot flashes',
-        'dizziness',
-        'constipation',
-        'acne',
-        'tender-breasts',
-        'backacke',
-        'no-discharge',
-        'watery',
-        'creamy',
-        'egg-white',
-        'sticky',
-        'spotting',
-        'unusual',
-        'clumpy-white',
-        'grey-discharge',
-      ];
+    let iconName: string | undefined;
 
-      if (customIconNames.includes(icon)) {
-        return <CustomIcon name={icon as any} size={54} />;
-      }
+    if (type === 'symptom') {
+      iconName = SYMPTOMS.find(s => s.id === item_id)?.icon;
+    } else if (type === 'mood') {
+      iconName = MOODS.find(m => m.id === item_id)?.icon;
+    } else if (type === 'flow') {
+      iconName = FLOWS.find(f => f.id === item_id)?.icon;
+    } else if (type === 'discharge') {
+      iconName = DISCHARGES.find(d => d.id === item_id)?.icon;
     }
 
-    // For any unrecognized icons, use AcneIcon as placeholder
-    return <CustomIcon name="joint-pain" size={54} />;
+    if (iconName) {
+      return <CustomIcon name={iconName as any} size={54} />;
+    }
+
+    return <CustomIcon name="im-okay" size={54} />;
   };
 
-  // Helper function to get display text for each log item
   const getDisplayText = (log: any) => {
-    const { type, name } = log;
+    const { type, item_id } = log;
 
-    // For notes, always show "Note" instead of the actual note text
     if (type === 'notes') {
       return t('symptomsTracker.note');
     }
 
-    // For other types, show the original name
-    return name;
+    if (type === 'symptom') {
+      return t(`symptoms.${item_id}`);
+    } else if (type === 'mood') {
+      return t(`moods.${item_id}`);
+    } else if (type === 'flow') {
+      return t(`flows.${item_id}`);
+    } else if (type === 'discharge') {
+      return t(`discharge.${item_id}`);
+    }
+
+    return item_id;
   };
 
   const formatDisplayText = (log: any) => {
