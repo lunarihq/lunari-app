@@ -33,7 +33,7 @@ export const createTypography = (colors: ColorScheme) =>
     },
     caption: {
       fontSize: 14,
-      lineHeight: 20,
+      lineHeight: 16,
       fontWeight: '400',
       color: colors.textSecondary,
     },
