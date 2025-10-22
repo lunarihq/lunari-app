@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
-import { SymptomsTracker } from './SymptomsTracker';
+import { QuickHealthSelector } from './QuickHealthSelector';
 import { PeriodPredictionService } from '../services/periodPredictions';
 import { formatDateString } from '../types/calendarTypes';
 import { useTheme, createTypography } from '../styles/theme';
@@ -74,7 +74,7 @@ export function CycleDetails({
       </View>
 
       {isDateInPastOrToday() && (
-        <SymptomsTracker
+        <QuickHealthSelector
           selectedDate={selectedDate}
           titleStyle={{ fontSize: 20 }}
         />

@@ -20,15 +20,15 @@ import { CustomIcon } from './icons/health';
 import { NoteIcon } from './icons/health/Note';
 import { SYMPTOMS, MOODS, FLOWS, DISCHARGES } from '../constants/healthTracking';
 
-type SymptomsTrackerProps = {
+type QuickHealthSelectorProps = {
   selectedDate?: string;
   titleStyle?: TextStyle;
 };
 
-export const SymptomsTracker = ({
+export const QuickHealthSelector = ({
   selectedDate,
   titleStyle,
-}: SymptomsTrackerProps) => {
+}: QuickHealthSelectorProps) => {
   const { colors } = useTheme();
   const typography = createTypography(colors);
   const { t } = useTranslation('health');
@@ -229,4 +229,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SymptomsTracker;
+export default QuickHealthSelector;

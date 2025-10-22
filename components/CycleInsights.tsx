@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
   insightsTitle: {
     fontSize: 22,
     fontWeight: '600',
-    backgroundColor: 'blue',
+    backgroundColor: 'green',
   },
   insightsText: {
     fontSize: 16,

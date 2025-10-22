@@ -85,7 +85,7 @@ const { t } = useTranslation('settings');
 ### Medium Priority (Components)
 
 #### 6. `components/CycleInsights.tsx`
-#### 7. `components/SymptomsTracker.tsx`
+#### 7. `components/QuickHealthSelector.tsx`
 #### 8. `components/CycleHistory.tsx`
 #### 9. `components/CycleDetails.tsx`
 #### 10. `components/StatCard.tsx`

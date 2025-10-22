@@ -3,7 +3,7 @@ import { View, ScrollView } from 'react-native';
 import { useLocalSearchParams, router, useFocusEffect } from 'expo-router';
 import { CycleOverviewWidget } from '../../components/CycleOverviewWidget';
 import { CycleInsights } from '../../components/CycleInsights';
-import { SymptomsTracker } from '../../components/SymptomsTracker';
+import { QuickHealthSelector } from '../../components/QuickHealthSelector';
 import { db, getSetting } from '../../db';
 import { PeriodDate, periodDates } from '../../db/schema';
 import { PeriodPredictionService } from '../../services/periodPredictions';
@@ -179,7 +179,7 @@ export default function Index() {
         averageCycleLength={averageCycleLength}
       />
 
-      <SymptomsTracker />
+      <QuickHealthSelector />
 
       <View />
     </ScrollView>
