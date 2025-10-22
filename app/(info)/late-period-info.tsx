@@ -42,15 +42,33 @@ export default function PeriodLength() {
           {t('latePeriod.causes.title')}
         </Text>
         <Text style={[typography.body]}>
-          {t('latePeriod.causes.stress')}{'\n'}
-          {t('latePeriod.causes.weight')}{'\n'}
-          {t('latePeriod.causes.exercise')}{'\n'}
-          {t('latePeriod.causes.sleep')}{'\n'}
-          {t('latePeriod.causes.illness')}{'\n'}
-          {t('latePeriod.causes.medications')}{'\n'}
-          {t('latePeriod.causes.pcos')}{'\n'}
-          {t('latePeriod.causes.pregnancy')}{'\n'}
+          {t('latePeriod.causes.stress')}
+          <Text style={typography.bodyBold}>{t('latePeriod.causes.stressBold')}</Text>
+          {t('latePeriod.causes.stressSuffix')}{'\n'}
+          {t('latePeriod.causes.weight')}
+          <Text style={typography.bodyBold}>{t('latePeriod.causes.weightBold')}</Text>
+          {t('latePeriod.causes.weightSuffix')}{'\n'}
+          {t('latePeriod.causes.exercise')}
+          <Text style={typography.bodyBold}>{t('latePeriod.causes.exerciseBold')}</Text>
+          {t('latePeriod.causes.exerciseSuffix')}{'\n'}
+          {t('latePeriod.causes.sleep')}
+          <Text style={typography.bodyBold}>{t('latePeriod.causes.sleepBold')}</Text>
+          {t('latePeriod.causes.sleepSuffix')}{'\n'}
+          {t('latePeriod.causes.illness')}
+          <Text style={typography.bodyBold}>{t('latePeriod.causes.illnessBold')}</Text>
+          {t('latePeriod.causes.illnessSuffix')}{'\n'}
+          {t('latePeriod.causes.medications')}
+          <Text style={typography.bodyBold}>{t('latePeriod.causes.medicationsBold')}</Text>
+          {t('latePeriod.causes.medicationsSuffix')}{'\n'}
+          {t('latePeriod.causes.pcos')}
+          <Text style={typography.bodyBold}>{t('latePeriod.causes.pcosBold')}</Text>
+          {t('latePeriod.causes.pcosSuffix')}{'\n'}
+          {t('latePeriod.causes.pregnancy')}
+          <Text style={typography.bodyBold}>{t('latePeriod.causes.pregnancyBold')}</Text>
+          {t('latePeriod.causes.pregnancySuffix')}{'\n'}
           {t('latePeriod.causes.perimenopause')}
+          <Text style={typography.bodyBold}>{t('latePeriod.causes.perimenopauseBold')}</Text>
+          {t('latePeriod.causes.perimenopauseSuffix')}
         </Text>
       </View>
 

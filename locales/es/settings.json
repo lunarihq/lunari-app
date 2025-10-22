@@ -184,8 +184,12 @@
     "permissions": {
       "title": "Permisos",
       "description": "Lunari puede solicitar los siguientes permisos:",
-      "reminders": "• Recordatorios: Para enviarte recordatorios de periodo y predicciones de ciclo.",
-      "biometric": "• Autenticación biométrica: Para asegurar tu aplicación con huella digital o reconocimiento facial (opcional).",
+      "reminders": "• ",
+      "remindersBold": "Recordatorios",
+      "remindersSuffix": ": Para enviarte recordatorios de periodo y predicciones de ciclo.",
+      "biometric": "• ",
+      "biometricBold": "Autenticación biométrica",
+      "biometricSuffix": ": Para asegurar tu aplicación con huella digital o reconocimiento facial (opcional).",
       "revoke": "Si no deseas usar ninguno de estos permisos, puedes revocarlos en cualquier momento a través de la configuración de tu dispositivo."
     },
     "transparency": {

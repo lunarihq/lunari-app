@@ -125,6 +125,8 @@ export default function PrivacyPolicy() {
           ]}
         >
           {t('privacyPolicyScreen.permissions.reminders')}
+          <Text style={typography.bodyBold}>{t('privacyPolicyScreen.permissions.remindersBold')}</Text>
+          {t('privacyPolicyScreen.permissions.remindersSuffix')}
         </Text>
         <Text
           style={[
@@ -133,6 +135,8 @@ export default function PrivacyPolicy() {
           ]}
         >
           {t('privacyPolicyScreen.permissions.biometric')}
+          <Text style={typography.bodyBold}>{t('privacyPolicyScreen.permissions.biometricBold')}</Text>
+          {t('privacyPolicyScreen.permissions.biometricSuffix')}
         </Text>
         <Text style={[typography.body, { marginBottom: 12 }]}>
           {t('privacyPolicyScreen.permissions.revoke')}

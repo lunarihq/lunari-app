@@ -19,8 +19,8 @@
   },
   "averages": {
     "title": "Promedios",
-    "cycleLength": "Duración promedio del ciclo",
-    "periodLength": "Duración promedio del periodo",
+    "cycleLength": "Promedio del ciclo",
+    "periodLength": "Promedio del periodo",
     "days": "{{count}} día",
     "days_other": "{{count}} días"
   },
