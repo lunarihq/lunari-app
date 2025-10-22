@@ -1,10 +1,12 @@
 import React from 'react';
 import { View, Text, ScrollView, Image } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import defaultTheme, { useTheme, createTypography } from '../../styles/theme';
 
 export default function PeriodLength() {
   const { colors } = useTheme();
   const typography = createTypography(colors);
+  const { t } = useTranslation('info');
 
   return (
     <ScrollView
@@ -27,55 +29,51 @@ export default function PeriodLength() {
       />
       <View style={{ marginBottom: 32 }}>
         <Text style={[typography.heading2, { marginBottom: 12 }]}>
-          What Does "Late" Mean?
+          {t('latePeriod.whatMeans.title')}
         </Text>
 
         <Text style={[typography.body]}>
-          A period is generally considered late when it's more than 5-7 days
-          past your expected date. Cycles can naturally vary by a few days each
-          month, so occasional lateness is normal.
+          {t('latePeriod.whatMeans.description')}
         </Text>
       </View>
 
       <View style={{ marginBottom: 32 }}>
         <Text style={[typography.heading2, { marginBottom: 12 }]}>
-          Common Causes
+          {t('latePeriod.causes.title')}
         </Text>
         <Text style={[typography.body]}>
-          • Stress: High stress affects hormones that regulate your cycle{'\n'}•
-          Weight changes: Significant gain or loss can delay periods{'\n'}•
-          Exercise: Intense training can temporarily stop menstruation{'\n'}•
-          Sleep disruption: Irregular sleep patterns affect hormones{'\n'}•
-          Illness: Being sick can throw off your cycle timing{'\n'}•
-          Medications: Birth control, antibiotics, and other drugs{'\n'}• PCOS:
-          Polycystic ovary syndrome causes irregular cycles{'\n'}• Pregnancy:
-          Obviously, the most common reason{'\n'}• Perimenopause: Natural
-          transition before menopause
+          {t('latePeriod.causes.stress')}{'\n'}
+          {t('latePeriod.causes.weight')}{'\n'}
+          {t('latePeriod.causes.exercise')}{'\n'}
+          {t('latePeriod.causes.sleep')}{'\n'}
+          {t('latePeriod.causes.illness')}{'\n'}
+          {t('latePeriod.causes.medications')}{'\n'}
+          {t('latePeriod.causes.pcos')}{'\n'}
+          {t('latePeriod.causes.pregnancy')}{'\n'}
+          {t('latePeriod.causes.perimenopause')}
         </Text>
       </View>
 
       <View style={{ marginBottom: 32 }}>
         <Text style={[typography.heading2, { marginBottom: 12 }]}>
-          When to See a Doctor
+          {t('latePeriod.seeDoctor.title')}
         </Text>
         <Text style={[typography.body]}>
-          Consult a healthcare provider if your period is more than 3 months
-          late, if you experience severe pain, or if you've had unprotected sex
-          and could be pregnant. Sudden changes in cycle regularity also warrant
-          a check-up.
+          {t('latePeriod.seeDoctor.description')}
         </Text>
       </View>
 
       <View style={{ marginBottom: 32 }}>
         <Text style={[typography.heading2, { marginBottom: 12 }]}>
-          What You Can Do
+          {t('latePeriod.whatToDo.title')}
         </Text>
         <Text style={[typography.body]}>
-          • Take a pregnancy test if there's any possibility{'\n'}• Manage
-          stress through meditation, exercise, or therapy{'\n'}• Maintain a
-          healthy weight for your body{'\n'}• Get consistent, quality sleep
-          {'\n'}• Track your cycles to identify patterns{'\n'}• Be patient,
-          occasional irregularity is normal
+          {t('latePeriod.whatToDo.pregnancy')}{'\n'}
+          {t('latePeriod.whatToDo.stress')}{'\n'}
+          {t('latePeriod.whatToDo.weight')}{'\n'}
+          {t('latePeriod.whatToDo.sleep')}{'\n'}
+          {t('latePeriod.whatToDo.track')}{'\n'}
+          {t('latePeriod.whatToDo.patience')}
         </Text>
       </View>
     </ScrollView>

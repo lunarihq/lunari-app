@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, View, StyleSheet, ScrollView } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
 import defaultTheme, { useTheme, createTypography } from '../../styles/theme';
 import * as Localization from 'expo-localization';
@@ -7,6 +8,7 @@ import * as Localization from 'expo-localization';
 export default function PrivacyPolicy() {
   const { colors } = useTheme();
   const typography = createTypography(colors);
+  const { t } = useTranslation('settings');
 
   return (
     <ScrollView
@@ -19,10 +21,10 @@ export default function PrivacyPolicy() {
     >
       <View style={[styles.header, { backgroundColor: colors.surface }]}>
         <Text style={[typography.heading1, { marginBottom: 8 }]}>
-          Privacy Policy
+          {t('privacyPolicyScreen.title')}
         </Text>
         <Text style={[typography.body, { color: colors.textSecondary }]}>
-          Last updated: {new Date().toLocaleDateString(Localization.getLocales()[0].languageTag)}
+          {t('privacyPolicyScreen.lastUpdated')} {new Date().toLocaleDateString(Localization.getLocales()[0].languageTag)}
         </Text>
       </View>
 
@@ -34,12 +36,11 @@ export default function PrivacyPolicy() {
             color={colors.primary}
           />
           <Text style={[typography.heading2, { marginLeft: 12 }]}>
-            Introduction
+            {t('privacyPolicyScreen.introduction.title')}
           </Text>
         </View>
         <Text style={[typography.body, { marginBottom: 12 }]}>
-          This Privacy Policy sets out how the app Lunari uses and protects your
-          personal data that you generate and store within the app.
+          {t('privacyPolicyScreen.introduction.description')}
         </Text>
       </View>
 
@@ -47,15 +48,13 @@ export default function PrivacyPolicy() {
         <View style={styles.sectionHeader}>
           <Ionicons name="analytics-outline" size={24} color={colors.primary} />
           <Text style={[typography.heading2, { marginLeft: 12 }]}>
-            Data Use
+            {t('privacyPolicyScreen.dataUse.title')}
           </Text>
         </View>
         <Text style={[typography.body, { marginBottom: 12 }]}>
-          Lunari respects and celebrates your privacy. There is no collection of
-          usage data or personal information, no ads, no spyware. Lunari can
-          store data related to your menstrual heatlh{' '}
-          <Text style={styles.bold}>locally on your phone</Text>, and this
-          inludes:
+          {t('privacyPolicyScreen.dataUse.descriptionPrefix')}{' '}
+          <Text style={styles.bold}>{t('privacyPolicyScreen.dataUse.descriptionBold')}</Text>
+          {t('privacyPolicyScreen.dataUse.descriptionSuffix')}
         </Text>
         <Text
           style={[
@@ -63,7 +62,7 @@ export default function PrivacyPolicy() {
             { marginBottom: 8, marginLeft: 8 },
           ]}
         >
-          • Period start and end dates
+          {t('privacyPolicyScreen.dataUse.periodDates')}
         </Text>
         <Text
           style={[
@@ -71,7 +70,7 @@ export default function PrivacyPolicy() {
             { marginBottom: 8, marginLeft: 8 },
           ]}
         >
-          • Cycle length and period duration
+          {t('privacyPolicyScreen.dataUse.cycleLength')}
         </Text>
         <Text
           style={[
@@ -79,7 +78,7 @@ export default function PrivacyPolicy() {
             { marginBottom: 8, marginLeft: 8 },
           ]}
         >
-          • Symptoms and mood tracking data
+          {t('privacyPolicyScreen.dataUse.symptoms')}
         </Text>
         <Text
           style={[
@@ -87,7 +86,7 @@ export default function PrivacyPolicy() {
             { marginBottom: 8, marginLeft: 8 },
           ]}
         >
-          • Notes and personal observations
+          {t('privacyPolicyScreen.dataUse.notes')}
         </Text>
         <Text
           style={[
@@ -95,17 +94,13 @@ export default function PrivacyPolicy() {
             { marginBottom: 8, marginLeft: 8 },
           ]}
         >
-          • App preferences and settings
+          {t('privacyPolicyScreen.dataUse.settings')}
         </Text>
         <Text style={[typography.body, { marginBottom: 12 }]}>
-          This data is used solely to provide you with period predictions, cycle
-          insights, and personalized tracking features. We do not share, sell,
-          or transmit your personal health data to any third parties.
+          {t('privacyPolicyScreen.dataUse.usage')}
         </Text>
         <Text style={[typography.body, { marginBottom: 12 }]}>
-          If you wish to delete all your app data, you can do so by going to the
-          settings menu and selecting "Delete data". This can also be done by
-          uninstalling the app.
+          {t('privacyPolicyScreen.dataUse.deletion')}
         </Text>
       </View>
 
@@ -117,11 +112,11 @@ export default function PrivacyPolicy() {
             color={colors.primary}
           />
           <Text style={[typography.heading2, { marginLeft: 12 }]}>
-            Permissions
+            {t('privacyPolicyScreen.permissions.title')}
           </Text>
         </View>
         <Text style={[typography.body, { marginBottom: 12 }]}>
-          Lunari may request the following permissions:
+          {t('privacyPolicyScreen.permissions.description')}
         </Text>
         <Text
           style={[
@@ -129,8 +124,7 @@ export default function PrivacyPolicy() {
             { marginBottom: 8, marginLeft: 8 },
           ]}
         >
-          • <Text style={styles.bold}>Reminders:</Text> To send you period
-          reminders and cycle predictions.
+          {t('privacyPolicyScreen.permissions.reminders')}
         </Text>
         <Text
           style={[
@@ -138,12 +132,10 @@ export default function PrivacyPolicy() {
             { marginBottom: 8, marginLeft: 8 },
           ]}
         >
-          • <Text style={styles.bold}>Biometric authentication:</Text> To secure
-          your app with fingerprint or face recognition (optional).
+          {t('privacyPolicyScreen.permissions.biometric')}
         </Text>
         <Text style={[typography.body, { marginBottom: 12 }]}>
-          If you don't want to use any of these permissions, you can revoke them
-          at any time through your device settings.
+          {t('privacyPolicyScreen.permissions.revoke')}
         </Text>
       </View>
 
@@ -151,11 +143,11 @@ export default function PrivacyPolicy() {
         <View style={styles.sectionHeader}>
           <Ionicons name="eye-outline" size={24} color={colors.primary} />
           <Text style={[typography.heading2, { marginLeft: 12 }]}>
-            Transparency
+            {t('privacyPolicyScreen.transparency.title')}
           </Text>
         </View>
         <Text style={[typography.body, { marginBottom: 12 }]}>
-          We believe in complete transparency about how your data is handled:
+          {t('privacyPolicyScreen.transparency.description')}
         </Text>
         <Text
           style={[
@@ -163,7 +155,7 @@ export default function PrivacyPolicy() {
             { marginBottom: 8, marginLeft: 8 },
           ]}
         >
-          • All your data is stored locally on your device
+          {t('privacyPolicyScreen.transparency.localStorage')}
         </Text>
         <Text
           style={[
@@ -171,7 +163,7 @@ export default function PrivacyPolicy() {
             { marginBottom: 8, marginLeft: 8 },
           ]}
         >
-          • No data is transmitted to external servers
+          {t('privacyPolicyScreen.transparency.noTransmission')}
         </Text>
         <Text
           style={[
@@ -179,7 +171,7 @@ export default function PrivacyPolicy() {
             { marginBottom: 8, marginLeft: 8 },
           ]}
         >
-          • You can delete all your data at any time
+          {t('privacyPolicyScreen.transparency.deleteAnytime')}
         </Text>
         <Text
           style={[
@@ -187,7 +179,7 @@ export default function PrivacyPolicy() {
             { marginBottom: 8, marginLeft: 8 },
           ]}
         >
-          • We do not use analytics or tracking services
+          {t('privacyPolicyScreen.transparency.noAnalytics')}
         </Text>
         <Text
           style={[
@@ -195,12 +187,10 @@ export default function PrivacyPolicy() {
             { marginBottom: 8, marginLeft: 8 },
           ]}
         >
-          • No third-party advertising or data collection
+          {t('privacyPolicyScreen.transparency.noAds')}
         </Text>
         <Text style={[typography.body, { marginBottom: 12 }]}>
-          You have full control over your data. You can delete all tracking data
-          through the settings menu, and the app will continue to work normally
-          without any stored information.
+          {t('privacyPolicyScreen.transparency.control')}
         </Text>
       </View>
 
@@ -214,9 +204,7 @@ export default function PrivacyPolicy() {
             },
           ]}
         >
-          If you have any questions about this privacy policy or how we handle
-          your data, please contact us at{' '}
-          <Text style={styles.bold}>lunari.appmail@gmail.app</Text>.
+          {t('privacyPolicyScreen.footer')}
         </Text>
       </View>
     </ScrollView>

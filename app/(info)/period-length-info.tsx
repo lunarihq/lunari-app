@@ -1,10 +1,12 @@
 import React from 'react';
 import { View, Text, ScrollView, Image } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import defaultTheme, { useTheme, createTypography } from '../../styles/theme';
 
 export default function PeriodLength() {
   const { colors } = useTheme();
   const typography = createTypography(colors);
+  const { t } = useTranslation('info');
 
   return (
     <ScrollView
@@ -27,78 +29,68 @@ export default function PeriodLength() {
       />
       <View style={{ marginBottom: 28 }}>
         <Text style={[typography.heading2, { marginBottom: 12 }]}>
-          Understanding your period
+          {t('periodLength.title')}
         </Text>
 
         <Text style={[typography.body]}>
-          <Text style={{ fontWeight: 'bold' }}>Period length</Text> is counted
-          from the first until the last day of menstrual bleeding of any volume.
+          <Text style={{ fontWeight: 'bold' }}>Period length</Text>{' '}
+          {t('periodLength.definition').replace('Period length is counted', 'is counted')}
         </Text>
       </View>
 
       <View style={{ marginBottom: 28 }}>
         <Text style={[typography.heading2, { marginBottom: 12 }]}>
-          Normal period length
+          {t('periodLength.normal.title')}
         </Text>
         <Text style={[typography.body]}>
-          According to the{' '}
+          {t('periodLength.normal.acogPrefix')}{' '}
           <Text style={{ fontWeight: 'bold' }}>
-            American College of Obstetricians and Gynecologists (ACOG)¹
+            {t('periodLength.normal.acogName')}
           </Text>
-          , a normal period length typically lasts between{' '}
-          <Text style={{ fontWeight: 'bold' }}>2 and 7 days</Text>.
+          {t('periodLength.normal.acogSuffix')}{' '}
+          <Text style={{ fontWeight: 'bold' }}>
+            {t('periodLength.normal.daysRange')}
+          </Text>.
         </Text>
         <Text style={[typography.body, { marginTop: 12 }]}>
-          Period length can vary from cycle to cycle, which is completely
-          normal.
+          {t('periodLength.normal.variation')}
         </Text>
       </View>
 
       <View style={{ marginBottom: 28 }}>
         <Text style={[typography.heading2, { marginBottom: 12 }]}>
-          Irregular periods
+          {t('periodLength.irregular.title')}
         </Text>
         <Text style={[typography.body]}>
-          Irregular periods (shorter than 2 days or longer than 7 days) might be
-          caused by lifestyle changes, medication, stress, travel, and a few
-          other factors that can affect hormone levels.
+          {t('periodLength.irregular.description')}
         </Text>
         <Text style={[typography.body, { marginTop: 12 }]}>
           <Text style={{ fontWeight: 'bold' }}>
             Incorrectly entered period data
           </Text>{' '}
-          could be the reason your period length is labeled prolonged or
-          shortened. You can always correct any event of you cycle
-          retrospectively on the calendar menu.{' '}
+          {t('periodLength.irregular.dataNote').replace('Incorrectly entered period data could be', 'could be')}
         </Text>
       </View>
       <View style={{ marginBottom: 28 }}>
         <Text style={[typography.heading2, { marginBottom: 12 }]}>
-          When to see a doctor?
+          {t('periodLength.seeDoctor.title')}
         </Text>
         <Text style={[typography.body]}>
-          If your period length is frequently abnormal in length, or/and
-          accompanied by other concerning symptoms, it’s best to talk to your
-          health care provider. They can help you figure out the cause and
-          suggest treatment, if necessary.
+          {t('periodLength.seeDoctor.description')}
         </Text>
       </View>
       <View style={{ marginBottom: 28 }}>
         <Text style={[typography.body]}>
-          <Text style={{ fontWeight: 'bold' }}>IMPORTANT! </Text>Lunari is not a
-          diagnostic tool. The information from Lunari does not replace advice
-          from a health care provider. Always seek the advice of your doctor or
-          other qualified health provider with any questions you may have
-          regarding your cycle.
+          <Text style={{ fontWeight: 'bold' }}>IMPORTANT! </Text>
+          {t('periodLength.disclaimer').replace('IMPORTANT! ', '')}
         </Text>
       </View>
       <View style={{ marginBottom: 28 }}>
         <Text style={[typography.heading3, { marginBottom: 12 }]}>
-          References
+          {t('periodLength.references.title')}
         </Text>
         <Text style={[typography.caption]}>
-          1. Your First Period. American College of Obstetricians and
-          Gynecologists. FAQ for patients.
+          {t('periodLength.references.acog')}
         </Text>
       </View>
     </ScrollView>

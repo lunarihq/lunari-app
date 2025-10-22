@@ -118,6 +118,87 @@
       "cancel": "Cancelar",
       "openSettings": "Abrir configuración"
     }
+  },
+  "aboutScreen": {
+    "title": "Acerca de Lunari",
+    "version": "Versión 1.0.0",
+    "whatIs": {
+      "title": "¿Qué es Lunari?",
+      "description": "Lunari es una aplicación de seguimiento de periodo con enfoque en la privacidad, diseñada para ayudarte a entender y gestionar tu ciclo menstrual."
+    },
+    "features": {
+      "title": "Características",
+      "predictions": "• Predicciones de periodo y ciclo",
+      "tracking": "• Seguimiento de síntomas y estado de ánimo",
+      "statistics": "• Estadísticas e historial de ciclos",
+      "insights": "• Información sobre fases del ciclo",
+      "reminders": "• Recordatorios de periodo",
+      "lock": "• Bloqueo de aplicación con PIN/biométrico",
+      "theme": "• Soporte de temas claro y oscuro"
+    },
+    "privacyFirst": {
+      "title": "Privacidad Primero",
+      "description": "Lunari está diseñada con un enfoque de privacidad primero:",
+      "local": "• Todos los datos se almacenan localmente en tu dispositivo",
+      "noTransmission": "• No hay transmisión de datos a servidores externos",
+      "noTracking": "• Sin análisis o seguimiento de terceros",
+      "noAds": "• Sin anuncios",
+      "noAccount": "• No se requiere cuenta"
+    },
+    "openSource": {
+      "title": "Código Abierto",
+      "description": "Lunari es de código abierto y tiene licencia bajo la",
+      "warranty": "Lunari se distribuye con la esperanza de que sea útil, pero SIN NINGUNA GARANTÍA; sin siquiera la garantía implícita de COMERCIABILIDAD o IDONEIDAD PARA UN PROPÓSITO PARTICULAR.",
+      "viewSource": "Ver el código fuente en GitHub"
+    },
+    "technical": {
+      "title": "Detalles Técnicos",
+      "description": "Lunari está construida usando tecnologías modernas para garantizar confiabilidad y rendimiento:",
+      "framework": "• Framework: React Native con Expo",
+      "database": "• Base de datos: SQLite con Drizzle ORM",
+      "language": "• Lenguaje: TypeScript",
+      "platform": "• Plataforma: iOS y Android"
+    },
+    "footer": "Para soporte o comentarios, por favor contáctanos en: lunari.appmail@gmail.app."
+  },
+  "privacyPolicyScreen": {
+    "title": "Política de Privacidad",
+    "lastUpdated": "Última actualización:",
+    "introduction": {
+      "title": "Introducción",
+      "description": "Esta Política de Privacidad establece cómo la aplicación Lunari usa y protege tus datos personales que generas y almacenas dentro de la aplicación."
+    },
+    "dataUse": {
+      "title": "Uso de Datos",
+      "descriptionPrefix": "Lunari respeta y celebra tu privacidad. No hay recopilación de datos de uso o información personal, sin anuncios, sin spyware. Lunari puede almacenar datos relacionados con tu salud menstrual",
+      "descriptionBold": "localmente en tu teléfono",
+      "descriptionSuffix": ", y esto incluye:",
+      "periodDates": "• Fechas de inicio y fin del periodo",
+      "cycleLength": "• Duración del ciclo y periodo",
+      "symptoms": "• Datos de seguimiento de síntomas y estado de ánimo",
+      "notes": "• Notas y observaciones personales",
+      "settings": "• Preferencias y configuración de la aplicación",
+      "usage": "Estos datos se usan únicamente para proporcionarte predicciones de periodo, información sobre tu ciclo y funciones de seguimiento personalizadas. No compartimos, vendemos ni transmitimos tus datos de salud personal a terceros.",
+      "deletion": "Si deseas eliminar todos los datos de tu aplicación, puedes hacerlo yendo al menú de configuración y seleccionando \"Eliminar datos\". Esto también se puede hacer desinstalando la aplicación."
+    },
+    "permissions": {
+      "title": "Permisos",
+      "description": "Lunari puede solicitar los siguientes permisos:",
+      "reminders": "• Recordatorios: Para enviarte recordatorios de periodo y predicciones de ciclo.",
+      "biometric": "• Autenticación biométrica: Para asegurar tu aplicación con huella digital o reconocimiento facial (opcional).",
+      "revoke": "Si no deseas usar ninguno de estos permisos, puedes revocarlos en cualquier momento a través de la configuración de tu dispositivo."
+    },
+    "transparency": {
+      "title": "Transparencia",
+      "description": "Creemos en la completa transparencia sobre cómo se manejan tus datos:",
+      "localStorage": "• Todos tus datos se almacenan localmente en tu dispositivo",
+      "noTransmission": "• No se transmiten datos a servidores externos",
+      "deleteAnytime": "• Puedes eliminar todos tus datos en cualquier momento",
+      "noAnalytics": "• No usamos servicios de análisis o seguimiento",
+      "noAds": "• Sin publicidad o recopilación de datos de terceros",
+      "control": "Tienes control total sobre tus datos. Puedes eliminar todos los datos de seguimiento a través del menú de configuración, y la aplicación seguirá funcionando normalmente sin ninguna información almacenada."
+    },
+    "footer": "Si tienes alguna pregunta sobre esta política de privacidad o cómo manejamos tus datos, por favor contáctanos en lunari.appmail@gmail.app."
   }
 }
 

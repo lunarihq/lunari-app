@@ -1,10 +1,12 @@
 import React from 'react';
 import { View, Text, ScrollView, Image } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import defaultTheme, { useTheme, createTypography } from '../../styles/theme';
 
 export default function StatusInfo() {
   const { colors } = useTheme();
   const typography = createTypography(colors);
+  const { t } = useTranslation('info');
 
   return (
     <ScrollView
@@ -27,43 +29,44 @@ export default function StatusInfo() {
       />
       <View style={{ marginBottom: 28 }}>
         <Text style={[typography.heading2, { marginBottom: 12 }]}>
-          Understanding your cycle
+          {t('cycleLength.title')}
         </Text>
 
         <Text style={[typography.body]}>
-          <Text style={{ fontWeight: 'bold' }}>Cycle length</Text> is counted
-          from the first day of one period to the first day of the next period.
+          <Text style={{ fontWeight: 'bold' }}>Cycle length</Text>{' '}
+          {t('cycleLength.definition').replace('Cycle length is counted', 'is counted')}
         </Text>
       </View>
 
       <View style={{ marginBottom: 28 }}>
         <Text style={[typography.heading2, { marginBottom: 12 }]}>
-          Normal range
+          {t('cycleLength.normalRange.title')}
         </Text>
         <Text style={[typography.body]}>
-          According to the{' '}
+          {t('cycleLength.normalRange.acogPrefix')}{' '}
           <Text style={{ fontWeight: 'bold' }}>
-            American College of Obstetricians and Gynecologists (ACOG)¹
+            {t('cycleLength.normalRange.acogName')}
           </Text>
-          , a normal menstrual cycle typically lasts between{' '}
-          <Text style={{ fontWeight: 'bold' }}>21 and 35 days</Text>.
+          {t('cycleLength.normalRange.acogSuffix')}{' '}
+          <Text style={{ fontWeight: 'bold' }}>
+            {t('cycleLength.normalRange.daysRange')}
+          </Text>.
         </Text>
         <Text style={[typography.body]}>
-          Most people have cycles that vary by a few days each month, which is
-          completely normal.
+          {t('cycleLength.normalRange.variation')}
         </Text>
       </View>
 
       <View style={{ marginBottom: 28 }}>
         <Text style={[typography.heading2, { marginBottom: 12 }]}>
-          Irregular cycles
+          {t('cycleLength.irregular.title')}
         </Text>
         <Text style={[typography.body]}>
-          Irregular cycles are{' '}
+          {t('cycleLength.irregular.descriptionPrefix')}{' '}
           <Text style={{ fontWeight: 'bold' }}>
-            shorter than 21 days or longer than 35 days
+            {t('cycleLength.irregular.daysRange')}
           </Text>{' '}
-          and can be caused by a variety of reasons, such as:
+          {t('cycleLength.irregular.descriptionSuffix')}
         </Text>
         <View style={{ marginTop: 12 }}>
           <View
@@ -75,7 +78,7 @@ export default function StatusInfo() {
           >
             <Text style={{ marginRight: 8 }}>{'\u2022'}</Text>
             <Text style={[typography.body, { flex: 1 }]}>
-              Hormonal changes
+              {t('cycleLength.irregular.causes.hormonal')}
             </Text>
           </View>
           <View
@@ -87,7 +90,7 @@ export default function StatusInfo() {
           >
             <Text style={{ marginRight: 8 }}>{'\u2022'}</Text>
             <Text style={[typography.body, { flex: 1 }]}>
-              Stress, travel, or disrupted sleep
+              {t('cycleLength.irregular.causes.stress')}
             </Text>
           </View>
           <View
@@ -99,7 +102,7 @@ export default function StatusInfo() {
           >
             <Text style={{ marginRight: 8 }}>{'\u2022'}</Text>
             <Text style={[typography.body, { flex: 1 }]}>
-              Medical conditions
+              {t('cycleLength.irregular.causes.medical')}
             </Text>
           </View>
           <View
@@ -111,7 +114,7 @@ export default function StatusInfo() {
           >
             <Text style={{ marginRight: 8 }}>{'\u2022'}</Text>
             <Text style={[typography.body, { flex: 1 }]}>
-              Polycystic ovary syndrome (PCOS)
+              {t('cycleLength.irregular.causes.pcos')}
             </Text>
           </View>
           <View
@@ -123,13 +126,13 @@ export default function StatusInfo() {
           >
             <Text style={{ marginRight: 8 }}>{'\u2022'}</Text>
             <Text style={[typography.body, { flex: 1 }]}>
-              Significant weight change or intense exercise
+              {t('cycleLength.irregular.causes.weight')}
             </Text>
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
             <Text style={{ marginRight: 8 }}>{'\u2022'}</Text>
             <Text style={[typography.body, { flex: 1 }]}>
-              Puberty or perimenopause
+              {t('cycleLength.irregular.causes.lifestage')}
             </Text>
           </View>
           <View
@@ -141,48 +144,38 @@ export default function StatusInfo() {
           >
             <Text style={{ marginRight: 8 }}>{'\u2022'}</Text>
             <Text style={[typography.body, { flex: 1 }]}>
-              Postpartum and breastfeeding
+              {t('cycleLength.irregular.causes.postpartum')}
             </Text>
           </View>
           <Text style={[typography.body, { marginTop: 12 }]}>
             <Text style={{ fontWeight: 'bold' }}>
               Incorrectly entered period data
             </Text>{' '}
-            can cause Lunari to indicate an abnormal cycle length. Most often,
-            this is the result of forget to log period. Tracking your cycles for
-            at least 3-6 months will help establish a pattern.
+            {t('cycleLength.irregular.dataNote').replace('Incorrectly entered period data can cause', 'can cause')}
           </Text>
         </View>
       </View>
 
       <View style={{ marginBottom: 28 }}>
         <Text style={[typography.heading2, { marginBottom: 12 }]}>
-          When to see a doctor?
+          {t('cycleLength.seeDoctor.title')}
         </Text>
         <Text style={[typography.body]}>
-          If your cycles are frequently abnormal in length, or/and accompanied
-          by other concerning symptoms, it’s best to talk to your health care
-          provider. They can help you figure out the cause and suggest
-          treatment, if necessary.
+          {t('cycleLength.seeDoctor.description')}
         </Text>
       </View>
       <View style={{ marginBottom: 28 }}>
         <Text style={[typography.body]}>
-          <Text style={{ fontWeight: 'bold' }}>IMPORTANT! </Text>Lunari is not a
-          diagnostic tool. The information from Lunari does not replace advice
-          from a health care provider. Always seek the advice of your doctor or
-          other qualified health provider with any questions you may have
-          regarding your cycle.
+          <Text style={{ fontWeight: 'bold' }}>IMPORTANT! </Text>
+          {t('cycleLength.disclaimer').replace('IMPORTANT! ', '')}
         </Text>
       </View>
       <View style={{ marginBottom: 28 }}>
         <Text style={[typography.heading3, { marginBottom: 12 }]}>
-          References
+          {t('cycleLength.references.title')}
         </Text>
         <Text style={[typography.caption]}>
-          1. Diagnosis of Abnormal Uterine Bleeding in Reproductive-Aged Women.
-          Practice Bulletin. Number 128, July 2012. American College of
-          Obstetricians and Gynecologists.
+          {t('cycleLength.references.acog')}
         </Text>
       </View>
     </ScrollView>

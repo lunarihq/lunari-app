@@ -1,11 +1,13 @@
 import React from 'react';
 import { Text, View, StyleSheet, ScrollView, Linking } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
 import defaultTheme, { useTheme, createTypography } from '../../styles/theme';
 
 export default function About() {
   const { colors } = useTheme();
   const typography = createTypography(colors);
+  const { t } = useTranslation('settings');
   const GITHUB_URL = 'https://github.com/lunari-app/lunari';
   const GPL_URL = 'https://www.gnu.org/licenses/gpl-3.0.en.html';
 
@@ -23,10 +25,10 @@ export default function About() {
     >
       <View style={[styles.header, { backgroundColor: colors.surface }]}>
         <Text style={[typography.heading1, { marginBottom: 8 }]}>
-          About Lunari
+          {t('aboutScreen.title')}
         </Text>
         <Text style={[typography.body, { color: colors.textSecondary }]}>
-          Version 1.0.0
+          {t('aboutScreen.version')}
         </Text>
       </View>
 
@@ -34,12 +36,11 @@ export default function About() {
         <View style={styles.sectionHeader}>
           <Ionicons name="heart-outline" size={24} color={colors.primary} />
           <Text style={[typography.heading2, { marginLeft: 12 }]}>
-            What is Lunari?
+            {t('aboutScreen.whatIs.title')}
           </Text>
         </View>
         <Text style={[typography.body, { marginBottom: 12 }]}>
-          Lunari is a privacy-first period tracking app designed to help you
-          understand and manage your menstrual cycle.
+          {t('aboutScreen.whatIs.description')}
         </Text>
       </View>
 
@@ -47,7 +48,7 @@ export default function About() {
         <View style={styles.sectionHeader}>
           <Ionicons name="calendar-outline" size={24} color={colors.primary} />
           <Text style={[typography.heading2, { marginLeft: 12 }]}>
-            Features
+            {t('aboutScreen.features.title')}
           </Text>
         </View>
         <Text
@@ -56,7 +57,7 @@ export default function About() {
             {marginBottom: 8, marginLeft: 8 },
           ]}
         >
-          • Period and cycle predictions
+          {t('aboutScreen.features.predictions')}
         </Text>
         <Text
           style={[
@@ -64,7 +65,7 @@ export default function About() {
             {marginBottom: 8, marginLeft: 8 },
           ]}
         >
-          • Symptom and mood tracking
+          {t('aboutScreen.features.tracking')}
         </Text>
         <Text
           style={[
@@ -72,7 +73,7 @@ export default function About() {
             {marginBottom: 8, marginLeft: 8 },
           ]}
         >
-          • Cycle statistics & history
+          {t('aboutScreen.features.statistics')}
         </Text>
         <Text
           style={[
@@ -80,7 +81,7 @@ export default function About() {
             {marginBottom: 8, marginLeft: 8 },
           ]}
         >
-          • Cycle phase insights
+          {t('aboutScreen.features.insights')}
         </Text>
         <Text
           style={[
@@ -88,7 +89,7 @@ export default function About() {
             {marginBottom: 8, marginLeft: 8 },
           ]}
         >
-          • Period reminders
+          {t('aboutScreen.features.reminders')}
         </Text>
         <Text
           style={[
@@ -96,7 +97,7 @@ export default function About() {
             {marginBottom: 8, marginLeft: 8 },
           ]}
         >
-          • PIN/biometric app lock
+          {t('aboutScreen.features.lock')}
         </Text>
         <Text
           style={[
@@ -104,7 +105,7 @@ export default function About() {
             {marginBottom: 8, marginLeft: 8 },
           ]}
         >
-          • Dark and light theme support
+          {t('aboutScreen.features.theme')}
         </Text>
       </View>
 
@@ -116,11 +117,11 @@ export default function About() {
             color={colors.primary}
           />
           <Text style={[typography.heading2, { marginLeft: 12 }]}>
-            Privacy First
+            {t('aboutScreen.privacyFirst.title')}
           </Text>
         </View>
         <Text style={[typography.body, { marginBottom: 12 }]}>
-          Lunari is designed with a privacy-first approach:
+          {t('aboutScreen.privacyFirst.description')}
         </Text>
         <Text
           style={[
@@ -128,7 +129,7 @@ export default function About() {
             {marginBottom: 8, marginLeft: 8 },
           ]}
         >
-          • All data is stored locally on your device
+          {t('aboutScreen.privacyFirst.local')}
         </Text>
         <Text
           style={[
@@ -136,7 +137,7 @@ export default function About() {
             {marginBottom: 8, marginLeft: 8 },
           ]}
         >
-          • No data transmission to external servers
+          {t('aboutScreen.privacyFirst.noTransmission')}
         </Text>
         <Text
           style={[
@@ -144,7 +145,7 @@ export default function About() {
             {marginBottom: 8, marginLeft: 8 },
           ]}
         >
-          • No third-party analytics or tracking
+          {t('aboutScreen.privacyFirst.noTracking')}
         </Text>
         <Text
           style={[
@@ -152,7 +153,7 @@ export default function About() {
             {marginBottom: 8, marginLeft: 8 },
           ]}
         >
-          • No ads
+          {t('aboutScreen.privacyFirst.noAds')}
         </Text>
         <Text
           style={[
@@ -160,7 +161,7 @@ export default function About() {
             {marginBottom: 8, marginLeft: 8 },
           ]}
         >
-          • No account required
+          {t('aboutScreen.privacyFirst.noAccount')}
         </Text>
       </View>
 
@@ -172,11 +173,11 @@ export default function About() {
             color={colors.primary}
           />
           <Text style={[typography.heading2, { marginLeft: 12 }]}>
-            Open Source
+            {t('aboutScreen.openSource.title')}
           </Text>
         </View>
         <Text style={[typography.body, { marginBottom: 12 }]}>
-          Lunari is open-source and licensed under the{' '}
+          {t('aboutScreen.openSource.description')}{' '}
           <Text
             onPress={() => Linking.openURL(GPL_URL)}
             accessibilityRole="link"
@@ -190,9 +191,7 @@ export default function About() {
           .
         </Text>
         <Text style={[typography.body, { marginBottom: 12 }]}>
-          Lunari is distributed in the hope that it will be useful, but WITHOUT
-          ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-          FITNESS FOR A PARTICULAR PURPOSE.
+          {t('aboutScreen.openSource.warranty')}
         </Text>
         <Text
           onPress={() => Linking.openURL(GITHUB_URL)}
@@ -202,7 +201,7 @@ export default function About() {
             { color: colors.primary, textDecorationLine: 'underline' },
           ]}
         >
-          View the source on GitHub
+          {t('aboutScreen.openSource.viewSource')}
         </Text>
       </View>
 
@@ -210,12 +209,11 @@ export default function About() {
         <View style={styles.sectionHeader}>
           <Ionicons name="code-outline" size={24} color={colors.primary} />
           <Text style={[typography.heading2, { marginLeft: 12 }]}>
-            Technical Details
+            {t('aboutScreen.technical.title')}
           </Text>
         </View>
         <Text style={[typography.body, { marginBottom: 12 }]}>
-          Lunari is built using modern technologies to ensure reliability and
-          performance:
+          {t('aboutScreen.technical.description')}
         </Text>
         <Text
           style={[
@@ -223,7 +221,7 @@ export default function About() {
             {marginBottom: 8, marginLeft: 8 },
           ]}
         >
-          • <Text style={styles.bold}>Framework:</Text> React Native with Expo
+          {t('aboutScreen.technical.framework')}
         </Text>
         <Text
           style={[
@@ -231,7 +229,7 @@ export default function About() {
             {marginBottom: 8, marginLeft: 8 },
           ]}
         >
-          • <Text style={styles.bold}>Database:</Text> SQLite with Drizzle ORM
+          {t('aboutScreen.technical.database')}
         </Text>
         <Text
           style={[
@@ -239,7 +237,7 @@ export default function About() {
             {marginBottom: 8, marginLeft: 8 },
           ]}
         >
-          • <Text style={styles.bold}>Language:</Text> TypeScript
+          {t('aboutScreen.technical.language')}
         </Text>
         <Text
           style={[
@@ -247,7 +245,7 @@ export default function About() {
             {marginBottom: 8, marginLeft: 8 },
           ]}
         >
-          • <Text style={styles.bold}>Platform:</Text> iOS and Android
+          {t('aboutScreen.technical.platform')}
         </Text>
       </View>
 
@@ -261,8 +259,7 @@ export default function About() {
             },
           ]}
         >
-          For support or feedback, please contact us at:
-          <Text style={styles.bold}>lunari.appmail@gmail.app.</Text>
+          {t('aboutScreen.footer')}
         </Text>
       </View>
     </ScrollView>

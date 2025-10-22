@@ -18,13 +18,128 @@
       "description": "This phase begins after ovulation and ends when your next period starts."
     }
   },
+  "cycleLength": {
+    "title": "Understanding your cycle",
+    "definition": "Cycle length is counted from the first day of one period to the first day of the next period.",
+    "normalRange": {
+      "title": "Normal range",
+      "acogPrefix": "According to the",
+      "acogName": "American College of Obstetricians and Gynecologists (ACOG)¹",
+      "acogSuffix": ", a normal menstrual cycle typically lasts between",
+      "daysRange": "21 and 35 days",
+      "variation": "Most people have cycles that vary by a few days each month, which is completely normal."
+    },
+    "irregular": {
+      "title": "Irregular cycles",
+      "descriptionPrefix": "Irregular cycles are",
+      "daysRange": "shorter than 21 days or longer than 35 days",
+      "descriptionSuffix": "and can be caused by a variety of reasons, such as:",
+      "causes": {
+        "hormonal": "Hormonal changes",
+        "stress": "Stress, travel, or disrupted sleep",
+        "medical": "Medical conditions",
+        "pcos": "Polycystic ovary syndrome (PCOS)",
+        "weight": "Significant weight change or intense exercise",
+        "lifestage": "Puberty or perimenopause",
+        "postpartum": "Postpartum and breastfeeding"
+      },
+      "dataNote": "Incorrectly entered period data can cause Lunari to indicate an abnormal cycle length. Most often, this is the result of forget to log period. Tracking your cycles for at least 3-6 months will help establish a pattern."
+    },
+    "seeDoctor": {
+      "title": "When to see a doctor?",
+      "description": "If your cycles are frequently abnormal in length, or/and accompanied by other concerning symptoms, it's best to talk to your health care provider. They can help you figure out the cause and suggest treatment, if necessary."
+    },
+    "disclaimer": "IMPORTANT! Lunari is not a diagnostic tool. The information from Lunari does not replace advice from a health care provider. Always seek the advice of your doctor or other qualified health provider with any questions you may have regarding your cycle.",
+    "references": {
+      "title": "References",
+      "acog": "1. Diagnosis of Abnormal Uterine Bleeding in Reproductive-Aged Women. Practice Bulletin. Number 128, July 2012. American College of Obstetricians and Gynecologists."
+    }
+  },
+  "periodLength": {
+    "title": "Understanding your period",
+    "definition": "Period length is counted from the first until the last day of menstrual bleeding of any volume.",
+    "normal": {
+      "title": "Normal period length",
+      "acogPrefix": "According to the",
+      "acogName": "American College of Obstetricians and Gynecologists (ACOG)¹",
+      "acogSuffix": ", a normal period length typically lasts between",
+      "daysRange": "2 and 7 days",
+      "variation": "Period length can vary from cycle to cycle, which is completely normal."
+    },
+    "irregular": {
+      "title": "Irregular periods",
+      "description": "Irregular periods (shorter than 2 days or longer than 7 days) might be caused by lifestyle changes, medication, stress, travel, and a few other factors that can affect hormone levels.",
+      "dataNote": "Incorrectly entered period data could be the reason your period length is labeled prolonged or shortened. You can always correct any event of you cycle retrospectively on the calendar menu."
+    },
+    "seeDoctor": {
+      "title": "When to see a doctor?",
+      "description": "If your period length is frequently abnormal in length, or/and accompanied by other concerning symptoms, it's best to talk to your health care provider. They can help you figure out the cause and suggest treatment, if necessary."
+    },
+    "disclaimer": "IMPORTANT! Lunari is not a diagnostic tool. The information from Lunari does not replace advice from a health care provider. Always seek the advice of your doctor or other qualified health provider with any questions you may have regarding your cycle.",
+    "references": {
+      "title": "References",
+      "acog": "1. Your First Period. American College of Obstetricians and Gynecologists. FAQ for patients."
+    }
+  },
   "latePeriod": {
     "title": "Late period",
-    "description": "A late period can be caused by stress, changes in weight, or hormonal changes. If your period is more than a week late, consider taking a pregnancy test or consulting your healthcare provider."
+    "description": "A late period can be caused by stress, changes in weight, or hormonal changes. If your period is more than a week late, consider taking a pregnancy test or consulting your healthcare provider.",
+    "whatMeans": {
+      "title": "What means that your period is late?",
+      "description": "A period is generally considered late when it's more than 5-7 days past your expected date. Cycles can naturally vary by a few days each month, so occasional lateness is normal."
+    },
+    "causes": {
+      "title": "Common causes",
+      "stress": "• Stress: High stress affects hormones that regulate your cycle",
+      "weight": "• Weight changes: Significant gain or loss can delay periods",
+      "exercise": "• Exercise: Intense training can temporarily stop menstruation",
+      "sleep": "• Sleep disruption: Irregular sleep patterns affect hormones",
+      "illness": "• Illness: Being sick can throw off your cycle timing",
+      "medications": "• Medications: Birth control, antibiotics, and other drugs",
+      "pcos": "• PCOS: Polycystic ovary syndrome causes irregular cycles",
+      "pregnancy": "• Pregnancy: Obviously, the most common reason",
+      "perimenopause": "• Perimenopause: Natural transition before menopause"
+    },
+    "seeDoctor": {
+      "title": "When to see a doctor",
+      "description": "Consult a healthcare provider if your period is more than 3 months late, if you experience severe pain, or if you've had unprotected sex and could be pregnant. Sudden changes in cycle regularity also warrant a check-up."
+    },
+    "whatToDo": {
+      "title": "What you can do",
+      "pregnancy": "• Take a pregnancy test if there's any possibility",
+      "stress": "• Manage stress through meditation, exercise, or therapy",
+      "weight": "• Maintain a healthy weight for your body",
+      "sleep": "• Get consistent, quality sleep",
+      "track": "• Track your cycles to identify patterns",
+      "patience": "• Be patient, occasional irregularity is normal"
+    }
   },
   "prediction": {
     "title": "How predictions work",
-    "description": "Lunari predicts your next period based on your cycle history. The more data you log, the more accurate the predictions become."
+    "description": "Lunari predicts your next period based on your cycle history. The more data you log, the more accurate the predictions become.",
+    "nextPeriod": {
+      "title": "Next period prediction",
+      "description": "Your next period is predicted by adding your average cycle length to the start date of your most recent period."
+    },
+    "cycleLengthCalc": {
+      "title": "Cycle length calculation",
+      "description": "Lunari calculates your average cycle length using a weighted average of your last 6 cycles, a commonly used approach in cycle tracking.",
+      "weighting": "Recent cycles have more influence on predictions than older ones. For example, most recent cycle: 100%, second most recent: 80%, third most recent: 60%, and so on."
+    },
+    "ovulation": {
+      "title": "Ovulation & fertility",
+      "description": "Ovulation is predicted to occur 14 days before your next expected period. Your fertile window includes:",
+      "fertileWindow": "• 5 days before ovulation • Ovulation day • 1 day after ovulation"
+    },
+    "accuracy": {
+      "title": "Accuracy improves over time",
+      "description": "The more periods you track, the more accurate predictions become. With 3+ cycles, Lunari can provide personalized predictions based on your unique patterns."
+    },
+    "privacy": {
+      "title": "Privacy first",
+      "description": "All calculations happen locally on your device. Your period data never leaves your phone and is never shared with anyone."
+    },
+    "disclaimer": "🛎️ Remember: These are predictions based on your historical data. Every body is different, and cycles can vary naturally."
   }
 }
 
