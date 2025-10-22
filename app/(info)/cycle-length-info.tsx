@@ -10,10 +10,7 @@ export default function StatusInfo() {
 
   return (
     <ScrollView
-      style={[
-        commonStyles.container,
-        { backgroundColor: colors.panel },
-      ]}
+      style={[commonStyles.scrollView, { backgroundColor: 'colors.panel' }]}
       contentContainerStyle={commonStyles.scrollContentContainer}
       showsVerticalScrollIndicator={false}
     >

@@ -11,7 +11,7 @@ export default function PredictionInfo() {
   return (
     <ScrollView
       style={[
-        commonStyles.container,
+        commonStyles.scrollView,
         { backgroundColor: colors.panel },
       ]}
       contentContainerStyle={commonStyles.scrollContentContainer}

@@ -56,14 +56,8 @@ export default function CyclePhaseDetails() {
   );
 
   return (
-    <View
-      style={[
-        commonStyles.container,
-        { backgroundColor: colors.background, paddingTop: 16 },
-      ]}
-    >
       <ScrollView
-        style={styles.content}
+        style={commonStyles.scrollView}
         contentContainerStyle={commonStyles.scrollContentContainer}
         showsVerticalScrollIndicator={false}
       >
@@ -182,7 +176,6 @@ export default function CyclePhaseDetails() {
           </View>
         )}
       </ScrollView>
-    </View>
   );
 }
 

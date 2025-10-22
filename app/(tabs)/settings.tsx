@@ -27,10 +27,7 @@ export default function Settings() {
 
   return (
     <ScrollView
-      style={[
-        commonStyles.container,
-        { backgroundColor: colors.background },
-      ]}
+      style={[commonStyles.scrollView]}
       contentContainerStyle={commonStyles.scrollContentContainer}
       showsVerticalScrollIndicator={false}
     >

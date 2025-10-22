@@ -127,13 +127,10 @@ export default function AppLockScreen() {
   };
 
   return (
-    <ScrollView
+    <View
       style={[
         commonStyles.container,
-        { backgroundColor: colors.background },
       ]}
-      contentContainerStyle={commonStyles.scrollContentContainer}
-      showsVerticalScrollIndicator={false}
     >
       <View style={[styles.section, { backgroundColor: colors.surface }]}>
         <View style={[styles.settingRow, { borderBottomColor: colors.border }]}>
@@ -206,7 +203,7 @@ export default function AppLockScreen() {
           </View>
         </View>
       )}
-    </ScrollView>
+    </View>
   );
 }
 

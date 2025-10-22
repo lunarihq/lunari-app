@@ -15,12 +15,11 @@ export default function About() {
   return (
     <ScrollView
       style={[
-        commonStyles.container,
-        { backgroundColor: colors.background },
+        commonStyles.scrollView,
+        { backgroundColor: 'colors.background' },
       ]}
       contentContainerStyle={[
         commonStyles.scrollContentContainer,
-        { paddingTop: 0 },
       ]}
       showsVerticalScrollIndicator={false}
     >

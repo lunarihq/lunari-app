@@ -14,8 +14,7 @@ export default function PrivacyPolicy() {
   return (
     <ScrollView
       style={[
-        commonStyles.container,
-        { backgroundColor: colors.background },
+        commonStyles.scrollView
       ]}
       contentContainerStyle={commonStyles.scrollContentContainer}
       showsVerticalScrollIndicator={false}

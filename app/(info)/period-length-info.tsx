@@ -12,7 +12,7 @@ export default function PeriodLength() {
   return (
     <ScrollView
       style={[
-        commonStyles.container,
+        commonStyles.scrollView,
         { backgroundColor: colors.panel },
       ]}
       contentContainerStyle={commonStyles.scrollContentContainer}

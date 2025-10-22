@@ -338,13 +338,7 @@ export default function HealthTracking() {
   };
 
   return (
-    <View
-      style={[
-        commonStyles.container,
-        { backgroundColor: colors.background },
-      ]}
-    >
-
+    <View style={{ flex: 1, backgroundColor: colors.background }}>
       <DateNavigator
         selectedDate={selectedDate}
         onDateChange={handleDateChange}

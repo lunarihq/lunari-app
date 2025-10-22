@@ -8,11 +8,9 @@ import { db, getSetting } from '../../db';
 import { PeriodDate, periodDates } from '../../db/schema';
 import { PeriodPredictionService } from '../../services/periodPredictions';
 import { NotificationService } from '../../services/notificationService';
-import { useTheme } from '../../styles/theme';
 import { commonStyles } from '../../styles/commonStyles';
 
 export default function Index() {
-  const { colors } = useTheme();
   const [selectedDates, setSelectedDates] = useState<{ [date: string]: any }>(
     {}
   );
@@ -157,10 +155,7 @@ export default function Index() {
 
   return (
     <ScrollView
-      style={[
-        commonStyles.container,
-        { backgroundColor: colors.background },
-      ]}
+      style={[commonStyles.scrollView]}
       contentContainerStyle={commonStyles.scrollContentContainer}
       showsVerticalScrollIndicator={false}
     >
