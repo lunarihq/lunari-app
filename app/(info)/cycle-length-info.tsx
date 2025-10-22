@@ -33,8 +33,8 @@ export default function StatusInfo() {
         </Text>
 
         <Text style={[typography.body]}>
-          <Text style={{ fontWeight: 'bold' }}>Cycle length</Text>{' '}
-          {t('cycleLength.definition').replace('Cycle length is counted', 'is counted')}
+          <Text style={{ fontWeight: 'bold' }}>{t('cycleLength.definitionBold')}</Text>{' '}
+          {t('cycleLength.definitionText')}
         </Text>
       </View>
 
@@ -149,9 +149,9 @@ export default function StatusInfo() {
           </View>
           <Text style={[typography.body, { marginTop: 12 }]}>
             <Text style={{ fontWeight: 'bold' }}>
-              Incorrectly entered period data
+              {t('cycleLength.irregular.dataNoteBold')}
             </Text>{' '}
-            {t('cycleLength.irregular.dataNote').replace('Incorrectly entered period data can cause', 'can cause')}
+            {t('cycleLength.irregular.dataNote')}
           </Text>
         </View>
       </View>
@@ -166,8 +166,8 @@ export default function StatusInfo() {
       </View>
       <View style={{ marginBottom: 28 }}>
         <Text style={[typography.body]}>
-          <Text style={{ fontWeight: 'bold' }}>IMPORTANT! </Text>
-          {t('cycleLength.disclaimer').replace('IMPORTANT! ', '')}
+          <Text style={{ fontWeight: 'bold' }}>{t('cycleLength.disclaimerBold')} </Text>
+          {t('cycleLength.disclaimer')}
         </Text>
       </View>
       <View style={{ marginBottom: 28 }}>

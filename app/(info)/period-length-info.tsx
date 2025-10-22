@@ -33,8 +33,8 @@ export default function PeriodLength() {
         </Text>
 
         <Text style={[typography.body]}>
-          <Text style={{ fontWeight: 'bold' }}>Period length</Text>{' '}
-          {t('periodLength.definition').replace('Period length is counted', 'is counted')}
+          <Text style={{ fontWeight: 'bold' }}>{t('periodLength.definitionBold')}</Text>{' '}
+          {t('periodLength.definitionText')}
         </Text>
       </View>
 
@@ -66,9 +66,9 @@ export default function PeriodLength() {
         </Text>
         <Text style={[typography.body, { marginTop: 12 }]}>
           <Text style={{ fontWeight: 'bold' }}>
-            Incorrectly entered period data
+            {t('periodLength.irregular.dataNoteBold')}
           </Text>{' '}
-          {t('periodLength.irregular.dataNote').replace('Incorrectly entered period data could be', 'could be')}
+          {t('periodLength.irregular.dataNote')}
         </Text>
       </View>
       <View style={{ marginBottom: 28 }}>
@@ -81,8 +81,8 @@ export default function PeriodLength() {
       </View>
       <View style={{ marginBottom: 28 }}>
         <Text style={[typography.body]}>
-          <Text style={{ fontWeight: 'bold' }}>IMPORTANT! </Text>
-          {t('periodLength.disclaimer').replace('IMPORTANT! ', '')}
+          <Text style={{ fontWeight: 'bold' }}>{t('periodLength.disclaimerBold')} </Text>
+          {t('periodLength.disclaimer')}
         </Text>
       </View>
       <View style={{ marginBottom: 28 }}>
