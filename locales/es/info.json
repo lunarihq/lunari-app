@@ -14,6 +14,37 @@
     "cyclePhaseTitle": "Fase del ciclo",
     "chanceToConceive": "Probabilidad de concebir",
     "possibleSymptoms": "Posibles síntomas",
+    "phases": {
+      "menstrual": "Menstrual",
+      "follicular": "Folicular",
+      "ovulatory": "Ovulatoria",
+      "luteal": "Lútea",
+      "extended": "Extendido"
+    },
+    "phaseDescriptions": {
+      "menstrual": "El periodo, o menstruación, es cuando el revestimiento del útero se desprende y sale del cuerpo a través del sangrado vaginal. Normalmente dura de 3 a 7 días, pero puede variar ampliamente.\n\nDurante este tiempo, el cuerpo se prepara para un posible embarazo engrosando el revestimiento uterino. Si no ocurre la fertilización, los niveles hormonales bajan y comienza la menstruación.",
+      "follicular": "La fase folicular es la primera parte del ciclo menstrual, comenzando con el primer día de tu periodo y terminando con la ovulación. Los niveles de energía comienzan a aumentar con el incremento de estrógeno. Es un buen momento para comenzar nuevos proyectos y actividad física.",
+      "ovulatory": "La ovulación es la liberación de un óvulo del ovario. Esta es la ventana de fertilidad máxima, y típicamente ocurre alrededor del día 14 de tu ciclo.",
+      "luteal": "La fase lútea es la segunda parte del ciclo menstrual, que dura desde la ovulación hasta el inicio de tu próximo periodo, y típicamente dura entre 12 y 14 días.\n\nDurante este tiempo, el cuerpo se prepara para un posible embarazo engrosando el revestimiento uterino. Si no ocurre la fertilización, los niveles hormonales bajan y comienza la menstruación.",
+      "extended": "Tu ciclo está durando más de lo habitual (después del día 35). Esto puede ser normal ocasionalmente, pero si sucede con frecuencia, considera hacer un seguimiento de los patrones y consultar con un profesional de la salud."
+    },
+    "pregnancyChance": {
+      "high": "Alta",
+      "medium": "Media",
+      "low": "Baja"
+    },
+    "pregnancyChanceDescriptions": {
+      "high": "Esta es tu ventana fértil cuando la concepción es más probable. La ovulación típicamente ocurre durante este tiempo.",
+      "medium": "Hay una probabilidad moderada de concepción durante este tiempo mientras te acercas o te alejas de tu ventana fértil.",
+      "low": "La concepción es menos probable durante este tiempo. Esto incluye los días menstruales y la fase lútea tardía de tu ciclo."
+    },
+    "symptoms": {
+      "menstrual": "Cólicos, fatiga, cambios de humor, hinchazón, dolores de cabeza y dolor lumbar. Tu energía y estado de ánimo pueden estar más bajos de lo habitual.",
+      "follicular": "Energía en aumento, mejor estado de ánimo, piel más clara y mayor motivación. Puedes sentirte más social y segura.",
+      "ovulatory": "Energía máxima, deseo sexual elevado, mayor confianza y posibles cólicos leves o manchado. Puedes sentirte más atractiva.",
+      "luteal": "Hinchazón, cambios de humor, antojos de comida, fatiga, sensibilidad en los senos e irritabilidad. Estos síntomas del SPM típicamente empeoran a medida que se acerca tu periodo.",
+      "extended": ""
+    },
     "menstrual": {
       "title": "Fase menstrual",
       "description": "El primer día de tu periodo marca el inicio de tu ciclo menstrual."

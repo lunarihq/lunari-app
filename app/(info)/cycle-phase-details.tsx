@@ -46,20 +46,14 @@ export default function CyclePhaseDetails() {
     parseInt(params.averageCycleLength as string) || 28;
   const currentDate = new Date();
 
-  const cyclePhase = PeriodPredictionService.getCyclePhase(
+  const cyclePhaseKey = PeriodPredictionService.getCyclePhase(
     cycleDay,
     averageCycleLength
   );
-  const phaseDescription =
-    PeriodPredictionService.getPhaseDescription(cyclePhase);
-  const pregnancyChance = PeriodPredictionService.getPregnancyChance(
+  const pregnancyChanceKey = PeriodPredictionService.getPregnancyChance(
     cycleDay,
     averageCycleLength
   );
-  const pregnancyDescription =
-    PeriodPredictionService.getPregnancyChanceDescription(pregnancyChance);
-  const possibleSymptoms =
-    PeriodPredictionService.getPossibleSymptoms(cyclePhase);
 
   return (
     <View
@@ -126,11 +120,11 @@ export default function CyclePhaseDetails() {
               { fontSize: 18, fontWeight: 'bold', marginBottom: 8 },
             ]}
           >
-            {cyclePhase}
+            {t(`cyclePhase.phases.${cyclePhaseKey}`)}
           </Text>
 
           <Text style={[typography.body]}>
-            {phaseDescription}
+            {t(`cyclePhase.phaseDescriptions.${cyclePhaseKey}`)}
           </Text>
         </View>
 
@@ -155,15 +149,15 @@ export default function CyclePhaseDetails() {
               { fontSize: 18, fontWeight: 'bold', marginBottom: 8 },
             ]}
           >
-            {pregnancyChance}
+            {t(`cyclePhase.pregnancyChance.${pregnancyChanceKey}`)}
           </Text>
 
           <Text style={[typography.body]}>
-            {pregnancyDescription}
+            {t(`cyclePhase.pregnancyChanceDescriptions.${pregnancyChanceKey}`)}
           </Text>
         </View>
 
-        {possibleSymptoms && (
+        {t(`cyclePhase.symptoms.${cyclePhaseKey}`) && (
           <View style={[styles.phaseCard, { backgroundColor: colors.surface }]}>
             <View style={styles.phaseHeader}>
               <View
@@ -183,7 +177,7 @@ export default function CyclePhaseDetails() {
               </Text>
             </View>
             <Text style={[typography.body]}>
-              {possibleSymptoms}
+              {t(`cyclePhase.symptoms.${cyclePhaseKey}`)}
             </Text>
           </View>
         )}

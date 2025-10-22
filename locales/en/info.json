@@ -14,6 +14,37 @@
     "cyclePhaseTitle": "Cycle phase",
     "chanceToConceive": "Chance to conceive",
     "possibleSymptoms": "Possible symptoms",
+    "phases": {
+      "menstrual": "Menstrual",
+      "follicular": "Follicular",
+      "ovulatory": "Ovulatory",
+      "luteal": "Luteal",
+      "extended": "Extended"
+    },
+    "phaseDescriptions": {
+      "menstrual": "The period, or menstruation, is when the lining of the uterus sheds and leaves the body through vaginal bleeding. It typically lasts 3–7 days, but can vary widely. \n\nDuring this time, the body prepares for a potential pregnancy by thickening the uterine lining. If fertilization does not occur, hormone levels drop, and menstruation begins.",
+      "follicular": "The follicular phase is the first part of the menstrual cycle, starting with the first day of your period and ending with ovulation. Energy levels start to rise with increasing estrogen. Good time for starting new projects and physical activity.",
+      "ovulatory": "Ovulation is the release of an egg from the ovary. This is the peak fertility window, and it typically occurs around day 14 of your cycle.",
+      "luteal": "The luteal phase is the second part of the menstrual cycle, lasting from ovulation until the start of your next period, and typically lasts about 12–14 days.\n\nDuring this time, the body prepares for a potential pregnancy by thickening the uterine lining. If fertilization does not occur, hormone levels drop, and menstruation begins.",
+      "extended": "Your cycle is running longer than usual (past day 35). This can be normal occasionally, but if it happens often, consider tracking patterns and chatting with a healthcare provider."
+    },
+    "pregnancyChance": {
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low"
+    },
+    "pregnancyChanceDescriptions": {
+      "high": "This is your fertile window when conception is most likely to occur. Ovulation typically happens during this time.",
+      "medium": "There is a moderate chance of conception during this time as you approach or move away from your fertile window.",
+      "low": "Conception is less likely during this time. This includes menstrual days and the later luteal phase of your cycle."
+    },
+    "symptoms": {
+      "menstrual": "Cramps, fatigue, mood swings, bloating, headaches, and lower back pain. Your energy and mood may be lower than usual.",
+      "follicular": "Rising energy, improved mood, clearer skin, and increased motivation. You may feel more social and confident.",
+      "ovulatory": "Peak energy, heightened sex drive, increased confidence, and possible mild cramping or spotting. You may feel your most attractive.",
+      "luteal": "Bloating, mood swings, food cravings, fatigue, breast tenderness, and irritability. These PMS symptoms typically worsen as your period approaches.",
+      "extended": ""
+    },
     "menstrual": {
       "title": "Menstrual phase",
       "description": "The first day of your period marks the beginning of your menstrual cycle."
