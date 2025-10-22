@@ -28,6 +28,7 @@ import {
   SELECTION_COLORS,
 } from '../constants/healthTracking';
 import { HealthItemGrid } from '../components/HealthItemGrid';
+import { DateNavigator } from '../components/DateNavigator';
 
 dayjs.extend(isoWeek);
 
@@ -84,28 +85,9 @@ export default function HealthTracking() {
     }, [selectedDate])
   );
 
-  // Navigate to previous day
-  const goToPreviousDay = () => {
-    setSelectedDate(
-      dayjs(selectedDate).subtract(1, 'day').format('YYYY-MM-DD')
-    );
-  };
-
-  // Navigate to next day
-  const goToNextDay = () => {
-    const nextDay = dayjs(selectedDate).add(1, 'day');
-    const today = dayjs();
-
-    // Don't allow navigating to future dates
-    if (!nextDay.isAfter(today, 'day')) {
-      setSelectedDate(nextDay.format('YYYY-MM-DD'));
-    }
-  };
-
-  const isNextDayDisabled = () => {
-    const nextDay = dayjs(selectedDate).add(1, 'day');
-    const today = dayjs();
-    return nextDay.isAfter(today, 'day');
+  // Handle date change from DateNavigator
+  const handleDateChange = (newDate: string) => {
+    setSelectedDate(newDate);
   };
   const checkIsPeriodDate = async (date: string) => {
     try {
@@ -360,33 +342,12 @@ export default function HealthTracking() {
         { backgroundColor: colors.background },
       ]}
     >
-      {/* Date Navigation Controls */}
-      <View style={styles.dateNavigator}>
-        <TouchableOpacity onPress={goToPreviousDay} style={styles.headerButton}>
-          <Ionicons name="chevron-back" size={24} color={colors.textPrimary} />
-        </TouchableOpacity>
 
-        <Text style={[typography.body, { fontSize: 18, fontWeight: '600' }]}>
-          {formatTodayOrDate(selectedDate)}
-        </Text>
-
-        <TouchableOpacity
-          onPress={goToNextDay}
-          style={[
-            styles.headerButton,
-            isNextDayDisabled() && styles.disabledButton,
-          ]}
-          disabled={isNextDayDisabled()}
-        >
-          <Ionicons
-            name="chevron-forward"
-            size={24}
-            color={
-              isNextDayDisabled() ? colors.textSecondary : colors.textPrimary
-            }
-          />
-        </TouchableOpacity>
-      </View>
+      <DateNavigator
+        selectedDate={selectedDate}
+        onDateChange={handleDateChange}
+        maxDate={dayjs().format('YYYY-MM-DD')}
+      />
 
       <ScrollView
         ref={scrollViewRef}
@@ -535,16 +496,6 @@ export default function HealthTracking() {
 }
 
 const styles = StyleSheet.create({
-  headerButton: {
-    padding: 10,
-  },
-  disabledButton: { opacity: 0.5 },
-  dateNavigator: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 10,
-    alignItems: 'center',
-  },
   scrollView: {
     flex: 1,
   },
