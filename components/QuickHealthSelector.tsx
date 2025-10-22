@@ -110,7 +110,7 @@ export const QuickHealthSelector = ({
   };
 
   return (
-    <View style={[styles.symptomsCard, { backgroundColor: colors.surface }]}>
+    <View style={[commonStyles.sectionContainer]}>
       <Text style={[typography.heading2, titleStyle, { marginBottom: 16 }]}>
         {t('symptomsTracker.title')}
       </Text>
