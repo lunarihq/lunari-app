@@ -131,7 +131,7 @@ export default function AppLockScreen() {
         commonStyles.container,
       ]}
     >
-      <View style={[styles.section, { backgroundColor: colors.surface }]}>
+      <View style={[commonStyles.sectionContainer, { padding: 0 }]}>
         <View style={[styles.settingRow, { borderBottomColor: colors.border }]}>
           <View style={styles.settingContent}>
             <Text style={[styles.settingTitle, { color: colors.textPrimary }]}>
@@ -174,7 +174,7 @@ export default function AppLockScreen() {
       </View>
 
       {biometricSupported && (
-        <View style={[styles.section, { backgroundColor: colors.surface }]}>
+        <View style={[commonStyles.sectionContainer, { padding: 0 }]}>
           <View style={[styles.settingRow, styles.lastRow]}>
             <View style={styles.settingContent}>
               <Text

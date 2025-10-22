@@ -30,7 +30,7 @@ const commonStyles = StyleSheet.create({
     marginBottom: 16,
     padding: 16,
     backgroundColor: 'yellow',
-
+    overflow: 'hidden',
   },
 
   // For title row in sections (text on left, actions on right)

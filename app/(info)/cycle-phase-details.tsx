@@ -93,7 +93,7 @@ export default function CyclePhaseDetails() {
           {getFormattedCycleStart(cycleDay, t)}
         </Text>
 
-        <View style={[styles.phaseCard, { backgroundColor: colors.surface }]}>
+        <View style={[commonStyles.sectionContainer]}>
           <View style={styles.phaseHeader}>
             <View
               style={[
@@ -122,7 +122,7 @@ export default function CyclePhaseDetails() {
           </Text>
         </View>
 
-        <View style={[styles.phaseCard, { backgroundColor: colors.surface }]}>
+        <View style={[commonStyles.sectionContainer]}>
           <View style={styles.phaseHeader}>
             <View
               style={[
@@ -152,7 +152,7 @@ export default function CyclePhaseDetails() {
         </View>
 
         {t(`cyclePhase.symptoms.${cyclePhaseKey}`) && (
-          <View style={[styles.phaseCard, { backgroundColor: colors.surface }]}>
+          <View style={[commonStyles.sectionContainer]}>
             <View style={styles.phaseHeader}>
               <View
                 style={[
@@ -180,14 +180,6 @@ export default function CyclePhaseDetails() {
 }
 
 const styles = StyleSheet.create({
-  content: {
-    flex: 1,
-  },
-  phaseCard: {
-    borderRadius: 16,
-    padding: 16,
-    marginBottom: 24,
-  },
   phaseHeader: {
     flexDirection: 'row',
     alignItems: 'center',
