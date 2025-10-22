@@ -78,7 +78,6 @@ export default function CycleLengthScreen() {
             {
               textAlign: 'left',
               marginBottom: 40,
-              lineHeight: 22,
               color: colors.textSecondary,
             },
           ]}

@@ -79,6 +79,5 @@ const createStyles = (colors: ColorScheme) =>
       color: colors.textSecondary,
       textAlign: 'center',
       marginTop: 5,
-      lineHeight: 18,
     },
   });

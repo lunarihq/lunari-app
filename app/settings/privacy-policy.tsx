@@ -37,7 +37,7 @@ export default function PrivacyPolicy() {
             Introduction
           </Text>
         </View>
-        <Text style={[typography.body, { lineHeight: 24, marginBottom: 12 }]}>
+        <Text style={[typography.body, { marginBottom: 12 }]}>
           This Privacy Policy sets out how the app Lunari uses and protects your
           personal data that you generate and store within the app.
         </Text>
@@ -50,7 +50,7 @@ export default function PrivacyPolicy() {
             Data Use
           </Text>
         </View>
-        <Text style={[typography.body, { lineHeight: 24, marginBottom: 12 }]}>
+        <Text style={[typography.body, { marginBottom: 12 }]}>
           Lunari respects and celebrates your privacy. There is no collection of
           usage data or personal information, no ads, no spyware. Lunari can
           store data related to your menstrual heatlh{' '}
@@ -60,7 +60,7 @@ export default function PrivacyPolicy() {
         <Text
           style={[
             typography.body,
-            { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
+            { marginBottom: 8, marginLeft: 8 },
           ]}
         >
           • Period start and end dates
@@ -68,7 +68,7 @@ export default function PrivacyPolicy() {
         <Text
           style={[
             typography.body,
-            { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
+            { marginBottom: 8, marginLeft: 8 },
           ]}
         >
           • Cycle length and period duration
@@ -76,7 +76,7 @@ export default function PrivacyPolicy() {
         <Text
           style={[
             typography.body,
-            { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
+            { marginBottom: 8, marginLeft: 8 },
           ]}
         >
           • Symptoms and mood tracking data
@@ -84,7 +84,7 @@ export default function PrivacyPolicy() {
         <Text
           style={[
             typography.body,
-            { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
+            { marginBottom: 8, marginLeft: 8 },
           ]}
         >
           • Notes and personal observations
@@ -92,17 +92,17 @@ export default function PrivacyPolicy() {
         <Text
           style={[
             typography.body,
-            { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
+            { marginBottom: 8, marginLeft: 8 },
           ]}
         >
           • App preferences and settings
         </Text>
-        <Text style={[typography.body, { lineHeight: 24, marginBottom: 12 }]}>
+        <Text style={[typography.body, { marginBottom: 12 }]}>
           This data is used solely to provide you with period predictions, cycle
           insights, and personalized tracking features. We do not share, sell,
           or transmit your personal health data to any third parties.
         </Text>
-        <Text style={[typography.body, { lineHeight: 24, marginBottom: 12 }]}>
+        <Text style={[typography.body, { marginBottom: 12 }]}>
           If you wish to delete all your app data, you can do so by going to the
           settings menu and selecting "Delete data". This can also be done by
           uninstalling the app.
@@ -120,13 +120,13 @@ export default function PrivacyPolicy() {
             Permissions
           </Text>
         </View>
-        <Text style={[typography.body, { lineHeight: 24, marginBottom: 12 }]}>
+        <Text style={[typography.body, { marginBottom: 12 }]}>
           Lunari may request the following permissions:
         </Text>
         <Text
           style={[
             typography.body,
-            { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
+            { marginBottom: 8, marginLeft: 8 },
           ]}
         >
           • <Text style={styles.bold}>Reminders:</Text> To send you period
@@ -135,13 +135,13 @@ export default function PrivacyPolicy() {
         <Text
           style={[
             typography.body,
-            { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
+            { marginBottom: 8, marginLeft: 8 },
           ]}
         >
           • <Text style={styles.bold}>Biometric authentication:</Text> To secure
           your app with fingerprint or face recognition (optional).
         </Text>
-        <Text style={[typography.body, { lineHeight: 24, marginBottom: 12 }]}>
+        <Text style={[typography.body, { marginBottom: 12 }]}>
           If you don't want to use any of these permissions, you can revoke them
           at any time through your device settings.
         </Text>
@@ -154,13 +154,13 @@ export default function PrivacyPolicy() {
             Transparency
           </Text>
         </View>
-        <Text style={[typography.body, { lineHeight: 24, marginBottom: 12 }]}>
+        <Text style={[typography.body, { marginBottom: 12 }]}>
           We believe in complete transparency about how your data is handled:
         </Text>
         <Text
           style={[
             typography.body,
-            { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
+            { marginBottom: 8, marginLeft: 8 },
           ]}
         >
           • All your data is stored locally on your device
@@ -168,7 +168,7 @@ export default function PrivacyPolicy() {
         <Text
           style={[
             typography.body,
-            { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
+            { marginBottom: 8, marginLeft: 8 },
           ]}
         >
           • No data is transmitted to external servers
@@ -176,7 +176,7 @@ export default function PrivacyPolicy() {
         <Text
           style={[
             typography.body,
-            { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
+            { marginBottom: 8, marginLeft: 8 },
           ]}
         >
           • You can delete all your data at any time
@@ -184,7 +184,7 @@ export default function PrivacyPolicy() {
         <Text
           style={[
             typography.body,
-            { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
+            { marginBottom: 8, marginLeft: 8 },
           ]}
         >
           • We do not use analytics or tracking services
@@ -192,12 +192,12 @@ export default function PrivacyPolicy() {
         <Text
           style={[
             typography.body,
-            { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
+            { marginBottom: 8, marginLeft: 8 },
           ]}
         >
           • No third-party advertising or data collection
         </Text>
-        <Text style={[typography.body, { lineHeight: 24, marginBottom: 12 }]}>
+        <Text style={[typography.body, { marginBottom: 12 }]}>
           You have full control over your data. You can delete all tracking data
           through the settings menu, and the app will continue to work normally
           without any stored information.
@@ -210,7 +210,6 @@ export default function PrivacyPolicy() {
             typography.body,
             {
               color: colors.textSecondary,
-              lineHeight: 24,
               textAlign: 'center',
             },
           ]}

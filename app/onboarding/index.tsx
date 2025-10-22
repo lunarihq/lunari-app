@@ -43,7 +43,6 @@ export default function WelcomeScreen() {
             { color: colors.primary },
             {
               fontSize: 33,
-              lineHeight: 44,
               marginBottom: 20,
               textAlign: 'center',
               fontFamily: 'BricolageGrotesque_700Bold',
@@ -57,7 +56,6 @@ export default function WelcomeScreen() {
             typography.body,
             {
               fontSize: 18,
-              lineHeight: 24,
               marginBottom: 40,
               textAlign: 'center',
               paddingHorizontal: 16,

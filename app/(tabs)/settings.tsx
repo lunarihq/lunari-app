@@ -45,7 +45,7 @@ export default function Settings() {
               color={colors.textPrimary}
             />
           </View>
-          <Text style={[typography.body, { fontSize: 18, flex: 1 }]}>
+          <Text style={[typography.body, { flex: 1 }]}>
             {t('reminders')}
           </Text>
           <Ionicons
@@ -66,7 +66,7 @@ export default function Settings() {
               color={colors.textPrimary}
             />
           </View>
-          <Text style={[typography.body, { fontSize: 18, flex: 1 }]}>
+          <Text style={[typography.body, { flex: 1 }]}>
             {t('appLock')}
           </Text>
           <Ionicons
@@ -87,7 +87,7 @@ export default function Settings() {
               color={colors.textPrimary}
             />
           </View>
-          <Text style={[typography.body, { fontSize: 18, flex: 1 }]}>
+          <Text style={[typography.body, { flex: 1 }]}>
             {t('privacyPolicy')}
           </Text>
           <Ionicons
@@ -108,7 +108,7 @@ export default function Settings() {
               color={colors.textPrimary}
             />
           </View>
-          <Text style={[typography.body, { fontSize: 18, flex: 1 }]}>
+          <Text style={[typography.body, { flex: 1 }]}>
             {t('about')}
           </Text>
           <Ionicons
@@ -129,7 +129,7 @@ export default function Settings() {
               color={colors.textPrimary}
             />
           </View>
-          <Text style={[typography.body, { fontSize: 18, flex: 1 }]}>
+          <Text style={[typography.body, { flex: 1 }]}>
             {t('theme')}
           </Text>
           <Text style={[typography.body, { color: colors.textSecondary }]}>
@@ -183,7 +183,7 @@ export default function Settings() {
           <Text
             style={[
               typography.body,
-              { fontSize: 18, flex: 1, color: colors.error },
+              { flex: 1, color: colors.error },
             ]}
           >
             {t('deleteData')}

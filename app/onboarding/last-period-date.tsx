@@ -123,7 +123,6 @@ export default function LastPeriodDateScreen() {
             {
               textAlign: 'left',
               marginBottom: 40,
-              lineHeight: 22,
               color: colors.textSecondary,
             },
           ]}

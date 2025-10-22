@@ -37,7 +37,7 @@ export default function About() {
             What is Lunari?
           </Text>
         </View>
-        <Text style={[typography.body, { lineHeight: 24, marginBottom: 12 }]}>
+        <Text style={[typography.body, { marginBottom: 12 }]}>
           Lunari is a privacy-first period tracking app designed to help you
           understand and manage your menstrual cycle.
         </Text>
@@ -53,7 +53,7 @@ export default function About() {
         <Text
           style={[
             typography.body,
-            { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
+            {marginBottom: 8, marginLeft: 8 },
           ]}
         >
           • Period and cycle predictions
@@ -61,7 +61,7 @@ export default function About() {
         <Text
           style={[
             typography.body,
-            { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
+            {marginBottom: 8, marginLeft: 8 },
           ]}
         >
           • Symptom and mood tracking
@@ -69,7 +69,7 @@ export default function About() {
         <Text
           style={[
             typography.body,
-            { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
+            {marginBottom: 8, marginLeft: 8 },
           ]}
         >
           • Cycle statistics & history
@@ -77,7 +77,7 @@ export default function About() {
         <Text
           style={[
             typography.body,
-            { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
+            {marginBottom: 8, marginLeft: 8 },
           ]}
         >
           • Cycle phase insights
@@ -85,7 +85,7 @@ export default function About() {
         <Text
           style={[
             typography.body,
-            { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
+            {marginBottom: 8, marginLeft: 8 },
           ]}
         >
           • Period reminders
@@ -93,7 +93,7 @@ export default function About() {
         <Text
           style={[
             typography.body,
-            { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
+            {marginBottom: 8, marginLeft: 8 },
           ]}
         >
           • PIN/biometric app lock
@@ -101,7 +101,7 @@ export default function About() {
         <Text
           style={[
             typography.body,
-            { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
+            {marginBottom: 8, marginLeft: 8 },
           ]}
         >
           • Dark and light theme support
@@ -119,13 +119,13 @@ export default function About() {
             Privacy First
           </Text>
         </View>
-        <Text style={[typography.body, { lineHeight: 24, marginBottom: 12 }]}>
+        <Text style={[typography.body, { marginBottom: 12 }]}>
           Lunari is designed with a privacy-first approach:
         </Text>
         <Text
           style={[
             typography.body,
-            { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
+            {marginBottom: 8, marginLeft: 8 },
           ]}
         >
           • All data is stored locally on your device
@@ -133,7 +133,7 @@ export default function About() {
         <Text
           style={[
             typography.body,
-            { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
+            {marginBottom: 8, marginLeft: 8 },
           ]}
         >
           • No data transmission to external servers
@@ -141,7 +141,7 @@ export default function About() {
         <Text
           style={[
             typography.body,
-            { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
+            {marginBottom: 8, marginLeft: 8 },
           ]}
         >
           • No third-party analytics or tracking
@@ -149,7 +149,7 @@ export default function About() {
         <Text
           style={[
             typography.body,
-            { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
+            {marginBottom: 8, marginLeft: 8 },
           ]}
         >
           • No ads
@@ -157,7 +157,7 @@ export default function About() {
         <Text
           style={[
             typography.body,
-            { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
+            {marginBottom: 8, marginLeft: 8 },
           ]}
         >
           • No account required
@@ -175,7 +175,7 @@ export default function About() {
             Open Source
           </Text>
         </View>
-        <Text style={[typography.body, { lineHeight: 24, marginBottom: 12 }]}>
+        <Text style={[typography.body, { marginBottom: 12 }]}>
           Lunari is open-source and licensed under the{' '}
           <Text
             onPress={() => Linking.openURL(GPL_URL)}
@@ -189,7 +189,7 @@ export default function About() {
           </Text>
           .
         </Text>
-        <Text style={[typography.body, { lineHeight: 24, marginBottom: 12 }]}>
+        <Text style={[typography.body, { marginBottom: 12 }]}>
           Lunari is distributed in the hope that it will be useful, but WITHOUT
           ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
           FITNESS FOR A PARTICULAR PURPOSE.
@@ -213,14 +213,14 @@ export default function About() {
             Technical Details
           </Text>
         </View>
-        <Text style={[typography.body, { lineHeight: 24, marginBottom: 12 }]}>
+        <Text style={[typography.body, { marginBottom: 12 }]}>
           Lunari is built using modern technologies to ensure reliability and
           performance:
         </Text>
         <Text
           style={[
             typography.body,
-            { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
+            {marginBottom: 8, marginLeft: 8 },
           ]}
         >
           • <Text style={styles.bold}>Framework:</Text> React Native with Expo
@@ -228,7 +228,7 @@ export default function About() {
         <Text
           style={[
             typography.body,
-            { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
+            {marginBottom: 8, marginLeft: 8 },
           ]}
         >
           • <Text style={styles.bold}>Database:</Text> SQLite with Drizzle ORM
@@ -236,7 +236,7 @@ export default function About() {
         <Text
           style={[
             typography.body,
-            { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
+            {marginBottom: 8, marginLeft: 8 },
           ]}
         >
           • <Text style={styles.bold}>Language:</Text> TypeScript
@@ -244,7 +244,7 @@ export default function About() {
         <Text
           style={[
             typography.body,
-            { lineHeight: 24, marginBottom: 8, marginLeft: 8 },
+            {marginBottom: 8, marginLeft: 8 },
           ]}
         >
           • <Text style={styles.bold}>Platform:</Text> iOS and Android
@@ -257,7 +257,6 @@ export default function About() {
             typography.body,
             {
               color: colors.textSecondary,
-              lineHeight: 24,
               textAlign: 'center',
             },
           ]}

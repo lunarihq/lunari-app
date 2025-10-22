@@ -868,7 +868,6 @@ export default function SymptomTracking() {
                 <Text
                   style={[
                     typography.caption,
-                    { lineHeight: 17 },
                     { textAlign: 'center' },
                   ]}
                 >
@@ -926,7 +925,6 @@ export default function SymptomTracking() {
                 <Text
                   style={[
                     typography.caption,
-                    { lineHeight: 17 },
                     { textAlign: 'center' },
                   ]}
                 >
@@ -984,7 +982,6 @@ export default function SymptomTracking() {
                 <Text
                   style={[
                     typography.caption,
-                    { lineHeight: 17 },
                     { textAlign: 'center' },
                   ]}
                 >
@@ -1037,7 +1034,7 @@ export default function SymptomTracking() {
           >
             {notes.trim() ? (
               <Text
-                style={[typography.body, { flex: 1, lineHeight: 22 }]}
+                style={[typography.body, { flex: 1 }]}
                 numberOfLines={3}
               >
                 {notes}
