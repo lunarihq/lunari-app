@@ -30,7 +30,7 @@ export default function PeriodLength() {
           What Does "Late" Mean?
         </Text>
 
-        <Text style={[typography.body, { lineHeight: 24 }]}>
+        <Text style={[typography.body]}>
           A period is generally considered late when it's more than 5-7 days
           past your expected date. Cycles can naturally vary by a few days each
           month, so occasional lateness is normal.
@@ -41,7 +41,7 @@ export default function PeriodLength() {
         <Text style={[typography.heading2, { marginBottom: 12 }]}>
           Common Causes
         </Text>
-        <Text style={[typography.body, { lineHeight: 24 }]}>
+        <Text style={[typography.body]}>
           • Stress: High stress affects hormones that regulate your cycle{'\n'}•
           Weight changes: Significant gain or loss can delay periods{'\n'}•
           Exercise: Intense training can temporarily stop menstruation{'\n'}•
@@ -58,7 +58,7 @@ export default function PeriodLength() {
         <Text style={[typography.heading2, { marginBottom: 12 }]}>
           When to See a Doctor
         </Text>
-        <Text style={[typography.body, { lineHeight: 24 }]}>
+        <Text style={[typography.body]}>
           Consult a healthcare provider if your period is more than 3 months
           late, if you experience severe pain, or if you've had unprotected sex
           and could be pregnant. Sudden changes in cycle regularity also warrant
@@ -70,7 +70,7 @@ export default function PeriodLength() {
         <Text style={[typography.heading2, { marginBottom: 12 }]}>
           What You Can Do
         </Text>
-        <Text style={[typography.body, { lineHeight: 24 }]}>
+        <Text style={[typography.body]}>
           • Take a pregnancy test if there's any possibility{'\n'}• Manage
           stress through meditation, exercise, or therapy{'\n'}• Maintain a
           healthy weight for your body{'\n'}• Get consistent, quality sleep

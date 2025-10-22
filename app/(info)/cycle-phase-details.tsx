@@ -127,7 +127,7 @@ export default function CyclePhaseDetails() {
             {cyclePhase}
           </Text>
 
-          <Text style={[typography.body, { fontSize: 17, lineHeight: 23 }]}>
+          <Text style={[typography.body]}>
             {phaseDescription}
           </Text>
         </View>
@@ -156,7 +156,7 @@ export default function CyclePhaseDetails() {
             {pregnancyChance}
           </Text>
 
-          <Text style={[typography.body, { fontSize: 17, lineHeight: 23 }]}>
+          <Text style={[typography.body]}>
             {pregnancyDescription}
           </Text>
         </View>
@@ -180,7 +180,7 @@ export default function CyclePhaseDetails() {
                 Possible symptoms
               </Text>
             </View>
-            <Text style={[typography.body, { fontSize: 17, lineHeight: 23 }]}>
+            <Text style={[typography.body]}>
               {possibleSymptoms}
             </Text>
           </View>

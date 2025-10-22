@@ -30,7 +30,7 @@ export default function StatusInfo() {
           Understanding your cycle
         </Text>
 
-        <Text style={[typography.body, { lineHeight: 24 }]}>
+        <Text style={[typography.body]}>
           <Text style={{ fontWeight: 'bold' }}>Cycle length</Text> is counted
           from the first day of one period to the first day of the next period.
         </Text>
@@ -40,7 +40,7 @@ export default function StatusInfo() {
         <Text style={[typography.heading2, { marginBottom: 12 }]}>
           Normal range
         </Text>
-        <Text style={[typography.body, { lineHeight: 24 }]}>
+        <Text style={[typography.body]}>
           According to the{' '}
           <Text style={{ fontWeight: 'bold' }}>
             American College of Obstetricians and Gynecologists (ACOG)¹
@@ -48,7 +48,7 @@ export default function StatusInfo() {
           , a normal menstrual cycle typically lasts between{' '}
           <Text style={{ fontWeight: 'bold' }}>21 and 35 days</Text>.
         </Text>
-        <Text style={[typography.body, { lineHeight: 24 }]}>
+        <Text style={[typography.body]}>
           Most people have cycles that vary by a few days each month, which is
           completely normal.
         </Text>
@@ -58,7 +58,7 @@ export default function StatusInfo() {
         <Text style={[typography.heading2, { marginBottom: 12 }]}>
           Irregular cycles
         </Text>
-        <Text style={[typography.body, { lineHeight: 24 }]}>
+        <Text style={[typography.body]}>
           Irregular cycles are{' '}
           <Text style={{ fontWeight: 'bold' }}>
             shorter than 21 days or longer than 35 days
@@ -73,8 +73,8 @@ export default function StatusInfo() {
               marginBottom: 6,
             }}
           >
-            <Text style={{ marginRight: 8, lineHeight: 24 }}>{'\u2022'}</Text>
-            <Text style={[typography.body, { flex: 1, lineHeight: 24 }]}>
+            <Text style={{ marginRight: 8 }}>{'\u2022'}</Text>
+            <Text style={[typography.body, { flex: 1 }]}>
               Hormonal changes
             </Text>
           </View>
@@ -85,8 +85,8 @@ export default function StatusInfo() {
               marginBottom: 6,
             }}
           >
-            <Text style={{ marginRight: 8, lineHeight: 24 }}>{'\u2022'}</Text>
-            <Text style={[typography.body, { flex: 1, lineHeight: 24 }]}>
+            <Text style={{ marginRight: 8 }}>{'\u2022'}</Text>
+            <Text style={[typography.body, { flex: 1 }]}>
               Stress, travel, or disrupted sleep
             </Text>
           </View>
@@ -97,8 +97,8 @@ export default function StatusInfo() {
               marginBottom: 6,
             }}
           >
-            <Text style={{ marginRight: 8, lineHeight: 24 }}>{'\u2022'}</Text>
-            <Text style={[typography.body, { flex: 1, lineHeight: 24 }]}>
+            <Text style={{ marginRight: 8 }}>{'\u2022'}</Text>
+            <Text style={[typography.body, { flex: 1 }]}>
               Medical conditions
             </Text>
           </View>
@@ -109,8 +109,8 @@ export default function StatusInfo() {
               marginBottom: 6,
             }}
           >
-            <Text style={{ marginRight: 8, lineHeight: 24 }}>{'\u2022'}</Text>
-            <Text style={[typography.body, { flex: 1, lineHeight: 24 }]}>
+            <Text style={{ marginRight: 8 }}>{'\u2022'}</Text>
+            <Text style={[typography.body, { flex: 1 }]}>
               Polycystic ovary syndrome (PCOS)
             </Text>
           </View>
@@ -121,14 +121,14 @@ export default function StatusInfo() {
               marginBottom: 6,
             }}
           >
-            <Text style={{ marginRight: 8, lineHeight: 24 }}>{'\u2022'}</Text>
-            <Text style={[typography.body, { flex: 1, lineHeight: 24 }]}>
+            <Text style={{ marginRight: 8 }}>{'\u2022'}</Text>
+            <Text style={[typography.body, { flex: 1 }]}>
               Significant weight change or intense exercise
             </Text>
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-            <Text style={{ marginRight: 8, lineHeight: 24 }}>{'\u2022'}</Text>
-            <Text style={[typography.body, { flex: 1, lineHeight: 24 }]}>
+            <Text style={{ marginRight: 8 }}>{'\u2022'}</Text>
+            <Text style={[typography.body, { flex: 1 }]}>
               Puberty or perimenopause
             </Text>
           </View>
@@ -139,12 +139,12 @@ export default function StatusInfo() {
               marginTop: 6,
             }}
           >
-            <Text style={{ marginRight: 8, lineHeight: 24 }}>{'\u2022'}</Text>
-            <Text style={[typography.body, { flex: 1, lineHeight: 24 }]}>
+            <Text style={{ marginRight: 8 }}>{'\u2022'}</Text>
+            <Text style={[typography.body, { flex: 1 }]}>
               Postpartum and breastfeeding
             </Text>
           </View>
-          <Text style={[typography.body, { lineHeight: 24, marginTop: 12 }]}>
+          <Text style={[typography.body, { marginTop: 12 }]}>
             <Text style={{ fontWeight: 'bold' }}>
               Incorrectly entered period data
             </Text>{' '}
@@ -159,7 +159,7 @@ export default function StatusInfo() {
         <Text style={[typography.heading2, { marginBottom: 12 }]}>
           When to see a doctor?
         </Text>
-        <Text style={[typography.body, { lineHeight: 24 }]}>
+        <Text style={[typography.body]}>
           If your cycles are frequently abnormal in length, or/and accompanied
           by other concerning symptoms, it’s best to talk to your health care
           provider. They can help you figure out the cause and suggest
@@ -167,7 +167,7 @@ export default function StatusInfo() {
         </Text>
       </View>
       <View style={{ marginBottom: 28 }}>
-        <Text style={[typography.body, { lineHeight: 24 }]}>
+        <Text style={[typography.body]}>
           <Text style={{ fontWeight: 'bold' }}>IMPORTANT! </Text>Lunari is not a
           diagnostic tool. The information from Lunari does not replace advice
           from a health care provider. Always seek the advice of your doctor or

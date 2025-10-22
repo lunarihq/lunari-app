@@ -31,7 +31,7 @@ export default function PredictionInfo() {
             <Text style={[typography.heading2, { marginBottom: 12 }]}>
               Next Period Prediction
             </Text>
-            <Text style={[typography.body, { lineHeight: 22 }]}>
+            <Text style={[typography.body]}>
               Your next period is predicted by adding your average cycle length
               to the start date of your most recent period.
             </Text>
@@ -39,11 +39,11 @@ export default function PredictionInfo() {
           <Text style={[typography.heading2, { marginBottom: 12 }]}>
             Cycle Length Calculation
           </Text>
-          <Text style={[typography.body, { lineHeight: 22, marginBottom: 16 }]}>
+          <Text style={[typography.body, { marginBottom: 16 }]}>
             Lunari calculates your average cycle length using a weighted average
             of your last 6 cycles, a commonly used approach in cycle tracking.
           </Text>
-          <Text style={[typography.body, { lineHeight: 22 }]}>
+          <Text style={[typography.body]}>
             Recent cycles have more influence on predictions than older ones.
             For example, most recent cycle: 100%, second most recent: 80%, third
             most recent: 60%, and so on.
@@ -54,7 +54,7 @@ export default function PredictionInfo() {
           <Text style={[typography.heading2, { marginBottom: 12 }]}>
             Ovulation & Fertility
           </Text>
-          <Text style={[typography.body, { lineHeight: 22, marginBottom: 16 }]}>
+          <Text style={[typography.body, { marginBottom: 16 }]}>
             Ovulation is predicted to occur 14 days before your next expected
             period. Your fertile window includes:
           </Text>
@@ -67,7 +67,7 @@ export default function PredictionInfo() {
           <Text style={[typography.heading2, { marginBottom: 12 }]}>
             Accuracy Improves Over Time
           </Text>
-          <Text style={[typography.body, { lineHeight: 22 }]}>
+          <Text style={[typography.body]}>
             The more periods you track, the more accurate predictions become.
             With 3+ cycles, Lunari can provide personalized predictions based on
             your unique patterns.
@@ -78,7 +78,7 @@ export default function PredictionInfo() {
           <Text style={[typography.heading2, { marginBottom: 8 }]}>
             Privacy First
           </Text>
-          <Text style={[typography.body, { lineHeight: 20 }]}>
+          <Text style={[typography.body]}>
             All calculations happen locally on your device. Your period data
             never leaves your phone and is never shared with anyone.
           </Text>

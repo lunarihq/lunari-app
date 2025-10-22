@@ -30,7 +30,7 @@ export default function PeriodLength() {
           Understanding your period
         </Text>
 
-        <Text style={[typography.body, { lineHeight: 24 }]}>
+        <Text style={[typography.body]}>
           <Text style={{ fontWeight: 'bold' }}>Period length</Text> is counted
           from the first until the last day of menstrual bleeding of any volume.
         </Text>
@@ -40,7 +40,7 @@ export default function PeriodLength() {
         <Text style={[typography.heading2, { marginBottom: 12 }]}>
           Normal period length
         </Text>
-        <Text style={[typography.body, { lineHeight: 24 }]}>
+        <Text style={[typography.body]}>
           According to the{' '}
           <Text style={{ fontWeight: 'bold' }}>
             American College of Obstetricians and Gynecologists (ACOG)¹
@@ -48,7 +48,7 @@ export default function PeriodLength() {
           , a normal period length typically lasts between{' '}
           <Text style={{ fontWeight: 'bold' }}>2 and 7 days</Text>.
         </Text>
-        <Text style={[typography.body, { lineHeight: 24, marginTop: 12 }]}>
+        <Text style={[typography.body, { marginTop: 12 }]}>
           Period length can vary from cycle to cycle, which is completely
           normal.
         </Text>
@@ -58,12 +58,12 @@ export default function PeriodLength() {
         <Text style={[typography.heading2, { marginBottom: 12 }]}>
           Irregular periods
         </Text>
-        <Text style={[typography.body, { lineHeight: 24 }]}>
+        <Text style={[typography.body]}>
           Irregular periods (shorter than 2 days or longer than 7 days) might be
           caused by lifestyle changes, medication, stress, travel, and a few
           other factors that can affect hormone levels.
         </Text>
-        <Text style={[typography.body, { lineHeight: 24, marginTop: 12 }]}>
+        <Text style={[typography.body, { marginTop: 12 }]}>
           <Text style={{ fontWeight: 'bold' }}>
             Incorrectly entered period data
           </Text>{' '}
@@ -76,7 +76,7 @@ export default function PeriodLength() {
         <Text style={[typography.heading2, { marginBottom: 12 }]}>
           When to see a doctor?
         </Text>
-        <Text style={[typography.body, { lineHeight: 24 }]}>
+        <Text style={[typography.body]}>
           If your period length is frequently abnormal in length, or/and
           accompanied by other concerning symptoms, it’s best to talk to your
           health care provider. They can help you figure out the cause and
@@ -84,7 +84,7 @@ export default function PeriodLength() {
         </Text>
       </View>
       <View style={{ marginBottom: 28 }}>
-        <Text style={[typography.body, { lineHeight: 24 }]}>
+        <Text style={[typography.body]}>
           <Text style={{ fontWeight: 'bold' }}>IMPORTANT! </Text>Lunari is not a
           diagnostic tool. The information from Lunari does not replace advice
           from a health care provider. Always seek the advice of your doctor or
