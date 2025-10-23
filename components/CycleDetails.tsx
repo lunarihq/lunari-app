@@ -24,6 +24,7 @@ export function CycleDetails({
   const { colors } = useTheme();
   const typography = createTypography(colors);
   const { t } = useTranslation('common');
+  const { t: tHealth } = useTranslation('health');
   const selectedDateFormatted = selectedDate
     ? formatDateLong(selectedDate)
     : '';
@@ -74,10 +75,14 @@ export function CycleDetails({
       </View>
 
       {isDateInPastOrToday() && (
-        <QuickHealthSelector
-          selectedDate={selectedDate}
-          titleStyle={{ fontSize: 20 }}
-        />
+        <>
+          <Text style={[typography.headingMd, { fontSize: 20, fontWeight: '500', marginBottom: 12, marginTop: 16 }]}>
+            {tHealth('quickHealthSelector.title')}
+          </Text>
+          <QuickHealthSelector
+            selectedDate={selectedDate}
+          />
+        </>
       )}
     </>
   );
@@ -85,9 +90,6 @@ export function CycleDetails({
 
 const styles = StyleSheet.create({
   cycleSummary: {
-    paddingTop: 6,
-    paddingBottom: 8,
-    paddingHorizontal: 16,
   },
   headerRow: {
     flexDirection: 'row',

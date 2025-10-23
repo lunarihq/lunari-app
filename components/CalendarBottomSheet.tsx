@@ -120,6 +120,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   sheetContent: {
-    paddingTop: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
   },
 });

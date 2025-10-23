@@ -73,7 +73,7 @@
     "errorMessage": "Error. Please try again."
   },
   "quickHealthSelector": {
-    "title": "How are you feeling today?",
+    "title": "How do you feel today?",
     "add": "Add",
     "note": "Note",
     "noSymptomsToday": "Add symptoms, moods, or notes",
