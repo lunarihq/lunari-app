@@ -113,7 +113,7 @@ export const QuickHealthSelector = ({
     <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
-        style={[styles.scrollContainer, { backgroundColor: 'red' }]}
+        style={[styles.scrollContainer, { backgroundColor: colors.surface }]}
       >
         {/* Add Button - Always visible */}
         <TouchableOpacity

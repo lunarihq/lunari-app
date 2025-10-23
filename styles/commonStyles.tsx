@@ -14,14 +14,13 @@ const commonStyles = StyleSheet.create({
   scrollView: {
     flex: 1,
     paddingHorizontal: 16,
-    backgroundColor: 'green',
+    backgroundColor: Colors.background,
   },
 
   // For ScrollView's contentContainerStyle - handles vertical padding of scrollable content
   scrollContentContainer: {
     paddingTop: 8,
     paddingBottom: 16,
-    backgroundColor: 'blue',
   },
 
   // For individual sections within a screen
