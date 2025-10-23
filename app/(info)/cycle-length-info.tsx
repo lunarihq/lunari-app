@@ -30,7 +30,7 @@ export default function StatusInfo() {
         </Text>
 
         <Text style={[typography.body]}>
-          <Text style={{ fontWeight: 'bold' }}>{t('cycleLength.definitionBold')}</Text>{' '}
+          <Text style={typography.bodyBold}>{t('cycleLength.definitionBold')}</Text>{' '}
           {t('cycleLength.definitionText')}
         </Text>
       </View>
@@ -41,11 +41,11 @@ export default function StatusInfo() {
         </Text>
         <Text style={[typography.body]}>
           {t('cycleLength.normalRange.acogPrefix')}{' '}
-          <Text style={{ fontWeight: 'bold' }}>
+          <Text style={typography.bodyBold}>
             {t('cycleLength.normalRange.acogName')}
           </Text>
           {t('cycleLength.normalRange.acogSuffix')}{' '}
-          <Text style={{ fontWeight: 'bold' }}>
+          <Text style={typography.bodyBold}>
             {t('cycleLength.normalRange.daysRange')}
           </Text>.
         </Text>
@@ -60,7 +60,7 @@ export default function StatusInfo() {
         </Text>
         <Text style={[typography.body]}>
           {t('cycleLength.irregular.descriptionPrefix')}{' '}
-          <Text style={{ fontWeight: 'bold' }}>
+          <Text style={typography.bodyBold}>
             {t('cycleLength.irregular.daysRange')}
           </Text>{' '}
           {t('cycleLength.irregular.descriptionSuffix')}
@@ -82,7 +82,7 @@ export default function StatusInfo() {
             </View>
           ))}
           <Text style={[typography.body, { marginTop: 12 }]}>
-            <Text style={{ fontWeight: 'bold' }}>
+            <Text style={typography.bodyBold}>
               {t('cycleLength.irregular.dataNoteBold')}
             </Text>{' '}
             {t('cycleLength.irregular.dataNote')}
@@ -100,7 +100,7 @@ export default function StatusInfo() {
       </View>
       <View style={{ marginBottom: 28 }}>
         <Text style={[typography.body]}>
-          <Text style={{ fontWeight: 'bold' }}>{t('cycleLength.disclaimerBold')} </Text>
+          <Text style={typography.bodyBold}>{t('cycleLength.disclaimerBold')} </Text>
           {t('cycleLength.disclaimer')}
         </Text>
       </View>

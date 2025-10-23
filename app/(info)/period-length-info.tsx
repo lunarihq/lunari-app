@@ -34,7 +34,7 @@ export default function PeriodLength() {
         </Text>
 
         <Text style={[typography.body]}>
-          <Text style={{ fontWeight: 'bold' }}>{t('periodLength.definitionBold')}</Text>{' '}
+          <Text style={typography.bodyBold}>{t('periodLength.definitionBold')}</Text>{' '}
           {t('periodLength.definitionText')}
         </Text>
       </View>
@@ -45,11 +45,11 @@ export default function PeriodLength() {
         </Text>
         <Text style={[typography.body]}>
           {t('periodLength.normal.acogPrefix')}{' '}
-          <Text style={{ fontWeight: 'bold' }}>
+          <Text style={typography.bodyBold}>
             {t('periodLength.normal.acogName')}
           </Text>
           {t('periodLength.normal.acogSuffix')}{' '}
-          <Text style={{ fontWeight: 'bold' }}>
+          <Text style={typography.bodyBold}>
             {t('periodLength.normal.daysRange')}
           </Text>.
         </Text>
@@ -66,7 +66,7 @@ export default function PeriodLength() {
           {t('periodLength.irregular.description')}
         </Text>
         <Text style={[typography.body, { marginTop: 12 }]}>
-          <Text style={{ fontWeight: 'bold' }}>
+          <Text style={typography.bodyBold}>
             {t('periodLength.irregular.dataNoteBold')}
           </Text>{' '}
           {t('periodLength.irregular.dataNote')}
@@ -82,7 +82,7 @@ export default function PeriodLength() {
       </View>
       <View style={{ marginBottom: 28 }}>
         <Text style={[typography.body]}>
-          <Text style={{ fontWeight: 'bold' }}>{t('periodLength.disclaimerBold')} </Text>
+          <Text style={typography.bodyBold}>{t('periodLength.disclaimerBold')} </Text>
           {t('periodLength.disclaimer')}
         </Text>
       </View>

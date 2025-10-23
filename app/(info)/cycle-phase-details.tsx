@@ -111,7 +111,8 @@ export default function CyclePhaseDetails() {
           <Text
             style={[
               typography.body,
-              { fontSize: 18, fontWeight: 'bold', marginBottom: 8 },
+              typography.bodyBold,
+              { marginBottom: 8 },
             ]}
           >
             {t(`cyclePhase.phases.${cyclePhaseKey}`)}
@@ -140,7 +141,8 @@ export default function CyclePhaseDetails() {
           <Text
             style={[
               typography.body,
-              { fontSize: 18, fontWeight: 'bold', marginBottom: 8 },
+              typography.bodyBold,
+              { marginBottom: 8 },
             ]}
           >
             {t(`cyclePhase.pregnancyChance.${pregnancyChanceKey}`)}
