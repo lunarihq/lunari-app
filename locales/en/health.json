@@ -73,10 +73,10 @@
     "errorMessage": "Error. Please try again."
   },
   "quickHealthSelector": {
-    "title": "This is a test to see if the long text wraps",
+    "title": "How are you feeling today?",
     "add": "Add",
     "note": "Note",
-    "noSymptomsToday": "No symptoms or moods logged today.",
+    "noSymptomsToday": "Add symptoms, moods, or notes",
     "noSymptomsThisDate": "No symptoms or moods logged this date."
   }
 }
