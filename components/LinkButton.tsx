@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useTheme } from '../styles/theme';
+import { useTheme, createTypography } from '../styles/theme';
 
 interface LinkButtonProps {
   title: string;
@@ -19,6 +19,7 @@ export function LinkButton({
   style,
 }: LinkButtonProps) {
   const { colors } = useTheme();
+  const typography = createTypography(colors);
 
   return (
     <Pressable
@@ -26,7 +27,7 @@ export function LinkButton({
       style={({ pressed }) => [styles.button, pressed && styles.pressed, style]}
     >
       <View style={styles.content}>
-        <Text style={[styles.text, { color: colors.primary }]}>{title}</Text>
+        <Text style={[typography.bodyBold, { color: colors.primary }]}>{title}</Text>
         <Ionicons
           name={iconName as any}
           size={iconSize}

@@ -64,8 +64,8 @@ export function CycleOverviewWidget({
             <>
               <Text
                 style={[
-                  typography.body,
-                  { fontWeight: '500', marginBottom: 20 },
+                  typography.bodyBold,
+                  { marginBottom: 20 },
                   { color: circleTextColor },
                 ]}
               >
@@ -73,8 +73,7 @@ export function CycleOverviewWidget({
               </Text>
               <Text
                 style={[
-                  typography.headingMd,
-                  { fontSize: 22, fontWeight: '500' },
+                  typography.labelLg,
                   { color: circleTextColor },
                 ]}
               >
@@ -82,10 +81,8 @@ export function CycleOverviewWidget({
               </Text>
               <Text
                 style={[
-                  typography.heading1,
+                  typography.displayLg,
                   {
-                    fontSize: 48,
-                    fontWeight: 'bold',
                     marginBottom: 8,
                     paddingHorizontal: 8,
                   },
@@ -99,8 +96,8 @@ export function CycleOverviewWidget({
             <>
               <Text
                 style={[
-                  typography.body,
-                  { fontWeight: '500', marginBottom: 20 },
+                  typography.bodyBold,
+                  { marginBottom: 20 },
                   { color: circleTextColor },
                 ]}
               >
@@ -110,19 +107,17 @@ export function CycleOverviewWidget({
                 <>
                   <Text
                     style={[
-                      typography.headingMd,
-                      { fontSize: 22, fontWeight: '500' },
+                      typography.labelLg,
                       { color: circleTextColor },
                     ]}
                   >
                     {t('nextPeriodIn')}
                   </Text>
+                  {/* Next period in X day display */}
                   <Text
                     style={[
-                      typography.heading1,
+                      typography.displayLg,
                       {
-                        fontSize: 48,
-                        fontWeight: 'bold',
                         marginBottom: 8,
                         paddingHorizontal: 8,
                       },
@@ -132,16 +127,15 @@ export function CycleOverviewWidget({
                     {t('daysCount', { count: prediction.days })}
                   </Text>
                 </>
+                /* Period expected today display */
               ) : prediction.days === 0 ? (
                 <Text
                   style={[
-                    typography.headingMd,
+                    typography.displaySm,
                     {
-                      fontSize: 28,
-                      fontWeight: '500',
                       textAlign: 'center',
-                      marginBottom: 32,
                       paddingHorizontal: 16,
+                      marginBottom: 16,
                     },
                     { color: circleTextColor },
                   ]}
@@ -150,10 +144,10 @@ export function CycleOverviewWidget({
                 </Text>
               ) : (
                 <>
+                {/* Late for X days display */}
                   <Text
                     style={[
-                      typography.headingMd,
-                      { fontSize: 22, fontWeight: '500' },
+                      typography.labelLg,
                       { color: circleTextColor },
                     ]}
                   >
@@ -161,10 +155,8 @@ export function CycleOverviewWidget({
                   </Text>
                   <Text
                     style={[
-                      typography.heading1,
+                      typography.displayLg,
                       {
-                        fontSize: 48,
-                        fontWeight: 'bold',
                         marginBottom: 8,
                         paddingHorizontal: 8,
                       },

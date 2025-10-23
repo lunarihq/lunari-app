@@ -19,14 +19,12 @@ export const createTypography = (colors: ColorScheme) =>
       fontWeight: '600',
       color: colors.textPrimary,
     },
-
     body: {
       fontSize: 16,
       lineHeight: 22,
       fontWeight: '400',
       color: colors.textPrimary,
     },
-
     bodyBold: {
       fontSize: 16,
       lineHeight: 22,
@@ -38,5 +36,35 @@ export const createTypography = (colors: ColorScheme) =>
       lineHeight: 16,
       fontWeight: '400',
       color: colors.textSecondary,
+    },
+    displayLg: {
+      fontSize: 48,
+      fontWeight: 'bold',
+      color: colors.textPrimary,
+    },
+    displayMd: {
+      fontSize: 32,
+      fontWeight: 'bold',
+      color: colors.textPrimary,
+    },
+    displaySm: {
+      fontSize: 24,
+      fontWeight: 'bold',
+      color: colors.textPrimary,
+    },
+    labelLg: {
+      fontSize: 22,
+      fontWeight: '500',
+      color: colors.textPrimary,
+    },
+    labelMd: {
+      fontSize: 18,
+      fontWeight: '500',
+      color: colors.textPrimary,
+    },
+    labelSm: {
+      fontSize: 16,
+      fontWeight: '500',
+      color: colors.textPrimary,
     },
   });
