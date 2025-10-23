@@ -1,0 +1,15 @@
+{
+  "periodReminder": {
+    "title": "Period reminder",
+    "body": "Your period is expected to start in {{days}} days, on {{date}}"
+  },
+  "periodStarting": {
+    "title": "Period might start today",
+    "body": "Your period is expected to start today based on your cycle history"
+  },
+  "periodLate": {
+    "title": "Period is late",
+    "body": "Your period was expected yesterday. Did you forget to log your period?"
+  }
+}
+

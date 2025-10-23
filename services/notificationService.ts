@@ -5,6 +5,7 @@ import { PeriodPredictionService } from './periodPredictions';
 import { getSetting, setSetting, db } from '../db';
 import { periodDates } from '../db/schema';
 import { Colors } from '../styles/colors';
+import i18n from '../i18n/config';
 
 // Configure how notifications are handled when the app is in the foreground
 Notifications.setNotificationHandler({
@@ -233,8 +234,11 @@ export class NotificationService {
       if (notificationDate > new Date()) {
         await Notifications.scheduleNotificationAsync({
           content: {
-            title: 'Period Reminder',
-            body: `Your period is expected to start in ${daysBefore} days, on ${prediction.date}`,
+            title: i18n.t('notifications:periodReminder.title'),
+            body: i18n.t('notifications:periodReminder.body', {
+              days: daysBefore,
+              date: prediction.date,
+            }),
             data: { type: 'period_reminder' },
             color: Colors.accentPink,
           },
@@ -257,8 +261,8 @@ export class NotificationService {
       if (periodDate > new Date()) {
         await Notifications.scheduleNotificationAsync({
           content: {
-            title: 'Period Starting Today',
-            body: `Your period is expected to start today based on your cycle history`,
+            title: i18n.t('notifications:periodStarting.title'),
+            body: i18n.t('notifications:periodStarting.body'),
             data: { type: 'period_start' },
             color: Colors.accentPink,
           },
@@ -282,8 +286,8 @@ export class NotificationService {
       if (latePeriodDate > new Date()) {
         await Notifications.scheduleNotificationAsync({
           content: {
-            title: 'Period is Late',
-            body: `Your period was expected yesterday. Don't worry, this can be normal!`,
+            title: i18n.t('notifications:periodLate.title'),
+            body: i18n.t('notifications:periodLate.body'),
             data: { type: 'period_late' },
             color: Colors.accentPink,
           },
@@ -317,15 +321,4 @@ export class NotificationService {
     }
   }
 
-  // Schedule a test notification that appears immediately (for testing)
-  static async scheduleTestNotification() {
-    await Notifications.scheduleNotificationAsync({
-      content: {
-        title: 'Test Notification',
-        body: 'This is a test notification for the period tracking app',
-        data: { type: 'test' },
-      },
-      trigger: null, // null trigger means the notification fires immediately
-    });
-  }
 }

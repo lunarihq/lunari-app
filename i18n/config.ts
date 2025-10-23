@@ -10,6 +10,7 @@ import healthEN from '../locales/en/health.json';
 import homeEN from '../locales/en/home.json';
 import statsEN from '../locales/en/stats.json';
 import infoEN from '../locales/en/info.json';
+import notificationsEN from '../locales/en/notifications.json';
 
 import commonES from '../locales/es/common.json';
 import onboardingES from '../locales/es/onboarding.json';
@@ -19,6 +20,7 @@ import healthES from '../locales/es/health.json';
 import homeES from '../locales/es/home.json';
 import statsES from '../locales/es/stats.json';
 import infoES from '../locales/es/info.json';
+import notificationsES from '../locales/es/notifications.json';
 
 const resources = {
   en: {
@@ -30,6 +32,7 @@ const resources = {
     home: homeEN,
     stats: statsEN,
     info: infoEN,
+    notifications: notificationsEN,
   },
   es: {
     common: commonES,
@@ -40,6 +43,7 @@ const resources = {
     home: homeES,
     stats: statsES,
     info: infoES,
+    notifications: notificationsES,
   },
 };
 
