@@ -9,11 +9,9 @@ import { db, getSetting } from '../../db';
 import { PeriodDate, periodDates } from '../../db/schema';
 import { PeriodPredictionService } from '../../services/periodPredictions';
 import { NotificationService } from '../../services/notificationService';
-import { useTheme } from '../../styles/theme';
 import { useAppStyles } from '../../hooks/useStyles';
 
 export default function Index() {
-  const { colors } = useTheme();
   const { typography, commonStyles } = useAppStyles();
   const { t } = useTranslation('health');
   
