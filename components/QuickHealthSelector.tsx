@@ -86,7 +86,7 @@ export const QuickHealthSelector = ({
     const { type, item_id } = log;
 
     if (type === 'notes') {
-      return t('symptomsTracker.note');
+      return t('quickHealthSelector.note');
     }
 
     if (type === 'symptom') {
@@ -139,7 +139,7 @@ export const QuickHealthSelector = ({
               },
             ]}
           >
-            {t('symptomsTracker.add')}
+            {t('quickHealthSelector.add')}
           </Text>
         </TouchableOpacity>
 
@@ -188,8 +188,8 @@ export const QuickHealthSelector = ({
           <View style={styles.noItemsContainer}>
             <Text style={[typography.caption, { color: colors.textSecondary }]}>
               {selectedDate && selectedDate !== dayjs().format('YYYY-MM-DD')
-                ? t('symptomsTracker.noSymptomsThisDate')
-                : t('symptomsTracker.noSymptomsToday')}
+                ? t('quickHealthSelector.noSymptomsThisDate')
+                : t('quickHealthSelector.noSymptomsToday')}
             </Text>
           </View>
         )}

@@ -14,7 +14,7 @@
   "learnAboutLatePeriods": "Learn about late periods",
   "cycleInsights": {
     "title": "Cycle insights",
-    "todaysInsights": "Today's insights",
+    "todaysInsights": "This is a test to see if the long text wraps",
     "cycleDay": "Cycle day",
     "cyclePhase": "Cycle phase",
     "chanceToConceive": "Chance to conceive",
@@ -35,11 +35,6 @@
     "dayOfCycle": "Day {{day}} of {{total}}",
     "averageCycle": "Average cycle: {{days}} days",
     "nextPeriod": "Next period: {{date}}"
-  },
-  "symptoms": {
-    "title": "How are you feeling today?",
-    "logSymptoms": "Log symptoms",
-    "noSymptoms": "No symptoms logged today"
   }
 }
 

@@ -182,7 +182,7 @@ export default function Index() {
 
       <View style={[commonStyles.sectionContainer]}>
         <Text style={[typography.heading2, { marginBottom: 16 }]}>
-          {t('symptomsTracker.title')}
+          {t('quickHealthSelector.title')}
         </Text>
         <QuickHealthSelector />
       </View>

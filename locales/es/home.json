@@ -35,11 +35,6 @@
     "dayOfCycle": "Día {{day}} de {{total}}",
     "averageCycle": "Ciclo promedio: {{days}} días",
     "nextPeriod": "Próximo periodo: {{date}}"
-  },
-  "symptoms": {
-    "title": "¿Cómo te sientes hoy?",
-    "logSymptoms": "Registrar síntomas",
-    "noSymptoms": "No se han registrado síntomas hoy"
   }
 }
 

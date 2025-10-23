@@ -72,7 +72,7 @@
     "successMessage": "Datos de salud guardados",
     "errorMessage": "Error. Por favor, inténtalo de nuevo."
   },
-  "symptomsTracker": {
+  "quickHealthSelector": {
     "title": "¿Cómo te sientes hoy?",
     "add": "Agregar",
     "note": "Nota",

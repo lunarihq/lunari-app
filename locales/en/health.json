@@ -72,8 +72,8 @@
     "successMessage": "Health data saved",
     "errorMessage": "Error. Please try again."
   },
-  "symptomsTracker": {
-    "title": "How do you feel today?",
+  "quickHealthSelector": {
+    "title": "This is a test to see if the long text wraps",
     "add": "Add",
     "note": "Note",
     "noSymptomsToday": "No symptoms or moods logged today.",
