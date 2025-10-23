@@ -147,8 +147,8 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
                 <View>
                   <Text
                     style={[
-                      typography.body,
-                      { fontSize: 18, fontWeight: 'bold', marginBottom: 10},
+                      typography.headingSm,
+                      { marginBottom: 10},
                     ]}
                   >
                     {t('stats:cycleHistory.currentCycle')}

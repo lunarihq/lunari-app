@@ -43,7 +43,7 @@ export default function Settings() {
               color={colors.textPrimary}
             />
           </View>
-          <Text style={[typography.body, { flex: 1 }]}>
+          <Text style={[typography.bodyLg, { flex: 1 }]}>
             {t('reminders')}
           </Text>
           <Ionicons
@@ -64,7 +64,7 @@ export default function Settings() {
               color={colors.textPrimary}
             />
           </View>
-          <Text style={[typography.body, { flex: 1 }]}>
+          <Text style={[typography.bodyLg, { flex: 1 }]}>
             {t('appLock')}
           </Text>
           <Ionicons
@@ -85,7 +85,7 @@ export default function Settings() {
               color={colors.textPrimary}
             />
           </View>
-          <Text style={[typography.body, { flex: 1 }]}>
+          <Text style={[typography.bodyLg, { flex: 1 }]}>
             {t('privacyPolicy')}
           </Text>
           <Ionicons
@@ -106,7 +106,7 @@ export default function Settings() {
               color={colors.textPrimary}
             />
           </View>
-          <Text style={[typography.body, { flex: 1 }]}>
+          <Text style={[typography.bodyLg, { flex: 1 }]}>
             {t('about')}
           </Text>
           <Ionicons
@@ -127,10 +127,10 @@ export default function Settings() {
               color={colors.textPrimary}
             />
           </View>
-          <Text style={[typography.body, { flex: 1 }]}>
+          <Text style={[typography.bodyLg, { flex: 1 }]}>
             {t('theme')}
           </Text>
-          <Text style={[typography.body, { color: colors.textSecondary }]}>
+          <Text style={[typography.bodyLg, { color: colors.textSecondary }]}>
             {themeMode === 'system'
               ? t('themeOptions.system')
               : themeMode === 'light'
@@ -180,7 +180,7 @@ export default function Settings() {
           </View>
           <Text
             style={[
-              typography.body,
+              typography.bodyLg,
               { flex: 1, color: colors.error },
             ]}
           >
