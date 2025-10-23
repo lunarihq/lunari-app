@@ -28,7 +28,7 @@ const commonStyles = StyleSheet.create({
     borderRadius: 16,
     marginBottom: 16,
     padding: 16,
-    backgroundColor: 'white',
+    backgroundColor: Colors.surface,
     overflow: 'hidden',
   },
 
