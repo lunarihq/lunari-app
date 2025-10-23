@@ -1,6 +1,6 @@
 {
   "title": "Statistics",
-  "cycleStatistics": "This is a test to see if the long text wraps",
+  "cycleStatistics": "Cycle statistics",
   "emptyState": {
     "message": "Log at least 2 periods to see your personal cycle statistics.",
     "logPeriodButton": "Log period"

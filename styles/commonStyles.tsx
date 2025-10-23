@@ -36,7 +36,6 @@ const commonStyles = StyleSheet.create({
   // For title row in sections (text on left, actions on right)
   sectionTitleContainer: {
     flexDirection: 'row',
-    flex: 1,
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 16,
