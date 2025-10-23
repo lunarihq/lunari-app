@@ -3,11 +3,12 @@ import { Text, View, StyleSheet, ScrollView, Linking } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme, createTypography } from '../../styles/theme';
-import { commonStyles } from '@/styles/commonStyles';
+import { createCommonStyles } from '../../styles/commonStyles';
 
 export default function About() {
   const { colors } = useTheme();
   const typography = createTypography(colors);
+  const commonStyles = createCommonStyles(colors);
   const { t } = useTranslation('settings');
   const GITHUB_URL = 'https://github.com/lunari-app/lunari';
   const GPL_URL = 'https://www.gnu.org/licenses/gpl-3.0.en.html';

@@ -8,7 +8,7 @@ import { CycleIcon } from './icons/general/Cycle';
 import { LeafIcon } from './icons/general/Leaf';
 import { PeriodPredictionService } from '../services/periodPredictions';
 import { useTheme, createTypography } from '../styles/theme';
-import { commonStyles } from '../styles/commonStyles';
+import { createCommonStyles } from '../styles/commonStyles';
 
 interface CycleInsightsProps {
   currentCycleDay: number | null;
@@ -21,6 +21,7 @@ export function CycleInsights({
 }: CycleInsightsProps) {
   const { colors } = useTheme();
   const typography = createTypography(colors);
+  const commonStyles = createCommonStyles(colors);
   const { t } = useTranslation('home');
 
   const iconContainerStyle = {

@@ -15,7 +15,7 @@ import { healthLogs } from '../db/schema';
 import { eq } from 'drizzle-orm';
 import { useTheme, createTypography } from '../styles/theme';
 import dayjs from 'dayjs';
-import { commonStyles } from '../styles/commonStyles';
+import { createCommonStyles } from '../styles/commonStyles';
 import { CustomIcon } from './icons/health';
 import { NoteIcon } from './icons/health/Note';
 import { SYMPTOMS, MOODS, FLOWS, DISCHARGES } from '../constants/healthTracking';
@@ -31,6 +31,7 @@ export const QuickHealthSelector = ({
 }: QuickHealthSelectorProps) => {
   const { colors } = useTheme();
   const typography = createTypography(colors);
+  const commonStyles = createCommonStyles(colors);
   const { t } = useTranslation('health');
   const [healthLogsForDate, setHealthLogsForDate] = useState<any[]>([]);
 

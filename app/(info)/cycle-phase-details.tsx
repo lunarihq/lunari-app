@@ -4,7 +4,8 @@ import { useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { PeriodPredictionService } from '../../services/periodPredictions';
 import { useTheme, createTypography } from '../../styles/theme';
-import { commonStyles } from '../../styles/commonStyles';import { CycleIcon } from '../../components/icons/general/Cycle';
+import { createCommonStyles } from '../../styles/commonStyles';
+import { CycleIcon } from '../../components/icons/general/Cycle';
 import { LeafIcon } from '../../components/icons/general/Leaf';
 import { formatTodayShort, formatDateShort } from '../../utils/localeUtils';
 import { useTranslation } from 'react-i18next';
@@ -39,6 +40,7 @@ const getFormattedCycleStart = (cycleDay: number, t: any): string => {
 export default function CyclePhaseDetails() {
   const { colors } = useTheme();
   const typography = createTypography(colors);
+  const commonStyles = createCommonStyles(colors);
   const { t } = useTranslation('info');
   const params = useLocalSearchParams();
   const cycleDay = parseInt(params.cycleDay as string) || 0;

@@ -1,20 +1,19 @@
 import { StyleSheet } from 'react-native';
+import { ColorScheme, Colors } from './colors';
 
-import { Colors } from './colors';
-
-const commonStyles = StyleSheet.create({
+export const createCommonStyles = (colors: ColorScheme) => StyleSheet.create({
   // For non-scrollable screens or wrapper Views
   container: {
     flex: 1,
     paddingHorizontal: 16,
-    backgroundColor: Colors.background,
+    backgroundColor: colors.background,
   },
 
   // For ScrollView component itself - handles flex and horizontal padding
   scrollView: {
     flex: 1,
     paddingHorizontal: 16,
-    backgroundColor: Colors.background,
+    backgroundColor: colors.background,
   },
 
   // For ScrollView's contentContainerStyle - handles vertical padding of scrollable content
@@ -28,7 +27,7 @@ const commonStyles = StyleSheet.create({
     borderRadius: 16,
     marginBottom: 16,
     padding: 16,
-    backgroundColor: Colors.surface,
+    backgroundColor: colors.surface,
     overflow: 'hidden',
   },
 
@@ -45,12 +44,14 @@ const commonStyles = StyleSheet.create({
     width: 54,
     height: 54,
     borderRadius: 27,
-    backgroundColor: Colors.primary,
+    backgroundColor: colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 8,
   },
 });
 
+// Legacy export for backward compatibility
+const commonStyles = createCommonStyles(Colors);
 export { commonStyles };
 export default commonStyles;

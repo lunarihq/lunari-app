@@ -1,12 +1,12 @@
 import { Colors } from './colors';
 import { createTypography } from './typography';
-import { commonStyles } from './commonStyles';
+import { createCommonStyles } from './commonStyles';
 
 // Legacy theme object - use useTheme() hook for theme-aware colors
 export const theme = {
   Colors,
   createTypography,
-  commonStyles,
+  createCommonStyles,
 };
 
 export default theme;

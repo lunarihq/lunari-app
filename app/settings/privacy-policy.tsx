@@ -3,12 +3,13 @@ import { Text, View, StyleSheet, ScrollView } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme, createTypography } from '../../styles/theme';
-import { commonStyles } from '@/styles/commonStyles';
+import { createCommonStyles } from '../../styles/commonStyles';
 import * as Localization from 'expo-localization';
 
 export default function PrivacyPolicy() {
   const { colors } = useTheme();
   const typography = createTypography(colors);
+  const commonStyles = createCommonStyles(colors);
   const { t } = useTranslation('settings');
 
   return (
