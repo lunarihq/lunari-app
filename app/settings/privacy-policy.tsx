@@ -53,7 +53,7 @@ export default function PrivacyPolicy() {
         </View>
         <Text style={[typography.body, { marginBottom: 12 }]}>
           {t('privacyPolicyScreen.dataUse.descriptionPrefix')}{' '}
-          <Text style={styles.bold}>{t('privacyPolicyScreen.dataUse.descriptionBold')}</Text>
+          <Text style={typography.bodyBold}>{t('privacyPolicyScreen.dataUse.descriptionBold')}</Text>
           {t('privacyPolicyScreen.dataUse.descriptionSuffix')}
         </Text>
         {['periodDates', 'cycleLength', 'symptoms', 'notes', 'settings'].map((item) => (
@@ -156,8 +156,4 @@ sectionHeader: {
     alignItems: 'center',
     marginBottom: 16,
   },
-  bold: {
-    fontWeight: '600',
-  },
-
 });
