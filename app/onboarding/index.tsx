@@ -5,14 +5,14 @@ import { Button } from '../../components/Button';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useTheme } from '../../contexts/ThemeContext';
-import { createTypography } from '../../styles/typography';
+import { useAppStyles } from '../../hooks/useStyles';
 import { createOnboardingStyles } from '../../styles/onboarding';
 import { Shape1, Shape2 } from '../../components/illustrations';
 
 export default function WelcomeScreen() {
   const router = useRouter();
   const { colors } = useTheme();
-  const typography = createTypography(colors);
+  const { typography } = useAppStyles();
   const onboardingStyles = createOnboardingStyles(colors);
   const { t } = useTranslation('onboarding');
 

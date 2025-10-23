@@ -5,7 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { LinkButton } from './LinkButton';
 import { Button } from './Button';
 import DashedCircle from './DashedCircle';
-import { useTheme, createTypography } from '../styles/theme';
+import { useTheme } from '../styles/theme';
+import { useAppStyles } from '../hooks/useStyles';
 import { formatTodayShort } from '../utils/localeUtils';
 
 interface CycleOverviewWidgetProps {
@@ -30,7 +31,7 @@ export function CycleOverviewWidget({
   averageCycleLength,
 }: CycleOverviewWidgetProps) {
   const { colors, isDark } = useTheme();
-  const typography = createTypography(colors);
+  const { typography } = useAppStyles();
   const { t } = useTranslation('home');
 
   const isPredictedPeriodDay = prediction?.days === 0;

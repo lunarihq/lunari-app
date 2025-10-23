@@ -9,13 +9,12 @@ import { db, getSetting } from '../../db';
 import { PeriodDate, periodDates } from '../../db/schema';
 import { PeriodPredictionService } from '../../services/periodPredictions';
 import { NotificationService } from '../../services/notificationService';
-import { createCommonStyles } from '../../styles/commonStyles';
-import { useTheme, createTypography } from '../../styles/theme';
+import { useTheme } from '../../styles/theme';
+import { useAppStyles } from '../../hooks/useStyles';
 
 export default function Index() {
   const { colors } = useTheme();
-  const typography = createTypography(colors);
-  const commonStyles = createCommonStyles(colors);
+  const { typography, commonStyles } = useAppStyles();
   const { t } = useTranslation('health');
   
   const [selectedDates, setSelectedDates] = useState<{ [date: string]: any }>(

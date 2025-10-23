@@ -5,7 +5,7 @@ import { Button } from '../../components/Button';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useTheme } from '../../contexts/ThemeContext';
-import { createTypography } from '../../styles/typography';
+import { useAppStyles } from '../../hooks/useStyles';
 import { Ionicons } from '@expo/vector-icons';
 import Animated, {
   useAnimatedStyle,
@@ -18,7 +18,7 @@ import Animated, {
 export default function SuccessScreen() {
   const router = useRouter();
   const { colors } = useTheme();
-  const typography = createTypography(colors);
+  const { typography } = useAppStyles();
   const { t } = useTranslation('onboarding');
 
   const scale = useSharedValue(0);

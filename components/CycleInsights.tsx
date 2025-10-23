@@ -7,8 +7,8 @@ import { CalendarIcon } from './icons/general/Calendar';
 import { CycleIcon } from './icons/general/Cycle';
 import { LeafIcon } from './icons/general/Leaf';
 import { PeriodPredictionService } from '../services/periodPredictions';
-import { useTheme, createTypography } from '../styles/theme';
-import { createCommonStyles } from '../styles/commonStyles';
+import { useTheme } from '../styles/theme';
+import { useAppStyles } from '../hooks/useStyles';
 
 interface CycleInsightsProps {
   currentCycleDay: number | null;
@@ -20,8 +20,7 @@ export function CycleInsights({
   averageCycleLength,
 }: CycleInsightsProps) {
   const { colors } = useTheme();
-  const typography = createTypography(colors);
-  const commonStyles = createCommonStyles(colors);
+  const { typography, commonStyles } = useAppStyles();
   const { t } = useTranslation('home');
 
   const iconContainerStyle = {

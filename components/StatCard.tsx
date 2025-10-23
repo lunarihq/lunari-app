@@ -2,7 +2,8 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import { useTheme, createTypography } from '../styles/theme';
+import { useTheme } from '../styles/theme';
+import { useAppStyles } from '../hooks/useStyles';
 import { AlertIcon } from './icons/general/Alert';
 import { CheckCircleIcon } from './icons/general/Check_Circle';
 import { useTranslation } from 'react-i18next';
@@ -17,7 +18,7 @@ interface StatCardProps {
 
 export function StatCard({ title, value, icon, status, type }: StatCardProps) {
   const { colors } = useTheme();
-  const typography = createTypography(colors);
+  const { typography } = useAppStyles();
   const router = useRouter();
   const { t } = useTranslation('common');
 

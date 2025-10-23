@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { useTheme, createTypography } from '../styles/theme';
+import { useTheme } from '../styles/theme';
+import { useAppStyles } from '../hooks/useStyles';
 import { formatDateShort } from '../utils/localeUtils';
-import { createCommonStyles } from '../styles/commonStyles';
 
 interface CycleData {
   startDate: string; // ISO date string (YYYY-MM-DD)
@@ -47,8 +47,7 @@ const DayCircles = ({
 
 export function CycleHistory({ cycles }: CycleHistoryProps) {
   const { colors } = useTheme();
-  const typography = createTypography(colors);
-  const commonStyles = createCommonStyles(colors);
+  const { typography, commonStyles } = useAppStyles();
   const { t } = useTranslation(['stats', 'common']);
 
   if (cycles.length === 0) {

@@ -12,10 +12,10 @@ import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useAuth } from '../../contexts/AuthContext';
 import { useTheme } from '../../styles/theme';
-import { createCommonStyles } from '../../styles/commonStyles';
+import { useAppStyles } from '../../hooks/useStyles';
 export default function AppLockScreen() {
   const { colors } = useTheme();
-  const commonStyles = createCommonStyles(colors);
+  const { commonStyles } = useAppStyles();
   const { t } = useTranslation('settings');
   const {
     isPinSet,

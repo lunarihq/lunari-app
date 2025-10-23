@@ -11,13 +11,12 @@ import {
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { getSetting, setSetting } from '../../db';
-import { useTheme, createTypography } from '../../styles/theme';
-import { createCommonStyles } from '../../styles/commonStyles';
+import { useTheme } from '../../styles/theme';
+import { useAppStyles } from '../../hooks/useStyles';
 
 export default function CalendarView() {
   const { colors } = useTheme();
-  const typography = createTypography(colors);
-  const commonStyles = createCommonStyles(colors);
+  const { typography, commonStyles } = useAppStyles();
   const { t } = useTranslation('calendar');
   const [showOvulation, setShowOvulation] = useState(true);
   const [showFuturePeriods, setShowFuturePeriods] = useState(true);

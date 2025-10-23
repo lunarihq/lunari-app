@@ -13,9 +13,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { db } from '../db';
 import { healthLogs } from '../db/schema';
 import { eq } from 'drizzle-orm';
-import { useTheme, createTypography } from '../styles/theme';
+import { useTheme } from '../styles/theme';
+import { useAppStyles } from '../hooks/useStyles';
 import dayjs from 'dayjs';
-import { createCommonStyles } from '../styles/commonStyles';
 import { CustomIcon } from './icons/health';
 import { NoteIcon } from './icons/health/Note';
 import { SYMPTOMS, MOODS, FLOWS, DISCHARGES } from '../constants/healthTracking';
@@ -30,8 +30,7 @@ export const QuickHealthSelector = ({
   titleStyle,
 }: QuickHealthSelectorProps) => {
   const { colors } = useTheme();
-  const typography = createTypography(colors);
-  const commonStyles = createCommonStyles(colors);
+  const { typography, commonStyles } = useAppStyles();
   const { t } = useTranslation('health');
   const [healthLogsForDate, setHealthLogsForDate] = useState<any[]>([]);
 

@@ -5,7 +5,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { QuickHealthSelector } from './QuickHealthSelector';
 import { PeriodPredictionService } from '../services/periodPredictions';
 import { formatDateString } from '../types/calendarTypes';
-import { useTheme, createTypography } from '../styles/theme';
+import { useTheme } from '../styles/theme';
+import { useAppStyles } from '../hooks/useStyles';
 import { formatDateLong } from '../utils/localeUtils';
 
 interface CycleDetailsProps {
@@ -22,7 +23,7 @@ export function CycleDetails({
   onClose,
 }: CycleDetailsProps) {
   const { colors } = useTheme();
-  const typography = createTypography(colors);
+  const { typography } = useAppStyles();
   const { t } = useTranslation('common');
   const { t: tHealth } = useTranslation('health');
   const selectedDateFormatted = selectedDate

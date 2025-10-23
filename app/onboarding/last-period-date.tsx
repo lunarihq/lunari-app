@@ -10,8 +10,8 @@ import { Calendar, DateData } from 'react-native-calendars';
 import { setSetting, getSetting, db } from '../../db';
 import { periodDates } from '../../db/schema';
 import { createOnboardingStyles } from '../../styles/onboarding';
-import { createTypography } from '../../styles/typography';
 import { useTheme } from '../../contexts/ThemeContext';
+import { useAppStyles } from '../../hooks/useStyles';
 import { formatDateString } from '../../types/calendarTypes';
 import { ColorScheme } from '../../styles/colors';
 import * as Localization from 'expo-localization';
@@ -20,7 +20,7 @@ export default function LastPeriodDateScreen() {
   const router = useRouter();
   const { colors } = useTheme();
   const onboardingStyles = createOnboardingStyles(colors);
-  const typography = createTypography(colors);
+  const { typography } = useAppStyles();
   const { t } = useTranslation('onboarding');
   const styles = createStyles(colors);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);

@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useTheme, createTypography } from '../styles/theme';
+import { useTheme } from '../styles/theme';
+import { useAppStyles } from '../hooks/useStyles';
 
 interface LinkButtonProps {
   title: string;
@@ -19,7 +20,7 @@ export function LinkButton({
   style,
 }: LinkButtonProps) {
   const { colors } = useTheme();
-  const typography = createTypography(colors);
+  const { typography } = useAppStyles();
 
   return (
     <Pressable

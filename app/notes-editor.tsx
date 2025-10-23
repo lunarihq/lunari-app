@@ -9,13 +9,14 @@ import {
 } from 'react-native';
 import { Button } from '../components/Button';
 import { router, useLocalSearchParams } from 'expo-router';
-import { useTheme, createTypography } from '../styles/theme';
+import { useTheme } from '../styles/theme';
+import { useAppStyles } from '../hooks/useStyles';
 import { useNotes } from '../contexts/NotesContext';
 import { useTranslation } from 'react-i18next';
 
 export default function NotesEditor() {
   const { colors } = useTheme();
-  const typography = createTypography(colors);
+  const { typography } = useAppStyles();
   const { t } = useTranslation(['common', 'health']);
   const params = useLocalSearchParams();
   const { notes, setNotes } = useNotes();

@@ -9,13 +9,14 @@ import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { setSetting } from '../../db';
 import { createOnboardingStyles } from '../../styles/onboarding';
-import { useTheme, createTypography } from '../../styles/theme';
+import { useTheme } from '../../styles/theme';
+import { useAppStyles } from '../../hooks/useStyles';
 
 export default function PeriodLengthScreen() {
   const router = useRouter();
   const { colors } = useTheme();
   const onboardingStyles = createOnboardingStyles(colors);
-  const typography = createTypography(colors);
+  const { typography } = useAppStyles();
   const { t } = useTranslation('onboarding');
   const [periodLength, setPeriodLength] = useState(5);
   const [dontKnow, setDontKnow] = useState(false);

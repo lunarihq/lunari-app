@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Button } from '../components/Button';
-import { useTheme, createTypography } from '../styles/theme';
+import { useTheme } from '../styles/theme';
+import { useAppStyles } from '../hooks/useStyles';
 import { useState, useEffect } from 'react';
 import { DateData } from 'react-native-calendars';
 import { Ionicons } from '@expo/vector-icons';
@@ -24,7 +25,7 @@ import { periodDates } from '../db/schema';
 
 export default function PeriodCalendarScreen() {
   const { colors } = useTheme();
-  const typography = createTypography(colors);
+  const { typography } = useAppStyles();
   const { t } = useTranslation(['common', 'calendar']);
   const [tempDates, setTempDates] = useState<MarkedDates>({});
   const [userPeriodLength, setUserPeriodLength] = useState<number>(5);

@@ -7,7 +7,8 @@ import {
   Vibration,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useTheme, createTypography } from '../styles/theme';
+import { useTheme } from '../styles/theme';
+import { useAppStyles } from '../hooks/useStyles';
 
 interface PinInputProps {
   title: string;
@@ -33,7 +34,7 @@ export function PinInput({
   onStartTyping,
 }: PinInputProps) {
   const { colors } = useTheme();
-  const typography = createTypography(colors);
+  const { typography } = useAppStyles();
   const [pin, setPin] = useState('');
 
   const PIN_LENGTH = 4;

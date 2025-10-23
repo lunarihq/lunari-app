@@ -3,8 +3,8 @@ import { Text, View, StyleSheet, ScrollView } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { PeriodPredictionService } from '../../services/periodPredictions';
-import { useTheme, createTypography } from '../../styles/theme';
-import { createCommonStyles } from '../../styles/commonStyles';
+import { useTheme } from '../../styles/theme';
+import { useAppStyles } from '../../hooks/useStyles';
 import { CycleIcon } from '../../components/icons/general/Cycle';
 import { LeafIcon } from '../../components/icons/general/Leaf';
 import { formatTodayShort, formatDateShort } from '../../utils/localeUtils';
@@ -39,8 +39,7 @@ const getFormattedCycleStart = (cycleDay: number, t: any): string => {
 
 export default function CyclePhaseDetails() {
   const { colors } = useTheme();
-  const typography = createTypography(colors);
-  const commonStyles = createCommonStyles(colors);
+  const { typography, commonStyles } = useAppStyles();
   const { t } = useTranslation('info');
   const params = useLocalSearchParams();
   const cycleDay = parseInt(params.cycleDay as string) || 0;

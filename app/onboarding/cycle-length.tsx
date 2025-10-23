@@ -9,14 +9,14 @@ import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { setSetting } from '../../db';
 import { createOnboardingStyles } from '../../styles/onboarding';
-import { createTypography } from '../../styles/typography';
 import { useTheme } from '../../contexts/ThemeContext';
+import { useAppStyles } from '../../hooks/useStyles';
 
 export default function CycleLengthScreen() {
   const router = useRouter();
   const { colors } = useTheme();
   const onboardingStyles = createOnboardingStyles(colors);
-  const typography = createTypography(colors);
+  const { typography } = useAppStyles();
   const { t } = useTranslation('onboarding');
   const [cycleLength, setCycleLength] = useState(28);
   const [dontKnow, setDontKnow] = useState(false);

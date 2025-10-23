@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useTheme, createTypography } from '../styles/theme';
+import { useTheme } from '../styles/theme';
+import { useAppStyles } from '../hooks/useStyles';
 import { formatTodayOrDate } from '../utils/localeUtils';
 import dayjs from 'dayjs';
 
@@ -21,7 +22,7 @@ export const DateNavigator = ({
   formatDate = formatTodayOrDate,
 }: DateNavigatorProps) => {
   const { colors } = useTheme();
-  const typography = createTypography(colors);
+  const { typography } = useAppStyles();
 
   const goToPreviousDay = () => {
     const previousDay = dayjs(selectedDate).subtract(1, 'day').format('YYYY-MM-DD');

@@ -14,8 +14,8 @@ import { db } from '../db';
 import { healthLogs, periodDates } from '../db/schema';
 import { eq } from 'drizzle-orm';
 import { useFocusEffect } from '@react-navigation/native';
-import { useTheme, createTypography } from '../styles/theme';
-import { createCommonStyles } from '../styles/commonStyles';
+import { useTheme } from '../styles/theme';
+import { useAppStyles } from '../hooks/useStyles';
 import { useNotes } from '../contexts/NotesContext';
 import Toast from 'react-native-toast-message';
 import { formatTodayOrDate } from '../utils/localeUtils';
@@ -38,8 +38,7 @@ dayjs.extend(isoWeek);
 
 export default function HealthTracking() {
   const { colors } = useTheme();
-  const typography = createTypography(colors);
-  const commonStyles = createCommonStyles(colors);
+  const { typography, commonStyles } = useAppStyles();
   const { t } = useTranslation(['common', 'health']);
   const params = useLocalSearchParams();
   const { notes, setNotes } = useNotes();

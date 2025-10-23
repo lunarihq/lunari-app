@@ -15,13 +15,12 @@ import { useTranslation } from 'react-i18next';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { NotificationService } from '../../services/notificationService';
 import { getSetting, setSetting } from '../../db';
-import { useTheme, createTypography } from '../../styles/theme';
-import { createCommonStyles } from '../../styles/commonStyles';
+import { useTheme } from '../../styles/theme';
+import { useAppStyles } from '../../hooks/useStyles';
 import { formatTime } from '../../utils/localeUtils';
 export default function Reminders() {
   const { colors } = useTheme();
-  const typography = createTypography(colors);
-  const commonStyles = createCommonStyles(colors);
+  const { typography, commonStyles } = useAppStyles();
   const { t } = useTranslation('settings');
   const [beforePeriodEnabled, setBeforePeriodEnabled] = useState(false);
   const [dayOfPeriodEnabled, setDayOfPeriodEnabled] = useState(false);

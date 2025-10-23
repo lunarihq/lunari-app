@@ -11,8 +11,8 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { useTheme, createTypography } from '../../styles/theme';
-import { createCommonStyles } from '../../styles/commonStyles';
+import { useTheme } from '../../styles/theme';
+import { useAppStyles } from '../../hooks/useStyles';
 import { ThemeSelectionModal } from '../../components/ThemeSelectionModal';
 import { DataDeletionService } from '../../services/dataDeletionService';
 import { useNotes } from '../../contexts/NotesContext';
@@ -20,8 +20,7 @@ import { useNotes } from '../../contexts/NotesContext';
 export default function Settings() {
   const router = useRouter();
   const { colors, themeMode } = useTheme();
-  const typography = createTypography(colors);
-  const commonStyles = createCommonStyles(colors);
+  const { typography, commonStyles } = useAppStyles();
   const { clearNotes } = useNotes();
   const { t } = useTranslation('settings');
   const [themeModalVisible, setThemeModalVisible] = useState(false);

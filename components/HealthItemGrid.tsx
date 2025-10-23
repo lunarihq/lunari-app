@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useTheme, createTypography } from '../styles/theme';
+import { useTheme } from '../styles/theme';
+import { useAppStyles } from '../hooks/useStyles';
 import { CustomIcon } from './icons/health';
 import { HealthItem } from '../constants/healthTracking';
 import { useTranslation } from 'react-i18next';
@@ -24,7 +25,7 @@ export function HealthItemGrid({
   iconSize = 50,
 }: HealthItemGridProps) {
   const { colors } = useTheme();
-  const typography = createTypography(colors);
+  const { typography } = useAppStyles();
   const { t } = useTranslation();
 
   return (

@@ -11,8 +11,8 @@ import { CycleHistory } from '../../components/CycleHistory';
 import { DropIcon } from '../../components/icons/general/Drop';
 import { CycleIcon } from '../../components/icons/general/Cycle';
 import { getCycleStatus, getPeriodStatus } from '../../utils/cycleUtils';
-import { useTheme, createTypography } from '../../styles/theme';
-import { createCommonStyles } from '../../styles/commonStyles';
+import { useTheme } from '../../styles/theme';
+import { useAppStyles } from '../../hooks/useStyles';
 import { useTranslation } from 'react-i18next';
 interface CycleData {
   startDate: string;
@@ -26,8 +26,7 @@ interface HistoryEntryWithDate extends CycleData {
 
 export default function Stats() {
   const { colors } = useTheme();
-  const typography = createTypography(colors);
-  const commonStyles = createCommonStyles(colors);
+  const { typography, commonStyles } = useAppStyles();
   const { t } = useTranslation('stats');
   const [averageCycleLength, setAverageCycleLength] = useState<number>(0);
   const [averagePeriodLength, setAveragePeriodLength] = useState<number>(0);

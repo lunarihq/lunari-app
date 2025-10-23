@@ -1,13 +1,12 @@
 import React from 'react';
 import { View, Text, ScrollView, Image } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { useTheme, createTypography } from '../../styles/theme';
-import { createCommonStyles } from '../../styles/commonStyles';
+import { useTheme } from '../../styles/theme';
+import { useAppStyles } from '../../hooks/useStyles';
 
 export default function PeriodLength() {
   const { colors } = useTheme();
-  const typography = createTypography(colors);
-  const commonStyles = createCommonStyles(colors);
+  const { typography, commonStyles } = useAppStyles();
   const { t } = useTranslation('info');
 
   return (
