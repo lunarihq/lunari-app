@@ -241,31 +241,6 @@ export default function CalendarView() {
           </View>
         ))}
       </View>
-      <View style={[commonStyles.sectionContainer, {padding: 0}]}>
-        <Text style={[commonStyles.sectionTitleContainer, typography.headingSm]}>
-          {t('view.iconsShown')}
-        </Text>
-      </View>
-      <View style={[commonStyles.sectionContainer, {padding: 0}]}>
-        <Text style={[commonStyles.sectionTitleContainer, typography.headingSm]}>
-          {t('view.iconsShown')}
-        </Text>
-      </View>
-      <View style={[commonStyles.sectionContainer, {padding: 0}]}>
-        <Text style={[commonStyles.sectionTitleContainer, typography.headingSm]}>
-          {t('view.iconsShown')}
-        </Text>
-      </View>
-      <View style={[commonStyles.sectionContainer, {padding: 0}]}>
-        <Text style={[commonStyles.sectionTitleContainer, typography.headingSm]}>
-          {t('view.iconsShown')}
-        </Text>
-      </View>
-      <View style={[commonStyles.sectionContainer, {padding: 0}]}>
-        <Text style={[commonStyles.sectionTitleContainer, typography.headingSm]}>
-          {t('view.iconsShown')}
-        </Text>
-      </View>
     </ScrollView>
   );
 }
