@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, memo, useMemo } from 'react';
 import {
   Text,
   View,
@@ -109,6 +109,52 @@ export const QuickHealthSelector = ({
     return text;
   };
 
+  // Memoized component for individual health log items
+  const HealthLogItem = memo(({ log, selectedDate }: { log: any; selectedDate?: string }) => {
+    const icon = useMemo(() => getIconComponent(log), [log]);
+    const text = useMemo(() => formatDisplayText(log), [log]);
+
+    return (
+      <TouchableOpacity
+        key={`${log.type}_${log.item_id}`}
+        style={styles.itemContainer}
+        onPress={() => {
+          const params: any = {};
+          if (selectedDate) {
+            params.date = selectedDate;
+          }
+          if (log.type === 'notes') {
+            params.scrollTo = 'notes';
+          }
+
+          router.push({
+            pathname: '/health-tracking',
+            params,
+          });
+        }}
+        activeOpacity={0.7}
+      >
+        <View style={styles.itemIconContainer}>
+          {icon}
+        </View>
+        <Text
+          style={[
+            {
+              fontSize: 12,
+              textAlign: 'center',
+              color: colors.textSecondary,
+            },
+          ]}
+          numberOfLines={2}
+        >
+          {text}
+        </Text>
+      </TouchableOpacity>
+    );
+  });
+
+  HealthLogItem.displayName = 'HealthLogItem';
+
   return (
     <ScrollView
         horizontal
@@ -145,43 +191,9 @@ export const QuickHealthSelector = ({
 
         {/* Either show logged items or "No items" message */}
         {healthLogsForDate.length > 0 ? (
-          // Map through logged items
+          // Map through logged items using memoized component
           healthLogsForDate.map(log => (
-            <TouchableOpacity
-              key={`${log.type}_${log.item_id}`}
-              style={styles.itemContainer}
-              onPress={() => {
-                const params: any = {};
-                if (selectedDate) {
-                  params.date = selectedDate;
-                }
-                if (log.type === 'notes') {
-                  params.scrollTo = 'notes';
-                }
-
-                router.push({
-                  pathname: '/health-tracking',
-                  params,
-                });
-              }}
-              activeOpacity={0.7}
-            >
-              <View style={styles.itemIconContainer}>
-                {getIconComponent(log)}
-              </View>
-              <Text
-                style={[
-                  {
-                    fontSize: 12,
-                    textAlign: 'center',
-                    color: colors.textSecondary,
-                  },
-                ]}
-                numberOfLines={2}
-              >
-                {formatDisplayText(log)}
-              </Text>
-            </TouchableOpacity>
+            <HealthLogItem key={`${log.type}_${log.item_id}`} log={log} selectedDate={selectedDate} />
           ))
         ) : (
           // No items message
