@@ -29,7 +29,7 @@ const commonStyles = StyleSheet.create({
     borderRadius: 16,
     marginBottom: 16,
     padding: 16,
-    backgroundColor: 'yellow',
+    backgroundColor: 'white',
     overflow: 'hidden',
   },
 

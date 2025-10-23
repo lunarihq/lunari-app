@@ -74,7 +74,7 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
       <Text
         style={[
           typography.heading2,
-          commonStyles.sectionTitleContainer,
+          commonStyles.sectionTitleContainer,{marginBottom: 8}
         ]}
       >
         {t('stats:cycleHistory.title')}
@@ -82,13 +82,13 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
       <Text
         style={[
           typography.body,
-          { marginBottom: 10, color: colors.textSecondary },
+          { marginBottom: 10, color: colors.textSecondary},
         ]}
       >
         {cycles.length} {t('stats:cycleHistory.loggedCycles')}
       </Text>
 
-      <View style={[styles.card, { backgroundColor: colors.surface }]}>
+      <View>
         {cycles.map((cycle, index) => {
           const isCurrentCycle = index === 0;
 
@@ -129,12 +129,13 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
             styles.cycleContainer,
             { backgroundColor: colors.surface },
             isCurrentCycle
-              ? {}
+              ? { paddingTop: 8 }
+              
               : index % 2 === 1
                 ? {
                     borderColor: colors.border,
                     borderTopWidth: 1,
-                    borderBottomWidth: 1,
+                    borderBottomWidth: 2,
                   }
                 : {},
           ];
@@ -147,7 +148,7 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
                   <Text
                     style={[
                       typography.body,
-                      { fontSize: 18, fontWeight: 'bold', marginBottom: 8 },
+                      { fontSize: 18, fontWeight: 'bold', marginBottom: 10},
                     ]}
                   >
                     {t('stats:cycleHistory.currentCycle')}
@@ -187,10 +188,7 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
 
 const styles = StyleSheet.create({
 
-  card: {
-    borderRadius: 12,
-    padding: 0,
-  },
+
   cycleContainer: {
     paddingVertical: 20,
   },
