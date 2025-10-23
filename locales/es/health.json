@@ -1,13 +1,13 @@
 {
   "symptoms": {
     "title": "Síntomas",
-    "im-okay": "Estoy bien",
+    "im-okay": "Todo va bien",
     "headache": "Dolor de cabeza",
-    "cramps": "Cólicos",
+    "cramps": "Calambre abdominal",
     "bloating": "Hinchazón",
     "backache": "Dolor de espalda",
     "acne": "Acné",
-    "tender-breasts": "Sensibilidad en los senos",
+    "tender-breasts": "Pechos sensibles",
     "nausea": "Náuseas",
     "fatigue": "Fatiga",
     "insomnia": "Insomnio",
@@ -16,7 +16,7 @@
     "hot-flashes": "Sofocos",
     "night-sweats": "Sudores nocturnos",
     "brain-fog": "Niebla mental",
-    "joint-pain": "Dolor en las articulaciones",
+    "joint-pain": "Dolor de articulaciones",
     "dizziness": "Mareos",
     "cravings": "Antojos",
     "frequent-urination": "Micción frecuente",
@@ -26,21 +26,21 @@
     "title": "Estados de ánimo",
     "calm": "Tranquila",
     "happy": "Feliz",
-    "energetic": "Energética",
+    "energetic": "Con energía",
     "sad": "Triste",
     "anxious": "Ansiosa",
     "confused": "Confundida",
     "irritated": "Irritada",
     "angry": "Enojada",
     "mood-swings": "Cambios de humor",
-    "frisky": "Juguetona",
+    "frisky": "Activa",
     "apathetic": "Apática",
     "bored": "Aburrida"
   },
   "flows": {
     "title": "Flujo menstrual",
     "light": "Ligero",
-    "medium": "Moderado",
+    "medium": "Medio",
     "heavy": "Abundante",
     "blood-clots": "Coágulos de sangre"
   },
@@ -54,7 +54,7 @@
     "spotting": "Manchado",
     "unusual": "Inusual",
     "clumpy-white": "Blanco grumoso",
-    "grey-discharge": "Flujo gris"
+    "grey-discharge": "Gris"
   },
   "tracking": {
     "title": "Registra tu salud",
