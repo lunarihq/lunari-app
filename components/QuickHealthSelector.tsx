@@ -110,15 +110,10 @@ export const QuickHealthSelector = ({
   };
 
   return (
-    <View style={[commonStyles.sectionContainer]}>
-      <Text style={[typography.heading2, titleStyle, { marginBottom: 16 }]}>
-        {t('symptomsTracker.title')}
-      </Text>
-
-      <ScrollView
+    <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
-        style={styles.scrollContainer}
+        style={[styles.scrollContainer, { backgroundColor: 'red' }]}
       >
         {/* Add Button - Always visible */}
         <TouchableOpacity
@@ -199,7 +194,6 @@ export const QuickHealthSelector = ({
           </View>
         )}
       </ScrollView>
-    </View>
   );
 };
 

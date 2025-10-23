@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, Text } from 'react-native';
 import { useLocalSearchParams, router, useFocusEffect } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { CycleOverviewWidget } from '../../components/CycleOverviewWidget';
 import { CycleInsights } from '../../components/CycleInsights';
 import { QuickHealthSelector } from '../../components/QuickHealthSelector';
@@ -9,8 +10,13 @@ import { PeriodDate, periodDates } from '../../db/schema';
 import { PeriodPredictionService } from '../../services/periodPredictions';
 import { NotificationService } from '../../services/notificationService';
 import { commonStyles } from '../../styles/commonStyles';
+import { useTheme, createTypography } from '../../styles/theme';
 
 export default function Index() {
+  const { colors } = useTheme();
+  const typography = createTypography(colors);
+  const { t } = useTranslation('health');
+  
   const [selectedDates, setSelectedDates] = useState<{ [date: string]: any }>(
     {}
   );
@@ -174,7 +180,12 @@ export default function Index() {
         averageCycleLength={averageCycleLength}
       />
 
-      <QuickHealthSelector />
+      <View style={[commonStyles.sectionContainer]}>
+        <Text style={[typography.heading2, { marginBottom: 16 }]}>
+          {t('symptomsTracker.title')}
+        </Text>
+        <QuickHealthSelector />
+      </View>
 
       <View />
     </ScrollView>
