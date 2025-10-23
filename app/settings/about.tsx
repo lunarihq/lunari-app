@@ -141,17 +141,25 @@ export default function About() {
         <Text style={[typography.body, { marginBottom: 12 }]}>
           {t('aboutScreen.technical.description')}
         </Text>
-        {['framework', 'database', 'language', 'platform'].map((item) => (
-          <Text
-            key={item}
-            style={[
-              typography.body,
-              {marginBottom: 8, marginLeft: 8 },
-            ]}
-          >
-            {t(`aboutScreen.technical.${item}`)}
-          </Text>
-        ))}
+        {['framework', 'database', 'language', 'platform'].map((item) => {
+          const fullText = t(`aboutScreen.technical.${item}`);
+          const colonIndex = fullText.indexOf(':');
+          const label = fullText.substring(0, colonIndex + 1);
+          const value = fullText.substring(colonIndex + 1);
+          
+          return (
+            <Text
+              key={item}
+              style={[
+                typography.body,
+                {marginBottom: 8, marginLeft: 8 },
+              ]}
+            >
+              <Text style={typography.bodyBold}>{label}</Text>
+              <Text>{value}</Text>
+            </Text>
+          );
+        })}
       </View>
 
       <View style={[commonStyles.sectionContainer]}>
@@ -176,8 +184,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 16,
-  },
-  bold: {
-    fontWeight: '600',
   },
 });
