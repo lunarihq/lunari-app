@@ -1,64 +1,86 @@
-import i18n from 'i18next';
+import i18n, { use as i18nUse, init as i18nInit } from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import { getLocales } from 'expo-localization';
 
-import commonEN from '../locales/en/common.json';
-import onboardingEN from '../locales/en/onboarding.json';
-import calendarEN from '../locales/en/calendar.json';
-import settingsEN from '../locales/en/settings.json';
-import healthEN from '../locales/en/health.json';
-import homeEN from '../locales/en/home.json';
-import statsEN from '../locales/en/stats.json';
-import infoEN from '../locales/en/info.json';
-import notificationsEN from '../locales/en/notifications.json';
-
-import commonES from '../locales/es/common.json';
-import onboardingES from '../locales/es/onboarding.json';
-import calendarES from '../locales/es/calendar.json';
-import settingsES from '../locales/es/settings.json';
-import healthES from '../locales/es/health.json';
-import homeES from '../locales/es/home.json';
-import statsES from '../locales/es/stats.json';
-import infoES from '../locales/es/info.json';
-import notificationsES from '../locales/es/notifications.json';
-
 const resources = {
   en: {
-    common: commonEN,
-    onboarding: onboardingEN,
-    calendar: calendarEN,
-    settings: settingsEN,
-    health: healthEN,
-    home: homeEN,
-    stats: statsEN,
-    info: infoEN,
-    notifications: notificationsEN,
+    common: () => import('../locales/en/common.json'),
+    onboarding: () => import('../locales/en/onboarding.json'),
+    calendar: () => import('../locales/en/calendar.json'),
+    settings: () => import('../locales/en/settings.json'),
+    health: () => import('../locales/en/health.json'),
+    home: () => import('../locales/en/home.json'),
+    stats: () => import('../locales/en/stats.json'),
+    info: () => import('../locales/en/info.json'),
+    notifications: () => import('../locales/en/notifications.json'),
   },
   es: {
-    common: commonES,
-    onboarding: onboardingES,
-    calendar: calendarES,
-    settings: settingsES,
-    health: healthES,
-    home: homeES,
-    stats: statsES,
-    info: infoES,
-    notifications: notificationsES,
+    common: () => import('../locales/es/common.json'),
+    onboarding: () => import('../locales/es/onboarding.json'),
+    calendar: () => import('../locales/es/calendar.json'),
+    settings: () => import('../locales/es/settings.json'),
+    health: () => import('../locales/es/health.json'),
+    home: () => import('../locales/es/home.json'),
+    stats: () => import('../locales/es/stats.json'),
+    info: () => import('../locales/es/info.json'),
+    notifications: () => import('../locales/es/notifications.json'),
   },
 };
 
 const deviceLanguage = getLocales()[0]?.languageCode || 'en';
 
-i18n.use(initReactI18next).init({
-  resources,
-  lng: deviceLanguage,
-  fallbackLng: 'en',
-  defaultNS: 'common',
-  interpolation: {
-    escapeValue: false,
-  },
-  compatibilityJSON: 'v3',
-});
+const loadLanguageResources = async (language: string) => {
+  const languageResources = resources[language as keyof typeof resources];
+  if (!languageResources) return {};
+
+  const loadedResources: Record<string, any> = {};
+  
+  for (const [namespace, importFn] of Object.entries(languageResources)) {
+    try {
+      const module = await importFn();
+      loadedResources[namespace] = module.default || module;
+    } catch (error) {
+      console.warn(`Failed to load ${namespace} for ${language}:`, error);
+    }
+  }
+  
+  return loadedResources;
+};
+
+const initializeI18n = async () => {
+  const initialResources = await loadLanguageResources(deviceLanguage);
+  
+  // Configure i18next
+  i18nUse(initReactI18next);
+  
+  // Initialize with resources
+  await i18nInit({
+    resources: {
+      [deviceLanguage]: initialResources,
+    },
+    lng: deviceLanguage,
+    fallbackLng: 'en',
+    defaultNS: 'common',
+    interpolation: {
+      escapeValue: false,
+    },
+    compatibilityJSON: 'v4',
+  });
+};
+
+initializeI18n();
+
+export const loadLanguage = async (language: string) => {
+  if (i18n.hasResourceBundle(language, 'common')) {
+    return;
+  }
+  
+  const languageResources = await loadLanguageResources(language);
+  
+  for (const [namespace, translations] of Object.entries(languageResources)) {
+    i18n.addResourceBundle(language, namespace, translations);
+  }
+};
 
 export default i18n;
 
