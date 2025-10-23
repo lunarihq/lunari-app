@@ -1,63 +1,60 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
+import resourcesToBackend from 'i18next-resources-to-backend';
 import { getLocales } from 'expo-localization';
-
-import commonEN from '../locales/en/common.json';
-import onboardingEN from '../locales/en/onboarding.json';
-import calendarEN from '../locales/en/calendar.json';
-import settingsEN from '../locales/en/settings.json';
-import healthEN from '../locales/en/health.json';
-import homeEN from '../locales/en/home.json';
-import statsEN from '../locales/en/stats.json';
-import infoEN from '../locales/en/info.json';
-import notificationsEN from '../locales/en/notifications.json';
-
-import commonES from '../locales/es/common.json';
-import onboardingES from '../locales/es/onboarding.json';
-import calendarES from '../locales/es/calendar.json';
-import settingsES from '../locales/es/settings.json';
-import healthES from '../locales/es/health.json';
-import homeES from '../locales/es/home.json';
-import statsES from '../locales/es/stats.json';
-import infoES from '../locales/es/info.json';
-import notificationsES from '../locales/es/notifications.json';
-
-const resources = {
-  en: {
-    common: commonEN,
-    onboarding: onboardingEN,
-    calendar: calendarEN,
-    settings: settingsEN,
-    health: healthEN,
-    home: homeEN,
-    stats: statsEN,
-    info: infoEN,
-    notifications: notificationsEN,
-  },
-  es: {
-    common: commonES,
-    onboarding: onboardingES,
-    calendar: calendarES,
-    settings: settingsES,
-    health: healthES,
-    home: homeES,
-    stats: statsES,
-    info: infoES,
-    notifications: notificationsES,
-  },
-};
 
 const deviceLanguage = getLocales()[0]?.languageCode || 'en';
 
-i18n.use(initReactI18next).init({
-  resources,
+const loadResources = resourcesToBackend((language: string, namespace: string) => {
+  const resources: Record<string, Record<string, () => Promise<any>>> = {
+    en: {
+      common: () => import('../locales/en/common.json'),
+      onboarding: () => import('../locales/en/onboarding.json'),
+      calendar: () => import('../locales/en/calendar.json'),
+      settings: () => import('../locales/en/settings.json'),
+      health: () => import('../locales/en/health.json'),
+      home: () => import('../locales/en/home.json'),
+      stats: () => import('../locales/en/stats.json'),
+      info: () => import('../locales/en/info.json'),
+      notifications: () => import('../locales/en/notifications.json'),
+    },
+    es: {
+      common: () => import('../locales/es/common.json'),
+      onboarding: () => import('../locales/es/onboarding.json'),
+      calendar: () => import('../locales/es/calendar.json'),
+      settings: () => import('../locales/es/settings.json'),
+      health: () => import('../locales/es/health.json'),
+      home: () => import('../locales/es/home.json'),
+      stats: () => import('../locales/es/stats.json'),
+      info: () => import('../locales/es/info.json'),
+      notifications: () => import('../locales/es/notifications.json'),
+    },
+  };
+
+  return resources[language]?.[namespace]?.();
+});
+
+// Initialize i18n with lazy-loaded translations
+// eslint-disable-next-line import/no-named-as-default-member
+i18n.use(loadResources).use(initReactI18next).init({
   lng: deviceLanguage,
   fallbackLng: 'en',
   defaultNS: 'common',
+  ns: [
+    'common',
+    'onboarding',
+    'calendar',
+    'settings',
+    'health',
+    'home',
+    'stats',
+    'info',
+    'notifications',
+  ],
   interpolation: {
     escapeValue: false,
   },
-  compatibilityJSON: 'v3',
+  compatibilityJSON: 'v4',
 });
 
 export default i18n;
