@@ -20,7 +20,7 @@ export default function PrivacyPolicy() {
       showsVerticalScrollIndicator={false}
     >
       <View style={[commonStyles.sectionContainer]}>
-        <Text style={[typography.heading1, { marginBottom: 8, textAlign: 'center' }]}>
+        <Text style={[typography.headingLg, { marginBottom: 8, textAlign: 'center' }]}>
           {t('privacyPolicyScreen.title')}
         </Text>
         <Text style={[typography.body, { color: colors.textSecondary, textAlign: 'center' }]}>
@@ -35,7 +35,7 @@ export default function PrivacyPolicy() {
             size={24}
             color={colors.primary}
           />
-          <Text style={[typography.heading2, { marginLeft: 12 }]}>
+          <Text style={[typography.headingMd, { marginLeft: 12 }]}>
             {t('privacyPolicyScreen.introduction.title')}
           </Text>
         </View>
@@ -47,7 +47,7 @@ export default function PrivacyPolicy() {
       <View style={[commonStyles.sectionContainer]}>
         <View style={styles.sectionHeader}>
           <Ionicons name="analytics-outline" size={24} color={colors.primary} />
-          <Text style={[typography.heading2, { marginLeft: 12 }]}>
+          <Text style={[typography.headingMd, { marginLeft: 12 }]}>
             {t('privacyPolicyScreen.dataUse.title')}
           </Text>
         </View>
@@ -82,7 +82,7 @@ export default function PrivacyPolicy() {
             size={24}
             color={colors.primary}
           />
-          <Text style={[typography.heading2, { marginLeft: 12 }]}>
+          <Text style={[typography.headingMd, { marginLeft: 12 }]}>
             {t('privacyPolicyScreen.permissions.title')}
           </Text>
         </View>
@@ -110,7 +110,7 @@ export default function PrivacyPolicy() {
       <View style={[commonStyles.sectionContainer]}>
         <View style={styles.sectionHeader}>
           <Ionicons name="eye-outline" size={24} color={colors.primary} />
-          <Text style={[typography.heading2, { marginLeft: 12 }]}>
+          <Text style={[typography.headingMd, { marginLeft: 12 }]}>
             {t('privacyPolicyScreen.transparency.title')}
           </Text>
         </View>

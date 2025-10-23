@@ -113,7 +113,7 @@ export default function LastPeriodDateScreen() {
 
       <View style={onboardingStyles.content}>
         <Text
-          style={[typography.heading2, { marginBottom: 20, textAlign: 'left' }]}
+          style={[typography.headingMd, { marginBottom: 20, textAlign: 'left' }]}
         >
           {t('lastPeriod.title')}
         </Text>
@@ -153,7 +153,7 @@ export default function LastPeriodDateScreen() {
               return (
                 <Text
                   style={[
-                    typography.heading2,
+                    typography.headingMd,
                     { textAlign: 'center', marginVertical: 10 },
                   ]}
                 >

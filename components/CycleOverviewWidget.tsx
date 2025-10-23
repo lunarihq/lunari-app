@@ -73,7 +73,7 @@ export function CycleOverviewWidget({
               </Text>
               <Text
                 style={[
-                  typography.heading2,
+                  typography.headingMd,
                   { fontSize: 22, fontWeight: '500' },
                   { color: circleTextColor },
                 ]}
@@ -110,7 +110,7 @@ export function CycleOverviewWidget({
                 <>
                   <Text
                     style={[
-                      typography.heading2,
+                      typography.headingMd,
                       { fontSize: 22, fontWeight: '500' },
                       { color: circleTextColor },
                     ]}
@@ -135,7 +135,7 @@ export function CycleOverviewWidget({
               ) : prediction.days === 0 ? (
                 <Text
                   style={[
-                    typography.heading2,
+                    typography.headingMd,
                     {
                       fontSize: 28,
                       fontWeight: '500',
@@ -152,7 +152,7 @@ export function CycleOverviewWidget({
                 <>
                   <Text
                     style={[
-                      typography.heading2,
+                      typography.headingMd,
                       { fontSize: 22, fontWeight: '500' },
                       { color: circleTextColor },
                     ]}

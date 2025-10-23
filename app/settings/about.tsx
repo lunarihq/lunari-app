@@ -24,7 +24,7 @@ export default function About() {
       showsVerticalScrollIndicator={false}
     >
       <View style={[commonStyles.sectionContainer]}>
-        <Text style={[typography.heading1, { marginBottom: 8, textAlign: 'center' }]}>
+        <Text style={[typography.headingLg, { marginBottom: 8, textAlign: 'center' }]}>
           {t('aboutScreen.title')}
         </Text>
         <Text style={[typography.body, { color: colors.textSecondary, textAlign: 'center' }]}>
@@ -35,7 +35,7 @@ export default function About() {
       <View style={[commonStyles.sectionContainer]}>
         <View style={styles.sectionHeader}>
           <Ionicons name="heart-outline" size={24} color={colors.primary} />
-          <Text style={[typography.heading2, { marginLeft: 12 }]}>
+          <Text style={[typography.headingMd, { marginLeft: 12 }]}>
             {t('aboutScreen.whatIs.title')}
           </Text>
         </View>
@@ -47,7 +47,7 @@ export default function About() {
       <View style={[commonStyles.sectionContainer]}>
         <View style={styles.sectionHeader}>
           <Ionicons name="calendar-outline" size={24} color={colors.primary} />
-          <Text style={[typography.heading2, { marginLeft: 12 }]}>
+          <Text style={[typography.headingMd, { marginLeft: 12 }]}>
             {t('aboutScreen.features.title')}
           </Text>
         </View>
@@ -71,7 +71,7 @@ export default function About() {
             size={24}
             color={colors.primary}
           />
-          <Text style={[typography.heading2, { marginLeft: 12 }]}>
+          <Text style={[typography.headingMd, { marginLeft: 12 }]}>
             {t('aboutScreen.privacyFirst.title')}
           </Text>
         </View>
@@ -98,7 +98,7 @@ export default function About() {
             size={24}
             color={colors.primary}
           />
-          <Text style={[typography.heading2, { marginLeft: 12 }]}>
+          <Text style={[typography.headingMd, { marginLeft: 12 }]}>
             {t('aboutScreen.openSource.title')}
           </Text>
         </View>
@@ -134,7 +134,7 @@ export default function About() {
       <View style={[commonStyles.sectionContainer]}>
         <View style={styles.sectionHeader}>
           <Ionicons name="code-outline" size={24} color={colors.primary} />
-          <Text style={[typography.heading2, { marginLeft: 12 }]}>
+          <Text style={[typography.headingMd, { marginLeft: 12 }]}>
             {t('aboutScreen.technical.title')}
           </Text>
         </View>

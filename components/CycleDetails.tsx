@@ -52,7 +52,7 @@ export function CycleDetails({
           <View style={styles.titleContainer}>
             <Text
               style={[
-                typography.heading2,
+                typography.headingMd,
                 { fontSize: 23, fontWeight: 'bold', marginBottom: 6 },
               ]}
             >

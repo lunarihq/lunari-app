@@ -182,7 +182,7 @@ export default function Stats() {
     >
       <Text
         style={[
-          typography.heading2,
+          typography.headingMd,
           {
             fontSize: 22,
             fontWeight: '500',
@@ -229,7 +229,7 @@ export default function Stats() {
         <Text
           style={[
             commonStyles.sectionTitleContainer,
-            typography.heading2,
+            typography.headingMd,
           ]}
         >
           {t('cycleStatistics')}

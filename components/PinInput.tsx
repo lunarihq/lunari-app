@@ -126,7 +126,7 @@ export function PinInput({
                 >
                   <Text
                     style={[
-                      typography.heading2,
+                      typography.headingMd,
                       { fontSize: 24, fontWeight: '600' },
                     ]}
                   >
@@ -146,7 +146,7 @@ export function PinInput({
       <View style={styles.header}>
         <Text
           style={[
-            typography.heading2,
+            typography.headingMd,
             { textAlign: 'center', marginBottom: 8 },
           ]}
         >

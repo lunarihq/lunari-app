@@ -72,7 +72,7 @@ export default function CyclePhaseDetails() {
 
         <Text
           style={[
-            typography.heading1,
+            typography.headingLg,
             { textAlign: 'center', marginBottom: 8 },
           ]}
         >
@@ -103,7 +103,7 @@ export default function CyclePhaseDetails() {
             >
               <CycleIcon size={36} color={colors.accentPink} />
             </View>
-            <Text style={[typography.heading2, { marginLeft: 12 }]}>
+            <Text style={[typography.headingMd, { marginLeft: 12 }]}>
               {t('cyclePhase.cyclePhaseTitle')}
             </Text>
           </View>
@@ -132,7 +132,7 @@ export default function CyclePhaseDetails() {
             >
               <LeafIcon size={40} color={colors.accentPink} />
             </View>
-            <Text style={[typography.heading2, { marginLeft: 12 }]}>
+            <Text style={[typography.headingMd, { marginLeft: 12 }]}>
               {t('cyclePhase.chanceToConceive')}
             </Text>
           </View>
@@ -166,7 +166,7 @@ export default function CyclePhaseDetails() {
                   color={colors.accentPink}
                 />
               </View>
-              <Text style={[typography.heading2, { marginLeft: 12 }]}>
+              <Text style={[typography.headingMd, { marginLeft: 12 }]}>
                 {t('cyclePhase.possibleSymptoms')}
               </Text>
             </View>

@@ -67,7 +67,7 @@ export function StatCard({ title, value, icon, status, type }: StatCardProps) {
         </Text>
         <Text
           style={[
-            typography.heading2,
+            typography.headingMd,
             { fontSize: 24, fontWeight: 'bold', marginTop: 2 },
           ]}
         >

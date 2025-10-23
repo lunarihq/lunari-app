@@ -36,7 +36,7 @@ export function CycleInsights({
   return (
     <View style={[commonStyles.sectionContainer]}>
       <View style={[commonStyles.sectionTitleContainer]}>
-        <Text style={[typography.heading2, {flex: 1}]}>
+        <Text style={[typography.headingMd, {flex: 1}]}>
           {t('cycleInsights.todaysInsights')}
         </Text>
         <Pressable

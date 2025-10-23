@@ -354,7 +354,7 @@ export default function HealthTracking() {
         {isPeriodDate && (
           <View style={[commonStyles.sectionContainer]}>
             <View style={commonStyles.sectionTitleContainer}>
-              <Text style={[typography.heading2]}>
+              <Text style={[typography.headingMd]}>
                 {t('health:tracking.flow')}
               </Text>
             </View>
@@ -371,7 +371,7 @@ export default function HealthTracking() {
         )}
         <View style={[commonStyles.sectionContainer]}>
           <View style={commonStyles.sectionTitleContainer}>
-            <Text style={[typography.heading2]}>
+            <Text style={[typography.headingMd]}>
               {t('health:tracking.symptoms')}
             </Text>
           </View>
@@ -388,7 +388,7 @@ export default function HealthTracking() {
 
         <View style={[commonStyles.sectionContainer]}>
           <View style={commonStyles.sectionTitleContainer}>
-            <Text style={[typography.heading2]}>
+            <Text style={[typography.headingMd]}>
               {t('health:tracking.moods')}
             </Text>
           </View>
@@ -405,7 +405,7 @@ export default function HealthTracking() {
 
         <View style={[commonStyles.sectionContainer]}>
           <View style={commonStyles.sectionTitleContainer}>
-            <Text style={[typography.heading2]}>
+            <Text style={[typography.headingMd]}>
               {t('health:tracking.discharge')}
             </Text>
           </View>
@@ -426,7 +426,7 @@ export default function HealthTracking() {
           style={[commonStyles.sectionContainer]}
         >
           <View style={commonStyles.sectionTitleContainer}>
-            <Text style={[typography.heading2]}>{t('health:tracking.notes')}</Text>
+            <Text style={[typography.headingMd]}>{t('health:tracking.notes')}</Text>
             <View style={styles.notesIconsContainer}>
               {notes.trim() && (
                 <TouchableOpacity

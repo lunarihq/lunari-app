@@ -174,7 +174,7 @@ export default function CalendarView() {
       ]}
       contentContainerStyle={commonStyles.scrollContentContainer}
     >
-      <Text style={[commonStyles.sectionTitleContainer, typography.heading3]}>
+      <Text style={[commonStyles.sectionTitleContainer, typography.headingSm]}>
         {t('view.displayOptions')}
       </Text>
       <View style={[commonStyles.sectionContainer, {padding: 0}]}>
@@ -219,7 +219,7 @@ export default function CalendarView() {
         </View>
       </View>
 
-      <Text style={[commonStyles.sectionTitleContainer, typography.heading3]}>
+      <Text style={[commonStyles.sectionTitleContainer, typography.headingSm]}>
         {t('view.iconsShown')}
       </Text>
       <View style={[commonStyles.sectionContainer, {padding: 0}]}>
@@ -242,27 +242,27 @@ export default function CalendarView() {
         ))}
       </View>
       <View style={[commonStyles.sectionContainer, {padding: 0}]}>
-        <Text style={[commonStyles.sectionTitleContainer, typography.heading3]}>
+        <Text style={[commonStyles.sectionTitleContainer, typography.headingSm]}>
           {t('view.iconsShown')}
         </Text>
       </View>
       <View style={[commonStyles.sectionContainer, {padding: 0}]}>
-        <Text style={[commonStyles.sectionTitleContainer, typography.heading3]}>
+        <Text style={[commonStyles.sectionTitleContainer, typography.headingSm]}>
           {t('view.iconsShown')}
         </Text>
       </View>
       <View style={[commonStyles.sectionContainer, {padding: 0}]}>
-        <Text style={[commonStyles.sectionTitleContainer, typography.heading3]}>
+        <Text style={[commonStyles.sectionTitleContainer, typography.headingSm]}>
           {t('view.iconsShown')}
         </Text>
       </View>
       <View style={[commonStyles.sectionContainer, {padding: 0}]}>
-        <Text style={[commonStyles.sectionTitleContainer, typography.heading3]}>
+        <Text style={[commonStyles.sectionTitleContainer, typography.headingSm]}>
           {t('view.iconsShown')}
         </Text>
       </View>
       <View style={[commonStyles.sectionContainer, {padding: 0}]}>
-        <Text style={[commonStyles.sectionTitleContainer, typography.heading3]}>
+        <Text style={[commonStyles.sectionTitleContainer, typography.headingSm]}>
           {t('view.iconsShown')}
         </Text>
       </View>

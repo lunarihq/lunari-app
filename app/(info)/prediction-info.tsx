@@ -30,14 +30,14 @@ export default function PredictionInfo() {
       <View>
         <View style={{ marginBottom: 32 }}>
           <View style={{ marginBottom: 32 }}>
-            <Text style={[typography.heading2, { marginBottom: 12 }]}>
+            <Text style={[typography.headingMd, { marginBottom: 12 }]}>
               {t('prediction.nextPeriod.title')}
             </Text>
             <Text style={[typography.body]}>
               {t('prediction.nextPeriod.description')}
             </Text>
           </View>
-          <Text style={[typography.heading2, { marginBottom: 12 }]}>
+          <Text style={[typography.headingMd, { marginBottom: 12 }]}>
             {t('prediction.cycleLengthCalc.title')}
           </Text>
           <Text style={[typography.body, { marginBottom: 16 }]}>
@@ -49,7 +49,7 @@ export default function PredictionInfo() {
         </View>
 
         <View style={{ marginBottom: 32 }}>
-          <Text style={[typography.heading2, { marginBottom: 12 }]}>
+          <Text style={[typography.headingMd, { marginBottom: 12 }]}>
             {t('prediction.ovulation.title')}
           </Text>
           <Text style={[typography.body, { marginBottom: 16 }]}>
@@ -61,7 +61,7 @@ export default function PredictionInfo() {
         </View>
 
         <View style={{ marginBottom: 32 }}>
-          <Text style={[typography.heading2, { marginBottom: 12 }]}>
+          <Text style={[typography.headingMd, { marginBottom: 12 }]}>
             {t('prediction.accuracy.title')}
           </Text>
           <Text style={[typography.body]}>
@@ -70,7 +70,7 @@ export default function PredictionInfo() {
         </View>
 
         <View style={{ marginBottom: 32 }}>
-          <Text style={[typography.heading2, { marginBottom: 8 }]}>
+          <Text style={[typography.headingMd, { marginBottom: 8 }]}>
             {t('prediction.privacy.title')}
           </Text>
           <Text style={[typography.body]}>

@@ -29,7 +29,7 @@ export default function PeriodLength() {
         }}
       />
       <View style={{ marginBottom: 28 }}>
-        <Text style={[typography.heading2, { marginBottom: 12 }]}>
+        <Text style={[typography.headingMd, { marginBottom: 12 }]}>
           {t('periodLength.title')}
         </Text>
 
@@ -40,7 +40,7 @@ export default function PeriodLength() {
       </View>
 
       <View style={{ marginBottom: 28 }}>
-        <Text style={[typography.heading2, { marginBottom: 12 }]}>
+        <Text style={[typography.headingMd, { marginBottom: 12 }]}>
           {t('periodLength.normal.title')}
         </Text>
         <Text style={[typography.body]}>
@@ -59,7 +59,7 @@ export default function PeriodLength() {
       </View>
 
       <View style={{ marginBottom: 28 }}>
-        <Text style={[typography.heading2, { marginBottom: 12 }]}>
+        <Text style={[typography.headingMd, { marginBottom: 12 }]}>
           {t('periodLength.irregular.title')}
         </Text>
         <Text style={[typography.body]}>
@@ -73,7 +73,7 @@ export default function PeriodLength() {
         </Text>
       </View>
       <View style={{ marginBottom: 28 }}>
-        <Text style={[typography.heading2, { marginBottom: 12 }]}>
+        <Text style={[typography.headingMd, { marginBottom: 12 }]}>
           {t('periodLength.seeDoctor.title')}
         </Text>
         <Text style={[typography.body]}>
@@ -87,7 +87,7 @@ export default function PeriodLength() {
         </Text>
       </View>
       <View style={{ marginBottom: 28 }}>
-        <Text style={[typography.heading3, { marginBottom: 12 }]}>
+        <Text style={[typography.headingSm, { marginBottom: 12 }]}>
           {t('periodLength.references.title')}
         </Text>
         <Text style={[typography.caption]}>

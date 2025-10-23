@@ -73,7 +73,7 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
     <View style={[commonStyles.sectionContainer]}>
       <Text
         style={[
-          typography.heading2,
+          typography.headingMd,
           commonStyles.sectionTitleContainer,{marginBottom: 8}
         ]}
       >

@@ -68,7 +68,7 @@ export default function CycleLengthScreen() {
 
       <View style={onboardingStyles.content}>
         <Text
-          style={[typography.heading2, { marginBottom: 20, textAlign: 'left' }]}
+          style={[typography.headingMd, { marginBottom: 20, textAlign: 'left' }]}
         >
           {t('cycleLength.title')}
         </Text>

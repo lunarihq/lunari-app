@@ -29,7 +29,7 @@ export default function PeriodLength() {
         }}
       />
       <View style={{ marginBottom: 32 }}>
-        <Text style={[typography.heading2, { marginBottom: 12 }]}>
+        <Text style={[typography.headingMd, { marginBottom: 12 }]}>
           {t('latePeriod.whatMeans.title')}
         </Text>
 
@@ -39,7 +39,7 @@ export default function PeriodLength() {
       </View>
 
       <View style={{ marginBottom: 32 }}>
-        <Text style={[typography.heading2, { marginBottom: 12 }]}>
+        <Text style={[typography.headingMd, { marginBottom: 12 }]}>
           {t('latePeriod.causes.title')}
         </Text>
         {[
@@ -55,7 +55,7 @@ export default function PeriodLength() {
       </View>
 
       <View style={{ marginBottom: 32 }}>
-        <Text style={[typography.heading2, { marginBottom: 12 }]}>
+        <Text style={[typography.headingMd, { marginBottom: 12 }]}>
           {t('latePeriod.seeDoctor.title')}
         </Text>
         <Text style={[typography.body]}>
@@ -64,7 +64,7 @@ export default function PeriodLength() {
       </View>
 
       <View style={{ marginBottom: 32 }}>
-        <Text style={[typography.heading2, { marginBottom: 12 }]}>
+        <Text style={[typography.headingMd, { marginBottom: 12 }]}>
           {t('latePeriod.whatToDo.title')}
         </Text>
         {['pregnancy', 'stress', 'weight', 'sleep', 'track', 'patience'].map((item, index) => (
