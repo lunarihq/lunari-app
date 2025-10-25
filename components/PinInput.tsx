@@ -20,6 +20,7 @@ interface PinInputProps {
   biometricLabel?: string;
   errorMessage?: string;
   onStartTyping?: () => void;
+  disabled?: boolean;
 }
 
 export function PinInput({
@@ -32,6 +33,7 @@ export function PinInput({
   biometricLabel,
   errorMessage,
   onStartTyping,
+  disabled = false,
 }: PinInputProps) {
   const { colors } = useTheme();
   const { typography } = useAppStyles();
@@ -54,7 +56,7 @@ export function PinInput({
   }, [errorMessage]);
 
   const handleNumberPress = (number: string) => {
-    if (pin.length >= PIN_LENGTH) return;
+    if (disabled || pin.length >= PIN_LENGTH) return;
 
     // Clear error message when user starts typing
     if (pin.length === 0 && onStartTyping) {
@@ -65,6 +67,7 @@ export function PinInput({
   };
 
   const handleBackspace = () => {
+    if (disabled) return;
     setPin(prev => prev.slice(0, -1));
   };
 
@@ -104,13 +107,15 @@ export function PinInput({
                     style={[
                       styles.numberButton,
                       { backgroundColor: colors.surface },
+                      disabled && styles.numberButtonDisabled,
                     ]}
                     onPress={handleBackspace}
+                    disabled={disabled}
                   >
                     <Ionicons
                       name="backspace-outline"
                       size={24}
-                      color={colors.textPrimary}
+                      color={disabled ? colors.textSecondary : colors.textPrimary}
                     />
                   </TouchableOpacity>
                 );
@@ -122,13 +127,19 @@ export function PinInput({
                   style={[
                     styles.numberButton,
                     { backgroundColor: colors.surface },
+                    disabled && styles.numberButtonDisabled,
                   ]}
                   onPress={() => handleNumberPress(item)}
+                  disabled={disabled}
                 >
                   <Text
                     style={[
                       typography.headingMd,
-                      { fontSize: 24, fontWeight: '600' },
+                      { 
+                        fontSize: 24, 
+                        fontWeight: '600',
+                        color: disabled ? colors.textSecondary : colors.textPrimary,
+                      },
                     ]}
                   >
                     {item}
@@ -272,6 +283,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 2,
+  },
+  numberButtonDisabled: {
+    opacity: 0.4,
   },
   biometricButton: {
     flexDirection: 'row',

@@ -104,6 +104,10 @@
     "enterPinSubtitle": "Enter your 4-digit PIN to unlock",
     "unlockApp": "Unlock Lunari",
     "incorrectPin": "Incorrect PIN. Please try again.",
+    "incorrectPinWithAttempts": "Incorrect PIN. {{attempts}} attempt(s) remaining.",
+    "tooManyAttempts": "Too many incorrect attempts.",
+    "lockedOut": "App Locked",
+    "lockedOutMessage": "Too many incorrect PIN attempts. Please wait before trying again.",
     "useBiometric": "Use Biometric"
   },
   "reminderSettings": {
@@ -213,4 +217,3 @@
     "footer": "If you have any questions about this privacy policy or how we handle your data, please contact us at lunari.appmail@gmail.app."
   }
 }
-

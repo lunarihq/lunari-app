@@ -9,10 +9,14 @@ import { useTheme } from '../styles/theme';
 export function LockScreen() {
   const { colors } = useTheme();
   const { t } = useTranslation('settings');
-  const { verifyPin, authenticateWithBiometric, lockMode } = useAuth();
+  const { verifyPin, authenticateWithBiometric, lockMode, checkLockoutStatus } = useAuth();
 
   const [errorMessage, setErrorMessage] = useState('');
   const [biometricAttempted, setBiometricAttempted] = useState(false);
+  const [isLockedOut, setIsLockedOut] = useState(false);
+  const [lockoutUntil, setLockoutUntil] = useState<number | null>(null);
+  const [remainingTime, setRemainingTime] = useState('');
+  const [isPinDisabled, setIsPinDisabled] = useState(false);
 
   const handleBiometricAuth = useCallback(async () => {
     try {
@@ -25,6 +29,45 @@ export function LockScreen() {
     }
   }, [authenticateWithBiometric]);
 
+  // Check lockout status on mount and set up countdown timer
+  useEffect(() => {
+    const checkLockout = async () => {
+      const status = await checkLockoutStatus();
+      if (status.isLockedOut && status.lockoutUntil) {
+        setIsLockedOut(true);
+        setLockoutUntil(status.lockoutUntil);
+      }
+    };
+    checkLockout();
+  }, [checkLockoutStatus]);
+
+  // Update countdown timer
+  useEffect(() => {
+    if (!isLockedOut || !lockoutUntil) return;
+
+    const updateTimer = () => {
+      const now = Date.now();
+      const remaining = lockoutUntil - now;
+
+      if (remaining <= 0) {
+        setIsLockedOut(false);
+        setLockoutUntil(null);
+        setRemainingTime('');
+        setErrorMessage('');
+        return;
+      }
+
+      const minutes = Math.floor(remaining / 60000);
+      const seconds = Math.floor((remaining % 60000) / 1000);
+      setRemainingTime(`${minutes}:${seconds.toString().padStart(2, '0')}`);
+    };
+
+    updateTimer();
+    const interval = setInterval(updateTimer, 1000);
+
+    return () => clearInterval(interval);
+  }, [isLockedOut, lockoutUntil]);
+
   // Automatically attempt biometric authentication when screen loads
   useEffect(() => {
     if (lockMode === 'biometric' && !biometricAttempted) {
@@ -34,18 +77,41 @@ export function LockScreen() {
   }, [lockMode, biometricAttempted, handleBiometricAuth]);
 
   const handlePinComplete = async (pin: string) => {
-    const isValid = await verifyPin(pin);
+    if (isPinDisabled || isLockedOut) return;
 
-    if (!isValid) {
-      setErrorMessage(t('lockScreen.incorrectPin'));
-      setTimeout(() => setErrorMessage(''), 3000);
+    const result = await verifyPin(pin);
+
+    if (result.isLockedOut && result.lockoutUntil) {
+      setIsLockedOut(true);
+      setLockoutUntil(result.lockoutUntil);
+      setErrorMessage(t('lockScreen.tooManyAttempts'));
+    } else if (!result.success) {
+      const attemptsMsg = result.remainingAttempts
+        ? t('lockScreen.incorrectPinWithAttempts', {
+            attempts: result.remainingAttempts,
+          })
+        : t('lockScreen.incorrectPin');
+      
+      setErrorMessage(attemptsMsg);
+
+      // Apply progressive delay
+      if (result.delayMs && result.delayMs > 0) {
+        setIsPinDisabled(true);
+        setTimeout(() => {
+          setIsPinDisabled(false);
+          setErrorMessage('');
+        }, result.delayMs);
+      } else {
+        setTimeout(() => setErrorMessage(''), 3000);
+      }
     }
   };
 
   const handleStartTyping = () => {
-    setErrorMessage('');
-    // Reset biometric attempt so user can try biometric again after typing PIN
-    setBiometricAttempted(true);
+    if (!isPinDisabled && !isLockedOut) {
+      setErrorMessage('');
+      setBiometricAttempted(true);
+    }
   };
 
   return (
@@ -54,13 +120,30 @@ export function LockScreen() {
     >
       <View style={styles.content}>
         {lockMode === 'pin' && (
-          <PinInput
-            title={t('lockScreen.enterPin')}
-            subtitle={t('lockScreen.enterPinSubtitle')}
-            onPinComplete={handlePinComplete}
-            errorMessage={errorMessage}
-            onStartTyping={handleStartTyping}
-          />
+          <>
+            {isLockedOut ? (
+              <View style={styles.lockoutContainer}>
+                <Text style={[styles.lockoutTitle, { color: colors.error }]}>
+                  {t('lockScreen.lockedOut')}
+                </Text>
+                <Text style={[styles.lockoutMessage, { color: colors.textSecondary }]}>
+                  {t('lockScreen.lockedOutMessage')}
+                </Text>
+                <Text style={[styles.lockoutTimer, { color: colors.textPrimary }]}>
+                  {remainingTime}
+                </Text>
+              </View>
+            ) : (
+              <PinInput
+                title={t('lockScreen.enterPin')}
+                subtitle={t('lockScreen.enterPinSubtitle')}
+                onPinComplete={handlePinComplete}
+                errorMessage={errorMessage}
+                onStartTyping={handleStartTyping}
+                disabled={isPinDisabled}
+              />
+            )}
+          </>
         )}
         {lockMode === 'biometric' && (
           <View style={styles.biometricContainer}>
@@ -92,5 +175,28 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: '600',
     marginBottom: 8,
+  },
+  lockoutContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 32,
+  },
+  lockoutTitle: {
+    fontSize: 28,
+    fontWeight: '700',
+    marginBottom: 16,
+    textAlign: 'center',
+  },
+  lockoutMessage: {
+    fontSize: 16,
+    textAlign: 'center',
+    marginBottom: 24,
+    lineHeight: 22,
+  },
+  lockoutTimer: {
+    fontSize: 48,
+    fontWeight: '700',
+    fontVariant: ['tabular-nums'],
   },
 });
