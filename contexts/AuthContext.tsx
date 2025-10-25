@@ -3,10 +3,11 @@ import React, {
   useContext,
   useState,
   useEffect,
+  useCallback,
   ReactNode,
 } from 'react';
 import { AppState, AppStateStatus } from 'react-native';
-import { AuthService } from '../services/authService';
+import { AuthService, PinVerificationResult } from '../services/authService';
 
 type LockMode = 'none' | 'pin' | 'biometric';
 
@@ -19,13 +20,18 @@ interface AuthContextType {
   lockApp: () => void;
   unlockApp: () => void;
   setupPin: (pin: string) => Promise<boolean>;
-  verifyPin: (pin: string) => Promise<boolean>;
+  verifyPin: (pin: string) => Promise<PinVerificationResult>;
   checkPin: (pin: string) => Promise<boolean>;
   removePin: () => Promise<boolean>;
   refreshPinStatus: () => Promise<void>;
   authenticateWithBiometric: () => Promise<boolean>;
   setBiometricEnabled: (enabled: boolean) => Promise<boolean>;
   getBiometricType: () => Promise<string>;
+  checkLockoutStatus: () => Promise<{
+    isLockedOut: boolean;
+    lockoutUntil?: number;
+    remainingMs?: number;
+  }>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -46,15 +52,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
   useEffect(() => {
     initializeAuth();
   }, []);
-
-  // Handle app state changes for auto-lock
-  useEffect(() => {
-    const subscription = AppState.addEventListener(
-      'change',
-      handleAppStateChange
-    );
-    return () => subscription?.remove();
-  }, [lockMode]);
 
   const initializeAuth = async () => {
     try {
@@ -93,30 +90,42 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   };
 
-  const handleAppStateChange = async (nextAppState: AppStateStatus) => {
-    if (nextAppState === 'background' || nextAppState === 'inactive') {
-      setAppStateBackground(true);
-    } else if (nextAppState === 'active' && appStateBackground && lockMode !== 'none') {
-      // Check for biometric enrollment loss when app becomes active
-      if (lockMode === 'biometric') {
-        const enrolled = await AuthService.isBiometricEnrolled();
-        if (!enrolled) {
-          await AuthService.setBiometricEnabled(false);
-          setLockMode('none');
-          setIsLocked(false);
-          setIsAuthenticated(true);
-          setAppStateBackground(false);
-          console.warn('App lock disabled - biometric data removed from device');
-          return;
+  const handleAppStateChange = useCallback(
+    async (nextAppState: AppStateStatus) => {
+      if (nextAppState === 'background' || nextAppState === 'inactive') {
+        setAppStateBackground(true);
+      } else if (nextAppState === 'active' && appStateBackground && lockMode !== 'none') {
+        // Check for biometric enrollment loss when app becomes active
+        if (lockMode === 'biometric') {
+          const enrolled = await AuthService.isBiometricEnrolled();
+          if (!enrolled) {
+            await AuthService.setBiometricEnabled(false);
+            setLockMode('none');
+            setIsLocked(false);
+            setIsAuthenticated(true);
+            setAppStateBackground(false);
+            console.warn('App lock disabled - biometric data removed from device');
+            return;
+          }
         }
-      }
 
-      // Lock app when returning from background if lock is enabled
-      setIsLocked(true);
-      setIsAuthenticated(false);
-      setAppStateBackground(false);
-    }
-  };
+        // Lock app when returning from background if lock is enabled
+        setIsLocked(true);
+        setIsAuthenticated(false);
+        setAppStateBackground(false);
+      }
+    },
+    [appStateBackground, lockMode]
+  );
+
+  // Handle app state changes for auto-lock
+  useEffect(() => {
+    const subscription = AppState.addEventListener(
+      'change',
+      handleAppStateChange
+    );
+    return () => subscription?.remove();
+  }, [handleAppStateChange]);
 
   const lockApp = () => {
     if (lockMode !== 'none') {
@@ -145,26 +154,30 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   };
 
-  const verifyPin = async (pin: string): Promise<boolean> => {
+  const verifyPin = async (pin: string): Promise<PinVerificationResult> => {
     try {
-      const isValid = await AuthService.verifyPin(pin);
-      if (isValid) {
+      const result = await AuthService.verifyPin(pin);
+      if (result.success) {
         unlockApp();
       }
-      return isValid;
+      return result;
     } catch (error) {
       console.error('Error verifying PIN:', error);
-      return false;
+      return { success: false, isLockedOut: false };
     }
   };
 
   const checkPin = async (pin: string): Promise<boolean> => {
     try {
-      return await AuthService.verifyPin(pin);
+      return await AuthService.verifyPinLegacy(pin);
     } catch (error) {
       console.error('Error checking PIN:', error);
       return false;
     }
+  };
+
+  const checkLockoutStatus = async () => {
+    return await AuthService.checkLockoutStatus();
   };
 
   const removePin = async (): Promise<boolean> => {
@@ -245,6 +258,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     authenticateWithBiometric,
     setBiometricEnabled,
     getBiometricType,
+    checkLockoutStatus,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
