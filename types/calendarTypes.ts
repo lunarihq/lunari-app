@@ -36,7 +36,7 @@ export const DEFAULT_SELECTED_STYLE: CustomMarking = {
   },
   customStyles: {
     text: {
-      color: '#FFFFFF',
+      color: '#FB3192', // Dark pink for proper contrast on light background
     },
   },
 };

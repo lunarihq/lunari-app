@@ -2,22 +2,15 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import {
   View,
   StyleSheet,
-  TouchableOpacity,
-  Text,
   DeviceEventEmitter,
 } from 'react-native';
 import { useTheme } from '../../styles/theme';
-import { DateData } from 'react-native-calendars';
 import {
   useFocusEffect,
-  useNavigation,
   useIsFocused,
 } from '@react-navigation/native';
 import { useLocalSearchParams, router } from 'expo-router';
-import {
-  BaseCalendar,
-  styles as baseCalendarStyles,
-} from '../../components/BaseCalendar';
+import { CustomCalendar } from '../../components/calendar/CustomCalendar';
 import { CalendarBottomSheet } from '../../components/CalendarBottomSheet';
 import { formatDateString } from '../../types/calendarTypes';
 import { useCalendarData } from '../../hooks/useCalendarData';
@@ -62,14 +55,8 @@ export default function CalendarScreen() {
   const [selectedDate, setSelectedDate] = useState(
     formatDateString(new Date())
   );
-  const [currentDate] = useState(formatDateString(new Date()));
-  const [calendarKey, setCalendarKey] = useState(Date.now());
   const [isDrawerOpen, setIsDrawerOpen] = useState(true);
-  const [displayedMonth, setDisplayedMonth] = useState(
-    formatDateString(new Date())
-  );
   const params = useLocalSearchParams();
-  const navigation = useNavigation();
 
   // Load calendar view settings on mount
   useEffect(() => {
@@ -134,8 +121,6 @@ export default function CalendarScreen() {
       );
       const today = formatDateString(new Date());
       setSelectedDate(today);
-      setDisplayedMonth(today);
-      setCalendarKey(Date.now());
     });
 
     return () => listener.remove();
@@ -165,8 +150,6 @@ export default function CalendarScreen() {
         }
         const today = formatDateString(new Date());
         setSelectedDate(today);
-        setDisplayedMonth(today);
-        setCalendarKey(Date.now());
       };
       reloadData();
       return () => {};
@@ -188,85 +171,30 @@ export default function CalendarScreen() {
   }, []);
 
   const onDayPress = useCallback(
-    (day: DateData) => {
-      const newDate = day.dateString;
-      setSelectedDate(newDate);
+    (dateString: string) => {
+      setSelectedDate(dateString);
 
-      // Update cycle day and marked dates immediately to avoid delays
-      setCycleDay(calculateCycleDay(newDate));
-      setMarkedDates(getMarkedDatesWithSelection(newDate));
+      setCycleDay(calculateCycleDay(dateString));
+      setMarkedDates(getMarkedDatesWithSelection(dateString));
 
       openDrawer();
     },
     [calculateCycleDay, getMarkedDatesWithSelection, openDrawer, setCycleDay]
   );
 
-  const onMonthChange = useCallback((month: DateData) => {
-    setDisplayedMonth(month.dateString);
+  const onMonthChange = useCallback((dateString: string) => {
+    // Month change handler - can be used for future features
   }, []);
-
-  // Function to check if the current displayed month is different from today's month
-  const isTodayButtonVisible = useCallback(() => {
-    // Extract year and month from today string (YYYY-MM-DD)
-    const todayYear = currentDate.substring(0, 4);
-    const todayMonth = currentDate.substring(5, 7);
-
-    // Extract year and month from displayedMonth string (YYYY-MM-DD)
-    const currentYear = displayedMonth.substring(0, 4);
-    const currentMonth = displayedMonth.substring(5, 7);
-
-    // Return true if they are different (button should be visible)
-    return todayYear !== currentYear || todayMonth !== currentMonth;
-  }, [currentDate, displayedMonth]);
-
-  const goToToday = useCallback(() => {
-    const today = formatDateString(new Date());
-    setSelectedDate(today);
-    setDisplayedMonth(today);
-    setCalendarKey(Date.now());
-    setCycleDay(calculateCycleDay(today));
-    setMarkedDates(getMarkedDatesWithSelection(today));
-  }, [getMarkedDatesWithSelection, calculateCycleDay, setCycleDay]);
-
-  // Update header with Today button based on current month
-  useEffect(() => {
-    navigation.setOptions({
-      headerRight: isTodayButtonVisible()
-        ? () => (
-            <TouchableOpacity onPress={goToToday}>
-              <Text
-                style={[
-                  baseCalendarStyles.todayButtonText,
-                  styles.todayButtonText,
-                  { color: colors.primary },
-                ]}
-              >
-                Today
-              </Text>
-            </TouchableOpacity>
-          )
-        : undefined,
-    });
-  }, [
-    displayedMonth,
-    navigation,
-    colors.primary,
-    goToToday,
-    isTodayButtonVisible,
-  ]);
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.calendarContainer}>
-        <BaseCalendar
+        <CustomCalendar
           mode="view"
-          calendarKey={calendarKey}
           current={selectedDate}
           markedDates={markedDates}
           onDayPress={onDayPress}
           onMonthChange={onMonthChange}
-          hideDayNames={true}
-          customDayContainerStyle={{ paddingTop: 4 }}
         />
       </View>
 
@@ -286,9 +214,6 @@ export default function CalendarScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  todayButtonText: {
-    marginRight: 16,
   },
   calendarContainer: {
     flex: 1,

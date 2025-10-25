@@ -6,15 +6,14 @@ import { Checkbox } from '../../components/Checkbox';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { Calendar, DateData } from 'react-native-calendars';
 import { setSetting, getSetting, db } from '../../db';
 import { periodDates } from '../../db/schema';
 import { createOnboardingStyles } from '../../styles/onboarding';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useAppStyles } from '../../hooks/useStyles';
-import { formatDateString } from '../../types/calendarTypes';
+import { formatDateString, DEFAULT_SELECTED_STYLE, MarkedDates } from '../../types/calendarTypes';
 import { ColorScheme } from '../../styles/colors';
-import * as Localization from 'expo-localization';
+import { SingleMonthCalendar } from '../../components/calendar/SingleMonthCalendar';
 
 export default function LastPeriodDateScreen() {
   const router = useRouter();
@@ -61,9 +60,9 @@ export default function LastPeriodDateScreen() {
     router.back();
   };
 
-  const onDayPress = (day: DateData) => {
+  const onDayPress = (dateString: string) => {
     if (!dontKnow) {
-      setSelectedDate(day.dateString);
+      setSelectedDate(dateString);
     }
   };
 
@@ -74,19 +73,13 @@ export default function LastPeriodDateScreen() {
     }
   };
 
-  // Create marked dates object for the selected date
-  const markedDates =
+  const markedDates: MarkedDates =
     selectedDate && !dontKnow
       ? {
-          [selectedDate]: {
-            selected: true,
-            selectedColor: colors.primary,
-            selectedTextColor: colors.white,
-          },
+          [selectedDate]: DEFAULT_SELECTED_STYLE,
         }
       : {};
 
-  // Get today's date to set as the initial month
   const today = formatDateString(new Date());
 
   return (
@@ -133,53 +126,17 @@ export default function LastPeriodDateScreen() {
         <View
           style={[
             styles.calendarContainer,
+            { backgroundColor: colors.surfaceVariant },
             dontKnow && styles.calendarDisabled,
           ]}
         >
-          <Calendar
-            current={today}
-            onDayPress={onDayPress}
+          <SingleMonthCalendar
             markedDates={markedDates}
+            onDayPress={onDayPress}
+            colors={colors}
+            current={today}
             maxDate={today}
-            firstDay={1}
-            renderHeader={date => {
-              const monthYear = new Date(date).toLocaleDateString(
-                Localization.getLocales()[0].languageTag,
-                {
-                  month: 'long',
-                  year: 'numeric',
-                }
-              );
-              return (
-                <Text
-                  style={[
-                    typography.headingMd,
-                    { textAlign: 'center', marginVertical: 10 },
-                  ]}
-                >
-                  {monthYear}
-                </Text>
-              );
-            }}
-            theme={{
-              backgroundColor: colors.surfaceVariant,
-              calendarBackground: colors.surfaceVariant,
-              textSectionTitleColor: colors.textPrimary,
-              selectedDayBackgroundColor: colors.primary,
-              selectedDayTextColor: colors.white,
-              todayTextColor: colors.primary,
-              dayTextColor: colors.textPrimary,
-              textDisabledColor: colors.textSecondary,
-              arrowColor: colors.primary,
-              monthTextColor: colors.textPrimary,
-              textDayFontWeight: '400',
-              textMonthFontWeight: 'bold',
-              textDayHeaderFontWeight: '600',
-              textDayFontSize: 16,
-              textMonthFontSize: 18,
-              textDayHeaderFontSize: 14,
-            }}
-            style={[styles.calendar, dontKnow && styles.calendarDisabledStyle]}
+            disableFuture={true}
           />
         </View>
 
@@ -216,12 +173,5 @@ const createStyles = (colors: ColorScheme) =>
     },
     calendarDisabled: {
       opacity: 0.5,
-    },
-    calendar: {
-      paddingHorizontal: 10,
-      paddingVertical: 10,
-    },
-    calendarDisabledStyle: {
-      backgroundColor: colors.panel,
     },
   });
