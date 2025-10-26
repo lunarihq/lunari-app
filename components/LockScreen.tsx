@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -17,6 +17,16 @@ export function LockScreen() {
   const [lockoutUntil, setLockoutUntil] = useState<number | null>(null);
   const [remainingTime, setRemainingTime] = useState('');
   const [isPinDisabled, setIsPinDisabled] = useState(false);
+
+  const delayTimerRef = useRef<number | null>(null);
+  const errorTimerRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (delayTimerRef.current) clearTimeout(delayTimerRef.current);
+      if (errorTimerRef.current) clearTimeout(errorTimerRef.current);
+    };
+  }, []);
 
   const handleBiometricAuth = useCallback(async () => {
     try {
@@ -91,15 +101,14 @@ export function LockScreen() {
       
       setErrorMessage(attemptsMsg);
 
-      // Apply progressive delay
       if (result.delayMs && result.delayMs > 0) {
         setIsPinDisabled(true);
-        setTimeout(() => {
+        delayTimerRef.current = setTimeout(() => {
           setIsPinDisabled(false);
           setErrorMessage('');
         }, result.delayMs);
       } else {
-        setTimeout(() => setErrorMessage(''), 3000);
+        errorTimerRef.current = setTimeout(() => setErrorMessage(''), 3000);
       }
     }
   };
