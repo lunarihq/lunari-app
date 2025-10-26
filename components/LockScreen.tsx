@@ -78,7 +78,7 @@ export function LockScreen() {
 
     const result = await verifyPin(pin);
 
-    if (result.isLockedOut && result.lockoutUntil) {
+    if (result.isLockedOut) {
       setIsLockedOut(true);
       setLockoutUntil(result.lockoutUntil);
       setErrorMessage(t('lockScreen.tooManyAttempts'));
