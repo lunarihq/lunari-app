@@ -22,7 +22,8 @@ export function PinSetup({ mode = 'setup' }: PinSetupProps) {
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleCurrentPinComplete = async (pin: string) => {
-    const isValid = await AuthService.verifyPinLegacy(pin);
+    const result = await AuthService.verifyPin(pin);
+    const isValid = result.success;
 
     if (!isValid) {
       setErrorMessage(t('pinSetup.verifyPin.error'));

@@ -117,11 +117,6 @@ export class AuthService {
     }
   }
 
-  // Legacy method for backward compatibility (settings page)
-  static async verifyPinLegacy(pin: string): Promise<boolean> {
-    const result = await this.verifyPin(pin);
-    return result.success;
-  }
 
   // Remove PIN
   static async removePin(): Promise<boolean> {

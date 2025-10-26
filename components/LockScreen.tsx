@@ -50,10 +50,7 @@ export function LockScreen() {
       const remaining = lockoutUntil - now;
 
       if (remaining <= 0) {
-        setIsLockedOut(false);
-        setLockoutUntil(null);
-        setRemainingTime('');
-        setErrorMessage('');
+        setRemainingTime('0:00');
         return;
       }
 
