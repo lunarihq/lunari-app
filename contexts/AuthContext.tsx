@@ -54,39 +54,66 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }, []);
 
   const initializeAuth = async () => {
+    let mode;
     try {
-      const mode = await AuthService.getLockMode();
-      const pinSet = await AuthService.isPinSet();
-      const biometricAvailable = await AuthService.canUseBiometric();
+      mode = await AuthService.getLockMode();
+    } catch (error) {
+      console.error('Error getting lock mode:', error);
+      return;
+    }
 
-      setLockMode(mode);
-      setIsPinSet(pinSet);
-      setCanUseBiometric(biometricAvailable);
+    let pinSet;
+    try {
+      pinSet = await AuthService.isPinSet();
+    } catch (error) {
+      console.error('Error checking if PIN is set:', error);
+      return;
+    }
 
-      // Check for biometric enrollment loss
-      if (mode === 'biometric') {
-        const enrolled = await AuthService.isBiometricEnrolled();
-        if (!enrolled) {
-          // Biometric was enabled but device enrollment removed
+    let biometricAvailable;
+    try {
+      biometricAvailable = await AuthService.canUseBiometric();
+    } catch (error) {
+      console.error('Error checking biometric availability:', error);
+      return;
+    }
+
+    setLockMode(mode);
+    setIsPinSet(pinSet);
+    setCanUseBiometric(biometricAvailable);
+
+    // Check for biometric enrollment loss
+    if (mode === 'biometric') {
+      let enrolled;
+      try {
+        enrolled = await AuthService.isBiometricEnrolled();
+      } catch (error) {
+        console.error('Error checking biometric enrollment:', error);
+        return;
+      }
+
+      if (!enrolled) {
+        try {
           await AuthService.setBiometricEnabled(false);
-          setLockMode('none');
-          setIsLocked(false);
-          setIsAuthenticated(true);
-          console.warn('App lock disabled - biometric data removed from device');
+        } catch (error) {
+          console.error('Error disabling biometric:', error);
           return;
         }
-      }
-
-      // If lock is enabled, app should be locked initially
-      if (mode !== 'none') {
-        setIsLocked(true);
-        setIsAuthenticated(false);
-      } else {
+        setLockMode('none');
         setIsLocked(false);
         setIsAuthenticated(true);
+        console.warn('App lock disabled - biometric data removed from device');
+        return;
       }
-    } catch (error) {
-      console.error('Error initializing auth:', error);
+    }
+
+    // If lock is enabled, app should be locked initially
+    if (mode !== 'none') {
+      setIsLocked(true);
+      setIsAuthenticated(false);
+    } else {
+      setIsLocked(false);
+      setIsAuthenticated(true);
     }
   };
 
@@ -217,17 +244,24 @@ export function AuthProvider({ children }: AuthProviderProps) {
   };
 
   const setBiometricEnabled = async (enabled: boolean): Promise<boolean> => {
+    let success;
     try {
-      const success = await AuthService.setBiometricEnabled(enabled);
-      if (success) {
-        const biometricAvailable = await AuthService.canUseBiometric();
-        setCanUseBiometric(biometricAvailable);
-      }
-      return success;
+      success = await AuthService.setBiometricEnabled(enabled);
     } catch (error) {
       console.error('Error setting biometric enabled:', error);
       return false;
     }
+
+    if (success) {
+      try {
+        const biometricAvailable = await AuthService.canUseBiometric();
+        setCanUseBiometric(biometricAvailable);
+      } catch (error) {
+        console.error('Error checking biometric availability after setting:', error);
+        // Still return success since the main operation succeeded
+      }
+    }
+    return success;
   };
 
   const getBiometricType = async (): Promise<string> => {

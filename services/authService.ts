@@ -36,84 +36,134 @@ export class AuthService {
 
   // Set PIN
   static async setPin(pin: string): Promise<boolean> {
+    if (!/^[0-9]{4}$/.test(pin)) return false;
+    
+    let hash;
     try {
-      if (!/^[0-9]{4}$/.test(pin)) return false;
-      const hash = await Crypto.digestStringAsync(
+      hash = await Crypto.digestStringAsync(
         Crypto.CryptoDigestAlgorithm.SHA256,
         `lunari_v1:${pin}`
       );
-      await SecureStore.setItemAsync(PIN_KEY, hash);
-      await this.setLockMode('pin');
-      return true;
     } catch (error) {
-      console.error('Error setting PIN:', error);
+      console.error('Error hashing PIN:', error);
       return false;
     }
+    
+    try {
+      await SecureStore.setItemAsync(PIN_KEY, hash);
+    } catch (error) {
+      console.error('Error storing PIN:', error);
+      return false;
+    }
+    
+    try {
+      await this.setLockMode('pin');
+    } catch (error) {
+      console.error('Error setting lock mode:', error);
+      return false;
+    }
+    
+    return true;
   }
 
   // Verify PIN with brute force protection
   static async verifyPin(pin: string): Promise<PinVerificationResult> {
+    // Check if currently locked out
+    let lockoutStatus;
     try {
-      // Check if currently locked out
-      const lockoutStatus = await this.checkLockoutStatus();
-      if (lockoutStatus.isLockedOut) {
-        return {
-          success: false,
-          isLockedOut: true,
-          lockoutUntil: lockoutStatus.lockoutUntil,
-        };
-      }
+      lockoutStatus = await this.checkLockoutStatus();
+    } catch (error) {
+      console.error('Error checking lockout status:', error);
+      return { success: false, isLockedOut: false };
+    }
+    
+    if (lockoutStatus.isLockedOut) {
+      return {
+        success: false,
+        isLockedOut: true,
+        lockoutUntil: lockoutStatus.lockoutUntil,
+      };
+    }
 
-      // Get current failed attempts
-      const failedAttempts = await this.getFailedAttempts();
+    // Get current failed attempts
+    let failedAttempts;
+    try {
+      failedAttempts = await this.getFailedAttempts();
+    } catch (error) {
+      console.error('Error getting failed attempts:', error);
+      return { success: false, isLockedOut: false };
+    }
 
-      // Verify the PIN
-      const storedPin = await SecureStore.getItemAsync(PIN_KEY);
-      if (!storedPin) {
-        return { success: false, isLockedOut: false };
-      }
+    // Get stored PIN
+    let storedPin;
+    try {
+      storedPin = await SecureStore.getItemAsync(PIN_KEY);
+    } catch (error) {
+      console.error('Error retrieving stored PIN:', error);
+      return { success: false, isLockedOut: false };
+    }
+    
+    if (!storedPin) {
+      return { success: false, isLockedOut: false };
+    }
 
-      const hash = await Crypto.digestStringAsync(
+    // Hash the input PIN
+    let hash;
+    try {
+      hash = await Crypto.digestStringAsync(
         Crypto.CryptoDigestAlgorithm.SHA256,
         `lunari_v1:${pin}`
       );
+    } catch (error) {
+      console.error('Error hashing PIN:', error);
+      return { success: false, isLockedOut: false };
+    }
 
-      const isValid = storedPin === hash;
+    const isValid = storedPin === hash;
 
-      if (isValid) {
-        // Reset failed attempts on successful verification
+    if (isValid) {
+      try {
         await this.resetFailedAttempts();
-        return { success: true, isLockedOut: false };
-      } else {
-        // Increment failed attempts
-        const newFailedAttempts = failedAttempts + 1;
+      } catch (error) {
+        console.error('Error resetting failed attempts:', error);
+        // Still return success since PIN was correct
+      }
+      return { success: true, isLockedOut: false };
+    } else {
+      // Increment failed attempts
+      const newFailedAttempts = failedAttempts + 1;
+      try {
         await this.incrementFailedAttempts();
+      } catch (error) {
+        console.error('Error incrementing failed attempts:', error);
+        return { success: false, isLockedOut: false };
+      }
 
-        // Check if max attempts reached
-        if (newFailedAttempts >= MAX_ATTEMPTS) {
-          const lockoutUntil = Date.now() + LOCKOUT_DURATION_MS;
+      // Check if max attempts reached
+      if (newFailedAttempts >= MAX_ATTEMPTS) {
+        const lockoutUntil = Date.now() + LOCKOUT_DURATION_MS;
+        try {
           await this.setLockoutUntil(lockoutUntil);
-          return {
-            success: false,
-            isLockedOut: true,
-            lockoutUntil,
-            remainingAttempts: 0,
-          };
+        } catch (error) {
+          console.error('Error setting lockout:', error);
+          return { success: false, isLockedOut: false };
         }
-
-        // Calculate progressive delay
-        const delayMs = this.getProgressiveDelay(newFailedAttempts);
-
+        
         return {
           success: false,
-          isLockedOut: false,
-          remainingAttempts: MAX_ATTEMPTS - newFailedAttempts,
-          delayMs,
+          isLockedOut: true,
+          lockoutUntil,
+          remainingAttempts: 0,
         };
       }
-    } catch (error) {
-      console.error('Error verifying PIN:', error);
-      return { success: false, isLockedOut: false };
+
+      const delayMs = this.getProgressiveDelay(newFailedAttempts);
+      return {
+        success: false,
+        isLockedOut: false,
+        remainingAttempts: MAX_ATTEMPTS - newFailedAttempts,
+        delayMs,
+      };
     }
   }
 
@@ -122,12 +172,19 @@ export class AuthService {
   static async removePin(): Promise<boolean> {
     try {
       await SecureStore.deleteItemAsync(PIN_KEY);
-      await this.setLockMode('none');
-      return true;
     } catch (error) {
-      console.error('Error removing PIN:', error);
+      console.error('Error deleting PIN:', error);
       return false;
     }
+    
+    try {
+      await this.setLockMode('none');
+    } catch (error) {
+      console.error('Error setting lock mode:', error);
+      return false;
+    }
+    
+    return true;
   }
 
   // Biometric Authentication Methods
@@ -209,16 +266,23 @@ export class AuthService {
   static async setBiometricEnabled(enabled: boolean): Promise<boolean> {
     try {
       await SecureStore.setItemAsync(BIOMETRIC_ENABLED_KEY, enabled.toString());
+    } catch (error) {
+      console.error('Error storing biometric enabled status:', error);
+      return false;
+    }
+    
+    try {
       if (enabled) {
         await this.setLockMode('biometric');
       } else {
         await this.setLockMode('none');
       }
-      return true;
     } catch (error) {
-      console.error('Error setting biometric enabled status:', error);
+      console.error('Error setting lock mode:', error);
       return false;
     }
+    
+    return true;
   }
 
   static async canUseBiometric(): Promise<boolean> {
@@ -281,9 +345,14 @@ export class AuthService {
   static async resetFailedAttempts(): Promise<void> {
     try {
       await SecureStore.deleteItemAsync(FAILED_ATTEMPTS_KEY);
+    } catch (error) {
+      console.error('Error deleting failed attempts:', error);
+    }
+    
+    try {
       await SecureStore.deleteItemAsync(LOCKOUT_UNTIL_KEY);
     } catch (error) {
-      console.error('Error resetting failed attempts:', error);
+      console.error('Error deleting lockout until:', error);
     }
   }
 
@@ -310,29 +379,35 @@ export class AuthService {
     lockoutUntil?: number;
     remainingMs?: number;
   }> {
+    let lockoutUntil;
     try {
-      const lockoutUntil = await this.getLockoutUntil();
-      
-      if (!lockoutUntil) {
-        return { isLockedOut: false };
-      }
-
-      const now = Date.now();
-      const remainingMs = lockoutUntil - now;
-
-      if (remainingMs > 0) {
-        return {
-          isLockedOut: true,
-          lockoutUntil,
-          remainingMs,
-        };
-      } else {
-        // Lockout expired, reset attempts
-        await this.resetFailedAttempts();
-        return { isLockedOut: false };
-      }
+      lockoutUntil = await this.getLockoutUntil();
     } catch (error) {
-      console.error('Error checking lockout status:', error);
+      console.error('Error getting lockout until:', error);
+      return { isLockedOut: false };
+    }
+    
+    if (!lockoutUntil) {
+      return { isLockedOut: false };
+    }
+
+    const now = Date.now();
+    const remainingMs = lockoutUntil - now;
+
+    if (remainingMs > 0) {
+      return {
+        isLockedOut: true,
+        lockoutUntil,
+        remainingMs,
+      };
+    } else {
+      // Lockout expired, reset attempts
+      try {
+        await this.resetFailedAttempts();
+      } catch (error) {
+        console.error('Error resetting failed attempts:', error);
+        // Still return unlocked since lockout expired
+      }
       return { isLockedOut: false };
     }
   }
