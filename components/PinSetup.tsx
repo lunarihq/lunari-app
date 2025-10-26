@@ -3,7 +3,6 @@ import { View, StyleSheet, Alert } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { PinInput } from './PinInput';
 import { useAuth } from '../contexts/AuthContext';
-import { AuthService } from '../services/authService';
 import { router } from 'expo-router';
 import { useTheme } from '../styles/theme';
 
@@ -14,7 +13,7 @@ interface PinSetupProps {
 export function PinSetup({ mode = 'setup' }: PinSetupProps) {
   const { colors } = useTheme();
   const { t } = useTranslation('settings');
-  const { setupPin } = useAuth();
+  const { setupPin, checkPin } = useAuth();
   const [step, setStep] = useState<'verify' | 'initial' | 'confirm'>(
     mode === 'change' ? 'verify' : 'initial'
   );
@@ -22,8 +21,7 @@ export function PinSetup({ mode = 'setup' }: PinSetupProps) {
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleCurrentPinComplete = async (pin: string) => {
-    const result = await AuthService.verifyPin(pin);
-    const isValid = result.success;
+    const isValid = await checkPin(pin);
 
     if (!isValid) {
       setErrorMessage(t('pinSetup.verifyPin.error'));
@@ -35,7 +33,7 @@ export function PinSetup({ mode = 'setup' }: PinSetupProps) {
     setErrorMessage('');
   };
 
-  const handleInitialPinComplete = async (pin: string) => {
+  const handleInitialPinComplete = (pin: string) => {
     setInitialPin(pin);
     setStep('confirm');
     setErrorMessage('');

@@ -196,8 +196,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const checkPin = async (pin: string): Promise<boolean> => {
     try {
-      const result = await AuthService.verifyPin(pin);
-      return result.success;
+      return await AuthService.checkPin(pin);
     } catch (error) {
       console.error('Error checking PIN:', error);
       return false;

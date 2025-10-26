@@ -66,6 +66,24 @@ export class AuthService {
     return true;
   }
 
+  // Simple PIN check without brute-force protection (for use in already-authenticated contexts)
+  static async checkPin(pin: string): Promise<boolean> {
+    try {
+      const storedPin = await SecureStore.getItemAsync(PIN_KEY);
+      if (!storedPin) return false;
+
+      const hash = await Crypto.digestStringAsync(
+        Crypto.CryptoDigestAlgorithm.SHA256,
+        `lunari_v1:${pin}`
+      );
+
+      return storedPin === hash;
+    } catch (error) {
+      console.error('Error checking PIN:', error);
+      return false;
+    }
+  }
+
   // Verify PIN with brute force protection
   static async verifyPin(pin: string): Promise<PinVerificationResult> {
     // Check if currently locked out
