@@ -80,7 +80,7 @@ export function LockScreen() {
 
     if (result.isLockedOut) {
       setIsLockedOut(true);
-      setLockoutUntil(result.lockoutUntil);
+      setLockoutUntil(result.lockoutUntil ?? null);
       setErrorMessage(t('lockScreen.tooManyAttempts'));
     } else if (!result.success) {
       const attemptsMsg = result.remainingAttempts
