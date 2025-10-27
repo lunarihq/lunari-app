@@ -127,6 +127,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 16,
+    backgroundColor: 'red',
   },
   text: {
     fontSize: 16,
