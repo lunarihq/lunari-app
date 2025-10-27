@@ -10,10 +10,10 @@ import { CustomCalendar } from '../components/calendar/CustomCalendar';
 import { EditDayCell } from '../components/calendar/EditDayCell';
 import {
   MarkedDates,
-  DEFAULT_SELECTED_STYLE,
   formatDateString,
   generateDateRange,
 } from '../types/calendarTypes';
+import { createSelectedStyle } from '../utils/calendarStyles';
 import { db, getSetting } from '../db';
 import { periodDates } from '../db/schema';
 
@@ -41,7 +41,7 @@ export default function PeriodCalendarScreen() {
 
         const dates = saved.reduce(
           (acc: { [key: string]: any }, curr) => {
-            acc[curr.date] = DEFAULT_SELECTED_STYLE;
+            acc[curr.date] = createSelectedStyle(colors);
             return acc;
           },
           {} as { [key: string]: any }
@@ -83,13 +83,13 @@ export default function PeriodCalendarScreen() {
     if (isStartOfSelection) {
       const dateRange = generateDateRange(dateString, userPeriodLength);
       dateRange.forEach(date => {
-        updatedDates[date] = DEFAULT_SELECTED_STYLE;
+        updatedDates[date] = createSelectedStyle(colors);
       });
       setTempDates(updatedDates);
       return;
     }
 
-    updatedDates[dateString] = DEFAULT_SELECTED_STYLE;
+    updatedDates[dateString] = createSelectedStyle(colors);
     setTempDates(updatedDates);
   };
 

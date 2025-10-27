@@ -88,7 +88,7 @@ export const DayCell = memo<DayCellProps>(
 
         {isSelected && (
           <View
-            style={[styles.selectionIndicator, { borderColor: colors.primary }]}
+            style={[styles.selectionIndicator, { borderColor: 'colors.primary' }]}
           />
         )}
 
@@ -127,7 +127,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 16,
-    backgroundColor: 'red',
   },
   text: {
     fontSize: 16,

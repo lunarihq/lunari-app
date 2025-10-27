@@ -25,21 +25,6 @@ export type SelectionRules = {
   autoSelectDays?: number;
 };
 
-// Styles for selected dates
-export const DEFAULT_SELECTED_STYLE: CustomMarking = {
-  selected: true,
-  selectedColor: '#FF597B',
-  customContainerStyle: {
-    borderWidth: 2,
-    borderColor: '#FF597B',
-    backgroundColor: '#FFEAEE',
-  },
-  customStyles: {
-    text: {
-      color: '#FB3192', // Dark pink for proper contrast on light background
-    },
-  },
-};
 
 // Helper function to create date string (YYYY-MM-DD)
 export function formatDateString(date: Date): string {

@@ -87,3 +87,23 @@ export function getPeriodDateStyle(colors: CalendarColors): CalendarDateStyle {
     },
   };
 }
+
+/**
+ * Returns styling for selected period dates (used in edit mode)
+ */
+export function createSelectedStyle(colors: CalendarColors): CalendarDateStyle {
+  return {
+    selected: true,
+    customStyles: {
+      container: {
+        borderRadius: 16,
+        backgroundColor: colors.accentPinkLight,
+        borderWidth: 2,
+        borderColor: colors.accentPink,
+      },
+      text: {
+        color: colors.accentPink,
+      },
+    },
+  };
+}
