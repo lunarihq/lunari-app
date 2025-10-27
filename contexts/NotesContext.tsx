@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { useAuth } from './AuthContext';
 
 interface NotesContextType {
   notes: string;
@@ -22,10 +23,18 @@ interface NotesProviderProps {
 
 export const NotesProvider: React.FC<NotesProviderProps> = ({ children }) => {
   const [notes, setNotes] = useState<string>('');
+  const { isLocked } = useAuth();
 
   const clearNotes = () => {
     setNotes('');
   };
+
+  // Clear notes when app is locked
+  useEffect(() => {
+    if (isLocked) {
+      clearNotes();
+    }
+  }, [isLocked]);
 
   return (
     <NotesContext.Provider value={{ notes, setNotes, clearNotes }}>

@@ -17,6 +17,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { useTheme } from '../styles/theme';
 import { useAppStyles } from '../hooks/useStyles';
 import { useNotes } from '../contexts/NotesContext';
+import { useAuth } from '../contexts/AuthContext';
 import Toast from 'react-native-toast-message';
 import { formatTodayOrDate } from '../utils/localeUtils';
 import { useTranslation } from 'react-i18next';
@@ -42,6 +43,7 @@ export default function HealthTracking() {
   const { t } = useTranslation(['common', 'health']);
   const params = useLocalSearchParams();
   const { notes, setNotes } = useNotes();
+  const { isLocked } = useAuth();
   const ICON_SIZE = 50;
 
   const [selectedDate, setSelectedDate] = useState<string>(
@@ -211,6 +213,22 @@ export default function HealthTracking() {
     originalDischarges,
     originalNotes,
   ]);
+
+  // Clear sensitive health data when app is locked
+  useEffect(() => {
+    if (isLocked) {
+      setSelectedSymptoms(new Set());
+      setSelectedMoods(new Set());
+      setSelectedFlows(new Set());
+      setSelectedDischarges(new Set());
+      setOriginalSymptoms(new Set());
+      setOriginalMoods(new Set());
+      setOriginalFlows(new Set());
+      setOriginalDischarges(new Set());
+      setOriginalNotes('');
+      setHasChanges(false);
+    }
+  }, [isLocked]);
 
   const toggleSymptom = (id: string) => {
     setSelectedSymptoms(prev => {
