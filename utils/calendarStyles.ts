@@ -3,9 +3,11 @@ interface CalendarColors {
   accentPinkLight: string;
   accentPink: string;
   white: string;
+  neutral300: string;
+  textPrimary: string;
 }
 
-export type PredictionType = 'ovulation' | 'fertile' | 'next_period';
+export type PredictionType = 'ovulation' | 'fertile' | 'period';
 
 export interface CalendarDateStyle {
   customStyles: {
@@ -56,7 +58,7 @@ export function getCalendarDateStyle(
           },
         },
       };
-    case 'next_period':
+    case 'period':
       return {
         customStyles: {
           container: {
@@ -103,6 +105,23 @@ export function createSelectedStyle(colors: CalendarColors): CalendarDateStyle {
       },
       text: {
         color: colors.accentPink,
+      },
+    },
+  };
+}
+
+/**
+ * Returns styling for today's date
+ */
+export function getTodayDateStyle(colors: CalendarColors): CalendarDateStyle {
+  return {
+    customStyles: {
+      container: {
+        borderRadius: 16,
+        backgroundColor: colors.neutral300,
+      },
+      text: {
+        color: colors.textPrimary,
       },
     },
   };

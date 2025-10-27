@@ -6,14 +6,10 @@ import {
   getCalendarDateStyle,
   getPeriodDateStyle,
 } from '../utils/calendarStyles';
+import { ColorScheme } from '../styles/colors';
 
 interface UseCalendarMarkedDatesProps {
-  colors: {
-    accentBlue: string;
-    accentPinkLight: string;
-    accentPink: string;
-    white: string;
-  };
+  colors: ColorScheme;
   userCycleLength: number;
   userPeriodLength: number;
   showOvulation?: boolean;

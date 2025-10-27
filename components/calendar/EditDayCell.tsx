@@ -32,9 +32,7 @@ export const EditDayCell = memo<EditDayCellProps>(
     const isDisabled = false;
     const isToday = dateString === new Date().toISOString().split('T')[0];
 
-    const isSelected =
-      marking?.selected ||
-      marking?.customStyles?.container?.backgroundColor === colors.accentPink;
+    const isSelected = marking?.selected;
 
     const handlePress = () => {
       if (!isDisabled) {

@@ -39,9 +39,6 @@ export const DayCell = memo<DayCellProps>(
     const hasHealthLogs = marking?.hasHealthLogs;
     const isToday = dateString === new Date().toISOString().split('T')[0];
 
-    const isPeriodDay =
-      marking?.customStyles?.container?.backgroundColor === colors.accentPink;
-
     const handlePress = () => {
       if (!isDisabled) {
         onPress(dateString);
@@ -52,7 +49,7 @@ export const DayCell = memo<DayCellProps>(
     const accessibilityLabel = `${date.toLocaleDateString('default', {
       month: 'long',
       day: 'numeric',
-    })}${isPeriodDay ? ', period day' : ''}${hasHealthLogs ? ', has health logs' : ''}${isSelected ? ', selected' : ''}`;
+    })}${hasHealthLogs ? ', has health logs' : ''}${isSelected ? ', selected' : ''}`;
     const accessibilityHint = isDisabled ? undefined : 'Double tap to view details';
 
     const containerStyle = [
@@ -64,7 +61,6 @@ export const DayCell = memo<DayCellProps>(
       styles.text,
       { color: colors.textPrimary },
       marking?.customStyles?.text,
-      isPeriodDay && { color: colors.white },
       isDisabled && { opacity: 0.3 },
     ];
 
@@ -143,7 +139,7 @@ const styles = StyleSheet.create({
   },
   healthLogDot: {
     position: 'absolute',
-    bottom: 18,
+    bottom: 20,
     right: 24,
     width: 6,
     height: 6,
