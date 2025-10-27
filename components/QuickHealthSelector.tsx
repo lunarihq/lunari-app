@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { router, useFocusEffect } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
 import { db } from '../db';
 import { healthLogs } from '../db/schema';
 import { eq } from 'drizzle-orm';
@@ -19,6 +18,7 @@ import dayjs from 'dayjs';
 import { CustomIcon } from './icons/health';
 import { NoteIcon } from './icons/health/Note';
 import { SYMPTOMS, MOODS, FLOWS, DISCHARGES } from '../constants/healthTracking';
+import { FAB } from './FAB';
 
 type QuickHealthSelectorProps = {
   selectedDate?: string;
@@ -30,7 +30,7 @@ export const QuickHealthSelector = ({
   titleStyle,
 }: QuickHealthSelectorProps) => {
   const { colors } = useTheme();
-  const { typography, commonStyles } = useAppStyles();
+  const { typography } = useAppStyles();
   const { t } = useTranslation('health');
   const [healthLogsForDate, setHealthLogsForDate] = useState<any[]>([]);
 
@@ -162,7 +162,7 @@ export const QuickHealthSelector = ({
         style={[styles.scrollContainer]}
       >
         {/* Add Button - Always visible */}
-        <TouchableOpacity
+        <FAB
           onPress={() =>
             router.push(
               selectedDate
@@ -170,24 +170,9 @@ export const QuickHealthSelector = ({
                 : '/health-tracking'
             )
           }
-          style={styles.itemContainer}
-        >
-          <View style={[commonStyles.fab, { backgroundColor: colors.primary }]}>
-            <Ionicons name="add" size={32} color={colors.white} />
-          </View>
-          <Text
-            style={[
-              {
-                fontSize: 12,
-                fontWeight: '500',
-                textAlign: 'center',
-                color: colors.textSecondary,
-              },
-            ]}
-          >
-            {t('quickHealthSelector.add')}
-          </Text>
-        </TouchableOpacity>
+          containerStyle={styles.itemContainer}
+          label={t('quickHealthSelector.add')}
+        />
 
         {/* Either show logged items or "No items" message */}
         {healthLogsForDate.length > 0 ? (
@@ -210,10 +195,6 @@ export const QuickHealthSelector = ({
 };
 
 const styles = StyleSheet.create({
-  symptomsCard: {
-    borderRadius: 12,
-    padding: 16,
-  },
   scrollContainer: {
     flexDirection: 'row',
   },
