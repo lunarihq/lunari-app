@@ -12,7 +12,7 @@ export type PredictionType = 'ovulation' | 'fertile' | 'period';
 export interface CalendarDateStyle {
   customStyles: {
     container: {
-      borderRadius: number;
+      borderRadius?: number;
       backgroundColor?: string;
       borderWidth?: number;
       borderColor?: string;
@@ -50,9 +50,7 @@ export function getCalendarDateStyle(
     case 'fertile':
       return {
         customStyles: {
-          container: {
-            borderRadius: 16,
-          },
+          container: {},
           text: {
             color: colors.accentBlue,
           },
@@ -62,7 +60,6 @@ export function getCalendarDateStyle(
       return {
         customStyles: {
           container: {
-            borderRadius: 16,
             backgroundColor: colors.accentPinkLight,
           },
           text: {
@@ -81,7 +78,6 @@ export function getPeriodDateStyle(colors: CalendarColors): CalendarDateStyle {
     customStyles: {
       container: {
         backgroundColor: colors.accentPink,
-        borderRadius: 16,
       },
       text: {
         color: colors.white,

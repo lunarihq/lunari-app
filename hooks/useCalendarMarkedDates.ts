@@ -5,6 +5,7 @@ import { useHealthLogDates } from './useHealthLogDates';
 import {
   getCalendarDateStyle,
   getPeriodDateStyle,
+  getTodayDateStyle,
 } from '../utils/calendarStyles';
 import { ColorScheme } from '../styles/colors';
 
@@ -111,6 +112,26 @@ export function useCalendarMarkedDates({
           };
         }
       });
+
+      // Apply today style to current date (but period style takes precedence)
+      const today = new Date().toISOString().split('T')[0];
+      const isPeriodDate = periodDates.includes(today);
+      
+      if (!isPeriodDate) {
+        const existingMarking = allMarkedDates[today];
+        const todayStyle = getTodayDateStyle(colors);
+        
+        if (existingMarking) {
+          // Merge today style with existing marking
+          allMarkedDates[today] = {
+            ...existingMarking,
+            customStyles: todayStyle.customStyles,
+          };
+        } else {
+          // Apply today style to unmarked date
+          allMarkedDates[today] = todayStyle;
+        }
+      }
 
       // Store base marked dates (without selection highlight)
       setBaseMarkedDates(allMarkedDates);
