@@ -1,5 +1,6 @@
 import React, { memo } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
 import { DayData } from '../../utils/customCalendarHelpers';
 import { CustomMarking } from '../../types/calendarTypes';
@@ -15,6 +16,7 @@ interface EditDayCellProps {
 export const EditDayCell = memo<EditDayCellProps>(
   ({ day, marking, onPress, colors, typography }) => {
     const { dateString, day: dayNum, isCurrentMonth } = day;
+    const { t } = useTranslation('calendar');
 
     // Hide days that are not in the current month
     if (!isCurrentMonth) {
@@ -28,6 +30,7 @@ export const EditDayCell = memo<EditDayCellProps>(
 
     const isFuture = dayDate > today;
     const isDisabled = false;
+    const isToday = dateString === new Date().toISOString().split('T')[0];
 
     const isSelected =
       marking?.selected ||
@@ -99,6 +102,12 @@ export const EditDayCell = memo<EditDayCellProps>(
             )}
           </View>
         </TouchableOpacity>
+
+        {isToday && (
+          <Text style={[typography.labelXs, styles.todayLabel]}>
+            {t('today')}
+          </Text>
+        )}
       </View>
     );
   }
@@ -137,6 +146,12 @@ const styles = StyleSheet.create({
   },
   futureDayIndicator: {
     borderWidth: 1,
+  },
+  todayLabel: {
+    position: 'absolute',
+    bottom: 2,
+    alignSelf: 'center',
+    textAlign: 'center',
   },
 });
 

@@ -1,7 +1,9 @@
 import React, { memo } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { DayData } from '../../utils/customCalendarHelpers';
 import { CustomMarking } from '../../types/calendarTypes';
+import { useTheme, createTypography } from '../../styles/theme';
 
 interface DayCellProps {
   day: DayData;
@@ -22,6 +24,9 @@ interface DayCellProps {
 export const DayCell = memo<DayCellProps>(
   ({ day, marking, onPress, colors, mode, disableFuture }) => {
     const { dateString, day: dayNum, isCurrentMonth } = day;
+    const { colors: themeColors } = useTheme();
+    const typography = createTypography(themeColors);
+    const { t } = useTranslation('calendar');
 
     // Hide days that are not in the current month
     if (!isCurrentMonth) {
@@ -32,6 +37,7 @@ export const DayCell = memo<DayCellProps>(
     const isDisabled = disableFuture && isFutureDate;
     const isSelected = marking?.selected;
     const hasHealthLogs = marking?.hasHealthLogs;
+    const isToday = dateString === new Date().toISOString().split('T')[0];
 
     const isPeriodDay =
       marking?.customStyles?.container?.backgroundColor === colors.accentPink;
@@ -91,6 +97,12 @@ export const DayCell = memo<DayCellProps>(
             style={[styles.healthLogDot, { backgroundColor: colors.primary }]}
           />
         )}
+
+        {isToday && (
+          <Text style={[typography.labelXs, styles.todayLabel]}>
+            {t('today')}
+          </Text>
+        )}
       </View>
     );
   },
@@ -136,6 +148,12 @@ const styles = StyleSheet.create({
     width: 6,
     height: 6,
     borderRadius: 3,
+  },
+  todayLabel: {
+    position: 'absolute',
+    bottom: 4,
+    alignSelf: 'center',
+    textAlign: 'center',
   },
 });
 

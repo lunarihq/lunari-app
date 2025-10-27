@@ -73,4 +73,9 @@ export const createTypography = (colors: ColorScheme) =>
       fontWeight: '500',
       color: colors.textPrimary,
     },
+    labelXs: {
+      fontSize: 10,
+      fontWeight: '500',
+      color: colors.textPrimary,
+    },
   });
