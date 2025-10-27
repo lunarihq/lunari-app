@@ -5,7 +5,7 @@ interface CalendarColors {
   white: string;
 }
 
-export type PredictionType = 'ovulation' | 'fertile' | 'period';
+export type PredictionType = 'ovulation' | 'fertile' | 'next_period';
 
 export interface CalendarDateStyle {
   customStyles: {
@@ -24,7 +24,7 @@ export interface CalendarDateStyle {
 }
 
 /**
- * Pure function that returns styling for different calendar prediction types
+ * Pure function that returns styling for different calendar prediction types (used in view mode)
  */
 export function getCalendarDateStyle(
   predictionType: PredictionType,
@@ -56,7 +56,7 @@ export function getCalendarDateStyle(
           },
         },
       };
-    case 'period':
+    case 'next_period':
       return {
         customStyles: {
           container: {
@@ -72,7 +72,7 @@ export function getCalendarDateStyle(
 }
 
 /**
- * Returns styling for actual logged period dates
+ * Returns styling for actual logged period dates (used in view mode)
  */
 export function getPeriodDateStyle(colors: CalendarColors): CalendarDateStyle {
   return {
