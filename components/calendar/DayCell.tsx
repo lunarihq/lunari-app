@@ -28,9 +28,9 @@ export const DayCell = memo<DayCellProps>(
     const typography = createTypography(themeColors);
     const { t } = useTranslation('calendar');
 
-    // Hide days that are not in the current month
+    // Render empty cell for days not in current month to maintain grid layout
     if (!isCurrentMonth) {
-      return null;
+      return <View style={styles.dayContainer} />;
     }
 
     const isFutureDate = new Date(dateString) > new Date();

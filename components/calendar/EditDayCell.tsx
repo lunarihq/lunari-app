@@ -18,9 +18,9 @@ export const EditDayCell = memo<EditDayCellProps>(
     const { dateString, day: dayNum, isCurrentMonth } = day;
     const { t } = useTranslation('calendar');
 
-    // Hide days that are not in the current month
+    // Render empty cell for days not in current month to maintain grid layout
     if (!isCurrentMonth) {
-      return null;
+      return <View style={styles.dayContainer} />;
     }
 
     const today = new Date();
