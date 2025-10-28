@@ -167,7 +167,7 @@ export const QuickHealthSelector = ({
                 : '/health-tracking'
             )
           }
-          containerStyle={styles.itemContainer}
+          containerStyle={styles.fabContainer}
           label={t('quickHealthSelector.add')}
         />
 
@@ -198,6 +198,11 @@ const styles = StyleSheet.create({
   itemContainer: {
     alignItems: 'center',
     width: 80,
+  },
+  fabContainer: {
+    alignSelf: 'flex-start',
+    width: 60,
+    marginRight: 8,
   },
 
   itemIconContainer: {

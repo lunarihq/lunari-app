@@ -9,7 +9,7 @@
   "expectedToday": "Se espera tu periodo hoy",
   "lateFor": "Periodo retrasado por",
   "logPeriod": "Registrar periodo",
-  "logOrEdit": "Registrar periodo",
+  "logOrEdit": "Editar fechas del periodo",
   "noDataPrompt": "Registra el primer día de tu último periodo para obtener predicciones.",
   "learnAboutLatePeriods": "Aprende sobre periodos retrasados",
   "cycleInsights": {
