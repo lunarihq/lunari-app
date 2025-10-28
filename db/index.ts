@@ -11,8 +11,7 @@ CREATE TABLE IF NOT EXISTS period_dates (
 );
 CREATE UNIQUE INDEX IF NOT EXISTS idx_period_dates_date ON period_dates(date);
 
-DROP TABLE IF EXISTS health_logs;
-CREATE TABLE health_logs (
+CREATE TABLE IF NOT EXISTS health_logs (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   date TEXT NOT NULL,
   type TEXT NOT NULL,

@@ -97,7 +97,7 @@ export const DayCell = memo<DayCellProps>(
         )}
 
         {isToday && (
-          <Text style={[typography.labelXs, styles.todayLabel]}>
+          <Text style={[typography.labelXs, { marginTop: 1 }]}>
             {t('today')}
           </Text>
         )}
@@ -148,17 +148,13 @@ const styles = StyleSheet.create({
   },
   healthLogDot: {
     position: 'absolute',
-    bottom: -8,
+    bottom: -10,
     alignSelf: 'center',
     width: 6,
     height: 6,
     borderRadius: 3,
     borderWidth: 0.5,
     borderColor: 'white',
-  },
-  todayLabel: {
-    marginTop: 2,
-    textAlign: 'center',
   },
 });
 
