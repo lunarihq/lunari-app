@@ -54,7 +54,7 @@ export default function PeriodCalendarScreen() {
     };
 
     loadData();
-  }, []);
+  }, [colors]);
 
   const onDayPress = (dateString: string) => {
     const selectedDate = new Date(dateString);
