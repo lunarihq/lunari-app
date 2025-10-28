@@ -4,13 +4,11 @@ import CycleSvg from './cycle.svg';
 
 interface IconProps extends SvgProps {
   size?: number;
-  color?: string;
 }
 
 export const CycleIcon: React.FC<IconProps> = ({
   size = 24,
-  color = '#1C1B1F',
   ...props
 }) => {
-  return <CycleSvg width={size} height={size} fill={color} color={color} {...props} />;
+  return <CycleSvg width={size} height={size} {...props} />;
 };

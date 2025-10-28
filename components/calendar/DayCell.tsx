@@ -66,31 +66,33 @@ export const DayCell = memo<DayCellProps>(
 
     return (
       <View style={styles.dayContainer}>
-        <TouchableOpacity
-          style={containerStyle}
-          onPress={handlePress}
-          disabled={isDisabled}
-          activeOpacity={0.7}
-          accessibilityRole="button"
-          accessibilityLabel={accessibilityLabel}
-          accessibilityHint={accessibilityHint}
-          accessibilityState={{
-            disabled: isDisabled,
-            selected: isSelected,
-          }}
-        >
-          <Text style={textStyle}>{dayNum}</Text>
-        </TouchableOpacity>
+        <View style={styles.dayContent}>
+          <TouchableOpacity
+            style={containerStyle}
+            onPress={handlePress}
+            disabled={isDisabled}
+            activeOpacity={0.7}
+            accessibilityRole="button"
+            accessibilityLabel={accessibilityLabel}
+            accessibilityHint={accessibilityHint}
+            accessibilityState={{
+              disabled: isDisabled,
+              selected: isSelected,
+            }}
+          >
+            <Text style={textStyle}>{dayNum}</Text>
+          </TouchableOpacity>
+          
+          {hasHealthLogs && (
+            <View
+              style={[styles.healthLogDot, { backgroundColor: colors.primary }]}
+            />
+          )}
+        </View>
 
         {isSelected && (
           <View
             style={[styles.selectionIndicator, { borderColor: colors.primary }]}
-          />
-        )}
-
-        {hasHealthLogs && (
-          <View
-            style={[styles.healthLogDot, { backgroundColor: colors.primary }]}
           />
         )}
 
@@ -113,9 +115,16 @@ DayCell.displayName = 'DayCell';
 const styles = StyleSheet.create({
   dayContainer: {
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
     width: '14.28%',
     height: 64,
+    paddingVertical: 4,
+  },
+  dayContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'relative',
   },
   container: {
     width: 32,
@@ -130,7 +139,7 @@ const styles = StyleSheet.create({
   },
   selectionIndicator: {
     position: 'absolute',
-    top: -3,
+    top: 1,
     width: 38,
     height: 38,
     borderRadius: 32,
@@ -139,16 +148,16 @@ const styles = StyleSheet.create({
   },
   healthLogDot: {
     position: 'absolute',
-    bottom: 20,
-    right: 24,
+    bottom: -8,
+    alignSelf: 'center',
     width: 6,
     height: 6,
     borderRadius: 3,
+    borderWidth: 0.5,
+    borderColor: 'white',
   },
   todayLabel: {
-    position: 'absolute',
-    bottom: 4,
-    alignSelf: 'center',
+    marginTop: 2,
     textAlign: 'center',
   },
 });

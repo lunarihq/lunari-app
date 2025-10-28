@@ -1,14 +1,14 @@
 import React from 'react';
 import { SvgProps } from 'react-native-svg';
-import CalendarSvg from './calendar.svg';
+import SymptomsSvg from './symptoms.svg';
 
 interface IconProps extends SvgProps {
   size?: number;
 }
 
-export const CalendarIcon: React.FC<IconProps> = ({
+export const SymptomsIcon: React.FC<IconProps> = ({
   size = 24,
   ...props
 }) => {
-  return <CalendarSvg width={size} height={size} {...props} />;
+  return <SymptomsSvg width={size} height={size} {...props} />;
 };

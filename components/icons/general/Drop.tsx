@@ -4,13 +4,11 @@ import DropSvg from './drop.svg';
 
 interface IconProps extends SvgProps {
   size?: number;
-  color?: string;
 }
 
 export const DropIcon: React.FC<IconProps> = ({
   size = 12,
-  color = 'black',
   ...props
 }) => {
-  return <DropSvg width={size} height={size} fill={color} color={color} {...props} />;
+  return <DropSvg width={size} height={size} {...props} />;
 };

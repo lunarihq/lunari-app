@@ -1,12 +1,12 @@
 import React from 'react';
 import { Text, View, StyleSheet, ScrollView } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
 import { PeriodPredictionService } from '../../services/periodPredictions';
 import { useTheme } from '../../styles/theme';
 import { useAppStyles } from '../../hooks/useStyles';
 import { CycleIcon } from '../../components/icons/general/Cycle';
 import { LeafIcon } from '../../components/icons/general/Leaf';
+import { SymptomsIcon } from '../../components/icons/general/Symptoms';
 import { formatTodayShort, formatDateShort } from '../../utils/localeUtils';
 import { useTranslation } from 'react-i18next';
 
@@ -96,14 +96,7 @@ export default function CyclePhaseDetails() {
 
         <View style={[commonStyles.sectionContainer]}>
           <View style={styles.phaseHeader}>
-            <View
-              style={[
-                styles.iconCircle,
-                { backgroundColor: colors.accentPinkLight },
-              ]}
-            >
-              <CycleIcon size={36} color={colors.accentPink} />
-            </View>
+              <CycleIcon size={32} />
             <Text style={[typography.headingMd, { marginLeft: 12 }]}>
               {t('cyclePhase.cyclePhaseTitle')}
             </Text>
@@ -126,14 +119,7 @@ export default function CyclePhaseDetails() {
 
         <View style={[commonStyles.sectionContainer]}>
           <View style={styles.phaseHeader}>
-            <View
-              style={[
-                styles.iconCircle,
-                { backgroundColor: colors.accentPinkLight },
-              ]}
-            >
-              <LeafIcon size={40} color={colors.accentPink} />
-            </View>
+              <LeafIcon size={34}/>
             <Text style={[typography.headingMd, { marginLeft: 12 }]}>
               {t('cyclePhase.chanceToConceive')}
             </Text>
@@ -157,18 +143,8 @@ export default function CyclePhaseDetails() {
         {t(`cyclePhase.symptoms.${cyclePhaseKey}`) && (
           <View style={[commonStyles.sectionContainer]}>
             <View style={styles.phaseHeader}>
-              <View
-                style={[
-                  styles.iconCircle,
-                  { backgroundColor: colors.accentPinkLight },
-                ]}
-              >
-                <Ionicons
-                  name="thermometer-outline"
-                  size={34}
-                  color={colors.accentPink}
-                />
-              </View>
+
+              <SymptomsIcon size={34}/>
               <Text style={[typography.headingMd, { marginLeft: 12 }]}>
                 {t('cyclePhase.possibleSymptoms')}
               </Text>
@@ -187,12 +163,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 16,
-  },
-  iconCircle: {
-    width: 48,
-    height: 48,
-    borderRadius: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });
