@@ -63,7 +63,7 @@ export function HealthItemGrid({
                 </View>
               )}
             </View>
-            <Text style={[typography.caption, { textAlign: 'center' }]}>
+            <Text style={[typography.caption, { fontSize: 12, textAlign: 'center' }]}>
               {t(`${translationKey}.${item.id}`)}
             </Text>
           </TouchableOpacity>

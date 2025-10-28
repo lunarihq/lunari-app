@@ -7,7 +7,7 @@ import { PeriodPredictionService } from '../services/periodPredictions';
 import { formatDateString } from '../types/calendarTypes';
 import { useTheme } from '../styles/theme';
 import { useAppStyles } from '../hooks/useStyles';
-import { formatDateLong } from '../utils/localeUtils';
+import { formatDateShort } from '../utils/localeUtils';
 
 interface CycleDetailsProps {
   selectedDate: string;
@@ -27,7 +27,7 @@ export function CycleDetails({
   const { t } = useTranslation('common');
   const { t: tHealth } = useTranslation('health');
   const selectedDateFormatted = selectedDate
-    ? formatDateLong(selectedDate)
+    ? formatDateShort(selectedDate)
     : '';
 
   const getConceptionChance = () => {

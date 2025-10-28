@@ -103,10 +103,7 @@ export const QuickHealthSelector = ({
   };
 
   const formatDisplayText = (log: any) => {
-    const text = getDisplayText(log);
-    const words = String(text).trim().split(/\s+/);
-    if (words.length === 2) return `${words[0]}\n${words[1]}`;
-    return text;
+    return getDisplayText(log);
   };
 
   // Memoized component for individual health log items
@@ -200,7 +197,7 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     alignItems: 'center',
-    marginRight: 16,
+    width: 80,
   },
 
   itemIconContainer: {

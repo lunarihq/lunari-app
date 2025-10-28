@@ -1,7 +1,7 @@
 {
   "symptoms": {
     "title": "Síntomas",
-    "im-okay": "Todo va bien",
+    "im-okay": "Me siento bien",
     "headache": "Dolor de cabeza",
     "cramps": "Calambre abdominal",
     "bloating": "Hinchazón",
@@ -76,8 +76,8 @@
     "title": "¿Cómo te sientes hoy?",
     "add": "Agregar",
     "note": "Nota",
-    "noSymptomsToday": "Nada registrado hoy.",
-    "noSymptomsThisDate": "Nada registrado en esta fecha."
+    "noSymptomsToday": "Agrega síntomas, estados de ánimo o notas.",
+    "noSymptomsThisDate": "Agrega síntomas, estados de ánimo o notas."
   }
 }
 
