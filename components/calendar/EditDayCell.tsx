@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
 import { DayData } from '../../utils/customCalendarHelpers';
 import { CustomMarking } from '../../types/calendarTypes';
+import { getEditDayCellStyles } from '../../utils/calendarStyles';
 
 interface EditDayCellProps {
   day: DayData;
@@ -17,6 +18,7 @@ export const EditDayCell = memo<EditDayCellProps>(
   ({ day, marking, onPress, colors, typography }) => {
     const { dateString, day: dayNum, isCurrentMonth } = day;
     const { t } = useTranslation('calendar');
+    const styles = StyleSheet.create(getEditDayCellStyles(colors));
 
     // Render empty cell for days not in current month to maintain grid layout
     if (!isCurrentMonth) {
@@ -67,7 +69,7 @@ export const EditDayCell = memo<EditDayCellProps>(
           <Text
             style={[
               typography.body,
-              styles.customDayText,
+              styles.text,
               { color: colors.textPrimary },
               isDisabled && styles.disabledDayText,
               isSelected && { color: colors.accentPink },
@@ -78,14 +80,10 @@ export const EditDayCell = memo<EditDayCellProps>(
 
           <View
             style={[
-              styles.dayIndicator,
+              styles.container,
               { borderColor: colors.neutral100 },
               isSelected && [
                 styles.selectedDayIndicator,
-                {
-                  backgroundColor: colors.accentPink,
-                  borderColor: colors.accentPink,
-                },
               ],
               isFuture && styles.futureDayIndicator,
             ]}
@@ -112,44 +110,4 @@ export const EditDayCell = memo<EditDayCellProps>(
 );
 
 EditDayCell.displayName = 'EditDayCell';
-
-const styles = StyleSheet.create({
-  dayContainer: {
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    width: '14.28%',
-    height: 64,
-  },
-  customDayText: {
-    fontSize: 16,
-    textAlign: 'center',
-    marginBottom: 1,
-  },
-  dayIndicator: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    borderWidth: 2,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  selectedDayIndicator: {
-    borderWidth: 2,
-  },
-  disabledDayText: {
-    opacity: 0.3,
-  },
-  checkmark: {
-    marginTop: 0,
-  },
-  futureDayIndicator: {
-    borderWidth: 1,
-  },
-  todayLabel: {
-    position: 'absolute',
-    bottom: 2,
-    alignSelf: 'center',
-    textAlign: 'center',
-  },
-});
 

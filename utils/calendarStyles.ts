@@ -122,3 +122,51 @@ export function getTodayDateStyle(colors: CalendarColors): CalendarDateStyle {
     },
   };
 }
+
+/**
+ * Returns styling for EditDayCell component (used in edit mode)
+ */
+export function getEditDayCellStyles(colors: CalendarColors) {
+  return {
+    dayContainer: {
+      alignItems: 'center' as const,
+      justifyContent: 'flex-start' as const,
+      width: '14.28%' as const,
+      height: 64,
+    },
+    container: {
+      width: 24,
+      height: 24,
+      borderRadius: 12,
+      borderWidth: 2,
+      alignItems: 'center' as const,
+      justifyContent: 'center' as const,
+      position: 'relative' as const,
+    },
+    text: {
+      fontSize: 16,
+      textAlign: 'center' as const,
+      marginBottom: 1,
+    },
+    checkmark: {
+      position: 'absolute' as const,
+      marginTop: 0,
+    },
+    todayLabel: {
+      position: 'absolute' as const,
+      bottom: 2,
+      alignSelf: 'center' as const,
+      textAlign: 'center' as const,
+    },
+    selectedDayIndicator: {
+      backgroundColor: colors.accentPink,
+      borderColor: colors.accentPink,
+    },
+    futureDayIndicator: {
+      borderWidth: 1,
+    },
+    disabledDayText: {
+      opacity: 0.3,
+    },
+  };
+}
