@@ -165,6 +165,12 @@ export function getEditDayCellStyles(colors: CalendarColors) {
     futureDayIndicator: {
       borderWidth: 1,
     },
+    futureSelectedDayIndicator: {
+      backgroundColor: 'transparent',
+      borderColor: colors.accentPink,
+      borderWidth: 2,
+      borderStyle: 'dashed',
+    },
     disabledDayText: {
       opacity: 0.3,
     },

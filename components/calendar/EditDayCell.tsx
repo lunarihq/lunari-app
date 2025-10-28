@@ -82,10 +82,9 @@ export const EditDayCell = memo<EditDayCellProps>(
             style={[
               styles.container,
               { borderColor: colors.neutral100 },
-              isSelected && [
-                styles.selectedDayIndicator,
-              ],
-              isFuture && styles.futureDayIndicator,
+              isSelected && !isFuture && styles.selectedDayIndicator,
+              isSelected && isFuture && styles.futureSelectedDayIndicator,
+              !isSelected && isFuture && styles.futureDayIndicator,
             ]}
           >
             {isSelected && !isFuture && (
