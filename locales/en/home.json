@@ -9,7 +9,7 @@
   "expectedToday": "Your period is expected today",
   "lateFor": "Late for",
   "logPeriod": "Log period",
-  "logOrEdit": "Log or edit period dates",
+  "logOrEdit": "Edit period dates",
   "noDataPrompt": "Log the first day of your last period for next prediction.",
   "learnAboutLatePeriods": "Learn about late periods",
   "cycleInsights": {
