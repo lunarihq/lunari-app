@@ -104,6 +104,10 @@
     "enterPinSubtitle": "Ingresa tu PIN de 4 dígitos para desbloquear",
     "unlockApp": "Desbloquear Lunari",
     "incorrectPin": "PIN incorrecto. Por favor, inténtalo de nuevo.",
+    "incorrectPinWithAttempts": "PIN incorrecto. {{attempts}} intento(s) restante(s).",
+    "tooManyAttempts": "Demasiados intentos incorrectos.",
+    "lockedOut": "Aplicación bloqueada",
+    "lockedOutMessage": "Demasiados intentos de PIN incorrectos. Por favor espera antes de intentar nuevamente.",
     "useBiometric": "Usar biometría"
   },
   "reminderSettings": {
@@ -213,4 +217,5 @@
     "footer": "Si tienes alguna pregunta sobre esta política de privacidad o cómo manejamos tus datos, por favor contáctanos en lunari.appmail@gmail.app."
   }
 }
+
 
