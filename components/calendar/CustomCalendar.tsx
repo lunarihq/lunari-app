@@ -22,8 +22,8 @@ export interface CustomCalendarProps {
 }
 
 const DAY_NAMES = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
-const HEADER_HEIGHT = 40;
-const DAY_CELL_HEIGHT = 48;
+const HEADER_HEIGHT = 50;
+const DAY_CELL_HEIGHT = 64;
 const MONTH_PADDING = 10;
 
 function getMonthHeight(weekCount: number): number {
@@ -135,9 +135,6 @@ export function CustomCalendar({
         showsVerticalScrollIndicator={false}
         onViewableItemsChanged={onViewableItemsChanged}
         viewabilityConfig={viewabilityConfig}
-        maintainVisibleContentPosition={{
-          minIndexForVisible: 0,
-        }}
         onScrollToIndexFailed={info => {
           setTimeout(() => {
             flatListRef.current?.scrollToIndex({
