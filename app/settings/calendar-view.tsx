@@ -101,7 +101,7 @@ export default function CalendarView() {
             justifyContent: 'center',
           }}
         >
-          <Text style={[typography.body, { color: colors.textPrimary }]}>
+          <Text style={[typography.body, { color: colors.accentPink }]}>
             1
           </Text>
         </View>
@@ -124,7 +124,7 @@ export default function CalendarView() {
             justifyContent: 'center',
           }}
         >
-          <Text style={[typography.body, { color: colors.textPrimary }]}>
+          <Text style={[typography.body, { color: colors.accentBlue }]}>
             1
           </Text>
         </View>
@@ -144,7 +144,7 @@ export default function CalendarView() {
             justifyContent: 'center',
           }}
         >
-          <Text style={[typography.body, { color: colors.primary }]}>1</Text>
+          <Text style={[typography.body, { color: colors.accentBlue }]}>1</Text>
         </View>
       ),
       isToggleable: true,

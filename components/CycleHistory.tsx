@@ -82,7 +82,7 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
       <Text
         style={[
           typography.body,
-          { marginBottom: 10, color: colors.textSecondary},
+          { marginBottom: 16, color: colors.textSecondary},
         ]}
       >
         {cycles.length} {t('stats:cycleHistory.loggedCycles')}
@@ -129,7 +129,11 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
             styles.cycleContainer,
             { backgroundColor: colors.surface },
             isCurrentCycle
-              ? { paddingTop: 8 }
+              ? {
+                  paddingTop: 14,
+                  borderColor: colors.border,
+                  borderTopWidth: 1,
+                }
               
               : index % 2 === 1
                 ? {
