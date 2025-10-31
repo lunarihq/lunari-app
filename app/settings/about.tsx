@@ -5,6 +5,13 @@ import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../../styles/theme';
 import { useAppStyles } from '../../hooks/useStyles';
 
+const SECTION_ICON_SIZE = 24;
+
+function SectionIcon({ name, ...props }: { name: keyof typeof Ionicons.glyphMap } & Partial<React.ComponentProps<typeof Ionicons>>) {
+  const { colors } = useTheme();
+  return <Ionicons name={name} size={SECTION_ICON_SIZE} color={colors.accentPink} {...props} />;
+}
+
 export default function About() {
   const { colors } = useTheme();
   const { typography, commonStyles } = useAppStyles();
@@ -34,7 +41,7 @@ export default function About() {
 
       <View style={[commonStyles.sectionContainer]}>
         <View style={styles.sectionHeader}>
-          <Ionicons name="heart-outline" size={24} color={colors.primary} />
+          <SectionIcon name="heart-outline" />
           <Text style={[typography.headingMd, { marginLeft: 12 }]}>
             {t('aboutScreen.whatIs.title')}
           </Text>
@@ -46,7 +53,7 @@ export default function About() {
 
       <View style={[commonStyles.sectionContainer]}>
         <View style={styles.sectionHeader}>
-          <Ionicons name="calendar-outline" size={24} color={colors.primary} />
+          <SectionIcon name="calendar-outline" />
           <Text style={[typography.headingMd, { marginLeft: 12 }]}>
             {t('aboutScreen.features.title')}
           </Text>
@@ -66,11 +73,7 @@ export default function About() {
 
       <View style={[commonStyles.sectionContainer]}>
         <View style={styles.sectionHeader}>
-          <Ionicons
-            name="shield-checkmark-outline"
-            size={24}
-            color={colors.primary}
-          />
+          <SectionIcon name="shield-checkmark-outline" />
           <Text style={[typography.headingMd, { marginLeft: 12 }]}>
             {t('aboutScreen.privacyFirst.title')}
           </Text>
@@ -93,11 +96,7 @@ export default function About() {
 
       <View style={[commonStyles.sectionContainer]}>
         <View style={styles.sectionHeader}>
-          <Ionicons
-            name="document-text-outline"
-            size={24}
-            color={colors.primary}
-          />
+          <SectionIcon name="document-text-outline" />
           <Text style={[typography.headingMd, { marginLeft: 12 }]}>
             {t('aboutScreen.openSource.title')}
           </Text>
@@ -133,7 +132,7 @@ export default function About() {
 
       <View style={[commonStyles.sectionContainer]}>
         <View style={styles.sectionHeader}>
-          <Ionicons name="code-outline" size={24} color={colors.primary} />
+          <SectionIcon name="code-outline" />
           <Text style={[typography.headingMd, { marginLeft: 12 }]}>
             {t('aboutScreen.technical.title')}
           </Text>
