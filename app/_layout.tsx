@@ -206,25 +206,6 @@ function AppContent() {
           }}
         />
         <Stack.Screen
-          name="settings/pin-setup"
-          options={({ route }) => ({
-            headerShown: true,
-            headerTitle:
-              (route.params as any)?.mode === 'change'
-                ? t('settings:screenTitles.pinChange')
-                : t('settings:screenTitles.pinSetup'),
-            headerShadowVisible: false,
-            headerStyle: {
-              backgroundColor: isDark
-                ? darkColors.background
-                : lightColors.background,
-            },
-            headerTintColor: isDark
-              ? darkColors.textPrimary
-              : lightColors.textPrimary,
-          })}
-        />
-        <Stack.Screen
           name="health-tracking"
           options={{
             headerShown: true,

@@ -10,6 +10,8 @@ interface LinkButtonProps {
   iconName?: string;
   iconSize?: number;
   style?: any;
+  showIcon?: boolean;
+  fontSize?: number;
 }
 
 export function LinkButton({
@@ -18,6 +20,8 @@ export function LinkButton({
   iconName = 'chevron-forward',
   iconSize = 16,
   style,
+  showIcon = true,
+  fontSize,
 }: LinkButtonProps) {
   const { colors } = useTheme();
   const { typography } = useAppStyles();
@@ -28,13 +32,23 @@ export function LinkButton({
       style={({ pressed }) => [styles.button, pressed && styles.pressed, style]}
     >
       <View style={styles.content}>
-        <Text style={[typography.bodyBold, { color: colors.primary }]}>{title}</Text>
-        <Ionicons
-          name={iconName as any}
-          size={iconSize}
-          color={colors.primary}
-          style={styles.icon}
-        />
+        <Text
+          style={[
+            typography.bodyBold,
+            { color: colors.primary },
+            fontSize !== undefined && { fontSize },
+          ]}
+        >
+          {title}
+        </Text>
+        {showIcon && (
+          <Ionicons
+            name={iconName as any}
+            size={iconSize}
+            color={colors.primary}
+            style={styles.icon}
+          />
+        )}
       </View>
     </Pressable>
   );
