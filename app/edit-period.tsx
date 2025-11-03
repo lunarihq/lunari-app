@@ -1,12 +1,12 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Button } from '../components/Button';
 import { useTheme } from '../styles/theme';
 import { useAppStyles } from '../hooks/useStyles';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { router } from 'expo-router';
 import Toast from 'react-native-toast-message';
 import { useTranslation } from 'react-i18next';
-import { CustomCalendar } from '../components/calendar/CustomCalendar';
+import { CustomCalendar, CustomCalendarRef } from '../components/calendar/CustomCalendar';
 import { EditDayCell } from '../components/calendar/EditDayCell';
 import {
   MarkedDates,
@@ -23,6 +23,8 @@ export default function PeriodCalendarScreen() {
   const { t } = useTranslation(['common', 'calendar']);
   const [tempDates, setTempDates] = useState<MarkedDates>({});
   const [userPeriodLength, setUserPeriodLength] = useState<number>(5);
+  const [showTodayButton, setShowTodayButton] = useState(false);
+  const calendarRef = useRef<CustomCalendarRef>(null);
 
   const today = formatDateString(new Date());
 
@@ -137,6 +139,21 @@ export default function PeriodCalendarScreen() {
     <EditDayCell {...props} colors={colors} typography={typography} />
   );
 
+  const handleMonthChange = (dateString: string) => {
+    const currentDate = new Date();
+    const visibleDate = new Date(dateString);
+    
+    const isCurrentMonth = 
+      currentDate.getMonth() === visibleDate.getMonth() &&
+      currentDate.getFullYear() === visibleDate.getFullYear();
+    
+    setShowTodayButton(!isCurrentMonth);
+  };
+
+  const handleTodayPress = () => {
+    calendarRef.current?.scrollToToday();
+  };
+
   return (
     <View style={[styles.container, { backgroundColor: colors.panel }]}>
       {/* Header with padding for status bar, similar to HealthTracking.tsx */}
@@ -149,10 +166,21 @@ export default function PeriodCalendarScreen() {
         >
           {t('calendar:editPeriod.title')}
         </Text>
+        {showTodayButton && (
+          <TouchableOpacity
+            onPress={handleTodayPress}
+            style={[styles.todayButton, { paddingTop: 63 }]}
+          >
+            <Text style={[typography.body, { color: colors.primary, fontWeight: '500' }]}>
+              {t('calendar:today')}
+            </Text>
+          </TouchableOpacity>
+        )}
       </View>
 
       <View style={styles.calendarContainer}>
         <CustomCalendar
+          ref={calendarRef}
           mode="selection"
           current={today}
           markedDates={tempDates}
@@ -161,6 +189,7 @@ export default function PeriodCalendarScreen() {
           futureScrollRange={1}
           pastScrollRange={12}
           renderDay={renderDay}
+          onMonthChange={handleMonthChange}
         />
       </View>
 
@@ -195,9 +224,13 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
     paddingHorizontal: 18,
     height: 100,
+  },
+  todayButton: {
+    paddingHorizontal: 8,
   },
   calendarContainer: {
     flex: 1,

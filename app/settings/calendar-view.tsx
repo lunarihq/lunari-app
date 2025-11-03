@@ -74,14 +74,18 @@ export default function CalendarView() {
       indicator: (
         <View
           style={{
-            width: 24,
-            height: 24,
-            borderRadius: 24,
+            width: 32,
+            height: 32,
+            borderRadius: 32,
             backgroundColor: colors.accentPink,
             alignItems: 'center',
             justifyContent: 'center',
           }}
-        ></View>
+        >
+          <Text style={[typography.body, { color: colors.white }]}>
+            1
+          </Text>
+        </View>
       ),
     },
     {
@@ -89,14 +93,18 @@ export default function CalendarView() {
       indicator: (
         <View
           style={{
-            width: 24,
-            height: 24,
-            borderRadius: 24,
+            width: 32,
+            height: 32,
+            borderRadius: 32,
             backgroundColor: colors.accentPinkLight,
             alignItems: 'center',
             justifyContent: 'center',
           }}
-        ></View>
+        >
+          <Text style={[typography.body, { color: colors.accentPink }]}>
+            1
+          </Text>
+        </View>
       ),
       isToggleable: true,
       isEnabled: showFuturePeriods,
@@ -106,16 +114,20 @@ export default function CalendarView() {
       indicator: (
         <View
           style={{
-            width: 24,
-            height: 24,
-            borderRadius: 24,
+            width: 32,
+            height: 32,
+            borderRadius: 32,
             borderWidth: 1.6,
             borderColor: colors.accentBlue,
             borderStyle: 'dashed',
             alignItems: 'center',
             justifyContent: 'center',
           }}
-        ></View>
+        >
+          <Text style={[typography.body, { color: colors.accentBlue }]}>
+            1
+          </Text>
+        </View>
       ),
       isToggleable: true,
       isEnabled: showOvulation,
@@ -125,14 +137,14 @@ export default function CalendarView() {
       indicator: (
         <View
           style={{
-            width: 24,
-            height: 24,
-            borderRadius: 16,
+            width: 32,
+            height: 32,
+            borderRadius: 32,
             alignItems: 'center',
             justifyContent: 'center',
           }}
         >
-          <Text style={{ color: colors.accentBlue, fontSize: 16 }}>12</Text>
+          <Text style={[typography.body, { color: colors.accentBlue }]}>1</Text>
         </View>
       ),
       isToggleable: true,
@@ -143,19 +155,20 @@ export default function CalendarView() {
       indicator: (
         <View
           style={{
-            width: 24,
-            height: 24,
-            borderRadius: 16,
+            width: 32,
+            height: 32,
+            borderRadius: 32,
             alignItems: 'center',
             justifyContent: 'center',
-            position: 'relative',
-            marginTop: -6,
           }}
         >
+          <Text style={[typography.body, { color: colors.textPrimary }]}>
+            1
+          </Text>
           <View
             style={{
               position: 'absolute',
-              bottom: 2,
+              bottom: -4,
               width: 7,
               height: 7,
               borderRadius: 8,

@@ -16,7 +16,7 @@ export default function StatusInfo() {
       showsVerticalScrollIndicator={false}
     >
       <Image
-        source={require('../../assets/images/prediction.png')}
+        source={require('../../assets/images/cycle-info.png')}
         style={{
           width: '100%',
           height: 200,

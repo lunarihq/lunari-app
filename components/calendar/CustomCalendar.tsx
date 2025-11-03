@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useMemo, useRef, useImperativeHandle, forwardRef } from 'react';
 import { FlatList, View, Text, StyleSheet } from 'react-native';
 import { useTheme } from '../../styles/theme';
 import { MarkedDates } from '../../types/calendarTypes';
@@ -21,28 +21,33 @@ export interface CustomCalendarProps {
   renderDay?: (props: any) => React.ReactNode;
 }
 
+export interface CustomCalendarRef {
+  scrollToToday: () => void;
+}
+
 const DAY_NAMES = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
-const HEADER_HEIGHT = 40;
-const DAY_CELL_HEIGHT = 48;
+const HEADER_HEIGHT = 50;
+const DAY_CELL_HEIGHT = 64;
 const MONTH_PADDING = 10;
 
 function getMonthHeight(weekCount: number): number {
   return HEADER_HEIGHT + (weekCount * DAY_CELL_HEIGHT) + MONTH_PADDING;
 }
 
-export function CustomCalendar({
-  mode,
-  markedDates,
-  onDayPress,
-  current,
-  pastScrollRange = 12,
-  futureScrollRange = 12,
-  disableFuture = false,
-  onMonthChange,
-  renderDay,
-}: CustomCalendarProps) {
-  const { colors } = useTheme();
-  const flatListRef = useRef<FlatList>(null);
+export const CustomCalendar = forwardRef<CustomCalendarRef, CustomCalendarProps>(
+  ({
+    mode,
+    markedDates,
+    onDayPress,
+    current,
+    pastScrollRange = 12,
+    futureScrollRange = 12,
+    disableFuture = false,
+    onMonthChange,
+    renderDay,
+  }, ref) => {
+    const { colors } = useTheme();
+    const flatListRef = useRef<FlatList>(null);
 
   const baseDate = useMemo(() => new Date(), []);
 
@@ -101,6 +106,16 @@ export function CustomCalendar({
     itemVisiblePercentThreshold: 50,
   }).current;
 
+  useImperativeHandle(ref, () => ({
+    scrollToToday: () => {
+      const todayIndex = findMonthIndex(months, baseDate);
+      flatListRef.current?.scrollToIndex({
+        index: todayIndex,
+        animated: true,
+      });
+    },
+  }));
+
   return (
     <View style={styles.container}>
       <View
@@ -135,9 +150,6 @@ export function CustomCalendar({
         showsVerticalScrollIndicator={false}
         onViewableItemsChanged={onViewableItemsChanged}
         viewabilityConfig={viewabilityConfig}
-        maintainVisibleContentPosition={{
-          minIndexForVisible: 0,
-        }}
         onScrollToIndexFailed={info => {
           setTimeout(() => {
             flatListRef.current?.scrollToIndex({
@@ -149,7 +161,9 @@ export function CustomCalendar({
       />
     </View>
   );
-}
+});
+
+CustomCalendar.displayName = 'CustomCalendar';
 
 const styles = StyleSheet.create({
   container: {

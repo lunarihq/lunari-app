@@ -1,28 +1,36 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import {
   View,
   StyleSheet,
   DeviceEventEmitter,
+  TouchableOpacity,
+  Text,
 } from 'react-native';
 import { useTheme } from '../../styles/theme';
 import {
   useFocusEffect,
   useIsFocused,
+  useNavigation,
 } from '@react-navigation/native';
 import { useLocalSearchParams, router } from 'expo-router';
-import { CustomCalendar } from '../../components/calendar/CustomCalendar';
+import { CustomCalendar, CustomCalendarRef } from '../../components/calendar/CustomCalendar';
 import { CalendarBottomSheet } from '../../components/CalendarBottomSheet';
 import { formatDateString } from '../../types/calendarTypes';
 import { useCalendarData } from '../../hooks/useCalendarData';
 import { useCalendarMarkedDates } from '../../hooks/useCalendarMarkedDates';
 import { useCycleCalculations } from '../../hooks/useCycleCalculations';
 import { getSetting } from '../../db';
+import { useTranslation } from 'react-i18next';
 
 export default function CalendarScreen() {
   const { colors } = useTheme();
   const isFocused = useIsFocused();
+  const navigation = useNavigation();
+  const { t } = useTranslation('calendar');
   const [showOvulation, setShowOvulation] = useState(true);
   const [showFuturePeriods, setShowFuturePeriods] = useState(true);
+  const [showTodayButton, setShowTodayButton] = useState(false);
+  const calendarRef = useRef<CustomCalendarRef>(null);
 
   const {
     firstPeriodDate,
@@ -182,14 +190,43 @@ export default function CalendarScreen() {
     [calculateCycleDay, getMarkedDatesWithSelection, openDrawer, setCycleDay]
   );
 
-  const onMonthChange = useCallback((dateString: string) => {
-    // Month change handler - can be used for future features
+  const handleTodayPress = useCallback(() => {
+    calendarRef.current?.scrollToToday();
   }, []);
+
+  const onMonthChange = useCallback((dateString: string) => {
+    const currentDate = new Date();
+    const visibleDate = new Date(dateString);
+    
+    const isCurrentMonth = 
+      currentDate.getMonth() === visibleDate.getMonth() &&
+      currentDate.getFullYear() === visibleDate.getFullYear();
+    
+    setShowTodayButton(!isCurrentMonth);
+  }, []);
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: showTodayButton
+        ? () => (
+            <TouchableOpacity
+              onPress={handleTodayPress}
+              style={{ marginRight: 16 }}
+            >
+              <Text style={{ color: colors.primary, fontSize: 16, fontWeight: '500' }}>
+                {t('today')}
+              </Text>
+            </TouchableOpacity>
+          )
+        : undefined,
+    });
+  }, [showTodayButton, handleTodayPress, colors.primary, navigation, t]);
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.calendarContainer}>
         <CustomCalendar
+          ref={calendarRef}
           mode="view"
           current={selectedDate}
           markedDates={markedDates}

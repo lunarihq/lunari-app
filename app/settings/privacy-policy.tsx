@@ -6,6 +6,13 @@ import { useTheme } from '../../styles/theme';
 import { useAppStyles } from '../../hooks/useStyles';
 import * as Localization from 'expo-localization';
 
+const SECTION_ICON_SIZE = 24;
+
+function SectionIcon({ name, ...props }: { name: keyof typeof Ionicons.glyphMap } & Partial<React.ComponentProps<typeof Ionicons>>) {
+  const { colors } = useTheme();
+  return <Ionicons name={name} size={SECTION_ICON_SIZE} color={colors.accentPink} {...props} />;
+}
+
 export default function PrivacyPolicy() {
   const { colors } = useTheme();
   const { typography, commonStyles } = useAppStyles();
@@ -30,11 +37,7 @@ export default function PrivacyPolicy() {
 
       <View style={[commonStyles.sectionContainer]}>
         <View style={styles.sectionHeader}>
-          <Ionicons
-            name="information-circle-outline"
-            size={24}
-            color={colors.primary}
-          />
+          <SectionIcon name="information-circle-outline" />
           <Text style={[typography.headingMd, { marginLeft: 12 }]}>
             {t('privacyPolicyScreen.introduction.title')}
           </Text>
@@ -46,7 +49,7 @@ export default function PrivacyPolicy() {
 
       <View style={[commonStyles.sectionContainer]}>
         <View style={styles.sectionHeader}>
-          <Ionicons name="analytics-outline" size={24} color={colors.primary} />
+          <SectionIcon name="analytics-outline" />
           <Text style={[typography.headingMd, { marginLeft: 12 }]}>
             {t('privacyPolicyScreen.dataUse.title')}
           </Text>
@@ -77,11 +80,7 @@ export default function PrivacyPolicy() {
 
       <View style={[commonStyles.sectionContainer]}>
         <View style={styles.sectionHeader}>
-          <Ionicons
-            name="shield-checkmark-outline"
-            size={24}
-            color={colors.primary}
-          />
+          <SectionIcon name="shield-checkmark-outline" />
           <Text style={[typography.headingMd, { marginLeft: 12 }]}>
             {t('privacyPolicyScreen.permissions.title')}
           </Text>
@@ -109,7 +108,7 @@ export default function PrivacyPolicy() {
 
       <View style={[commonStyles.sectionContainer]}>
         <View style={styles.sectionHeader}>
-          <Ionicons name="eye-outline" size={24} color={colors.primary} />
+          <SectionIcon name="eye-outline" />
           <Text style={[typography.headingMd, { marginLeft: 12 }]}>
             {t('privacyPolicyScreen.transparency.title')}
           </Text>
