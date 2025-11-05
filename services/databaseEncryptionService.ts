@@ -87,6 +87,13 @@ export async function reWrapDEK(requireAuth: boolean): Promise<void> {
 
     console.log('[Encryption] Re-wrapping complete, mode:', newMode);
   } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    
+    if (errorMessage.includes('canceled') || errorMessage.includes('cancelled')) {
+      console.log('[Encryption] User cancelled authentication, reverting...');
+      throw new Error('USER_CANCELLED');
+    }
+
     console.error('[Encryption] Re-wrapping failed:', error);
     throw new Error('Failed to re-wrap encryption key');
   }

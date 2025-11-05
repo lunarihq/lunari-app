@@ -20,7 +20,7 @@ interface AuthContextType {
   unlockApp: () => void;
   authenticate: () => Promise<boolean>;
   authenticateForSettings: () => Promise<boolean>;
-  setLockEnabled: (enabled: boolean) => Promise<boolean>;
+  setLockEnabled: (enabled: boolean) => Promise<boolean | 'cancelled'>;
   refreshLockStatus: () => Promise<void>;
   getDeviceSecurityType: () => Promise<string>;
 }
@@ -140,7 +140,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   };
 
-  const setLockEnabled = async (enabled: boolean): Promise<boolean> => {
+  const setLockEnabled = async (enabled: boolean): Promise<boolean | 'cancelled'> => {
     try {
       setIsReWrapping(true);
 
@@ -160,8 +160,15 @@ export function AuthProvider({ children }: AuthProviderProps) {
       setIsReWrapping(false);
       return success;
     } catch (error) {
-      console.error('Error setting lock enabled:', error);
       setIsReWrapping(false);
+      
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      if (errorMessage === 'USER_CANCELLED') {
+        console.log('User cancelled biometric prompt');
+        return 'cancelled';
+      }
+      
+      console.error('Error setting lock enabled:', error);
       try {
         await reWrapDEK(!enabled);
       } catch (rollbackError) {

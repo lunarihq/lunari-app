@@ -42,12 +42,12 @@ export default function AppLockScreen() {
       return;
     }
 
-    const success = await setLockEnabled(value);
-    if (success) {
+    const result = await setLockEnabled(value);
+    if (result === true) {
       setLockEnabledState(value);
       const newMode = await getEncryptionMode();
       setEncryptionMode(newMode);
-    } else {
+    } else if (result === false) {
       Alert.alert(
         t('appLockSettings.error.title'),
         t('appLockSettings.error.message')
