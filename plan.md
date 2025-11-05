@@ -12,7 +12,7 @@ Implement SQLCipher encryption with two-tier key architecture (DEK + KEK) per `a
 
 **`services/databaseEncryptionService.ts`**
 - Generate random 256-bit DEK and KEK on first launch
-- Wrap DEK with KEK using AES-256-GCM
+- Wrap DEK with KEK using AES-256-GCM (via @noble/ciphers library)
 - Store wrapped DEK and KEK in SecureStore
 - Export `getDEK()` to unwrap and return DEK for SQLCipher
 - Export `getEncryptionMode()` to query current state

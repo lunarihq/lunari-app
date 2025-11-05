@@ -8,7 +8,7 @@ import React, {
 } from 'react';
 import { AppState, AppStateStatus } from 'react-native';
 import { AuthService } from '../services/authService';
-import { reWrapDEK } from '../services/databaseEncryptionService';
+import { reWrapKEK } from '../services/databaseEncryptionService';
 
 interface AuthContextType {
   isLocked: boolean;
@@ -144,7 +144,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     try {
       setIsReWrapping(true);
 
-      await reWrapDEK(enabled);
+      await reWrapKEK(enabled);
 
       const success = await AuthService.setLockEnabled(enabled);
       if (success) {
@@ -154,7 +154,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
           setIsAuthenticated(true);
         }
       } else {
-        await reWrapDEK(!enabled);
+        await reWrapKEK(!enabled);
       }
       
       setIsReWrapping(false);
@@ -170,7 +170,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       
       console.error('Error setting lock enabled:', error);
       try {
-        await reWrapDEK(!enabled);
+        await reWrapKEK(!enabled);
       } catch (rollbackError) {
         console.error('Error rolling back encryption:', rollbackError);
       }

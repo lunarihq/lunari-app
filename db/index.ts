@@ -2,7 +2,7 @@ import * as SQLite from 'expo-sqlite';
 import { drizzle } from 'drizzle-orm/expo-sqlite';
 import { settings } from './schema';
 import { eq } from 'drizzle-orm';
-import { initializeEncryption, getDEK } from '../services/databaseEncryptionService';
+import { initializeEncryption, getDEK, setKeyMigrationCallback } from '../services/databaseEncryptionService';
 
 const MIGRATION_TABLES = `
 CREATE TABLE IF NOT EXISTS period_dates (
@@ -32,6 +32,22 @@ CREATE TABLE IF NOT EXISTS settings (
 let expo: SQLite.SQLiteDatabase | null = null;
 let db: ReturnType<typeof drizzle> | null = null;
 let initializationPromise: Promise<void> | null = null;
+
+export async function deleteDatabaseFile(): Promise<void> {
+  try {
+    if (expo) {
+      await expo.closeAsync();
+      expo = null;
+    }
+    db = null;
+    
+    await SQLite.deleteDatabaseAsync('period.db');
+  } catch (error) {
+    console.error('Error deleting database file:', error);
+  }
+}
+
+setKeyMigrationCallback(deleteDatabaseFile);
 
 export async function initializeDatabase(): Promise<void> {
   if (initializationPromise) {
