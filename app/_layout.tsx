@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Stack, useRouter, usePathname } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { getSetting } from '../db';
+import { View, Text, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { initializeDatabase, getSetting } from '../db';
 import * as Notifications from 'expo-notifications';
 import { AuthProvider, useAuth } from '../contexts/AuthContext';
 import { NotesProvider } from '../contexts/NotesContext';
@@ -28,6 +29,8 @@ const toastConfig = {
 function AppContent() {
   const [isReady, setIsReady] = useState(false);
   const [onboardingCompleted, setOnboardingCompleted] = useState(false);
+  const [dbInitialized, setDbInitialized] = useState(false);
+  const [dbError, setDbError] = useState<string | null>(null);
 
   const router = useRouter();
   const pathname = usePathname();
@@ -42,6 +45,20 @@ function AppContent() {
   const [fontsLoaded] = useFonts({
     BricolageGrotesque_700Bold,
   });
+
+  // Initialize database
+  useEffect(() => {
+    async function setupDatabase() {
+      try {
+        await initializeDatabase();
+        setDbInitialized(true);
+      } catch (error) {
+        console.error('Failed to initialize database:', error);
+        setDbError(error instanceof Error ? error.message : 'Unknown error');
+      }
+    }
+    setupDatabase();
+  }, []);
 
   // Initialize notification response listener only (don't request permissions yet)
   useEffect(() => {
@@ -70,8 +87,10 @@ function AppContent() {
     };
   }, [router]);
 
-  // Only check onboarding status once during initial mount
+  // Only check onboarding status once during initial mount (after DB is ready)
   useEffect(() => {
+    if (!dbInitialized) return;
+
     async function checkOnboardingStatus() {
       try {
         const status = await getSetting('onboardingCompleted');
@@ -85,7 +104,7 @@ function AppContent() {
     }
 
     checkOnboardingStatus();
-  }, []);
+  }, [dbInitialized]);
 
   // Handle initial redirect if needed
   useEffect(() => {
@@ -105,8 +124,39 @@ function AppContent() {
     }
   }, [isReady, onboardingCompleted, pathname, router, initialRender]);
 
-  if (!isReady || !fontsLoaded) {
-    return null;
+  // Show database error screen
+  if (dbError) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 20, backgroundColor: isDark ? darkColors.background : lightColors.background }}>
+        <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 16, color: isDark ? darkColors.textPrimary : lightColors.textPrimary }}>
+          Database Error
+        </Text>
+        <Text style={{ fontSize: 14, marginBottom: 24, textAlign: 'center', color: isDark ? darkColors.textSecondary : lightColors.textSecondary }}>
+          {dbError}
+        </Text>
+        <TouchableOpacity
+          style={{ paddingHorizontal: 24, paddingVertical: 12, backgroundColor: isDark ? darkColors.primary : lightColors.primary, borderRadius: 8 }}
+          onPress={() => {
+            setDbError(null);
+            setDbInitialized(false);
+            initializeDatabase()
+              .then(() => setDbInitialized(true))
+              .catch(error => setDbError(error instanceof Error ? error.message : 'Unknown error'));
+          }}
+        >
+          <Text style={{ color: '#fff', fontSize: 16, fontWeight: '600' }}>Retry</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+
+  // Show loading screen while database initializes
+  if (!dbInitialized || !isReady || !fontsLoaded) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: isDark ? darkColors.background : lightColors.background }}>
+        <ActivityIndicator size="large" color={isDark ? darkColors.primary : lightColors.primary} />
+      </View>
+    );
   }
 
   // Show lock screen if app is locked

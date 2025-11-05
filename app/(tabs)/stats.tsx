@@ -3,7 +3,7 @@ import { View, ScrollView, StyleSheet, Text } from 'react-native';
 import { Button } from '../../components/Button';
 import { useFocusEffect } from '@react-navigation/native';
 import { router } from 'expo-router';
-import { db, getSetting } from '../../db';
+import { getDB, getSetting } from '../../db';
 import { periodDates } from '../../db/schema';
 import { PeriodPredictionService } from '../../services/periodPredictions';
 import { StatCard } from '../../components/StatCard';
@@ -36,6 +36,7 @@ export default function Stats() {
 
   const loadStatistics = useCallback(async () => {
     try {
+      const db = getDB();
       // Load period dates from the database
       const saved = await db.select().from(periodDates);
 
