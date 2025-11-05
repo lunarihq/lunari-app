@@ -5,6 +5,7 @@ import { gcm } from '@noble/ciphers/aes.js';
 const SECURE_STORE_KEYS = {
   ENCRYPTED_DEK: 'encrypted_dek',
   KEK: 'kek',
+  ENCRYPTION_MODE: 'encryption_mode',
 };
 
 export type EncryptionMode = 'basic' | 'protected';
@@ -108,11 +109,13 @@ export async function initializeEncryption(): Promise<void> {
         requireAuthentication: false,
       });
       await SecureStore.setItemAsync(SECURE_STORE_KEYS.ENCRYPTED_DEK, wrappedDEK);
+      await setStoredEncryptionMode('basic');
       
       dekCache = dek;
     } else {
       try {
-        const requireAuth = await isKEKProtected();
+        const mode = await getStoredEncryptionMode();
+        const requireAuth = mode === 'protected';
         
         const kekValue = await SecureStore.getItemAsync(SECURE_STORE_KEYS.KEK, {
           requireAuthentication: requireAuth,
@@ -145,6 +148,7 @@ export async function initializeEncryption(): Promise<void> {
             requireAuthentication: false,
           });
           await SecureStore.setItemAsync(SECURE_STORE_KEYS.ENCRYPTED_DEK, newWrappedDEK);
+          await setStoredEncryptionMode('basic');
           
           dekCache = dek;
           console.log('[Encryption] Migration complete - new keys generated');
@@ -159,15 +163,17 @@ export async function initializeEncryption(): Promise<void> {
   }
 }
 
-async function isKEKProtected(): Promise<boolean> {
+async function getStoredEncryptionMode(): Promise<EncryptionMode> {
   try {
-    await SecureStore.getItemAsync(SECURE_STORE_KEYS.KEK, {
-      requireAuthentication: false,
-    });
-    return false;
+    const mode = await SecureStore.getItemAsync(SECURE_STORE_KEYS.ENCRYPTION_MODE);
+    return mode === 'protected' ? 'protected' : 'basic';
   } catch {
-    return true;
+    return 'basic';
   }
+}
+
+async function setStoredEncryptionMode(mode: EncryptionMode): Promise<void> {
+  await SecureStore.setItemAsync(SECURE_STORE_KEYS.ENCRYPTION_MODE, mode);
 }
 
 export function getDEK(): string {
@@ -179,8 +185,7 @@ export function getDEK(): string {
 
 export async function getEncryptionMode(): Promise<EncryptionMode> {
   try {
-    const isProtected = await isKEKProtected();
-    return isProtected ? 'protected' : 'basic';
+    return await getStoredEncryptionMode();
   } catch (error) {
     console.error('Error getting encryption mode:', error);
     return 'basic';
@@ -228,6 +233,7 @@ export async function reWrapKEK(requireAuth: boolean): Promise<void> {
     });
 
     await SecureStore.setItemAsync(SECURE_STORE_KEYS.ENCRYPTED_DEK, newWrappedDEK);
+    await setStoredEncryptionMode(newMode);
 
     dekCache = dek;
 
@@ -253,9 +259,9 @@ export async function clearAllKeys(): Promise<void> {
   try {
     await SecureStore.deleteItemAsync(SECURE_STORE_KEYS.KEK);
     await SecureStore.deleteItemAsync(SECURE_STORE_KEYS.ENCRYPTED_DEK);
+    await SecureStore.deleteItemAsync(SECURE_STORE_KEYS.ENCRYPTION_MODE);
     dekCache = null;
   } catch (error) {
     console.error('Error clearing keys:', error);
   }
 }
-
