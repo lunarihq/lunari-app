@@ -8,7 +8,8 @@ import React, {
 } from 'react';
 import { AppState, AppStateStatus } from 'react-native';
 import { AuthService } from '../services/authService';
-import { reWrapKEK } from '../services/databaseEncryptionService';
+import { reWrapKEK, clearDEKCache } from '../services/databaseEncryptionService';
+import { clearDatabaseCache } from '../db';
 
 interface AuthContextType {
   isLocked: boolean;
@@ -18,8 +19,6 @@ interface AuthContextType {
   isReWrapping: boolean;
   lockApp: () => void;
   unlockApp: () => void;
-  authenticate: () => Promise<boolean>;
-  authenticateForSettings: () => Promise<boolean>;
   setLockEnabled: (enabled: boolean) => Promise<boolean | 'cancelled'>;
   refreshLockStatus: () => Promise<void>;
   getDeviceSecurityType: () => Promise<string>;
@@ -47,6 +46,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
     async (nextAppState: AppStateStatus) => {
       if (nextAppState === 'background' || nextAppState === 'inactive') {
         setAppStateBackground(true);
+        if (isLockEnabled) {
+          clearDEKCache();
+          clearDatabaseCache();
+        }
       } else if (nextAppState === 'active' && appStateBackground && isLockEnabled) {
         const deviceSecurityAvailable = await AuthService.isDeviceSecurityAvailable();
         if (!deviceSecurityAvailable) {
@@ -116,30 +119,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
     setIsAuthenticated(true);
   };
 
-  const authenticate = async (): Promise<boolean> => {
-    try {
-      const result = await AuthService.authenticateWithDevice();
-      if (result.success) {
-        unlockApp();
-        return true;
-      }
-      return false;
-    } catch (error) {
-      console.error('Error with authentication:', error);
-      return false;
-    }
-  };
-
-  const authenticateForSettings = async (): Promise<boolean> => {
-    try {
-      const result = await AuthService.authenticateForSettings();
-      return result.success;
-    } catch (error) {
-      console.error('Error with settings authentication:', error);
-      return false;
-    }
-  };
-
   const setLockEnabled = async (enabled: boolean): Promise<boolean | 'cancelled'> => {
     try {
       setIsReWrapping(true);
@@ -203,8 +182,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
     isReWrapping,
     lockApp,
     unlockApp,
-    authenticate,
-    authenticateForSettings,
     setLockEnabled,
     refreshLockStatus,
     getDeviceSecurityType,

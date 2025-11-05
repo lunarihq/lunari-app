@@ -37,7 +37,7 @@ function AppContent() {
   const [initialRender, setInitialRender] = useState(true);
   const notificationResponseListener =
     useRef<Notifications.Subscription | null>(null);
-  const { isLocked, isAuthenticated } = useAuth();
+  const { isLocked, isAuthenticated, unlockApp } = useAuth();
   const { isDark } = useTheme();
   const { t } = useTranslation(['settings', 'health', 'info']);
 
@@ -46,19 +46,25 @@ function AppContent() {
     BricolageGrotesque_700Bold,
   });
 
-  // Initialize database
+  // Initialize database (wait for lock screen to render if locked)
   useEffect(() => {
+    if (!isLocked && isAuthenticated) return;
+
     async function setupDatabase() {
+      if (isLocked) {
+        await new Promise(resolve => setTimeout(resolve, 100));
+      }
       try {
         await initializeDatabase();
         setDbInitialized(true);
+        unlockApp();
       } catch (error) {
         console.error('Failed to initialize database:', error);
         setDbError(error instanceof Error ? error.message : 'Unknown error');
       }
     }
     setupDatabase();
-  }, []);
+  }, [isLocked, isAuthenticated, unlockApp]);
 
   // Initialize notification response listener only (don't request permissions yet)
   useEffect(() => {

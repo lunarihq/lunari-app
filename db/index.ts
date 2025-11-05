@@ -103,4 +103,8 @@ export async function setSetting(key: string, value: string): Promise<void> {
     .onConflictDoUpdate({ target: settings.key, set: { value } });
 }
 
+export function clearDatabaseCache(): void {
+  initializationPromise = null;
+}
+
 export { db };
