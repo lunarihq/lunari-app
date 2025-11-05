@@ -50,7 +50,46 @@ export function getDEK(): string {
 }
 
 export async function getEncryptionMode(): Promise<EncryptionMode> {
-  return 'basic';
+  try {
+    const authMode = await SecureStore.getItemAsync(SECURE_STORE_KEYS.AUTH_MODE);
+    return authMode === 'protected' ? 'protected' : 'basic';
+  } catch (error) {
+    console.error('Error getting encryption mode:', error);
+    return 'basic';
+  }
+}
+
+export async function reWrapDEK(requireAuth: boolean): Promise<void> {
+  try {
+    if (!dekCache) {
+      throw new Error('DEK not initialized. Call initializeEncryption first.');
+    }
+
+    const currentMode = await getEncryptionMode();
+    const newMode: EncryptionMode = requireAuth ? 'protected' : 'basic';
+
+    if ((currentMode === 'protected') === requireAuth) {
+      console.log('[Encryption] Already in', newMode, 'mode, no re-wrapping needed');
+      return;
+    }
+
+    console.log('[Encryption] Re-wrapping DEK:', currentMode, '→', newMode);
+
+    const dekToSave = dekCache;
+
+    await SecureStore.deleteItemAsync(SECURE_STORE_KEYS.DEK);
+
+    await SecureStore.setItemAsync(SECURE_STORE_KEYS.DEK, dekToSave, {
+      requireAuthentication: requireAuth,
+    });
+
+    await SecureStore.setItemAsync(SECURE_STORE_KEYS.AUTH_MODE, newMode);
+
+    console.log('[Encryption] Re-wrapping complete, mode:', newMode);
+  } catch (error) {
+    console.error('[Encryption] Re-wrapping failed:', error);
+    throw new Error('Failed to re-wrap encryption key');
+  }
 }
 
 export function clearDEKCache(): void {

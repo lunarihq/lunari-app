@@ -8,12 +8,14 @@ import React, {
 } from 'react';
 import { AppState, AppStateStatus } from 'react-native';
 import { AuthService } from '../services/authService';
+import { reWrapDEK } from '../services/databaseEncryptionService';
 
 interface AuthContextType {
   isLocked: boolean;
   isAuthenticated: boolean;
   isLockEnabled: boolean;
   isDeviceSecurityAvailable: boolean;
+  isReWrapping: boolean;
   lockApp: () => void;
   unlockApp: () => void;
   authenticate: () => Promise<boolean>;
@@ -35,6 +37,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [appStateBackground, setAppStateBackground] = useState(false);
   const [isLockEnabled, setIsLockEnabledState] = useState(false);
   const [isDeviceSecurityAvailable, setIsDeviceSecurityAvailable] = useState(false);
+  const [isReWrapping, setIsReWrapping] = useState(false);
 
   useEffect(() => {
     initializeAuth();
@@ -139,6 +142,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const setLockEnabled = async (enabled: boolean): Promise<boolean> => {
     try {
+      setIsReWrapping(true);
+
+      await reWrapDEK(enabled);
+
       const success = await AuthService.setLockEnabled(enabled);
       if (success) {
         setIsLockEnabledState(enabled);
@@ -146,10 +153,20 @@ export function AuthProvider({ children }: AuthProviderProps) {
           setIsLocked(false);
           setIsAuthenticated(true);
         }
+      } else {
+        await reWrapDEK(!enabled);
       }
+      
+      setIsReWrapping(false);
       return success;
     } catch (error) {
       console.error('Error setting lock enabled:', error);
+      setIsReWrapping(false);
+      try {
+        await reWrapDEK(!enabled);
+      } catch (rollbackError) {
+        console.error('Error rolling back encryption:', rollbackError);
+      }
       return false;
     }
   };
@@ -176,6 +193,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     isAuthenticated,
     isLockEnabled,
     isDeviceSecurityAvailable,
+    isReWrapping,
     lockApp,
     unlockApp,
     authenticate,
