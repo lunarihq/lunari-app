@@ -7,7 +7,6 @@ import * as Notifications from 'expo-notifications';
 import { AuthProvider, useAuth } from '../contexts/AuthContext';
 import { NotesProvider } from '../contexts/NotesContext';
 import { ThemeProvider, useTheme } from '../contexts/ThemeContext';
-import { LockScreen } from '../components/LockScreen';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { lightColors, darkColors } from '../styles/colors';
@@ -37,7 +36,7 @@ function AppContent() {
   const [initialRender, setInitialRender] = useState(true);
   const notificationResponseListener =
     useRef<Notifications.Subscription | null>(null);
-  const { isLocked, isAuthenticated, unlockApp } = useAuth();
+  const { isLocked, unlockApp } = useAuth();
   const { isDark } = useTheme();
   const { t } = useTranslation(['settings', 'health', 'info']);
 
@@ -180,24 +179,20 @@ function AppContent() {
     );
   }
 
-  // Show loading screen while database initializes
-  if (!dbInitialized || !isReady || !fontsLoaded) {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: isDark ? darkColors.background : lightColors.background }}>
-        <ActivityIndicator size="large" color={isDark ? darkColors.primary : lightColors.primary} />
-      </View>
-    );
-  }
-
-  // Show lock screen if app is locked
-  if (isLocked && !isAuthenticated) {
-    return (
-      <>
-        <LockScreen />
-        <StatusBar style={isDark ? 'light' : 'dark'} />
-      </>
-    );
-  }
+    // Show loading screen while database initializes
+    if (!dbInitialized || !isReady || !fontsLoaded) {
+      return (
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: isDark ? darkColors.background : lightColors.background }}>
+          {isLocked ? (
+            <Text style={{ fontSize: 28, fontWeight: '600', color: isDark ? darkColors.textPrimary : lightColors.textPrimary }}>
+              Lunari locked
+            </Text>
+          ) : (
+            <ActivityIndicator size="large" color={isDark ? darkColors.primary : lightColors.primary} />
+          )}
+        </View>
+      );
+    }
 
   return (
     <>
