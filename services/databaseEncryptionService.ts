@@ -95,28 +95,31 @@ async function unwrapDEK(wrappedDEK: string, kek: string): Promise<string> {
 }
 
 export async function initializeEncryption(): Promise<void> {
+  if (dekCache) {
+    return;
+  }
+  
   try {
-    let kek = await SecureStore.getItemAsync(SECURE_STORE_KEYS.KEK);
-    let wrappedDEK = await SecureStore.getItemAsync(SECURE_STORE_KEYS.ENCRYPTED_DEK);
+    const mode = await getStoredEncryptionMode();
+    const requireAuth = mode === 'protected';
+    
+    const wrappedDEK = await SecureStore.getItemAsync(SECURE_STORE_KEYS.ENCRYPTED_DEK);
 
-    if (!kek || !wrappedDEK) {
+    if (!wrappedDEK) {
       const dek = generateRandomKey();
-      kek = generateRandomKey();
+      const kek = generateRandomKey();
       
-      wrappedDEK = await wrapDEK(dek, kek);
+      const newWrappedDEK = await wrapDEK(dek, kek);
       
       await SecureStore.setItemAsync(SECURE_STORE_KEYS.KEK, kek, {
         requireAuthentication: false,
       });
-      await SecureStore.setItemAsync(SECURE_STORE_KEYS.ENCRYPTED_DEK, wrappedDEK);
+      await SecureStore.setItemAsync(SECURE_STORE_KEYS.ENCRYPTED_DEK, newWrappedDEK);
       await setStoredEncryptionMode('basic');
       
       dekCache = dek;
     } else {
       try {
-        const mode = await getStoredEncryptionMode();
-        const requireAuth = mode === 'protected';
-        
         const kekValue = await SecureStore.getItemAsync(SECURE_STORE_KEYS.KEK, {
           requireAuthentication: requireAuth,
         });
@@ -216,11 +219,8 @@ export async function reWrapKEK(requireAuth: boolean): Promise<void> {
     const newMode: EncryptionMode = requireAuth ? 'protected' : 'basic';
 
     if ((currentMode === 'protected') === requireAuth) {
-      console.log('[Encryption] Already in', newMode, 'mode, no re-wrapping needed');
       return;
     }
-
-    console.log('[Encryption] Re-wrapping KEK:', currentMode, '→', newMode);
 
     const oldKEK = await SecureStore.getItemAsync(SECURE_STORE_KEYS.KEK, {
       requireAuthentication: currentMode === 'protected',
@@ -250,13 +250,10 @@ export async function reWrapKEK(requireAuth: boolean): Promise<void> {
     await setStoredEncryptionMode(newMode);
 
     dekCache = dek;
-
-    console.log('[Encryption] Re-wrapping complete, mode:', newMode);
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     
     if (errorMessage.includes('canceled') || errorMessage.includes('cancelled')) {
-      console.log('[Encryption] User cancelled authentication, reverting...');
       throw new Error('USER_CANCELLED');
     }
 
