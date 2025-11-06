@@ -105,6 +105,11 @@ export async function setSetting(key: string, value: string): Promise<void> {
 
 export function clearDatabaseCache(): void {
   initializationPromise = null;
+  db = null;
+  if (expo) {
+    expo.closeAsync().catch(() => {});
+    expo = null;
+  }
 }
 
 export { db };

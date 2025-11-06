@@ -46,18 +46,24 @@ function AppContent() {
     BricolageGrotesque_700Bold,
   });
 
-  // Initialize database (wait for lock screen to render if locked)
+  // Reset DB state when app gets locked (after background)
   useEffect(() => {
-    if (!isLocked && isAuthenticated) return;
+    if (isLocked && dbInitialized) {
+      setDbInitialized(false);
+    }
+  }, [isLocked, dbInitialized]);
+
+  // Initialize database (even if locked - this triggers biometric prompt)
+  useEffect(() => {
+    if (dbInitialized) return;
 
     async function setupDatabase() {
-      if (isLocked) {
-        await new Promise(resolve => setTimeout(resolve, 100));
-      }
       try {
         await initializeDatabase();
         setDbInitialized(true);
-        unlockApp();
+        if (isLocked) {
+          unlockApp();
+        }
       } catch (error) {
         const errorMessage = error instanceof Error ? error.message : '';
         
@@ -70,7 +76,7 @@ function AppContent() {
       }
     }
     setupDatabase();
-  }, [isLocked, isAuthenticated, unlockApp]);
+  }, [dbInitialized, isLocked, unlockApp]);
 
   // Initialize notification response listener only (don't request permissions yet)
   useEffect(() => {
