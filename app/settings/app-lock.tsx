@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../contexts/AuthContext';
 import { useTheme } from '../../styles/theme';
 import { useAppStyles } from '../../hooks/useStyles';
-import { getEncryptionMode, EncryptionMode } from '../../services/databaseEncryptionService';
 
 export default function AppLockScreen() {
   const { colors } = useTheme();
@@ -19,17 +18,10 @@ export default function AppLockScreen() {
 
   const [lockEnabledState, setLockEnabledState] = useState(false);
   const [deviceSecurityAvailable, setDeviceSecurityAvailable] = useState(false);
-  const [encryptionMode, setEncryptionMode] = useState<EncryptionMode>('basic');
 
   useEffect(() => {
     setLockEnabledState(isLockEnabled);
     setDeviceSecurityAvailable(isDeviceSecurityAvailable);
-    
-    const loadEncryptionMode = async () => {
-      const mode = await getEncryptionMode();
-      setEncryptionMode(mode);
-    };
-    loadEncryptionMode();
   }, [isLockEnabled, isDeviceSecurityAvailable]);
 
   const handleToggle = async (value: boolean) => {
@@ -45,8 +37,6 @@ export default function AppLockScreen() {
     const result = await setLockEnabled(value);
     if (result === true) {
       setLockEnabledState(value);
-      const newMode = await getEncryptionMode();
-      setEncryptionMode(newMode);
     } else if (result === false) {
       Alert.alert(
         t('appLockSettings.error.title'),
@@ -84,35 +74,7 @@ export default function AppLockScreen() {
             />
           )}
         </View>
-
-        <View style={[styles.settingRow, styles.lastRow]}>
-          <View style={styles.settingContent}>
-            <Text style={[styles.settingTitle, { color: colors.textPrimary }]}>
-              Database Encryption
-            </Text>
-            <Text
-              style={[styles.settingSubtitle, { color: colors.textSecondary }]}
-            >
-              {encryptionMode === 'protected'
-                ? 'Device-Protected Encryption (hardware-backed)'
-                : 'Basic Encryption (OS-level only)'}
-            </Text>
-          </View>
-          <View style={[styles.badge, { backgroundColor: encryptionMode === 'protected' ? colors.success : colors.neutral300 }]}>
-            <Text style={[styles.badgeText, { color: encryptionMode === 'protected' ? colors.white : colors.textSecondary }]}>
-              {encryptionMode === 'protected' ? '🔒 Protected' : 'Basic'}
-            </Text>
-          </View>
-        </View>
       </View>
-
-      {lockEnabledState && (
-        <View style={[commonStyles.sectionContainer, { paddingHorizontal: 16 }]}>
-          <Text style={[styles.warningText, { color: colors.warning }]}>
-            ⚠️ Warning: If you forget your device PIN/biometric authentication, you will lose access to all data permanently.
-          </Text>
-        </View>
-      )}
     </View>
   );
 }
@@ -125,9 +87,6 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     borderBottomWidth: 1,
   },
-  lastRow: {
-    borderBottomWidth: 0,
-  },
   settingContent: {
     flex: 1,
     marginRight: 12,
@@ -139,18 +98,5 @@ const styles = StyleSheet.create({
   settingSubtitle: {
     fontSize: 14,
     marginTop: 2,
-  },
-  badge: {
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 12,
-  },
-  badgeText: {
-    fontSize: 12,
-    fontWeight: '600',
-  },
-  warningText: {
-    fontSize: 14,
-    lineHeight: 20,
   },
 });

@@ -9,14 +9,13 @@ import {
   DeviceEventEmitter,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useRouter, useFocusEffect } from 'expo-router';
+import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../../styles/theme';
 import { useAppStyles } from '../../hooks/useStyles';
 import { ThemeSelectionModal } from '../../components/ThemeSelectionModal';
 import { DataDeletionService } from '../../services/dataDeletionService';
 import { useNotes } from '../../contexts/NotesContext';
-import { getEncryptionMode, EncryptionMode } from '../../services/databaseEncryptionService';
 
 export default function Settings() {
   const router = useRouter();
@@ -25,17 +24,6 @@ export default function Settings() {
   const { clearNotes } = useNotes();
   const { t } = useTranslation('settings');
   const [themeModalVisible, setThemeModalVisible] = useState(false);
-  const [encryptionMode, setEncryptionMode] = useState<EncryptionMode>('basic');
-
-  useFocusEffect(
-    React.useCallback(() => {
-      const loadEncryptionMode = async () => {
-        const mode = await getEncryptionMode();
-        setEncryptionMode(mode);
-      };
-      loadEncryptionMode();
-    }, [])
-  );
 
   return (
     <ScrollView
@@ -79,13 +67,6 @@ export default function Settings() {
           <Text style={[typography.bodyLg, { flex: 1 }]}>
             {t('appLock')}
           </Text>
-          {encryptionMode === 'protected' && (
-            <View style={[styles.badge, { backgroundColor: colors.success }]}>
-              <Text style={[styles.badgeText, { color: colors.white }]}>
-                🔒
-              </Text>
-            </View>
-          )}
           <Ionicons
             name="chevron-forward"
             size={24}
@@ -235,14 +216,5 @@ const styles = StyleSheet.create({
   },
   lastRow: {
     borderBottomWidth: 0,
-  },
-  badge: {
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 10,
-    marginRight: 8,
-  },
-  badgeText: {
-    fontSize: 14,
   },
 });
