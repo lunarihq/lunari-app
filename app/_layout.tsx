@@ -59,8 +59,14 @@ function AppContent() {
         setDbInitialized(true);
         unlockApp();
       } catch (error) {
-        console.error('Failed to initialize database:', error);
-        setDbError(error instanceof Error ? error.message : 'Unknown error');
+        const errorMessage = error instanceof Error ? error.message : '';
+        
+        if (errorMessage === 'USER_CANCELLED') {
+          setDbError('Authentication required to access your data');
+        } else {
+          console.error('Failed to initialize database:', error);
+          setDbError(error instanceof Error ? error.message : 'Unknown error');
+        }
       }
     }
     setupDatabase();
@@ -132,10 +138,11 @@ function AppContent() {
 
   // Show database error screen
   if (dbError) {
+    const isAuthError = dbError === 'Authentication required to access your data';
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 20, backgroundColor: isDark ? darkColors.background : lightColors.background }}>
         <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 16, color: isDark ? darkColors.textPrimary : lightColors.textPrimary }}>
-          Database Error
+          {isAuthError ? 'Authentication Required' : 'Database Error'}
         </Text>
         <Text style={{ fontSize: 14, marginBottom: 24, textAlign: 'center', color: isDark ? darkColors.textSecondary : lightColors.textSecondary }}>
           {dbError}
@@ -150,7 +157,15 @@ function AppContent() {
                 setDbInitialized(true);
                 unlockApp();
               })
-              .catch(error => setDbError(error instanceof Error ? error.message : 'Unknown error'));
+              .catch(error => {
+                const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+                
+                if (errorMessage === 'USER_CANCELLED') {
+                  setDbError('Authentication required to access your data');
+                } else {
+                  setDbError(errorMessage);
+                }
+              });
           }}
         >
           <Text style={{ color: '#fff', fontSize: 16, fontWeight: '600' }}>Retry</Text>

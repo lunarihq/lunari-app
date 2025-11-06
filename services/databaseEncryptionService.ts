@@ -129,6 +129,11 @@ export async function initializeEncryption(): Promise<void> {
       } catch (error) {
         const errorMessage = error instanceof Error ? error.message : String(error);
         
+        if (errorMessage.includes('canceled') || errorMessage.includes('cancelled') || 
+            errorMessage.includes('Cancel')) {
+          throw new Error('USER_CANCELLED');
+        }
+        
         if (errorMessage.includes('Invalid wrapped DEK') || 
             errorMessage.includes('Failed to unwrap DEK') ||
             errorMessage.includes('corrupted')) {
@@ -158,6 +163,15 @@ export async function initializeEncryption(): Promise<void> {
       }
     }
   } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    
+    if (errorMessage === 'USER_CANCELLED' || 
+        errorMessage.includes('canceled') || 
+        errorMessage.includes('cancelled') ||
+        errorMessage.includes('Cancel')) {
+      throw new Error('USER_CANCELLED');
+    }
+    
     console.error('Failed to initialize encryption:', error);
     throw new Error('Failed to initialize encryption keys');
   }
