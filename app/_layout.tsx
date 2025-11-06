@@ -30,6 +30,7 @@ function AppContent() {
   const [onboardingCompleted, setOnboardingCompleted] = useState(false);
   const [dbInitialized, setDbInitialized] = useState(false);
   const [dbError, setDbError] = useState<string | null>(null);
+  const [authCancelled, setAuthCancelled] = useState(false);
 
   const router = useRouter();
   const pathname = usePathname();
@@ -49,6 +50,7 @@ function AppContent() {
   useEffect(() => {
     if (isLocked && dbInitialized) {
       setDbInitialized(false);
+      setAuthCancelled(false);
     }
   }, [isLocked, dbInitialized]);
 
@@ -67,7 +69,7 @@ function AppContent() {
         const errorMessage = error instanceof Error ? error.message : '';
         
         if (errorMessage === 'USER_CANCELLED') {
-          setDbError('Authentication required to access your data');
+          setAuthCancelled(true);
         } else {
           console.error('Failed to initialize database:', error);
           setDbError(error instanceof Error ? error.message : 'Unknown error');
@@ -143,13 +145,12 @@ function AppContent() {
 
   // Show database error screen
   if (dbError) {
-    const isAuthError = dbError === 'Authentication required to access your data';
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 20, backgroundColor: isDark ? darkColors.background : lightColors.background }}>
-        <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 16, color: isDark ? darkColors.textPrimary : lightColors.textPrimary }}>
-          {isAuthError ? 'Authentication Required' : 'Database Error'}
+        <Text style={{ fontSize: 22, fontWeight: 'bold', marginBottom: 16, color: isDark ? darkColors.textPrimary : lightColors.textPrimary }}>
+          Database Error
         </Text>
-        <Text style={{ fontSize: 14, marginBottom: 24, textAlign: 'center', color: isDark ? darkColors.textSecondary : lightColors.textSecondary }}>
+        <Text style={{ fontSize: 16, marginBottom: 24, color: isDark ? darkColors.textSecondary : lightColors.textSecondary, textAlign: 'center' }}>
           {dbError}
         </Text>
         <TouchableOpacity
@@ -166,7 +167,7 @@ function AppContent() {
                 const errorMessage = error instanceof Error ? error.message : 'Unknown error';
                 
                 if (errorMessage === 'USER_CANCELLED') {
-                  setDbError('Authentication required to access your data');
+                  setAuthCancelled(true);
                 } else {
                   setDbError(errorMessage);
                 }
@@ -179,20 +180,47 @@ function AppContent() {
     );
   }
 
-    // Show loading screen while database initializes
-    if (!dbInitialized || !isReady || !fontsLoaded) {
-      return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: isDark ? darkColors.background : lightColors.background }}>
-          {isLocked ? (
-            <Text style={{ fontSize: 28, fontWeight: '600', color: isDark ? darkColors.textPrimary : lightColors.textPrimary }}>
-              Lunari locked
+  // Show loading/unlock screen while database initializes
+  if (!dbInitialized || !isReady || !fontsLoaded) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 20, backgroundColor: isDark ? darkColors.background : lightColors.background }}>
+        {isLocked ? (
+          <>
+            <Text style={{ fontSize: 28, fontWeight: '600', marginBottom: 24, color: isDark ? darkColors.textPrimary : lightColors.textPrimary }}>
+              Unlock Lunari
             </Text>
-          ) : (
-            <ActivityIndicator size="large" color={isDark ? darkColors.primary : lightColors.primary} />
-          )}
-        </View>
-      );
-    }
+            {authCancelled && (
+              <TouchableOpacity
+                style={{ paddingHorizontal: 24, paddingVertical: 12, backgroundColor: isDark ? darkColors.primary : lightColors.primary, borderRadius: 8 }}
+                onPress={() => {
+                  setAuthCancelled(false);
+                  setDbInitialized(false);
+                  initializeDatabase()
+                    .then(() => {
+                      setDbInitialized(true);
+                      unlockApp();
+                    })
+                    .catch(error => {
+                      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+                      
+                      if (errorMessage === 'USER_CANCELLED') {
+                        setAuthCancelled(true);
+                      } else {
+                        setDbError(errorMessage);
+                      }
+                    });
+                }}
+              >
+                <Text style={{ color: '#fff', fontSize: 16, fontWeight: '600' }}>Unlock</Text>
+              </TouchableOpacity>
+            )}
+          </>
+        ) : (
+          <ActivityIndicator size="large" color={isDark ? darkColors.primary : lightColors.primary} />
+        )}
+      </View>
+    );
+  }
 
   return (
     <>
