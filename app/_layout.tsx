@@ -146,7 +146,10 @@ function AppContent() {
             setDbError(null);
             setDbInitialized(false);
             initializeDatabase()
-              .then(() => setDbInitialized(true))
+              .then(() => {
+                setDbInitialized(true);
+                unlockApp();
+              })
               .catch(error => setDbError(error instanceof Error ? error.message : 'Unknown error'));
           }}
         >
