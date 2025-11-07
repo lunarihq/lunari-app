@@ -142,7 +142,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
       setIsReWrapping(false);
       
       if (error instanceof EncryptionError && error.code === ERROR_CODES.USER_CANCELLED) {
-        console.log('User cancelled biometric prompt');
         return 'cancelled';
       }
       
