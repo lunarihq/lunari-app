@@ -11,6 +11,13 @@ import { AuthService } from '../services/authService';
 import { reWrapKEK, clearDEKCache, EncryptionError, ERROR_CODES } from '../services/databaseEncryptionService';
 import { clearDatabaseCache } from '../db';
 
+interface SetLockEnabledResult {
+  success: boolean;
+  cancelled?: boolean;
+  error?: string;
+  errorCode?: string;
+}
+
 interface AuthContextType {
   isLocked: boolean;
   isAuthenticated: boolean;
@@ -19,7 +26,7 @@ interface AuthContextType {
   isReWrapping: boolean;
   lockApp: () => void;
   unlockApp: () => void;
-  setLockEnabled: (enabled: boolean) => Promise<boolean | 'cancelled'>;
+  setLockEnabled: (enabled: boolean) => Promise<SetLockEnabledResult>;
   refreshLockStatus: () => Promise<void>;
   getDeviceSecurityType: () => Promise<string>;
 }
@@ -119,7 +126,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     setIsAuthenticated(true);
   };
 
-  const setLockEnabled = async (enabled: boolean): Promise<boolean | 'cancelled'> => {
+  const setLockEnabled = async (enabled: boolean): Promise<SetLockEnabledResult> => {
     try {
       setIsReWrapping(true);
 
@@ -137,16 +144,24 @@ export function AuthProvider({ children }: AuthProviderProps) {
       }
       
       setIsReWrapping(false);
-      return success;
+      return { success };
     } catch (error) {
       setIsReWrapping(false);
       
       if (error instanceof EncryptionError && error.code === ERROR_CODES.USER_CANCELLED) {
-        return 'cancelled';
+        return { success: false, cancelled: true };
       }
       
       console.error('Error setting lock enabled:', error);
-      return false;
+      const errorMessage = error instanceof EncryptionError 
+        ? error.message 
+        : error instanceof Error 
+        ? error.message 
+        : 'Failed to update app lock settings. Please try again.';
+      
+      const errorCode = error instanceof EncryptionError ? error.code : undefined;
+      
+      return { success: false, error: errorMessage, errorCode };
     }
   };
 

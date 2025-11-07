@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../contexts/AuthContext';
 import { useTheme } from '../../styles/theme';
 import { useAppStyles } from '../../hooks/useStyles';
+import { ERROR_CODES } from '../../services/databaseEncryptionService';
 
 export default function AppLockScreen() {
   const { colors } = useTheme();
@@ -35,12 +36,16 @@ export default function AppLockScreen() {
     }
 
     const result = await setLockEnabled(value);
-    if (result === true) {
+    if (result.success) {
       setLockEnabledState(value);
-    } else if (result === false) {
+    } else if (result.error) {
+      const errorMessage = result.errorCode === ERROR_CODES.REWRAP_FAILED
+        ? t('appLockSettings.error.rewrapFailed')
+        : result.error;
+      
       Alert.alert(
         t('appLockSettings.error.title'),
-        t('appLockSettings.error.message')
+        errorMessage
       );
     }
   };

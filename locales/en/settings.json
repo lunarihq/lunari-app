@@ -42,7 +42,8 @@
     },
     "error": {
       "title": "Error",
-      "message": "Failed to update app lock settings. The encryption key could not be updated. Please try again."
+      "message": "Failed to update app lock settings. The encryption key could not be updated. Please try again.",
+      "rewrapFailed": "Failed to re-wrap encryption key. Your data is still safe with the old settings."
     }
   },
   "lockScreen": {
