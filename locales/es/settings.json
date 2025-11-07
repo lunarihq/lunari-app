@@ -42,7 +42,7 @@
     },
     "error": {
       "title": "Error",
-      "message": "Error al actualizar la configuración de bloqueo. Por favor, inténtalo de nuevo."
+      "message": "Error al actualizar la configuración de bloqueo. No se pudo actualizar la clave de cifrado. Por favor, inténtalo de nuevo."
     }
   },
   "lockScreen": {
