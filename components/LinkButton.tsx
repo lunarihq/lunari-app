@@ -36,7 +36,7 @@ export function LinkButton({
           style={[
             typography.bodyBold,
             { color: colors.primary },
-            fontSize !== undefined && { fontSize },
+            fontSize !== undefined ? { fontSize } : undefined,
           ]}
         >
           {title}
