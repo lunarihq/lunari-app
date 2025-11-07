@@ -240,14 +240,20 @@ export async function reWrapKEK(requireAuth: boolean): Promise<void> {
     const newKEK = generateRandomKey();
     const newWrappedDEK = await wrapDEK(dek, newKEK);
 
-    await SecureStore.deleteItemAsync(SECURE_STORE_KEYS.KEK);
-
     await SecureStore.setItemAsync(SECURE_STORE_KEYS.KEK, newKEK, {
       requireAuthentication: requireAuth,
     });
 
     await SecureStore.setItemAsync(SECURE_STORE_KEYS.ENCRYPTED_DEK, newWrappedDEK);
     await setStoredEncryptionMode(newMode);
+
+    // Verify both keys were stored successfully to prevent data loss.
+    // If KEK is stored but wrapped DEK fails, the new KEK can't unwrap the old wrapped DEK.
+    const verifyWrappedDEK = await SecureStore.getItemAsync(SECURE_STORE_KEYS.ENCRYPTED_DEK);
+
+    if (!verifyWrappedDEK) {
+      throw new Error('Failed to verify key storage');
+    }
 
     dekCache = dek;
   } catch (error) {
