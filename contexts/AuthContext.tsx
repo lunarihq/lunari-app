@@ -8,7 +8,7 @@ import React, {
 } from 'react';
 import { AppState, AppStateStatus } from 'react-native';
 import { AuthService } from '../services/authService';
-import { reWrapKEK, clearDEKCache } from '../services/databaseEncryptionService';
+import { reWrapKEK, clearDEKCache, EncryptionError, ERROR_CODES } from '../services/databaseEncryptionService';
 import { clearDatabaseCache } from '../db';
 
 interface AuthContextType {
@@ -141,18 +141,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
     } catch (error) {
       setIsReWrapping(false);
       
-      const errorMessage = error instanceof Error ? error.message : String(error);
-      if (errorMessage === 'USER_CANCELLED') {
+      if (error instanceof EncryptionError && error.code === ERROR_CODES.USER_CANCELLED) {
         console.log('User cancelled biometric prompt');
         return 'cancelled';
       }
       
       console.error('Error setting lock enabled:', error);
-      try {
-        await reWrapKEK(!enabled);
-      } catch (rollbackError) {
-        console.error('Error rolling back encryption:', rollbackError);
-      }
       return false;
     }
   };

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Stack, useRouter, usePathname } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { View, Text, ActivityIndicator, TouchableOpacity } from 'react-native';
-import { initializeDatabase, getSetting } from '../db';
+import { initializeDatabase, getSetting, deleteDatabaseFile, clearDatabaseCache } from '../db';
 import * as Notifications from 'expo-notifications';
 import { AuthProvider, useAuth } from '../contexts/AuthContext';
 import { NotesProvider } from '../contexts/NotesContext';
@@ -11,6 +11,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { lightColors, darkColors } from '../styles/colors';
 import Toast, { BaseToast, ErrorToast } from 'react-native-toast-message';
+import { EncryptionError, ERROR_CODES, clearDEKCache } from '../services/databaseEncryptionService';
 import {
   useFonts,
   BricolageGrotesque_700Bold,
@@ -46,6 +47,39 @@ function AppContent() {
     BricolageGrotesque_700Bold,
   });
 
+  const setupDatabase = React.useCallback(async () => {
+    try {
+      await initializeDatabase();
+      setDbInitialized(true);
+      if (isLocked) {
+        unlockApp();
+      }
+    } catch (error) {
+      if (error instanceof EncryptionError) {
+        switch (error.code) {
+          case ERROR_CODES.USER_CANCELLED:
+          case ERROR_CODES.AUTH_IN_PROGRESS:
+            clearDEKCache();
+            clearDatabaseCache();
+            setAuthCancelled(true);
+            break;
+          case ERROR_CODES.KEY_CORRUPTION:
+            setDbError('CORRUPTION');
+            break;
+          case ERROR_CODES.SECURE_STORE_UNAVAILABLE:
+            setDbError('SECURE_STORE_UNAVAILABLE');
+            break;
+          default:
+            console.error('Failed to initialize database:', error);
+            setDbError(error.message);
+        }
+      } else {
+        console.error('Failed to initialize database:', error);
+        setDbError(error instanceof Error ? error.message : 'Unknown error');
+      }
+    }
+  }, [isLocked, unlockApp]);
+
   // Reset DB state when app gets locked (after background)
   useEffect(() => {
     if (isLocked && dbInitialized) {
@@ -57,27 +91,8 @@ function AppContent() {
   // Initialize database (even if locked - this triggers biometric prompt)
   useEffect(() => {
     if (dbInitialized) return;
-
-    async function setupDatabase() {
-      try {
-        await initializeDatabase();
-        setDbInitialized(true);
-        if (isLocked) {
-          unlockApp();
-        }
-      } catch (error) {
-        const errorMessage = error instanceof Error ? error.message : '';
-        
-        if (errorMessage === 'USER_CANCELLED') {
-          setAuthCancelled(true);
-        } else {
-          console.error('Failed to initialize database:', error);
-          setDbError(error instanceof Error ? error.message : 'Unknown error');
-        }
-      }
-    }
     setupDatabase();
-  }, [dbInitialized, isLocked, unlockApp]);
+  }, [dbInitialized, setupDatabase]);
 
   // Initialize notification response listener only (don't request permissions yet)
   useEffect(() => {
@@ -145,37 +160,47 @@ function AppContent() {
 
   // Show database error screen
   if (dbError) {
+    const isCorruption = dbError === 'CORRUPTION';
+    const isSecureStoreUnavailable = dbError === 'SECURE_STORE_UNAVAILABLE';
+
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 20, backgroundColor: isDark ? darkColors.background : lightColors.background }}>
         <Text style={{ fontSize: 22, fontWeight: 'bold', marginBottom: 16, color: isDark ? darkColors.textPrimary : lightColors.textPrimary }}>
-          Database Error
+          {isCorruption ? 'Data Corruption Detected' : isSecureStoreUnavailable ? 'Security Unavailable' : 'Database Error'}
         </Text>
         <Text style={{ fontSize: 16, marginBottom: 24, color: isDark ? darkColors.textSecondary : lightColors.textSecondary, textAlign: 'center' }}>
-          {dbError}
+          {isCorruption
+            ? 'Your encryption keys are corrupted and your data cannot be decrypted. To continue using the app, you must reset all data.'
+            : isSecureStoreUnavailable
+            ? 'Secure storage is not available on this device. The app cannot function without secure storage.'
+            : dbError}
         </Text>
-        <TouchableOpacity
-          style={{ paddingHorizontal: 24, paddingVertical: 12, backgroundColor: isDark ? darkColors.primary : lightColors.primary, borderRadius: 8 }}
-          onPress={() => {
-            setDbError(null);
-            setDbInitialized(false);
-            initializeDatabase()
-              .then(() => {
-                setDbInitialized(true);
-                unlockApp();
-              })
-              .catch(error => {
-                const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-                
-                if (errorMessage === 'USER_CANCELLED') {
-                  setAuthCancelled(true);
-                } else {
-                  setDbError(errorMessage);
-                }
-              });
-          }}
-        >
-          <Text style={{ color: '#fff', fontSize: 16, fontWeight: '600' }}>Retry</Text>
-        </TouchableOpacity>
+        {isCorruption ? (
+          <TouchableOpacity
+            style={{ paddingHorizontal: 24, paddingVertical: 12, backgroundColor: '#ef4444', borderRadius: 8 }}
+            onPress={async () => {
+              try {
+                await deleteDatabaseFile();
+                setDbError(null);
+                setDbInitialized(false);
+              } catch (error) {
+                console.error('Failed to reset data:', error);
+              }
+            }}
+          >
+            <Text style={{ color: '#fff', fontSize: 16, fontWeight: '600' }}>Reset All Data</Text>
+          </TouchableOpacity>
+        ) : !isSecureStoreUnavailable ? (
+          <TouchableOpacity
+            style={{ paddingHorizontal: 24, paddingVertical: 12, backgroundColor: isDark ? darkColors.primary : lightColors.primary, borderRadius: 8 }}
+            onPress={() => {
+              setDbError(null);
+              setDbInitialized(false);
+            }}
+          >
+            <Text style={{ color: '#fff', fontSize: 16, fontWeight: '600' }}>Retry</Text>
+          </TouchableOpacity>
+        ) : null}
       </View>
     );
   }
@@ -192,23 +217,10 @@ function AppContent() {
             {authCancelled && (
               <TouchableOpacity
                 style={{ paddingHorizontal: 24, paddingVertical: 12, backgroundColor: isDark ? darkColors.primary : lightColors.primary, borderRadius: 8 }}
-                onPress={() => {
+                onPress={async () => {
                   setAuthCancelled(false);
-                  setDbInitialized(false);
-                  initializeDatabase()
-                    .then(() => {
-                      setDbInitialized(true);
-                      unlockApp();
-                    })
-                    .catch(error => {
-                      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-                      
-                      if (errorMessage === 'USER_CANCELLED') {
-                        setAuthCancelled(true);
-                      } else {
-                        setDbError(errorMessage);
-                      }
-                    });
+                  await new Promise(resolve => setTimeout(resolve, 300)); // Wait for UI to update
+                  setupDatabase();
                 }}
               >
                 <Text style={{ color: '#fff', fontSize: 16, fontWeight: '600' }}>Unlock</Text>
