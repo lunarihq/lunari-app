@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, Switch, Alert, ActivityIndicator } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../contexts/AuthContext';
@@ -17,16 +17,8 @@ export default function AppLockScreen() {
     setLockEnabled,
   } = useAuth();
 
-  const [lockEnabledState, setLockEnabledState] = useState(false);
-  const [deviceSecurityAvailable, setDeviceSecurityAvailable] = useState(false);
-
-  useEffect(() => {
-    setLockEnabledState(isLockEnabled);
-    setDeviceSecurityAvailable(isDeviceSecurityAvailable);
-  }, [isLockEnabled, isDeviceSecurityAvailable]);
-
   const handleToggle = async (value: boolean) => {
-    if (value && !deviceSecurityAvailable) {
+    if (value && !isDeviceSecurityAvailable) {
       Alert.alert(
         t('appLockSettings.noDeviceSecurity.title'),
         t('appLockSettings.noDeviceSecurity.message'),
@@ -36,9 +28,7 @@ export default function AppLockScreen() {
     }
 
     const result = await setLockEnabled(value);
-    if (result.success) {
-      setLockEnabledState(value);
-    } else if (result.error) {
+    if (result.error) {
       const errorMessage = result.errorCode === ERROR_CODES.REWRAP_FAILED
         ? t('appLockSettings.error.rewrapFailed')
         : result.error;
@@ -61,7 +51,7 @@ export default function AppLockScreen() {
             <Text
               style={[styles.settingSubtitle, { color: colors.textSecondary }]}
             >
-              {deviceSecurityAvailable
+              {isDeviceSecurityAvailable
                 ? t('appLockSettings.unlockDescription')
                 : t('appLockSettings.noDeviceSecurityDescription')}
             </Text>
@@ -70,9 +60,9 @@ export default function AppLockScreen() {
             <ActivityIndicator size="small" color={colors.primary} />
           ) : (
             <Switch
-              value={lockEnabledState}
+              value={isLockEnabled}
               onValueChange={handleToggle}
-              disabled={!deviceSecurityAvailable}
+              disabled={!isDeviceSecurityAvailable}
               trackColor={{ false: colors.border, true: colors.primary }}
               thumbColor={colors.white}
               ios_backgroundColor={colors.border}

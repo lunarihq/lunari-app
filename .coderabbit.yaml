@@ -67,6 +67,32 @@ reviews:
         Translation files for i18n. Ensure consistency across languages,
         proper JSON formatting, and no missing keys compared to default locale (en).
 
+    - path: "styles/**/*.ts"
+      instructions: |
+        Theme and styling definitions. Ensure consistency with design system,
+        proper TypeScript typing for theme objects, and accessibility considerations
+        (color contrast, text sizing).
+
+    - path: "utils/**/*.ts"
+      instructions: |
+        Utility functions. Must be pure, well-tested, and properly typed.
+        Check for edge cases and proper date/timezone handling (critical for cycle tracking).
+
+    - path: "contexts/**/*.tsx"
+      instructions: |
+        React Context providers. Verify proper memoization to avoid unnecessary re-renders,
+        secure handling of auth/sensitive state, and proper TypeScript typing.
+
+    - path: "validation/**/*.ts"
+      instructions: |
+        Data validation logic. Ensure robust validation for user inputs,
+        especially date ranges and health data. Check for proper error messages.
+
+    - path: "{package.json,tsconfig.json,app.json,eas.json}"
+      instructions: |
+        Configuration files. Verify dependency versions are compatible,
+        no security vulnerabilities, and proper build/deployment settings.
+
     - path: "*.md"
       instructions: |
         Documentation should be clear, accurate, and aligned with current
