@@ -233,7 +233,7 @@ export default function Stats() {
           <StatCard
             title={t('averages.cycleLength')}
             value={`${averageCycleLength} ${t('common:time.days')}`}
-            icon={<CycleIcon size={40} color={colors.icon} />}
+            icon={<CycleIcon size={40}/>}
             status={getCycleStatus(averageCycleLength).status}
             type="cycle"
           />
