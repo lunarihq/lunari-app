@@ -178,18 +178,14 @@ export default function Stats() {
   // Empty state component
   const renderEmptyState = () => (
     <View
-      style={[styles.emptyStateContainer, { backgroundColor: 'colors.surface' }]}
+      style={[commonStyles.sectionContainer, {padding: 32, marginTop: 24}]}
     >
       <Text
         style={[
           typography.headingMd,
           {
-            fontSize: 22,
-            fontWeight: '500',
-            lineHeight: 32,
-            marginBottom: 32,
             textAlign: 'center',
-            paddingHorizontal: 8,
+            marginBottom: 24,
           },
         ]}
       >
@@ -198,7 +194,6 @@ export default function Stats() {
       <Button
         title={t('emptyState.logPeriodButton')}
         onPress={() => router.push('/edit-period')}
-        style={styles.emptyStateButton}
       />
     </View>
   );
@@ -265,16 +260,5 @@ const styles = StyleSheet.create({
   },
   cardsContainer: {
     gap: 12,
-  },
-  emptyStateContainer: {
-    marginVertical: 16,
-    padding: 32,
-    borderRadius: 16,
-    alignItems: 'center',
-    justifyContent: 'center',
-    minHeight: 300,
-  },
-  emptyStateButton: {
-    minWidth: 120,
   },
 });

@@ -1,9 +1,21 @@
 import { Tabs, useRouter } from 'expo-router';
-import Ionicons from '@expo/vector-icons/Ionicons';
+import { Ionicons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../../styles/theme';
 import { InfoIcon } from '../../components/icons/general/info';
+
+function createTabIcon(filledName: string, outlineName: string) {
+  const TabIcon = ({ color, focused }: { color: string; focused: boolean }) => (
+    <Ionicons
+      name={focused ? (filledName as any) : (outlineName as any)}
+      color={color}
+      size={24}
+    />
+  );
+  TabIcon.displayName = `TabIcon(${filledName})`;
+  return TabIcon;
+}
 
 export default function TabLayout() {
   const { colors } = useTheme();
@@ -45,19 +57,13 @@ export default function TabLayout() {
               style={{ marginRight: 16 }}
             >
               <InfoIcon
-                size={26}
+                size={24}
                 color={colors.neutral400}
               />
             </TouchableOpacity>
           ),
           tabBarLabel: t('navigation.today'),
-          tabBarIcon: ({ color, focused }) => (
-            <Ionicons
-              name={focused ? 'time' : 'time-outline'}
-              color={color}
-              size={24}
-            />
-          ),
+          tabBarIcon: createTabIcon('time', 'time-outline'),
         }}
       />
       <Tabs.Screen
@@ -86,13 +92,7 @@ export default function TabLayout() {
           },
           headerTintColor: colors.textPrimary,
           tabBarLabel: t('navigation.calendar'),
-          tabBarIcon: ({ color, focused }) => (
-            <Ionicons
-              name={focused ? 'calendar' : 'calendar-outline'}
-              color={color}
-              size={24}
-            />
-          ),
+          tabBarIcon: createTabIcon('calendar', 'calendar-outline'),
         }}
       />
 
@@ -102,13 +102,7 @@ export default function TabLayout() {
           headerShown: true,
           headerTitle: t('navigation.stats'),
           tabBarLabel: t('navigation.stats'),
-          tabBarIcon: ({ color, focused }) => (
-            <Ionicons
-              name={focused ? 'bar-chart' : 'bar-chart-outline'}
-              color={color}
-              size={24}
-            />
-          ),
+          tabBarIcon: createTabIcon('bar-chart', 'bar-chart-outline'),
         }}
       />
 
@@ -118,13 +112,7 @@ export default function TabLayout() {
           headerShown: true,
           headerTitle: t('navigation.settings'),
           tabBarLabel: t('navigation.settings'),
-          tabBarIcon: ({ color, focused }) => (
-            <Ionicons
-              name={focused ? 'settings' : 'settings-outline'}
-              color={color}
-              size={24}
-            />
-          ),
+          tabBarIcon: createTabIcon('settings', 'settings-outline'),
         }}
       />
     </Tabs>
