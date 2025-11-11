@@ -57,10 +57,11 @@ export async function initializeDatabase(): Promise<void> {
       await initializeEncryption();
       
       const dek = getDEK();
+      const hexKey = Array.from(dek).map(b => b.toString(16).padStart(2, '0')).join('');
       
       expo = await SQLite.openDatabaseAsync('period.db');
       
-      await expo.execAsync(`PRAGMA key = "x'${dek}'";`);
+      await expo.execAsync(`PRAGMA key = "x'${hexKey}'";`);
       await expo.execAsync('PRAGMA cipher_page_size = 4096;');
       await expo.execAsync('PRAGMA kdf_iter = 256000;');
       

@@ -1,7 +1,19 @@
 import * as SecureStore from 'expo-secure-store';
 import * as Crypto from 'expo-crypto';
 import { gcm } from '@noble/ciphers/aes.js';
-import { Buffer } from 'buffer';
+import { managedNonce } from '@noble/ciphers/utils.js';
+import * as base64 from 'base64-js';
+
+if (typeof globalThis.crypto === 'undefined') {
+  globalThis.crypto = {} as any;
+}
+if (typeof globalThis.crypto.getRandomValues === 'undefined') {
+  globalThis.crypto.getRandomValues = <T extends ArrayBufferView>(array: T): T => {
+    const bytes = Crypto.getRandomBytes(array.byteLength);
+    new Uint8Array(array.buffer, array.byteOffset, array.byteLength).set(bytes);
+    return array;
+  };
+}
 
 const SECURE_STORE_KEYS = {
   ENCRYPTED_DEK: 'encrypted_dek',
@@ -26,69 +38,23 @@ export const ERROR_CODES = {
   AUTH_IN_PROGRESS: 'AUTH_IN_PROGRESS',
 } as const;
 
-let dekCache: string | null = null;
+let dekCache: Uint8Array | null = null;
 
-function generateRandomKey(): string {
-  const randomBytes = Crypto.getRandomBytes(32);
-  return Array.from(randomBytes)
-    .map(b => b.toString(16).padStart(2, '0'))
-    .join('');
+function generateRandomKey(): Uint8Array {
+  return Crypto.getRandomBytes(32);
 }
 
-function hexToBytes(hex: string): Uint8Array {
-  const bytes = new Uint8Array(hex.length / 2);
-  for (let i = 0; i < hex.length; i += 2) {
-    bytes[i / 2] = parseInt(hex.substring(i, i + 2), 16);
-  }
-  return bytes;
+async function wrapDEK(dek: Uint8Array, kek: Uint8Array): Promise<string> {
+  const cipher = managedNonce(gcm)(kek);
+  const ciphertext = cipher.encrypt(dek);
+  return base64.fromByteArray(ciphertext);
 }
 
-function bytesToHex(bytes: Uint8Array): string {
-  return Array.from(bytes)
-    .map(b => b.toString(16).padStart(2, '0'))
-    .join('');
-}
-
-function stringToBase64(str: string): string {
-  return Buffer.from(str, 'utf8').toString('base64');
-}
-
-function base64ToString(base64: string): string {
-  return Buffer.from(base64, 'base64').toString('utf8');
-}
-
-async function wrapDEK(dek: string, kek: string): Promise<string> {
-  const nonce = Crypto.getRandomBytes(12);
-  const kekBytes = hexToBytes(kek);
-  const dekBytes = hexToBytes(dek);
-  
-  const aesGcm = gcm(kekBytes, nonce);
-  const ciphertext = aesGcm.encrypt(dekBytes);
-  
-  const wrappedData = {
-    nonce: bytesToHex(nonce),
-    ciphertext: bytesToHex(ciphertext),
-  };
-  
-  return stringToBase64(JSON.stringify(wrappedData));
-}
-
-async function unwrapDEK(wrappedDEK: string, kek: string): Promise<string> {
+async function unwrapDEK(wrappedDEK: string, kek: Uint8Array): Promise<Uint8Array> {
   try {
-    const wrappedData = JSON.parse(base64ToString(wrappedDEK));
-    
-    if (!wrappedData.nonce || !wrappedData.ciphertext) {
-      throw new Error('Invalid wrapped DEK format');
-    }
-    
-    const nonce = hexToBytes(wrappedData.nonce);
-    const ciphertext = hexToBytes(wrappedData.ciphertext);
-    const kekBytes = hexToBytes(kek);
-    
-    const aesGcm = gcm(kekBytes, nonce);
-    const dekBytes = aesGcm.decrypt(ciphertext);
-    
-    return bytesToHex(dekBytes);
+    const ciphertext = base64.toByteArray(wrappedDEK);
+    const cipher = managedNonce(gcm)(kek);
+    return cipher.decrypt(ciphertext);
   } catch (error) {
     console.error('Failed to unwrap DEK:', error);
     throw new Error('Failed to unwrap DEK - corrupted data or wrong KEK');
@@ -112,7 +78,7 @@ export async function initializeEncryption(): Promise<void> {
       
       const newWrappedDEK = await wrapDEK(dek, kek);
       
-      await SecureStore.setItemAsync(SECURE_STORE_KEYS.KEK, kek, {
+      await SecureStore.setItemAsync(SECURE_STORE_KEYS.KEK, base64.fromByteArray(kek), {
         requireAuthentication: false,
       });
       await SecureStore.setItemAsync(SECURE_STORE_KEYS.ENCRYPTED_DEK, newWrappedDEK);
@@ -121,11 +87,11 @@ export async function initializeEncryption(): Promise<void> {
       dekCache = dek;
     } else {
       try {
-        const kekValue = await SecureStore.getItemAsync(SECURE_STORE_KEYS.KEK, {
+        const kekBase64 = await SecureStore.getItemAsync(SECURE_STORE_KEYS.KEK, {
           requireAuthentication: requireAuth,
         });
         
-        if (!kekValue) {
+        if (!kekBase64) {
           console.error('[Encryption] KEK missing but wrapped DEK exists - corruption detected');
           throw new EncryptionError(
             ERROR_CODES.KEY_CORRUPTION,
@@ -133,7 +99,8 @@ export async function initializeEncryption(): Promise<void> {
           );
         }
         
-        dekCache = await unwrapDEK(wrappedDEK, kekValue);
+        const kek = base64.toByteArray(kekBase64);
+        dekCache = await unwrapDEK(wrappedDEK, kek);
       } catch (error) {
         if (error instanceof EncryptionError) {
           throw error;
@@ -214,7 +181,7 @@ async function setStoredEncryptionMode(mode: EncryptionMode): Promise<void> {
   await SecureStore.setItemAsync(SECURE_STORE_KEYS.ENCRYPTION_MODE, mode);
 }
 
-export function getDEK(): string {
+export function getDEK(): Uint8Array {
   if (!dekCache) {
     throw new Error('DEK not initialized. Call initializeEncryption first.');
   }
@@ -249,11 +216,11 @@ export async function reWrapKEK(requireAuth: boolean): Promise<void> {
       return;
     }
 
-    const oldKEK = await SecureStore.getItemAsync(SECURE_STORE_KEYS.KEK, {
+    const oldKEKBase64 = await SecureStore.getItemAsync(SECURE_STORE_KEYS.KEK, {
       requireAuthentication: currentMode === 'protected',
     });
 
-    if (!oldKEK) {
+    if (!oldKEKBase64) {
       throw new Error('Failed to retrieve old KEK');
     }
 
@@ -262,34 +229,36 @@ export async function reWrapKEK(requireAuth: boolean): Promise<void> {
       throw new Error('Failed to retrieve wrapped DEK');
     }
 
+    const oldKEK = base64.toByteArray(oldKEKBase64);
     const dek = await unwrapDEK(wrappedDEK, oldKEK);
 
     const newKEK = generateRandomKey();
     const newWrappedDEK = await wrapDEK(dek, newKEK);
 
-    await SecureStore.setItemAsync(TEMP_KEYS.KEK, newKEK, {
+    await SecureStore.setItemAsync(TEMP_KEYS.KEK, base64.fromByteArray(newKEK), {
       requireAuthentication: false,
     });
 
     await SecureStore.setItemAsync(TEMP_KEYS.ENCRYPTED_DEK, newWrappedDEK);
     await SecureStore.setItemAsync(TEMP_KEYS.ENCRYPTION_MODE, newMode);
 
-    const verifyKEK = await SecureStore.getItemAsync(TEMP_KEYS.KEK, {
+    const verifyKEKBase64 = await SecureStore.getItemAsync(TEMP_KEYS.KEK, {
       requireAuthentication: false,
     });
     const verifyWrappedDEK = await SecureStore.getItemAsync(TEMP_KEYS.ENCRYPTED_DEK);
     const verifyMode = await SecureStore.getItemAsync(TEMP_KEYS.ENCRYPTION_MODE);
 
-    if (!verifyKEK || !verifyWrappedDEK || !verifyMode) {
+    if (!verifyKEKBase64 || !verifyWrappedDEK || !verifyMode) {
       throw new Error('Failed to verify temporary key storage');
     }
 
+    const verifyKEK = base64.toByteArray(verifyKEKBase64);
     const verifiedDEK = await unwrapDEK(verifyWrappedDEK, verifyKEK);
-    if (verifiedDEK !== dek) {
+    if (base64.fromByteArray(verifiedDEK) !== base64.fromByteArray(dek)) {
       throw new Error('Key verification failed - unwrapped DEK mismatch');
     }
 
-    await SecureStore.setItemAsync(SECURE_STORE_KEYS.KEK, newKEK, {
+    await SecureStore.setItemAsync(SECURE_STORE_KEYS.KEK, base64.fromByteArray(newKEK), {
       requireAuthentication: requireAuth,
     });
     await SecureStore.setItemAsync(SECURE_STORE_KEYS.ENCRYPTED_DEK, newWrappedDEK);
