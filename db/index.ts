@@ -35,12 +35,22 @@ let initializationPromise: Promise<void> | null = null;
 
 export async function deleteDatabaseFile(): Promise<void> {
   try {
+    const pendingInit = initializationPromise;
+    if (pendingInit) {
+      try {
+        await pendingInit;
+      } catch {
+        // Initialization failed or in-progress, proceed with deletion
+      }
+    }
+    
+    initializationPromise = null;
+    
     if (expo) {
       await expo.closeAsync();
       expo = null;
     }
     db = null;
-    initializationPromise = null;
     
     await SQLite.deleteDatabaseAsync('period.db');
   } catch (error) {
