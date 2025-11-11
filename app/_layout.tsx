@@ -197,7 +197,7 @@ function AppContent() {
             style={{ paddingHorizontal: 24, paddingVertical: 12, backgroundColor: isDark ? darkColors.primary : lightColors.primary, borderRadius: 8 }}
             onPress={async () => {
               try {
-                await clearAllKeys();
+                clearKeyCache();
                 clearDatabaseCache();
                 setDbError(null);
                 setDbInitialized(false);
