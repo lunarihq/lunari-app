@@ -123,5 +123,3 @@ export function clearDatabaseCache(): void {
     expo = null;
   }
 }
-
-export { db };
