@@ -11,7 +11,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { lightColors, darkColors } from '../styles/colors';
 import Toast, { BaseToast, ErrorToast } from 'react-native-toast-message';
-import { EncryptionError, ERROR_CODES, clearKeyCache } from '../services/databaseEncryptionService';
+import { EncryptionError, ERROR_CODES, clearKeyCache, clearAllKeys } from '../services/databaseEncryptionService';
 import {
   useFonts,
   BricolageGrotesque_700Bold,
@@ -180,6 +180,8 @@ function AppContent() {
             style={{ paddingHorizontal: 24, paddingVertical: 12, backgroundColor: '#ef4444', borderRadius: 8 }}
             onPress={async () => {
               try {
+                await clearAllKeys();
+                clearDatabaseCache();
                 await deleteDatabaseFile();
                 setDbError(null);
                 setDbInitialized(false);
@@ -193,9 +195,15 @@ function AppContent() {
         ) : !isSecureStoreUnavailable ? (
           <TouchableOpacity
             style={{ paddingHorizontal: 24, paddingVertical: 12, backgroundColor: isDark ? darkColors.primary : lightColors.primary, borderRadius: 8 }}
-            onPress={() => {
-              setDbError(null);
-              setDbInitialized(false);
+            onPress={async () => {
+              try {
+                await clearAllKeys();
+                clearDatabaseCache();
+                setDbError(null);
+                setDbInitialized(false);
+              } catch (error) {
+                console.error('Failed to clear keys during retry:', error);
+              }
             }}
           >
             <Text style={{ color: '#fff', fontSize: 16, fontWeight: '600' }}>Retry</Text>
