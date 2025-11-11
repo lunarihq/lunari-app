@@ -59,13 +59,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
         }
       } else if (nextAppState === 'active' && appStateBackground && isLockEnabled) {
         const deviceSecurityAvailable = await AuthService.isDeviceSecurityAvailable();
+        setIsDeviceSecurityAvailable(deviceSecurityAvailable);
         if (!deviceSecurityAvailable) {
-          await AuthService.setLockEnabled(false);
-          setIsLockEnabledState(false);
-          setIsLocked(false);
-          setIsAuthenticated(true);
+          console.warn('App lock remains enabled - device security not available');
+          setIsLocked(true);
+          setIsAuthenticated(false);
           setAppStateBackground(false);
-          console.warn('App lock disabled - device security not available');
           return;
         }
 
@@ -94,11 +93,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
       setIsDeviceSecurityAvailable(deviceSecurityAvailable);
 
       if (lockEnabled && !deviceSecurityAvailable) {
-        await AuthService.setLockEnabled(false);
-        setIsLockEnabledState(false);
-        setIsLocked(false);
-        setIsAuthenticated(true);
-        console.warn('App lock disabled - device security not available');
+        console.warn('App lock remains enabled - device security not available');
+        setIsLocked(true);
+        setIsAuthenticated(false);
         return;
       }
 
