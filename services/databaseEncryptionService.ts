@@ -1,6 +1,7 @@
 import * as SecureStore from 'expo-secure-store';
 import * as Crypto from 'expo-crypto';
 import { gcm } from '@noble/ciphers/aes.js';
+import { Buffer } from 'buffer';
 
 const SECURE_STORE_KEYS = {
   ENCRYPTED_DEK: 'encrypted_dek',
@@ -49,21 +50,11 @@ function bytesToHex(bytes: Uint8Array): string {
 }
 
 function stringToBase64(str: string): string {
-  const bytes = new TextEncoder().encode(str);
-  let binary = '';
-  for (let i = 0; i < bytes.length; i++) {
-    binary += String.fromCharCode(bytes[i]);
-  }
-  return btoa(binary);
+  return Buffer.from(str, 'utf8').toString('base64');
 }
 
 function base64ToString(base64: string): string {
-  const binary = atob(base64);
-  const bytes = new Uint8Array(binary.length);
-  for (let i = 0; i < binary.length; i++) {
-    bytes[i] = binary.charCodeAt(i);
-  }
-  return new TextDecoder().decode(bytes);
+  return Buffer.from(base64, 'base64').toString('utf8');
 }
 
 async function wrapDEK(dek: string, kek: string): Promise<string> {
