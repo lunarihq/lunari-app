@@ -61,110 +61,80 @@ async function unwrapDEK(wrappedDEK: string, kek: Uint8Array): Promise<Uint8Arra
   }
 }
 
-export async function initializeEncryption(): Promise<void> {
-  if (dekCache) {
-    return;
-  }
+function isCancellationError(error: unknown): boolean {
+  if (!(error instanceof Error)) return false;
   
-  try {
-    const wrappedDEK = await SecureStore.getItemAsync(SECURE_STORE_KEYS.ENCRYPTED_DEK);
+  const name = (error as any).name;
+  if (name === 'NotAllowedError' || name === 'ERR_CANCELED') return true;
+  
+  const code = (error as any).code;
+  if (code === 'ERR_CANCELED' || code === 'USER_CANCELLED') return true;
+  
+  return error.message.includes('cancel');
+}
 
-    if (!wrappedDEK) {
-      const dek = generateRandomKey();
-      const kek = generateRandomKey();
-      
-      const newWrappedDEK = await wrapDEK(dek, kek);
-      
-      await SecureStore.setItemAsync(SECURE_STORE_KEYS.KEK, base64.fromByteArray(kek), {
-        requireAuthentication: false,
-      });
-      await SecureStore.setItemAsync(SECURE_STORE_KEYS.ENCRYPTED_DEK, newWrappedDEK);
-      await setStoredEncryptionMode('basic');
-      
-      dekCache = dek;
-    } else {
-      try {
-        const mode = await getStoredEncryptionMode();
-        const requireAuth = mode === 'protected';
-        
-        const kekBase64 = await SecureStore.getItemAsync(SECURE_STORE_KEYS.KEK, {
-          requireAuthentication: requireAuth,
-        });
-        
-        if (!kekBase64) {
-          console.error('[Encryption] KEK missing but wrapped DEK exists - corruption detected');
-          throw new EncryptionError(
-            ERROR_CODES.KEY_CORRUPTION,
-            'Encryption keys are corrupted. Your data cannot be decrypted.'
-          );
-        }
-        
-        const kek = base64.toByteArray(kekBase64);
-        dekCache = await unwrapDEK(wrappedDEK, kek);
-      } catch (error) {
-        if (error instanceof EncryptionError) {
-          throw error;
-        }
-        
-        const errorMessage = error instanceof Error ? error.message : String(error);
-        
-        if (errorMessage.includes('canceled') || errorMessage.includes('cancelled') || 
-            errorMessage.includes('Cancel')) {
-          throw new EncryptionError(ERROR_CODES.USER_CANCELLED, 'Authentication was cancelled');
-        }
-        
-        if (errorMessage.includes('Authentication is already in progress') ||
-            errorMessage.includes('already in progress')) {
-          throw new EncryptionError(ERROR_CODES.AUTH_IN_PROGRESS, 'Authentication is in progress. Please try again.');
-        }
-        
-        if (errorMessage.includes('Invalid wrapped DEK') || 
-            errorMessage.includes('Failed to unwrap DEK') ||
-            errorMessage.includes('corrupted')) {
-          console.error('[Encryption] Key corruption detected');
-          throw new EncryptionError(
-            ERROR_CODES.KEY_CORRUPTION,
-            'Encryption keys are corrupted. Your data cannot be decrypted.'
-          );
-        }
-        
-        throw error;
-      }
-    }
+function classifyError(error: unknown): EncryptionError {
+  if (error instanceof EncryptionError) {
+    return error;
+  }
+
+  if (isCancellationError(error)) {
+    return new EncryptionError(ERROR_CODES.USER_CANCELLED, 'Authentication was cancelled');
+  }
+
+  const message = error instanceof Error ? error.message : String(error);
+  
+  if (message.includes('Authentication is already in progress')) {
+    return new EncryptionError(ERROR_CODES.AUTH_IN_PROGRESS, 'Authentication is in progress. Please try again.');
+  }
+
+  if (message.includes('not available') || message.includes('SecureStore')) {
+    console.error('[Encryption] SecureStore unavailable:', error);
+    return new EncryptionError(ERROR_CODES.SECURE_STORE_UNAVAILABLE, 'Secure storage is not available on this device');
+  }
+
+  console.error('[Encryption] Unexpected error:', error);
+  return new EncryptionError(ERROR_CODES.SECURE_STORE_UNAVAILABLE, 'Failed to initialize encryption - secure storage may be unavailable');
+}
+
+async function createNewKeys(): Promise<Uint8Array> {
+  const dek = generateRandomKey();
+  const kek = generateRandomKey();
+  const wrappedDEK = await wrapDEK(dek, kek);
+  
+  await SecureStore.setItemAsync(SECURE_STORE_KEYS.KEK, base64.fromByteArray(kek), { requireAuthentication: false });
+  await SecureStore.setItemAsync(SECURE_STORE_KEYS.ENCRYPTED_DEK, wrappedDEK);
+  await setStoredEncryptionMode('basic');
+  
+  return dek;
+}
+
+async function loadExistingKeys(): Promise<Uint8Array> {
+  const wrappedDEK = await SecureStore.getItemAsync(SECURE_STORE_KEYS.ENCRYPTED_DEK);
+  if (!wrappedDEK) {
+    throw new Error('Wrapped DEK not found');
+  }
+
+  const mode = await getStoredEncryptionMode();
+  const kekBase64 = await SecureStore.getItemAsync(SECURE_STORE_KEYS.KEK, { requireAuthentication: mode === 'protected' });
+  
+  if (!kekBase64) {
+    console.error('[Encryption] KEK missing but wrapped DEK exists');
+    throw new EncryptionError(ERROR_CODES.KEY_CORRUPTION, 'Encryption keys are corrupted. Your data cannot be decrypted.');
+  }
+
+  const kek = base64.toByteArray(kekBase64);
+  return unwrapDEK(wrappedDEK, kek);
+}
+
+export async function initializeEncryption(): Promise<void> {
+  if (dekCache) return;
+
+  try {
+    const hasExistingKeys = await SecureStore.getItemAsync(SECURE_STORE_KEYS.ENCRYPTED_DEK);
+    dekCache = hasExistingKeys ? await loadExistingKeys() : await createNewKeys();
   } catch (error) {
-    if (error instanceof EncryptionError) {
-      throw error;
-    }
-    
-    const errorMessage = error instanceof Error ? error.message : String(error);
-    
-    if (errorMessage === 'USER_CANCELLED' || 
-        errorMessage.includes('canceled') || 
-        errorMessage.includes('cancelled') ||
-        errorMessage.includes('Cancel')) {
-      throw new EncryptionError(ERROR_CODES.USER_CANCELLED, 'Authentication was cancelled');
-    }
-    
-    if (errorMessage.includes('Authentication is already in progress') ||
-        errorMessage.includes('already in progress')) {
-      throw new EncryptionError(ERROR_CODES.AUTH_IN_PROGRESS, 'Authentication is in progress. Please try again.');
-    }
-    
-    if (errorMessage.includes('not available') || 
-        errorMessage.includes('SecureStore') ||
-        errorMessage.includes('unavailable')) {
-      console.error('[Encryption] SecureStore unavailable:', error);
-      throw new EncryptionError(
-        ERROR_CODES.SECURE_STORE_UNAVAILABLE,
-        'Secure storage is not available on this device'
-      );
-    }
-    
-    console.error('Failed to initialize encryption:', error);
-    throw new EncryptionError(
-      ERROR_CODES.SECURE_STORE_UNAVAILABLE,
-      'Failed to initialize encryption - secure storage may be unavailable'
-    );
+    throw classifyError(error);
   }
 }
 
@@ -197,98 +167,85 @@ export async function getEncryptionMode(): Promise<EncryptionMode> {
   }
 }
 
-export async function reWrapKEK(requireAuth: boolean): Promise<void> {
-  const TEMP_KEYS = {
-    KEK: 'temp_kek',
-    ENCRYPTED_DEK: 'temp_encrypted_dek',
-    ENCRYPTION_MODE: 'temp_encryption_mode',
-  };
+const TEMP_KEYS = {
+  KEK: 'temp_kek',
+  ENCRYPTED_DEK: 'temp_encrypted_dek',
+  ENCRYPTION_MODE: 'temp_encryption_mode',
+};
+
+async function cleanupTempKeys(): Promise<void> {
+  await Promise.allSettled([
+    SecureStore.deleteItemAsync(TEMP_KEYS.KEK),
+    SecureStore.deleteItemAsync(TEMP_KEYS.ENCRYPTED_DEK),
+    SecureStore.deleteItemAsync(TEMP_KEYS.ENCRYPTION_MODE),
+  ]);
+}
+
+async function verifyTempKeys(originalDEK: Uint8Array): Promise<void> {
+  const kekBase64 = await SecureStore.getItemAsync(TEMP_KEYS.KEK, { requireAuthentication: false });
+  const wrappedDEK = await SecureStore.getItemAsync(TEMP_KEYS.ENCRYPTED_DEK);
+  const mode = await SecureStore.getItemAsync(TEMP_KEYS.ENCRYPTION_MODE);
+
+  if (!kekBase64 || !wrappedDEK || !mode) {
+    throw new Error('Failed to verify temporary key storage');
+  }
+
+  const kek = base64.toByteArray(kekBase64);
+  const verifiedDEK = await unwrapDEK(wrappedDEK, kek);
   
+  if (base64.fromByteArray(verifiedDEK) !== base64.fromByteArray(originalDEK)) {
+    throw new Error('Key verification failed - unwrapped DEK mismatch');
+  }
+}
+
+async function commitNewKeys(newKEK: Uint8Array, newWrappedDEK: string, newMode: EncryptionMode, requireAuth: boolean): Promise<void> {
+  await SecureStore.setItemAsync(SECURE_STORE_KEYS.KEK, base64.fromByteArray(newKEK), { requireAuthentication: requireAuth });
+  await SecureStore.setItemAsync(SECURE_STORE_KEYS.ENCRYPTED_DEK, newWrappedDEK);
+  await setStoredEncryptionMode(newMode);
+}
+
+export async function reWrapKEK(requireAuth: boolean): Promise<void> {
+  if (!dekCache) {
+    throw new Error('DEK not initialized. Call initializeEncryption first.');
+  }
+
+  const currentMode = await getEncryptionMode();
+  if ((currentMode === 'protected') === requireAuth) return;
+
+  const newMode: EncryptionMode = requireAuth ? 'protected' : 'basic';
+
   try {
-    if (!dekCache) {
-      throw new Error('DEK not initialized. Call initializeEncryption first.');
-    }
-
-    const currentMode = await getEncryptionMode();
-    const newMode: EncryptionMode = requireAuth ? 'protected' : 'basic';
-
-    if ((currentMode === 'protected') === requireAuth) {
-      return;
-    }
-
-    const oldKEKBase64 = await SecureStore.getItemAsync(SECURE_STORE_KEYS.KEK, {
-      requireAuthentication: currentMode === 'protected',
-    });
-
-    if (!oldKEKBase64) {
-      throw new Error('Failed to retrieve old KEK');
-    }
-
+    const kekBase64 = await SecureStore.getItemAsync(SECURE_STORE_KEYS.KEK, { requireAuthentication: currentMode === 'protected' });
     const wrappedDEK = await SecureStore.getItemAsync(SECURE_STORE_KEYS.ENCRYPTED_DEK);
-    if (!wrappedDEK) {
-      throw new Error('Failed to retrieve wrapped DEK');
+    
+    if (!kekBase64 || !wrappedDEK) {
+      throw new Error('Failed to retrieve current keys');
     }
 
-    const oldKEK = base64.toByteArray(oldKEKBase64);
+    const oldKEK = base64.toByteArray(kekBase64);
     const dek = await unwrapDEK(wrappedDEK, oldKEK);
 
     const newKEK = generateRandomKey();
     const newWrappedDEK = await wrapDEK(dek, newKEK);
 
-    await SecureStore.setItemAsync(TEMP_KEYS.KEK, base64.fromByteArray(newKEK), {
-      requireAuthentication: false,
-    });
-
+    await SecureStore.setItemAsync(TEMP_KEYS.KEK, base64.fromByteArray(newKEK), { requireAuthentication: false });
     await SecureStore.setItemAsync(TEMP_KEYS.ENCRYPTED_DEK, newWrappedDEK);
     await SecureStore.setItemAsync(TEMP_KEYS.ENCRYPTION_MODE, newMode);
 
-    const verifyKEKBase64 = await SecureStore.getItemAsync(TEMP_KEYS.KEK, {
-      requireAuthentication: false,
-    });
-    const verifyWrappedDEK = await SecureStore.getItemAsync(TEMP_KEYS.ENCRYPTED_DEK);
-    const verifyMode = await SecureStore.getItemAsync(TEMP_KEYS.ENCRYPTION_MODE);
-
-    if (!verifyKEKBase64 || !verifyWrappedDEK || !verifyMode) {
-      throw new Error('Failed to verify temporary key storage');
-    }
-
-    const verifyKEK = base64.toByteArray(verifyKEKBase64);
-    const verifiedDEK = await unwrapDEK(verifyWrappedDEK, verifyKEK);
-    if (base64.fromByteArray(verifiedDEK) !== base64.fromByteArray(dek)) {
-      throw new Error('Key verification failed - unwrapped DEK mismatch');
-    }
-
-    await SecureStore.setItemAsync(SECURE_STORE_KEYS.KEK, base64.fromByteArray(newKEK), {
-      requireAuthentication: requireAuth,
-    });
-    await SecureStore.setItemAsync(SECURE_STORE_KEYS.ENCRYPTED_DEK, newWrappedDEK);
-    await setStoredEncryptionMode(newMode);
-
-    await SecureStore.deleteItemAsync(TEMP_KEYS.KEK);
-    await SecureStore.deleteItemAsync(TEMP_KEYS.ENCRYPTED_DEK);
-    await SecureStore.deleteItemAsync(TEMP_KEYS.ENCRYPTION_MODE);
+    await verifyTempKeys(dek);
+    await commitNewKeys(newKEK, newWrappedDEK, newMode, requireAuth);
+    await cleanupTempKeys();
 
     dekCache = dek;
   } catch (error) {
-    await SecureStore.deleteItemAsync(TEMP_KEYS.KEK).catch(() => {});
-    await SecureStore.deleteItemAsync(TEMP_KEYS.ENCRYPTED_DEK).catch(() => {});
-    await SecureStore.deleteItemAsync(TEMP_KEYS.ENCRYPTION_MODE).catch(() => {});
-    
+    await cleanupTempKeys();
+
     if (error instanceof EncryptionError) {
       throw error;
     }
-    
-    const errorMessage = error instanceof Error ? error.message : String(error);
-    
-    if (errorMessage.includes('canceled') || errorMessage.includes('cancelled')) {
-      throw new EncryptionError(ERROR_CODES.USER_CANCELLED, 'Authentication was cancelled');
-    }
 
     console.error('[Encryption] Re-wrapping failed:', error);
-    throw new EncryptionError(
-      ERROR_CODES.REWRAP_FAILED,
-      'Failed to re-wrap encryption key. Your data is still safe with the old settings.'
-    );
+    throw new EncryptionError(ERROR_CODES.REWRAP_FAILED, 'Failed to re-wrap encryption key. Your data is still safe with the old settings.');
   }
 }
 
