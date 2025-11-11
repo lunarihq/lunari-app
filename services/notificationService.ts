@@ -99,6 +99,10 @@ export class NotificationService {
   // Check if period data exists and schedule notifications if it does
   private static async scheduleNotificationsIfDataExists(): Promise<void> {
     try {
+      const { db: dbInstance, initializeDatabase } = await import('../db');
+      if (!dbInstance) {
+        await initializeDatabase();
+      }
       const db = getDB();
       // Get period dates from database
       const saved = await db.select().from(periodDates);
