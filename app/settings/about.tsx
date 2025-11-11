@@ -30,7 +30,7 @@ export default function About() {
       ]}
       showsVerticalScrollIndicator={false}
     >
-      <View style={[commonStyles.sectionContainer]}>
+      <View style={styles.section}>
         <Text style={[typography.headingLg, { marginBottom: 8, textAlign: 'center' }]}>
           {t('aboutScreen.title')}
         </Text>
@@ -39,7 +39,7 @@ export default function About() {
         </Text>
       </View>
 
-      <View style={[commonStyles.sectionContainer]}>
+      <View style={styles.section}>
         <View style={styles.sectionHeader}>
           <SectionIcon name="heart-outline" />
           <Text style={[typography.headingMd, { marginLeft: 12 }]}>
@@ -51,7 +51,7 @@ export default function About() {
         </Text>
       </View>
 
-      <View style={[commonStyles.sectionContainer]}>
+      <View style={styles.section}>
         <View style={styles.sectionHeader}>
           <SectionIcon name="calendar-outline" />
           <Text style={[typography.headingMd, { marginLeft: 12 }]}>
@@ -71,7 +71,7 @@ export default function About() {
         ))}
       </View>
 
-      <View style={[commonStyles.sectionContainer]}>
+      <View style={styles.section}>
         <View style={styles.sectionHeader}>
           <SectionIcon name="shield-checkmark-outline" />
           <Text style={[typography.headingMd, { marginLeft: 12 }]}>
@@ -94,7 +94,7 @@ export default function About() {
         ))}
       </View>
 
-      <View style={[commonStyles.sectionContainer]}>
+      <View style={styles.section}>
         <View style={styles.sectionHeader}>
           <SectionIcon name="document-text-outline" />
           <Text style={[typography.headingMd, { marginLeft: 12 }]}>
@@ -130,7 +130,7 @@ export default function About() {
         </Text>
       </View>
 
-      <View style={[commonStyles.sectionContainer]}>
+      <View style={styles.section}>
         <View style={styles.sectionHeader}>
           <SectionIcon name="code-outline" />
           <Text style={[typography.headingMd, { marginLeft: 12 }]}>
@@ -161,7 +161,7 @@ export default function About() {
         })}
       </View>
 
-      <View style={[commonStyles.sectionContainer]}>
+      <View style={[commonStyles.sectionContainer, { marginBottom: 32 }]}>
         <Text
           style={[
             typography.body,
@@ -183,5 +183,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 16,
+  },
+  section: {
+    marginBottom: 32,
   },
 });

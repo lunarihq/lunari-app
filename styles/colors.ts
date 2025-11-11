@@ -108,8 +108,8 @@ export const lightColors: ColorScheme = {
 
 export const darkColors: ColorScheme = {
   // surfaces
-  background: '#0E0D23', // dark page background
-  surface: '#1C1B33', // dark cards / panels
+  background: '#000219', // dark page background
+  surface: '#1A1C31', // dark cards / panels
   surfaceVariant: '#26253E', // dark variant cards / panels
   surfaceVariant2: '#30304D', // dark variant cards / panels
   surfaceTabBar: '#22213F', // dark tab bar background
