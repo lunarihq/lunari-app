@@ -204,6 +204,31 @@ async function commitNewKeys(newKEK: Uint8Array, newWrappedDEK: string, newMode:
   await setStoredEncryptionMode(newMode);
 }
 
+async function retrieveCurrentKeys(currentMode: EncryptionMode): Promise<{ kek: Uint8Array; wrappedDEK: string }> {
+  const kekBase64 = await SecureStore.getItemAsync(SECURE_STORE_KEYS.KEK, { requireAuthentication: currentMode === 'protected' });
+  const wrappedDEK = await SecureStore.getItemAsync(SECURE_STORE_KEYS.ENCRYPTED_DEK);
+  
+  if (!kekBase64 || !wrappedDEK) {
+    throw new Error('Failed to retrieve current keys');
+  }
+
+  return { kek: base64.toByteArray(kekBase64), wrappedDEK };
+}
+
+async function createReWrappedKeys(oldKEK: Uint8Array, wrappedDEK: string): Promise<{ dek: Uint8Array; newKEK: Uint8Array; newWrappedDEK: string }> {
+  const dek = await unwrapDEK(wrappedDEK, oldKEK);
+  const newKEK = generateRandomKey();
+  const newWrappedDEK = await wrapDEK(dek, newKEK);
+  
+  return { dek, newKEK, newWrappedDEK };
+}
+
+async function storeTemporaryKeys(newKEK: Uint8Array, newWrappedDEK: string, newMode: EncryptionMode): Promise<void> {
+  await SecureStore.setItemAsync(TEMP_KEYS.KEK, base64.fromByteArray(newKEK), { requireAuthentication: false });
+  await SecureStore.setItemAsync(TEMP_KEYS.ENCRYPTED_DEK, newWrappedDEK);
+  await SecureStore.setItemAsync(TEMP_KEYS.ENCRYPTION_MODE, newMode);
+}
+
 export async function reWrapKEK(requireAuth: boolean): Promise<void> {
   if (!dekCache) {
     throw new Error('DEK not initialized. Call initializeEncryption first.');
@@ -215,23 +240,10 @@ export async function reWrapKEK(requireAuth: boolean): Promise<void> {
   const newMode: EncryptionMode = requireAuth ? 'protected' : 'basic';
 
   try {
-    const kekBase64 = await SecureStore.getItemAsync(SECURE_STORE_KEYS.KEK, { requireAuthentication: currentMode === 'protected' });
-    const wrappedDEK = await SecureStore.getItemAsync(SECURE_STORE_KEYS.ENCRYPTED_DEK);
-    
-    if (!kekBase64 || !wrappedDEK) {
-      throw new Error('Failed to retrieve current keys');
-    }
+    const { kek: oldKEK, wrappedDEK } = await retrieveCurrentKeys(currentMode);
+    const { dek, newKEK, newWrappedDEK } = await createReWrappedKeys(oldKEK, wrappedDEK);
 
-    const oldKEK = base64.toByteArray(kekBase64);
-    const dek = await unwrapDEK(wrappedDEK, oldKEK);
-
-    const newKEK = generateRandomKey();
-    const newWrappedDEK = await wrapDEK(dek, newKEK);
-
-    await SecureStore.setItemAsync(TEMP_KEYS.KEK, base64.fromByteArray(newKEK), { requireAuthentication: false });
-    await SecureStore.setItemAsync(TEMP_KEYS.ENCRYPTED_DEK, newWrappedDEK);
-    await SecureStore.setItemAsync(TEMP_KEYS.ENCRYPTION_MODE, newMode);
-
+    await storeTemporaryKeys(newKEK, newWrappedDEK, newMode);
     await verifyTempKeys(dek);
     await commitNewKeys(newKEK, newWrappedDEK, newMode, requireAuth);
     await cleanupTempKeys();
