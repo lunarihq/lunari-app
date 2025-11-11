@@ -67,9 +67,6 @@ export async function initializeEncryption(): Promise<void> {
   }
   
   try {
-    const mode = await getStoredEncryptionMode();
-    const requireAuth = mode === 'protected';
-    
     const wrappedDEK = await SecureStore.getItemAsync(SECURE_STORE_KEYS.ENCRYPTED_DEK);
 
     if (!wrappedDEK) {
@@ -87,6 +84,9 @@ export async function initializeEncryption(): Promise<void> {
       dekCache = dek;
     } else {
       try {
+        const mode = await getStoredEncryptionMode();
+        const requireAuth = mode === 'protected';
+        
         const kekBase64 = await SecureStore.getItemAsync(SECURE_STORE_KEYS.KEK, {
           requireAuthentication: requireAuth,
         });
