@@ -140,14 +140,30 @@ export function AuthProvider({ children }: AuthProviderProps) {
           setIsAuthenticated(true);
         }
       } else {
-        await reWrapKEK(!enabled);
+        try {
+          await reWrapKEK(!enabled);
+        } catch (rollbackError) {
+          console.error('Failed to rollback encryption state:', rollbackError);
+          const rollbackMessage = rollbackError instanceof EncryptionError 
+            ? rollbackError.message 
+            : rollbackError instanceof Error 
+            ? rollbackError.message 
+            : 'Failed to rollback encryption state';
+          
+          const rollbackErrorCode = rollbackError instanceof EncryptionError 
+            ? rollbackError.code 
+            : 'ROLLBACK_FAILED';
+          
+          return { 
+            success: false, 
+            error: `Lock setting failed and rollback failed: ${rollbackMessage}`,
+            errorCode: rollbackErrorCode
+          };
+        }
       }
       
-      setIsReWrapping(false);
       return { success };
     } catch (error) {
-      setIsReWrapping(false);
-      
       if (error instanceof EncryptionError && error.code === ERROR_CODES.USER_CANCELLED) {
         return { success: false, cancelled: true };
       }
@@ -162,6 +178,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const errorCode = error instanceof EncryptionError ? error.code : undefined;
       
       return { success: false, error: errorMessage, errorCode };
+    } finally {
+      setIsReWrapping(false);
     }
   };
 
