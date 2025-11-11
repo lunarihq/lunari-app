@@ -40,6 +40,7 @@ export async function deleteDatabaseFile(): Promise<void> {
       expo = null;
     }
     db = null;
+    initializationPromise = null;
     
     await SQLite.deleteDatabaseAsync('period.db');
   } catch (error) {
