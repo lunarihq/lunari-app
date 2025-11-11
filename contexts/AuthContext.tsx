@@ -52,25 +52,35 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const handleAppStateChange = useCallback(
     async (nextAppState: AppStateStatus) => {
-      if (nextAppState === 'background' || nextAppState === 'inactive') {
-        setAppStateBackground(true);
-        if (isLockEnabled) {
-          clearKeyCache();
-          await clearDatabaseCache();
-        }
-      } else if (nextAppState === 'active' && appStateBackground && isLockEnabled) {
-        const deviceSecurityAvailable = await AuthService.isDeviceSecurityAvailable();
-        setIsDeviceSecurityAvailable(deviceSecurityAvailable);
-        if (!deviceSecurityAvailable) {
-          console.warn('App lock remains enabled - device security not available');
+      try {
+        if (nextAppState === 'background' || nextAppState === 'inactive') {
+          setAppStateBackground(true);
+          if (isLockEnabled) {
+            clearKeyCache();
+            await clearDatabaseCache();
+          }
+        } else if (nextAppState === 'active' && appStateBackground && isLockEnabled) {
+          const deviceSecurityAvailable = await AuthService.isDeviceSecurityAvailable();
+          setIsDeviceSecurityAvailable(deviceSecurityAvailable);
+          if (!deviceSecurityAvailable) {
+            console.warn('App lock remains enabled - device security not available');
+            setIsLocked(true);
+            setIsAuthenticated(false);
+            setAppStateBackground(false);
+            return;
+          }
+
           setIsLocked(true);
           setIsAuthenticated(false);
           setAppStateBackground(false);
-          return;
         }
-
-        setIsLocked(true);
-        setIsAuthenticated(false);
+      } catch (error) {
+        console.error('Error handling app state change:', {
+          nextAppState,
+          isLockEnabled,
+          appStateBackground,
+          error,
+        });
         setAppStateBackground(false);
       }
     },
