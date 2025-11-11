@@ -11,7 +11,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { lightColors, darkColors } from '../styles/colors';
 import Toast, { BaseToast, ErrorToast } from 'react-native-toast-message';
-import { EncryptionError, ERROR_CODES, clearDEKCache } from '../services/databaseEncryptionService';
+import { EncryptionError, ERROR_CODES, clearKeyCache } from '../services/databaseEncryptionService';
 import {
   useFonts,
   BricolageGrotesque_700Bold,
@@ -59,7 +59,7 @@ function AppContent() {
         switch (error.code) {
           case ERROR_CODES.USER_CANCELLED:
           case ERROR_CODES.AUTH_IN_PROGRESS:
-            clearDEKCache();
+            clearKeyCache();
             clearDatabaseCache();
             setAuthCancelled(true);
             break;

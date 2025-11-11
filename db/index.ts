@@ -2,7 +2,7 @@ import * as SQLite from 'expo-sqlite';
 import { drizzle } from 'drizzle-orm/expo-sqlite';
 import { settings } from './schema';
 import { eq } from 'drizzle-orm';
-import { initializeEncryption, getDEK } from '../services/databaseEncryptionService';
+import { initializeEncryption, getEncryptionKey } from '../services/databaseEncryptionService';
 
 const MIGRATION_TABLES = `
 CREATE TABLE IF NOT EXISTS period_dates (
@@ -56,8 +56,8 @@ export async function initializeDatabase(): Promise<void> {
     try {
       await initializeEncryption();
       
-      const dek = getDEK();
-      const hexKey = Array.from(dek).map(b => b.toString(16).padStart(2, '0')).join('');
+      const key = getEncryptionKey();
+      const hexKey = Array.from(key).map(b => b.toString(16).padStart(2, '0')).join('');
       
       expo = await SQLite.openDatabaseAsync('period.db');
       

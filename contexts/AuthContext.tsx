@@ -8,7 +8,7 @@ import React, {
 } from 'react';
 import { AppState, AppStateStatus } from 'react-native';
 import { AuthService } from '../services/authService';
-import { reWrapKEK, clearDEKCache, EncryptionError, ERROR_CODES } from '../services/databaseEncryptionService';
+import { reWrapKEK, clearKeyCache, EncryptionError, ERROR_CODES } from '../services/databaseEncryptionService';
 import { clearDatabaseCache } from '../db';
 
 interface SetLockEnabledResult {
@@ -54,7 +54,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       if (nextAppState === 'background' || nextAppState === 'inactive') {
         setAppStateBackground(true);
         if (isLockEnabled) {
-          clearDEKCache();
+          clearKeyCache();
           clearDatabaseCache();
         }
       } else if (nextAppState === 'active' && appStateBackground && isLockEnabled) {

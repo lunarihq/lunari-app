@@ -128,7 +128,7 @@ async function setStoredEncryptionMode(mode: EncryptionMode): Promise<void> {
   await SecureStore.setItemAsync(SECURE_STORE_KEYS.ENCRYPTION_MODE, mode);
 }
 
-export function getDEK(): Uint8Array {
+export function getEncryptionKey(): Uint8Array {
   if (!keyCache) {
     throw new Error('Encryption key not initialized. Call initializeEncryption first.');
   }
@@ -175,7 +175,7 @@ export async function reWrapKEK(requireAuth: boolean): Promise<void> {
   return modeUpdatePromise;
 }
 
-export function clearDEKCache(): void {
+export function clearKeyCache(): void {
   keyCache = null;
   initPromise = null;
   modeUpdatePromise = null;
