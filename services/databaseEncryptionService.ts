@@ -39,6 +39,8 @@ export const ERROR_CODES = {
 } as const;
 
 let dekCache: Uint8Array | null = null;
+let initPromise: Promise<void> | null = null;
+let reWrapPromise: Promise<void> | null = null;
 
 function generateRandomKey(): Uint8Array {
   return Crypto.getRandomBytes(32);
@@ -129,13 +131,20 @@ async function loadExistingKeys(): Promise<Uint8Array> {
 
 export async function initializeEncryption(): Promise<void> {
   if (dekCache) return;
+  if (initPromise) return initPromise;
 
-  try {
-    const hasExistingKeys = await SecureStore.getItemAsync(SECURE_STORE_KEYS.ENCRYPTED_DEK);
-    dekCache = hasExistingKeys ? await loadExistingKeys() : await createNewKeys();
-  } catch (error) {
-    throw classifyError(error);
-  }
+  initPromise = (async () => {
+    try {
+      const hasExistingKeys = await SecureStore.getItemAsync(SECURE_STORE_KEYS.ENCRYPTED_DEK);
+      dekCache = hasExistingKeys ? await loadExistingKeys() : await createNewKeys();
+    } catch (error) {
+      throw classifyError(error);
+    } finally {
+      initPromise = null;
+    }
+  })();
+
+  return initPromise;
 }
 
 async function getStoredEncryptionMode(): Promise<EncryptionMode> {
@@ -234,35 +243,47 @@ export async function reWrapKEK(requireAuth: boolean): Promise<void> {
     throw new Error('DEK not initialized. Call initializeEncryption first.');
   }
 
+  if (reWrapPromise) {
+    return reWrapPromise;
+  }
+
   const currentMode = await getEncryptionMode();
   if ((currentMode === 'protected') === requireAuth) return;
 
   const newMode: EncryptionMode = requireAuth ? 'protected' : 'basic';
 
-  try {
-    const { kek: oldKEK, wrappedDEK } = await retrieveCurrentKeys(currentMode);
-    const { dek, newKEK, newWrappedDEK } = await createReWrappedKeys(oldKEK, wrappedDEK);
+  reWrapPromise = (async () => {
+    try {
+      const { kek: oldKEK, wrappedDEK } = await retrieveCurrentKeys(currentMode);
+      const { dek, newKEK, newWrappedDEK } = await createReWrappedKeys(oldKEK, wrappedDEK);
 
-    await storeTemporaryKeys(newKEK, newWrappedDEK, newMode);
-    await verifyTempKeys(dek);
-    await commitNewKeys(newKEK, newWrappedDEK, newMode, requireAuth);
-    await cleanupTempKeys();
+      await storeTemporaryKeys(newKEK, newWrappedDEK, newMode);
+      await verifyTempKeys(dek);
+      await commitNewKeys(newKEK, newWrappedDEK, newMode, requireAuth);
+      await cleanupTempKeys();
 
-    dekCache = dek;
-  } catch (error) {
-    await cleanupTempKeys();
+      dekCache = dek;
+    } catch (error) {
+      await cleanupTempKeys();
 
-    if (error instanceof EncryptionError) {
-      throw error;
+      if (error instanceof EncryptionError) {
+        throw error;
+      }
+
+      console.error('[Encryption] Re-wrapping failed:', error);
+      throw new EncryptionError(ERROR_CODES.REWRAP_FAILED, 'Failed to re-wrap encryption key. Your data is still safe with the old settings.');
+    } finally {
+      reWrapPromise = null;
     }
+  })();
 
-    console.error('[Encryption] Re-wrapping failed:', error);
-    throw new EncryptionError(ERROR_CODES.REWRAP_FAILED, 'Failed to re-wrap encryption key. Your data is still safe with the old settings.');
-  }
+  return reWrapPromise;
 }
 
 export function clearDEKCache(): void {
   dekCache = null;
+  initPromise = null;
+  reWrapPromise = null;
 }
 
 export async function clearAllKeys(): Promise<void> {
@@ -271,6 +292,8 @@ export async function clearAllKeys(): Promise<void> {
     await SecureStore.deleteItemAsync(SECURE_STORE_KEYS.ENCRYPTED_DEK);
     await SecureStore.deleteItemAsync(SECURE_STORE_KEYS.ENCRYPTION_MODE);
     dekCache = null;
+    initPromise = null;
+    reWrapPromise = null;
   } catch (error) {
     console.error('Error clearing keys:', error);
   }
