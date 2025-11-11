@@ -69,8 +69,15 @@ export async function initializeDatabase(): Promise<void> {
       
       db = drizzle(expo);
     } catch (error) {
+      if (expo) {
+        try {
+          await expo.closeAsync();
+        } catch (closeError) {
+          console.error('Error closing database during initialization failure:', closeError);
+        }
+        expo = null;
+      }
       initializationPromise = null;
-      expo = null;
       db = null;
       throw error;
     }
