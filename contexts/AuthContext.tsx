@@ -6,7 +6,8 @@ import React, {
   useCallback,
   ReactNode,
 } from 'react';
-import { AppState, AppStateStatus } from 'react-native';
+import { AppState, AppStateStatus, Platform } from 'react-native';
+import * as LocalAuthentication from 'expo-local-authentication';
 import { AuthService } from '../services/authService';
 import { reWrapKEK, clearKeyCache, EncryptionError, ERROR_CODES } from '../services/databaseEncryptionService';
 import { clearDatabaseCache } from '../db';
@@ -187,9 +188,15 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const getDeviceSecurityType = async (): Promise<string> => {
     try {
       const types = await AuthService.getDeviceSecurityType();
-      if (types.includes(1)) return 'Touch ID';
-      if (types.includes(2)) return 'Face ID';
-      if (types.includes(3)) return 'Fingerprint';
+      if (types.includes(LocalAuthentication.AuthenticationType.FINGERPRINT)) {
+        return Platform.OS === 'ios' ? 'Touch ID' : 'Fingerprint';
+      }
+      if (types.includes(LocalAuthentication.AuthenticationType.FACIAL_RECOGNITION)) {
+        return Platform.OS === 'ios' ? 'Face ID' : 'Facial Recognition';
+      }
+      if (types.includes(LocalAuthentication.AuthenticationType.IRIS)) {
+        return 'Iris Recognition';
+      }
       return 'Device passcode';
     } catch (error) {
       console.error('Error getting device security type:', error);
