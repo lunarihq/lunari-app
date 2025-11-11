@@ -116,11 +116,21 @@ export async function setSetting(key: string, value: string): Promise<void> {
     .onConflictDoUpdate({ target: settings.key, set: { value } });
 }
 
-export function clearDatabaseCache(): void {
+export async function clearDatabaseCache(): Promise<void> {
+  const pendingInit = initializationPromise;
+  if (pendingInit) {
+    try {
+      await pendingInit;
+    } catch {
+      // Initialization failed, proceed with cleanup
+    }
+  }
+
   initializationPromise = null;
   db = null;
+  
   if (expo) {
-    expo.closeAsync().catch(() => {});
+    await expo.closeAsync();
     expo = null;
   }
 }

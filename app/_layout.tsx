@@ -60,7 +60,7 @@ function AppContent() {
           case ERROR_CODES.USER_CANCELLED:
           case ERROR_CODES.AUTH_IN_PROGRESS:
             clearKeyCache();
-            clearDatabaseCache();
+            await clearDatabaseCache();
             setAuthCancelled(true);
             break;
           case ERROR_CODES.KEY_CORRUPTION:
@@ -181,7 +181,7 @@ function AppContent() {
             onPress={async () => {
               try {
                 await clearAllKeys();
-                clearDatabaseCache();
+                await clearDatabaseCache();
                 await deleteDatabaseFile();
                 setDbError(null);
                 setDbInitialized(false);
@@ -198,7 +198,7 @@ function AppContent() {
             onPress={async () => {
               try {
                 clearKeyCache();
-                clearDatabaseCache();
+                await clearDatabaseCache();
                 setDbError(null);
                 setDbInitialized(false);
               } catch (error) {

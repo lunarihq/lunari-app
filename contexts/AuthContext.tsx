@@ -55,7 +55,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         setAppStateBackground(true);
         if (isLockEnabled) {
           clearKeyCache();
-          clearDatabaseCache();
+          await clearDatabaseCache();
         }
       } else if (nextAppState === 'active' && appStateBackground && isLockEnabled) {
         const deviceSecurityAvailable = await AuthService.isDeviceSecurityAvailable();
