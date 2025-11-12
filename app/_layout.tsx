@@ -61,8 +61,7 @@ function AppContent() {
   const notificationResponseListener =
     useRef<Notifications.Subscription | null>(null);
   const setupDatabaseCallCount = useRef(0);
-  const previousLockState = useRef<boolean | null>(null);
-  const { isLocked, unlockApp } = useAuth();
+  const { isLocked, unlockApp, startAuthentication, endAuthentication, justReturnedFromBackground, clearBackgroundFlag } = useAuth();
   const { isDark } = useTheme();
   const { t } = useTranslation(['settings', 'health', 'info']);
 
@@ -92,6 +91,7 @@ function AppContent() {
     console.log('========================================\n');
 
     try {
+      startAuthentication();
       console.log('[AppLayout] Calling initializeDatabase...');
       await initializeDatabase();
       console.log('[AppLayout] ✅ Database initialized successfully');
@@ -99,11 +99,12 @@ function AppContent() {
       setDbInitialized(true);
       console.log('[AppLayout] Set dbInitialized to true');
       
-      if (isLocked) {
-        console.log('[AppLayout] App was locked, calling unlockApp...');
-        unlockApp();
-      }
+      console.log('[AppLayout] Database initialized, unlocking app...');
+      unlockApp();
+      
+      endAuthentication();
     } catch (error) {
+      endAuthentication();
       console.log('[AppLayout] ❌ Database initialization error:', error);
       if (error instanceof EncryptionError) {
         switch (error.code) {
@@ -131,34 +132,26 @@ function AppContent() {
         setDbError(error instanceof Error ? error.message : 'Unknown error');
       }
     }
-  }, [isLocked, unlockApp]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [unlockApp, startAuthentication, endAuthentication]);
 
   // Log when setupDatabase callback is recreated
   useEffect(() => {
     console.log('[AppLayout] setupDatabase callback recreated due to dependency change');
   }, [setupDatabase]);
 
-  // Reset DB state when app gets locked (after background)
-  // Only reset when transitioning FROM unlocked TO locked (not during initial load)
+  // Reset DB state when returning from background
   useEffect(() => {
-    console.log('[AppLayout] Lock state changed', {
-      isLocked,
-      dbInitialized,
-      previousLockState: previousLockState.current,
-    });
-
-    // Only reset DB when transitioning from unlocked to locked (returning from background)
-    const isTransitioningToLocked = previousLockState.current === false && isLocked === true;
-    
-    if (isTransitioningToLocked && dbInitialized) {
-      console.log('[AppLayout] App transitioned to locked state, resetting DB state');
-      setDbInitialized(false);
-      setAuthCancelled(false);
+    if (justReturnedFromBackground) {
+      console.log('[AppLayout] Returned from background with lock enabled');
+      clearBackgroundFlag();
+      if (dbInitialized) {
+        console.log('[AppLayout] Resetting DB state');
+        setDbInitialized(false);
+        setAuthCancelled(false);
+      }
     }
-    
-    // Update previous lock state for next comparison
-    previousLockState.current = isLocked;
-  }, [isLocked, dbInitialized]);
+  }, [justReturnedFromBackground, dbInitialized, clearBackgroundFlag]);
 
   // Initialize database (even if locked - this triggers biometric prompt)
   // Note: We intentionally omit setupDatabase from dependencies to prevent re-running
@@ -166,6 +159,7 @@ function AppContent() {
   useEffect(() => {
     console.log('[AppLayout] Database initialization effect triggered', {
       dbInitialized,
+      authCancelled,
     });
 
     if (dbInitialized) {
@@ -173,10 +167,15 @@ function AppContent() {
       return;
     }
     
+    if (authCancelled) {
+      console.log('[AppLayout] Auth was cancelled, waiting for manual retry');
+      return;
+    }
+    
     console.log('[AppLayout] Starting database setup...');
     setupDatabase();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dbInitialized]);
+  }, [dbInitialized, authCancelled]);
 
   // Initialize notification response listener only (don't request permissions yet)
   useEffect(() => {
@@ -311,10 +310,8 @@ function AppContent() {
             {authCancelled && (
               <TouchableOpacity
                 style={{ paddingHorizontal: 24, paddingVertical: 12, backgroundColor: isDark ? darkColors.primary : lightColors.primary, borderRadius: 8 }}
-                onPress={async () => {
+                onPress={() => {
                   setAuthCancelled(false);
-                  await new Promise(resolve => setTimeout(resolve, 300)); // Wait for UI to update
-                  setupDatabase();
                 }}
               >
                 <Text style={{ color: '#fff', fontSize: 16, fontWeight: '600' }}>Unlock</Text>

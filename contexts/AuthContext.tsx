@@ -26,6 +26,8 @@ interface AuthContextType {
   isLockEnabled: boolean;
   isDeviceSecurityAvailable: boolean;
   isReWrapping: boolean;
+  isAuthenticating: boolean;
+  justReturnedFromBackground: boolean;
   lockApp: () => void;
   unlockApp: () => void;
   setLockEnabled: (enabled: boolean) => Promise<SetLockEnabledResult>;
@@ -33,6 +35,9 @@ interface AuthContextType {
   getDeviceSecurityType: () => Promise<string>;
   startPermissionRequest: () => void;
   endPermissionRequest: () => void;
+  startAuthentication: () => void;
+  endAuthentication: () => void;
+  clearBackgroundFlag: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -49,6 +54,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [isDeviceSecurityAvailable, setIsDeviceSecurityAvailable] = useState(false);
   const [isReWrapping, setIsReWrapping] = useState(false);
   const [isRequestingPermission, setIsRequestingPermission] = useState(false);
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
+  const [justReturnedFromBackground, setJustReturnedFromBackground] = useState(false);
 
   useEffect(() => {
     initializeAuth();
@@ -63,11 +70,18 @@ export function AuthProvider({ children }: AuthProviderProps) {
         isLocked,
         isAuthenticated,
         isRequestingPermission,
+        isAuthenticating,
       });
 
       try {
         if (nextAppState === 'background' || nextAppState === 'inactive') {
           console.log('[AuthContext] App going to background/inactive');
+          
+          if (isAuthenticating) {
+            console.log('[AuthContext] Authentication in progress, ignoring background state');
+            return;
+          }
+          
           setAppStateBackground(true);
           if (isLockEnabled && !isRequestingPermission) {
             console.log('[AuthContext] Clearing key cache and database cache');
@@ -79,6 +93,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
           
           if (isRequestingPermission) {
             console.log('[AuthContext] Returning from permission request, skipping lock');
+            setAppStateBackground(false);
+            return;
+          }
+          
+          if (isAuthenticating) {
+            console.log('[AuthContext] Authentication in progress, ignoring active state');
             setAppStateBackground(false);
             return;
           }
@@ -95,14 +115,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
           }
 
           console.log('[AuthContext] App returning to foreground with lock enabled');
-setIsLocked(true);
-setIsAuthenticated(false);
-setAppStateBackground(false);
-          
-          setTimeout(() => {
-            console.log('[AuthContext] Now locking app after brief unlock');
-            setIsLocked(true);
-          }, 0);
+          setAppStateBackground(false);
+          setJustReturnedFromBackground(true);
+          setIsLocked(true);
+          setIsAuthenticated(false);
         }
       } catch (error) {
         console.error('[AuthContext] Error handling app state change:', {
@@ -114,7 +130,7 @@ setAppStateBackground(false);
         setAppStateBackground(false);
       }
     },
-    [appStateBackground, isLockEnabled, isLocked, isAuthenticated, isRequestingPermission]
+    [appStateBackground, isLockEnabled, isLocked, isAuthenticated, isRequestingPermission, isAuthenticating]
   );
 
   useEffect(() => {
@@ -187,11 +203,7 @@ setAppStateBackground(false);
       if (success) {
         setIsLockEnabledState(enabled);
         if (enabled) {
-          console.log('[AuthContext] Lock enabled, clearing caches and locking app');
-          clearKeyCache();
-          await clearDatabaseCache();
-          setIsLocked(true);
-          setIsAuthenticated(false);
+          console.log('[AuthContext] Lock enabled - will take effect on next app background');
         } else {
           console.log('[AuthContext] Lock disabled, unlocking app');
           setIsLocked(false);
@@ -277,12 +289,29 @@ setAppStateBackground(false);
     setIsRequestingPermission(false);
   }, []);
 
+  const startAuthentication = useCallback(() => {
+    console.log('[AuthContext] Starting authentication');
+    setIsAuthenticating(true);
+  }, []);
+
+  const endAuthentication = useCallback(() => {
+    console.log('[AuthContext] Ending authentication');
+    setIsAuthenticating(false);
+  }, []);
+
+  const clearBackgroundFlag = useCallback(() => {
+    console.log('[AuthContext] Clearing background flag');
+    setJustReturnedFromBackground(false);
+  }, []);
+
   const value: AuthContextType = useMemo(() => ({
     isLocked,
     isAuthenticated,
     isLockEnabled,
     isDeviceSecurityAvailable,
     isReWrapping,
+    isAuthenticating,
+    justReturnedFromBackground,
     lockApp,
     unlockApp,
     setLockEnabled,
@@ -290,12 +319,17 @@ setAppStateBackground(false);
     getDeviceSecurityType,
     startPermissionRequest,
     endPermissionRequest,
+    startAuthentication,
+    endAuthentication,
+    clearBackgroundFlag,
   }), [
     isLocked,
     isAuthenticated,
     isLockEnabled,
     isDeviceSecurityAvailable,
     isReWrapping,
+    isAuthenticating,
+    justReturnedFromBackground,
     lockApp,
     unlockApp,
     setLockEnabled,
@@ -303,6 +337,9 @@ setAppStateBackground(false);
     getDeviceSecurityType,
     startPermissionRequest,
     endPermissionRequest,
+    startAuthentication,
+    endAuthentication,
+    clearBackgroundFlag,
   ]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
