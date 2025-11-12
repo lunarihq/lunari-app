@@ -94,10 +94,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
             return;
           }
 
-          console.log('[AuthContext] Setting app to locked state (forcing re-lock to trigger DB reset)');
-          setIsLocked(false);
-          setIsAuthenticated(false);
-          setAppStateBackground(false);
+          console.log('[AuthContext] App returning to foreground with lock enabled');
+setIsLocked(true);
+setIsAuthenticated(false);
+setAppStateBackground(false);
           
           setTimeout(() => {
             console.log('[AuthContext] Now locking app after brief unlock');
