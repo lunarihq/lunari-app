@@ -186,7 +186,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
       
       if (success) {
         setIsLockEnabledState(enabled);
-        if (!enabled) {
+        if (enabled) {
+          console.log('[AuthContext] Lock enabled, clearing caches and locking app');
+          clearKeyCache();
+          await clearDatabaseCache();
+          setIsLocked(true);
+          setIsAuthenticated(false);
+        } else {
           console.log('[AuthContext] Lock disabled, unlocking app');
           setIsLocked(false);
           setIsAuthenticated(true);
