@@ -86,28 +86,70 @@ async function createNewKey(): Promise<Uint8Array> {
 }
 
 async function loadExistingKey(): Promise<Uint8Array> {
+  console.log('[EncryptionService] loadExistingKey called');
   const mode = await getStoredEncryptionMode();
+  console.log('[EncryptionService] Current encryption mode:', mode);
+  console.log('[EncryptionService] Will require authentication:', mode === 'protected');
+  
+  if (mode === 'protected') {
+    console.log('[EncryptionService] 🔐 BIOMETRIC PROMPT - About to trigger for key retrieval');
+  }
+  
   const keyBase64 = await SecureStore.getItemAsync(SECURE_STORE_KEYS.ENCRYPTION_KEY, { requireAuthentication: mode === 'protected' });
+  
+  if (mode === 'protected') {
+    console.log('[EncryptionService] ✅ BIOMETRIC PROMPT - Completed successfully');
+  }
   
   if (!keyBase64) {
     console.error('[Encryption] Key missing');
     throw new EncryptionError(ERROR_CODES.KEY_CORRUPTION, 'Encryption key is missing. Your data cannot be decrypted.');
   }
 
+  console.log('[EncryptionService] Key loaded successfully');
   return base64.toByteArray(keyBase64);
 }
 
 export async function initializeEncryption(): Promise<void> {
-  if (keyCache) return;
-  if (initPromise) return initPromise;
+  console.log('[EncryptionService] initializeEncryption called', {
+    hasKeyCache: !!keyCache,
+    hasInitPromise: !!initPromise,
+    timestamp: new Date().toISOString(),
+  });
+
+  if (keyCache) {
+    console.log('[EncryptionService] Using cached key, skipping initialization');
+    return;
+  }
+  
+  if (initPromise) {
+    console.log('[EncryptionService] Initialization already in progress, waiting...');
+    return initPromise;
+  }
 
   initPromise = (async () => {
     try {
-      const hasExistingKey = await SecureStore.getItemAsync(SECURE_STORE_KEYS.ENCRYPTION_KEY);
-      keyCache = hasExistingKey ? await loadExistingKey() : await createNewKey();
+      console.log('[EncryptionService] Starting fresh initialization');
+      
+      // Check if encryption mode exists (cheaper check that doesn't trigger auth)
+      const mode = await getStoredEncryptionMode();
+      const hasExistingKey = await SecureStore.getItemAsync(SECURE_STORE_KEYS.ENCRYPTION_MODE);
+      console.log('[EncryptionService] Checked for existing setup:', !!hasExistingKey, 'mode:', mode);
+      
+      if (hasExistingKey) {
+        console.log('[EncryptionService] Loading existing key...');
+        keyCache = await loadExistingKey();
+        console.log('[EncryptionService] Existing key loaded successfully');
+      } else {
+        console.log('[EncryptionService] Creating new key...');
+        keyCache = await createNewKey();
+        console.log('[EncryptionService] New key created successfully');
+      }
     } catch (error) {
+      console.log('[EncryptionService] Initialization failed:', error);
       throw classifyError(error);
     } finally {
+      console.log('[EncryptionService] Clearing initPromise');
       initPromise = null;
     }
   })();
@@ -145,29 +187,54 @@ export async function getEncryptionMode(): Promise<EncryptionMode> {
 }
 
 export async function reWrapKEK(requireAuth: boolean): Promise<void> {
+  console.log('[EncryptionService] reWrapKEK called', {
+    requireAuth,
+    hasKeyCache: !!keyCache,
+    hasModeUpdatePromise: !!modeUpdatePromise,
+  });
+
   if (!keyCache) {
     throw new Error('Encryption key not initialized. Call initializeEncryption first.');
   }
 
   if (modeUpdatePromise) {
+    console.log('[EncryptionService] Mode update already in progress, waiting...');
     return modeUpdatePromise;
   }
 
   const currentMode = await getEncryptionMode();
-  if ((currentMode === 'protected') === requireAuth) return;
+  console.log('[EncryptionService] Current mode:', currentMode, 'Target:', requireAuth ? 'protected' : 'basic');
+  
+  if ((currentMode === 'protected') === requireAuth) {
+    console.log('[EncryptionService] Mode already matches target, skipping reWrap');
+    return;
+  }
 
   const newMode: EncryptionMode = requireAuth ? 'protected' : 'basic';
+  console.log('[EncryptionService] Switching mode from', currentMode, 'to', newMode);
 
   modeUpdatePromise = (async () => {
     try {
+      if (requireAuth) {
+        console.log('[EncryptionService] 🔐 BIOMETRIC PROMPT - About to trigger for re-wrapping to protected mode');
+      }
+      
       await SecureStore.setItemAsync(SECURE_STORE_KEYS.ENCRYPTION_KEY, base64.fromByteArray(keyCache), { requireAuthentication: requireAuth });
+      
+      if (requireAuth) {
+        console.log('[EncryptionService] ✅ BIOMETRIC PROMPT - Re-wrap completed successfully');
+      }
+      
       await setStoredEncryptionMode(newMode);
+      console.log('[EncryptionService] Mode update completed successfully');
     } catch (error) {
+      console.log('[EncryptionService] Mode update failed:', error);
       if (error instanceof EncryptionError) {
         throw error;
       }
       throw classifyError(error);
     } finally {
+      console.log('[EncryptionService] Clearing modeUpdatePromise');
       modeUpdatePromise = null;
     }
   })();
@@ -176,6 +243,11 @@ export async function reWrapKEK(requireAuth: boolean): Promise<void> {
 }
 
 export function clearKeyCache(): void {
+  console.log('[EncryptionService] clearKeyCache called', {
+    hadKeyCache: !!keyCache,
+    hadInitPromise: !!initPromise,
+    hadModeUpdatePromise: !!modeUpdatePromise,
+  });
   keyCache = null;
   initPromise = null;
   modeUpdatePromise = null;

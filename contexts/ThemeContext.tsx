@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState, useMemo, useCallback } from 'react';
 import { useColorScheme } from 'react-native';
 import { getDB, getSetting, setSetting } from '../db';
 import { lightColors, darkColors, ColorScheme } from '../styles/colors';
@@ -41,13 +41,18 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     loadTheme();
   }, []);
 
-  const setThemeMode = async (mode: ThemeMode) => {
+  const setThemeMode = useCallback(async (mode: ThemeMode) => {
     setThemeModeState(mode);
     await setSetting('themeMode', mode);
-  };
+  }, []);
+
+  const value = useMemo(
+    () => ({ colors, isDark, themeMode, setThemeMode }),
+    [colors, isDark, themeMode, setThemeMode]
+  );
 
   return (
-    <ThemeContext.Provider value={{ colors, isDark, themeMode, setThemeMode }}>
+    <ThemeContext.Provider value={value}>
       {children}
     </ThemeContext.Provider>
   );

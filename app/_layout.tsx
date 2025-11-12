@@ -26,6 +26,28 @@ const toastConfig = {
   text1Style: { fontSize: 16, fontWeight: '400' as const },
 };
 
+/*
+ * DEBUG GUIDE - Double Biometric Prompt Issue
+ * 
+ * When debugging, look for these patterns in the logs:
+ * 1. 🔐 BIOMETRIC PROMPT markers - these show when actual biometric auth is triggered
+ * 2. setupDatabase call count - track how many times it's invoked
+ * 3. previousLockState transitions - should only reset DB on false → true transition
+ * 4. initializeEncryption flow - check if it's being called multiple times or caches are working
+ * 5. App state changes - look for background/active transitions
+ * 
+ * Expected single prompt flow:
+ * - App opens or comes from background
+ * - setupDatabase is called once per unlock event
+ * - initializeDatabase is called once
+ * - initializeEncryption triggers ONE biometric prompt (if in protected mode)
+ * - Database initialized successfully
+ * 
+ * Key behavior:
+ * - On initial load: previousLockState is null, so no DB reset happens
+ * - On background: isLocked goes false → true, DB state is reset (correct)
+ * - On foreground: DB reinitializes with ONE prompt
+ */
 function AppContent() {
   const [isReady, setIsReady] = useState(false);
   const [onboardingCompleted, setOnboardingCompleted] = useState(false);
@@ -38,9 +60,20 @@ function AppContent() {
   const [initialRender, setInitialRender] = useState(true);
   const notificationResponseListener =
     useRef<Notifications.Subscription | null>(null);
+  const setupDatabaseCallCount = useRef(0);
+  const previousLockState = useRef<boolean | null>(null);
   const { isLocked, unlockApp } = useAuth();
   const { isDark } = useTheme();
   const { t } = useTranslation(['settings', 'health', 'info']);
+
+  console.log('[AppLayout] AppContent render', {
+    isReady,
+    onboardingCompleted,
+    dbInitialized,
+    dbError,
+    authCancelled,
+    isLocked,
+  });
 
   // Load fonts
   const [fontsLoaded] = useFonts({
@@ -48,51 +81,102 @@ function AppContent() {
   });
 
   const setupDatabase = React.useCallback(async () => {
+    setupDatabaseCallCount.current++;
+    console.log('\n========================================');
+    console.log(`[AppLayout] 🚀 setupDatabase INVOKED (Call #${setupDatabaseCallCount.current})`);
+    console.log('[AppLayout] setupDatabase state:', {
+      isLocked,
+      dbInitialized,
+      authCancelled,
+    });
+    console.log('========================================\n');
+
     try {
+      console.log('[AppLayout] Calling initializeDatabase...');
       await initializeDatabase();
+      console.log('[AppLayout] ✅ Database initialized successfully');
+      
       setDbInitialized(true);
+      console.log('[AppLayout] Set dbInitialized to true');
+      
       if (isLocked) {
+        console.log('[AppLayout] App was locked, calling unlockApp...');
         unlockApp();
       }
     } catch (error) {
+      console.log('[AppLayout] ❌ Database initialization error:', error);
       if (error instanceof EncryptionError) {
         switch (error.code) {
           case ERROR_CODES.USER_CANCELLED:
           case ERROR_CODES.AUTH_IN_PROGRESS:
+            console.log('[AppLayout] User cancelled or auth in progress, clearing caches');
             clearKeyCache();
             await clearDatabaseCache();
             setAuthCancelled(true);
             break;
           case ERROR_CODES.KEY_CORRUPTION:
+            console.log('[AppLayout] Key corruption detected');
             setDbError('CORRUPTION');
             break;
           case ERROR_CODES.SECURE_STORE_UNAVAILABLE:
+            console.log('[AppLayout] Secure store unavailable');
             setDbError('SECURE_STORE_UNAVAILABLE');
             break;
           default:
-            console.error('Failed to initialize database:', error);
+            console.error('[AppLayout] Failed to initialize database:', error);
             setDbError(error.message);
         }
       } else {
-        console.error('Failed to initialize database:', error);
+        console.error('[AppLayout] Failed to initialize database:', error);
         setDbError(error instanceof Error ? error.message : 'Unknown error');
       }
     }
   }, [isLocked, unlockApp]);
 
-  // Reset DB state when app gets locked (after background)
+  // Log when setupDatabase callback is recreated
   useEffect(() => {
-    if (isLocked && dbInitialized) {
+    console.log('[AppLayout] setupDatabase callback recreated due to dependency change');
+  }, [setupDatabase]);
+
+  // Reset DB state when app gets locked (after background)
+  // Only reset when transitioning FROM unlocked TO locked (not during initial load)
+  useEffect(() => {
+    console.log('[AppLayout] Lock state changed', {
+      isLocked,
+      dbInitialized,
+      previousLockState: previousLockState.current,
+    });
+
+    // Only reset DB when transitioning from unlocked to locked (returning from background)
+    const isTransitioningToLocked = previousLockState.current === false && isLocked === true;
+    
+    if (isTransitioningToLocked && dbInitialized) {
+      console.log('[AppLayout] App transitioned to locked state, resetting DB state');
       setDbInitialized(false);
       setAuthCancelled(false);
     }
+    
+    // Update previous lock state for next comparison
+    previousLockState.current = isLocked;
   }, [isLocked, dbInitialized]);
 
   // Initialize database (even if locked - this triggers biometric prompt)
+  // Note: We intentionally omit setupDatabase from dependencies to prevent re-running
+  // when the callback is recreated due to isLocked changing during AuthContext initialization
   useEffect(() => {
-    if (dbInitialized) return;
+    console.log('[AppLayout] Database initialization effect triggered', {
+      dbInitialized,
+    });
+
+    if (dbInitialized) {
+      console.log('[AppLayout] Database already initialized, skipping');
+      return;
+    }
+    
+    console.log('[AppLayout] Starting database setup...');
     setupDatabase();
-  }, [dbInitialized, setupDatabase]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dbInitialized]);
 
   // Initialize notification response listener only (don't request permissions yet)
   useEffect(() => {

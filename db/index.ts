@@ -59,32 +59,55 @@ export async function deleteDatabaseFile(): Promise<void> {
 }
 
 export async function initializeDatabase(): Promise<void> {
+  console.log('[Database] initializeDatabase called', {
+    hasInitPromise: !!initializationPromise,
+    hasExpo: !!expo,
+    hasDb: !!db,
+    timestamp: new Date().toISOString(),
+  });
+
   if (initializationPromise) {
+    console.log('[Database] Initialization already in progress, waiting...');
     return initializationPromise;
   }
 
   initializationPromise = (async () => {
     try {
-      await initializeEncryption();
+      console.log('[Database] Starting database initialization');
       
+      console.log('[Database] Calling initializeEncryption...');
+      await initializeEncryption();
+      console.log('[Database] Encryption initialized');
+      
+      console.log('[Database] Getting encryption key...');
       const key = getEncryptionKey();
       const hexKey = Array.from(key).map(b => b.toString(16).padStart(2, '0')).join('');
+      console.log('[Database] Encryption key obtained');
       
+      console.log('[Database] Opening SQLite database...');
       expo = await SQLite.openDatabaseAsync('period.db');
+      console.log('[Database] SQLite database opened');
       
+      console.log('[Database] Setting PRAGMA key...');
       await expo.execAsync(`PRAGMA key = "x'${hexKey}'";`);
       await expo.execAsync('PRAGMA cipher_page_size = 4096;');
       await expo.execAsync('PRAGMA kdf_iter = 256000;');
+      console.log('[Database] PRAGMA settings applied');
       
+      console.log('[Database] Running migrations...');
       await expo.execAsync(MIGRATION_TABLES);
+      console.log('[Database] Migrations completed');
       
       db = drizzle(expo);
+      console.log('[Database] Database initialization completed successfully');
     } catch (error) {
+      console.log('[Database] Database initialization failed:', error);
       if (expo) {
         try {
+          console.log('[Database] Closing database connection after failure...');
           await expo.closeAsync();
         } catch (closeError) {
-          console.error('Error closing database during initialization failure:', closeError);
+          console.error('[Database] Error closing database during initialization failure:', closeError);
         }
         expo = null;
       }
@@ -127,20 +150,32 @@ export async function setSetting(key: string, value: string): Promise<void> {
 }
 
 export async function clearDatabaseCache(): Promise<void> {
+  console.log('[Database] clearDatabaseCache called', {
+    hasInitPromise: !!initializationPromise,
+    hasExpo: !!expo,
+    hasDb: !!db,
+  });
+
   const pendingInit = initializationPromise;
   if (pendingInit) {
     try {
+      console.log('[Database] Waiting for pending initialization before clearing...');
       await pendingInit;
     } catch {
-      // Initialization failed, proceed with cleanup
+      console.log('[Database] Pending initialization failed, proceeding with cleanup');
     }
   }
 
+  console.log('[Database] Clearing database cache...');
   initializationPromise = null;
   db = null;
   
   if (expo) {
+    console.log('[Database] Closing database connection...');
     await expo.closeAsync();
     expo = null;
+    console.log('[Database] Database connection closed');
   }
+  
+  console.log('[Database] Database cache cleared');
 }
