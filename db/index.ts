@@ -86,13 +86,47 @@ export async function initializeDatabase(): Promise<void> {
       
       console.log('[Database] Opening SQLite database...');
       expo = await SQLite.openDatabaseAsync('period.db');
-      console.log('[Database] SQLite database opened');
       
-      console.log('[Database] Setting PRAGMA key...');
-      await expo.execAsync(`PRAGMA key = "x'${hexKey}'";`);
-      await expo.execAsync('PRAGMA cipher_page_size = 4096;');
-      await expo.execAsync('PRAGMA kdf_iter = 256000;');
-      console.log('[Database] PRAGMA settings applied');
+      let isLegacyDatabase = false;
+      try {
+        console.log('[Database] Testing if database is encrypted...');
+        await expo.execAsync(`PRAGMA key = "x'${hexKey}'";`);
+        await expo.execAsync('PRAGMA cipher_page_size = 4096;');
+        await expo.execAsync('PRAGMA kdf_iter = 256000;');
+        
+        await expo.getAllAsync('SELECT count(*) FROM sqlite_master;');
+        console.log('[Database] Database is already encrypted');
+      } catch (error: any) {
+        console.log('[Database] Failed to open with encryption key, checking for legacy database:', error?.message);
+        
+        await expo.closeAsync();
+        expo = await SQLite.openDatabaseAsync('period.db');
+        
+        try {
+          await expo.getAllAsync('SELECT count(*) FROM sqlite_master;');
+          console.log('[Database] Detected legacy unencrypted database');
+          isLegacyDatabase = true;
+        } catch (plaintextError) {
+          console.error('[Database] Database is corrupted or encrypted with unknown key:', plaintextError);
+          throw new Error('Database is corrupted or encrypted with unknown key');
+        }
+      }
+      
+      if (isLegacyDatabase) {
+        console.log('[Database] Migrating legacy database to encrypted format...');
+        try {
+          await expo.execAsync(`PRAGMA rekey = "x'${hexKey}'";`);
+          await expo.execAsync('PRAGMA cipher_page_size = 4096;');
+          await expo.execAsync('PRAGMA kdf_iter = 256000;');
+          console.log('[Database] Legacy database successfully encrypted');
+          
+          await expo.getAllAsync('SELECT count(*) FROM sqlite_master;');
+          console.log('[Database] Encryption verified');
+        } catch (rekeyError) {
+          console.error('[Database] Failed to encrypt legacy database:', rekeyError);
+          throw new Error('Failed to migrate database to encrypted format');
+        }
+      }
       
       console.log('[Database] Running migrations...');
       await expo.execAsync(MIGRATION_TABLES);
