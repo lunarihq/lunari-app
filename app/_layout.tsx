@@ -212,9 +212,11 @@ function AppContent() {
     async function checkOnboardingStatus() {
       try {
         const status = await getSetting('onboardingCompleted');
-        setOnboardingCompleted(status === 'true');
+        const isCompleted = status === 'true';
+        console.log('[AppLayout] Onboarding status from DB:', { status, isCompleted });
+        setOnboardingCompleted(isCompleted);
       } catch (error) {
-        console.error('Failed to check onboarding status', error);
+        console.error('[AppLayout] Failed to check onboarding status', error);
         setOnboardingCompleted(false);
       } finally {
         setIsReady(true);

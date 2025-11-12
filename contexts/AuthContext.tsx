@@ -4,6 +4,7 @@ import React, {
   useState,
   useEffect,
   useCallback,
+  useMemo,
   ReactNode,
 } from 'react';
 import { AppState, AppStateStatus, Platform } from 'react-native';
@@ -30,6 +31,8 @@ interface AuthContextType {
   setLockEnabled: (enabled: boolean) => Promise<SetLockEnabledResult>;
   refreshLockStatus: () => Promise<void>;
   getDeviceSecurityType: () => Promise<string>;
+  startPermissionRequest: () => void;
+  endPermissionRequest: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -45,6 +48,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [isLockEnabled, setIsLockEnabledState] = useState(false);
   const [isDeviceSecurityAvailable, setIsDeviceSecurityAvailable] = useState(false);
   const [isReWrapping, setIsReWrapping] = useState(false);
+  const [isRequestingPermission, setIsRequestingPermission] = useState(false);
 
   useEffect(() => {
     initializeAuth();
@@ -58,19 +62,27 @@ export function AuthProvider({ children }: AuthProviderProps) {
         isLockEnabled,
         isLocked,
         isAuthenticated,
+        isRequestingPermission,
       });
 
       try {
         if (nextAppState === 'background' || nextAppState === 'inactive') {
           console.log('[AuthContext] App going to background/inactive');
           setAppStateBackground(true);
-          if (isLockEnabled) {
+          if (isLockEnabled && !isRequestingPermission) {
             console.log('[AuthContext] Clearing key cache and database cache');
             clearKeyCache();
             await clearDatabaseCache();
           }
         } else if (nextAppState === 'active' && appStateBackground && isLockEnabled) {
           console.log('[AuthContext] App becoming active after background with lock enabled');
+          
+          if (isRequestingPermission) {
+            console.log('[AuthContext] Returning from permission request, skipping lock');
+            setAppStateBackground(false);
+            return;
+          }
+          
           const deviceSecurityAvailable = await AuthService.isDeviceSecurityAvailable();
           console.log('[AuthContext] Device security available:', deviceSecurityAvailable);
           setIsDeviceSecurityAvailable(deviceSecurityAvailable);
@@ -83,13 +95,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
           }
 
           console.log('[AuthContext] Setting app to locked state (forcing re-lock to trigger DB reset)');
-          // Ensure app is locked when returning from background
-          // First set to false briefly to ensure state change is detected
           setIsLocked(false);
           setIsAuthenticated(false);
           setAppStateBackground(false);
           
-          // Then immediately lock it in next tick to trigger the transition
           setTimeout(() => {
             console.log('[AuthContext] Now locking app after brief unlock');
             setIsLocked(true);
@@ -105,7 +114,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         setAppStateBackground(false);
       }
     },
-    [appStateBackground, isLockEnabled, isLocked, isAuthenticated]
+    [appStateBackground, isLockEnabled, isLocked, isAuthenticated, isRequestingPermission]
   );
 
   useEffect(() => {
@@ -252,7 +261,17 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   }, []);
 
-  const value: AuthContextType = {
+  const startPermissionRequest = useCallback(() => {
+    console.log('[AuthContext] Starting permission request');
+    setIsRequestingPermission(true);
+  }, []);
+
+  const endPermissionRequest = useCallback(() => {
+    console.log('[AuthContext] Ending permission request');
+    setIsRequestingPermission(false);
+  }, []);
+
+  const value: AuthContextType = useMemo(() => ({
     isLocked,
     isAuthenticated,
     isLockEnabled,
@@ -263,7 +282,22 @@ export function AuthProvider({ children }: AuthProviderProps) {
     setLockEnabled,
     refreshLockStatus,
     getDeviceSecurityType,
-  };
+    startPermissionRequest,
+    endPermissionRequest,
+  }), [
+    isLocked,
+    isAuthenticated,
+    isLockEnabled,
+    isDeviceSecurityAvailable,
+    isReWrapping,
+    lockApp,
+    unlockApp,
+    setLockEnabled,
+    refreshLockStatus,
+    getDeviceSecurityType,
+    startPermissionRequest,
+    endPermissionRequest,
+  ]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
