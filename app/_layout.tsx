@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Stack, useRouter, usePathname } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { View, Text, ActivityIndicator, TouchableOpacity } from 'react-native';
-import { initializeDatabase, getSetting, deleteDatabaseFile, clearDatabaseCache } from '../db';
+import { initializeDatabase, getSetting, clearDatabaseCache } from '../db';
 import * as Notifications from 'expo-notifications';
 import { AuthProvider, useAuth } from '../contexts/AuthContext';
 import { NotesProvider } from '../contexts/NotesContext';
@@ -11,7 +11,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { lightColors, darkColors } from '../styles/colors';
 import Toast, { BaseToast, ErrorToast } from 'react-native-toast-message';
-import { EncryptionError, ERROR_CODES, clearKeyCache, clearAllKeys } from '../services/databaseEncryptionService';
+import { EncryptionError, ERROR_CODES, clearKeyCache } from '../services/databaseEncryptionService';
 import {
   useFonts,
   BricolageGrotesque_700Bold,
@@ -19,35 +19,12 @@ import {
 import '../i18n/config';
 import { useTranslation } from 'react-i18next';
 
-// Shared toast styles
 const toastConfig = {
   style: { height: 48 },
   contentContainerStyle: { paddingHorizontal: 16, paddingVertical: 0 },
   text1Style: { fontSize: 16, fontWeight: '400' as const },
 };
 
-/*
- * DEBUG GUIDE - Double Biometric Prompt Issue
- * 
- * When debugging, look for these patterns in the logs:
- * 1. 🔐 BIOMETRIC PROMPT markers - these show when actual biometric auth is triggered
- * 2. setupDatabase call count - track how many times it's invoked
- * 3. previousLockState transitions - should only reset DB on false → true transition
- * 4. initializeEncryption flow - check if it's being called multiple times or caches are working
- * 5. App state changes - look for background/active transitions
- * 
- * Expected single prompt flow:
- * - App opens or comes from background
- * - setupDatabase is called once per unlock event
- * - initializeDatabase is called once
- * - initializeEncryption triggers ONE biometric prompt (if in protected mode)
- * - Database initialized successfully
- * 
- * Key behavior:
- * - On initial load: previousLockState is null, so no DB reset happens
- * - On background: isLocked goes false → true, DB state is reset (correct)
- * - On foreground: DB reinitializes with ONE prompt
- */
 function AppContent() {
   const [isReady, setIsReady] = useState(false);
   const [onboardingCompleted, setOnboardingCompleted] = useState(false);
@@ -60,19 +37,9 @@ function AppContent() {
   const [initialRender, setInitialRender] = useState(true);
   const notificationResponseListener =
     useRef<Notifications.Subscription | null>(null);
-  const setupDatabaseCallCount = useRef(0);
   const { isLocked, unlockApp, startAuthentication, endAuthentication, justReturnedFromBackground, clearBackgroundFlag } = useAuth();
   const { isDark } = useTheme();
   const { t } = useTranslation(['settings', 'health', 'info']);
-
-  console.log('[AppLayout] AppContent render', {
-    isReady,
-    onboardingCompleted,
-    dbInitialized,
-    dbError,
-    authCancelled,
-    isLocked,
-  });
 
   // Load fonts
   const [fontsLoaded] = useFonts({
@@ -80,99 +47,40 @@ function AppContent() {
   });
 
   const setupDatabase = React.useCallback(async () => {
-    setupDatabaseCallCount.current++;
-    console.log('\n========================================');
-    console.log(`[AppLayout] 🚀 setupDatabase INVOKED (Call #${setupDatabaseCallCount.current})`);
-    console.log('[AppLayout] setupDatabase state:', {
-      isLocked,
-      dbInitialized,
-      authCancelled,
-    });
-    console.log('========================================\n');
-
     try {
       startAuthentication();
-      console.log('[AppLayout] Calling initializeDatabase...');
       await initializeDatabase();
-      console.log('[AppLayout] ✅ Database initialized successfully');
-      
       setDbInitialized(true);
-      console.log('[AppLayout] Set dbInitialized to true');
-      
-      console.log('[AppLayout] Database initialized, unlocking app...');
       unlockApp();
-      
       endAuthentication();
     } catch (error) {
       endAuthentication();
-      console.log('[AppLayout] ❌ Database initialization error:', error);
-      if (error instanceof EncryptionError) {
-        switch (error.code) {
-          case ERROR_CODES.USER_CANCELLED:
-          case ERROR_CODES.AUTH_IN_PROGRESS:
-            console.log('[AppLayout] User cancelled or auth in progress, clearing caches');
-            clearKeyCache();
-            await clearDatabaseCache();
-            setAuthCancelled(true);
-            break;
-          case ERROR_CODES.KEY_CORRUPTION:
-            console.log('[AppLayout] Key corruption detected');
-            setDbError('CORRUPTION');
-            break;
-          case ERROR_CODES.SECURE_STORE_UNAVAILABLE:
-            console.log('[AppLayout] Secure store unavailable');
-            setDbError('SECURE_STORE_UNAVAILABLE');
-            break;
-          default:
-            console.error('[AppLayout] Failed to initialize database:', error);
-            setDbError(error.message);
-        }
+      if (error instanceof EncryptionError && error.code === ERROR_CODES.USER_CANCELLED) {
+        clearKeyCache();
+        await clearDatabaseCache();
+        setAuthCancelled(true);
       } else {
-        console.error('[AppLayout] Failed to initialize database:', error);
+        console.error('[AppLayout] Database initialization error:', error);
         setDbError(error instanceof Error ? error.message : 'Unknown error');
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [unlockApp, startAuthentication, endAuthentication]);
 
-  // Log when setupDatabase callback is recreated
-  useEffect(() => {
-    console.log('[AppLayout] setupDatabase callback recreated due to dependency change');
-  }, [setupDatabase]);
-
-  // Reset DB state when returning from background
   useEffect(() => {
     if (justReturnedFromBackground) {
-      console.log('[AppLayout] Returned from background with lock enabled');
       clearBackgroundFlag();
       if (dbInitialized) {
-        console.log('[AppLayout] Resetting DB state');
         setDbInitialized(false);
         setAuthCancelled(false);
       }
     }
   }, [justReturnedFromBackground, dbInitialized, clearBackgroundFlag]);
 
-  // Initialize database (even if locked - this triggers biometric prompt)
-  // Note: We intentionally omit setupDatabase from dependencies to prevent re-running
-  // when the callback is recreated due to isLocked changing during AuthContext initialization
   useEffect(() => {
-    console.log('[AppLayout] Database initialization effect triggered', {
-      dbInitialized,
-      authCancelled,
-    });
-
-    if (dbInitialized) {
-      console.log('[AppLayout] Database already initialized, skipping');
+    if (dbInitialized || authCancelled) {
       return;
     }
     
-    if (authCancelled) {
-      console.log('[AppLayout] Auth was cancelled, waiting for manual retry');
-      return;
-    }
-    
-    console.log('[AppLayout] Starting database setup...');
     setupDatabase();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dbInitialized, authCancelled]);
@@ -204,16 +112,13 @@ function AppContent() {
     };
   }, [router]);
 
-  // Only check onboarding status once during initial mount (after DB is ready)
   useEffect(() => {
     if (!dbInitialized) return;
 
     async function checkOnboardingStatus() {
       try {
         const status = await getSetting('onboardingCompleted');
-        const isCompleted = status === 'true';
-        console.log('[AppLayout] Onboarding status from DB:', { status, isCompleted });
-        setOnboardingCompleted(isCompleted);
+        setOnboardingCompleted(status === 'true');
       } catch (error) {
         console.error('[AppLayout] Failed to check onboarding status', error);
         setOnboardingCompleted(false);
@@ -225,80 +130,48 @@ function AppContent() {
     checkOnboardingStatus();
   }, [dbInitialized]);
 
-  // Handle initial redirect if needed
   useEffect(() => {
     if (!isReady) return;
 
-    // Only redirect on initial app launch
     if (initialRender) {
       setInitialRender(false);
 
       const inOnboardingPath = pathname.startsWith('/onboarding');
 
       if (!onboardingCompleted && !inOnboardingPath) {
-        // If onboarding not completed and not on onboarding screen,
-        // redirect to onboarding
         router.replace('/onboarding');
       }
     }
   }, [isReady, onboardingCompleted, pathname, router, initialRender]);
 
-  // Show database error screen
   if (dbError) {
-    const isCorruption = dbError === 'CORRUPTION';
-    const isSecureStoreUnavailable = dbError === 'SECURE_STORE_UNAVAILABLE';
-
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 20, backgroundColor: isDark ? darkColors.background : lightColors.background }}>
         <Text style={{ fontSize: 22, fontWeight: 'bold', marginBottom: 16, color: isDark ? darkColors.textPrimary : lightColors.textPrimary }}>
-          {isCorruption ? 'Data Corruption Detected' : isSecureStoreUnavailable ? 'Security Unavailable' : 'Database Error'}
+          Database Error
         </Text>
         <Text style={{ fontSize: 16, marginBottom: 24, color: isDark ? darkColors.textSecondary : lightColors.textSecondary, textAlign: 'center' }}>
-          {isCorruption
-            ? 'Your encryption keys are corrupted and your data cannot be decrypted. To continue using the app, you must reset all data.'
-            : isSecureStoreUnavailable
-            ? 'Secure storage is not available on this device. The app cannot function without secure storage.'
-            : dbError}
+          {dbError}
         </Text>
-        {isCorruption ? (
-          <TouchableOpacity
-            style={{ paddingHorizontal: 24, paddingVertical: 12, backgroundColor: '#ef4444', borderRadius: 8 }}
-            onPress={async () => {
-              try {
-                await clearAllKeys();
-                await clearDatabaseCache();
-                await deleteDatabaseFile();
-                setDbError(null);
-                setDbInitialized(false);
-              } catch (error) {
-                console.error('Failed to reset data:', error);
-              }
-            }}
-          >
-            <Text style={{ color: '#fff', fontSize: 16, fontWeight: '600' }}>Reset All Data</Text>
-          </TouchableOpacity>
-        ) : !isSecureStoreUnavailable ? (
-          <TouchableOpacity
-            style={{ paddingHorizontal: 24, paddingVertical: 12, backgroundColor: isDark ? darkColors.primary : lightColors.primary, borderRadius: 8 }}
-            onPress={async () => {
-              try {
-                clearKeyCache();
-                await clearDatabaseCache();
-                setDbError(null);
-                setDbInitialized(false);
-              } catch (error) {
-                console.error('Failed to clear keys during retry:', error);
-              }
-            }}
-          >
-            <Text style={{ color: '#fff', fontSize: 16, fontWeight: '600' }}>Retry</Text>
-          </TouchableOpacity>
-        ) : null}
+        <TouchableOpacity
+          style={{ paddingHorizontal: 24, paddingVertical: 12, backgroundColor: isDark ? darkColors.primary : lightColors.primary, borderRadius: 8 }}
+          onPress={async () => {
+            try {
+              clearKeyCache();
+              await clearDatabaseCache();
+              setDbError(null);
+              setDbInitialized(false);
+            } catch (error) {
+              console.error('Failed to clear keys during retry:', error);
+            }
+          }}
+        >
+          <Text style={{ color: '#fff', fontSize: 16, fontWeight: '600' }}>Retry</Text>
+        </TouchableOpacity>
       </View>
     );
   }
 
-  // Show loading/unlock screen while database initializes
   if (!dbInitialized || !isReady || !fontsLoaded) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 20, backgroundColor: isDark ? darkColors.background : lightColors.background }}>

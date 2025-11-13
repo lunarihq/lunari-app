@@ -63,70 +63,45 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const handleAppStateChange = useCallback(
     async (nextAppState: AppStateStatus) => {
-      console.log('[AuthContext] handleAppStateChange', {
-        nextAppState,
-        appStateBackground,
-        isLockEnabled,
-        isLocked,
-        isAuthenticated,
-        isRequestingPermission,
-        isAuthenticating,
-      });
-
       try {
         if (nextAppState === 'background' || nextAppState === 'inactive') {
-          console.log('[AuthContext] App going to background/inactive');
-          
           if (isAuthenticating) {
-            console.log('[AuthContext] Authentication in progress, ignoring background state');
             return;
           }
           
           setAppStateBackground(true);
           if (isLockEnabled && !isRequestingPermission) {
-            console.log('[AuthContext] Clearing key cache and database cache');
             clearKeyCache();
             await clearDatabaseCache();
           }
         } else if (nextAppState === 'active' && appStateBackground && isLockEnabled) {
-          console.log('[AuthContext] App becoming active after background with lock enabled');
-          
           if (isRequestingPermission) {
-            console.log('[AuthContext] Returning from permission request, skipping lock');
             setAppStateBackground(false);
             return;
           }
           
           if (isAuthenticating) {
-            console.log('[AuthContext] Authentication in progress, ignoring active state');
             setAppStateBackground(false);
             return;
           }
           
           const deviceSecurityAvailable = await AuthService.isDeviceSecurityAvailable();
-          console.log('[AuthContext] Device security available:', deviceSecurityAvailable);
           setIsDeviceSecurityAvailable(deviceSecurityAvailable);
           if (!deviceSecurityAvailable) {
-            console.warn('[AuthContext] App lock remains enabled - device security not available');
+            console.warn('[AuthContext] Device security not available');
             setIsLocked(true);
             setIsAuthenticated(false);
             setAppStateBackground(false);
             return;
           }
 
-          console.log('[AuthContext] App returning to foreground with lock enabled');
           setAppStateBackground(false);
           setJustReturnedFromBackground(true);
           setIsLocked(true);
           setIsAuthenticated(false);
         }
       } catch (error) {
-        console.error('[AuthContext] Error handling app state change:', {
-          nextAppState,
-          isLockEnabled,
-          appStateBackground,
-          error,
-        });
+        console.error('[AuthContext] Error handling app state change:', error);
         setAppStateBackground(false);
       }
     },
@@ -142,29 +117,24 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }, [handleAppStateChange]);
 
   const initializeAuth = async () => {
-    console.log('[AuthContext] initializeAuth called');
     try {
       const lockEnabled = await AuthService.isLockEnabled();
       const deviceSecurityAvailable = await AuthService.isDeviceSecurityAvailable();
-
-      console.log('[AuthContext] Auth status:', { lockEnabled, deviceSecurityAvailable });
 
       setIsLockEnabledState(lockEnabled);
       setIsDeviceSecurityAvailable(deviceSecurityAvailable);
 
       if (lockEnabled && !deviceSecurityAvailable) {
-        console.warn('[AuthContext] App lock remains enabled - device security not available');
+        console.warn('[AuthContext] Device security not available');
         setIsLocked(true);
         setIsAuthenticated(false);
         return;
       }
 
       if (lockEnabled) {
-        console.log('[AuthContext] Lock is enabled, setting locked state');
         setIsLocked(true);
         setIsAuthenticated(false);
       } else {
-        console.log('[AuthContext] Lock is disabled, setting unlocked state');
         setIsLocked(false);
         setIsAuthenticated(true);
       }
@@ -174,7 +144,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
   };
 
   const lockApp = useCallback(() => {
-    console.log('[AuthContext] lockApp called', { isLockEnabled });
     if (isLockEnabled) {
       setIsLocked(true);
       setIsAuthenticated(false);
@@ -182,40 +151,28 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }, [isLockEnabled]);
 
   const unlockApp = useCallback(() => {
-    console.log('[AuthContext] unlockApp called');
     setIsLocked(false);
     setIsAuthenticated(true);
   }, []);
 
   const setLockEnabled = useCallback(async (enabled: boolean): Promise<SetLockEnabledResult> => {
-    console.log('[AuthContext] setLockEnabled called', { enabled });
     try {
       setIsReWrapping(true);
 
-      console.log('[AuthContext] Calling reWrapKEK...');
       await reWrapKEK(enabled);
-      console.log('[AuthContext] reWrapKEK completed');
-
-      console.log('[AuthContext] Setting lock enabled in AuthService...');
       const success = await AuthService.setLockEnabled(enabled);
-      console.log('[AuthContext] AuthService.setLockEnabled result:', success);
       
       if (success) {
         setIsLockEnabledState(enabled);
-        if (enabled) {
-          console.log('[AuthContext] Lock enabled - will take effect on next app background');
-        } else {
-          console.log('[AuthContext] Lock disabled, unlocking app');
+        if (!enabled) {
           setIsLocked(false);
           setIsAuthenticated(true);
         }
       } else {
-        console.log('[AuthContext] Failed to set lock enabled, rolling back...');
         try {
           await reWrapKEK(!enabled);
-          console.log('[AuthContext] Rollback successful');
         } catch (rollbackError) {
-          console.error('[AuthContext] Failed to rollback encryption state:', rollbackError);
+          console.error('[AuthContext] Rollback failed:', rollbackError);
           const rollbackMessage = rollbackError instanceof EncryptionError 
             ? rollbackError.message 
             : rollbackError instanceof Error 
@@ -237,11 +194,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
       return { success };
     } catch (error) {
       if (error instanceof EncryptionError && error.code === ERROR_CODES.USER_CANCELLED) {
-        console.log('[AuthContext] User cancelled authentication');
         return { success: false, cancelled: true };
       }
       
-      console.error('[AuthContext] Error setting lock enabled:', error);
+      console.error('[AuthContext] Error setting lock:', error);
       const errorMessage = error instanceof EncryptionError 
         ? error.message 
         : error instanceof Error 
@@ -280,27 +236,22 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }, []);
 
   const startPermissionRequest = useCallback(() => {
-    console.log('[AuthContext] Starting permission request');
     setIsRequestingPermission(true);
   }, []);
 
   const endPermissionRequest = useCallback(() => {
-    console.log('[AuthContext] Ending permission request');
     setIsRequestingPermission(false);
   }, []);
 
   const startAuthentication = useCallback(() => {
-    console.log('[AuthContext] Starting authentication');
     setIsAuthenticating(true);
   }, []);
 
   const endAuthentication = useCallback(() => {
-    console.log('[AuthContext] Ending authentication');
     setIsAuthenticating(false);
   }, []);
 
   const clearBackgroundFlag = useCallback(() => {
-    console.log('[AuthContext] Clearing background flag');
     setJustReturnedFromBackground(false);
   }, []);
 

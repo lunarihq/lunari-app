@@ -63,65 +63,35 @@ async function createNewKey(): Promise<Uint8Array> {
 }
 
 async function loadExistingKey(): Promise<Uint8Array> {
-  console.log('[EncryptionService] loadExistingKey called');
   const mode = await getStoredEncryptionMode();
-  console.log('[EncryptionService] Current encryption mode:', mode);
-  console.log('[EncryptionService] Will require authentication:', mode === 'protected');
-  
-  if (mode === 'protected') {
-    console.log('[EncryptionService] 🔐 BIOMETRIC PROMPT - About to trigger for key retrieval');
-  }
-  
   const keyBase64 = await SecureStore.getItemAsync(SECURE_STORE_KEYS.ENCRYPTION_KEY, { requireAuthentication: mode === 'protected' });
   
-  if (mode === 'protected') {
-    console.log('[EncryptionService] ✅ BIOMETRIC PROMPT - Completed successfully');
-  }
-  
   if (!keyBase64) {
-    console.error('[Encryption] Key missing');
     throw new Error('Encryption key is missing. Your data cannot be decrypted.');
   }
 
-  console.log('[EncryptionService] Key loaded successfully');
   return base64.toByteArray(keyBase64);
 }
 
 export async function initializeEncryption(): Promise<void> {
-  console.log('[EncryptionService] initializeEncryption called', {
-    hasKeyCache: !!keyCache,
-    hasInFlightInit: !!initializationPromise,
-    timestamp: new Date().toISOString(),
-  });
-
   if (keyCache) {
-    console.log('[EncryptionService] Using cached key, skipping initialization');
     return;
   }
 
   if (initializationPromise) {
-    console.log('[EncryptionService] Initialization already in progress, waiting...');
     return initializationPromise;
   }
 
   initializationPromise = (async () => {
     try {
-      console.log('[EncryptionService] Starting fresh initialization');
-      
       const hasExistingKey = await SecureStore.getItemAsync(SECURE_STORE_KEYS.ENCRYPTION_KEY);
-      console.log('[EncryptionService] Checked for existing key:', !!hasExistingKey);
       
       if (hasExistingKey) {
-        console.log('[EncryptionService] Loading existing key...');
         keyCache = await loadExistingKey();
-        console.log('[EncryptionService] Existing key loaded successfully');
       } else {
-        console.log('[EncryptionService] Creating new key...');
         keyCache = await createNewKey();
-        console.log('[EncryptionService] New key created successfully');
       }
     } catch (error) {
-      console.log('[EncryptionService] Initialization failed:', error);
       throw classifyError(error);
     } finally {
       initializationPromise = null;
@@ -180,9 +150,6 @@ export async function reWrapKEK(requireAuth: boolean): Promise<void> {
 }
 
 export function clearKeyCache(): void {
-  console.log('[EncryptionService] clearKeyCache called', {
-    hadKeyCache: !!keyCache,
-  });
   keyCache = null;
 }
 
