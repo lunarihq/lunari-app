@@ -1,32 +1,23 @@
-import React, { useEffect, useState, useRef, useMemo } from 'react';
-import { Stack, useRouter, usePathname } from 'expo-router';
+import React, { useEffect, useRef, useMemo } from 'react';
+import { Stack, useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { View, Text, ActivityIndicator, TouchableOpacity, StyleSheet } from 'react-native';
-import { initializeDatabase, getSetting, clearDatabaseCache } from '../db';
 import * as Notifications from 'expo-notifications';
-import { AuthProvider, useAuth } from '../contexts/AuthContext';
+import { AuthProvider } from '../contexts/AuthContext';
 import { NotesProvider } from '../contexts/NotesContext';
 import { ThemeProvider, useTheme } from '../contexts/ThemeContext';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { lightColors, darkColors } from '../styles/colors';
 import Toast, { BaseToast, ErrorToast } from 'react-native-toast-message';
-import { EncryptionError, ERROR_CODES, clearKeyCache } from '../services/databaseEncryptionService';
 import {
   useFonts,
   BricolageGrotesque_700Bold,
 } from '@expo-google-fonts/bricolage-grotesque';
 import '../i18n/config';
 import { useTranslation } from 'react-i18next';
-import {
-  AppState,
-  createInitialState,
-  createLockedState,
-  createErrorState,
-  createCheckingOnboardingState,
-  createReadyState,
-} from '../types/appState';
 import { dynamicScreens, getBackgroundColor } from '../config/screenConfig';
+import { useAppInitialization } from '../hooks/useAppInitialization';
 
 const toastConfig = {
   style: { height: 48 },
@@ -35,54 +26,16 @@ const toastConfig = {
 };
 
 function AppContent() {
-  const [appState, setAppState] = useState<AppState>(createInitialState());
-  const [initialRender, setInitialRender] = useState(true);
   const notificationResponseListener = useRef<Notifications.Subscription | null>(null);
-
   const router = useRouter();
-  const pathname = usePathname();
-  const { unlockApp, startAuthentication, endAuthentication, justReturnedFromBackground, clearBackgroundFlag } = useAuth();
+
+  const { appState, retryInitialization } = useAppInitialization();
   const { isDark } = useTheme();
   const { t } = useTranslation(['settings', 'health', 'info']);
 
   const [fontsLoaded] = useFonts({
     BricolageGrotesque_700Bold,
   });
-
-  const setupDatabase = React.useCallback(async () => {
-    try {
-      startAuthentication();
-      await initializeDatabase();
-      unlockApp();
-      endAuthentication();
-      setAppState(createCheckingOnboardingState());
-    } catch (error) {
-      endAuthentication();
-      if (error instanceof EncryptionError && error.code === ERROR_CODES.USER_CANCELLED) {
-        clearKeyCache();
-        await clearDatabaseCache();
-        setAppState(createLockedState('auth_cancelled'));
-      } else {
-        console.error('[AppLayout] Database initialization error:', error);
-        setAppState(createErrorState(error instanceof Error ? error.message : 'Unknown error'));
-      }
-    }
-  }, [unlockApp, startAuthentication, endAuthentication]);
-
-  useEffect(() => {
-    if (justReturnedFromBackground) {
-      clearBackgroundFlag();
-      if (appState.status === 'ready') {
-        setAppState(createLockedState('background_return'));
-      }
-    }
-  }, [justReturnedFromBackground, appState.status, clearBackgroundFlag]);
-
-  useEffect(() => {
-    if (appState.status === 'initializing' || appState.status === 'locked') {
-      setupDatabase();
-    }
-  }, [appState.status, setupDatabase]);
 
   // Initialize notification response listener only (don't request permissions yet)
   useEffect(() => {
@@ -110,36 +63,6 @@ function AppContent() {
       }
     };
   }, [router]);
-
-  useEffect(() => {
-    if (appState.status !== 'checking_onboarding') return;
-
-    async function checkOnboardingStatus() {
-      try {
-        const status = await getSetting('onboardingCompleted');
-        setAppState(createReadyState(status === 'true'));
-      } catch (error) {
-        console.error('[AppLayout] Failed to check onboarding status', error);
-        setAppState(createReadyState(false));
-      }
-    }
-
-    checkOnboardingStatus();
-  }, [appState.status]);
-
-  useEffect(() => {
-    if (appState.status !== 'ready') return;
-
-    if (initialRender) {
-      setInitialRender(false);
-
-      const inOnboardingPath = pathname.startsWith('/onboarding');
-
-      if (!appState.onboardingComplete && !inOnboardingPath) {
-        router.replace('/onboarding');
-      }
-    }
-  }, [appState, pathname, router, initialRender]);
 
   const styles = useMemo(
     () =>
@@ -191,15 +114,7 @@ function AppContent() {
         <Text style={styles.errorMessage}>{appState.error}</Text>
         <TouchableOpacity
           style={styles.button}
-          onPress={async () => {
-            try {
-              clearKeyCache();
-              await clearDatabaseCache();
-              setAppState(createInitialState());
-            } catch (error) {
-              console.error('Failed to clear keys during retry:', error);
-            }
-          }}
+          onPress={retryInitialization}
         >
           <Text style={styles.buttonText}>Retry</Text>
         </TouchableOpacity>
@@ -214,7 +129,7 @@ function AppContent() {
         {appState.reason === 'auth_cancelled' && (
           <TouchableOpacity
             style={styles.button}
-            onPress={() => setAppState(createInitialState())}
+            onPress={retryInitialization}
           >
             <Text style={styles.buttonText}>Unlock</Text>
           </TouchableOpacity>
