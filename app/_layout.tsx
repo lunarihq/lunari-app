@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { Stack, useRouter, usePathname } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { View, Text, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { View, Text, ActivityIndicator, TouchableOpacity, StyleSheet } from 'react-native';
 import { initializeDatabase, getSetting, clearDatabaseCache } from '../db';
 import * as Notifications from 'expo-notifications';
 import { AuthProvider, useAuth } from '../contexts/AuthContext';
@@ -18,6 +18,15 @@ import {
 } from '@expo-google-fonts/bricolage-grotesque';
 import '../i18n/config';
 import { useTranslation } from 'react-i18next';
+import {
+  AppState,
+  createInitialState,
+  createLockedState,
+  createErrorState,
+  createCheckingOnboardingState,
+  createReadyState,
+} from '../types/appState';
+import { dynamicScreens, getBackgroundColor } from '../config/screenConfig';
 
 const toastConfig = {
   style: { height: 48 },
@@ -26,22 +35,16 @@ const toastConfig = {
 };
 
 function AppContent() {
-  const [isReady, setIsReady] = useState(false);
-  const [onboardingCompleted, setOnboardingCompleted] = useState(false);
-  const [dbInitialized, setDbInitialized] = useState(false);
-  const [dbError, setDbError] = useState<string | null>(null);
-  const [authCancelled, setAuthCancelled] = useState(false);
+  const [appState, setAppState] = useState<AppState>(createInitialState());
+  const [initialRender, setInitialRender] = useState(true);
+  const notificationResponseListener = useRef<Notifications.Subscription | null>(null);
 
   const router = useRouter();
   const pathname = usePathname();
-  const [initialRender, setInitialRender] = useState(true);
-  const notificationResponseListener =
-    useRef<Notifications.Subscription | null>(null);
-  const { isLocked, unlockApp, startAuthentication, endAuthentication, justReturnedFromBackground, clearBackgroundFlag } = useAuth();
+  const { unlockApp, startAuthentication, endAuthentication, justReturnedFromBackground, clearBackgroundFlag } = useAuth();
   const { isDark } = useTheme();
   const { t } = useTranslation(['settings', 'health', 'info']);
 
-  // Load fonts
   const [fontsLoaded] = useFonts({
     BricolageGrotesque_700Bold,
   });
@@ -50,18 +53,18 @@ function AppContent() {
     try {
       startAuthentication();
       await initializeDatabase();
-      setDbInitialized(true);
       unlockApp();
       endAuthentication();
+      setAppState(createCheckingOnboardingState());
     } catch (error) {
       endAuthentication();
       if (error instanceof EncryptionError && error.code === ERROR_CODES.USER_CANCELLED) {
         clearKeyCache();
         await clearDatabaseCache();
-        setAuthCancelled(true);
+        setAppState(createLockedState('auth_cancelled'));
       } else {
         console.error('[AppLayout] Database initialization error:', error);
-        setDbError(error instanceof Error ? error.message : 'Unknown error');
+        setAppState(createErrorState(error instanceof Error ? error.message : 'Unknown error'));
       }
     }
   }, [unlockApp, startAuthentication, endAuthentication]);
@@ -69,21 +72,17 @@ function AppContent() {
   useEffect(() => {
     if (justReturnedFromBackground) {
       clearBackgroundFlag();
-      if (dbInitialized) {
-        setDbInitialized(false);
-        setAuthCancelled(false);
+      if (appState.status === 'ready') {
+        setAppState(createLockedState('background_return'));
       }
     }
-  }, [justReturnedFromBackground, dbInitialized, clearBackgroundFlag]);
+  }, [justReturnedFromBackground, appState.status, clearBackgroundFlag]);
 
   useEffect(() => {
-    if (dbInitialized || authCancelled) {
-      return;
+    if (appState.status === 'initializing' || appState.status === 'locked') {
+      setupDatabase();
     }
-    
-    setupDatabase();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dbInitialized, authCancelled]);
+  }, [appState.status, setupDatabase]);
 
   // Initialize notification response listener only (don't request permissions yet)
   useEffect(() => {
@@ -113,87 +112,121 @@ function AppContent() {
   }, [router]);
 
   useEffect(() => {
-    if (!dbInitialized) return;
+    if (appState.status !== 'checking_onboarding') return;
 
     async function checkOnboardingStatus() {
       try {
         const status = await getSetting('onboardingCompleted');
-        setOnboardingCompleted(status === 'true');
+        setAppState(createReadyState(status === 'true'));
       } catch (error) {
         console.error('[AppLayout] Failed to check onboarding status', error);
-        setOnboardingCompleted(false);
-      } finally {
-        setIsReady(true);
+        setAppState(createReadyState(false));
       }
     }
 
     checkOnboardingStatus();
-  }, [dbInitialized]);
+  }, [appState.status]);
 
   useEffect(() => {
-    if (!isReady) return;
+    if (appState.status !== 'ready') return;
 
     if (initialRender) {
       setInitialRender(false);
 
       const inOnboardingPath = pathname.startsWith('/onboarding');
 
-      if (!onboardingCompleted && !inOnboardingPath) {
+      if (!appState.onboardingComplete && !inOnboardingPath) {
         router.replace('/onboarding');
       }
     }
-  }, [isReady, onboardingCompleted, pathname, router, initialRender]);
+  }, [appState, pathname, router, initialRender]);
 
-  if (dbError) {
+  const styles = useMemo(
+    () =>
+      StyleSheet.create({
+        centerContainer: {
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: 20,
+          backgroundColor: isDark ? darkColors.background : lightColors.background,
+        },
+        errorTitle: {
+          fontSize: 22,
+          fontWeight: 'bold',
+          marginBottom: 16,
+          color: isDark ? darkColors.textPrimary : lightColors.textPrimary,
+        },
+        errorMessage: {
+          fontSize: 16,
+          marginBottom: 24,
+          color: isDark ? darkColors.textSecondary : lightColors.textSecondary,
+          textAlign: 'center',
+        },
+        lockTitle: {
+          fontSize: 28,
+          fontWeight: '600',
+          marginBottom: 24,
+          color: isDark ? darkColors.textPrimary : lightColors.textPrimary,
+        },
+        button: {
+          paddingHorizontal: 24,
+          paddingVertical: 12,
+          backgroundColor: isDark ? darkColors.primary : lightColors.primary,
+          borderRadius: 8,
+        },
+        buttonText: {
+          color: '#fff',
+          fontSize: 16,
+          fontWeight: '600',
+        },
+      }),
+    [isDark]
+  );
+
+  if (appState.status === 'db_error') {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 20, backgroundColor: isDark ? darkColors.background : lightColors.background }}>
-        <Text style={{ fontSize: 22, fontWeight: 'bold', marginBottom: 16, color: isDark ? darkColors.textPrimary : lightColors.textPrimary }}>
-          Database Error
-        </Text>
-        <Text style={{ fontSize: 16, marginBottom: 24, color: isDark ? darkColors.textSecondary : lightColors.textSecondary, textAlign: 'center' }}>
-          {dbError}
-        </Text>
+      <View style={styles.centerContainer}>
+        <Text style={styles.errorTitle}>Database Error</Text>
+        <Text style={styles.errorMessage}>{appState.error}</Text>
         <TouchableOpacity
-          style={{ paddingHorizontal: 24, paddingVertical: 12, backgroundColor: isDark ? darkColors.primary : lightColors.primary, borderRadius: 8 }}
+          style={styles.button}
           onPress={async () => {
             try {
               clearKeyCache();
               await clearDatabaseCache();
-              setDbError(null);
-              setDbInitialized(false);
+              setAppState(createInitialState());
             } catch (error) {
               console.error('Failed to clear keys during retry:', error);
             }
           }}
         >
-          <Text style={{ color: '#fff', fontSize: 16, fontWeight: '600' }}>Retry</Text>
+          <Text style={styles.buttonText}>Retry</Text>
         </TouchableOpacity>
       </View>
     );
   }
 
-  if (!dbInitialized || !isReady || !fontsLoaded) {
+  if (appState.status === 'locked') {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 20, backgroundColor: isDark ? darkColors.background : lightColors.background }}>
-        {isLocked ? (
-          <>
-            <Text style={{ fontSize: 28, fontWeight: '600', marginBottom: 24, color: isDark ? darkColors.textPrimary : lightColors.textPrimary }}>
-              Unlock Lunari
-            </Text>
-            {authCancelled && (
-              <TouchableOpacity
-                style={{ paddingHorizontal: 24, paddingVertical: 12, backgroundColor: isDark ? darkColors.primary : lightColors.primary, borderRadius: 8 }}
-                onPress={() => {
-                  setAuthCancelled(false);
-                }}
-              >
-                <Text style={{ color: '#fff', fontSize: 16, fontWeight: '600' }}>Unlock</Text>
-              </TouchableOpacity>
-            )}
-          </>
-        ) : (
-          <ActivityIndicator size="large" color={isDark ? darkColors.primary : lightColors.primary} />
+      <View style={styles.centerContainer}>
+        <Text style={styles.lockTitle}>Unlock Lunari</Text>
+        {appState.reason === 'auth_cancelled' && (
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => setAppState(createInitialState())}
+          >
+            <Text style={styles.buttonText}>Unlock</Text>
+          </TouchableOpacity>
         )}
+      </View>
+    );
+  }
+
+  if (appState.status !== 'ready' || !fontsLoaded) {
+    return (
+      <View style={styles.centerContainer}>
+        <ActivityIndicator size="large" color={isDark ? darkColors.primary : lightColors.primary} />
       </View>
     );
   }
@@ -204,194 +237,30 @@ function AppContent() {
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="onboarding" options={{ headerShown: false }} />
         <Stack.Screen name="edit-period" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="settings/calendar-view"
-          options={{
-            headerShown: true,
-            headerTitle: 'Calendar view',
-            headerShadowVisible: false,
-            headerStyle: {
-              backgroundColor: isDark
-                ? darkColors.background
-                : lightColors.background,
-            },
-            headerTintColor: isDark
-              ? darkColors.textPrimary
-              : lightColors.textPrimary,
-          }}
-        />
-        <Stack.Screen
-          name="settings/reminders"
-          options={{
-            headerShown: true,
-            headerTitle: t('settings:screenTitles.reminders'),
-            headerShadowVisible: false,
-            headerStyle: {
-              backgroundColor: isDark
-                ? darkColors.background
-                : lightColors.background,
-            },
-            headerTintColor: isDark
-              ? darkColors.textPrimary
-              : lightColors.textPrimary,
-          }}
-        />
-        <Stack.Screen
-          name="settings/app-lock"
-          options={{
-            headerShown: true,
-            headerTitle: t('settings:screenTitles.appLock'),
-            headerShadowVisible: false,
-            headerStyle: {
-              backgroundColor: isDark
-                ? darkColors.background
-                : lightColors.background,
-            },
-            headerTintColor: isDark
-              ? darkColors.textPrimary
-              : lightColors.textPrimary,
-          }}
-        />
-        <Stack.Screen
-          name="settings/about"
-          options={{
-            headerShown: true,
-            headerTitle: t('settings:screenTitles.about'),
-            headerShadowVisible: false,
-            headerStyle: {
-              backgroundColor: isDark
-                ? darkColors.background
-                : lightColors.background,
-            },
-            headerTintColor: isDark
-              ? darkColors.textPrimary
-              : lightColors.textPrimary,
-          }}
-        />
-        <Stack.Screen
-          name="settings/privacy-policy"
-          options={{
-            headerShown: true,
-            headerTitle: t('settings:screenTitles.privacyPolicy'),
-            headerShadowVisible: false,
-            headerStyle: {
-              backgroundColor: isDark
-                ? darkColors.background
-                : lightColors.background,
-            },
-            headerTintColor: isDark
-              ? darkColors.textPrimary
-              : lightColors.textPrimary,
-          }}
-        />
-        <Stack.Screen
-          name="health-tracking"
-          options={{
-            headerShown: true,
-            headerTitle: t('health:tracking.screenTitle'),
-            headerShadowVisible: false,
-            headerStyle: {
-              backgroundColor: isDark
-                ? darkColors.background
-                : lightColors.background,
-            },
-            headerTintColor: isDark
-              ? darkColors.textPrimary
-              : lightColors.textPrimary,
-          }}
-        />
-        <Stack.Screen
-          name="notes-editor"
-          options={{
-            headerShown: true,
-            headerTitle: 'Notes',
-            headerShadowVisible: false,
-            headerStyle: {
-              backgroundColor: isDark ? darkColors.panel : lightColors.panel,
-            },
-            headerTintColor: isDark
-              ? darkColors.textPrimary
-              : lightColors.textPrimary,
-          }}
-        />
-        <Stack.Screen
-          name="(info)/cycle-phase-details"
-          options={{
-            headerShown: true,
-            headerTitle: t('info:screenTitles.todaysInsights'),
-            headerShadowVisible: true,
-            headerStyle: {
-              backgroundColor: isDark
-                ? darkColors.surface
-                : lightColors.surfaceVariant,
-            },
-            headerTintColor: isDark
-              ? darkColors.textPrimary
-              : lightColors.textPrimary,
-          }}
-        />
-        <Stack.Screen
-          name="(info)/cycle-length-info"
-          options={{
-            headerShown: true,
-            headerTitle: t('info:screenTitles.cycleLength'),
-            headerShadowVisible: false,
-            headerStyle: {
-              backgroundColor: isDark
-                ? darkColors.surface
-                : lightColors.surface,
-            },
-            headerTintColor: isDark
-              ? darkColors.textPrimary
-              : lightColors.textPrimary,
-          }}
-        />
-        <Stack.Screen
-          name="(info)/period-length-info"
-          options={{
-            headerShown: true,
-            headerTitle: t('info:screenTitles.periodLength'),
-            headerShadowVisible: false,
-            headerStyle: {
-              backgroundColor: isDark
-                ? darkColors.surface
-                : lightColors.surface,
-            },
-            headerTintColor: isDark
-              ? darkColors.textPrimary
-              : lightColors.textPrimary,
-          }}
-        />
-        <Stack.Screen
-          name="(info)/late-period-info"
-          options={{
-            headerShown: true,
-            headerTitle: t('info:screenTitles.latePeriod'),
-            headerShadowVisible: false,
-            headerStyle: {
-              backgroundColor: isDark
-                ? darkColors.surface
-                : lightColors.surface,
-            },
-            headerTintColor: isDark
-              ? darkColors.textPrimary
-              : lightColors.textPrimary,
-          }}
-        />
-        <Stack.Screen
-          name="(info)/prediction-info"
-          options={{
-            headerShown: true,
-            headerTitle: t('info:screenTitles.howPredictionsWork'),
-            headerShadowVisible: false,
-            headerStyle: {
-              backgroundColor: isDark ? darkColors.panel : lightColors.panel,
-            },
-            headerTintColor: isDark
-              ? darkColors.textPrimary
-              : lightColors.textPrimary,
-          }}
-        />
+        {dynamicScreens.map(screen => {
+          const titleValue = screen.titleKey?.includes(':') ? t(screen.titleKey) : screen.titleKey;
+          
+          return (
+            <Stack.Screen
+              key={screen.name}
+              name={screen.name}
+              options={{
+                headerShown: screen.headerShown,
+                headerTitle: titleValue,
+                headerShadowVisible: screen.headerShadowVisible ?? false,
+                headerStyle: {
+                  backgroundColor: getBackgroundColor(
+                    screen.backgroundColorKey,
+                    isDark,
+                    darkColors,
+                    lightColors
+                  ),
+                },
+                headerTintColor: isDark ? darkColors.textPrimary : lightColors.textPrimary,
+              }}
+            />
+          );
+        })}
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style={isDark ? 'light' : 'dark'} />
