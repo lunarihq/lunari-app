@@ -10,7 +10,7 @@ const SECURE_STORE_KEYS = {
 export type EncryptionMode = 'basic' | 'protected';
 
 export class EncryptionError extends Error {
-  constructor(public code: string, message: string) {
+  constructor(public code: keyof typeof ERROR_CODES, message: string) {
     super(message);
     this.name = 'EncryptionError';
   }
