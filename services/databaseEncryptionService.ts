@@ -26,7 +26,6 @@ export const ERROR_CODES = {
 
 let keyCache: Uint8Array | null = null;
 let initPromise: Promise<void> | null = null;
-let modeUpdatePromise: Promise<void> | null = null;
 
 function generateRandomKey(): Uint8Array {
   return Crypto.getRandomBytes(32);
@@ -163,70 +162,31 @@ export async function getEncryptionMode(): Promise<EncryptionMode> {
 }
 
 export async function reWrapKEK(requireAuth: boolean): Promise<void> {
-  console.log('[EncryptionService] reWrapKEK called', {
-    requireAuth,
-    hasKeyCache: !!keyCache,
-    hasModeUpdatePromise: !!modeUpdatePromise,
-  });
-
   if (!keyCache) {
-    throw new Error('Encryption key not initialized. Call initializeEncryption first.');
-  }
-
-  if (modeUpdatePromise) {
-    console.log('[EncryptionService] Mode update already in progress, waiting...');
-    return modeUpdatePromise;
-  }
-
-  const currentMode = await getEncryptionMode();
-  console.log('[EncryptionService] Current mode:', currentMode, 'Target:', requireAuth ? 'protected' : 'basic');
-  
-  if ((currentMode === 'protected') === requireAuth) {
-    console.log('[EncryptionService] Mode already matches target, skipping reWrap');
-    return;
+    throw new Error('Encryption key not initialized.');
   }
 
   const newMode: EncryptionMode = requireAuth ? 'protected' : 'basic';
-  console.log('[EncryptionService] Switching mode from', currentMode, 'to', newMode);
-
-  modeUpdatePromise = (async () => {
-    try {
-      if (requireAuth) {
-        console.log('[EncryptionService] 🔐 BIOMETRIC PROMPT - About to trigger for re-wrapping to protected mode');
-      }
-      
-      await SecureStore.setItemAsync(SECURE_STORE_KEYS.ENCRYPTION_KEY, base64.fromByteArray(keyCache), { requireAuthentication: requireAuth });
-      
-      if (requireAuth) {
-        console.log('[EncryptionService] ✅ BIOMETRIC PROMPT - Re-wrap completed successfully');
-      }
-      
-      await setStoredEncryptionMode(newMode);
-      console.log('[EncryptionService] Mode update completed successfully');
-    } catch (error) {
-      console.log('[EncryptionService] Mode update failed:', error);
-      if (error instanceof EncryptionError) {
-        throw error;
-      }
-      throw classifyError(error);
-    } finally {
-      console.log('[EncryptionService] Clearing modeUpdatePromise');
-      modeUpdatePromise = null;
-    }
-  })();
-
-  return modeUpdatePromise;
+  
+  try {
+    await SecureStore.setItemAsync(
+      SECURE_STORE_KEYS.ENCRYPTION_KEY, 
+      base64.fromByteArray(keyCache), 
+      { requireAuthentication: requireAuth }
+    );
+    await setStoredEncryptionMode(newMode);
+  } catch (error) {
+    throw classifyError(error);
+  }
 }
 
 export function clearKeyCache(): void {
   console.log('[EncryptionService] clearKeyCache called', {
     hadKeyCache: !!keyCache,
     hadInitPromise: !!initPromise,
-    hadModeUpdatePromise: !!modeUpdatePromise,
   });
   keyCache = null;
   initPromise = null;
-  modeUpdatePromise = null;
 }
 
 export async function clearAllKeys(): Promise<void> {
@@ -235,7 +195,6 @@ export async function clearAllKeys(): Promise<void> {
     await AsyncStorage.removeItem(ASYNC_STORAGE_KEYS.ENCRYPTION_MODE);
     keyCache = null;
     initPromise = null;
-    modeUpdatePromise = null;
   } catch (error) {
     console.error('Error clearing keys:', error);
   }
