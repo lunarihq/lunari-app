@@ -108,21 +108,13 @@ export function getDB() {
   return db;
 }
 
-// Helper function to get a setting
 export async function getSetting(key: string): Promise<string | null> {
-  if (!db) {
-    await initializeDatabase();
-  }
   const database = getDB();
   const result = await database.select().from(settings).where(eq(settings.key, key));
   return result.length > 0 ? result[0].value : null;
 }
 
-// Helper function to set a setting
 export async function setSetting(key: string, value: string): Promise<void> {
-  if (!db) {
-    await initializeDatabase();
-  }
   const database = getDB();
   await database
     .insert(settings)
