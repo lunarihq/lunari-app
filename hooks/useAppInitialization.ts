@@ -51,9 +51,14 @@ export function useAppInitialization() {
         error instanceof EncryptionError &&
         error.code === ERROR_CODES.USER_CANCELLED
       ) {
-        clearKeyCache();
-        await clearDatabaseCache();
-        setAppState(createLockedState('auth_cancelled'));
+        try {
+          clearKeyCache();
+          await clearDatabaseCache();
+        } catch (cleanupError) {
+          console.error('[AppLayout] Cache cleanup failed:', cleanupError);
+        } finally {
+          setAppState(createLockedState('auth_cancelled'));
+        }
       } else {
         console.error('[AppLayout] Database initialization error:', error);
         setAppState(
@@ -87,12 +92,15 @@ export function useAppInitialization() {
     }
   }, [justReturnedFromBackground, appState.status, clearBackgroundFlag]);
 
-  // Trigger database initialization when app starts or after unlock
+  // Trigger database initialization when app starts or after background return
   useEffect(() => {
-    if (appState.status === 'initializing' || appState.status === 'locked') {
+    if (
+      appState.status === 'initializing' ||
+      (appState.status === 'locked' && appState.reason === 'background_return')
+    ) {
       setupDatabase();
     }
-  }, [appState.status, setupDatabase]);
+  }, [appState, setupDatabase]);
 
   // Check onboarding status after database is ready
   useEffect(() => {
