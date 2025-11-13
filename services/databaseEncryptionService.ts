@@ -22,6 +22,7 @@ export class EncryptionError extends Error {
 
 export const ERROR_CODES = {
   USER_CANCELLED: 'USER_CANCELLED',
+  KEY_NOT_FOUND: 'KEY_NOT_FOUND',
 } as const;
 
 let keyCache: Uint8Array | null = null;
@@ -67,7 +68,7 @@ async function loadExistingKey(): Promise<Uint8Array> {
   const keyBase64 = await SecureStore.getItemAsync(SECURE_STORE_KEYS.ENCRYPTION_KEY, { requireAuthentication: mode === 'protected' });
   
   if (!keyBase64) {
-    throw new Error('Encryption key is missing. Your data cannot be decrypted.');
+    throw new EncryptionError(ERROR_CODES.KEY_NOT_FOUND, 'Encryption key is missing. Your data cannot be decrypted.');
   }
 
   return base64.toByteArray(keyBase64);
@@ -84,15 +85,13 @@ export async function initializeEncryption(): Promise<void> {
 
   initializationPromise = (async () => {
     try {
-      const hasExistingKey = await SecureStore.getItemAsync(SECURE_STORE_KEYS.ENCRYPTION_KEY);
-      
-      if (hasExistingKey) {
-        keyCache = await loadExistingKey();
-      } else {
-        keyCache = await createNewKey();
-      }
+      keyCache = await loadExistingKey();
     } catch (error) {
-      throw classifyError(error);
+      if (error instanceof EncryptionError && error.code === ERROR_CODES.KEY_NOT_FOUND) {
+        keyCache = await createNewKey();
+      } else {
+        throw classifyError(error);
+      }
     } finally {
       initializationPromise = null;
     }
