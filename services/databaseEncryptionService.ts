@@ -25,7 +25,6 @@ export const ERROR_CODES = {
 } as const;
 
 let keyCache: Uint8Array | null = null;
-let initPromise: Promise<void> | null = null;
 
 function generateRandomKey(): Uint8Array {
   return Crypto.getRandomBytes(32);
@@ -90,7 +89,6 @@ async function loadExistingKey(): Promise<Uint8Array> {
 export async function initializeEncryption(): Promise<void> {
   console.log('[EncryptionService] initializeEncryption called', {
     hasKeyCache: !!keyCache,
-    hasInitPromise: !!initPromise,
     timestamp: new Date().toISOString(),
   });
 
@@ -98,38 +96,26 @@ export async function initializeEncryption(): Promise<void> {
     console.log('[EncryptionService] Using cached key, skipping initialization');
     return;
   }
-  
-  if (initPromise) {
-    console.log('[EncryptionService] Initialization already in progress, waiting...');
-    return initPromise;
-  }
 
-  initPromise = (async () => {
-    try {
-      console.log('[EncryptionService] Starting fresh initialization');
-      
-      const hasExistingKey = await SecureStore.getItemAsync(SECURE_STORE_KEYS.ENCRYPTION_KEY);
-      console.log('[EncryptionService] Checked for existing key:', !!hasExistingKey);
-      
-      if (hasExistingKey) {
-        console.log('[EncryptionService] Loading existing key...');
-        keyCache = await loadExistingKey();
-        console.log('[EncryptionService] Existing key loaded successfully');
-      } else {
-        console.log('[EncryptionService] Creating new key...');
-        keyCache = await createNewKey();
-        console.log('[EncryptionService] New key created successfully');
-      }
-    } catch (error) {
-      console.log('[EncryptionService] Initialization failed:', error);
-      throw classifyError(error);
-    } finally {
-      console.log('[EncryptionService] Clearing initPromise');
-      initPromise = null;
+  try {
+    console.log('[EncryptionService] Starting fresh initialization');
+    
+    const hasExistingKey = await SecureStore.getItemAsync(SECURE_STORE_KEYS.ENCRYPTION_KEY);
+    console.log('[EncryptionService] Checked for existing key:', !!hasExistingKey);
+    
+    if (hasExistingKey) {
+      console.log('[EncryptionService] Loading existing key...');
+      keyCache = await loadExistingKey();
+      console.log('[EncryptionService] Existing key loaded successfully');
+    } else {
+      console.log('[EncryptionService] Creating new key...');
+      keyCache = await createNewKey();
+      console.log('[EncryptionService] New key created successfully');
     }
-  })();
-
-  return initPromise;
+  } catch (error) {
+    console.log('[EncryptionService] Initialization failed:', error);
+    throw classifyError(error);
+  }
 }
 
 async function getStoredEncryptionMode(): Promise<EncryptionMode> {
@@ -183,10 +169,8 @@ export async function reWrapKEK(requireAuth: boolean): Promise<void> {
 export function clearKeyCache(): void {
   console.log('[EncryptionService] clearKeyCache called', {
     hadKeyCache: !!keyCache,
-    hadInitPromise: !!initPromise,
   });
   keyCache = null;
-  initPromise = null;
 }
 
 export async function clearAllKeys(): Promise<void> {
@@ -194,7 +178,6 @@ export async function clearAllKeys(): Promise<void> {
     await SecureStore.deleteItemAsync(SECURE_STORE_KEYS.ENCRYPTION_KEY);
     await AsyncStorage.removeItem(ASYNC_STORAGE_KEYS.ENCRYPTION_MODE);
     keyCache = null;
-    initPromise = null;
   } catch (error) {
     console.error('Error clearing keys:', error);
   }
