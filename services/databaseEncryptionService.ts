@@ -18,9 +18,6 @@ export class EncryptionError extends Error {
 
 export const ERROR_CODES = {
   USER_CANCELLED: 'USER_CANCELLED',
-  KEY_CORRUPTION: 'KEY_CORRUPTION',
-  SECURE_STORE_UNAVAILABLE: 'SECURE_STORE_UNAVAILABLE',
-  AUTH_IN_PROGRESS: 'AUTH_IN_PROGRESS',
 } as const;
 
 let keyCache: Uint8Array | null = null;
@@ -43,28 +40,16 @@ function isCancellationError(error: unknown): boolean {
   return error.message.includes('cancel');
 }
 
-function classifyError(error: unknown): EncryptionError {
+function classifyError(error: unknown): never {
   if (error instanceof EncryptionError) {
-    return error;
+    throw error;
   }
 
   if (isCancellationError(error)) {
-    return new EncryptionError(ERROR_CODES.USER_CANCELLED, 'Authentication was cancelled');
+    throw new EncryptionError(ERROR_CODES.USER_CANCELLED, 'Authentication was cancelled');
   }
 
-  const message = error instanceof Error ? error.message : String(error);
-  
-  if (message.includes('Authentication is already in progress')) {
-    return new EncryptionError(ERROR_CODES.AUTH_IN_PROGRESS, 'Authentication is in progress. Please try again.');
-  }
-
-  if (message.includes('not available') || message.includes('SecureStore')) {
-    console.error('[Encryption] SecureStore unavailable:', error);
-    return new EncryptionError(ERROR_CODES.SECURE_STORE_UNAVAILABLE, 'Secure storage is not available on this device');
-  }
-
-  console.error('[Encryption] Unexpected error:', error);
-  return new EncryptionError(ERROR_CODES.SECURE_STORE_UNAVAILABLE, 'Failed to initialize encryption - secure storage may be unavailable');
+  throw error;
 }
 
 async function createNewKey(): Promise<Uint8Array> {
@@ -92,7 +77,7 @@ async function loadExistingKey(): Promise<Uint8Array> {
   
   if (!keyBase64) {
     console.error('[Encryption] Key missing');
-    throw new EncryptionError(ERROR_CODES.KEY_CORRUPTION, 'Encryption key is missing. Your data cannot be decrypted.');
+    throw new Error('Encryption key is missing. Your data cannot be decrypted.');
   }
 
   console.log('[EncryptionService] Key loaded successfully');
