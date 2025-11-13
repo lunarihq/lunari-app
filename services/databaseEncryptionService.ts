@@ -1,9 +1,13 @@
 import * as SecureStore from 'expo-secure-store';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Crypto from 'expo-crypto';
 import * as base64 from 'base64-js';
 
 const SECURE_STORE_KEYS = {
   ENCRYPTION_KEY: 'encryption_key',
+};
+
+const ASYNC_STORAGE_KEYS = {
   ENCRYPTION_MODE: 'encryption_mode',
 };
 
@@ -105,10 +109,8 @@ export async function initializeEncryption(): Promise<void> {
     try {
       console.log('[EncryptionService] Starting fresh initialization');
       
-      // Check if encryption mode exists (cheaper check that doesn't trigger auth)
-      const mode = await getStoredEncryptionMode();
-      const hasExistingKey = await SecureStore.getItemAsync(SECURE_STORE_KEYS.ENCRYPTION_MODE);
-      console.log('[EncryptionService] Checked for existing setup:', !!hasExistingKey, 'mode:', mode);
+      const hasExistingKey = await SecureStore.getItemAsync(SECURE_STORE_KEYS.ENCRYPTION_KEY);
+      console.log('[EncryptionService] Checked for existing key:', !!hasExistingKey);
       
       if (hasExistingKey) {
         console.log('[EncryptionService] Loading existing key...');
@@ -133,7 +135,7 @@ export async function initializeEncryption(): Promise<void> {
 
 async function getStoredEncryptionMode(): Promise<EncryptionMode> {
   try {
-    const mode = await SecureStore.getItemAsync(SECURE_STORE_KEYS.ENCRYPTION_MODE);
+    const mode = await AsyncStorage.getItem(ASYNC_STORAGE_KEYS.ENCRYPTION_MODE);
     return mode === 'protected' ? 'protected' : 'basic';
   } catch {
     return 'basic';
@@ -141,7 +143,7 @@ async function getStoredEncryptionMode(): Promise<EncryptionMode> {
 }
 
 async function setStoredEncryptionMode(mode: EncryptionMode): Promise<void> {
-  await SecureStore.setItemAsync(SECURE_STORE_KEYS.ENCRYPTION_MODE, mode);
+  await AsyncStorage.setItem(ASYNC_STORAGE_KEYS.ENCRYPTION_MODE, mode);
 }
 
 export function getEncryptionKey(): Uint8Array {
@@ -230,7 +232,7 @@ export function clearKeyCache(): void {
 export async function clearAllKeys(): Promise<void> {
   try {
     await SecureStore.deleteItemAsync(SECURE_STORE_KEYS.ENCRYPTION_KEY);
-    await SecureStore.deleteItemAsync(SECURE_STORE_KEYS.ENCRYPTION_MODE);
+    await AsyncStorage.removeItem(ASYNC_STORAGE_KEYS.ENCRYPTION_MODE);
     keyCache = null;
     initPromise = null;
     modeUpdatePromise = null;
