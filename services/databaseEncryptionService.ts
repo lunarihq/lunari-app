@@ -2,17 +2,6 @@ import * as SecureStore from 'expo-secure-store';
 import * as Crypto from 'expo-crypto';
 import * as base64 from 'base64-js';
 
-if (typeof globalThis.crypto === 'undefined') {
-  globalThis.crypto = {} as any;
-}
-if (typeof globalThis.crypto.getRandomValues === 'undefined') {
-  globalThis.crypto.getRandomValues = <T extends ArrayBufferView>(array: T): T => {
-    const bytes = Crypto.getRandomBytes(array.byteLength);
-    new Uint8Array(array.buffer, array.byteOffset, array.byteLength).set(bytes);
-    return array;
-  };
-}
-
 const SECURE_STORE_KEYS = {
   ENCRYPTION_KEY: 'encryption_key',
   ENCRYPTION_MODE: 'encryption_mode',
