@@ -1,5 +1,5 @@
-import * as SecureStore from 'expo-secure-store';
 import * as LocalAuthentication from 'expo-local-authentication';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LOCK_ENABLED_KEY = 'app_lock_enabled';
 
@@ -35,7 +35,7 @@ export class AuthService {
   static async isLockEnabled(): Promise<boolean> {
     console.log('[AuthService] isLockEnabled called');
     try {
-      const enabled = await SecureStore.getItemAsync(LOCK_ENABLED_KEY);
+      const enabled = await AsyncStorage.getItem(LOCK_ENABLED_KEY);
       console.log('[AuthService] Lock enabled status:', enabled);
       return enabled === 'true';
     } catch (error) {
@@ -47,7 +47,7 @@ export class AuthService {
   static async setLockEnabled(enabled: boolean): Promise<boolean> {
     console.log('[AuthService] setLockEnabled called', { enabled });
     try {
-      await SecureStore.setItemAsync(LOCK_ENABLED_KEY, enabled.toString());
+      await AsyncStorage.setItem(LOCK_ENABLED_KEY, enabled.toString());
       console.log('[AuthService] Lock status set successfully');
       return true;
     } catch (error) {
