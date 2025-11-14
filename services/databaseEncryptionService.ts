@@ -120,12 +120,8 @@ export async function initializeEncryption(): Promise<void> {
 }
 
 async function getStoredEncryptionMode(): Promise<EncryptionMode> {
-  try {
-    const mode = await AsyncStorage.getItem(ASYNC_STORAGE_KEYS.ENCRYPTION_MODE);
-    return mode === 'protected' ? 'protected' : 'basic';
-  } catch {
-    return 'basic';
-  }
+  const mode = await AsyncStorage.getItem(ASYNC_STORAGE_KEYS.ENCRYPTION_MODE);
+  return mode === 'protected' ? 'protected' : 'basic';
 }
 
 async function setStoredEncryptionMode(mode: EncryptionMode): Promise<void> {
