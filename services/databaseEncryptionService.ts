@@ -1,7 +1,6 @@
 import * as SecureStore from 'expo-secure-store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Crypto from 'expo-crypto';
-import * as base64 from 'base64-js';
 
 const SECURE_STORE_KEYS = {
   ENCRYPTION_KEY: 'encryption_key',
@@ -25,11 +24,12 @@ export const ERROR_CODES = {
   KEY_NOT_FOUND: 'KEY_NOT_FOUND',
 } as const;
 
-let keyCache: Uint8Array | null = null;
+let keyCache: string | null = null;
 let initializationPromise: Promise<void> | null = null;
 
-function generateRandomKey(): Uint8Array {
-  return Crypto.getRandomBytes(32);
+function generateRandomKeyHex(): string {
+  const bytes = Crypto.getRandomBytes(32);
+  return Array.from(bytes).map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
 function isCancellationError(error: unknown): boolean {
@@ -66,26 +66,26 @@ function classifyError(error: unknown): never {
   throw error;
 }
 
-async function createNewKey(): Promise<Uint8Array> {
-  const key = generateRandomKey();
-  await SecureStore.setItemAsync(SECURE_STORE_KEYS.ENCRYPTION_KEY, base64.fromByteArray(key), { requireAuthentication: false });
+async function createNewKey(): Promise<string> {
+  const keyHex = generateRandomKeyHex();
+  await SecureStore.setItemAsync(SECURE_STORE_KEYS.ENCRYPTION_KEY, keyHex, { requireAuthentication: false });
   await setStoredEncryptionMode('basic');
-  return key;
+  return keyHex;
 }
 
-async function loadExistingKey(): Promise<Uint8Array> {
+async function loadExistingKey(): Promise<string> {
   const mode = await getStoredEncryptionMode();
-  let keyBase64: string | null;
+  let keyHex: string | null;
   
   try {
-    keyBase64 = await SecureStore.getItemAsync(
+    keyHex = await SecureStore.getItemAsync(
       SECURE_STORE_KEYS.ENCRYPTION_KEY, 
       { requireAuthentication: mode === 'protected' }
     );
   } catch (error) {
     // Mode desync: AsyncStorage says 'basic' but key requires auth
     if (mode !== 'protected' && isAuthenticationRequiredError(error)) {
-      keyBase64 = await SecureStore.getItemAsync(
+      keyHex = await SecureStore.getItemAsync(
         SECURE_STORE_KEYS.ENCRYPTION_KEY, 
         { requireAuthentication: true }
       );
@@ -95,11 +95,11 @@ async function loadExistingKey(): Promise<Uint8Array> {
     }
   }
   
-  if (!keyBase64) {
+  if (!keyHex) {
     throw new EncryptionError(ERROR_CODES.KEY_NOT_FOUND, 'Encryption key is missing. Your data cannot be decrypted.');
   }
 
-  return base64.toByteArray(keyBase64);
+  return keyHex;
 }
 
 export async function initializeEncryption(): Promise<void> {
@@ -141,7 +141,7 @@ async function setStoredEncryptionMode(mode: EncryptionMode): Promise<void> {
   await AsyncStorage.setItem(ASYNC_STORAGE_KEYS.ENCRYPTION_MODE, mode);
 }
 
-export function getEncryptionKey(): Uint8Array {
+export function getEncryptionKeyHex(): string {
   if (!keyCache) {
     throw new Error('Encryption key not initialized. Call initializeEncryption first.');
   }
@@ -167,7 +167,7 @@ export async function reWrapKEK(requireAuth: boolean): Promise<void> {
   try {
     await SecureStore.setItemAsync(
       SECURE_STORE_KEYS.ENCRYPTION_KEY, 
-      base64.fromByteArray(keyCache), 
+      keyCache, 
       { requireAuthentication: requireAuth }
     );
     await setStoredEncryptionMode(newMode);
