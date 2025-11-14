@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { db, getSetting } from '../db';
+import { getDB, getSetting } from '../db';
 import { periodDates } from '../db/schema';
 import { PeriodPredictionService } from '../services/periodPredictions';
 
@@ -32,6 +32,7 @@ export function useCalendarData() {
 
   // Load period dates from database
   const loadData = useCallback(async () => {
+    const db = getDB();
     const saved = await db.select().from(periodDates);
 
     // Return raw period dates without styling

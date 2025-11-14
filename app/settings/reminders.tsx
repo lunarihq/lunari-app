@@ -18,10 +18,13 @@ import { getSetting, setSetting } from '../../db';
 import { useTheme } from '../../styles/theme';
 import { useAppStyles } from '../../hooks/useStyles';
 import { formatTime } from '../../utils/localeUtils';
+import { useAuth } from '../../contexts/AuthContext';
+
 export default function Reminders() {
   const { colors } = useTheme();
   const { typography, commonStyles } = useAppStyles();
   const { t } = useTranslation('settings');
+  const { startPermissionRequest, endPermissionRequest } = useAuth();
   const [beforePeriodEnabled, setBeforePeriodEnabled] = useState(false);
   const [dayOfPeriodEnabled, setDayOfPeriodEnabled] = useState(false);
   const [latePeriodEnabled, setLatePeriodEnabled] = useState(false);
@@ -108,7 +111,12 @@ export default function Reminders() {
 
       // If no permission, request it
       if (!hasPermission) {
-        hasPermission = await NotificationService.requestPermissions();
+        startPermissionRequest();
+        try {
+          hasPermission = await NotificationService.requestPermissions();
+        } finally {
+          endPermissionRequest();
+        }
       }
 
       if (hasPermission) {
@@ -146,7 +154,12 @@ export default function Reminders() {
 
       // If no permission, request it
       if (!hasPermission) {
-        hasPermission = await NotificationService.requestPermissions();
+        startPermissionRequest();
+        try {
+          hasPermission = await NotificationService.requestPermissions();
+        } finally {
+          endPermissionRequest();
+        }
       }
 
       if (hasPermission) {
@@ -184,7 +197,12 @@ export default function Reminders() {
 
       // If no permission, request it
       if (!hasPermission) {
-        hasPermission = await NotificationService.requestPermissions();
+        startPermissionRequest();
+        try {
+          hasPermission = await NotificationService.requestPermissions();
+        } finally {
+          endPermissionRequest();
+        }
       }
 
       if (hasPermission) {

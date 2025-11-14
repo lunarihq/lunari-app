@@ -10,7 +10,7 @@ import { Button } from '../components/Button';
 import { router, useLocalSearchParams } from 'expo-router';
 import dayjs from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek';
-import { db } from '../db';
+import { getDB } from '../db';
 import { healthLogs, periodDates } from '../db/schema';
 import { eq } from 'drizzle-orm';
 import { useFocusEffect } from '@react-navigation/native';
@@ -95,6 +95,7 @@ export default function HealthTracking() {
   };
   const checkIsPeriodDate = async (date: string) => {
     try {
+      const db = getDB();
       const result = await db
         .select()
         .from(periodDates)
@@ -111,6 +112,7 @@ export default function HealthTracking() {
       try {
         await checkIsPeriodDate(selectedDate);
 
+        const db = getDB();
         const existingEntries = await db
           .select()
           .from(healthLogs)
@@ -288,6 +290,7 @@ export default function HealthTracking() {
 
   const saveChanges = async () => {
     try {
+      const db = getDB();
       await db.delete(healthLogs).where(eq(healthLogs.date, selectedDate));
 
       const allRecords = [];

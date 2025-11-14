@@ -2,6 +2,7 @@ import * as SQLite from 'expo-sqlite';
 import { drizzle } from 'drizzle-orm/expo-sqlite';
 import { settings } from './schema';
 import { eq } from 'drizzle-orm';
+import { initializeEncryption, getEncryptionKeyHex } from '../services/databaseEncryptionService';
 
 const MIGRATION_TABLES = `
 CREATE TABLE IF NOT EXISTS period_dates (
@@ -28,23 +29,81 @@ CREATE TABLE IF NOT EXISTS settings (
 );
 `;
 
-export const expo = SQLite.openDatabaseSync('period.db');
+let expo: SQLite.SQLiteDatabase | null = null;
+let db: ReturnType<typeof drizzle> | null = null;
 
-// Execute the migration
-expo.execSync(MIGRATION_TABLES);
+export async function deleteDatabaseFile(): Promise<void> {
+  if (expo) {
+    await expo.closeAsync();
+  }
+  
+  expo = null;
+  db = null;
+  
+  await SQLite.deleteDatabaseAsync('period.db');
+}
 
-export const db = drizzle(expo);
+export async function initializeDatabase(): Promise<void> {
+  if (db) {
+    return;
+  }
 
-// Helper function to get a setting
+  try {
+    await initializeEncryption();
+    
+    const hexKey = getEncryptionKeyHex();
+    
+    expo = await SQLite.openDatabaseAsync('period.db');
+
+    await expo.execAsync(`PRAGMA key = "x'${hexKey}'";`);
+    await expo.execAsync('PRAGMA cipher_page_size = 4096;');
+    await expo.execAsync('PRAGMA kdf_iter = 256000;');
+
+    // Test DB access
+    await expo.getAllAsync('SELECT count(*) FROM sqlite_master;');
+    await expo.execAsync(MIGRATION_TABLES);
+    
+    db = drizzle(expo);
+  } catch (error) {
+    if (expo) {
+      try {
+        await expo.closeAsync();
+      } catch (closeError) {
+        console.error('[Database] Error closing database:', closeError);
+      }
+      expo = null;
+    }
+    db = null;
+    throw error;
+  }
+}
+
+export function getDB() {
+  if (!db) {
+    throw new Error('Database not initialized. Call initializeDatabase first.');
+  }
+  return db;
+}
+
 export async function getSetting(key: string): Promise<string | null> {
-  const result = await db.select().from(settings).where(eq(settings.key, key));
+  const database = getDB();
+  const result = await database.select().from(settings).where(eq(settings.key, key));
   return result.length > 0 ? result[0].value : null;
 }
 
-// Helper function to set a setting
 export async function setSetting(key: string, value: string): Promise<void> {
-  await db
+  const database = getDB();
+  await database
     .insert(settings)
     .values({ key, value })
     .onConflictDoUpdate({ target: settings.key, set: { value } });
+}
+
+export async function clearDatabaseCache(): Promise<void> {
+  db = null;
+  
+  if (expo) {
+    await expo.closeAsync();
+    expo = null;
+  }
 }
