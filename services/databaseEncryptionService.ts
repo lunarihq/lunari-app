@@ -35,13 +35,23 @@ function generateRandomKey(): Uint8Array {
 function isCancellationError(error: unknown): boolean {
   if (!(error instanceof Error)) return false;
   
-  const name = (error as any).name;
-  if (name === 'NotAllowedError' || name === 'ERR_CANCELED') return true;
+  if (error.name === 'NotAllowedError' || error.name === 'ERR_CANCELED') return true;
   
   const code = (error as any).code;
   if (code === 'ERR_CANCELED' || code === 'USER_CANCELLED') return true;
   
   return error.message.includes('cancel');
+}
+
+function isAuthenticationRequiredError(error: unknown): boolean {
+  if (!(error instanceof Error)) return false;
+  // Primary check: the documented error code
+  const code = (error as any).code;
+  if (code === 'ERR_SECURESTORE_AUTHENTICATION_REQUIRED') return true;
+  // Secondary check: error name (some native modules use this)
+  if (error.name === 'ERR_SECURESTORE_AUTHENTICATION_REQUIRED') return true;
+  
+  return false;
 }
 
 function classifyError(error: unknown): never {
@@ -65,7 +75,25 @@ async function createNewKey(): Promise<Uint8Array> {
 
 async function loadExistingKey(): Promise<Uint8Array> {
   const mode = await getStoredEncryptionMode();
-  const keyBase64 = await SecureStore.getItemAsync(SECURE_STORE_KEYS.ENCRYPTION_KEY, { requireAuthentication: mode === 'protected' });
+  let keyBase64: string | null;
+  
+  try {
+    keyBase64 = await SecureStore.getItemAsync(
+      SECURE_STORE_KEYS.ENCRYPTION_KEY, 
+      { requireAuthentication: mode === 'protected' }
+    );
+  } catch (error) {
+    // Mode desync: AsyncStorage says 'basic' but key requires auth
+    if (mode !== 'protected' && isAuthenticationRequiredError(error)) {
+      keyBase64 = await SecureStore.getItemAsync(
+        SECURE_STORE_KEYS.ENCRYPTION_KEY, 
+        { requireAuthentication: true }
+      );
+      await setStoredEncryptionMode('protected');
+    } else {
+      throw error;
+    }
+  }
   
   if (!keyBase64) {
     throw new EncryptionError(ERROR_CODES.KEY_NOT_FOUND, 'Encryption key is missing. Your data cannot be decrypted.');
