@@ -22,6 +22,7 @@ export class EncryptionError extends Error {
 export const ERROR_CODES = {
   USER_CANCELLED: 'USER_CANCELLED',
   KEY_NOT_FOUND: 'KEY_NOT_FOUND',
+  UNINITIALIZED_ENCRYPTION: 'UNINITIALIZED_ENCRYPTION',
 } as const;
 
 let keyCache: string | null = null;
@@ -51,17 +52,6 @@ function isAuthenticationRequiredError(error: unknown): boolean {
   return false;
 }
 
-function classifyError(error: unknown): never {
-  if (error instanceof EncryptionError) {
-    throw error;
-  }
-
-  if (isCancellationError(error)) {
-    throw new EncryptionError(ERROR_CODES.USER_CANCELLED, 'Authentication was cancelled');
-  }
-
-  throw error;
-}
 
 async function createNewKey(): Promise<string> {
   const keyHex = generateRandomKeyHex();
@@ -115,7 +105,11 @@ export async function initializeEncryption(): Promise<void> {
       if (error instanceof EncryptionError && error.code === ERROR_CODES.KEY_NOT_FOUND) {
         keyCache = await createNewKey();
       } else {
-        throw classifyError(error);
+        if (error instanceof EncryptionError) throw error;
+        if (isCancellationError(error)) {
+          throw new EncryptionError(ERROR_CODES.USER_CANCELLED, 'Authentication was cancelled');
+        }
+        throw error;
       }
     } finally {
       initializationPromise = null;
@@ -140,23 +134,18 @@ async function setStoredEncryptionMode(mode: EncryptionMode): Promise<void> {
 
 export function getEncryptionKeyHex(): string {
   if (!keyCache) {
-    throw new Error('Encryption key not initialized. Call initializeEncryption first.');
+    throw new EncryptionError(ERROR_CODES.UNINITIALIZED_ENCRYPTION, 'Encryption key not initialized. Call initializeEncryption first.');
   }
   return keyCache;
 }
 
 export async function getEncryptionMode(): Promise<EncryptionMode> {
-  try {
-    return await getStoredEncryptionMode();
-  } catch (error) {
-    console.error('Error getting encryption mode:', error);
-    return 'basic';
-  }
+  return await getStoredEncryptionMode();
 }
 
 export async function reWrapKEK(requireAuth: boolean): Promise<void> {
   if (!keyCache) {
-    throw new Error('Encryption key not initialized.');
+    throw new EncryptionError(ERROR_CODES.UNINITIALIZED_ENCRYPTION, 'Encryption key not initialized.');
   }
 
   const newMode: EncryptionMode = requireAuth ? 'protected' : 'basic';
@@ -169,7 +158,11 @@ export async function reWrapKEK(requireAuth: boolean): Promise<void> {
     );
     await setStoredEncryptionMode(newMode);
   } catch (error) {
-    throw classifyError(error);
+    if (error instanceof EncryptionError) throw error;
+    if (isCancellationError(error)) {
+      throw new EncryptionError(ERROR_CODES.USER_CANCELLED, 'Authentication was cancelled');
+    }
+    throw error;
   }
 }
 
