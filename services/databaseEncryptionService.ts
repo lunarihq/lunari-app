@@ -33,14 +33,11 @@ function generateRandomKeyHex(): string {
 }
 
 function isCancellationError(error: unknown): boolean {
-  if (!(error instanceof Error)) return false;
+  const code = (error as any)?.code;
+  const message = (error as any)?.message || '';
   
-  if (error.name === 'NotAllowedError' || error.name === 'ERR_CANCELED') return true;
-  
-  const code = (error as any).code;
-  if (code === 'ERR_CANCELED' || code === 'USER_CANCELLED') return true;
-  
-  return error.message.includes('cancel');
+  return code === 'ERR_AUTHENTICATION' && 
+         message.toLowerCase().includes('cancel');
 }
 
 function isAuthenticationRequiredError(error: unknown): boolean {
@@ -180,7 +177,7 @@ export function clearKeyCache(): void {
   keyCache = null;
 }
 
-export async function clearAllKeys(): Promise<void> {
+export async function deleteEncryptionKey(): Promise<void> {
   try {
     await SecureStore.deleteItemAsync(SECURE_STORE_KEYS.ENCRYPTION_KEY);
     await AsyncStorage.removeItem(ASYNC_STORAGE_KEYS.ENCRYPTION_MODE);
