@@ -59,6 +59,7 @@ export async function initializeDatabase(): Promise<void> {
     await expo.execAsync('PRAGMA cipher_page_size = 4096;');
     await expo.execAsync('PRAGMA kdf_iter = 256000;');
 
+    // Test DB access
     await expo.getAllAsync('SELECT count(*) FROM sqlite_master;');
     await expo.execAsync(MIGRATION_TABLES);
     
