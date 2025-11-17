@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS settings (
 
 let expo: SQLite.SQLiteDatabase | null = null;
 let db: ReturnType<typeof drizzle> | null = null;
+let initializationPromise: Promise<void> | null = null;
 
 export async function deleteDatabaseFile(): Promise<void> {
   if (expo) {
@@ -48,34 +49,45 @@ export async function initializeDatabase(): Promise<void> {
     return;
   }
 
-  try {
-    await initializeEncryption();
-    
-    const hexKey = getEncryptionKeyHex();
-    
-    expo = await SQLite.openDatabaseAsync('period.db');
-
-    await expo.execAsync(`PRAGMA key = "x'${hexKey}'";`);
-    await expo.execAsync('PRAGMA cipher_page_size = 4096;');
-    await expo.execAsync('PRAGMA kdf_iter = 256000;');
-
-    // Test DB access
-    await expo.getAllAsync('SELECT count(*) FROM sqlite_master;');
-    await expo.execAsync(MIGRATION_TABLES);
-    
-    db = drizzle(expo);
-  } catch (error) {
-    if (expo) {
-      try {
-        await expo.closeAsync();
-      } catch (closeError) {
-        console.error('[Database] Error closing database:', closeError);
-      }
-      expo = null;
-    }
-    db = null;
-    throw error;
+  if (initializationPromise) {
+    await initializationPromise;
+    return;
   }
+
+  initializationPromise = (async () => {
+    try {
+      await initializeEncryption();
+      
+      const hexKey = getEncryptionKeyHex();
+      
+      expo = await SQLite.openDatabaseAsync('period.db');
+
+      await expo.execAsync(`PRAGMA key = "x'${hexKey}'";`);
+      await expo.execAsync('PRAGMA cipher_page_size = 4096;');
+      await expo.execAsync('PRAGMA kdf_iter = 256000;');
+
+      // Test DB access
+      await expo.getAllAsync('SELECT count(*) FROM sqlite_master;');
+      await expo.execAsync(MIGRATION_TABLES);
+      
+      db = drizzle(expo);
+    } catch (error) {
+      if (expo) {
+        try {
+          await expo.closeAsync();
+        } catch (closeError) {
+          console.error('[Database] Error closing database:', closeError);
+        }
+        expo = null;
+      }
+      db = null;
+      throw error;
+    } finally {
+      initializationPromise = null;
+    }
+  })();
+
+  return initializationPromise;
 }
 
 export function getDB() {
