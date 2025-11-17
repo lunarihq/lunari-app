@@ -71,7 +71,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
           
           setAppStateBackground(true);
           if (isLockEnabled && !isRequestingPermission) {
-            clearKeyCache();
+            await clearKeyCache();
             await clearDatabaseCache();
           }
         } else if (nextAppState === 'active' && appStateBackground && isLockEnabled) {

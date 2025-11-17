@@ -52,7 +52,7 @@ export function useAppInitialization() {
         error.code === ERROR_CODES.USER_CANCELLED
       ) {
         try {
-          clearKeyCache();
+          await clearKeyCache();
           await clearDatabaseCache();
         } catch (cleanupError) {
           console.error('[AppLayout] Cache cleanup failed:', cleanupError);
@@ -74,7 +74,7 @@ export function useAppInitialization() {
 
   const retryInitialization = useCallback(async () => {
     try {
-      clearKeyCache();
+      await clearKeyCache();
       await clearDatabaseCache();
       setAppState(createInitialState());
     } catch (error) {

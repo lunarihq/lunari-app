@@ -162,15 +162,32 @@ export async function reWrapKEK(requireAuth: boolean): Promise<void> {
   }
 }
 
-export function clearKeyCache(): void {
+export async function clearKeyCache(): Promise<void> {
+  if (initializationPromise) {
+    try {
+      await initializationPromise;
+    } catch {
+      // Swallow errors from initialization since we're clearing anyway
+    }
+  }
   keyCache = null;
+  initializationPromise = null;
 }
 
 export async function deleteEncryptionKey(): Promise<void> {
+  if (initializationPromise) {
+    try {
+      await initializationPromise;
+    } catch {
+      // Swallow errors since we're deleting anyway
+    }
+  }
+  
   try {
     await SecureStore.deleteItemAsync(SECURE_STORE_KEYS.ENCRYPTION_KEY);
     await AsyncStorage.removeItem(ASYNC_STORAGE_KEYS.ENCRYPTION_MODE);
     keyCache = null;
+    initializationPromise = null;
   } catch (error) {
     console.error('Error clearing keys:', error);
   }
