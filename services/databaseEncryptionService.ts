@@ -27,6 +27,7 @@ export const ERROR_CODES = {
 
 let keyCache: string | null = null;
 let initializationPromise: Promise<void> | null = null;
+let reWrapPromise: Promise<void> | null = null;
 
 function generateRandomKeyHex(): string {
   const bytes = Crypto.getRandomBytes(32);
@@ -144,22 +145,32 @@ export async function reWrapKEK(requireAuth: boolean): Promise<void> {
     throw new EncryptionError(ERROR_CODES.UNINITIALIZED_ENCRYPTION, 'Encryption key not initialized.');
   }
 
+  if (reWrapPromise) {
+    return reWrapPromise;
+  }
+
   const newMode: EncryptionMode = requireAuth ? 'protected' : 'basic';
   
-  try {
-    await SecureStore.setItemAsync(
-      SECURE_STORE_KEYS.ENCRYPTION_KEY, 
-      keyCache, 
-      { requireAuthentication: requireAuth }
-    );
-    await setStoredEncryptionMode(newMode);
-  } catch (error) {
-    if (error instanceof EncryptionError) throw error;
-    if (isCancellationError(error)) {
-      throw new EncryptionError(ERROR_CODES.USER_CANCELLED, 'Authentication was cancelled');
+  reWrapPromise = (async () => {
+    try {
+      await SecureStore.setItemAsync(
+        SECURE_STORE_KEYS.ENCRYPTION_KEY, 
+        keyCache, 
+        { requireAuthentication: requireAuth }
+      );
+      await setStoredEncryptionMode(newMode);
+    } catch (error) {
+      if (error instanceof EncryptionError) throw error;
+      if (isCancellationError(error)) {
+        throw new EncryptionError(ERROR_CODES.USER_CANCELLED, 'Authentication was cancelled');
+      }
+      throw error;
+    } finally {
+      reWrapPromise = null;
     }
-    throw error;
-  }
+  })();
+
+  return reWrapPromise;
 }
 
 export async function clearKeyCache(): Promise<void> {
@@ -170,8 +181,16 @@ export async function clearKeyCache(): Promise<void> {
       // Swallow errors from initialization since we're clearing anyway
     }
   }
+  if (reWrapPromise) {
+    try {
+      await reWrapPromise;
+    } catch {
+      // Swallow errors from reWrap since we're clearing anyway
+    }
+  }
   keyCache = null;
   initializationPromise = null;
+  reWrapPromise = null;
 }
 
 export async function deleteEncryptionKey(): Promise<void> {
@@ -182,12 +201,20 @@ export async function deleteEncryptionKey(): Promise<void> {
       // Swallow errors since we're deleting anyway
     }
   }
+  if (reWrapPromise) {
+    try {
+      await reWrapPromise;
+    } catch {
+      // Swallow errors since we're deleting anyway
+    }
+  }
   
   try {
     await SecureStore.deleteItemAsync(SECURE_STORE_KEYS.ENCRYPTION_KEY);
     await AsyncStorage.removeItem(ASYNC_STORAGE_KEYS.ENCRYPTION_MODE);
     keyCache = null;
     initializationPromise = null;
+    reWrapPromise = null;
   } catch (error) {
     console.error('Error clearing keys:', error);
   }
