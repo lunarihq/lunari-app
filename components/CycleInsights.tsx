@@ -72,7 +72,7 @@ export function CycleInsights({
           >
             <View style={styles.insightTop}>
               <View style={iconContainerStyle}>
-                <CalendarIcon size={28} color={colors.icon} />
+                <CalendarIcon size={28}/>
               </View>
               <Text
                 style={[styles.insightLabel, { color: colors.textPrimary }]}
@@ -143,7 +143,7 @@ export function CycleInsights({
           >
             <View style={styles.insightTop}>
               <View style={iconContainerStyle}>
-                <LeafIcon size={28} color={colors.icon} />
+                <LeafIcon size={28} />
               </View>
               <Text
                 style={[styles.insightLabel, { color: colors.textPrimary }]}

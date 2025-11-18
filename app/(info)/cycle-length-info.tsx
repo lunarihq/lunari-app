@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView, Image } from 'react-native';
+import { View, Text, ScrollView, Image, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../../styles/theme';
 import { useAppStyles } from '../../hooks/useStyles';
@@ -25,7 +25,7 @@ export default function StatusInfo() {
           borderRadius: 16,
         }}
       />
-      <View style={{ marginBottom: 28 }}>
+      <View style={[styles.contentSection]}>
         <Text style={[typography.headingMd, { marginBottom: 12 }]}>
           {t('cycleLength.title')}
         </Text>
@@ -36,7 +36,7 @@ export default function StatusInfo() {
         </Text>
       </View>
 
-      <View style={{ marginBottom: 28 }}>
+      <View style={[styles.contentSection]}>
         <Text style={[typography.headingMd, { marginBottom: 12 }]}>
           {t('cycleLength.normalRange.title')}
         </Text>
@@ -55,7 +55,7 @@ export default function StatusInfo() {
         </Text>
       </View>
 
-      <View style={{ marginBottom: 28 }}>
+      <View style={[styles.contentSection]}>
         <Text style={[typography.headingMd, { marginBottom: 12 }]}>
           {t('cycleLength.irregular.title')}
         </Text>
@@ -76,7 +76,7 @@ export default function StatusInfo() {
                 marginBottom: index === 6 ? 0 : 6,
               }}
             >
-              <Text style={{ marginRight: 8 }}>{'\u2022'}</Text>
+              <Text style={{ marginRight: 8, color: colors.textPrimary, fontSize: 18 }}>{'\u2022'}</Text>
               <Text style={[typography.body, { flex: 1 }]}>
                 {t(`cycleLength.irregular.causes.${cause}`)}
               </Text>
@@ -91,7 +91,7 @@ export default function StatusInfo() {
         </View>
       </View>
 
-      <View style={{ marginBottom: 28 }}>
+      <View style={[styles.contentSection]}>
         <Text style={[typography.headingMd, { marginBottom: 12 }]}>
           {t('cycleLength.seeDoctor.title')}
         </Text>
@@ -99,13 +99,13 @@ export default function StatusInfo() {
           {t('cycleLength.seeDoctor.description')}
         </Text>
       </View>
-      <View style={{ marginBottom: 28 }}>
+      <View style={[styles.contentSection]}>
         <Text style={[typography.body]}>
           <Text style={typography.bodyBold}>{t('cycleLength.disclaimerBold')} </Text>
           {t('cycleLength.disclaimer')}
         </Text>
       </View>
-      <View style={{ marginBottom: 28 }}>
+      <View style={[styles.contentSection]}>
         <Text style={[typography.headingSm, { marginBottom: 12 }]}>
           {t('cycleLength.references.title')}
         </Text>
@@ -116,3 +116,9 @@ export default function StatusInfo() {
     </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  contentSection: {
+    marginBottom: 32,
+  },
+});

@@ -26,16 +26,16 @@ export default function PrivacyPolicy() {
       contentContainerStyle={commonStyles.scrollContentContainer}
       showsVerticalScrollIndicator={false}
     >
-      <View style={[commonStyles.sectionContainer]}>
-        <Text style={[typography.headingLg, { marginBottom: 8, textAlign: 'center' }]}>
+      <View style={[commonStyles.sectionContainer, { marginBottom: 32, alignItems: 'center' }]}>
+        <Text style={[typography.headingLg, { marginBottom: 8 }]}>
           {t('privacyPolicyScreen.title')}
         </Text>
-        <Text style={[typography.body, { color: colors.textSecondary, textAlign: 'center' }]}>
+        <Text style={[typography.body, { color: colors.textSecondary }]}>
           {t('privacyPolicyScreen.lastUpdated')} {new Date().toLocaleDateString(Localization.getLocales()[0].languageTag)}
         </Text>
       </View>
 
-      <View style={[commonStyles.sectionContainer]}>
+      <View style={[styles.contentSection]}>
         <View style={styles.sectionHeader}>
           <SectionIcon name="information-circle-outline" />
           <Text style={[typography.headingMd, { marginLeft: 12 }]}>
@@ -47,7 +47,7 @@ export default function PrivacyPolicy() {
         </Text>
       </View>
 
-      <View style={[commonStyles.sectionContainer]}>
+      <View style={[styles.contentSection]}>
         <View style={styles.sectionHeader}>
           <SectionIcon name="analytics-outline" />
           <Text style={[typography.headingMd, { marginLeft: 12 }]}>
@@ -59,18 +59,22 @@ export default function PrivacyPolicy() {
           <Text style={typography.bodyBold}>{t('privacyPolicyScreen.dataUse.descriptionBold')}</Text>
           {t('privacyPolicyScreen.dataUse.descriptionSuffix')}
         </Text>
-        {['periodDates', 'cycleLength', 'symptoms', 'notes', 'settings'].map((item) => (
-          <Text
+        {['periodDates', 'cycleLength', 'symptoms', 'notes', 'settings'].map((item, index) => (
+          <View
             key={item}
-            style={[
-              typography.body,
-              { marginBottom: 8, marginLeft: 8 },
-            ]}
+            style={{
+              flexDirection: 'row',
+              alignItems: 'flex-start',
+              marginBottom: index === 4 ? 0 : 8,
+            }}
           >
-            {t(`privacyPolicyScreen.dataUse.${item}`)}
-          </Text>
+            <Text style={{ marginRight: 8, color: colors.textPrimary, fontSize: 18 }}>{'\u2022'}</Text>
+            <Text style={[typography.body, { flex: 1 }]}>
+              {t(`privacyPolicyScreen.dataUse.${item}`)}
+            </Text>
+          </View>
         ))}
-        <Text style={[typography.body, { marginBottom: 12 }]}>
+        <Text style={[typography.body, { marginVertical: 12 }]}>
           {t('privacyPolicyScreen.dataUse.usage')}
         </Text>
         <Text style={[typography.body, { marginBottom: 12 }]}>
@@ -78,7 +82,7 @@ export default function PrivacyPolicy() {
         </Text>
       </View>
 
-      <View style={[commonStyles.sectionContainer]}>
+      <View style={[styles.contentSection]}>
         <View style={styles.sectionHeader}>
           <SectionIcon name="shield-checkmark-outline" />
           <Text style={[typography.headingMd, { marginLeft: 12 }]}>
@@ -88,25 +92,29 @@ export default function PrivacyPolicy() {
         <Text style={[typography.body, { marginBottom: 12 }]}>
           {t('privacyPolicyScreen.permissions.description')}
         </Text>
-        {['reminders', 'biometric'].map((permission) => (
-          <Text
+        {['reminders', 'biometric'].map((permission, index) => (
+          <View
             key={permission}
-            style={[
-              typography.body,
-              { marginBottom: 8, marginLeft: 8 },
-            ]}
+            style={{
+              flexDirection: 'row',
+              alignItems: 'flex-start',
+              marginBottom: index === 1 ? 0 : 8,
+            }}
           >
-            {t(`privacyPolicyScreen.permissions.${permission}`)}
-            <Text style={typography.bodyBold}>{t(`privacyPolicyScreen.permissions.${permission}Bold`)}</Text>
-            {t(`privacyPolicyScreen.permissions.${permission}Suffix`)}
-          </Text>
+            <Text style={{ marginRight: 8, color: colors.textPrimary, fontSize: 18 }}>{'\u2022'}</Text>
+            <Text style={[typography.body, { flex: 1 }]}>
+              {t(`privacyPolicyScreen.permissions.${permission}`)}
+              <Text style={typography.bodyBold}>{t(`privacyPolicyScreen.permissions.${permission}Bold`)}</Text>
+              {t(`privacyPolicyScreen.permissions.${permission}Suffix`)}
+            </Text>
+          </View>
         ))}
-        <Text style={[typography.body, { marginBottom: 12 }]}>
+        <Text style={[typography.body, { marginVertical: 12 }]}>
           {t('privacyPolicyScreen.permissions.revoke')}
         </Text>
       </View>
 
-      <View style={[commonStyles.sectionContainer]}>
+      <View style={[styles.contentSection]}>
         <View style={styles.sectionHeader}>
           <SectionIcon name="eye-outline" />
           <Text style={[typography.headingMd, { marginLeft: 12 }]}>
@@ -116,23 +124,27 @@ export default function PrivacyPolicy() {
         <Text style={[typography.body, { marginBottom: 12 }]}>
           {t('privacyPolicyScreen.transparency.description')}
         </Text>
-        {['localStorage', 'noTransmission', 'deleteAnytime', 'noAnalytics', 'noAds'].map((item) => (
-          <Text
+        {['localStorage', 'noTransmission', 'deleteAnytime', 'noAnalytics', 'noAds'].map((item, index) => (
+          <View
             key={item}
-            style={[
-              typography.body,
-              { marginBottom: 8, marginLeft: 8 },
-            ]}
+            style={{
+              flexDirection: 'row',
+              alignItems: 'flex-start',
+              marginBottom: index === 4 ? 0 : 8,
+            }}
           >
-            {t(`privacyPolicyScreen.transparency.${item}`)}
-          </Text>
+            <Text style={{ marginRight: 8, color: colors.textPrimary, fontSize: 18 }}>{'\u2022'}</Text>
+            <Text style={[typography.body, { flex: 1 }]}>
+              {t(`privacyPolicyScreen.transparency.${item}`)}
+            </Text>
+          </View>
         ))}
-        <Text style={[typography.body, { marginBottom: 12 }]}>
+        <Text style={[typography.body, { marginVertical: 12 }]}>
           {t('privacyPolicyScreen.transparency.control')}
         </Text>
       </View>
 
-      <View style={[commonStyles.sectionContainer]}>
+      <View style={[commonStyles.sectionContainer, { marginBottom: 32 }]}>
         <Text
           style={[
             typography.body,
@@ -142,7 +154,9 @@ export default function PrivacyPolicy() {
             },
           ]}
         >
-          {t('privacyPolicyScreen.footer')}
+          {t('privacyPolicyScreen.footer.prefix')}
+          <Text style={typography.bodyBold}>{t('privacyPolicyScreen.footer.email')}</Text>
+          {t('privacyPolicyScreen.footer.suffix')}
         </Text>
       </View>
     </ScrollView>
@@ -154,5 +168,8 @@ sectionHeader: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 16,
+  },
+  contentSection: {
+    marginBottom: 32,
   },
 });

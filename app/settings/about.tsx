@@ -23,23 +23,23 @@ export default function About() {
     <ScrollView
       style={[
         commonStyles.scrollView,
-        { backgroundColor: 'colors.background' },
+        { backgroundColor: colors.background },
       ]}
       contentContainerStyle={[
         commonStyles.scrollContentContainer,
       ]}
       showsVerticalScrollIndicator={false}
     >
-      <View style={[commonStyles.sectionContainer]}>
-        <Text style={[typography.headingLg, { marginBottom: 8, textAlign: 'center' }]}>
+      <View style={[commonStyles.sectionContainer, { marginBottom: 32, alignItems: 'center' }]}>
+        <Text style={[typography.headingLg, { marginBottom: 8 }]}>
           {t('aboutScreen.title')}
         </Text>
-        <Text style={[typography.body, { color: colors.textSecondary, textAlign: 'center' }]}>
+        <Text style={[typography.body, { color: colors.textSecondary }]}>
           {t('aboutScreen.version')}
         </Text>
       </View>
 
-      <View style={[commonStyles.sectionContainer]}>
+      <View style={[styles.contentSection]}>
         <View style={styles.sectionHeader}>
           <SectionIcon name="heart-outline" />
           <Text style={[typography.headingMd, { marginLeft: 12 }]}>
@@ -51,27 +51,31 @@ export default function About() {
         </Text>
       </View>
 
-      <View style={[commonStyles.sectionContainer]}>
+      <View style={[styles.contentSection]}>
         <View style={styles.sectionHeader}>
           <SectionIcon name="calendar-outline" />
           <Text style={[typography.headingMd, { marginLeft: 12 }]}>
             {t('aboutScreen.features.title')}
           </Text>
         </View>
-        {['predictions', 'tracking', 'statistics', 'insights', 'reminders', 'lock', 'theme'].map((feature) => (
-          <Text
+        {['predictions', 'tracking', 'statistics', 'insights', 'reminders', 'lock', 'theme'].map((feature, index) => (
+          <View
             key={feature}
-            style={[
-              typography.body,
-              {marginBottom: 8, marginLeft: 8 },
-            ]}
+            style={{
+              flexDirection: 'row',
+              alignItems: 'flex-start',
+              marginBottom: index === 6 ? 0 : 8,
+            }}
           >
-            {t(`aboutScreen.features.${feature}`)}
-          </Text>
+            <Text style={{ marginRight: 8, color: colors.textPrimary, fontSize: 18 }}>{'\u2022'}</Text>
+            <Text style={[typography.body, { flex: 1 }]}>
+              {t(`aboutScreen.features.${feature}`)}
+            </Text>
+          </View>
         ))}
       </View>
 
-      <View style={[commonStyles.sectionContainer]}>
+      <View style={[styles.contentSection]}>
         <View style={styles.sectionHeader}>
           <SectionIcon name="shield-checkmark-outline" />
           <Text style={[typography.headingMd, { marginLeft: 12 }]}>
@@ -81,20 +85,24 @@ export default function About() {
         <Text style={[typography.body, { marginBottom: 12 }]}>
           {t('aboutScreen.privacyFirst.description')}
         </Text>
-        {['local', 'noTransmission', 'noTracking', 'noAds', 'noAccount'].map((item) => (
-          <Text
+        {['local', 'noTransmission', 'noTracking', 'noAds', 'noAccount'].map((item, index) => (
+          <View
             key={item}
-            style={[
-              typography.body,
-              {marginBottom: 8, marginLeft: 8 },
-            ]}
+            style={{
+              flexDirection: 'row',
+              alignItems: 'flex-start',
+              marginBottom: index === 4 ? 0 : 8,
+            }}
           >
-            {t(`aboutScreen.privacyFirst.${item}`)}
-          </Text>
+            <Text style={{ marginRight: 8, color: colors.textPrimary, fontSize: 18 }}>{'\u2022'}</Text>
+            <Text style={[typography.body, { flex: 1 }]}>
+              {t(`aboutScreen.privacyFirst.${item}`)}
+            </Text>
+          </View>
         ))}
       </View>
 
-      <View style={[commonStyles.sectionContainer]}>
+      <View style={[styles.contentSection]}>
         <View style={styles.sectionHeader}>
           <SectionIcon name="document-text-outline" />
           <Text style={[typography.headingMd, { marginLeft: 12 }]}>
@@ -130,7 +138,7 @@ export default function About() {
         </Text>
       </View>
 
-      <View style={[commonStyles.sectionContainer]}>
+      <View style={[styles.contentSection]}>
         <View style={styles.sectionHeader}>
           <SectionIcon name="code-outline" />
           <Text style={[typography.headingMd, { marginLeft: 12 }]}>
@@ -140,28 +148,34 @@ export default function About() {
         <Text style={[typography.body, { marginBottom: 12 }]}>
           {t('aboutScreen.technical.description')}
         </Text>
-        {['framework', 'database', 'language', 'platform'].map((item) => {
+        {['framework', 'database', 'language', 'platform'].map((item, index) => {
           const fullText = t(`aboutScreen.technical.${item}`);
           const colonIndex = fullText.indexOf(':');
           const label = fullText.substring(0, colonIndex + 1);
           const value = fullText.substring(colonIndex + 1);
           
           return (
-            <Text
+            <View
               key={item}
-              style={[
-                typography.body,
-                {marginBottom: 8, marginLeft: 8 },
-              ]}
+              style={{
+                flexDirection: 'row',
+                alignItems: 'flex-start',
+                marginBottom: index === 3 ? 0 : 8,
+                backgroundColor: 'red',
+                marginLeft: 8,
+              }}
             >
-              <Text style={typography.bodyBold}>{label}</Text>
-              <Text>{value}</Text>
-            </Text>
+              <Text style={{ marginRight: 8, color: colors.textPrimary, fontSize: 18 }}>{'\u2022'}</Text>
+              <Text style={[typography.body, { flex: 1 }]}>
+                <Text style={typography.bodyBold}>{label}</Text>
+                <Text>{value}</Text>
+              </Text>
+            </View>
           );
         })}
       </View>
 
-      <View style={[commonStyles.sectionContainer]}>
+      <View style={[commonStyles.sectionContainer, { marginBottom: 32 }]}>
         <Text
           style={[
             typography.body,
@@ -171,7 +185,9 @@ export default function About() {
             },
           ]}
         >
-          {t('aboutScreen.footer')}
+          {t('aboutScreen.footer.prefix')}
+          <Text style={typography.bodyBold}>{t('aboutScreen.footer.email')}</Text>
+          {t('aboutScreen.footer.suffix')}
         </Text>
       </View>
     </ScrollView>
@@ -183,5 +199,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 16,
+  },
+  contentSection: {
+    marginBottom: 32,
   },
 });

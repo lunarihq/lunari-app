@@ -88,7 +88,9 @@ export default function PredictionInfo() {
               },
             ]}
           >
-            {t('prediction.disclaimer')}
+            {t('prediction.disclaimerPrefix')}
+            <Text style={typography.captionBold}>{t('prediction.disclaimerBold')}</Text>
+            {t('prediction.disclaimerSuffix')}
           </Text>
         </View>
       </View>

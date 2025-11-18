@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView, Image } from 'react-native';
+import { View, Text, ScrollView, Image, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../../styles/theme';
 import { useAppStyles } from '../../hooks/useStyles';
@@ -28,7 +28,7 @@ export default function PeriodLength() {
           borderRadius: 16,
         }}
       />
-      <View style={{ marginBottom: 28 }}>
+      <View style={[styles.contentSection]}>
         <Text style={[typography.headingMd, { marginBottom: 12 }]}>
           {t('periodLength.title')}
         </Text>
@@ -39,7 +39,7 @@ export default function PeriodLength() {
         </Text>
       </View>
 
-      <View style={{ marginBottom: 28 }}>
+      <View style={[styles.contentSection]}>
         <Text style={[typography.headingMd, { marginBottom: 12 }]}>
           {t('periodLength.normal.title')}
         </Text>
@@ -58,7 +58,7 @@ export default function PeriodLength() {
         </Text>
       </View>
 
-      <View style={{ marginBottom: 28 }}>
+      <View style={[styles.contentSection]}>
         <Text style={[typography.headingMd, { marginBottom: 12 }]}>
           {t('periodLength.irregular.title')}
         </Text>
@@ -72,7 +72,7 @@ export default function PeriodLength() {
           {t('periodLength.irregular.dataNote')}
         </Text>
       </View>
-      <View style={{ marginBottom: 28 }}>
+      <View style={[styles.contentSection]}>
         <Text style={[typography.headingMd, { marginBottom: 12 }]}>
           {t('periodLength.seeDoctor.title')}
         </Text>
@@ -80,13 +80,13 @@ export default function PeriodLength() {
           {t('periodLength.seeDoctor.description')}
         </Text>
       </View>
-      <View style={{ marginBottom: 28 }}>
+      <View style={[styles.contentSection]}>
         <Text style={[typography.body]}>
           <Text style={typography.bodyBold}>{t('periodLength.disclaimerBold')} </Text>
           {t('periodLength.disclaimer')}
         </Text>
       </View>
-      <View style={{ marginBottom: 28 }}>
+      <View style={[styles.contentSection]}>
         <Text style={[typography.headingSm, { marginBottom: 12 }]}>
           {t('periodLength.references.title')}
         </Text>
@@ -97,3 +97,8 @@ export default function PeriodLength() {
     </ScrollView>
   );
 }
+const styles = StyleSheet.create({
+  contentSection: {
+    marginBottom: 32,
+  },
+});

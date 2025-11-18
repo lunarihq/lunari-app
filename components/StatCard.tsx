@@ -1,11 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useTheme } from '../styles/theme';
 import { useAppStyles } from '../hooks/useStyles';
-import { AlertIcon } from './icons/general/Alert';
-import { CheckCircleIcon } from './icons/general/Check_Circle';
+import { InfoIcon } from './icons/general/info';
 import { useTranslation } from 'react-i18next';
 
 interface StatCardProps {
@@ -26,9 +25,9 @@ export function StatCard({ title, value, icon, status, type }: StatCardProps) {
     if (!status) return null;
 
     if (status === 'normal') {
-      return <CheckCircleIcon size={20} color={colors.success} />;
+      return <Ionicons name="checkmark-circle" size={20} color={colors.success} />;
     } else {
-      return <AlertIcon size={20} color={colors.warning} />;
+      return <Ionicons name="alert-circle" size={20} color={colors.warning} />;
     }
   };
 
@@ -82,7 +81,7 @@ export function StatCard({ title, value, icon, status, type }: StatCardProps) {
             style={styles.infoIcon}
             activeOpacity={0.7}
           >
-            <Feather name="info" size={20} color={colors.textSecondary} />
+            <InfoIcon size={20} color={colors.textSecondary} />
           </TouchableOpacity>
         )}
         {status && (

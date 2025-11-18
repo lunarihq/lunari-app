@@ -17,6 +17,16 @@ import { ThemeSelectionModal } from '../../components/ThemeSelectionModal';
 import { DataDeletionService } from '../../services/dataDeletionService';
 import { useNotes } from '../../contexts/NotesContext';
 
+function SettingsIcon({ name, ...props }: { name: keyof typeof Ionicons.glyphMap } & Partial<React.ComponentProps<typeof Ionicons>>) {
+  const { colors } = useTheme();
+  return <Ionicons name={name} size={24} color={colors.neutral200} {...props} />;
+}
+
+function ChevronIcon({ ...props }: Partial<React.ComponentProps<typeof Ionicons>>) {
+  const { colors } = useTheme();
+  return <Ionicons name="chevron-forward" size={24} color={colors.textPrimary} {...props} />;
+}
+
 export default function Settings() {
   const router = useRouter();
   const { colors, themeMode } = useTheme();
@@ -37,20 +47,12 @@ export default function Settings() {
           onPress={() => router.push('/settings/reminders')}
         >
           <View style={styles.iconContainer}>
-            <Ionicons
-              name="alarm-outline"
-              size={24}
-              color={colors.textPrimary}
-            />
+            <SettingsIcon name="alarm-outline" />
           </View>
           <Text style={[typography.bodyLg, { flex: 1 }]}>
             {t('reminders')}
           </Text>
-          <Ionicons
-            name="chevron-forward"
-            size={24}
-            color={colors.textPrimary}
-          />
+          <ChevronIcon />
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -58,20 +60,12 @@ export default function Settings() {
           onPress={() => router.push('/settings/app-lock')}
         >
           <View style={styles.iconContainer}>
-            <Ionicons
-              name="lock-closed-outline"
-              size={24}
-              color={colors.textPrimary}
-            />
+            <SettingsIcon name="lock-closed-outline" />
           </View>
           <Text style={[typography.bodyLg, { flex: 1 }]}>
             {t('appLock')}
           </Text>
-          <Ionicons
-            name="chevron-forward"
-            size={24}
-            color={colors.textPrimary}
-          />
+          <ChevronIcon />
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -79,20 +73,12 @@ export default function Settings() {
           onPress={() => router.push('/settings/privacy-policy')}
         >
           <View style={styles.iconContainer}>
-            <Ionicons
-              name="document-text-outline"
-              size={24}
-              color={colors.textPrimary}
-            />
+            <SettingsIcon name="document-text-outline" />
           </View>
           <Text style={[typography.bodyLg, { flex: 1 }]}>
             {t('privacyPolicy')}
           </Text>
-          <Ionicons
-            name="chevron-forward"
-            size={24}
-            color={colors.textPrimary}
-          />
+          <ChevronIcon />
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -100,20 +86,12 @@ export default function Settings() {
           onPress={() => router.push('/settings/about')}
         >
           <View style={styles.iconContainer}>
-            <Ionicons
-              name="information-circle-outline"
-              size={24}
-              color={colors.textPrimary}
-            />
+            <SettingsIcon name="information-circle-outline" />
           </View>
           <Text style={[typography.bodyLg, { flex: 1 }]}>
             {t('about')}
           </Text>
-          <Ionicons
-            name="chevron-forward"
-            size={24}
-            color={colors.textPrimary}
-          />
+          <ChevronIcon />
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -121,11 +99,7 @@ export default function Settings() {
           onPress={() => setThemeModalVisible(true)}
         >
           <View style={styles.iconContainer}>
-            <Ionicons
-              name="color-palette-outline"
-              size={24}
-              color={colors.textPrimary}
-            />
+            <SettingsIcon name="color-palette-outline" />
           </View>
           <Text style={[typography.bodyLg, { flex: 1 }]}>
             {t('theme')}
@@ -176,7 +150,7 @@ export default function Settings() {
           }}
         >
           <View style={styles.iconContainer}>
-            <Ionicons name="trash-outline" size={24} color={colors.error} />
+            <SettingsIcon name="trash-outline" color={colors.error} />
           </View>
           <Text
             style={[
@@ -186,7 +160,7 @@ export default function Settings() {
           >
             {t('deleteData')}
           </Text>
-          <Ionicons name="chevron-forward" size={24} color={colors.error} />
+          <ChevronIcon color={colors.error} />
         </TouchableOpacity>
       </View>
 
@@ -199,11 +173,6 @@ export default function Settings() {
 }
 
 const styles = StyleSheet.create({
-  section: {
-    borderRadius: 8,
-    marginBottom: 8,
-    overflow: 'hidden',
-  },
   iconContainer: {
     marginRight: 12,
   },
