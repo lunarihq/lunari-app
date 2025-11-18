@@ -87,6 +87,10 @@ async function loadExistingKey(): Promise<string> {
     throw new EncryptionError(ERROR_CODES.KEY_NOT_FOUND, 'Encryption key is missing. Your data cannot be decrypted.');
   }
 
+  if (keyHex.length !== 64) {
+    throw new EncryptionError(ERROR_CODES.KEY_NOT_FOUND, 'Stored encryption key is corrupted.');
+  }
+
   return keyHex;
 }
 
