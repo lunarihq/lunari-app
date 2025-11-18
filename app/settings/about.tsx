@@ -161,6 +161,8 @@ export default function About() {
                 flexDirection: 'row',
                 alignItems: 'flex-start',
                 marginBottom: index === 3 ? 0 : 8,
+                backgroundColor: 'red',
+                marginLeft: 8,
               }}
             >
               <Text style={{ marginRight: 8, color: colors.textPrimary, fontSize: 18 }}>{'\u2022'}</Text>
