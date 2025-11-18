@@ -136,22 +136,22 @@
     },
     "features": {
       "title": "Features",
-      "predictions": "• Period and cycle predictions",
-      "tracking": "• Symptom and mood tracking",
-      "statistics": "• Cycle statistics & history",
-      "insights": "• Cycle phase insights",
-      "reminders": "• Period reminders",
-      "lock": "• PIN/biometric app lock",
-      "theme": "• Dark and light theme support"
+      "predictions": "Period and cycle predictions",
+      "tracking": "Symptom and mood tracking",
+      "statistics": "Cycle statistics & history",
+      "insights": "Cycle phase insights",
+      "reminders": "Period reminders",
+      "lock": "PIN/biometric app lock",
+      "theme": "Dark and light theme support"
     },
     "privacyFirst": {
       "title": "Privacy First",
       "description": "Lunari is designed with a privacy-first approach:",
-      "local": "• All data is stored locally on your device",
-      "noTransmission": "• No data transmission to external servers",
-      "noTracking": "• No third-party analytics or tracking",
-      "noAds": "• No ads",
-      "noAccount": "• No account required"
+      "local": "All data is stored locally on your device",
+      "noTransmission": "No data transmission to external servers",
+      "noTracking": "No third-party analytics or tracking",
+      "noAds": "No ads",
+      "noAccount": "No account required"
     },
     "openSource": {
       "title": "Open Source",
@@ -162,10 +162,10 @@
     "technical": {
       "title": "Technical Details",
       "description": "Lunari is built using modern technologies to ensure reliability and performance:",
-      "framework": "• Framework: React Native with Expo",
-      "database": "• Database: SQLite with Drizzle ORM",
-      "language": "• Language: TypeScript",
-      "platform": "• Platform: iOS and Android"
+      "framework": "Framework: React Native with Expo",
+      "database": "Database: SQLite with Drizzle ORM",
+      "language": "Language: TypeScript",
+      "platform": "Platform: iOS and Android"
     },
     "footer": {
       "prefix": "For support or feedback, please contact us at: ",
@@ -185,21 +185,21 @@
       "descriptionPrefix": "Lunari respects and celebrates your privacy. There is no collection of usage data or personal information, no ads, no spyware. Lunari can store data related to your menstrual heatlh",
       "descriptionBold": "locally on your phone",
       "descriptionSuffix": ", and this inludes:",
-      "periodDates": "• Period start and end dates",
-      "cycleLength": "• Cycle length and period duration",
-      "symptoms": "• Symptoms and mood tracking data",
-      "notes": "• Notes and personal observations",
-      "settings": "• App preferences and settings",
+      "periodDates": "Period start and end dates",
+      "cycleLength": "Cycle length and period duration",
+      "symptoms": "Symptoms and mood tracking data",
+      "notes": "Notes and personal observations",
+      "settings": "App preferences and settings",
       "usage": "This data is used solely to provide you with period predictions, cycle insights, and personalized tracking features. We do not share, sell, or transmit your personal health data to any third parties.",
       "deletion": "If you wish to delete all your app data, you can do so by going to the settings menu and selecting \"Delete data\". This can also be done by uninstalling the app."
     },
     "permissions": {
       "title": "Permissions",
       "description": "Lunari may request the following permissions:",
-      "reminders": "• ",
+      "reminders": "",
       "remindersBold": "Reminders",
       "remindersSuffix": ": To send you period reminders and cycle predictions.",
-      "biometric": "• ",
+      "biometric": "",
       "biometricBold": "Biometric authentication",
       "biometricSuffix": ": To secure your app with fingerprint or face recognition (optional).",
       "revoke": "If you don't want to use any of these permissions, you can revoke them at any time through your device settings."
@@ -207,11 +207,11 @@
     "transparency": {
       "title": "Transparency",
       "description": "We believe in complete transparency about how your data is handled:",
-      "localStorage": "• All your data is stored locally on your device",
-      "noTransmission": "• No data is transmitted to external servers",
-      "deleteAnytime": "• You can delete all your data at any time",
-      "noAnalytics": "• We do not use analytics or tracking services",
-      "noAds": "• No third-party advertising or data collection",
+      "localStorage": "All your data is stored locally on your device",
+      "noTransmission": "No data is transmitted to external servers",
+      "deleteAnytime": "You can delete all your data at any time",
+      "noAnalytics": "We do not use analytics or tracking services",
+      "noAds": "No third-party advertising or data collection",
       "control": "You have full control over your data. You can delete all tracking data through the settings menu, and the app will continue to work normally without any stored information."
     },
     "footer": {

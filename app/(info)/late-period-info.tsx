@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView, Image } from 'react-native';
+import { View, Text, ScrollView, Image, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../../styles/theme';
 import { useAppStyles } from '../../hooks/useStyles';
@@ -28,7 +28,7 @@ export default function PeriodLength() {
           borderRadius: 16,
         }}
       />
-      <View style={{ marginBottom: 32 }}>
+      <View style={[styles.contentSection]}>
         <Text style={[typography.headingMd, { marginBottom: 12 }]}>
           {t('latePeriod.whatMeans.title')}
         </Text>
@@ -38,7 +38,7 @@ export default function PeriodLength() {
         </Text>
       </View>
 
-      <View style={{ marginBottom: 32 }}>
+      <View style={[styles.contentSection]}>
         <Text style={[typography.headingMd, { marginBottom: 12 }]}>
           {t('latePeriod.causes.title')}
         </Text>
@@ -54,7 +54,7 @@ export default function PeriodLength() {
         ))}
       </View>
 
-      <View style={{ marginBottom: 32 }}>
+      <View style={[styles.contentSection]}>
         <Text style={[typography.headingMd, { marginBottom: 12 }]}>
           {t('latePeriod.seeDoctor.title')}
         </Text>
@@ -63,7 +63,7 @@ export default function PeriodLength() {
         </Text>
       </View>
 
-      <View style={{ marginBottom: 32 }}>
+      <View style={[styles.contentSection]}>
         <Text style={[typography.headingMd, { marginBottom: 12 }]}>
           {t('latePeriod.whatToDo.title')}
         </Text>
@@ -76,3 +76,8 @@ export default function PeriodLength() {
     </ScrollView>
   );
 }
+const styles = StyleSheet.create({
+  contentSection: {
+    marginBottom: 32,
+  },
+});

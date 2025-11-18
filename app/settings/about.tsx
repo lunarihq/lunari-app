@@ -23,7 +23,7 @@ export default function About() {
     <ScrollView
       style={[
         commonStyles.scrollView,
-        { backgroundColor: 'colors.background' },
+        { backgroundColor: colors.background },
       ]}
       contentContainerStyle={[
         commonStyles.scrollContentContainer,
@@ -58,16 +58,20 @@ export default function About() {
             {t('aboutScreen.features.title')}
           </Text>
         </View>
-        {['predictions', 'tracking', 'statistics', 'insights', 'reminders', 'lock', 'theme'].map((feature) => (
-          <Text
+        {['predictions', 'tracking', 'statistics', 'insights', 'reminders', 'lock', 'theme'].map((feature, index) => (
+          <View
             key={feature}
-            style={[
-              typography.body,
-              {marginBottom: 8, marginLeft: 8 },
-            ]}
+            style={{
+              flexDirection: 'row',
+              alignItems: 'flex-start',
+              marginBottom: index === 6 ? 0 : 8,
+            }}
           >
-            {t(`aboutScreen.features.${feature}`)}
-          </Text>
+            <Text style={{ marginRight: 8, color: colors.textPrimary, fontSize: 18 }}>{'\u2022'}</Text>
+            <Text style={[typography.body, { flex: 1 }]}>
+              {t(`aboutScreen.features.${feature}`)}
+            </Text>
+          </View>
         ))}
       </View>
 
@@ -81,16 +85,20 @@ export default function About() {
         <Text style={[typography.body, { marginBottom: 12 }]}>
           {t('aboutScreen.privacyFirst.description')}
         </Text>
-        {['local', 'noTransmission', 'noTracking', 'noAds', 'noAccount'].map((item) => (
-          <Text
+        {['local', 'noTransmission', 'noTracking', 'noAds', 'noAccount'].map((item, index) => (
+          <View
             key={item}
-            style={[
-              typography.body,
-              {marginBottom: 8, marginLeft: 8 },
-            ]}
+            style={{
+              flexDirection: 'row',
+              alignItems: 'flex-start',
+              marginBottom: index === 4 ? 0 : 8,
+            }}
           >
-            {t(`aboutScreen.privacyFirst.${item}`)}
-          </Text>
+            <Text style={{ marginRight: 8, color: colors.textPrimary, fontSize: 18 }}>{'\u2022'}</Text>
+            <Text style={[typography.body, { flex: 1 }]}>
+              {t(`aboutScreen.privacyFirst.${item}`)}
+            </Text>
+          </View>
         ))}
       </View>
 
@@ -137,26 +145,30 @@ export default function About() {
             {t('aboutScreen.technical.title')}
           </Text>
         </View>
-        <Text style={[typography.body]}>
+        <Text style={[typography.body, { marginBottom: 12 }]}>
           {t('aboutScreen.technical.description')}
         </Text>
-        {['framework', 'database', 'language', 'platform'].map((item) => {
+        {['framework', 'database', 'language', 'platform'].map((item, index) => {
           const fullText = t(`aboutScreen.technical.${item}`);
           const colonIndex = fullText.indexOf(':');
           const label = fullText.substring(0, colonIndex + 1);
           const value = fullText.substring(colonIndex + 1);
           
           return (
-            <Text
+            <View
               key={item}
-              style={[
-                typography.body,
-                {marginBottom: 8, marginLeft: 8 },
-              ]}
+              style={{
+                flexDirection: 'row',
+                alignItems: 'flex-start',
+                marginBottom: index === 3 ? 0 : 8,
+              }}
             >
-              <Text style={typography.bodyBold}>{label}</Text>
-              <Text>{value}</Text>
-            </Text>
+              <Text style={{ marginRight: 8, color: colors.textPrimary, fontSize: 18 }}>{'\u2022'}</Text>
+              <Text style={[typography.body, { flex: 1 }]}>
+                <Text style={typography.bodyBold}>{label}</Text>
+                <Text>{value}</Text>
+              </Text>
+            </View>
           );
         })}
       </View>
