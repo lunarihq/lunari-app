@@ -34,23 +34,20 @@ function generateRandomKeyHex(): string {
   return Array.from(bytes).map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
+// expo-secure-store v15.0.7 throws ERR_AUTHENTICATION for both:
+// - Authentication required (key needs auth but requireAuthentication=false was used)
+// - User cancellation (user cancelled the biometric prompt)
+// Tested on Android. There's no reliable way to distinguish between these two scenarios.
+// We use the same check but keep separate functions for semantic clarity.
 function isCancellationError(error: unknown): boolean {
   const code = (error as any)?.code;
-  const message = (error as any)?.message || '';
-  
-  return code === 'ERR_AUTHENTICATION' && 
-         message.toLowerCase().includes('cancel');
+  return code === 'ERR_AUTHENTICATION';
 }
 
 function isAuthenticationRequiredError(error: unknown): boolean {
   if (!(error instanceof Error)) return false;
-  // Primary check: the documented error code
   const code = (error as any).code;
-  if (code === 'ERR_SECURESTORE_AUTHENTICATION_REQUIRED') return true;
-  // Secondary check: error name (some native modules use this)
-  if (error.name === 'ERR_SECURESTORE_AUTHENTICATION_REQUIRED') return true;
-  
-  return false;
+  return code === 'ERR_AUTHENTICATION';
 }
 
 
