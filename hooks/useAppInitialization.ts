@@ -55,12 +55,12 @@ export function useAppInitialization() {
           await clearKeyCache();
           await clearDatabaseCache();
         } catch (cleanupError) {
-          console.error('[AppLayout] Cache cleanup failed:', cleanupError);
+          console.error('[AppInitialization] Cache cleanup failed:', cleanupError);
         } finally {
           setAppState(createLockedState('auth_cancelled'));
         }
       } else {
-        console.error('[AppLayout] Database initialization error:', error);
+        console.error('[AppInitialization] Database initialization error:', error);
         setAppState(
           createErrorState(
             error instanceof Error ? error.message : 'Unknown error'
@@ -77,7 +77,7 @@ export function useAppInitialization() {
       await clearKeyCache();
       await clearDatabaseCache();
     } catch (error) {
-      console.error('Failed to clear keys during retry:', error);
+      console.error('[AppInitialization] Failed to clear keys during retry:', error);
     } finally {
       setAppState(createInitialState());
     }
@@ -113,7 +113,7 @@ export function useAppInitialization() {
         const status = await getSetting('onboardingCompleted');
         setAppState(createReadyState(status === 'true'));
       } catch (error) {
-        console.error('[AppLayout] Failed to check onboarding status', error);
+        console.error('[AppInitialization] Failed to check onboarding status', error);
         setAppState(createReadyState(false));
       }
     }
