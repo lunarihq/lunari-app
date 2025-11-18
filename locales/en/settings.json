@@ -167,7 +167,11 @@
       "language": "• Language: TypeScript",
       "platform": "• Platform: iOS and Android"
     },
-    "footer": "For support or feedback, please contact us at: lunari.appmail@gmail.app."
+    "footer": {
+      "prefix": "For support or feedback, please contact us at: ",
+      "email": "lunari.appmail@gmail.app",
+      "suffix": "."
+    }
   },
   "privacyPolicyScreen": {
     "title": "Privacy Policy",

@@ -171,7 +171,9 @@ export default function About() {
             },
           ]}
         >
-          {t('aboutScreen.footer')}
+          {t('aboutScreen.footer.prefix')}
+          <Text style={typography.bodyBold}>{t('aboutScreen.footer.email')}</Text>
+          {t('aboutScreen.footer.suffix')}
         </Text>
       </View>
     </ScrollView>

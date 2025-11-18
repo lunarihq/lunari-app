@@ -59,7 +59,7 @@ export default function SuccessScreen() {
 
         <Text
           style={[
-            typography.heading1,
+            typography.headingLg,
             { marginTop: 32, marginBottom: 16, textAlign: 'center' },
           ]}
         >
