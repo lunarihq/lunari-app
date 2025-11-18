@@ -108,17 +108,27 @@ export function useAppInitialization() {
   useEffect(() => {
     if (appState.status !== 'checking_onboarding') return;
 
+    let mounted = true;
+
     async function checkOnboardingStatus() {
       try {
         const status = await getSetting('onboardingCompleted');
-        setAppState(createReadyState(status === 'true'));
+        if (mounted) {
+          setAppState(createReadyState(status === 'true'));
+        }
       } catch (error) {
         console.error('[AppInitialization] Failed to check onboarding status', error);
-        setAppState(createReadyState(false));
+        if (mounted) {
+          setAppState(createReadyState(false));
+        }
       }
     }
 
     checkOnboardingStatus();
+
+    return () => {
+      mounted = false;
+    };
   }, [appState.status]);
 
   // Redirect to onboarding on first render if not completed
