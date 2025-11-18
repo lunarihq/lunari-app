@@ -62,7 +62,7 @@ async function createNewKey(): Promise<string> {
 }
 
 async function loadExistingKey(): Promise<string> {
-  const mode = await getStoredEncryptionMode();
+  const mode = await getEncryptionMode();
   let keyHex: string | null;
   
   try {
@@ -120,7 +120,7 @@ export async function initializeEncryption(): Promise<void> {
   return initializationPromise;
 }
 
-async function getStoredEncryptionMode(): Promise<EncryptionMode> {
+export async function getEncryptionMode(): Promise<EncryptionMode> {
   const mode = await AsyncStorage.getItem(ASYNC_STORAGE_KEYS.ENCRYPTION_MODE);
   return mode === 'protected' ? 'protected' : 'basic';
 }
@@ -134,10 +134,6 @@ export function getEncryptionKeyHex(): string {
     throw new EncryptionError(ERROR_CODES.UNINITIALIZED_ENCRYPTION, 'Encryption key not initialized. Call initializeEncryption first.');
   }
   return keyCache;
-}
-
-export async function getEncryptionMode(): Promise<EncryptionMode> {
-  return await getStoredEncryptionMode();
 }
 
 export async function reWrapKEK(requireAuth: boolean): Promise<void> {
