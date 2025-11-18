@@ -214,7 +214,11 @@
       "noAds": "• Sin publicidad o recopilación de datos de terceros",
       "control": "Tienes control total sobre tus datos. Puedes eliminar todos los datos de seguimiento a través del menú de configuración, y la aplicación seguirá funcionando normalmente sin ninguna información almacenada."
     },
-    "footer": "Si tienes alguna pregunta sobre esta política de privacidad o cómo manejamos tus datos, por favor contáctanos en lunari.appmail@gmail.app."
+    "footer": {
+      "prefix": "Si tienes alguna pregunta sobre esta política de privacidad o cómo manejamos tus datos, por favor contáctanos en ",
+      "email": "lunari.appmail@gmail.app",
+      "suffix": "."
+    }
   }
 }
 

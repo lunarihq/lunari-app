@@ -214,7 +214,11 @@
       "noAds": "• No third-party advertising or data collection",
       "control": "You have full control over your data. You can delete all tracking data through the settings menu, and the app will continue to work normally without any stored information."
     },
-    "footer": "If you have any questions about this privacy policy or how we handle your data, please contact us at lunari.appmail@gmail.app."
+    "footer": {
+      "prefix": "If you have any questions about this privacy policy or how we handle your data, please contact us at ",
+      "email": "lunari.appmail@gmail.app",
+      "suffix": "."
+    }
   }
 }
 

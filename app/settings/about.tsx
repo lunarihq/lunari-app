@@ -30,16 +30,16 @@ export default function About() {
       ]}
       showsVerticalScrollIndicator={false}
     >
-      <View style={styles.section}>
-        <Text style={[typography.headingLg, { marginBottom: 8, textAlign: 'center' }]}>
+      <View style={[commonStyles.sectionContainer, { marginBottom: 32, alignItems: 'center' }]}>
+        <Text style={[typography.headingLg, { marginBottom: 8 }]}>
           {t('aboutScreen.title')}
         </Text>
-        <Text style={[typography.body, { color: colors.textSecondary, textAlign: 'center' }]}>
+        <Text style={[typography.body, { color: colors.textSecondary }]}>
           {t('aboutScreen.version')}
         </Text>
       </View>
 
-      <View style={styles.section}>
+      <View style={[styles.contentSection]}>
         <View style={styles.sectionHeader}>
           <SectionIcon name="heart-outline" />
           <Text style={[typography.headingMd, { marginLeft: 12 }]}>
@@ -51,7 +51,7 @@ export default function About() {
         </Text>
       </View>
 
-      <View style={styles.section}>
+      <View style={[styles.contentSection]}>
         <View style={styles.sectionHeader}>
           <SectionIcon name="calendar-outline" />
           <Text style={[typography.headingMd, { marginLeft: 12 }]}>
@@ -71,7 +71,7 @@ export default function About() {
         ))}
       </View>
 
-      <View style={styles.section}>
+      <View style={[styles.contentSection]}>
         <View style={styles.sectionHeader}>
           <SectionIcon name="shield-checkmark-outline" />
           <Text style={[typography.headingMd, { marginLeft: 12 }]}>
@@ -94,7 +94,7 @@ export default function About() {
         ))}
       </View>
 
-      <View style={styles.section}>
+      <View style={[styles.contentSection]}>
         <View style={styles.sectionHeader}>
           <SectionIcon name="document-text-outline" />
           <Text style={[typography.headingMd, { marginLeft: 12 }]}>
@@ -130,14 +130,14 @@ export default function About() {
         </Text>
       </View>
 
-      <View style={styles.section}>
+      <View style={[styles.contentSection]}>
         <View style={styles.sectionHeader}>
           <SectionIcon name="code-outline" />
           <Text style={[typography.headingMd, { marginLeft: 12 }]}>
             {t('aboutScreen.technical.title')}
           </Text>
         </View>
-        <Text style={[typography.body, { marginBottom: 12 }]}>
+        <Text style={[typography.body]}>
           {t('aboutScreen.technical.description')}
         </Text>
         {['framework', 'database', 'language', 'platform'].map((item) => {
@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 16,
   },
-  section: {
+  contentSection: {
     marginBottom: 32,
   },
 });

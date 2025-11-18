@@ -26,16 +26,16 @@ export default function PrivacyPolicy() {
       contentContainerStyle={commonStyles.scrollContentContainer}
       showsVerticalScrollIndicator={false}
     >
-      <View style={[commonStyles.sectionContainer]}>
-        <Text style={[typography.headingLg, { marginBottom: 8, textAlign: 'center' }]}>
+      <View style={[commonStyles.sectionContainer, { marginBottom: 32, alignItems: 'center' }]}>
+        <Text style={[typography.headingLg, { marginBottom: 8 }]}>
           {t('privacyPolicyScreen.title')}
         </Text>
-        <Text style={[typography.body, { color: colors.textSecondary, textAlign: 'center' }]}>
+        <Text style={[typography.body, { color: colors.textSecondary }]}>
           {t('privacyPolicyScreen.lastUpdated')} {new Date().toLocaleDateString(Localization.getLocales()[0].languageTag)}
         </Text>
       </View>
 
-      <View style={[commonStyles.sectionContainer]}>
+      <View style={[styles.contentSection]}>
         <View style={styles.sectionHeader}>
           <SectionIcon name="information-circle-outline" />
           <Text style={[typography.headingMd, { marginLeft: 12 }]}>
@@ -47,7 +47,7 @@ export default function PrivacyPolicy() {
         </Text>
       </View>
 
-      <View style={[commonStyles.sectionContainer]}>
+      <View style={[styles.contentSection]}>
         <View style={styles.sectionHeader}>
           <SectionIcon name="analytics-outline" />
           <Text style={[typography.headingMd, { marginLeft: 12 }]}>
@@ -78,7 +78,7 @@ export default function PrivacyPolicy() {
         </Text>
       </View>
 
-      <View style={[commonStyles.sectionContainer]}>
+      <View style={[styles.contentSection]}>
         <View style={styles.sectionHeader}>
           <SectionIcon name="shield-checkmark-outline" />
           <Text style={[typography.headingMd, { marginLeft: 12 }]}>
@@ -106,7 +106,7 @@ export default function PrivacyPolicy() {
         </Text>
       </View>
 
-      <View style={[commonStyles.sectionContainer]}>
+      <View style={[styles.contentSection]}>
         <View style={styles.sectionHeader}>
           <SectionIcon name="eye-outline" />
           <Text style={[typography.headingMd, { marginLeft: 12 }]}>
@@ -132,7 +132,7 @@ export default function PrivacyPolicy() {
         </Text>
       </View>
 
-      <View style={[commonStyles.sectionContainer]}>
+      <View style={[commonStyles.sectionContainer, { marginBottom: 32 }]}>
         <Text
           style={[
             typography.body,
@@ -142,7 +142,9 @@ export default function PrivacyPolicy() {
             },
           ]}
         >
-          {t('privacyPolicyScreen.footer')}
+          {t('privacyPolicyScreen.footer.prefix')}
+          <Text style={typography.bodyBold}>{t('privacyPolicyScreen.footer.email')}</Text>
+          {t('privacyPolicyScreen.footer.suffix')}
         </Text>
       </View>
     </ScrollView>
@@ -154,5 +156,8 @@ sectionHeader: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 16,
+  },
+  contentSection: {
+    marginBottom: 32,
   },
 });
