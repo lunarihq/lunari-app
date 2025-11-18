@@ -92,7 +92,7 @@ export function useAppInitialization() {
         setAppState(createLockedState('background_return'));
       }
     }
-  }, [justReturnedFromBackground, appState.status, clearBackgroundFlag]);
+  }, [justReturnedFromBackground, appState, clearBackgroundFlag]);
 
   // Trigger database initialization when app starts or after background return
   useEffect(() => {
