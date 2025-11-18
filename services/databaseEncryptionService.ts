@@ -212,10 +212,9 @@ export async function deleteEncryptionKey(): Promise<void> {
   try {
     await SecureStore.deleteItemAsync(SECURE_STORE_KEYS.ENCRYPTION_KEY);
     await AsyncStorage.removeItem(ASYNC_STORAGE_KEYS.ENCRYPTION_MODE);
+  } finally {
     keyCache = null;
     initializationPromise = null;
     reWrapPromise = null;
-  } catch (error) {
-    console.error('Error clearing keys:', error);
   }
 }
