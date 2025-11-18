@@ -129,7 +129,7 @@ export function useAppInitialization() {
     return () => {
       mounted = false;
     };
-  }, [appState.status]);
+  }, [appState]);
 
   // Redirect to onboarding on first render if not completed
   useEffect(() => {
