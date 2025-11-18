@@ -207,7 +207,9 @@
       "title": "Privacidad primero",
       "description": "Todos los cálculos se realizan localmente en tu dispositivo. Los datos de tu periodo nunca salen de tu teléfono y nunca se comparten con nadie."
     },
-    "disclaimer": "🛎️ Recuerda: Estas son predicciones basadas en tus datos históricos. Cada cuerpo es diferente y los ciclos pueden variar naturalmente."
+    "disclaimerPrefix": "🛎️ ",
+    "disclaimerBold": "Recuerda",
+    "disclaimerSuffix": ": Estas son predicciones basadas en tus datos históricos. Cada cuerpo es diferente y los ciclos pueden variar naturalmente."
   }
 }
 

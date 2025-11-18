@@ -207,7 +207,9 @@
       "title": "Privacy first",
       "description": "All calculations happen locally on your device. Your period data never leaves your phone and is never shared with anyone."
     },
-    "disclaimer": "🛎️ Remember: These are predictions based on your historical data. Every body is different, and cycles can vary naturally."
+    "disclaimerPrefix": "🛎️ ",
+    "disclaimerBold": "Remember",
+    "disclaimerSuffix": ": These are predictions based on your historical data. Every body is different, and cycles can vary naturally."
   }
 }
 
