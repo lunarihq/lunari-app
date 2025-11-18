@@ -126,14 +126,12 @@ function AppContent() {
     return (
       <View style={styles.centerContainer}>
         <Text style={styles.lockTitle}>Unlock Lunari</Text>
-        {appState.reason === 'auth_cancelled' && (
-          <TouchableOpacity
-            style={styles.button}
-            onPress={retryInitialization}
-          >
-            <Text style={styles.buttonText}>Unlock</Text>
-          </TouchableOpacity>
-        )}
+        <TouchableOpacity
+          style={styles.button}
+          onPress={retryInitialization}
+        >
+          <Text style={styles.buttonText}>Unlock</Text>
+        </TouchableOpacity>
       </View>
     );
   }

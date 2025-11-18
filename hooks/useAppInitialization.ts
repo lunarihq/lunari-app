@@ -86,6 +86,7 @@ export function useAppInitialization() {
   useEffect(() => {
     if (justReturnedFromBackground) {
       clearBackgroundFlag();
+      setupInProgress.current = false;
       if (appState.status === 'ready') {
         setAppState(createLockedState('background_return'));
       }
