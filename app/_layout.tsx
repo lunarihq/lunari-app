@@ -110,13 +110,13 @@ function AppContent() {
   if (appState.status === 'db_error') {
     return (
       <View style={styles.centerContainer}>
-        <Text style={styles.errorTitle}>Database Error</Text>
-        <Text style={styles.errorMessage}>{appState.error}</Text>
+        <Text style={styles.errorTitle}>{t('errors.database.title')}</Text>
+        <Text style={styles.errorMessage}>{t(appState.error)}</Text>
         <TouchableOpacity
           style={styles.button}
           onPress={retryInitialization}
         >
-          <Text style={styles.buttonText}>Retry</Text>
+          <Text style={styles.buttonText}>{t('buttons.continue')}</Text>
         </TouchableOpacity>
       </View>
     );

@@ -60,12 +60,11 @@ export function useAppInitialization() {
           setAppState(createLockedState('auth_cancelled'));
         }
       } else {
+        // Log technical details for debugging (not shown to users)
         console.error('[AppInitialization] Database initialization error:', error);
-        setAppState(
-          createErrorState(
-            error instanceof Error ? error.message : 'Unknown error'
-          )
-        );
+        
+        // Always show generic user-friendly message
+        setAppState(createErrorState('errors.database.generic'));
       }
     } finally {
       setupInProgress.current = false;

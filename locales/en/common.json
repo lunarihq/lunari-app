@@ -16,7 +16,11 @@
     "generic": "Something went wrong. Please try again.",
     "loadFailed": "Failed to load data",
     "saveFailed": "Failed to save",
-    "deleteFailed": "Failed to delete"
+    "deleteFailed": "Failed to delete",
+    "database": {
+      "title": "Unable to Start App",
+      "generic": "We encountered an issue starting the app. Please try restarting."
+    }
   },
   "time": {
     "today": "Today",

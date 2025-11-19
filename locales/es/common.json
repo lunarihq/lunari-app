@@ -16,7 +16,11 @@
     "generic": "Algo salió mal. Por favor, inténtalo de nuevo.",
     "loadFailed": "Error al cargar los datos",
     "saveFailed": "Error al guardar",
-    "deleteFailed": "Error al eliminar"
+    "deleteFailed": "Error al eliminar",
+    "database": {
+      "title": "No se puede iniciar la aplicación",
+      "generic": "Encontramos un problema al iniciar la aplicación. Por favor, intenta reiniciar."
+    }
   },
   "time": {
     "today": "Hoy",
