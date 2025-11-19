@@ -59,7 +59,9 @@ async function loadExistingKey(): Promise<string> {
       { requireAuthentication: requiresAuth }
     );
   } catch (error) {
-    // Mode desync: AsyncStorage says no auth but key requires auth
+    // Mode desync recovery: On iOS, SecureStore (Keychain) can survive app uninstall
+    // whilst AsyncStorage is cleared. After reinstall, AsyncStorage defaults to false
+    // but the persisted key still requires authentication. Retry with auth and update mode.
     if (!requiresAuth && isAuthenticationError(error)) {
       keyHex = await SecureStore.getItemAsync(
         SECURE_STORE_KEYS.ENCRYPTION_KEY, 
