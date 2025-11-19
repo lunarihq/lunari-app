@@ -31,7 +31,7 @@ function AppContent() {
 
   const { appState, retryInitialization } = useAppInitialization();
   const { isDark } = useTheme();
-  const { t } = useTranslation(['settings', 'health', 'info']);
+  const { t } = useTranslation(['common', 'settings', 'health', 'info']);
 
   const [fontsLoaded] = useFonts({
     BricolageGrotesque_700Bold,
@@ -150,30 +150,26 @@ function AppContent() {
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="onboarding" options={{ headerShown: false }} />
         <Stack.Screen name="edit-period" options={{ headerShown: false }} />
-        {dynamicScreens.map(screen => {
-          const titleValue = screen.titleKey?.includes(':') ? t(screen.titleKey) : screen.titleKey;
-          
-          return (
-            <Stack.Screen
-              key={screen.name}
-              name={screen.name}
-              options={{
-                headerShown: screen.headerShown,
-                headerTitle: titleValue,
-                headerShadowVisible: screen.headerShadowVisible ?? false,
-                headerStyle: {
-                  backgroundColor: getBackgroundColor(
-                    screen.backgroundColorKey,
-                    isDark,
-                    darkColors,
-                    lightColors
-                  ),
-                },
-                headerTintColor: isDark ? darkColors.textPrimary : lightColors.textPrimary,
-              }}
-            />
-          );
-        })}
+        {dynamicScreens.map(screen => (
+          <Stack.Screen
+            key={screen.name}
+            name={screen.name}
+            options={{
+              headerShown: screen.headerShown,
+              headerTitle: screen.titleKey ? t(screen.titleKey) : '',
+              headerShadowVisible: screen.headerShadowVisible ?? false,
+              headerStyle: {
+                backgroundColor: getBackgroundColor(
+                  screen.backgroundColorKey,
+                  isDark,
+                  darkColors,
+                  lightColors
+                ),
+              },
+              headerTintColor: isDark ? darkColors.textPrimary : lightColors.textPrimary,
+            }}
+          />
+        ))}
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style={isDark ? 'light' : 'dark'} />

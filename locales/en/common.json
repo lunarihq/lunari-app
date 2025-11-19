@@ -34,7 +34,8 @@
     "calendar": "Calendar",
     "stats": "Stats",
     "settings": "Settings",
-    "appName": "Lunari"
+    "appName": "Lunari",
+    "notes": "Notes"
   },
   "cycleDetails": {
     "cycleDay": "Cycle day {{number}}",

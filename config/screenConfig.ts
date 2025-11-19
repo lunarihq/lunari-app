@@ -10,7 +10,7 @@ export const dynamicScreens: ScreenConfig[] = [
   {
     name: 'settings/calendar-view',
     headerShown: true,
-    titleKey: 'Calendar view',
+    titleKey: 'settings:screenTitles.calendarView',
     headerShadowVisible: false,
     backgroundColorKey: 'background',
   },
@@ -52,7 +52,7 @@ export const dynamicScreens: ScreenConfig[] = [
   {
     name: 'notes-editor',
     headerShown: true,
-    titleKey: 'Notes',
+    titleKey: 'common:navigation.notes',
     headerShadowVisible: false,
     backgroundColorKey: 'panel',
   },

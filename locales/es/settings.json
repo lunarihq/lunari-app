@@ -11,7 +11,8 @@
     "reminders": "Recordatorios",
     "appLock": "Bloqueo de aplicación",
     "about": "Acerca de",
-    "privacyPolicy": "Política de privacidad"
+    "privacyPolicy": "Política de privacidad",
+    "calendarView": "Vista del calendario"
   },
   "deleteDataConfirm": {
     "title": "Eliminar todos los datos de seguimiento",

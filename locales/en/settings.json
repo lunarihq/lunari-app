@@ -11,7 +11,8 @@
     "reminders": "Reminders",
     "appLock": "App Lock",
     "about": "About",
-    "privacyPolicy": "Privacy policy"
+    "privacyPolicy": "Privacy policy",
+    "calendarView": "Calendar view"
   },
   "deleteDataConfirm": {
     "title": "Delete all tracking data",
