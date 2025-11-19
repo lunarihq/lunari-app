@@ -27,7 +27,7 @@ export const ERROR_CODES = {
 
 let keyCache: string | null = null;
 let initializationPromise: Promise<void> | null = null;
-let reWrapPromise: Promise<void> | null = null;
+let keyRewrappingPromise: Promise<void> | null = null;
 
 function generateRandomKeyHex(): string {
   const bytes = Crypto.getRandomBytes(32);
@@ -135,13 +135,13 @@ export async function reWrapKEK(requireAuth: boolean): Promise<void> {
     throw new EncryptionError(ERROR_CODES.UNINITIALIZED_ENCRYPTION, 'Encryption key not initialized.');
   }
 
-  if (reWrapPromise) {
-    return reWrapPromise;
+  if (keyRewrappingPromise) {
+    return keyRewrappingPromise;
   }
 
   const newMode: EncryptionMode = requireAuth ? 'protected' : 'basic';
   
-  reWrapPromise = (async () => {
+  keyRewrappingPromise = (async () => {
     try {
       await SecureStore.setItemAsync(
         SECURE_STORE_KEYS.ENCRYPTION_KEY, 
@@ -156,11 +156,11 @@ export async function reWrapKEK(requireAuth: boolean): Promise<void> {
       }
       throw error;
     } finally {
-      reWrapPromise = null;
+      keyRewrappingPromise = null;
     }
   })();
 
-  return reWrapPromise;
+  return keyRewrappingPromise;
 }
 
 export async function clearKeyCache(): Promise<void> {
@@ -171,16 +171,16 @@ export async function clearKeyCache(): Promise<void> {
       // Swallow errors from initialization since we're clearing anyway
     }
   }
-  if (reWrapPromise) {
+  if (keyRewrappingPromise) {
     try {
-      await reWrapPromise;
+      await keyRewrappingPromise;
     } catch {
-      // Swallow errors from reWrap since we're clearing anyway
+      // Swallow errors from key rewrapping since we're clearing anyway
     }
   }
   keyCache = null;
   initializationPromise = null;
-  reWrapPromise = null;
+  keyRewrappingPromise = null;
 }
 
 export async function deleteEncryptionKey(): Promise<void> {
@@ -191,9 +191,9 @@ export async function deleteEncryptionKey(): Promise<void> {
       // Swallow errors since we're deleting anyway
     }
   }
-  if (reWrapPromise) {
+  if (keyRewrappingPromise) {
     try {
-      await reWrapPromise;
+      await keyRewrappingPromise;
     } catch {
       // Swallow errors since we're deleting anyway
     }
@@ -205,6 +205,6 @@ export async function deleteEncryptionKey(): Promise<void> {
   } finally {
     keyCache = null;
     initializationPromise = null;
-    reWrapPromise = null;
+    keyRewrappingPromise = null;
   }
 }
