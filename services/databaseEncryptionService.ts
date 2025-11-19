@@ -7,10 +7,8 @@ const SECURE_STORE_KEYS = {
 };
 
 const ASYNC_STORAGE_KEYS = {
-  ENCRYPTION_MODE: 'encryption_mode',
+  KEY_REQUIRES_AUTH: 'key_requires_auth',
 };
-
-export type EncryptionMode = 'basic' | 'protected';
 
 export class EncryptionError extends Error {
   constructor(public code: keyof typeof ERROR_CODES, message: string) {
@@ -47,27 +45,27 @@ function isAuthenticationError(error: unknown): boolean {
 async function createNewKey(): Promise<string> {
   const keyHex = generateRandomKeyHex();
   await SecureStore.setItemAsync(SECURE_STORE_KEYS.ENCRYPTION_KEY, keyHex, { requireAuthentication: false });
-  await setStoredEncryptionMode('basic');
+  await setKeyRequiresAuth(false);
   return keyHex;
 }
 
 async function loadExistingKey(): Promise<string> {
-  const mode = await getEncryptionMode();
+  const requiresAuth = await getKeyRequiresAuth();
   let keyHex: string | null;
   
   try {
     keyHex = await SecureStore.getItemAsync(
       SECURE_STORE_KEYS.ENCRYPTION_KEY, 
-      { requireAuthentication: mode === 'protected' }
+      { requireAuthentication: requiresAuth }
     );
   } catch (error) {
-    // Mode desync: AsyncStorage says 'basic' but key requires auth
-    if (mode !== 'protected' && isAuthenticationError(error)) {
+    // Mode desync: AsyncStorage says no auth but key requires auth
+    if (!requiresAuth && isAuthenticationError(error)) {
       keyHex = await SecureStore.getItemAsync(
         SECURE_STORE_KEYS.ENCRYPTION_KEY, 
         { requireAuthentication: true }
       );
-      await setStoredEncryptionMode('protected');
+      await setKeyRequiresAuth(true);
     } else {
       throw error;
     }
@@ -114,13 +112,13 @@ export async function initializeEncryption(): Promise<void> {
   return initializationPromise;
 }
 
-export async function getEncryptionMode(): Promise<EncryptionMode> {
-  const mode = await AsyncStorage.getItem(ASYNC_STORAGE_KEYS.ENCRYPTION_MODE);
-  return mode === 'protected' ? 'protected' : 'basic';
+export async function getKeyRequiresAuth(): Promise<boolean> {
+  const value = await AsyncStorage.getItem(ASYNC_STORAGE_KEYS.KEY_REQUIRES_AUTH);
+  return value === 'true';
 }
 
-async function setStoredEncryptionMode(mode: EncryptionMode): Promise<void> {
-  await AsyncStorage.setItem(ASYNC_STORAGE_KEYS.ENCRYPTION_MODE, mode);
+async function setKeyRequiresAuth(requiresAuth: boolean): Promise<void> {
+  await AsyncStorage.setItem(ASYNC_STORAGE_KEYS.KEY_REQUIRES_AUTH, String(requiresAuth));
 }
 
 export function getEncryptionKeyHex(): string {
@@ -138,8 +136,6 @@ export async function reWrapKEK(requireAuth: boolean): Promise<void> {
   if (keyRewrappingPromise) {
     return keyRewrappingPromise;
   }
-
-  const newMode: EncryptionMode = requireAuth ? 'protected' : 'basic';
   
   keyRewrappingPromise = (async () => {
     try {
@@ -148,7 +144,7 @@ export async function reWrapKEK(requireAuth: boolean): Promise<void> {
         keyCache, 
         { requireAuthentication: requireAuth }
       );
-      await setStoredEncryptionMode(newMode);
+      await setKeyRequiresAuth(requireAuth);
     } catch (error) {
       if (error instanceof EncryptionError) throw error;
       if (isAuthenticationError(error)) {
@@ -201,7 +197,7 @@ export async function deleteEncryptionKey(): Promise<void> {
   
   try {
     await SecureStore.deleteItemAsync(SECURE_STORE_KEYS.ENCRYPTION_KEY);
-    await AsyncStorage.removeItem(ASYNC_STORAGE_KEYS.ENCRYPTION_MODE);
+    await AsyncStorage.removeItem(ASYNC_STORAGE_KEYS.KEY_REQUIRES_AUTH);
   } finally {
     keyCache = null;
     initializationPromise = null;
