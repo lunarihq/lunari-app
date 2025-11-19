@@ -21,6 +21,7 @@ export const ERROR_CODES = {
   USER_CANCELLED: 'USER_CANCELLED',
   KEY_NOT_FOUND: 'KEY_NOT_FOUND',
   UNINITIALIZED_ENCRYPTION: 'UNINITIALIZED_ENCRYPTION',
+  ORPHANED_DATABASE: 'ORPHANED_DATABASE',
 } as const;
 
 let keyCache: string | null = null;
@@ -84,14 +85,17 @@ async function loadExistingKey(): Promise<string> {
   return keyHex;
 }
 
-export async function initializeEncryption(): Promise<void> {
+export async function initializeEncryption(): Promise<{ wasKeyJustCreated: boolean }> {
   if (keyCache) {
-    return;
+    return { wasKeyJustCreated: false };
   }
 
   if (initializationPromise) {
-    return initializationPromise;
+    await initializationPromise;
+    return { wasKeyJustCreated: false };
   }
+
+  let wasKeyCreated = false;
 
   initializationPromise = (async () => {
     try {
@@ -99,6 +103,7 @@ export async function initializeEncryption(): Promise<void> {
     } catch (error) {
       if (error instanceof EncryptionError && error.code === ERROR_CODES.KEY_NOT_FOUND) {
         keyCache = await createNewKey();
+        wasKeyCreated = true;
       } else {
         if (error instanceof EncryptionError) throw error;
         if (isAuthenticationError(error)) {
@@ -111,7 +116,8 @@ export async function initializeEncryption(): Promise<void> {
     }
   })();
 
-  return initializationPromise;
+  await initializationPromise;
+  return { wasKeyJustCreated: wasKeyCreated };
 }
 
 export async function getKeyRequiresAuth(): Promise<boolean> {

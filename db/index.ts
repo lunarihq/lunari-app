@@ -2,7 +2,8 @@ import * as SQLite from 'expo-sqlite';
 import { drizzle } from 'drizzle-orm/expo-sqlite';
 import { settings } from './schema';
 import { eq } from 'drizzle-orm';
-import { initializeEncryption, getEncryptionKeyHex } from '../services/databaseEncryptionService';
+import * as FileSystem from 'expo-file-system';
+import { initializeEncryption, getEncryptionKeyHex, EncryptionError, ERROR_CODES } from '../services/databaseEncryptionService';
 
 const MIGRATION_TABLES = `
 CREATE TABLE IF NOT EXISTS period_dates (
@@ -33,6 +34,15 @@ let expo: SQLite.SQLiteDatabase | null = null;
 let db: ReturnType<typeof drizzle> | null = null;
 let initializationPromise: Promise<void> | null = null;
 
+async function databaseFileExists(): Promise<boolean> {
+  if (!FileSystem.documentDirectory) {
+    return false;
+  }
+  const dbPath = `${FileSystem.documentDirectory}SQLite/period.db`;
+  const fileInfo = await FileSystem.getInfoAsync(dbPath);
+  return fileInfo.exists;
+}
+
 export async function deleteDatabaseFile(): Promise<void> {
   if (expo) {
     await expo.closeAsync();
@@ -56,7 +66,18 @@ export async function initializeDatabase(): Promise<void> {
 
   initializationPromise = (async () => {
     try {
-      await initializeEncryption();
+      const { wasKeyJustCreated } = await initializeEncryption();
+      
+      // Check for orphaned database: key was just created but encrypted database exists
+      if (wasKeyJustCreated) {
+        const dbExists = await databaseFileExists();
+        if (dbExists) {
+          throw new EncryptionError(
+            ERROR_CODES.ORPHANED_DATABASE,
+            'Encryption key was lost but encrypted database still exists. Your data cannot be recovered.'
+          );
+        }
+      }
       
       const hexKey = getEncryptionKeyHex();
       

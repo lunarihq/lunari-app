@@ -63,6 +63,13 @@ export function useAppInitialization() {
         } finally {
           setAppState(createLockedState('auth_cancelled'));
         }
+      } else if (
+        error instanceof EncryptionError &&
+        error.code === ERROR_CODES.ORPHANED_DATABASE
+      ) {
+        // Specific error for when encryption key is lost but encrypted database exists
+        console.error('[AppInitialization] Orphaned database detected:', error);
+        setAppState(createErrorState('errors.database.orphaned'));
       } else {
         // Log technical details for debugging (not shown to users)
         console.error('[AppInitialization] Database initialization error:', error);

@@ -20,7 +20,8 @@
     "deleteFailed": "Failed to delete",
     "database": {
       "title": "Unable to Start App",
-      "generic": "We encountered an issue starting the app. Please try restarting."
+      "generic": "We encountered an issue starting the app. Please try restarting.",
+      "orphaned": "Your encryption key was lost, but your encrypted database still exists. Your previous data cannot be recovered and must be reset to continue using the app."
     }
   },
   "resetData": {

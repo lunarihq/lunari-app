@@ -20,7 +20,8 @@
     "deleteFailed": "Error al eliminar",
     "database": {
       "title": "No se puede iniciar la aplicación",
-      "generic": "Encontramos un problema al iniciar la aplicación. Por favor, intenta reiniciar."
+      "generic": "Encontramos un problema al iniciar la aplicación. Por favor, intenta reiniciar.",
+      "orphaned": "Tu clave de cifrado se perdió, pero tu base de datos cifrada todavía existe. Tus datos anteriores no se pueden recuperar y deben restablecerse para continuar usando la aplicación."
     }
   },
   "resetData": {
