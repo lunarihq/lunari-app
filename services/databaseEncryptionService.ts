@@ -38,16 +38,9 @@ function generateRandomKeyHex(): string {
 // - Authentication required (key needs auth but requireAuthentication=false was used)
 // - User cancellation (user cancelled the biometric prompt)
 // Tested on Android. There's no reliable way to distinguish between these two scenarios.
-// We use the same check but keep separate functions for semantic clarity.
-function isCancellationError(error: unknown): boolean {
-  const code = (error as any)?.code;
-  return code === 'ERR_AUTHENTICATION';
-}
-
-function isAuthenticationRequiredError(error: unknown): boolean {
+function isAuthenticationError(error: unknown): boolean {
   if (!(error instanceof Error)) return false;
-  const code = (error as any).code;
-  return code === 'ERR_AUTHENTICATION';
+  return (error as any).code === 'ERR_AUTHENTICATION';
 }
 
 
@@ -69,7 +62,7 @@ async function loadExistingKey(): Promise<string> {
     );
   } catch (error) {
     // Mode desync: AsyncStorage says 'basic' but key requires auth
-    if (mode !== 'protected' && isAuthenticationRequiredError(error)) {
+    if (mode !== 'protected' && isAuthenticationError(error)) {
       keyHex = await SecureStore.getItemAsync(
         SECURE_STORE_KEYS.ENCRYPTION_KEY, 
         { requireAuthentication: true }
@@ -108,7 +101,7 @@ export async function initializeEncryption(): Promise<void> {
         keyCache = await createNewKey();
       } else {
         if (error instanceof EncryptionError) throw error;
-        if (isCancellationError(error)) {
+        if (isAuthenticationError(error)) {
           throw new EncryptionError(ERROR_CODES.USER_CANCELLED, 'Authentication was cancelled');
         }
         throw error;
@@ -158,7 +151,7 @@ export async function reWrapKEK(requireAuth: boolean): Promise<void> {
       await setStoredEncryptionMode(newMode);
     } catch (error) {
       if (error instanceof EncryptionError) throw error;
-      if (isCancellationError(error)) {
+      if (isAuthenticationError(error)) {
         throw new EncryptionError(ERROR_CODES.USER_CANCELLED, 'Authentication was cancelled');
       }
       throw error;
