@@ -1,11 +1,14 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { Alert } from 'react-native';
 import { useRouter, usePathname } from 'expo-router';
-import { initializeDatabase, getSetting, clearDatabaseCache } from '../db';
+import { useTranslation } from 'react-i18next';
+import { initializeDatabase, getSetting, clearDatabaseCache, deleteDatabaseFile } from '../db';
 import { useAuth } from '../contexts/AuthContext';
 import {
   EncryptionError,
   ERROR_CODES,
   clearKeyCache,
+  deleteEncryptionKey,
 } from '../services/databaseEncryptionService';
 import {
   AppState,
@@ -27,6 +30,7 @@ export function useAppInitialization() {
 
   const router = useRouter();
   const pathname = usePathname();
+  const { t } = useTranslation('common');
   const {
     unlockApp,
     startAuthentication,
@@ -81,6 +85,45 @@ export function useAppInitialization() {
       setAppState(createInitialState());
     }
   }, []);
+
+  const resetAllLocalData = useCallback(() => {
+    Alert.alert(
+      t('resetData.title'),
+      t('resetData.message'),
+      [
+        {
+          text: t('buttons.cancel'),
+          style: 'cancel',
+        },
+        {
+          text: t('resetData.confirm'),
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              // Delete encryption key from SecureStore
+              await deleteEncryptionKey();
+              
+              // Delete database file from filesystem
+              await deleteDatabaseFile();
+              
+              // Clear any remaining caches
+              await clearDatabaseCache();
+              
+              // Re-initialize app with fresh database and key
+              setAppState(createInitialState());
+            } catch (error) {
+              console.error('[AppInitialization] Failed to reset local data:', error);
+              Alert.alert(
+                t('resetData.failed.title'),
+                t('resetData.failed.message'),
+                [{ text: 'OK' }]
+              );
+            }
+          },
+        },
+      ]
+    );
+  }, [t]);
 
   // Re-lock app when returning from background (security requirement)
   useEffect(() => {
@@ -148,6 +191,7 @@ export function useAppInitialization() {
   return {
     appState,
     retryInitialization,
+    resetAllLocalData,
   };
 }
 

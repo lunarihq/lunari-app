@@ -10,7 +10,8 @@
     "edit": "Edit",
     "close": "Close",
     "confirm": "Confirm",
-    "continue": "Continue"
+    "continue": "Continue",
+    "resetAllData": "Reset All Data"
   },
   "errors": {
     "generic": "Something went wrong. Please try again.",
@@ -20,6 +21,15 @@
     "database": {
       "title": "Unable to Start App",
       "generic": "We encountered an issue starting the app. Please try restarting."
+    }
+  },
+  "resetData": {
+    "title": "Reset All Local Data",
+    "message": "This will permanently delete all your health data, period tracking history, and settings. This action cannot be undone.\n\nAre you sure you want to continue?",
+    "confirm": "Reset All Data",
+    "failed": {
+      "title": "Reset Failed",
+      "message": "Unable to reset local data. Please try again or reinstall the app."
     }
   },
   "time": {

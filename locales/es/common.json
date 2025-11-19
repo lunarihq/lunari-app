@@ -10,7 +10,8 @@
     "edit": "Editar",
     "close": "Cerrar",
     "confirm": "Confirmar",
-    "continue": "Continuar"
+    "continue": "Continuar",
+    "resetAllData": "Restablecer Todos los Datos"
   },
   "errors": {
     "generic": "Algo salió mal. Por favor, inténtalo de nuevo.",
@@ -20,6 +21,15 @@
     "database": {
       "title": "No se puede iniciar la aplicación",
       "generic": "Encontramos un problema al iniciar la aplicación. Por favor, intenta reiniciar."
+    }
+  },
+  "resetData": {
+    "title": "Restablecer Todos los Datos",
+    "message": "Esto eliminará permanentemente todos tus datos de salud, historial de seguimiento del período y configuraciones. Esta acción no se puede deshacer.\n\n¿Estás segura de que deseas continuar?",
+    "confirm": "Restablecer Todos los Datos",
+    "failed": {
+      "title": "Error al Restablecer",
+      "message": "No se pudieron restablecer los datos locales. Por favor, intenta de nuevo o reinstala la aplicación."
     }
   },
   "time": {

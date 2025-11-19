@@ -29,7 +29,7 @@ function AppContent() {
   const notificationResponseListener = useRef<Notifications.Subscription | null>(null);
   const router = useRouter();
 
-  const { appState, retryInitialization } = useAppInitialization();
+  const { appState, retryInitialization, resetAllLocalData } = useAppInitialization();
   const { isDark } = useTheme();
   const { t } = useTranslation(['common', 'settings', 'health', 'info']);
 
@@ -92,14 +92,35 @@ function AppContent() {
           marginBottom: 24,
           color: isDark ? darkColors.textPrimary : lightColors.textPrimary,
         },
+        buttonContainer: {
+          flexDirection: 'column',
+          gap: 12,
+          width: '100%',
+          maxWidth: 300,
+        },
         button: {
           paddingHorizontal: 24,
           paddingVertical: 12,
           backgroundColor: isDark ? darkColors.primary : lightColors.primary,
           borderRadius: 8,
+          alignItems: 'center',
+        },
+        buttonSecondary: {
+          paddingHorizontal: 24,
+          paddingVertical: 12,
+          backgroundColor: 'transparent',
+          borderRadius: 8,
+          borderWidth: 1,
+          borderColor: isDark ? darkColors.error : lightColors.error,
+          alignItems: 'center',
         },
         buttonText: {
           color: '#fff',
+          fontSize: 16,
+          fontWeight: '600',
+        },
+        buttonTextSecondary: {
+          color: isDark ? darkColors.error : lightColors.error,
           fontSize: 16,
           fontWeight: '600',
         },
@@ -112,12 +133,20 @@ function AppContent() {
       <View style={styles.centerContainer}>
         <Text style={styles.errorTitle}>{t('errors.database.title')}</Text>
         <Text style={styles.errorMessage}>{t(appState.error)}</Text>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={retryInitialization}
-        >
-          <Text style={styles.buttonText}>{t('buttons.continue')}</Text>
-        </TouchableOpacity>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={retryInitialization}
+          >
+            <Text style={styles.buttonText}>{t('buttons.continue')}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.buttonSecondary}
+            onPress={resetAllLocalData}
+          >
+            <Text style={styles.buttonTextSecondary}>{t('buttons.resetAllData')}</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
