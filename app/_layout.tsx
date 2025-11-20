@@ -137,12 +137,16 @@ function AppContent() {
           <TouchableOpacity
             style={styles.button}
             onPress={retryInitialization}
+            accessibilityRole="button"
+            accessibilityLabel={t('buttons.continue')}
           >
             <Text style={styles.buttonText}>{t('buttons.continue')}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.buttonSecondary}
             onPress={resetAllLocalData}
+            accessibilityRole="button"
+            accessibilityLabel={t('buttons.resetAllData')}
           >
             <Text style={styles.buttonTextSecondary}>{t('buttons.resetAllData')}</Text>
           </TouchableOpacity>

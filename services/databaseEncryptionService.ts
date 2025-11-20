@@ -10,6 +10,8 @@ const ASYNC_STORAGE_KEYS = {
   KEY_REQUIRES_AUTH: 'key_requires_auth',
 };
 
+// Note: Error messages below are for internal logging/debugging only.
+// User-facing messages are handled by the calling code using localized translations.
 export class EncryptionError extends Error {
   constructor(public code: keyof typeof ERROR_CODES, message: string) {
     super(message);
