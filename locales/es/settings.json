@@ -43,8 +43,8 @@
     },
     "error": {
       "title": "Error",
-      "message": "Error al actualizar la configuración de bloqueo. No se pudo actualizar la clave de cifrado. Por favor, inténtalo de nuevo.",
-      "rewrapFailed": "No se pudo volver a envolver la clave de cifrado. Tus datos siguen seguros con la configuración anterior."
+      "message": "Error al actualizar la configuración de bloqueo. No se pudo actualizar la seguridad",
+      "rewrapFailed": "No se pudo aplicar la configuración de seguridad. Tus datos siguen seguros con la configuración anterior."
     }
   },
   "lockScreen": {
