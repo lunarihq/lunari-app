@@ -34,13 +34,9 @@
   },
   "appLockSettings": {
     "unlockApp": "Unlock app with biometric",
-    "unlockDescription": "Use fingerprint, face ID, or other device authentication method to unlock Lunari.",
-    "noDeviceSecurityDescription": "You need to set up a biometric authentication on your device to enable this feature.",
-    "noDeviceSecurity": {
-      "title": "Device Security Required",
-      "message": "Please set up a passcode, fingerprint, or face unlock on your device first.",
-      "ok": "OK"
-    },
+    "unlockDescription": "Use your device's authentication method to unlock Lunari.",
+    "noDeviceSecurityDescription": "You need to setup your device's authentication method first to enable this feature.",
+
     "error": {
       "title": "Error",
       "message": "Failed to update app lock settings. Unable to complete security update. Please try again.",

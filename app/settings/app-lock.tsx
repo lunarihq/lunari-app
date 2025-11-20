@@ -17,15 +17,7 @@ export default function AppLockScreen() {
   } = useAuth();
 
   const handleToggle = async (value: boolean) => {
-    if (value && !isDeviceSecurityAvailable) {
-      Alert.alert(
-        t('appLockSettings.noDeviceSecurity.title'),
-        t('appLockSettings.noDeviceSecurity.message'),
-        [{ text: t('appLockSettings.noDeviceSecurity.ok') }]
-      );
-      return;
-    }
-
+    // No need to check device security here - the toggle is disabled when unavailable
     const result = await setLockEnabled(value);
     if (result.cancelled) {
       return;

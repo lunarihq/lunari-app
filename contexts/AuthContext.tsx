@@ -9,6 +9,7 @@ import React, {
 } from 'react';
 import { AppState, AppStateStatus, Platform } from 'react-native';
 import * as LocalAuthentication from 'expo-local-authentication';
+import { useTranslation } from 'react-i18next';
 import { AuthService } from '../services/authService';
 import { reWrapKEK, clearKeyCache, EncryptionError, ERROR_CODES } from '../services/databaseEncryptionService';
 import { clearDatabaseCache } from '../db';
@@ -47,6 +48,7 @@ interface AuthProviderProps {
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
+  const { t } = useTranslation('settings');
   const [isLocked, setIsLocked] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [appStateBackground, setAppStateBackground] = useState(false);
@@ -105,7 +107,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         setAppStateBackground(false);
       }
     },
-    [appStateBackground, isLockEnabled, isLocked, isAuthenticated, isRequestingPermission, isAuthenticating]
+    [appStateBackground, isLockEnabled, isRequestingPermission, isAuthenticating]
   );
 
   useEffect(() => {
@@ -173,19 +175,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
           await reWrapKEK(!enabled);
         } catch (rollbackError) {
           console.error('[AuthContext] Rollback failed:', rollbackError);
-          const rollbackMessage = rollbackError instanceof EncryptionError 
-            ? rollbackError.message 
-            : rollbackError instanceof Error 
-            ? rollbackError.message 
-            : 'Failed to rollback encryption state';
-          
           const rollbackErrorCode = rollbackError instanceof EncryptionError 
             ? rollbackError.code 
             : 'ROLLBACK_FAILED';
           
           return { 
             success: false, 
-            error: `Lock setting failed and rollback failed: ${rollbackMessage}`,
+            error: t('appLockSettings.error.rewrapFailed'),
             errorCode: rollbackErrorCode
           };
         }
@@ -202,7 +198,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         ? error.message 
         : error instanceof Error 
         ? error.message 
-        : 'Failed to update app lock settings. Please try again.';
+        : t('appLockSettings.error.message');
       
       const errorCode = error instanceof EncryptionError ? error.code : undefined;
       
@@ -210,7 +206,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     } finally {
       setIsReWrapping(false);
     }
-  }, []);
+  }, [t]);
 
   const refreshLockStatus = useCallback(async (): Promise<void> => {
     await initializeAuth();

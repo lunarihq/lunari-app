@@ -134,4 +134,3 @@ knowledge_base:
     filePatterns:
       - "README.md"
       - "LOCALIZATION_GUIDE.md"
-      - "CALENDAR_MIGRATION.md"

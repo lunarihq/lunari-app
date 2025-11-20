@@ -36,11 +36,6 @@
     "unlockApp": "Desbloquear aplicación",
     "unlockDescription": "Usa la autenticación de tu dispositivo (huella digital, reconocimiento facial, etc.) para desbloquear Lunari.",
     "noDeviceSecurityDescription": "Configura la autenticación biométrica en tu dispositivo para habilitar esta función.",
-    "noDeviceSecurity": {
-      "title": "Seguridad del dispositivo requerida",
-      "message": "Por favor, configura la autenticación biométrica en tu dispositivo primero.",
-      "ok": "OK"
-    },
     "error": {
       "title": "Error",
       "message": "Error al actualizar la configuración de bloqueo. No se pudo actualizar la seguridad",
