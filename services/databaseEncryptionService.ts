@@ -18,7 +18,7 @@ export class EncryptionError extends Error {
 }
 
 export const ERROR_CODES = {
-  USER_CANCELLED: 'USER_CANCELLED',
+  AUTHENTICATION_FAILED: 'AUTHENTICATION_FAILED',
   KEY_NOT_FOUND: 'KEY_NOT_FOUND',
   KEY_CORRUPTED: 'KEY_CORRUPTED',
   UNINITIALIZED_ENCRYPTION: 'UNINITIALIZED_ENCRYPTION',
@@ -34,13 +34,27 @@ function generateRandomKeyHex(): string {
   return Array.from(bytes).map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
-// expo-secure-store v15.0.7 throws ERR_AUTHENTICATION for both:
-// - Authentication required (key needs auth but requireAuthentication=false was used)
-// - User cancellation (user cancelled the biometric prompt)
-// Tested on Android. There's no reliable way to distinguish between these two scenarios.
+// expo-secure-store v15.0.7 error handling:
+// Android: All authentication failures throw ERR_AUTHENTICATION (user cancellation,
+//   biometrics not enrolled, hardware unavailable, etc. - cannot be distinguished)
+// iOS: Authentication failures throw ERR_KEY_CHAIN with OSStatus codes in message
+//   (errSecUserCanceled, errSecAuthFailed, errSecInteractionNotAllowed, etc.)
+// 
+// Since we cannot reliably distinguish between different failure types across platforms,
+// we treat all authentication errors uniformly and present user-friendly guidance.
 function isAuthenticationError(error: unknown): boolean {
   if (!(error instanceof Error)) return false;
-  return (error as any).code === 'ERR_AUTHENTICATION';
+  const code = (error as any).code;
+  // Android authentication errors
+  if (code === 'ERR_AUTHENTICATION') return true;
+  // iOS authentication errors (keychain access failures)
+  if (code === 'ERR_KEY_CHAIN') {
+    const message = error.message.toLowerCase();
+    return message.includes('canceled') || 
+           message.includes('authentication') || 
+           message.includes('interaction not allowed');
+  }
+  return false;
 }
 
 
@@ -115,7 +129,10 @@ export async function initializeEncryption(): Promise<{ wasKeyJustCreated: boole
       } else {
         if (error instanceof EncryptionError) throw error;
         if (isAuthenticationError(error)) {
-          throw new EncryptionError(ERROR_CODES.USER_CANCELLED, 'Authentication was cancelled');
+          throw new EncryptionError(
+            ERROR_CODES.AUTHENTICATION_FAILED, 
+            'Authentication failed or unavailable. Please ensure biometric authentication is set up on your device.'
+          );
         }
         throw error;
       }
@@ -164,7 +181,10 @@ export async function reWrapKEK(requireAuth: boolean): Promise<void> {
     } catch (error) {
       if (error instanceof EncryptionError) throw error;
       if (isAuthenticationError(error)) {
-        throw new EncryptionError(ERROR_CODES.USER_CANCELLED, 'Authentication was cancelled');
+        throw new EncryptionError(
+          ERROR_CODES.AUTHENTICATION_FAILED, 
+          'Authentication failed or unavailable. Please ensure biometric authentication is set up on your device.'
+        );
       }
       throw error;
     } finally {

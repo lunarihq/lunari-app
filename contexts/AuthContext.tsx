@@ -189,7 +189,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       
       return { success };
     } catch (error) {
-      if (error instanceof EncryptionError && error.code === ERROR_CODES.USER_CANCELLED) {
+      if (error instanceof EncryptionError && error.code === ERROR_CODES.AUTHENTICATION_FAILED) {
         return { success: false, cancelled: true };
       }
       

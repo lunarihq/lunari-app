@@ -53,7 +53,7 @@ export function useAppInitialization() {
       endAuthentication();
       if (
         error instanceof EncryptionError &&
-        error.code === ERROR_CODES.USER_CANCELLED
+        error.code === ERROR_CODES.AUTHENTICATION_FAILED
       ) {
         try {
           await clearKeyCache();
