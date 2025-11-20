@@ -20,6 +20,7 @@ export class EncryptionError extends Error {
 export const ERROR_CODES = {
   USER_CANCELLED: 'USER_CANCELLED',
   KEY_NOT_FOUND: 'KEY_NOT_FOUND',
+  KEY_CORRUPTED: 'KEY_CORRUPTED',
   UNINITIALIZED_ENCRYPTION: 'UNINITIALIZED_ENCRYPTION',
   ORPHANED_DATABASE: 'ORPHANED_DATABASE',
 } as const;
@@ -75,11 +76,18 @@ async function loadExistingKey(): Promise<string> {
   }
   
   if (!keyHex) {
-    throw new EncryptionError(ERROR_CODES.KEY_NOT_FOUND, 'Encryption key is missing. Your data cannot be decrypted.');
+    throw new EncryptionError(
+      ERROR_CODES.KEY_NOT_FOUND,
+      'Encryption key is missing. Your data cannot be decrypted.');
   }
 
-  if (keyHex.length !== 64) {
-    throw new EncryptionError(ERROR_CODES.KEY_NOT_FOUND, 'Stored encryption key is corrupted.');
+  // Validate: exactly 64 hex characters (256 bits)
+  const hexPattern = /^[0-9a-f]{64}$/i;
+  if (!hexPattern.test(keyHex)) {
+    throw new EncryptionError(
+      ERROR_CODES.KEY_CORRUPTED, 
+      'Stored encryption key is corrupted or invalid.'
+    );
   }
 
   return keyHex;
