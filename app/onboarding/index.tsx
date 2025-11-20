@@ -8,6 +8,7 @@ import { useTheme } from '../../contexts/ThemeContext';
 import { useAppStyles } from '../../hooks/useStyles';
 import { createOnboardingStyles } from '../../styles/onboarding';
 import { Shape1, Shape2 } from '../../components/illustrations';
+import { useFonts, BricolageGrotesque_700Bold } from '@expo-google-fonts/bricolage-grotesque';
 
 export default function WelcomeScreen() {
   const router = useRouter();
@@ -15,6 +16,7 @@ export default function WelcomeScreen() {
   const { typography } = useAppStyles();
   const onboardingStyles = createOnboardingStyles(colors);
   const { t } = useTranslation('onboarding');
+  const [fontsLoaded] = useFonts({ BricolageGrotesque_700Bold });
 
   const handleNext = () => {
     router.push({ pathname: '/onboarding/period-length' });
@@ -45,7 +47,8 @@ export default function WelcomeScreen() {
               fontSize: 33,
               marginBottom: 20,
               textAlign: 'center',
-              fontFamily: 'BricolageGrotesque_700Bold',
+              fontWeight: 'bold',
+              ...(fontsLoaded && { fontFamily: 'BricolageGrotesque_700Bold' }),
             },
           ]}
         >

@@ -1,7 +1,6 @@
-import React, { useEffect, useRef, useMemo } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Stack, useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { View, Text, ActivityIndicator, TouchableOpacity, StyleSheet } from 'react-native';
 import * as Notifications from 'expo-notifications';
 import { AuthProvider } from '../contexts/AuthContext';
 import { NotesProvider } from '../contexts/NotesContext';
@@ -18,6 +17,9 @@ import '../i18n/config';
 import { useTranslation } from 'react-i18next';
 import { dynamicScreens, getBackgroundColor } from '../config/screenConfig';
 import { useAppInitialization } from '../hooks/useAppInitialization';
+import { ErrorScreen } from '../components/ErrorScreen';
+import { LockScreen } from '../components/LockScreen';
+import { LoadingScreen } from '../components/LoadingScreen';
 
 const toastConfig = {
   style: { height: 48 },
@@ -33,7 +35,8 @@ function AppContent() {
   const { isDark } = useTheme();
   const { t } = useTranslation(['common', 'settings', 'health', 'info']);
 
-  const [fontsLoaded] = useFonts({
+  // Load custom fonts asynchronously (non-blocking)
+  useFonts({
     BricolageGrotesque_700Bold,
   });
 
@@ -64,117 +67,22 @@ function AppContent() {
     };
   }, [router]);
 
-  const styles = useMemo(
-    () =>
-      StyleSheet.create({
-        centerContainer: {
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-          padding: 20,
-          backgroundColor: isDark ? darkColors.background : lightColors.background,
-        },
-        errorTitle: {
-          fontSize: 22,
-          fontWeight: 'bold',
-          marginBottom: 16,
-          color: isDark ? darkColors.textPrimary : lightColors.textPrimary,
-        },
-        errorMessage: {
-          fontSize: 16,
-          marginBottom: 24,
-          color: isDark ? darkColors.textSecondary : lightColors.textSecondary,
-          textAlign: 'center',
-        },
-        lockTitle: {
-          fontSize: 28,
-          fontWeight: '600',
-          marginBottom: 24,
-          color: isDark ? darkColors.textPrimary : lightColors.textPrimary,
-        },
-        buttonContainer: {
-          flexDirection: 'column',
-          gap: 12,
-          width: '100%',
-          maxWidth: 300,
-        },
-        button: {
-          paddingHorizontal: 24,
-          paddingVertical: 12,
-          backgroundColor: isDark ? darkColors.primary : lightColors.primary,
-          borderRadius: 8,
-          alignItems: 'center',
-        },
-        buttonSecondary: {
-          paddingHorizontal: 24,
-          paddingVertical: 12,
-          backgroundColor: 'transparent',
-          borderRadius: 8,
-          borderWidth: 1,
-          borderColor: isDark ? darkColors.error : lightColors.error,
-          alignItems: 'center',
-        },
-        buttonText: {
-          color: '#fff',
-          fontSize: 16,
-          fontWeight: '600',
-        },
-        buttonTextSecondary: {
-          color: isDark ? darkColors.error : lightColors.error,
-          fontSize: 16,
-          fontWeight: '600',
-        },
-      }),
-    [isDark]
-  );
-
   if (appState.status === 'db_error') {
     return (
-      <View style={styles.centerContainer}>
-        <Text style={styles.errorTitle}>{t('errors.database.title')}</Text>
-        <Text style={styles.errorMessage}>{t(appState.error)}</Text>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={retryInitialization}
-            accessibilityRole="button"
-            accessibilityLabel={t('buttons.continue')}
-          >
-            <Text style={styles.buttonText}>{t('buttons.continue')}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.buttonSecondary}
-            onPress={resetAllLocalData}
-            accessibilityRole="button"
-            accessibilityLabel={t('buttons.resetAllData')}
-          >
-            <Text style={styles.buttonTextSecondary}>{t('buttons.resetAllData')}</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+      <ErrorScreen
+        error={appState.error}
+        onRetry={retryInitialization}
+        onReset={resetAllLocalData}
+      />
     );
   }
 
   if (appState.status === 'locked') {
-    return (
-      <View style={styles.centerContainer}>
-        <Text style={styles.lockTitle}>{t('settings:lockScreen.unlockApp')}</Text>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={retryInitialization}
-        >
-          <Text style={styles.buttonText}>{t('settings:lockScreen.unlockButton')}</Text>
-        </TouchableOpacity>
-      </View>
-    );
+    return <LockScreen onUnlock={retryInitialization} />;
   }
 
-  if (appState.status !== 'ready' || !fontsLoaded) {
-    return (
-      <View style={styles.centerContainer}>
-        <ActivityIndicator size="large" color={isDark ? darkColors.primary : lightColors.primary} />
-      </View>
-    );
+  if (appState.status !== 'ready') {
+    return <LoadingScreen />;
   }
 
   return (
