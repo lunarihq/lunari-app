@@ -154,12 +154,12 @@ function AppContent() {
   if (appState.status === 'locked') {
     return (
       <View style={styles.centerContainer}>
-        <Text style={styles.lockTitle}>Unlock Lunari</Text>
+        <Text style={styles.lockTitle}>{t('settings:lockScreen.unlockApp')}</Text>
         <TouchableOpacity
           style={styles.button}
           onPress={retryInitialization}
         >
-          <Text style={styles.buttonText}>Unlock</Text>
+          <Text style={styles.buttonText}>{t('settings:lockScreen.unlockButton')}</Text>
         </TouchableOpacity>
       </View>
     );

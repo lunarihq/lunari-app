@@ -33,8 +33,8 @@
     "dark": "Oscuro"
   },
   "appLockSettings": {
-    "unlockApp": "Desbloquear aplicación",
-    "unlockDescription": "Usa la autenticación de tu dispositivo (huella digital, reconocimiento facial, etc.) para desbloquear Lunari.",
+    "unlockApp": "Desbloquear aplicación con biometría",
+    "unlockDescription": "Usa la autenticación biométrica de tu dispositivo (huella digital o reconocimiento facial) para desbloquear Lunari.",
     "noDeviceSecurityDescription": "Configura la autenticación biométrica en tu dispositivo para habilitar esta función.",
     "error": {
       "title": "Error",
@@ -43,7 +43,7 @@
     }
   },
   "lockScreen": {
-    "unlockApp": "Lunari bloqueado",
+    "unlockApp": "Desbloquear Lunari",
     "unlockButton": "Desbloquear"
   },
   "reminderSettings": {
@@ -81,7 +81,7 @@
       "statistics": "Estadísticas e historial de ciclos",
       "insights": "Información sobre fases del ciclo",
       "reminders": "Recordatorios de periodo",
-      "lock": "Bloqueo de aplicación con PIN/biométrico",
+      "lock": "Bloqueo biométrico de aplicación",
       "theme": "Soporte de temas claro y oscuro"
     },
     "privacyFirst": {
