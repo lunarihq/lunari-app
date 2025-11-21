@@ -39,24 +39,16 @@ function generateRandomKeyHex(): string {
 // expo-secure-store v15.0.7 error handling:
 // Android: All authentication failures throw ERR_AUTHENTICATION (user cancellation,
 //   biometrics not enrolled, hardware unavailable, etc. - cannot be distinguished)
-// iOS: Authentication failures throw ERR_KEY_CHAIN with OSStatus codes in message
-//   (errSecUserCanceled, errSecAuthFailed, errSecInteractionNotAllowed, etc.)
+// iOS: All authentication failures throw ERR_KEY_CHAIN
+//   (conservative approach; may need refinement during iOS development)
 // 
-// Since we cannot reliably distinguish between different failure types across platforms,
-// we treat all authentication errors uniformly and present user-friendly guidance.
+// Since expo-secure-store reports platform-specific codes, we conservatively treat
+// both ERR_AUTHENTICATION (Android) and ERR_KEY_CHAIN (iOS) as authentication failures.
+// Revisit once iOS-specific testing can confirm narrower OSStatus handling.
 function isAuthenticationError(error: unknown): boolean {
   if (!(error instanceof Error)) return false;
   const code = (error as any).code;
-  // Android authentication errors
-  if (code === 'ERR_AUTHENTICATION') return true;
-  // iOS authentication errors (keychain access failures)
-  if (code === 'ERR_KEY_CHAIN') {
-    const message = error.message.toLowerCase();
-    return message.includes('canceled') || 
-           message.includes('authentication') || 
-           message.includes('interaction not allowed');
-  }
-  return false;
+  return code === 'ERR_AUTHENTICATION' || code === 'ERR_KEY_CHAIN';
 }
 
 
