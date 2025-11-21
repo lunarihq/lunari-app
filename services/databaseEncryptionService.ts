@@ -162,6 +162,11 @@ export async function reWrapKEK(requireAuth: boolean): Promise<void> {
     throw new EncryptionError(ERROR_CODES.UNINITIALIZED_ENCRYPTION, 'Encryption key not initialized.');
   }
 
+  const currentRequiresAuth = await getKeyRequiresAuth();
+  if (currentRequiresAuth === requireAuth) {
+    return; // Already in target mode
+  }
+
   if (keyRewrappingPromise) {
     return keyRewrappingPromise;
   }
