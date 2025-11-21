@@ -201,14 +201,17 @@ export async function clearKeyCache(): Promise<void> {
   if (initializationPromise) {
     try {
       await initializationPromise;
-    } catch {
+    } catch (error)
+    {
+      console.error('[Encryption] clearKeyCache: initialization failed during cleanup', error);
       // Swallow errors from initialization since we're clearing anyway
     }
   }
   if (keyRewrappingPromise) {
     try {
       await keyRewrappingPromise;
-    } catch {
+    } catch (error) {
+      console.error('[Encryption] clearKeyCache: key rewrapping failed during cleanup', error);
       // Swallow errors from key rewrapping since we're clearing anyway
     }
   }
