@@ -30,6 +30,8 @@ export const ERROR_CODES = {
 let keyCache: string | null = null;
 let initializationPromise: Promise<void> | null = null;
 let keyRewrappingPromise: Promise<void> | null = null;
+let wasKeyCreatedDuringInit = false;
+
 
 function generateRandomKeyHex(): string {
   const bytes = Crypto.getRandomBytes(32);
@@ -108,10 +110,10 @@ export async function initializeEncryption(): Promise<{ wasKeyJustCreated: boole
 
   if (initializationPromise) {
     await initializationPromise;
-    return { wasKeyJustCreated: false };
+    return { wasKeyJustCreated: wasKeyCreatedDuringInit };
   }
 
-  let wasKeyCreated = false;
+  wasKeyCreatedDuringInit = false;
 
   initializationPromise = (async () => {
     try {
@@ -119,7 +121,7 @@ export async function initializeEncryption(): Promise<{ wasKeyJustCreated: boole
     } catch (error) {
       if (error instanceof EncryptionError && error.code === ERROR_CODES.KEY_NOT_FOUND) {
         keyCache = await createNewKey();
-        wasKeyCreated = true;
+        wasKeyCreatedDuringInit = true;
       } else {
         if (error instanceof EncryptionError) throw error;
         if (isAuthenticationError(error)) {
@@ -136,7 +138,7 @@ export async function initializeEncryption(): Promise<{ wasKeyJustCreated: boole
   })();
 
   await initializationPromise;
-  return { wasKeyJustCreated: wasKeyCreated };
+  return { wasKeyJustCreated: wasKeyCreatedDuringInit };
 }
 
 export async function getKeyRequiresAuth(): Promise<boolean> {
