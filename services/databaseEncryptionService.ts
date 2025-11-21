@@ -201,8 +201,7 @@ export async function clearKeyCache(): Promise<void> {
   if (initializationPromise) {
     try {
       await initializationPromise;
-    } catch (error)
-    {
+    } catch (error) {
       console.error('[Encryption] clearKeyCache: initialization failed during cleanup', error);
       // Swallow errors from initialization since we're clearing anyway
     }
@@ -224,14 +223,16 @@ export async function deleteEncryptionKey(): Promise<void> {
   if (initializationPromise) {
     try {
       await initializationPromise;
-    } catch {
+    } catch (error) {
+      console.error('[Encryption] deleteEncryptionKey: initialization failed during cleanup', error);
       // Swallow errors since we're deleting anyway
     }
   }
   if (keyRewrappingPromise) {
     try {
       await keyRewrappingPromise;
-    } catch {
+    } catch (error) {
+      console.error('[Encryption] deleteEncryptionKey: key rewrapping failed during cleanup', error);
       // Swallow errors since we're deleting anyway
     }
   }

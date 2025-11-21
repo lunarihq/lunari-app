@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../contexts/ThemeContext';
@@ -16,7 +16,7 @@ export function ErrorScreen({ errorKey, onRetry, onReset }: ErrorScreenProps) {
   const { t } = useTranslation('common');
   const colors = isDark ? darkColors : lightColors;
 
-  const styles = StyleSheet.create({
+  const styles = useMemo(() => StyleSheet.create({
     container: {
       flex: 1,
       justifyContent: 'center',
@@ -68,7 +68,7 @@ export function ErrorScreen({ errorKey, onRetry, onReset }: ErrorScreenProps) {
       fontSize: 16,
       fontWeight: '600',
     },
-  });
+  }), [colors]);
 
   return (
     <View style={styles.container}>
