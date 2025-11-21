@@ -1,11 +1,12 @@
 import * as Notifications from 'expo-notifications';
-import { db } from '../db';
+import { getDB } from '../db';
 import { periodDates, healthLogs, settings } from '../db/schema';
 import { eq, ne } from 'drizzle-orm';
 
 export class DataDeletionService {
   static async deleteAllUserData(): Promise<void> {
     try {
+      const db = getDB();
       // Delete all period tracking data
       await db.delete(periodDates);
 
@@ -51,6 +52,7 @@ export class DataDeletionService {
     settings: number;
   }> {
     try {
+      const db = getDB();
       const periodCount = await db.select().from(periodDates);
       const healthCount = await db.select().from(healthLogs);
       const settingsCount = await db

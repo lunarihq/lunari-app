@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { router, useFocusEffect } from 'expo-router';
-import { db } from '../db';
+import { getDB } from '../db';
 import { healthLogs } from '../db/schema';
 import { eq } from 'drizzle-orm';
 import { useTheme } from '../styles/theme';
@@ -39,6 +39,7 @@ export const QuickHealthSelector = ({
     useCallback(() => {
       const loadHealthLogs = async () => {
         try {
+          const db = getDB();
           // Use the selected date or default to today
           const dateToUse = selectedDate || dayjs().format('YYYY-MM-DD');
           const logs = await db

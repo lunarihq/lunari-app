@@ -1,13 +1,13 @@
 import { useState, useCallback } from 'react';
-import { db } from '../db';
+import { getDB } from '../db';
 import { healthLogs } from '../db/schema';
-import { sql } from 'drizzle-orm';
 
 export function useHealthLogDates() {
   const [healthLogDates, setHealthLogDates] = useState<string[]>([]);
 
   const loadHealthLogDates = useCallback(async () => {
     try {
+      const db = getDB();
       // Query distinct dates that have health logs
       const result = await db
         .selectDistinct({ date: healthLogs.date })

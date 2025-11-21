@@ -12,8 +12,7 @@
     "appLock": "App Lock",
     "about": "About",
     "privacyPolicy": "Privacy policy",
-    "pinSetup": "Set PIN",
-    "pinChange": "Change PIN"
+    "calendarView": "Calendar view"
   },
   "deleteDataConfirm": {
     "title": "Delete all tracking data",
@@ -34,77 +33,19 @@
     "dark": "Dark"
   },
   "appLockSettings": {
-    "title": "App lock",
-    "enable": "Enable app lock",
-    "description": "Protect your data with biometric authentication or PIN",
-    "setupPin": "Set up PIN",
-    "changePin": "Change PIN",
-    "removePin": "Remove PIN",
-    "pin": "PIN",
-    "pinDescription": "Set up a PIN to unlock the app",
-    "biometricAuth": "Biometric authentication",
-    "biometricDescription": "Use device biometrics to unlock the app.",
-    "removeBiometricFirst": {
-      "title": "Remove Biometric First",
-      "message": "You currently have biometric authentication enabled. Please disable it before enabling PIN.",
-      "ok": "OK"
-    },
-    "removePinConfirm": {
-      "title": "Remove PIN",
-      "message": "Are you sure you want to remove your PIN?",
-      "cancel": "Cancel",
-      "remove": "Remove"
-    },
-    "removePinError": {
+    "unlockApp": "Unlock app with biometric",
+    "unlockDescription": "Use your device's biometric authentication (e.g. fingerprint or face ID) to unlock Lunari",
+    "noDeviceSecurityDescription": "You need to setup your device's biometric authentication first to enable this feature.",
+
+    "error": {
       "title": "Error",
-      "message": "Failed to remove PIN. Please try again."
-    },
-    "removePinFirst": {
-      "title": "Remove PIN First",
-      "message": "You currently have PIN enabled. Please disable PIN before enabling biometric authentication.",
-      "ok": "OK"
-    },
-    "biometricEnableError": {
-      "title": "Error",
-      "message": "Failed to enable biometric lock. Please try again."
-    },
-    "biometricDisableError": {
-      "title": "Error",
-      "message": "Failed to disable biometric lock. Please try again."
-    }
-  },
-  "pinSetup": {
-    "verifyPin": {
-      "title": "Enter Current PIN",
-      "subtitle": "Enter your current PIN to continue",
-      "error": "Incorrect current PIN. Please try again."
-    },
-    "setPin": {
-      "title": "Set PIN",
-      "titleChange": "Set New PIN",
-      "subtitle": "Choose a 4-digit PIN to secure your app",
-      "subtitleChange": "Choose a new 4-digit PIN"
-    },
-    "confirmPin": {
-      "title": "Confirm PIN",
-      "subtitle": "Enter your PIN again to confirm",
-      "mismatch": "PINs do not match. Please try again.",
-      "failed": "Failed to set PIN. Please try again."
-    },
-    "success": {
-      "title": "PIN Set Successfully",
-      "titleChange": "PIN Changed Successfully",
-      "message": "Your PIN has been set up. You can now use it to secure your app.",
-      "messageChange": "Your PIN has been changed successfully.",
-      "ok": "OK"
+      "message": "Failed to update app lock settings. Unable to complete security update. Please try again.",
+      "rewrapFailed": "The security setting could not be applied. Your data is still safe with the old settings."
     }
   },
   "lockScreen": {
-    "enterPin": "Enter PIN",
-    "enterPinSubtitle": "Enter your 4-digit PIN to unlock",
     "unlockApp": "Unlock Lunari",
-    "incorrectPin": "Incorrect PIN. Please try again.",
-    "useBiometric": "Use Biometric"
+    "unlockButton": "Unlock"
   },
   "reminderSettings": {
     "title": "Reminders",
@@ -141,7 +82,7 @@
       "statistics": "Cycle statistics & history",
       "insights": "Cycle phase insights",
       "reminders": "Period reminders",
-      "lock": "PIN/biometric app lock",
+      "lock": "Biometric app lock",
       "theme": "Dark and light theme support"
     },
     "privacyFirst": {
@@ -182,9 +123,9 @@
     },
     "dataUse": {
       "title": "Data Use",
-      "descriptionPrefix": "Lunari respects and celebrates your privacy. There is no collection of usage data or personal information, no ads, no spyware. Lunari can store data related to your menstrual heatlh",
+      "descriptionPrefix": "Lunari respects and celebrates your privacy. There is no collection of usage data or personal information, no ads, no spyware. Lunari can store data related to your menstrual health",
       "descriptionBold": "locally on your phone",
-      "descriptionSuffix": ", and this inludes:",
+      "descriptionSuffix": ", and this includes:",
       "periodDates": "Period start and end dates",
       "cycleLength": "Cycle length and period duration",
       "symptoms": "Symptoms and mood tracking data",
@@ -201,7 +142,7 @@
       "remindersSuffix": ": To send you period reminders and cycle predictions.",
       "biometric": "",
       "biometricBold": "Biometric authentication",
-      "biometricSuffix": ": To secure your app with fingerprint or face recognition (optional).",
+      "biometricSuffix": ": To secure your app with fingerprint or face recognition (required).",
       "revoke": "If you don't want to use any of these permissions, you can revoke them at any time through your device settings."
     },
     "transparency": {

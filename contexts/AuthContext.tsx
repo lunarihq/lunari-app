@@ -3,29 +3,42 @@ import React, {
   useContext,
   useState,
   useEffect,
+  useCallback,
+  useMemo,
   ReactNode,
 } from 'react';
-import { AppState, AppStateStatus } from 'react-native';
+import { AppState, AppStateStatus, Platform } from 'react-native';
+import * as LocalAuthentication from 'expo-local-authentication';
+import { useTranslation } from 'react-i18next';
 import { AuthService } from '../services/authService';
+import { reWrapKEK, clearKeyCache, EncryptionError, ERROR_CODES } from '../services/databaseEncryptionService';
+import { clearDatabaseCache } from '../db';
 
-type LockMode = 'none' | 'pin' | 'biometric';
+interface SetLockEnabledResult {
+  success: boolean;
+  cancelled?: boolean;
+  error?: string;
+  errorCode?: string;
+}
 
 interface AuthContextType {
   isLocked: boolean;
-  isPinSet: boolean;
   isAuthenticated: boolean;
-  canUseBiometric: boolean;
-  lockMode: LockMode;
+  isLockEnabled: boolean;
+  isDeviceSecurityAvailable: boolean;
+  isReWrapping: boolean;
+  isAuthenticating: boolean;
+  justReturnedFromBackground: boolean;
   lockApp: () => void;
   unlockApp: () => void;
-  setupPin: (pin: string) => Promise<boolean>;
-  verifyPin: (pin: string) => Promise<boolean>;
-  checkPin: (pin: string) => Promise<boolean>;
-  removePin: () => Promise<boolean>;
-  refreshPinStatus: () => Promise<void>;
-  authenticateWithBiometric: () => Promise<boolean>;
-  setBiometricEnabled: (enabled: boolean) => Promise<boolean>;
-  getBiometricType: () => Promise<string>;
+  setLockEnabled: (enabled: boolean) => Promise<SetLockEnabledResult>;
+  refreshLockStatus: () => Promise<void>;
+  getDeviceSecurityType: () => Promise<string>;
+  startPermissionRequest: () => void;
+  endPermissionRequest: () => void;
+  startAuthentication: () => void;
+  endAuthentication: () => void;
+  clearBackgroundFlag: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -35,53 +48,92 @@ interface AuthProviderProps {
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
+  const { t } = useTranslation('settings');
   const [isLocked, setIsLocked] = useState(false);
-  const [isPinSet, setIsPinSet] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [appStateBackground, setAppStateBackground] = useState(false);
-  const [canUseBiometric, setCanUseBiometric] = useState(false);
-  const [lockMode, setLockMode] = useState<LockMode>('none');
+  const [isLockEnabled, setIsLockEnabledState] = useState(false);
+  const [isDeviceSecurityAvailable, setIsDeviceSecurityAvailable] = useState(false);
+  const [isReWrapping, setIsReWrapping] = useState(false);
+  const [isRequestingPermission, setIsRequestingPermission] = useState(false);
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
+  const [justReturnedFromBackground, setJustReturnedFromBackground] = useState(false);
 
-  // Initialize auth state
   useEffect(() => {
     initializeAuth();
   }, []);
 
-  // Handle app state changes for auto-lock
+  const handleAppStateChange = useCallback(
+    async (nextAppState: AppStateStatus) => {
+      try {
+        if (nextAppState === 'background' || nextAppState === 'inactive') {
+          if (isAuthenticating) {
+            return;
+          }
+          
+          setAppStateBackground(true);
+          if (isLockEnabled && !isRequestingPermission) {
+            await clearKeyCache();
+            await clearDatabaseCache();
+          }
+        } else if (nextAppState === 'active' && appStateBackground && isLockEnabled) {
+          if (isRequestingPermission) {
+            setAppStateBackground(false);
+            return;
+          }
+          
+          if (isAuthenticating) {
+            setAppStateBackground(false);
+            return;
+          }
+          
+          const deviceSecurityAvailable = await AuthService.isDeviceSecurityAvailable();
+          setIsDeviceSecurityAvailable(deviceSecurityAvailable);
+          if (!deviceSecurityAvailable) {
+            console.warn('[AuthContext] Device security not available');
+            setIsLocked(true);
+            setIsAuthenticated(false);
+            setAppStateBackground(false);
+            return;
+          }
+
+          setAppStateBackground(false);
+          setJustReturnedFromBackground(true);
+          setIsLocked(true);
+          setIsAuthenticated(false);
+        }
+      } catch (error) {
+        console.error('[AuthContext] Error handling app state change:', error);
+        setAppStateBackground(false);
+      }
+    },
+    [appStateBackground, isLockEnabled, isRequestingPermission, isAuthenticating]
+  );
+
   useEffect(() => {
     const subscription = AppState.addEventListener(
       'change',
       handleAppStateChange
     );
     return () => subscription?.remove();
-  }, [lockMode]);
+  }, [handleAppStateChange]);
 
   const initializeAuth = async () => {
     try {
-      const mode = await AuthService.getLockMode();
-      const pinSet = await AuthService.isPinSet();
-      const biometricAvailable = await AuthService.canUseBiometric();
+      const lockEnabled = await AuthService.isLockEnabled();
+      const deviceSecurityAvailable = await AuthService.isDeviceSecurityAvailable();
 
-      setLockMode(mode);
-      setIsPinSet(pinSet);
-      setCanUseBiometric(biometricAvailable);
+      setIsLockEnabledState(lockEnabled);
+      setIsDeviceSecurityAvailable(deviceSecurityAvailable);
 
-      // Check for biometric enrollment loss
-      if (mode === 'biometric') {
-        const enrolled = await AuthService.isBiometricEnrolled();
-        if (!enrolled) {
-          // Biometric was enabled but device enrollment removed
-          await AuthService.setBiometricEnabled(false);
-          setLockMode('none');
-          setIsLocked(false);
-          setIsAuthenticated(true);
-          console.warn('App lock disabled - biometric data removed from device');
-          return;
-        }
+      if (lockEnabled && !deviceSecurityAvailable) {
+        console.warn('[AuthContext] Device security not available');
+        setIsLocked(true);
+        setIsAuthenticated(false);
+        return;
       }
 
-      // If lock is enabled, app should be locked initially
-      if (mode !== 'none') {
+      if (lockEnabled) {
         setIsLocked(true);
         setIsAuthenticated(false);
       } else {
@@ -89,163 +141,153 @@ export function AuthProvider({ children }: AuthProviderProps) {
         setIsAuthenticated(true);
       }
     } catch (error) {
-      console.error('Error initializing auth:', error);
+      console.error('[AuthContext] Error initializing auth:', error);
     }
   };
 
-  const handleAppStateChange = async (nextAppState: AppStateStatus) => {
-    if (nextAppState === 'background' || nextAppState === 'inactive') {
-      setAppStateBackground(true);
-    } else if (nextAppState === 'active' && appStateBackground && lockMode !== 'none') {
-      // Check for biometric enrollment loss when app becomes active
-      if (lockMode === 'biometric') {
-        const enrolled = await AuthService.isBiometricEnrolled();
-        if (!enrolled) {
-          await AuthService.setBiometricEnabled(false);
-          setLockMode('none');
-          setIsLocked(false);
-          setIsAuthenticated(true);
-          setAppStateBackground(false);
-          console.warn('App lock disabled - biometric data removed from device');
-          return;
-        }
-      }
-
-      // Lock app when returning from background if lock is enabled
-      setIsLocked(true);
-      setIsAuthenticated(false);
-      setAppStateBackground(false);
-    }
-  };
-
-  const lockApp = () => {
-    if (lockMode !== 'none') {
+  const lockApp = useCallback(() => {
+    if (isLockEnabled) {
       setIsLocked(true);
       setIsAuthenticated(false);
     }
-  };
+  }, [isLockEnabled]);
 
-  const unlockApp = () => {
+  const unlockApp = useCallback(() => {
     setIsLocked(false);
     setIsAuthenticated(true);
-  };
+  }, []);
 
-  const setupPin = async (pin: string): Promise<boolean> => {
+  const setLockEnabled = useCallback(async (enabled: boolean): Promise<SetLockEnabledResult> => {
     try {
-      const success = await AuthService.setPin(pin);
+      setIsReWrapping(true);
+
+      await reWrapKEK(enabled);
+      const success = await AuthService.setLockEnabled(enabled);
+      
       if (success) {
-        setIsPinSet(true);
-        setIsAuthenticated(true);
-        setIsLocked(false);
+        setIsLockEnabledState(enabled);
+        if (!enabled) {
+          setIsLocked(false);
+          setIsAuthenticated(true);
+        }
+      } else {
+        try {
+          await reWrapKEK(!enabled);
+        } catch (rollbackError) {
+          console.error('[AuthContext] Rollback failed:', rollbackError);
+          const rollbackErrorCode = rollbackError instanceof EncryptionError 
+            ? rollbackError.code 
+            : 'ROLLBACK_FAILED';
+          
+          return { 
+            success: false, 
+            error: t('appLockSettings.error.rewrapFailed'),
+            errorCode: rollbackErrorCode
+          };
+        }
       }
-      return success;
+      
+      return { success };
     } catch (error) {
-      console.error('Error setting up PIN:', error);
-      return false;
-    }
-  };
-
-  const verifyPin = async (pin: string): Promise<boolean> => {
-    try {
-      const isValid = await AuthService.verifyPin(pin);
-      if (isValid) {
-        unlockApp();
+      if (error instanceof EncryptionError && error.code === ERROR_CODES.AUTHENTICATION_FAILED) {
+        return { success: false, cancelled: true };
       }
-      return isValid;
-    } catch (error) {
-      console.error('Error verifying PIN:', error);
-      return false;
+      
+      console.error('[AuthContext] Error setting lock:', error);
+      const errorMessage = error instanceof EncryptionError 
+        ? error.message 
+        : error instanceof Error 
+        ? error.message 
+        : t('appLockSettings.error.message');
+      
+      const errorCode = error instanceof EncryptionError ? error.code : undefined;
+      
+      return { success: false, error: errorMessage, errorCode };
+    } finally {
+      setIsReWrapping(false);
     }
-  };
+  }, [t]);
 
-  const checkPin = async (pin: string): Promise<boolean> => {
-    try {
-      return await AuthService.verifyPin(pin);
-    } catch (error) {
-      console.error('Error checking PIN:', error);
-      return false;
-    }
-  };
-
-  const removePin = async (): Promise<boolean> => {
-    try {
-      const success = await AuthService.removePin();
-      if (success) {
-        setIsPinSet(false);
-        setIsLocked(false);
-        setIsAuthenticated(true);
-      }
-      return success;
-    } catch (error) {
-      console.error('Error removing PIN:', error);
-      return false;
-    }
-  };
-
-  const refreshPinStatus = async (): Promise<void> => {
+  const refreshLockStatus = useCallback(async (): Promise<void> => {
     await initializeAuth();
-  };
+  }, []);
 
-  const authenticateWithBiometric = async (): Promise<boolean> => {
+  const getDeviceSecurityType = useCallback(async (): Promise<string> => {
     try {
-      // For biometric-only mode, allow device fallback
-      const disableDeviceFallback = lockMode === 'pin';
-      const result = await AuthService.authenticateWithBiometric(disableDeviceFallback);
-      if (result.success) {
-        unlockApp();
-        return true;
+      const types = await AuthService.getDeviceSecurityType();
+      if (types.includes(LocalAuthentication.AuthenticationType.FINGERPRINT)) {
+        return Platform.OS === 'ios' ? 'Touch ID' : 'Fingerprint';
       }
-      return false;
-    } catch (error) {
-      console.error('Error with biometric authentication:', error);
-      return false;
-    }
-  };
-
-  const setBiometricEnabled = async (enabled: boolean): Promise<boolean> => {
-    try {
-      const success = await AuthService.setBiometricEnabled(enabled);
-      if (success) {
-        const biometricAvailable = await AuthService.canUseBiometric();
-        setCanUseBiometric(biometricAvailable);
+      if (types.includes(LocalAuthentication.AuthenticationType.FACIAL_RECOGNITION)) {
+        return Platform.OS === 'ios' ? 'Face ID' : 'Facial Recognition';
       }
-      return success;
+      if (types.includes(LocalAuthentication.AuthenticationType.IRIS)) {
+        return 'Iris Recognition';
+      }
+      return 'Device passcode';
     } catch (error) {
-      console.error('Error setting biometric enabled:', error);
-      return false;
+      console.error('Error getting device security type:', error);
+      return 'Device security';
     }
-  };
+  }, []);
 
-  const getBiometricType = async (): Promise<string> => {
-    try {
-      const types = await AuthService.getBiometricType();
-      if (types.includes(1)) return 'Touch ID';
-      if (types.includes(2)) return 'Face ID';
-      if (types.includes(3)) return 'Fingerprint';
-      return 'Biometric';
-    } catch (error) {
-      console.error('Error getting biometric type:', error);
-      return 'Biometric';
-    }
-  };
+  const startPermissionRequest = useCallback(() => {
+    setIsRequestingPermission(true);
+  }, []);
 
-  const value: AuthContextType = {
+  const endPermissionRequest = useCallback(() => {
+    setIsRequestingPermission(false);
+  }, []);
+
+  const startAuthentication = useCallback(() => {
+    setIsAuthenticating(true);
+  }, []);
+
+  const endAuthentication = useCallback(() => {
+    setIsAuthenticating(false);
+  }, []);
+
+  const clearBackgroundFlag = useCallback(() => {
+    setJustReturnedFromBackground(false);
+  }, []);
+
+  const value: AuthContextType = useMemo(() => ({
     isLocked,
-    isPinSet,
     isAuthenticated,
-    canUseBiometric,
-    lockMode,
+    isLockEnabled,
+    isDeviceSecurityAvailable,
+    isReWrapping,
+    isAuthenticating,
+    justReturnedFromBackground,
     lockApp,
     unlockApp,
-    setupPin,
-    verifyPin,
-    checkPin,
-    removePin,
-    refreshPinStatus,
-    authenticateWithBiometric,
-    setBiometricEnabled,
-    getBiometricType,
-  };
+    setLockEnabled,
+    refreshLockStatus,
+    getDeviceSecurityType,
+    startPermissionRequest,
+    endPermissionRequest,
+    startAuthentication,
+    endAuthentication,
+    clearBackgroundFlag,
+  }), [
+    isLocked,
+    isAuthenticated,
+    isLockEnabled,
+    isDeviceSecurityAvailable,
+    isReWrapping,
+    isAuthenticating,
+    justReturnedFromBackground,
+    lockApp,
+    unlockApp,
+    setLockEnabled,
+    refreshLockStatus,
+    getDeviceSecurityType,
+    startPermissionRequest,
+    endPermissionRequest,
+    startAuthentication,
+    endAuthentication,
+    clearBackgroundFlag,
+  ]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

@@ -6,7 +6,7 @@ import { Checkbox } from '../../components/Checkbox';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { setSetting, getSetting, db } from '../../db';
+import { setSetting, getSetting, getDB } from '../../db';
 import { periodDates } from '../../db/schema';
 import { createOnboardingStyles } from '../../styles/onboarding';
 import { useTheme } from '../../contexts/ThemeContext';
@@ -28,6 +28,7 @@ export default function LastPeriodDateScreen() {
 
   const handleNext = async () => {
     try {
+      const db = getDB();
       // Only save last period date if user didn't select "don't know"
       if (!dontKnow && selectedDate) {
         // Save directly to periodDates table instead of settings

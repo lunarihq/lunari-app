@@ -1,24 +1,22 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { Stack, useRouter, usePathname } from 'expo-router';
+import React, { useEffect, useRef } from 'react';
+import { Stack, useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { getSetting } from '../db';
 import * as Notifications from 'expo-notifications';
-import { AuthProvider, useAuth } from '../contexts/AuthContext';
+import { AuthProvider } from '../contexts/AuthContext';
 import { NotesProvider } from '../contexts/NotesContext';
 import { ThemeProvider, useTheme } from '../contexts/ThemeContext';
-import { LockScreen } from '../components/LockScreen';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { lightColors, darkColors } from '../styles/colors';
 import Toast, { BaseToast, ErrorToast } from 'react-native-toast-message';
-import {
-  useFonts,
-  BricolageGrotesque_700Bold,
-} from '@expo-google-fonts/bricolage-grotesque';
 import '../i18n/config';
 import { useTranslation } from 'react-i18next';
+import { dynamicScreens, getBackgroundColor } from '../config/screenConfig';
+import { useAppInitialization } from '../hooks/useAppInitialization';
+import { ErrorScreen } from '../components/ErrorScreen';
+import { LockScreen } from '../components/LockScreen';
+import { LoadingScreen } from '../components/LoadingScreen';
 
-// Shared toast styles
 const toastConfig = {
   style: { height: 48 },
   contentContainerStyle: { paddingHorizontal: 16, paddingVertical: 0 },
@@ -26,22 +24,12 @@ const toastConfig = {
 };
 
 function AppContent() {
-  const [isReady, setIsReady] = useState(false);
-  const [onboardingCompleted, setOnboardingCompleted] = useState(false);
-
+  const notificationResponseListener = useRef<Notifications.Subscription | null>(null);
   const router = useRouter();
-  const pathname = usePathname();
-  const [initialRender, setInitialRender] = useState(true);
-  const notificationResponseListener =
-    useRef<Notifications.Subscription | null>(null);
-  const { isLocked, isAuthenticated } = useAuth();
-  const { isDark } = useTheme();
-  const { t } = useTranslation(['settings', 'health', 'info']);
 
-  // Load fonts
-  const [fontsLoaded] = useFonts({
-    BricolageGrotesque_700Bold,
-  });
+  const { appState, retryInitialization, resetAllLocalData } = useAppInitialization();
+  const { isDark } = useTheme();
+  const { t } = useTranslation(['common', 'settings', 'health', 'info']);
 
   // Initialize notification response listener only (don't request permissions yet)
   useEffect(() => {
@@ -70,53 +58,22 @@ function AppContent() {
     };
   }, [router]);
 
-  // Only check onboarding status once during initial mount
-  useEffect(() => {
-    async function checkOnboardingStatus() {
-      try {
-        const status = await getSetting('onboardingCompleted');
-        setOnboardingCompleted(status === 'true');
-      } catch (error) {
-        console.error('Failed to check onboarding status', error);
-        setOnboardingCompleted(false);
-      } finally {
-        setIsReady(true);
-      }
-    }
-
-    checkOnboardingStatus();
-  }, []);
-
-  // Handle initial redirect if needed
-  useEffect(() => {
-    if (!isReady) return;
-
-    // Only redirect on initial app launch
-    if (initialRender) {
-      setInitialRender(false);
-
-      const inOnboardingPath = pathname.startsWith('/onboarding');
-
-      if (!onboardingCompleted && !inOnboardingPath) {
-        // If onboarding not completed and not on onboarding screen,
-        // redirect to onboarding
-        router.replace('/onboarding');
-      }
-    }
-  }, [isReady, onboardingCompleted, pathname, router, initialRender]);
-
-  if (!isReady || !fontsLoaded) {
-    return null;
+  if (appState.status === 'db_error') {
+    return (
+      <ErrorScreen
+        errorKey={appState.error}
+        onRetry={retryInitialization}
+        onReset={resetAllLocalData}
+      />
+    );
   }
 
-  // Show lock screen if app is locked
-  if (isLocked && !isAuthenticated) {
-    return (
-      <>
-        <LockScreen />
-        <StatusBar style={isDark ? 'light' : 'dark'} />
-      </>
-    );
+  if (appState.status === 'locked') {
+    return <LockScreen onUnlock={retryInitialization} />;
+  }
+
+  if (appState.status !== 'ready') {
+    return <LoadingScreen />;
   }
 
   return (
@@ -125,213 +82,26 @@ function AppContent() {
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="onboarding" options={{ headerShown: false }} />
         <Stack.Screen name="edit-period" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="settings/calendar-view"
-          options={{
-            headerShown: true,
-            headerTitle: 'Calendar view',
-            headerShadowVisible: false,
-            headerStyle: {
-              backgroundColor: isDark
-                ? darkColors.background
-                : lightColors.background,
-            },
-            headerTintColor: isDark
-              ? darkColors.textPrimary
-              : lightColors.textPrimary,
-          }}
-        />
-        <Stack.Screen
-          name="settings/reminders"
-          options={{
-            headerShown: true,
-            headerTitle: t('settings:screenTitles.reminders'),
-            headerShadowVisible: false,
-            headerStyle: {
-              backgroundColor: isDark
-                ? darkColors.background
-                : lightColors.background,
-            },
-            headerTintColor: isDark
-              ? darkColors.textPrimary
-              : lightColors.textPrimary,
-          }}
-        />
-        <Stack.Screen
-          name="settings/app-lock"
-          options={{
-            headerShown: true,
-            headerTitle: t('settings:screenTitles.appLock'),
-            headerShadowVisible: false,
-            headerStyle: {
-              backgroundColor: isDark
-                ? darkColors.background
-                : lightColors.background,
-            },
-            headerTintColor: isDark
-              ? darkColors.textPrimary
-              : lightColors.textPrimary,
-          }}
-        />
-        <Stack.Screen
-          name="settings/about"
-          options={{
-            headerShown: true,
-            headerTitle: t('settings:screenTitles.about'),
-            headerShadowVisible: false,
-            headerStyle: {
-              backgroundColor: isDark
-                ? darkColors.background
-                : lightColors.background,
-            },
-            headerTintColor: isDark
-              ? darkColors.textPrimary
-              : lightColors.textPrimary,
-          }}
-        />
-        <Stack.Screen
-          name="settings/privacy-policy"
-          options={{
-            headerShown: true,
-            headerTitle: t('settings:screenTitles.privacyPolicy'),
-            headerShadowVisible: false,
-            headerStyle: {
-              backgroundColor: isDark
-                ? darkColors.background
-                : lightColors.background,
-            },
-            headerTintColor: isDark
-              ? darkColors.textPrimary
-              : lightColors.textPrimary,
-          }}
-        />
-        <Stack.Screen
-          name="settings/pin-setup"
-          options={({ route }) => ({
-            headerShown: true,
-            headerTitle:
-              (route.params as any)?.mode === 'change'
-                ? t('settings:screenTitles.pinChange')
-                : t('settings:screenTitles.pinSetup'),
-            headerShadowVisible: false,
-            headerStyle: {
-              backgroundColor: isDark
-                ? darkColors.background
-                : lightColors.background,
-            },
-            headerTintColor: isDark
-              ? darkColors.textPrimary
-              : lightColors.textPrimary,
-          })}
-        />
-        <Stack.Screen
-          name="health-tracking"
-          options={{
-            headerShown: true,
-            headerTitle: t('health:tracking.screenTitle'),
-            headerShadowVisible: false,
-            headerStyle: {
-              backgroundColor: isDark
-                ? darkColors.background
-                : lightColors.background,
-            },
-            headerTintColor: isDark
-              ? darkColors.textPrimary
-              : lightColors.textPrimary,
-          }}
-        />
-        <Stack.Screen
-          name="notes-editor"
-          options={{
-            headerShown: true,
-            headerTitle: 'Notes',
-            headerShadowVisible: false,
-            headerStyle: {
-              backgroundColor: isDark ? darkColors.panel : lightColors.panel,
-            },
-            headerTintColor: isDark
-              ? darkColors.textPrimary
-              : lightColors.textPrimary,
-          }}
-        />
-        <Stack.Screen
-          name="(info)/cycle-phase-details"
-          options={{
-            headerShown: true,
-            headerTitle: t('info:screenTitles.todaysInsights'),
-            headerShadowVisible: true,
-            headerStyle: {
-              backgroundColor: isDark
-                ? darkColors.surface
-                : lightColors.surfaceVariant,
-            },
-            headerTintColor: isDark
-              ? darkColors.textPrimary
-              : lightColors.textPrimary,
-          }}
-        />
-        <Stack.Screen
-          name="(info)/cycle-length-info"
-          options={{
-            headerShown: true,
-            headerTitle: t('info:screenTitles.cycleLength'),
-            headerShadowVisible: false,
-            headerStyle: {
-              backgroundColor: isDark
-                ? darkColors.surface
-                : lightColors.surface,
-            },
-            headerTintColor: isDark
-              ? darkColors.textPrimary
-              : lightColors.textPrimary,
-          }}
-        />
-        <Stack.Screen
-          name="(info)/period-length-info"
-          options={{
-            headerShown: true,
-            headerTitle: t('info:screenTitles.periodLength'),
-            headerShadowVisible: false,
-            headerStyle: {
-              backgroundColor: isDark
-                ? darkColors.surface
-                : lightColors.surface,
-            },
-            headerTintColor: isDark
-              ? darkColors.textPrimary
-              : lightColors.textPrimary,
-          }}
-        />
-        <Stack.Screen
-          name="(info)/late-period-info"
-          options={{
-            headerShown: true,
-            headerTitle: t('info:screenTitles.latePeriod'),
-            headerShadowVisible: false,
-            headerStyle: {
-              backgroundColor: isDark
-                ? darkColors.surface
-                : lightColors.surface,
-            },
-            headerTintColor: isDark
-              ? darkColors.textPrimary
-              : lightColors.textPrimary,
-          }}
-        />
-        <Stack.Screen
-          name="(info)/prediction-info"
-          options={{
-            headerShown: true,
-            headerTitle: t('info:screenTitles.howPredictionsWork'),
-            headerShadowVisible: false,
-            headerStyle: {
-              backgroundColor: isDark ? darkColors.panel : lightColors.panel,
-            },
-            headerTintColor: isDark
-              ? darkColors.textPrimary
-              : lightColors.textPrimary,
-          }}
-        />
+        {dynamicScreens.map(screen => (
+          <Stack.Screen
+            key={screen.name}
+            name={screen.name}
+            options={{
+              headerShown: screen.headerShown,
+              headerTitle: screen.titleKey ? t(screen.titleKey) : '',
+              headerShadowVisible: screen.headerShadowVisible ?? false,
+              headerStyle: {
+                backgroundColor: getBackgroundColor(
+                  screen.backgroundColorKey,
+                  isDark,
+                  darkColors,
+                  lightColors
+                ),
+              },
+              headerTintColor: isDark ? darkColors.textPrimary : lightColors.textPrimary,
+            }}
+          />
+        ))}
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style={isDark ? 'light' : 'dark'} />

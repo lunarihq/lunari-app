@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { CycleOverviewWidget } from '../../components/CycleOverviewWidget';
 import { CycleInsights } from '../../components/CycleInsights';
 import { QuickHealthSelector } from '../../components/QuickHealthSelector';
-import { db, getSetting } from '../../db';
+import { getDB, getSetting } from '../../db';
 import { PeriodDate, periodDates } from '../../db/schema';
 import { PeriodPredictionService } from '../../services/periodPredictions';
 import { NotificationService } from '../../services/notificationService';
@@ -65,6 +65,7 @@ export default function Index() {
   }, [params.openPeriodModal]);
 
   const loadSavedDates = async () => {
+    const db = getDB();
     const saved = await db.select().from(periodDates);
 
     const dates = saved.reduce(

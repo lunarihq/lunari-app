@@ -2,7 +2,7 @@ import * as Notifications from 'expo-notifications';
 import * as Device from 'expo-device';
 import { Platform } from 'react-native';
 import { PeriodPredictionService } from './periodPredictions';
-import { getSetting, setSetting, db } from '../db';
+import { getSetting, setSetting, getDB } from '../db';
 import { periodDates } from '../db/schema';
 import { Colors } from '../styles/colors';
 import i18n from '../i18n/config';
@@ -99,7 +99,7 @@ export class NotificationService {
   // Check if period data exists and schedule notifications if it does
   private static async scheduleNotificationsIfDataExists(): Promise<void> {
     try {
-      // Get period dates from database
+      const db = getDB();
       const saved = await db.select().from(periodDates);
 
       if (saved.length > 0) {

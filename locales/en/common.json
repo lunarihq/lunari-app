@@ -10,13 +10,28 @@
     "edit": "Edit",
     "close": "Close",
     "confirm": "Confirm",
-    "continue": "Continue"
+    "continue": "Continue",
+    "resetAllData": "Reset All Data"
   },
   "errors": {
     "generic": "Something went wrong. Please try again.",
     "loadFailed": "Failed to load data",
     "saveFailed": "Failed to save",
-    "deleteFailed": "Failed to delete"
+    "deleteFailed": "Failed to delete",
+    "database": {
+      "title": "Unable to Start App",
+      "generic": "We encountered an issue starting the app. Please try restarting.",
+      "orphaned": "Your encryption key was lost, but your encrypted database still exists. Your previous data cannot be recovered and must be reset to continue using the app."
+    }
+  },
+  "resetData": {
+    "title": "Reset All Local Data",
+    "message": "This will permanently delete all your health data, period tracking history, and settings. This action cannot be undone.\n\nAre you sure you want to continue?",
+    "confirm": "Reset All Data",
+    "failed": {
+      "title": "Reset Failed",
+      "message": "Unable to reset local data. Please try again or reinstall the app."
+    }
   },
   "time": {
     "today": "Today",
@@ -34,7 +49,8 @@
     "calendar": "Calendar",
     "stats": "Stats",
     "settings": "Settings",
-    "appName": "Lunari"
+    "appName": "Lunari",
+    "notes": "Notes"
   },
   "cycleDetails": {
     "cycleDay": "Cycle day {{number}}",
