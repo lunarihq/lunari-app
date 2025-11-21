@@ -238,5 +238,6 @@ export async function deleteEncryptionKey(): Promise<void> {
     keyCache = null;
     initializationPromise = null;
     keyRewrappingPromise = null;
+    wasKeyCreatedDuringInit = false;
   }
 }
