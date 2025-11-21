@@ -5,12 +5,13 @@ import { useTheme } from '../contexts/ThemeContext';
 import { lightColors, darkColors } from '../styles/colors';
 
 interface ErrorScreenProps {
-  error: string;
+  /** i18n translation key for the primary error message */
+  errorKey: string;
   onRetry: () => void;
   onReset: () => void;
 }
 
-export function ErrorScreen({ error, onRetry, onReset }: ErrorScreenProps) {
+export function ErrorScreen({ errorKey, onRetry, onReset }: ErrorScreenProps) {
   const { isDark } = useTheme();
   const { t } = useTranslation('common');
   const colors = isDark ? darkColors : lightColors;
@@ -72,7 +73,7 @@ export function ErrorScreen({ error, onRetry, onReset }: ErrorScreenProps) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{t('errors.database.title')}</Text>
-      <Text style={styles.message}>{t(error)}</Text>
+      <Text style={styles.message}>{t(errorKey)}</Text>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.buttonPrimary}

@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../../components/Button';
+import { LoadingScreen } from '../../components/LoadingScreen';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useTheme } from '../../contexts/ThemeContext';
@@ -14,9 +15,18 @@ export default function WelcomeScreen() {
   const router = useRouter();
   const { colors } = useTheme();
   const { typography } = useAppStyles();
-  const onboardingStyles = createOnboardingStyles(colors);
+  const onboardingStyles: ReturnType<typeof createOnboardingStyles> =
+    createOnboardingStyles(colors);
   const { t } = useTranslation('onboarding');
-  const [fontsLoaded] = useFonts({ BricolageGrotesque_700Bold });
+  const [fontsLoaded, fontError] = useFonts({ BricolageGrotesque_700Bold });
+
+  if (!fontsLoaded && !fontError) {
+    return <LoadingScreen />;
+  }
+
+  if (fontError) {
+    console.error('Failed to load custom fonts:', fontError);
+  }
 
   const handleNext = () => {
     router.push({ pathname: '/onboarding/period-length' });
@@ -47,8 +57,7 @@ export default function WelcomeScreen() {
               fontSize: 33,
               marginBottom: 20,
               textAlign: 'center',
-              fontWeight: 'bold',
-              ...(fontsLoaded && { fontFamily: 'BricolageGrotesque_700Bold' }),
+              fontFamily: 'BricolageGrotesque_700Bold',
             },
           ]}
         >

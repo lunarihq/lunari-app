@@ -9,10 +9,6 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { lightColors, darkColors } from '../styles/colors';
 import Toast, { BaseToast, ErrorToast } from 'react-native-toast-message';
-import {
-  useFonts,
-  BricolageGrotesque_700Bold,
-} from '@expo-google-fonts/bricolage-grotesque';
 import '../i18n/config';
 import { useTranslation } from 'react-i18next';
 import { dynamicScreens, getBackgroundColor } from '../config/screenConfig';
@@ -34,11 +30,6 @@ function AppContent() {
   const { appState, retryInitialization, resetAllLocalData } = useAppInitialization();
   const { isDark } = useTheme();
   const { t } = useTranslation(['common', 'settings', 'health', 'info']);
-
-  // Load custom fonts asynchronously (non-blocking)
-  useFonts({
-    BricolageGrotesque_700Bold,
-  });
 
   // Initialize notification response listener only (don't request permissions yet)
   useEffect(() => {
@@ -70,7 +61,7 @@ function AppContent() {
   if (appState.status === 'db_error') {
     return (
       <ErrorScreen
-        error={appState.error}
+        errorKey={appState.error}
         onRetry={retryInitialization}
         onReset={resetAllLocalData}
       />
