@@ -1,27 +1,18 @@
 import * as Notifications from 'expo-notifications';
-import { getDB } from '../db';
-import { periodDates, healthLogs, settings } from '../db/schema';
-import { eq, ne } from 'drizzle-orm';
+import { deleteEncryptionKey } from './databaseEncryptionService';
+import { deleteDatabaseFile, clearDatabaseCache } from '../db';
 
 export class DataDeletionService {
   static async deleteAllUserData(): Promise<void> {
     try {
-      const db = getDB();
-      // Delete all period tracking data
-      await db.delete(periodDates);
+      // Delete encryption key from SecureStore + key_requires_auth from AsyncStorage
+      await deleteEncryptionKey();
 
-      // Delete all health logs (symptoms and mood data)
-      await db.delete(healthLogs);
+      // Delete entire database file (period.db)
+      await deleteDatabaseFile();
 
-      // Delete only user content settings, preserve app setup/preferences
-      const userContentSettingsToDelete = [
-        'notifications_period_before',
-        'notifications_period_day',
-      ];
-
-      for (const settingKey of userContentSettingsToDelete) {
-        await db.delete(settings).where(eq(settings.key, settingKey));
-      }
+      // Clear database cache
+      await clearDatabaseCache();
 
       // Cancel all scheduled notifications
       await this.cancelAllNotifications();
@@ -43,35 +34,6 @@ export class DataDeletionService {
       }
     } catch (error) {
       console.error('Error canceling notifications:', error);
-    }
-  }
-
-  static async getDataSummary(): Promise<{
-    periodEntries: number;
-    healthLogs: number;
-    settings: number;
-  }> {
-    try {
-      const db = getDB();
-      const periodCount = await db.select().from(periodDates);
-      const healthCount = await db.select().from(healthLogs);
-      const settingsCount = await db
-        .select()
-        .from(settings)
-        .where(ne(settings.key, 'theme'));
-
-      return {
-        periodEntries: periodCount.length,
-        healthLogs: healthCount.length,
-        settings: settingsCount.length,
-      };
-    } catch (error) {
-      console.error('Error getting data summary:', error);
-      return {
-        periodEntries: 0,
-        healthLogs: 0,
-        settings: 0,
-      };
     }
   }
 }

@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState, useMemo, useCallback } from 'react';
 import { useColorScheme } from 'react-native';
-import { getDB, getSetting, setSetting } from '../db';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { lightColors, darkColors, ColorScheme } from '../styles/colors';
 
 export type ThemeMode = 'light' | 'dark' | 'system';
@@ -14,6 +14,8 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
+const THEME_STORAGE_KEY = 'theme_mode';
+
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const systemColorScheme = useColorScheme();
   const [themeMode, setThemeModeState] = useState<ThemeMode>('system');
@@ -25,17 +27,16 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   const colors = isDark ? darkColors : lightColors;
 
-  // Check if database is ready and load theme
+  // Load theme from AsyncStorage
   useEffect(() => {
     const loadTheme = async () => {
       try {
-        getDB();
-        const saved = await getSetting('themeMode');
+        const saved = await AsyncStorage.getItem(THEME_STORAGE_KEY);
         if (saved && ['light', 'dark', 'system'].includes(saved)) {
           setThemeModeState(saved as ThemeMode);
         }
-      } catch {
-        setTimeout(loadTheme, 100);
+      } catch (error) {
+        console.error('[ThemeContext] Failed to load theme:', error);
       }
     };
     loadTheme();
@@ -43,7 +44,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   const setThemeMode = useCallback(async (mode: ThemeMode) => {
     setThemeModeState(mode);
-    await setSetting('themeMode', mode);
+    try {
+      await AsyncStorage.setItem(THEME_STORAGE_KEY, mode);
+    } catch (error) {
+      console.error('[ThemeContext] Failed to save theme:', error);
+    }
   }, []);
 
   const value = useMemo(
