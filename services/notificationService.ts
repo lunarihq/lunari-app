@@ -1,11 +1,20 @@
 import * as Notifications from 'expo-notifications';
 import * as Device from 'expo-device';
 import { Platform } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { PeriodPredictionService } from './periodPredictions';
-import { getSetting, setSetting, getDB } from '../db';
+import { getSetting, getDB } from '../db';
 import { periodDates } from '../db/schema';
 import { Colors } from '../styles/colors';
 import i18n from '../i18n/config';
+
+const NOTIFICATION_SETTINGS_KEYS = {
+  BEFORE_PERIOD: 'notifications_period_before',
+  DAY_OF_PERIOD: 'notifications_period_day',
+  LATE_PERIOD: 'notifications_period_late',
+  TIME_HOUR: 'notification_time_hour',
+  TIME_MINUTE: 'notification_time_minute',
+};
 
 // Configure how notifications are handled when the app is in the foreground
 Notifications.setNotificationHandler({
@@ -22,9 +31,9 @@ Notifications.setNotificationHandler({
 export class NotificationService {
   // Check if notifications are enabled in settings
   static async areNotificationsEnabled(): Promise<boolean> {
-    const beforePeriodEnabled = await getSetting('notifications_period_before');
-    const dayOfPeriodEnabled = await getSetting('notifications_period_day');
-    const latePeriodEnabled = await getSetting('notifications_period_late');
+    const beforePeriodEnabled = await AsyncStorage.getItem(NOTIFICATION_SETTINGS_KEYS.BEFORE_PERIOD);
+    const dayOfPeriodEnabled = await AsyncStorage.getItem(NOTIFICATION_SETTINGS_KEYS.DAY_OF_PERIOD);
+    const latePeriodEnabled = await AsyncStorage.getItem(NOTIFICATION_SETTINGS_KEYS.LATE_PERIOD);
 
     return (
       beforePeriodEnabled === 'true' ||
@@ -40,11 +49,11 @@ export class NotificationService {
     latePeriodEnabled: boolean;
   }> {
     const beforePeriodEnabled =
-      (await getSetting('notifications_period_before')) === 'true';
+      (await AsyncStorage.getItem(NOTIFICATION_SETTINGS_KEYS.BEFORE_PERIOD)) === 'true';
     const dayOfPeriodEnabled =
-      (await getSetting('notifications_period_day')) === 'true';
+      (await AsyncStorage.getItem(NOTIFICATION_SETTINGS_KEYS.DAY_OF_PERIOD)) === 'true';
     const latePeriodEnabled =
-      (await getSetting('notifications_period_late')) === 'true';
+      (await AsyncStorage.getItem(NOTIFICATION_SETTINGS_KEYS.LATE_PERIOD)) === 'true';
 
     return {
       beforePeriodEnabled,
@@ -59,17 +68,17 @@ export class NotificationService {
     dayOfPeriodEnabled: boolean,
     latePeriodEnabled: boolean
   ): Promise<void> {
-    // Save settings to database
-    await setSetting(
-      'notifications_period_before',
+    // Save settings to AsyncStorage
+    await AsyncStorage.setItem(
+      NOTIFICATION_SETTINGS_KEYS.BEFORE_PERIOD,
       beforePeriodEnabled ? 'true' : 'false'
     );
-    await setSetting(
-      'notifications_period_day',
+    await AsyncStorage.setItem(
+      NOTIFICATION_SETTINGS_KEYS.DAY_OF_PERIOD,
       dayOfPeriodEnabled ? 'true' : 'false'
     );
-    await setSetting(
-      'notifications_period_late',
+    await AsyncStorage.setItem(
+      NOTIFICATION_SETTINGS_KEYS.LATE_PERIOD,
       latePeriodEnabled ? 'true' : 'false'
     );
 
@@ -204,9 +213,9 @@ export class NotificationService {
 
     // Load user notification time preference (default to 9 AM)
     const notificationHour =
-      (await getSetting('notification_time_hour')) || '9';
+      (await AsyncStorage.getItem(NOTIFICATION_SETTINGS_KEYS.TIME_HOUR)) || '9';
     const notificationMinute =
-      (await getSetting('notification_time_minute')) || '0';
+      (await AsyncStorage.getItem(NOTIFICATION_SETTINGS_KEYS.TIME_MINUTE)) || '0';
 
     // Get prediction for next period date (YYYY-MM-DD string)
     const prediction = PeriodPredictionService.getPrediction(
