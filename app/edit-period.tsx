@@ -14,7 +14,7 @@ import {
   generateDateRange,
 } from '../types/calendarTypes';
 import { createSelectedStyle } from '../utils/calendarStyles';
-import { db, getSetting } from '../db';
+import { getDB, getSetting } from '../db';
 import { periodDates } from '../db/schema';
 
 export default function PeriodCalendarScreen() {
@@ -32,6 +32,7 @@ export default function PeriodCalendarScreen() {
   useEffect(() => {
     const loadData = async () => {
       try {
+        const db = getDB();
         // Load user period length setting
         const periodLength = await getSetting('userPeriodLength');
         if (periodLength) {
@@ -98,6 +99,7 @@ export default function PeriodCalendarScreen() {
   // Save dates and go back
   const handleSave = async () => {
     try {
+      const db = getDB();
       await db.delete(periodDates);
 
       const dateInserts = Object.keys(tempDates).map(date => ({

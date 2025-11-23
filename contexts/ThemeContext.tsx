@@ -1,6 +1,6 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState, useMemo, useCallback } from 'react';
 import { useColorScheme } from 'react-native';
-import { getSetting, setSetting } from '../db';
+import { getDB, getSetting, setSetting } from '../db';
 import { lightColors, darkColors, ColorScheme } from '../styles/colors';
 
 export type ThemeMode = 'light' | 'dark' | 'system';
@@ -25,22 +25,34 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   const colors = isDark ? darkColors : lightColors;
 
-  // Load saved theme preference on mount
+  // Check if database is ready and load theme
   useEffect(() => {
-    getSetting('themeMode').then(saved => {
-      if (saved && ['light', 'dark', 'system'].includes(saved)) {
-        setThemeModeState(saved as ThemeMode);
+    const loadTheme = async () => {
+      try {
+        getDB();
+        const saved = await getSetting('themeMode');
+        if (saved && ['light', 'dark', 'system'].includes(saved)) {
+          setThemeModeState(saved as ThemeMode);
+        }
+      } catch {
+        setTimeout(loadTheme, 100);
       }
-    });
+    };
+    loadTheme();
   }, []);
 
-  const setThemeMode = async (mode: ThemeMode) => {
+  const setThemeMode = useCallback(async (mode: ThemeMode) => {
     setThemeModeState(mode);
     await setSetting('themeMode', mode);
-  };
+  }, []);
+
+  const value = useMemo(
+    () => ({ colors, isDark, themeMode, setThemeMode }),
+    [colors, isDark, themeMode, setThemeMode]
+  );
 
   return (
-    <ThemeContext.Provider value={{ colors, isDark, themeMode, setThemeMode }}>
+    <ThemeContext.Provider value={value}>
       {children}
     </ThemeContext.Provider>
   );

@@ -1,0 +1,136 @@
+language: "en-GB"
+tone_instructions: "Focus on React Native/Expo best practices, TypeScript idioms, clean component architecture, and secure health data handling. Be precise and technical."
+
+reviews:
+  profile: "assertive"
+  request_changes_workflow: true
+  fail_commit_status: true
+
+  # Noise reduction
+  review_status: false
+  high_level_summary: false
+  collapse_walkthrough: true
+  poem: false
+
+  auto_review:
+    base_branches:
+      - main
+
+  path_instructions:
+    - path: ".github/workflows/**/*.yml"
+      instructions: |
+        GitHub Actions workflows MUST use full commit SHAs instead of tags for all actions.
+        This prevents supply chain attacks and ensures reproducible builds.
+        Example: Use 'actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.0.2' instead of 'actions/checkout@v4.0.2'.
+
+    - path: "app/**/*.tsx"
+      instructions: |
+        Expo Router screens and layouts. Ensure proper navigation setup,
+        TypeScript types, and consistent UI patterns. Check for accessibility
+        (a11y) compliance and proper i18n usage.
+
+    - path: "components/**/*.tsx"
+      instructions: |
+        Reusable React Native components. Must be platform-agnostic where possible.
+        Verify proper TypeScript typing, performance optimizations (memo, useMemo),
+        and style consistency with theme. Check for proper error boundaries.
+
+    - path: "services/**/*.ts"
+      instructions: |
+        Business logic and API services. Ensure proper error handling,
+        data encryption where needed (especially health data), and clean separation
+        of concerns. Verify secure storage practices and HIPAA compliance awareness.
+
+    - path: "hooks/**/*.ts"
+      instructions: |
+        Custom React hooks. Verify proper dependency arrays, cleanup in useEffect,
+        and memoization where appropriate. Ensure hooks follow React rules.
+
+    - path: "db/**/*.ts"
+      instructions: |
+        Database schema and operations with Drizzle ORM. Verify proper migrations,
+        data encryption for sensitive health information, and efficient queries.
+        Check for proper indexing and data integrity.
+        
+        IMPORTANT: App has no production users yet. Plaintext-to-encrypted DB migration
+        is NOT required - users will uninstall/reinstall during development.
+        Do not flag missing plaintext upgrade handling.
+
+    - path: "android/**"
+      instructions: |
+        Android-specific native code. Check for proper Gradle configuration,
+        Android API usage, and integration with React Native bridge if applicable.
+
+    - path: "ios/**"
+      instructions: |
+        iOS-specific native code. Verify Xcode configuration, Swift/Objective-C
+        interop if needed, and proper integration with React Native.
+
+    - path: "locales/**/*.json"
+      instructions: |
+        Translation files for i18n. Ensure consistency across languages,
+        proper JSON formatting, and no missing keys compared to default locale (en).
+
+    - path: "styles/**/*.ts"
+      instructions: |
+        Theme and styling definitions. Ensure consistency with design system,
+        proper TypeScript typing for theme objects, and accessibility considerations
+        (color contrast, text sizing).
+
+    - path: "utils/**/*.ts"
+      instructions: |
+        Utility functions. Must be pure, well-tested, and properly typed.
+        Check for edge cases and proper date/timezone handling (critical for cycle tracking).
+
+    - path: "contexts/**/*.tsx"
+      instructions: |
+        React Context providers. Verify proper memoization to avoid unnecessary re-renders,
+        secure handling of auth/sensitive state, and proper TypeScript typing.
+
+    - path: "validation/**/*.ts"
+      instructions: |
+        Data validation logic. Ensure robust validation for user inputs,
+        especially date ranges and health data. Check for proper error messages.
+
+    - path: "{package.json,tsconfig.json,app.json,eas.json}"
+      instructions: |
+        Configuration files. Verify dependency versions are compatible,
+        no security vulnerabilities, and proper build/deployment settings.
+
+    - path: "*.md"
+      instructions: |
+        Documentation should be clear, accurate, and aligned with current
+        implementation. Check for outdated information.
+
+  pre_merge_checks:
+    docstrings:
+      mode: "off"
+
+    title:
+      mode: "error"
+      requirements: "Title should be concise, descriptive, free of typos, and ideally under 60 characters."
+
+    description:
+      mode: "error"
+
+    issue_assessment:
+      mode: "error"
+
+  finishing_touches:
+    docstrings:
+      enabled: false
+
+    unit_tests:
+      enabled: false
+
+  tools:
+    github-checks:
+      enabled: true
+      timeout_ms: 900000
+
+knowledge_base:
+  code_guidelines:
+    enabled: true
+    filePatterns:
+      - "README.md"
+      - "LOCALIZATION_GUIDE.md"

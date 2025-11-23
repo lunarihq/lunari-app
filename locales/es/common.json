@@ -10,13 +10,28 @@
     "edit": "Editar",
     "close": "Cerrar",
     "confirm": "Confirmar",
-    "continue": "Continuar"
+    "continue": "Continuar",
+    "resetAllData": "Restablecer Todos los Datos"
   },
   "errors": {
     "generic": "Algo salió mal. Por favor, inténtalo de nuevo.",
     "loadFailed": "Error al cargar los datos",
     "saveFailed": "Error al guardar",
-    "deleteFailed": "Error al eliminar"
+    "deleteFailed": "Error al eliminar",
+    "database": {
+      "title": "No se puede iniciar la aplicación",
+      "generic": "Encontramos un problema al iniciar la aplicación. Por favor, intenta reiniciar.",
+      "orphaned": "Tu clave de cifrado se perdió, pero tu base de datos cifrada todavía existe. Tus datos anteriores no se pueden recuperar y deben restablecerse para continuar usando la aplicación."
+    }
+  },
+  "resetData": {
+    "title": "Restablecer Todos los Datos",
+    "message": "Esto eliminará permanentemente todos tus datos de salud, historial de seguimiento del período y configuraciones. Esta acción no se puede deshacer.\n\n¿Estás segura de que deseas continuar?",
+    "confirm": "Restablecer Todos los Datos",
+    "failed": {
+      "title": "Error al Restablecer",
+      "message": "No se pudieron restablecer los datos locales. Por favor, intenta de nuevo o reinstala la aplicación."
+    }
   },
   "time": {
     "today": "Hoy",
@@ -34,7 +49,8 @@
     "calendar": "Calendario",
     "stats": "Estadísticas",
     "settings": "Configuración",
-    "appName": "Lunari"
+    "appName": "Lunari",
+    "notes": "Notas"
   },
   "cycleDetails": {
     "cycleDay": "Día {{number}} del ciclo",
