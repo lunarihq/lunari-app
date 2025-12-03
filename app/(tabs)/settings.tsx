@@ -146,7 +146,8 @@ export default function Settings() {
                           },
                         ]
                       );
-                    } catch {
+                    } catch (error) {
+                      console.error('Failed to delete user data:', error);
                       Alert.alert(
                         t('deleteDataConfirm.error'),
                         t('deleteDataConfirm.errorMessage')
