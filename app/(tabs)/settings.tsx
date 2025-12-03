@@ -16,7 +16,6 @@ import { useAppStyles } from '../../hooks/useStyles';
 import { ThemeSelectionModal } from '../../components/ThemeSelectionModal';
 import { DataDeletionService } from '../../services/dataDeletionService';
 import { useNotes } from '../../contexts/NotesContext';
-import { initializeDatabase } from '../../db';
 
 function SettingsIcon({ name, ...props }: { name: keyof typeof Ionicons.glyphMap } & Partial<React.ComponentProps<typeof Ionicons>>) {
   const { colors } = useTheme();
@@ -132,9 +131,6 @@ export default function Settings() {
                       await DataDeletionService.deleteAllUserData();
                       clearNotes();
 
-                      // Reinitialize database with fresh encryption key
-                      await initializeDatabase();
-
                       DeviceEventEmitter.emit('dataDeleted');
 
                       Alert.alert(
@@ -147,8 +143,7 @@ export default function Settings() {
                           },
                         ]
                       );
-                    } catch (error) {
-                      console.error('[Settings] Failed to delete data:', error);
+                    } catch {
                       Alert.alert(
                         t('deleteDataConfirm.error'),
                         t('deleteDataConfirm.errorMessage')
