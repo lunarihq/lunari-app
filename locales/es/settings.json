@@ -6,7 +6,7 @@
   "about": "Acerca de",
   "theme": "Tema",
   "calendarView": "Vista del calendario",
-  "deleteData": "Eliminar datos de seguimiento",
+  "deleteData": "Eliminar todos los datos",
   "screenTitles": {
     "reminders": "Recordatorios",
     "appLock": "Bloqueo de aplicación",
@@ -15,12 +15,12 @@
     "calendarView": "Vista del calendario"
   },
   "deleteDataConfirm": {
-    "title": "Eliminar todos los datos de seguimiento",
-    "message": "Todos tus datos de seguimiento del periodo, síntomas y preferencias de notificación se eliminarán permanentemente. Tus ajustes y preferencias de la aplicación se conservarán.",
-    "delete": "Eliminar datos",
+    "title": "Eliminar todos los datos",
+    "message": "Todos tus datos se eliminarán permanentemente: seguimiento del periodo, síntomas, registros de salud, ajustes de la aplicación, preferencias de tema, configuración de notificaciones y configuración de bloqueo. Esta acción no se puede deshacer.",
+    "delete": "Eliminar todos los datos",
     "cancel": "Cancelar",
     "success": "Éxito",
-    "successMessage": "Todos tus datos han sido eliminados.",
+    "successMessage": "Todos tus datos han sido eliminados. La aplicación se reiniciará ahora.",
     "error": "Error",
     "errorMessage": "Error al eliminar los datos. Por favor, inténtalo de nuevo."
   },
@@ -131,7 +131,7 @@
       "notes": "Notas y observaciones personales",
       "settings": "Preferencias y configuración de la aplicación",
       "usage": "Estos datos se usan únicamente para proporcionarte predicciones de periodo, información sobre tu ciclo y funciones de seguimiento personalizadas. No compartimos, vendemos ni transmitimos tus datos de salud personal a terceros.",
-      "deletion": "Si deseas eliminar todos los datos de tu aplicación, puedes hacerlo yendo al menú de configuración y seleccionando \"Eliminar datos\". Esto también se puede hacer desinstalando la aplicación."
+      "deletion": "Si deseas eliminar todos los datos de tu aplicación, puedes hacerlo yendo al menú de configuración y seleccionando \"Eliminar todos los datos\". Esto borrará permanentemente todos los datos de seguimiento, registros de salud y ajustes de la aplicación. También puedes eliminar todos los datos desinstalando la aplicación."
     },
     "permissions": {
       "title": "Permisos",
