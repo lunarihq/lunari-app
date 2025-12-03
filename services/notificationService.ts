@@ -211,9 +211,9 @@ export class NotificationService {
       ? parseInt(userCycleLengthSetting, 10)
       : undefined;
 
-    // Load user notification time preference (default to 9 AM)
+    // Load user notification time preference (default to 10 AM)
     const notificationHour =
-      (await AsyncStorage.getItem(NOTIFICATION_SETTINGS_KEYS.TIME_HOUR)) || '9';
+      (await AsyncStorage.getItem(NOTIFICATION_SETTINGS_KEYS.TIME_HOUR)) || '10';
     const notificationMinute =
       (await AsyncStorage.getItem(NOTIFICATION_SETTINGS_KEYS.TIME_MINUTE)) || '0';
 
