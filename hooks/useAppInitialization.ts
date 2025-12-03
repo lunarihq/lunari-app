@@ -27,9 +27,7 @@ export function useAppInitialization() {
   const [appState, setAppState] = useState<AppState>(createInitialState());
   const [initialRender, setInitialRender] = useState(true);
   const setupInProgress = useRef(false);
-  const previousReadyState = useRef<AppState | null>(null);
-  const unlockTriggered = useRef(false);
-
+  const previousReadyState = useRef<Extract<AppState, { status: 'ready' }> | null>(null);  const unlockTriggered = useRef(false);
   const router = useRouter();
   const pathname = usePathname();
   const { t } = useTranslation('common');
