@@ -68,13 +68,15 @@ function AppContent() {
     );
   }
 
-  if (appState.status === 'locked') {
+  if (appState.status === 'locked' && appState.reason === 'auth_cancelled') {
     return <LockScreen onUnlock={retryInitialization} />;
   }
 
-  if (appState.status !== 'ready') {
+  if (appState.status !== 'ready' && !(appState.status === 'locked' && appState.reason === 'background_return')) {
     return <LoadingScreen />;
   }
+
+  const showLockOverlay = appState.status === 'locked' && appState.reason === 'background_return';
 
   return (
     <>
@@ -104,6 +106,7 @@ function AppContent() {
         ))}
         <Stack.Screen name="+not-found" />
       </Stack>
+      {showLockOverlay && <LockScreen onUnlock={retryInitialization} isOverlay />}
       <StatusBar style={isDark ? 'light' : 'dark'} />
       <Toast
         position="top"
