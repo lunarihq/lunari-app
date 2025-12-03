@@ -6,16 +6,26 @@ import { lightColors, darkColors } from '../styles/colors';
 
 interface LockScreenProps {
   onUnlock: () => void;
+  isOverlay?: boolean;
 }
 
-export function LockScreen({ onUnlock }: LockScreenProps) {
+export function LockScreen({ onUnlock, isOverlay = false }: LockScreenProps) {
   const { isDark } = useTheme();
   const { t } = useTranslation('settings');
   const colors = isDark ? darkColors : lightColors;
 
   const styles = StyleSheet.create({
     container: {
-      flex: 1,
+      ...(isOverlay ? {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        zIndex: 9999,
+      } : {
+        flex: 1,
+      }),
       justifyContent: 'center',
       alignItems: 'center',
       padding: 20,
@@ -55,4 +65,3 @@ export function LockScreen({ onUnlock }: LockScreenProps) {
     </View>
   );
 }
-

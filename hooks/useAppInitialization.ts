@@ -27,6 +27,8 @@ export function useAppInitialization() {
   const [appState, setAppState] = useState<AppState>(createInitialState());
   const [initialRender, setInitialRender] = useState(true);
   const setupInProgress = useRef(false);
+  const previousReadyState = useRef<AppState | null>(null);
+  const unlockTriggered = useRef(false);
 
   const router = useRouter();
   const pathname = usePathname();
@@ -39,7 +41,7 @@ export function useAppInitialization() {
     clearBackgroundFlag,
   } = useAuth();
 
-  const setupDatabase = useCallback(async () => {
+  const setupDatabase = useCallback(async (skipStateChange = false) => {
     if (setupInProgress.current) return;
     setupInProgress.current = true;
 
@@ -48,7 +50,11 @@ export function useAppInitialization() {
       await initializeDatabase();
       unlockApp();
       endAuthentication();
-      setAppState(createCheckingOnboardingState());
+      if (!skipStateChange) {
+        setAppState(createCheckingOnboardingState());
+      } else {
+        setAppState(prev => prev.status === 'ready' ? prev : createCheckingOnboardingState());
+      }
     } catch (error) {
       endAuthentication();
       if (
@@ -82,16 +88,46 @@ export function useAppInitialization() {
     }
   }, [unlockApp, startAuthentication, endAuthentication]);
 
-  const retryInitialization = useCallback(async () => {
+  const unlockFromBackground = useCallback(async () => {
+    if (!previousReadyState.current) return;
+    
     try {
-      await clearKeyCache();
-      await clearDatabaseCache();
+      startAuthentication();
+      await initializeDatabase();
+      unlockApp();
+      endAuthentication();
+      setAppState(previousReadyState.current);
+      previousReadyState.current = null;
     } catch (error) {
-      console.error('[AppInitialization] Failed to clear keys during retry:', error);
-    } finally {
-      setAppState(createInitialState());
+      endAuthentication();
+      if (
+        error instanceof EncryptionError &&
+        error.code === ERROR_CODES.AUTHENTICATION_FAILED
+      ) {
+        // User cancelled - reset flag so manual unlock button works
+        unlockTriggered.current = false;
+        return;
+      }
+      console.error('[AppInitialization] Background unlock failed:', error);
+      setAppState(createErrorState('errors.database.generic'));
+      previousReadyState.current = null;
     }
-  }, []);
+  }, [unlockApp, startAuthentication, endAuthentication]);
+
+  const retryInitialization = useCallback(async () => {
+    if (appState.status === 'locked' && appState.reason === 'background_return') {
+      await unlockFromBackground();
+    } else {
+      try {
+        await clearKeyCache();
+        await clearDatabaseCache();
+      } catch (error) {
+        console.error('[AppInitialization] Failed to clear keys during retry:', error);
+      } finally {
+        setAppState(createInitialState());
+      }
+    }
+  }, [appState, unlockFromBackground]);
 
   const resetAllLocalData = useCallback(() => {
     Alert.alert(
@@ -137,18 +173,25 @@ export function useAppInitialization() {
     if (justReturnedFromBackground) {
       clearBackgroundFlag();
       setupInProgress.current = false;
+      unlockTriggered.current = false;
       if (appState.status === 'ready') {
+        previousReadyState.current = appState;
         setAppState(createLockedState('background_return'));
       }
     }
   }, [justReturnedFromBackground, appState, clearBackgroundFlag]);
 
-  // Trigger database initialization when app starts or after background return
+  // Auto-trigger biometric when locked from background return
   useEffect(() => {
-    if (
-      appState.status === 'initializing' ||
-      (appState.status === 'locked' && appState.reason === 'background_return')
-    ) {
+    if (appState.status === 'locked' && appState.reason === 'background_return' && previousReadyState.current && !unlockTriggered.current) {
+      unlockTriggered.current = true;
+      unlockFromBackground();
+    }
+  }, [appState, unlockFromBackground]);
+
+  // Trigger database initialization when app starts
+  useEffect(() => {
+    if (appState.status === 'initializing') {
       setupDatabase();
     }
   }, [appState, setupDatabase]);
@@ -201,4 +244,3 @@ export function useAppInitialization() {
     resetAllLocalData,
   };
 }
-
