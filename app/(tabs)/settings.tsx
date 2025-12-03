@@ -16,6 +16,7 @@ import { useAppStyles } from '../../hooks/useStyles';
 import { ThemeSelectionModal } from '../../components/ThemeSelectionModal';
 import { DataDeletionService } from '../../services/dataDeletionService';
 import { useNotes } from '../../contexts/NotesContext';
+import { useAuth } from '../../contexts/AuthContext';
 
 function SettingsIcon({ name, ...props }: { name: keyof typeof Ionicons.glyphMap } & Partial<React.ComponentProps<typeof Ionicons>>) {
   const { colors } = useTheme();
@@ -32,6 +33,7 @@ export default function Settings() {
   const { colors, themeMode } = useTheme();
   const { typography, commonStyles } = useAppStyles();
   const { clearNotes } = useNotes();
+  const { refreshLockStatus } = useAuth();
   const { t } = useTranslation('settings');
   const [themeModalVisible, setThemeModalVisible] = useState(false);
 
@@ -130,6 +132,7 @@ export default function Settings() {
                     try {
                       await DataDeletionService.deleteAllUserData();
                       clearNotes();
+                      await refreshLockStatus();
 
                       DeviceEventEmitter.emit('dataDeleted');
 
@@ -139,7 +142,7 @@ export default function Settings() {
                         [
                           {
                             text: 'OK',
-                            onPress: () => router.replace('/(tabs)'),
+                            onPress: () => router.replace('/onboarding'),
                           },
                         ]
                       );
@@ -193,3 +196,4 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0,
   },
 });
+

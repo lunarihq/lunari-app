@@ -1,6 +1,7 @@
 import * as Notifications from 'expo-notifications';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { deleteEncryptionKey } from './databaseEncryptionService';
-import { deleteDatabaseFile, clearDatabaseCache } from '../db';
+import { deleteDatabaseFile, clearDatabaseCache, initializeDatabase } from '../db';
 
 export class DataDeletionService {
   static async deleteAllUserData(): Promise<void> {
@@ -16,6 +17,12 @@ export class DataDeletionService {
 
       // Cancel all scheduled notifications
       await this.cancelAllNotifications();
+
+      // Clear all AsyncStorage items (theme, notification settings, app lock, etc.)
+      await AsyncStorage.clear();
+
+      // Reinitialize database (creates fresh empty database with new encryption key)
+      await initializeDatabase();
     } catch (error) {
       console.error('Error deleting user data:', error);
       throw new Error('Failed to delete user data');

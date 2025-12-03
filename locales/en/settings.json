@@ -6,7 +6,7 @@
   "about": "About",
   "theme": "Theme",
   "calendarView": "Calendar view",
-  "deleteData": "Delete tracking data",
+  "deleteData": "Delete all data",
   "screenTitles": {
     "reminders": "Reminders",
     "appLock": "App Lock",
@@ -15,12 +15,12 @@
     "calendarView": "Calendar view"
   },
   "deleteDataConfirm": {
-    "title": "Delete all tracking data",
-    "message": "All your period tracking data, symptoms, and notification preferences will be permanently deleted. Your app settings and preferences will be preserved.",
-    "delete": "Delete data",
+    "title": "Delete all data",
+    "message": "All your data will be permanently deleted: period tracking, symptoms, health logs, app settings, theme preferences, notification settings, and app lock configuration. This action cannot be undone.",
+    "delete": "Delete all data",
     "cancel": "Cancel",
     "success": "Success",
-    "successMessage": "All your data has been deleted.",
+    "successMessage": "All your data has been deleted. The app will now restart.",
     "error": "Error",
     "errorMessage": "Failed to delete data. Please try again."
   },
@@ -132,7 +132,7 @@
       "notes": "Notes and personal observations",
       "settings": "App preferences and settings",
       "usage": "This data is used solely to provide you with period predictions, cycle insights, and personalized tracking features. We do not share, sell, or transmit your personal health data to any third parties.",
-      "deletion": "If you wish to delete all your app data, you can do so by going to the settings menu and selecting \"Delete data\". This can also be done by uninstalling the app."
+      "deletion": "If you wish to delete all your app data, you can do so by going to the settings menu and selecting \"Delete all data\". This will permanently erase all tracking data, health logs, and app settings. You can also delete all data by uninstalling the app."
     },
     "permissions": {
       "title": "Permissions",
