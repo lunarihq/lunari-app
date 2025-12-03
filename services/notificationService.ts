@@ -31,15 +31,20 @@ Notifications.setNotificationHandler({
 export class NotificationService {
   // Check if notifications are enabled in settings
   static async areNotificationsEnabled(): Promise<boolean> {
-    const beforePeriodEnabled = await AsyncStorage.getItem(NOTIFICATION_SETTINGS_KEYS.BEFORE_PERIOD);
-    const dayOfPeriodEnabled = await AsyncStorage.getItem(NOTIFICATION_SETTINGS_KEYS.DAY_OF_PERIOD);
-    const latePeriodEnabled = await AsyncStorage.getItem(NOTIFICATION_SETTINGS_KEYS.LATE_PERIOD);
+    try {
+      const beforePeriodEnabled = await AsyncStorage.getItem(NOTIFICATION_SETTINGS_KEYS.BEFORE_PERIOD);
+      const dayOfPeriodEnabled = await AsyncStorage.getItem(NOTIFICATION_SETTINGS_KEYS.DAY_OF_PERIOD);
+      const latePeriodEnabled = await AsyncStorage.getItem(NOTIFICATION_SETTINGS_KEYS.LATE_PERIOD);
 
-    return (
-      beforePeriodEnabled === 'true' ||
-      dayOfPeriodEnabled === 'true' ||
-      latePeriodEnabled === 'true'
-    );
+      return (
+        beforePeriodEnabled === 'true' ||
+        dayOfPeriodEnabled === 'true' ||
+        latePeriodEnabled === 'true'
+      );
+    } catch (error) {
+      console.error('Failed to read notification settings:', error);
+      return false;
+    }
   }
 
   // Check the status of specific notification types
@@ -48,18 +53,27 @@ export class NotificationService {
     dayOfPeriodEnabled: boolean;
     latePeriodEnabled: boolean;
   }> {
-    const beforePeriodEnabled =
-      (await AsyncStorage.getItem(NOTIFICATION_SETTINGS_KEYS.BEFORE_PERIOD)) === 'true';
-    const dayOfPeriodEnabled =
-      (await AsyncStorage.getItem(NOTIFICATION_SETTINGS_KEYS.DAY_OF_PERIOD)) === 'true';
-    const latePeriodEnabled =
-      (await AsyncStorage.getItem(NOTIFICATION_SETTINGS_KEYS.LATE_PERIOD)) === 'true';
+    try {
+      const beforePeriodEnabled =
+        (await AsyncStorage.getItem(NOTIFICATION_SETTINGS_KEYS.BEFORE_PERIOD)) === 'true';
+      const dayOfPeriodEnabled =
+        (await AsyncStorage.getItem(NOTIFICATION_SETTINGS_KEYS.DAY_OF_PERIOD)) === 'true';
+      const latePeriodEnabled =
+        (await AsyncStorage.getItem(NOTIFICATION_SETTINGS_KEYS.LATE_PERIOD)) === 'true';
 
-    return {
-      beforePeriodEnabled,
-      dayOfPeriodEnabled,
-      latePeriodEnabled,
-    };
+      return {
+        beforePeriodEnabled,
+        dayOfPeriodEnabled,
+        latePeriodEnabled,
+      };
+    } catch (error) {
+      console.error('Failed to read notification settings:', error);
+      return {
+        beforePeriodEnabled: false,
+        dayOfPeriodEnabled: false,
+        latePeriodEnabled: false,
+      };
+    }
   }
 
   // Save notification settings
@@ -68,29 +82,34 @@ export class NotificationService {
     dayOfPeriodEnabled: boolean,
     latePeriodEnabled: boolean
   ): Promise<void> {
-    // Save settings to AsyncStorage
-    await AsyncStorage.setItem(
-      NOTIFICATION_SETTINGS_KEYS.BEFORE_PERIOD,
-      beforePeriodEnabled ? 'true' : 'false'
-    );
-    await AsyncStorage.setItem(
-      NOTIFICATION_SETTINGS_KEYS.DAY_OF_PERIOD,
-      dayOfPeriodEnabled ? 'true' : 'false'
-    );
-    await AsyncStorage.setItem(
-      NOTIFICATION_SETTINGS_KEYS.LATE_PERIOD,
-      latePeriodEnabled ? 'true' : 'false'
-    );
+    try {
+      // Save settings to AsyncStorage
+      await AsyncStorage.setItem(
+        NOTIFICATION_SETTINGS_KEYS.BEFORE_PERIOD,
+        beforePeriodEnabled ? 'true' : 'false'
+      );
+      await AsyncStorage.setItem(
+        NOTIFICATION_SETTINGS_KEYS.DAY_OF_PERIOD,
+        dayOfPeriodEnabled ? 'true' : 'false'
+      );
+      await AsyncStorage.setItem(
+        NOTIFICATION_SETTINGS_KEYS.LATE_PERIOD,
+        latePeriodEnabled ? 'true' : 'false'
+      );
 
-    // If notifications were just enabled, initialize them
-    if (beforePeriodEnabled || dayOfPeriodEnabled || latePeriodEnabled) {
-      await this.init();
+      // If notifications were just enabled, initialize them
+      if (beforePeriodEnabled || dayOfPeriodEnabled || latePeriodEnabled) {
+        await this.init();
 
-      // Immediately schedule notifications if there's period data
-      await this.scheduleNotificationsIfDataExists();
-    } else {
-      // If all are disabled, cancel all notifications
-      await this.cancelPeriodNotifications();
+        // Immediately schedule notifications if there's period data
+        await this.scheduleNotificationsIfDataExists();
+      } else {
+        // If all are disabled, cancel all notifications
+        await this.cancelPeriodNotifications();
+      }
+    } catch (error) {
+      console.error('Failed to save notification settings:', error);
+      throw new Error('Failed to save notification settings. Please try again.');
     }
   }
 
@@ -212,10 +231,16 @@ export class NotificationService {
       : undefined;
 
     // Load user notification time preference (default to 10 AM)
-    const notificationHour =
-      (await AsyncStorage.getItem(NOTIFICATION_SETTINGS_KEYS.TIME_HOUR)) || '10';
-    const notificationMinute =
-      (await AsyncStorage.getItem(NOTIFICATION_SETTINGS_KEYS.TIME_MINUTE)) || '0';
+    let notificationHour = '10';
+    let notificationMinute = '0';
+    try {
+      notificationHour =
+        (await AsyncStorage.getItem(NOTIFICATION_SETTINGS_KEYS.TIME_HOUR)) || '10';
+      notificationMinute =
+        (await AsyncStorage.getItem(NOTIFICATION_SETTINGS_KEYS.TIME_MINUTE)) || '0';
+    } catch (error) {
+      console.error('Failed to read notification time settings, using defaults:', error);
+    }
 
     // Get prediction for next period date (YYYY-MM-DD string)
     const prediction = PeriodPredictionService.getPrediction(
