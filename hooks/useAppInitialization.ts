@@ -145,7 +145,7 @@ export function useAppInitialization() {
         await clearKeyCache();
         await clearDatabaseCache();
       } catch (error) {
-        console.error('[AppInit] Failed to clear keys during retry:', error);
+        console.error('[AppInitialization] Failed to clear keys during retry:', error);
       } finally {
         setAppState(createInitialState());
       }
