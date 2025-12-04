@@ -27,7 +27,9 @@ export function useAppInitialization() {
   const [appState, setAppState] = useState<AppState>(createInitialState());
   const [initialRender, setInitialRender] = useState(true);
   const setupInProgress = useRef(false);
-  const previousReadyState = useRef<Extract<AppState, { status: 'ready' }> | null>(null);  const unlockTriggered = useRef(false);
+  const previousReadyState = useRef<Extract<AppState, { status: 'ready' }> | null>(null);
+  const unlockTriggered = useRef(false);
+  const unlockInProgress = useRef(false);
   const router = useRouter();
   const pathname = usePathname();
   const { t } = useTranslation('common');
@@ -43,18 +45,23 @@ export function useAppInitialization() {
     if (setupInProgress.current) return;
     setupInProgress.current = true;
 
+    let authenticationStarted = false;
     try {
       startAuthentication();
+      authenticationStarted = true;
       await initializeDatabase();
       unlockApp();
       endAuthentication();
+      authenticationStarted = false;
       if (!skipStateChange) {
         setAppState(createCheckingOnboardingState());
       } else {
         setAppState(prev => prev.status === 'ready' ? prev : createCheckingOnboardingState());
       }
     } catch (error) {
-      endAuthentication();
+      if (authenticationStarted) {
+        endAuthentication();
+      }
       if (
         error instanceof EncryptionError &&
         error.code === ERROR_CODES.AUTHENTICATION_FAILED
@@ -87,28 +94,46 @@ export function useAppInitialization() {
   }, [unlockApp, startAuthentication, endAuthentication]);
 
   const unlockFromBackground = useCallback(async () => {
-    if (!previousReadyState.current) return;
+    if (unlockInProgress.current) {
+      console.log('[AppInit] Unlock already in progress, ignoring duplicate request');
+      return;
+    }
+    
+    if (!previousReadyState.current) {
+      return;
+    }
+    
+    unlockInProgress.current = true;
+    const savedState = previousReadyState.current;
+    let authenticationStarted = false;
     
     try {
       startAuthentication();
+      authenticationStarted = true;
       await initializeDatabase();
       unlockApp();
       endAuthentication();
-      setAppState(previousReadyState.current);
+      authenticationStarted = false;
       previousReadyState.current = null;
+      setAppState(savedState);
     } catch (error) {
-      endAuthentication();
+      if (authenticationStarted) {
+        endAuthentication();
+      }
       if (
         error instanceof EncryptionError &&
         error.code === ERROR_CODES.AUTHENTICATION_FAILED
       ) {
         // User cancelled - reset flag so manual unlock button works
+        // Keep previousReadyState so retry can work
         unlockTriggered.current = false;
         return;
       }
-      console.error('[AppInitialization] Background unlock failed:', error);
-      setAppState(createErrorState('errors.database.generic'));
+      console.error('[AppInit] Background unlock failed:', error);
       previousReadyState.current = null;
+      setAppState(createErrorState('errors.database.generic'));
+    } finally {
+      unlockInProgress.current = false;
     }
   }, [unlockApp, startAuthentication, endAuthentication]);
 
@@ -120,7 +145,7 @@ export function useAppInitialization() {
         await clearKeyCache();
         await clearDatabaseCache();
       } catch (error) {
-        console.error('[AppInitialization] Failed to clear keys during retry:', error);
+        console.error('[AppInit] Failed to clear keys during retry:', error);
       } finally {
         setAppState(createInitialState());
       }
@@ -172,12 +197,21 @@ export function useAppInitialization() {
       clearBackgroundFlag();
       setupInProgress.current = false;
       unlockTriggered.current = false;
+      
+      // If unlock was in progress, it likely got stuck - reset it
+      if (unlockInProgress.current) {
+        console.log('[AppInit] Resetting stuck authentication from background interruption');
+        unlockInProgress.current = false;
+        endAuthentication();
+      }
+      
       if (appState.status === 'ready') {
         previousReadyState.current = appState;
         setAppState(createLockedState('background_return'));
       }
+      // Don't overwrite previousReadyState if already locked from background
     }
-  }, [justReturnedFromBackground, appState, clearBackgroundFlag]);
+  }, [justReturnedFromBackground, appState, clearBackgroundFlag, endAuthentication]);
 
   // Auto-trigger biometric when locked from background return
   useEffect(() => {
