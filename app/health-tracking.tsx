@@ -73,6 +73,10 @@ export default function HealthTracking() {
   const [isPeriodDate, setIsPeriodDate] = useState<boolean>(false);
 
   const scrollViewRef = useRef<ScrollView>(null);
+  const flowSectionRef = useRef<View>(null);
+  const symptomsSectionRef = useRef<View>(null);
+  const moodsSectionRef = useRef<View>(null);
+  const dischargeSectionRef = useRef<View>(null);
   const notesSectionRef = useRef<View>(null);
 
   // Update header title on focused
@@ -160,14 +164,21 @@ export default function HealthTracking() {
 
   // Handle scrollTo parameter to navigate to specific sections
   useEffect(() => {
-    if (
-      params.scrollTo === 'notes' &&
-      scrollViewRef.current &&
-      notesSectionRef.current
-    ) {
-      // Use setTimeout to ensure the component has fully rendered
+    if (!params.scrollTo || !scrollViewRef.current) return;
+
+    const sectionRefs: Record<string, React.RefObject<View | null>> = {
+      flow: flowSectionRef,
+      symptoms: symptomsSectionRef,
+      moods: moodsSectionRef,
+      discharge: dischargeSectionRef,
+      notes: notesSectionRef,
+    };
+
+    const targetRef = sectionRefs[params.scrollTo as string];
+    
+    if (targetRef?.current) {
       setTimeout(() => {
-        notesSectionRef.current?.measureLayout(
+        targetRef.current?.measureLayout(
           scrollViewRef.current as any,
           (x, y) => {
             scrollViewRef.current?.scrollTo({ y, animated: true });
@@ -373,7 +384,10 @@ export default function HealthTracking() {
         showsVerticalScrollIndicator={false}
       >
         {isPeriodDate && (
-          <View style={[commonStyles.sectionContainer]}>
+          <View
+            ref={flowSectionRef}
+            style={[commonStyles.sectionContainer]}
+          >
             <View style={commonStyles.sectionTitleContainer}>
               <Text style={[typography.headingMd]}>
                 {t('health:tracking.flow')}
@@ -390,7 +404,10 @@ export default function HealthTracking() {
             />
           </View>
         )}
-        <View style={[commonStyles.sectionContainer]}>
+        <View
+          ref={symptomsSectionRef}
+          style={[commonStyles.sectionContainer]}
+        >
           <View style={commonStyles.sectionTitleContainer}>
             <Text style={[typography.headingMd]}>
               {t('health:tracking.symptoms')}
@@ -407,7 +424,10 @@ export default function HealthTracking() {
           />
         </View>
 
-        <View style={[commonStyles.sectionContainer]}>
+        <View
+          ref={moodsSectionRef}
+          style={[commonStyles.sectionContainer]}
+        >
           <View style={commonStyles.sectionTitleContainer}>
             <Text style={[typography.headingMd]}>
               {t('health:tracking.moods')}
@@ -424,7 +444,10 @@ export default function HealthTracking() {
           />
         </View>
 
-        <View style={[commonStyles.sectionContainer]}>
+        <View
+          ref={dischargeSectionRef}
+          style={[commonStyles.sectionContainer]}
+        >
           <View style={commonStyles.sectionTitleContainer}>
             <Text style={[typography.headingMd]}>
               {t('health:tracking.discharge')}

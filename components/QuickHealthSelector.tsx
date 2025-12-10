@@ -121,8 +121,17 @@ export const QuickHealthSelector = ({
           if (selectedDate) {
             params.date = selectedDate;
           }
+          
           if (log.type === 'notes') {
             params.scrollTo = 'notes';
+          } else if (log.type === 'symptom') {
+            params.scrollTo = 'symptoms';
+          } else if (log.type === 'mood') {
+            params.scrollTo = 'moods';
+          } else if (log.type === 'discharge') {
+            params.scrollTo = 'discharge';
+          } else if (log.type === 'flow') {
+            params.scrollTo = 'flow';
           }
 
           router.push({
