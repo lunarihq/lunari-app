@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../contexts/ThemeContext';
@@ -14,7 +14,7 @@ export function LockScreen({ onUnlock, isOverlay = false }: LockScreenProps) {
   const { t } = useTranslation('settings');
   const colors = isDark ? darkColors : lightColors;
 
-  const styles = StyleSheet.create({
+  const styles = useMemo(() => StyleSheet.create({
     container: {
       ...(isOverlay ? {
         position: 'absolute',
@@ -49,7 +49,7 @@ export function LockScreen({ onUnlock, isOverlay = false }: LockScreenProps) {
       fontSize: 16,
       fontWeight: '600',
     },
-  });
+  }), [colors, isOverlay]);
 
   return (
     <View style={styles.container}>

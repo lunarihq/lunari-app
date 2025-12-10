@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
@@ -22,7 +22,7 @@ export function DayPicker({
 }: DayPickerProps) {
   const { colors } = useTheme();
   const { t } = useTranslation('common');
-  const styles = createStyles(colors);
+  const styles = useMemo(() => createStyles(colors), [colors]);
 
   const increment = () => {
     onChange(Math.min(value + 1, max));

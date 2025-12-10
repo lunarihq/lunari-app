@@ -1,24 +1,26 @@
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
 import { DayData } from '../../utils/customCalendarHelpers';
 import { CustomMarking } from '../../types/calendarTypes';
 import { getEditDayCellStyles } from '../../utils/calendarStyles';
+import { ColorScheme } from '../../styles/colors';
+import { Typography } from '../../styles/typography';
 
 interface EditDayCellProps {
   day: DayData;
   marking?: CustomMarking;
   onPress: (dateString: string) => void;
-  colors: any;
-  typography: any;
+  colors: ColorScheme;
+  typography: Typography;
 }
 
 export const EditDayCell = memo<EditDayCellProps>(
   ({ day, marking, onPress, colors, typography }) => {
     const { dateString, day: dayNum, isCurrentMonth } = day;
     const { t } = useTranslation('calendar');
-    const styles = StyleSheet.create(getEditDayCellStyles(colors));
+    const styles = useMemo(() => StyleSheet.create(getEditDayCellStyles(colors)), [colors]);
 
     // Render empty cell for days not in current month to maintain grid layout
     if (!isCurrentMonth) {
@@ -50,9 +52,9 @@ export const EditDayCell = memo<EditDayCellProps>(
     const accessibilityHint = isDisabled 
       ? undefined 
       : isSelected 
-        ? 'Double tap to deselect' 
-        : 'Double tap to select as period day';
-
+        ? t('accessibility.tapToDeselect') 
+        : t('accessibility.tapToSelectPeriod');
+        
     return (
       <View style={styles.dayContainer}>
         <TouchableOpacity
@@ -105,7 +107,12 @@ export const EditDayCell = memo<EditDayCellProps>(
         )}
       </View>
     );
-  }
+  },
+  (prev, next) =>
+    prev.day.dateString === next.day.dateString &&
+    prev.marking === next.marking &&
+    prev.colors === next.colors &&
+    prev.typography === next.typography
 );
 
 EditDayCell.displayName = 'EditDayCell';

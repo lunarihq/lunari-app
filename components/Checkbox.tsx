@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
@@ -20,7 +20,7 @@ export function Checkbox({
 }: CheckboxProps) {
   const { colors } = useTheme();
   const { t } = useTranslation('onboarding');
-  const styles = createStyles(colors);
+  const styles = useMemo(() => createStyles(colors), [colors]);
   
   const defaultText = text || t('periodLength.checkboxText');
 

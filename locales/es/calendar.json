@@ -32,6 +32,13 @@
     "ovulationDay": "Día de ovulación",
     "fertileWindow": "Ventana fértil",
     "symptomsIndicator": "Indicador de síntomas registrados"
+  },
+  "accessibility": {
+    "tapToDeselect": "Toca para deseleccionar",
+    "tapToSelectPeriod": "Toca para seleccionar como día de periodo",
+    "hasHealthLogs": "tiene registros de salud",
+    "selected": "seleccionado",
+    "tapToView": "Toca para ver detalles"
   }
 }
 

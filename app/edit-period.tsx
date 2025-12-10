@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Button } from '../components/Button';
 import { useTheme } from '../styles/theme';
 import { useAppStyles } from '../hooks/useStyles';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { router } from 'expo-router';
 import Toast from 'react-native-toast-message';
 import { useTranslation } from 'react-i18next';
@@ -59,42 +59,42 @@ export default function PeriodCalendarScreen() {
     loadData();
   }, [colors]);
 
-  const onDayPress = (dateString: string) => {
+  const onDayPress = useCallback((dateString: string) => {
     const selectedDate = new Date(dateString);
     const todayDate = new Date(today);
 
-    const updatedDates = { ...tempDates };
+    setTempDates(prevDates => {
+      const updatedDates = { ...prevDates };
 
-    const prevDay = new Date(dateString);
-    prevDay.setDate(prevDay.getDate() - 1);
-    const prevDayString = formatDateString(prevDay);
+      const prevDay = new Date(dateString);
+      prevDay.setDate(prevDay.getDate() - 1);
+      const prevDayString = formatDateString(prevDay);
 
-    const isAlreadySelected = !!updatedDates[dateString];
-    const isFuture = selectedDate > todayDate;
-    const isStartOfSelection = !updatedDates[prevDayString];
+      const isAlreadySelected = !!updatedDates[dateString];
+      const isFuture = selectedDate > todayDate;
+      const isStartOfSelection = !updatedDates[prevDayString];
 
-    if (isFuture && !isAlreadySelected) {
-      return;
-    }
+      if (isFuture && !isAlreadySelected) {
+        return prevDates;
+      }
 
-    if (isAlreadySelected) {
-      delete updatedDates[dateString];
-      setTempDates(updatedDates);
-      return;
-    }
+      if (isAlreadySelected) {
+        delete updatedDates[dateString];
+        return updatedDates;
+      }
 
-    if (isStartOfSelection) {
-      const dateRange = generateDateRange(dateString, userPeriodLength);
-      dateRange.forEach(date => {
-        updatedDates[date] = createSelectedStyle(colors);
-      });
-      setTempDates(updatedDates);
-      return;
-    }
+      if (isStartOfSelection) {
+        const dateRange = generateDateRange(dateString, userPeriodLength);
+        dateRange.forEach(date => {
+          updatedDates[date] = createSelectedStyle(colors);
+        });
+        return updatedDates;
+      }
 
-    updatedDates[dateString] = createSelectedStyle(colors);
-    setTempDates(updatedDates);
-  };
+      updatedDates[dateString] = createSelectedStyle(colors);
+      return updatedDates;
+    });
+  }, [today, userPeriodLength, colors]);
 
   // Save dates and go back
   const handleSave = async () => {
@@ -137,11 +137,11 @@ export default function PeriodCalendarScreen() {
     router.back();
   };
 
-  const renderDay = (props: any) => (
+  const renderDay = useCallback((props: any) => (
     <EditDayCell {...props} colors={colors} typography={typography} />
-  );
+  ), [colors, typography]);
 
-  const handleMonthChange = (dateString: string) => {
+  const handleMonthChange = useCallback((dateString: string) => {
     const currentDate = new Date();
     const visibleDate = new Date(dateString);
     
@@ -150,7 +150,7 @@ export default function PeriodCalendarScreen() {
       currentDate.getFullYear() === visibleDate.getFullYear();
     
     setShowTodayButton(!isCurrentMonth);
-  };
+  }, []);
 
   const handleTodayPress = () => {
     calendarRef.current?.scrollToToday();
@@ -222,7 +222,6 @@ export default function PeriodCalendarScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'purple',
   },
   header: {
     flexDirection: 'row',

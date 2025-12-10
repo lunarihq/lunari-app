@@ -32,6 +32,13 @@
     "ovulationDay": "Ovulation day",
     "fertileWindow": "Fertile window",
     "symptomsIndicator": "Symptoms log indicator"
+  },
+  "accessibility": {
+    "tapToDeselect": "Tap to deselect",
+    "tapToSelectPeriod": "Tap to select as period day",
+    "hasHealthLogs": "has health logs",
+    "selected": "selected",
+    "tapToView": "Tap to view details"
   }
 }
 

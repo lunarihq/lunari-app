@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { DayData } from '../../utils/customCalendarHelpers';
 import { CustomMarking } from '../../types/calendarTypes';
-import { useTheme, createTypography } from '../../styles/theme';
+import { useTypography } from '../../hooks/useStyles';
 
 interface DayCellProps {
   day: DayData;
@@ -24,8 +24,7 @@ interface DayCellProps {
 export const DayCell = memo<DayCellProps>(
   ({ day, marking, onPress, colors, mode, disableFuture }) => {
     const { dateString, day: dayNum, isCurrentMonth } = day;
-    const { colors: themeColors } = useTheme();
-    const typography = createTypography(themeColors);
+    const typography = useTypography();
     const { t } = useTranslation('calendar');
 
     // Render empty cell for days not in current month to maintain grid layout
@@ -46,11 +45,11 @@ export const DayCell = memo<DayCellProps>(
     };
 
     const date = new Date(dateString);
-    const accessibilityLabel = `${date.toLocaleDateString('default', {
+    const accessibilityLabel = `${date.toLocaleDateString(undefined, {
       month: 'long',
       day: 'numeric',
-    })}${hasHealthLogs ? ', has health logs' : ''}${isSelected ? ', selected' : ''}`;
-    const accessibilityHint = isDisabled ? undefined : 'Double tap to view details';
+    })}${hasHealthLogs ? `, ${t('accessibility.hasHealthLogs')}` : ''}${isSelected ? `, ${t('accessibility.selected')}` : ''}`;
+    const accessibilityHint = isDisabled ? undefined : t('accessibility.tapToView');
 
     const containerStyle = [
       styles.container,
@@ -107,7 +106,9 @@ export const DayCell = memo<DayCellProps>(
   (prev, next) =>
     prev.day.dateString === next.day.dateString &&
     prev.marking === next.marking &&
-    prev.colors === next.colors
+    prev.colors === next.colors &&
+    prev.mode === next.mode &&
+    prev.disableFuture === next.disableFuture
 );
 
 DayCell.displayName = 'DayCell';
