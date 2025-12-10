@@ -73,7 +73,8 @@ export default function StatusInfo() {
               style={{
                 flexDirection: 'row',
                 alignItems: 'flex-start',
-                marginBottom: index === 6 ? 0 : 6,
+                marginBottom: index === 6 ? 0 : 8,
+                marginLeft: 8,
               }}
             >
               <Text style={{ marginRight: 8, color: colors.textPrimary, fontSize: 18 }}>{'\u2022'}</Text>
