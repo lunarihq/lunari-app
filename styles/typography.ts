@@ -85,3 +85,5 @@ export const createTypography = (colors: ColorScheme) =>
       color: colors.textPrimary,
     },
   });
+
+export type Typography = ReturnType<typeof createTypography>;

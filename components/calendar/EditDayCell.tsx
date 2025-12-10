@@ -5,13 +5,15 @@ import { Ionicons } from '@expo/vector-icons';
 import { DayData } from '../../utils/customCalendarHelpers';
 import { CustomMarking } from '../../types/calendarTypes';
 import { getEditDayCellStyles } from '../../utils/calendarStyles';
+import { ColorScheme } from '../../styles/colors';
+import { Typography } from '../../styles/typography';
 
 interface EditDayCellProps {
   day: DayData;
   marking?: CustomMarking;
   onPress: (dateString: string) => void;
-  colors: any;
-  typography: any;
+  colors: ColorScheme;
+  typography: Typography;
 }
 
 export const EditDayCell = memo<EditDayCellProps>(
@@ -50,9 +52,9 @@ export const EditDayCell = memo<EditDayCellProps>(
     const accessibilityHint = isDisabled 
       ? undefined 
       : isSelected 
-        ? 'Double tap to deselect' 
-        : 'Double tap to select as period day';
-
+        ? t('accessibility.tapToDeselect') 
+        : t('accessibility.tapToSelectPeriod');
+        
     return (
       <View style={styles.dayContainer}>
         <TouchableOpacity
