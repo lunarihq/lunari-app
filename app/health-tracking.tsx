@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import {
   View,
   Text,
@@ -232,7 +232,7 @@ export default function HealthTracking() {
     }
   }, [isLocked]);
 
-  const toggleSymptom = (id: string) => {
+  const toggleSymptom = useCallback((id: string) => {
     setSelectedSymptoms(prev => {
       const next = new Set(prev);
       if (next.has(id)) {
@@ -242,9 +242,9 @@ export default function HealthTracking() {
       }
       return next;
     });
-  };
+  }, []);
 
-  const toggleMood = (id: string) => {
+  const toggleMood = useCallback((id: string) => {
     setSelectedMoods(prev => {
       const next = new Set(prev);
       if (next.has(id)) {
@@ -254,9 +254,9 @@ export default function HealthTracking() {
       }
       return next;
     });
-  };
+  }, []);
 
-  const toggleFlow = (id: string) => {
+  const toggleFlow = useCallback((id: string) => {
     setSelectedFlows(prev => {
       const next = new Set(prev);
       if (next.has(id)) {
@@ -266,9 +266,9 @@ export default function HealthTracking() {
       }
       return next;
     });
-  };
+  }, []);
 
-  const toggleDischarge = (id: string) => {
+  const toggleDischarge = useCallback((id: string) => {
     setSelectedDischarges(prev => {
       const next = new Set(prev);
       if (next.has(id)) {
@@ -278,7 +278,7 @@ export default function HealthTracking() {
       }
       return next;
     });
-  };
+  }, []);
 
   // Navigate to notes editor
   const openNotesEditor = () => {

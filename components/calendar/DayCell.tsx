@@ -1,9 +1,9 @@
-import React, { memo, useMemo } from 'react';
+import React, { memo } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { DayData } from '../../utils/customCalendarHelpers';
 import { CustomMarking } from '../../types/calendarTypes';
-import { useTheme, createTypography } from '../../styles/theme';
+import { useTypography } from '../../hooks/useStyles';
 
 interface DayCellProps {
   day: DayData;
@@ -24,8 +24,7 @@ interface DayCellProps {
 export const DayCell = memo<DayCellProps>(
   ({ day, marking, onPress, colors, mode, disableFuture }) => {
     const { dateString, day: dayNum, isCurrentMonth } = day;
-    const { colors: themeColors } = useTheme();
-    const typography = useMemo(() => createTypography(themeColors), [themeColors]);
+    const typography = useTypography();
     const { t } = useTranslation('calendar');
 
     // Render empty cell for days not in current month to maintain grid layout

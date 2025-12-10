@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../../components/Button';
@@ -22,7 +22,7 @@ export default function LastPeriodDateScreen() {
   const onboardingStyles = createOnboardingStyles(colors);
   const { typography } = useAppStyles();
   const { t } = useTranslation('onboarding');
-  const styles = createStyles(colors);
+  const styles = useMemo(() => getStyles(colors), [colors]);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [dontKnow, setDontKnow] = useState(false);
 
@@ -166,7 +166,7 @@ export default function LastPeriodDateScreen() {
   );
 }
 
-const createStyles = (colors: ColorScheme) =>
+const getStyles = (colors: ColorScheme) =>
   StyleSheet.create({
     calendarContainer: {
       marginBottom: 30,

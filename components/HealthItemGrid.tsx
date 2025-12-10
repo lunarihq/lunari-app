@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../styles/theme';
@@ -16,14 +16,14 @@ interface HealthItemGridProps {
   iconSize?: number;
 }
 
-export function HealthItemGrid({
+export const HealthItemGrid = memo<HealthItemGridProps>(function HealthItemGrid({
   items,
   selectedIds,
   onToggle,
   translationKey,
   selectionColor,
   iconSize = 50,
-}: HealthItemGridProps) {
+}) {
   const { colors } = useTheme();
   const { typography } = useAppStyles();
   const { t } = useTranslation();
@@ -71,7 +71,7 @@ export function HealthItemGrid({
       })}
     </View>
   );
-}
+});
 
 const styles = StyleSheet.create({
   itemsGrid: {
