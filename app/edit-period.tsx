@@ -222,7 +222,6 @@ export default function PeriodCalendarScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'purple',
   },
   header: {
     flexDirection: 'row',
