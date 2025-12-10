@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useImperativeHandle, forwardRef } from 'react';
+import React, { useMemo, useRef, useImperativeHandle, forwardRef, useCallback } from 'react';
 import { FlatList, View, Text, StyleSheet } from 'react-native';
 import { useTheme } from '../../styles/theme';
 import { MarkedDates } from '../../types/calendarTypes';
@@ -75,7 +75,7 @@ export const CustomCalendar = forwardRef<CustomCalendarRef, CustomCalendarProps>
     [months, currentDate]
   );
 
-  const renderMonth = ({ item }: { item: MonthData }) => (
+  const renderMonth = useCallback(({ item }: { item: MonthData }) => (
     <MonthView
       monthData={item}
       markedDates={markedDates}
@@ -86,7 +86,7 @@ export const CustomCalendar = forwardRef<CustomCalendarRef, CustomCalendarProps>
       showDayNames={false}
       renderDay={renderDay}
     />
-  );
+  ), [markedDates, onDayPress, colors, mode, disableFuture, renderDay]);
 
   const getItemLayout = (_: any, index: number) => ({
     length: getMonthHeight(months[index].weekCount),
