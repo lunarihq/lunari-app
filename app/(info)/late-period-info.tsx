@@ -46,11 +46,21 @@ export default function PeriodLength() {
           'stress', 'weight', 'exercise', 'sleep', 
           'illness', 'medications', 'pcos', 'pregnancy', 'perimenopause'
         ].map((cause, index) => (
-          <Text key={cause} style={[typography.body, { marginBottom: index === 8 ? 0 : 12 }]}>
-            {t(`latePeriod.causes.${cause}`)}
-            <Text style={typography.bodyBold}>{t(`latePeriod.causes.${cause}Bold`)}</Text>
-            {t(`latePeriod.causes.${cause}Suffix`)}
-          </Text>
+          <View
+            key={cause}
+            style={{
+              flexDirection: 'row',
+              alignItems: 'flex-start',
+              marginBottom: index === 8 ? 0 : 8,
+              marginLeft: 8,
+            }}
+          >
+            <Text style={{ marginRight: 8, color: colors.textPrimary, fontSize: 18 }}>{'\u2022'}</Text>
+            <Text style={[typography.body, { flex: 1 }]}>
+              <Text style={typography.bodyBold}>{t(`latePeriod.causes.${cause}Bold`)}</Text>
+              {t(`latePeriod.causes.${cause}Suffix`)}
+            </Text>
+          </View>
         ))}
       </View>
 
@@ -68,9 +78,20 @@ export default function PeriodLength() {
           {t('latePeriod.whatToDo.title')}
         </Text>
         {['pregnancy', 'stress', 'weight', 'sleep', 'track', 'patience'].map((item, index) => (
-          <Text key={item} style={[typography.body, { marginBottom: index === 5 ? 0 : 12 }]}>
-            {t(`latePeriod.whatToDo.${item}`)}
-          </Text>
+          <View
+            key={item}
+            style={{
+              flexDirection: 'row',
+              alignItems: 'flex-start',
+              marginBottom: index === 5 ? 0 : 8,
+              marginLeft: 8,
+            }}
+          >
+            <Text style={{ marginRight: 8, color: colors.textPrimary, fontSize: 18 }}>{'\u2022'}</Text>
+            <Text style={[typography.body, { flex: 1 }]}>
+              {t(`latePeriod.whatToDo.${item}`)}
+            </Text>
+          </View>
         ))}
       </View>
     </ScrollView>

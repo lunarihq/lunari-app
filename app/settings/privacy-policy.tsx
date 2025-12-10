@@ -66,6 +66,7 @@ export default function PrivacyPolicy() {
               flexDirection: 'row',
               alignItems: 'flex-start',
               marginBottom: index === 4 ? 0 : 8,
+              marginLeft: 8,
             }}
           >
             <Text style={{ marginRight: 8, color: colors.textPrimary, fontSize: 18 }}>{'\u2022'}</Text>
@@ -99,6 +100,7 @@ export default function PrivacyPolicy() {
               flexDirection: 'row',
               alignItems: 'flex-start',
               marginBottom: index === 1 ? 0 : 8,
+              marginLeft: 8,
             }}
           >
             <Text style={{ marginRight: 8, color: colors.textPrimary, fontSize: 18 }}>{'\u2022'}</Text>
@@ -131,6 +133,7 @@ export default function PrivacyPolicy() {
               flexDirection: 'row',
               alignItems: 'flex-start',
               marginBottom: index === 4 ? 0 : 8,
+              marginLeft: 8,
             }}
           >
             <Text style={{ marginRight: 8, color: colors.textPrimary, fontSize: 18 }}>{'\u2022'}</Text>
