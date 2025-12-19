@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Button } from '../components/Button';
 import { router, useLocalSearchParams } from 'expo-router';
 import dayjs from 'dayjs';
@@ -41,6 +42,7 @@ export default function HealthTracking() {
   const { colors } = useTheme();
   const { typography, commonStyles } = useAppStyles();
   const { t } = useTranslation(['common', 'health']);
+  const insets = useSafeAreaInsets();
   const params = useLocalSearchParams();
   const { notes, setNotes } = useNotes();
   const { isLocked } = useAuth();
@@ -523,7 +525,7 @@ export default function HealthTracking() {
 
       {/* Save button that appears only when changes are made */}
       {hasChanges && (
-        <View style={styles.saveButtonContainer}>
+        <View style={[styles.saveButtonContainer, { bottom: 30 + insets.bottom }]}>
           <Button title={t('buttons.save')} onPress={saveChanges} fullWidth />
         </View>
       )}
@@ -547,7 +549,6 @@ const styles = StyleSheet.create({
   },
   saveButtonContainer: {
     position: 'absolute',
-    bottom: 30,
     left: 16,
     right: 16,
   },
