@@ -146,37 +146,20 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
 
           return (
             <View key={index} style={cycleStyle}>
-              {isCurrentCycle ? (
-                // Special layout for current cycle
-                <View>
-                  <Text
-                    style={[
-                      typography.headingSm,
-                      { marginBottom: 10},
-                    ]}
-                  >
-                    {t('stats:cycleHistory.currentCycle')}
-                  </Text>
-                  <View style={styles.cycleInfoRow}>
-                    <Text style={[typography.body, { fontWeight: '600' }]}>
-                      {formattedStartDate} - {t('common:time.today')}
-                    </Text>
-                    <Text style={[typography.body, { fontWeight: '600' }]}>
-                      {displayCycleLength}
-                    </Text>
-                  </View>
-                </View>
-              ) : (
-                // Regular layout for past cycles
-                <View style={styles.cycleInfoRow}>
-                  <Text style={[typography.body, { fontWeight: '600' }]}>
-                    {formattedStartDate} - {formattedEndDate}
-                  </Text>
-                  <Text style={[typography.body, { fontWeight: '600' }]}>
-                    {displayCycleLength}
-                  </Text>
-                </View>
-              )}
+              <View style={styles.cycleInfoColumn}>
+                <Text style={[typography.headingSm, {marginBottom: 4}]}>
+                  {isCurrentCycle 
+                    ? `${t('stats:cycleHistory.currentCycle')}: ${displayCycleLength}`
+                    : displayCycleLength
+                  }
+                </Text>
+                <Text style={[typography.labelSm, { color: colors.textSecondary, marginBottom: 8 }]}>
+                  {isCurrentCycle 
+                    ? `${formattedStartDate} - ${t('common:time.today')}`
+                    : `${formattedStartDate} - ${formattedEndDate}`
+                  }
+                </Text>
+              </View>
 
               <DayCircles
                 totalDays={circleDays}
@@ -196,11 +179,8 @@ const styles = StyleSheet.create({
   cycleContainer: {
     paddingVertical: 20,
   },
-  cycleInfoRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 16,
+  cycleInfoColumn: {
+    flexDirection: 'column',
   },
   circleContainer: {
     flexDirection: 'row',
