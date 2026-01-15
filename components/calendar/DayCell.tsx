@@ -96,7 +96,7 @@ export const DayCell = memo<DayCellProps>(
         )}
 
         {isToday && (
-          <Text style={[typography.labelXs, { marginTop: 1 }]}>
+          <Text style={[typography.labelXs, { marginBottom: 7 }]}>
             {t('today')}
           </Text>
         )}
@@ -129,6 +129,7 @@ const styles = StyleSheet.create({
   container: {
     width: 34,
     height: 34,
+    borderRadius: 34,
     alignItems: 'center',
     justifyContent: 'center',
   },

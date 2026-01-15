@@ -116,7 +116,7 @@ export function getTodayDateStyle(colors: CalendarColors): CalendarDateStyle {
   return {
     customStyles: {
       container: {
-        borderRadius: 16,
+        borderRadius: 34,
         backgroundColor: colors.neutral300,
       },
       text: {
