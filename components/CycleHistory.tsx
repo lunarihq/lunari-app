@@ -124,28 +124,8 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
             ? formatDateShort(new Date(cycle.endDate))
             : calculateEndDate(cycle.startDate, circleDays);
 
-          // Determine style
-          const cycleStyle = [
-            styles.cycleContainer,
-            { backgroundColor: colors.surface },
-            isCurrentCycle
-              ? {
-                  paddingTop: 14,
-                  borderColor: colors.border,
-                  borderTopWidth: 1,
-                }
-              
-              : index % 2 === 1
-                ? {
-                    borderColor: colors.border,
-                    borderTopWidth: 1,
-                    borderBottomWidth: 2,
-                  }
-                : {},
-          ];
-
           return (
-            <View key={index} style={cycleStyle}>
+            <View key={index} style={styles.cycleContainer}>
               <View style={styles.cycleInfoColumn}>
                 <Text style={[typography.headingSm, {marginBottom: 4}]}>
                   {isCurrentCycle 
@@ -153,7 +133,7 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
                     : displayCycleLength
                   }
                 </Text>
-                <Text style={[typography.labelSm, { color: colors.textSecondary, marginBottom: 8 }]}>
+                <Text style={[typography.labelSm, { color: colors.textSecondary}]}>
                   {isCurrentCycle 
                     ? `${formattedStartDate} - ${t('common:time.today')}`
                     : `${formattedStartDate} - ${formattedEndDate}`
@@ -177,15 +157,21 @@ const styles = StyleSheet.create({
 
 
   cycleContainer: {
-    paddingVertical: 20,
+    paddingVertical: 16,
+    backgroundColor: 'yellow',
+    borderColor: 'red',
+    borderBottomWidth: 1,
   },
   cycleInfoColumn: {
     flexDirection: 'column',
+    backgroundColor: 'blue',
+    marginBottom: 8,
   },
   circleContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'center',
+    backgroundColor: 'green',
   },
   circle: {
     width: 8,
