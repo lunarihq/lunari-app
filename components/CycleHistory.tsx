@@ -206,13 +206,12 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     alignItems: 'center',
     marginBottom: 16,
+    gap: 4,
   },
   circle: {
     width: 8,
     height: 8,
     borderRadius: 4,
-    marginRight: 4,
-    marginBottom: 4,
   },
 });
 
