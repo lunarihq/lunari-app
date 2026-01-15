@@ -119,7 +119,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: '14.28%',
     height: 64,
-    paddingVertical: 4,
   },
   dayContent: {
     flexDirection: 'row',
@@ -128,11 +127,11 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   container: {
-    width: 32,
-    height: 32,
+    width: 34,
+    height: 34,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 16,
+    borderRadius: 18,
   },
   text: {
     fontSize: 16,
