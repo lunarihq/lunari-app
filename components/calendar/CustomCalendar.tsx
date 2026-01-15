@@ -62,10 +62,14 @@ export const CustomCalendar = forwardRef<CustomCalendarRef, CustomCalendarProps>
   );
 
   const monthOffsets = useMemo(() => {
+    const SEPARATOR_HEIGHT = 1;
     let offset = 0;
-    return months.map(month => {
+    return months.map((month, index) => {
       const currentOffset = offset;
       offset += getMonthHeight(month.weekCount);
+      if (index < months.length - 1) {
+        offset += SEPARATOR_HEIGHT;
+      }
       return currentOffset;
     });
   }, [months]);
@@ -87,6 +91,10 @@ export const CustomCalendar = forwardRef<CustomCalendarRef, CustomCalendarProps>
       renderDay={renderDay}
     />
   ), [markedDates, onDayPress, colors, mode, disableFuture, renderDay]);
+
+  const renderSeparator = useCallback(() => (
+    <View style={[styles.separator, { backgroundColor: colors.border }]} />
+  ), [colors.border]);
 
   const getItemLayout = (_: any, index: number) => ({
     length: getMonthHeight(months[index].weekCount),
@@ -141,6 +149,7 @@ export const CustomCalendar = forwardRef<CustomCalendarRef, CustomCalendarProps>
         data={months}
         renderItem={renderMonth}
         keyExtractor={item => item.key}
+        ItemSeparatorComponent={renderSeparator}
         initialScrollIndex={initialIndex}
         initialNumToRender={3}
         maxToRenderPerBatch={2}
@@ -182,6 +191,9 @@ const styles = StyleSheet.create({
   dayNameText: {
     fontSize: 12,
     fontWeight: '500',
+  },
+  separator: {
+    height: 1,
   },
 });
 

@@ -47,7 +47,6 @@ export const MonthView = memo<MonthViewProps>(
           styles.container,
           {
             backgroundColor: showMonthHeader ? colors.panel : 'transparent',
-            borderBottomColor: colors.border,
           },
         ]}
       >
@@ -71,7 +70,7 @@ export const MonthView = memo<MonthViewProps>(
           </View>
         )}
 
-        <View style={[styles.daysGrid, { borderBottomColor: colors.border }]}>
+        <View style={styles.daysGrid}>
           {days.map(day =>
             renderDay ? (
               <React.Fragment key={day.dateString}>
@@ -153,7 +152,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     paddingHorizontal: 16,
-    borderBottomWidth: 1,
   },
 });
 
