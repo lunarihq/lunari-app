@@ -75,6 +75,7 @@ export const EditDayCell = memo<EditDayCellProps>(
               { color: colors.textPrimary },
               isDisabled && styles.disabledDayText,
               isSelected && { color: colors.accentPink },
+              isToday && { fontWeight: 'bold' },
             ]}
           >
             {dayNum}

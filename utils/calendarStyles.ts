@@ -157,7 +157,7 @@ export function getEditDayCellStyles(colors: CalendarColors) {
     },
     todayLabel: {
       position: 'absolute' as const,
-      bottom: 2,
+      bottom: 3,
       alignSelf: 'center' as const,
       textAlign: 'center' as const,
     },
