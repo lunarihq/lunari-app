@@ -71,8 +71,8 @@ export const lightColors: ColorScheme = {
 
   //UI components
   predictionCircleBackground: '#FFFFFF',
-  predictionCirclePeriodBackground: '#FFDDEE',
-  predictionCirclePeriodOuter: '#FF9BC8',
+  predictionCirclePeriodBackground: '#FFE4F2',
+  predictionCirclePeriodOuter: '#FE6E97',
   predicitionCircleOuter: '#CDCFEA',
   insightCardBorder: '#475FC3', // card borders
   insightCardBackground: '#DEE4FC', // card borders

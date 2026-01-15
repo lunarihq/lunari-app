@@ -209,11 +209,7 @@ export function CycleOverviewWidget({
                 : t('logPeriod')
             }
             onPress={() => router.push('/edit-period')}
-            style={
-              isSpecialDay
-                ? { marginVertical: 16, backgroundColor: colors.accentPink }
-                : { marginVertical: 16 }
-            }
+            style={{ marginVertical: 16 }}
           />
         </View>
       </View>
