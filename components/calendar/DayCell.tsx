@@ -131,7 +131,6 @@ const styles = StyleSheet.create({
     height: 34,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 18,
   },
   text: {
     fontSize: 16,
@@ -139,10 +138,11 @@ const styles = StyleSheet.create({
   },
   selectionIndicator: {
     position: 'absolute',
-    top: 1,
-    width: 38,
-    height: 38,
-    borderRadius: 32,
+    top: -3,
+    left: 7,
+    width: 40,
+    height: 40,
+    borderRadius: 40,
     borderWidth: 1.5,
     backgroundColor: 'transparent',
   },
