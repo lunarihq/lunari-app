@@ -62,7 +62,7 @@ export const MonthView = memo<MonthViewProps>(
           <View style={styles.dayNamesRow}>
             {DAY_NAMES.map((name, index) => (
               <View key={index} style={styles.dayNameCell}>
-                <Text style={[styles.dayNameText, { color: colors.textPrimary }]}>
+                <Text style={[styles.dayNameText, { color: colors.textPrimary, }]}>
                   {name}
                 </Text>
               </View>
@@ -123,7 +123,9 @@ MonthView.displayName = 'MonthView';
 
 const styles = StyleSheet.create({
   container: {
-    paddingBottom: 10,
+    paddingBottom: 0,
+    paddingTop: 10,
+    backgroundColor: 'purple',
   },
   header: {
     alignItems: 'center',
