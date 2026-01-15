@@ -20,9 +20,11 @@ interface CycleHistoryProps {
 const DayCircles = ({
   totalDays,
   periodDays,
+  isLast,
 }: {
   totalDays: number;
   periodDays: number;
+  isLast?: boolean;
 }) => {
   const { colors } = useTheme();
   const circles = [];
@@ -42,7 +44,16 @@ const DayCircles = ({
     );
   }
 
-  return <View style={styles.circleContainer}>{circles}</View>;
+  return (
+    <View 
+      style={[
+        styles.circleContainer,
+        isLast && { marginBottom: 0 }
+      ]}
+    >
+      {circles}
+    </View>
+  );
 };
 
 export function CycleHistory({ cycles }: CycleHistoryProps) {
@@ -70,25 +81,27 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
   };
 
   return (
-    <View style={[commonStyles.sectionContainer]}>
-      <Text
-        style={[
-          typography.headingMd,
-          commonStyles.sectionTitleContainer,{marginBottom: 8}
-        ]}
-      >
-        {t('stats:cycleHistory.title')}
-      </Text>
-      <Text
-        style={[
-          typography.body,
-          { marginBottom: 16, color: colors.textSecondary},
-        ]}
-      >
-        {cycles.length} {t('stats:cycleHistory.loggedCycles')}
-      </Text>
+    <View>
+      <View style={[styles.headerContainer, { backgroundColor: colors.surface, borderBottomColor: colors.border}]}>
+        <Text
+          style={[
+            typography.headingMd,
+            commonStyles.sectionTitleContainer,{marginBottom: 8}
+          ]}
+        >
+          {t('stats:cycleHistory.title')}
+        </Text>
+        <Text
+          style={[
+            typography.body,
+            { color: colors.textSecondary},
+          ]}
+        >
+          {cycles.length} {t('stats:cycleHistory.loggedCycles')}
+        </Text>
+      </View>
 
-      <View>
+      <View style={[styles.cycleHistoryContainer, { backgroundColor: colors.surface}]}>
         {cycles.map((cycle, index) => {
           const isCurrentCycle = index === 0;
 
@@ -125,7 +138,17 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
             : calculateEndDate(cycle.startDate, circleDays);
 
           return (
-            <View key={index} style={styles.cycleContainer}>
+            <View 
+              key={index} 
+              style={[
+                styles.cycleContainer,
+                { borderBottomColor: colors.border},
+                index === cycles.length - 1 && {
+                  borderBottomWidth: 0,
+                  marginBottom: 0,
+                }
+              ]}
+            >
               <View style={styles.cycleInfoColumn}>
                 <Text style={[typography.headingSm, {marginBottom: 4}]}>
                   {isCurrentCycle 
@@ -144,6 +167,7 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
               <DayCircles
                 totalDays={circleDays}
                 periodDays={cycle.periodLength}
+                isLast={index === cycles.length - 1}
               />
             </View>
           );
@@ -154,24 +178,33 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
 }
 
 const styles = StyleSheet.create({
-
-
-  cycleContainer: {
+  cycleHistoryContainer: {
+    padding: 16,
+    borderBottomLeftRadius: 16,
+    borderBottomRightRadius: 16,
+    marginBottom: 16,
+    overflow: 'hidden',
+  },
+  headerContainer: {
     paddingVertical: 16,
-    backgroundColor: 'yellow',
-    borderColor: 'red',
+    paddingHorizontal: 16,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
     borderBottomWidth: 1,
+  },
+  cycleContainer: {
+    borderBottomWidth: 1,
+    marginBottom: 16,
   },
   cycleInfoColumn: {
     flexDirection: 'column',
-    backgroundColor: 'blue',
     marginBottom: 8,
   },
   circleContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'center',
-    backgroundColor: 'green',
+    marginBottom: 8,
   },
   circle: {
     width: 8,

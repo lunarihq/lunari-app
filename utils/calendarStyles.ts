@@ -7,7 +7,7 @@ interface CalendarColors {
   textPrimary: string;
 }
 
-export type PredictionType = 'ovulation' | 'fertile' | 'nextPeriod';
+export type PredictionType = 'ovulation' | 'fertile' | 'period';
 
 export interface CalendarDateStyle {
   customStyles: {
@@ -38,7 +38,7 @@ export function getCalendarDateStyle(
         customStyles: {
           container: {
             borderRadius: 16,
-            borderWidth: 1.6,
+            borderWidth: 2,
             borderColor: colors.accentBlue,
             borderStyle: 'dotted',
           },
@@ -56,12 +56,12 @@ export function getCalendarDateStyle(
           },
         },
       };
-    case 'nextPeriod':
+    case 'period':
       return {
         customStyles: {
           container: {
             borderRadius: 16,
-            borderWidth: 1.6,
+            borderWidth: 2,
             borderColor: colors.accentPink,
             borderStyle: 'dotted',
           },
