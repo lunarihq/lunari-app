@@ -86,7 +86,7 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
         <Text
           style={[
             typography.headingMd,
-            commonStyles.sectionTitleContainer,{marginBottom: 8}
+            commonStyles.sectionTitleContainer,{marginBottom: 6}
           ]}
         >
           {t('stats:cycleHistory.title')}
@@ -156,7 +156,7 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
                     : displayCycleLength
                   }
                 </Text>
-                <Text style={[typography.labelSm, { color: colors.textSecondary}]}>
+                <Text style={[typography.labelSm, { color: colors.textSecondary, fontSize: 15}]}>
                   {isCurrentCycle 
                     ? `${formattedStartDate} - ${t('common:time.today')}`
                     : `${formattedStartDate} - ${formattedEndDate}`
@@ -180,6 +180,7 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
 const styles = StyleSheet.create({
   cycleHistoryContainer: {
     padding: 16,
+    paddingTop: 10,
     borderBottomLeftRadius: 16,
     borderBottomRightRadius: 16,
     marginBottom: 16,
@@ -204,7 +205,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'center',
-    marginBottom: 8,
+    marginBottom: 16,
   },
   circle: {
     width: 8,
