@@ -117,6 +117,7 @@ const styles = StyleSheet.create({
   },
   rightContainer: {
     alignItems: 'flex-end',
+    alignSelf: 'flex-start',
     gap: 8,
   },
   statusContainer: {
