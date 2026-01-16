@@ -10,6 +10,7 @@ interface SingleMonthCalendarProps {
   colors: any;
   current?: string;
   maxDate?: string;
+  minDate?: string;
   disableFuture?: boolean;
 }
 
@@ -19,6 +20,7 @@ export function SingleMonthCalendar({
   colors,
   current,
   maxDate,
+  minDate,
   disableFuture = false,
 }: SingleMonthCalendarProps) {
   const currentDate = current ? new Date(current) : new Date();
@@ -58,6 +60,7 @@ export function SingleMonthCalendar({
   : {};
 
   const maxDateObj = maxDate ? new Date(maxDate) : null;
+  const minDateObj = minDate ? new Date(minDate) : null;
 
   const canGoNext = () => {
     if (!maxDateObj) return true;
@@ -65,7 +68,15 @@ export function SingleMonthCalendar({
     return nextMonth <= maxDateObj;
   };
 
+  const canGoPrev = () => {
+    if (!minDateObj) return true;
+    const prevMonth = new Date(displayYear, displayMonth - 1, 1);
+    return prevMonth >= minDateObj;
+  };
+
   const handlePrevMonth = () => {
+    if (!canGoPrev()) return;
+    
     if (displayMonth === 0) {
       setDisplayMonth(11);
       setDisplayYear(displayYear - 1);
@@ -101,8 +112,13 @@ export function SingleMonthCalendar({
         <TouchableOpacity
           onPress={handlePrevMonth}
           style={styles.arrowButton}
+          disabled={!canGoPrev()}
         >
-          <Ionicons name="chevron-back" size={24} color={colors.white} />
+          <Ionicons
+            name="chevron-back"
+            size={24}
+            color={canGoPrev() ? colors.white : colors.neutral200}
+          />
         </TouchableOpacity>
         
         <Text style={[styles.monthText, { color: colors.textPrimary }]}>

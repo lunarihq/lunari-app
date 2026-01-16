@@ -75,6 +75,9 @@ export default function LastPeriodDateScreen() {
   };
 
   const today = formatDateString(new Date());
+  const sixMonthsAgo = formatDateString(
+    new Date(new Date().setMonth(new Date().getMonth() - 6))
+  );
 
   return (
     <SafeAreaView style={onboardingStyles.container}>
@@ -130,6 +133,7 @@ export default function LastPeriodDateScreen() {
             colors={colors}
             current={today}
             maxDate={today}
+            minDate={sixMonthsAgo}
             disableFuture={true}
           />
         </View>
