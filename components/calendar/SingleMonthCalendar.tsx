@@ -102,7 +102,7 @@ export function SingleMonthCalendar({
           onPress={handlePrevMonth}
           style={styles.arrowButton}
         >
-          <Ionicons name="chevron-back" size={24} color={colors.primary} />
+          <Ionicons name="chevron-back" size={24} color={colors.white} />
         </TouchableOpacity>
         
         <Text style={[styles.monthText, { color: colors.textPrimary }]}>
@@ -117,7 +117,7 @@ export function SingleMonthCalendar({
           <Ionicons
             name="chevron-forward"
             size={24}
-            color={canGoNext() ? colors.primary : colors.textSecondary}
+            color={canGoNext() ? colors.white : colors.neutral200}
           />
         </TouchableOpacity>
       </View>
@@ -125,7 +125,7 @@ export function SingleMonthCalendar({
       <View style={styles.dayNamesRow}>
         {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((name, index) => (
           <View key={index} style={styles.dayNameCell}>
-            <Text style={[styles.dayNameText, { color: colors.textPrimary }]}>
+            <Text style={[styles.dayNameText, { color: colors.textPrimary, fontWeight: '600' }]}>
               {name}
             </Text>
           </View>
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: 12,
+    paddingVertical: 10,
     paddingHorizontal: 16,
     borderBottomWidth: 1.5,
   },
