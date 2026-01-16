@@ -156,8 +156,6 @@ export default function CalendarScreen() {
             result.periods
           );
         }
-        const today = formatDateString(new Date());
-        setSelectedDate(today);
       };
       reloadData();
       return () => {};
