@@ -33,6 +33,7 @@ export interface ColorScheme {
 
   //Neutrals
   neutral100: string;
+  neutral150: string;
   neutral200: string;
   neutral300: string;
   neutral400: string;
@@ -87,6 +88,7 @@ export const lightColors: ColorScheme = {
 
   //Neutrals
   neutral100: '#DADAE4',
+  neutral150: '#DDE0FF',
   neutral200: '#8A86A9',
   neutral300: '#D8DAFF',
   neutral400: '#706D8C',
@@ -141,6 +143,7 @@ export const darkColors: ColorScheme = {
 
   //Neutrals
   neutral100: '#5E5D7F',
+  neutral150: '#4C4B6C',
   neutral200: '#696981',
   neutral300: '#26253E',
   neutral400: '#706D8C',

@@ -89,7 +89,7 @@ export const DayCell = memo<DayCellProps>(
           )}
         </View>
 
-        {isSelected && (
+        {isSelected && mode === 'view' && (
           <View
             style={[styles.selectionIndicator, { borderColor: colors.primary }]}
           />

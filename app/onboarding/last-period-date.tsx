@@ -11,8 +11,7 @@ import { periodDates } from '../../db/schema';
 import { createOnboardingStyles } from '../../styles/onboarding';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useAppStyles } from '../../hooks/useStyles';
-import { formatDateString, MarkedDates } from '../../types/calendarTypes';
-import { createSelectedStyle } from '../../utils/calendarStyles';
+import { formatDateString } from '../../types/calendarTypes';
 import { ColorScheme } from '../../styles/colors';
 import { SingleMonthCalendar } from '../../components/calendar/SingleMonthCalendar';
 
@@ -75,13 +74,6 @@ export default function LastPeriodDateScreen() {
     }
   };
 
-  const markedDates: MarkedDates =
-    selectedDate && !dontKnow
-      ? {
-          [selectedDate]: createSelectedStyle(colors),
-        }
-      : {};
-
   const today = formatDateString(new Date());
 
   return (
@@ -133,7 +125,7 @@ export default function LastPeriodDateScreen() {
           ]}
         >
           <SingleMonthCalendar
-            markedDates={markedDates}
+            selectedDate={!dontKnow ? selectedDate || undefined : undefined}
             onDayPress={onDayPress}
             colors={colors}
             current={today}

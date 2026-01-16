@@ -2,27 +2,24 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { MonthView } from './MonthView';
-import { MarkedDates } from '../../types/calendarTypes';
 import { MonthData } from '../../utils/customCalendarHelpers';
 
 interface SingleMonthCalendarProps {
-  markedDates: MarkedDates;
+  selectedDate?: string;
   onDayPress: (dateString: string) => void;
   colors: any;
   current?: string;
   maxDate?: string;
   disableFuture?: boolean;
-  renderDay?: (props: any) => React.ReactNode;
 }
 
 export function SingleMonthCalendar({
-  markedDates,
+  selectedDate,
   onDayPress,
   colors,
   current,
   maxDate,
   disableFuture = false,
-  renderDay,
 }: SingleMonthCalendarProps) {
   const currentDate = current ? new Date(current) : new Date();
   const [displayMonth, setDisplayMonth] = useState(currentDate.getMonth());
@@ -42,6 +39,23 @@ export function SingleMonthCalendar({
     daysInMonth,
     weekCount,
   };
+
+  const markedDates = selectedDate
+  ? {
+      [selectedDate]: {
+        selected: true,
+        selectedColor: colors.primary,
+        customStyles: {
+          container: {
+            backgroundColor: colors.primary,
+          },
+          text: {
+            color: colors.white,
+          },
+        },
+      },
+    }
+  : {};
 
   const maxDateObj = maxDate ? new Date(maxDate) : null;
 
@@ -82,7 +96,7 @@ export function SingleMonthCalendar({
   return (
     <View style={styles.container}>
       <View
-        style={[styles.header, { borderBottomColor: colors.border }]}
+        style={[styles.header, { borderBottomColor: colors.neutral150}]}
       >
         <TouchableOpacity
           onPress={handlePrevMonth}
@@ -118,7 +132,7 @@ export function SingleMonthCalendar({
         ))}
       </View>
 
-      <View style={styles.daysGrid}>
+      <View>
         <MonthView
           monthData={monthData}
           markedDates={markedDates}
@@ -128,7 +142,6 @@ export function SingleMonthCalendar({
           disableFuture={disableFuture}
           showDayNames={false}
           showMonthHeader={false}
-          renderDay={renderDay}
         />
       </View>
     </View>
@@ -146,11 +159,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingVertical: 12,
     paddingHorizontal: 16,
-    borderBottomWidth: 1,
+    borderBottomWidth: 1.5,
   },
   monthText: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: '500',
   },
   arrowButton: {
     padding: 8,
@@ -167,10 +180,6 @@ const styles = StyleSheet.create({
   dayNameText: {
     fontSize: 12,
     fontWeight: '500',
-  },
-  daysGrid: {
-    paddingHorizontal: 16,
-    paddingBottom: 16,
   },
 });
 
