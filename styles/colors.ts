@@ -143,7 +143,7 @@ export const darkColors: ColorScheme = {
 
   //Neutrals
   neutral100: '#5E5D7F',
-  neutral150: '#4C4B6C',
+  neutral150: '#3E3D5C',
   neutral200: '#696981',
   neutral300: '#26253E',
   neutral400: '#706D8C',
