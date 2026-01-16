@@ -150,6 +150,7 @@ export function SingleMonthCalendar({
 
       <View>
         <MonthView
+          key={monthData.key}
           monthData={monthData}
           markedDates={markedDates}
           onDayPress={onDayPress}
