@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import { MonthView } from './MonthView';
 import { MonthData } from '../../utils/customCalendarHelpers';
 
@@ -104,6 +105,16 @@ export function SingleMonthCalendar({
     }
   );
 
+  const swipeGesture = Gesture.Pan()
+    .runOnJS(true)
+    .onEnd((event) => {
+      if (event.translationX > 50) {
+        handlePrevMonth();
+      } else if (event.translationX < -50) {
+        handleNextMonth();
+      }
+    });
+
   return (
     <View style={styles.container}>
       <View
@@ -138,29 +149,33 @@ export function SingleMonthCalendar({
         </TouchableOpacity>
       </View>
 
-      <View style={styles.dayNamesRow}>
-        {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((name, index) => (
-          <View key={index} style={styles.dayNameCell}>
-            <Text style={[styles.dayNameText, { color: colors.textPrimary, fontWeight: '600' }]}>
-              {name}
-            </Text>
+      <GestureDetector gesture={swipeGesture}>
+        <View>
+          <View style={styles.dayNamesRow}>
+            {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((name, index) => (
+              <View key={index} style={styles.dayNameCell}>
+                <Text style={[styles.dayNameText, { color: colors.textPrimary, fontWeight: '600' }]}>
+                  {name}
+                </Text>
+              </View>
+            ))}
           </View>
-        ))}
-      </View>
 
-      <View>
-        <MonthView
-          key={monthData.key}
-          monthData={monthData}
-          markedDates={markedDates}
-          onDayPress={onDayPress}
-          colors={colors}
-          mode="selection"
-          disableFuture={disableFuture}
-          showDayNames={false}
-          showMonthHeader={false}
-        />
-      </View>
+          <View>
+            <MonthView
+              key={monthData.key}
+              monthData={monthData}
+              markedDates={markedDates}
+              onDayPress={onDayPress}
+              colors={colors}
+              mode="selection"
+              disableFuture={disableFuture}
+              showDayNames={false}
+              showMonthHeader={false}
+            />
+          </View>
+        </View>
+      </GestureDetector>
     </View>
   );
 }
