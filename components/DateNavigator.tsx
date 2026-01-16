@@ -63,7 +63,7 @@ export const DateNavigator = ({
         <Ionicons 
           name="chevron-back" 
           size={24} 
-          color={isPreviousDisabled() ? colors.textSecondary : colors.textPrimary} 
+          color={colors.textPrimary} 
         />
       </TouchableOpacity>
 
@@ -82,7 +82,7 @@ export const DateNavigator = ({
         <Ionicons
           name="chevron-forward"
           size={24}
-          color={isNextDisabled() ? colors.textSecondary : colors.textPrimary}
+          color={colors.textPrimary}
         />
       </TouchableOpacity>
     </View>
@@ -100,6 +100,6 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   disabledButton: { 
-    opacity: 0.5 
+    opacity: 0.38 
   },
 });

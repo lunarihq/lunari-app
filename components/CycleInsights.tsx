@@ -242,6 +242,6 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   chevronDisabled: {
-    opacity: 0.5,
+    opacity: 0.38,
   },
 });

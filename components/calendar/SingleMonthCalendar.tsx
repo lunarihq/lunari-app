@@ -122,13 +122,13 @@ export function SingleMonthCalendar({
       >
         <TouchableOpacity
           onPress={handlePrevMonth}
-          style={styles.arrowButton}
+          style={[styles.arrowButton, !canGoPrev() && { opacity: 0.38 }]}
           disabled={!canGoPrev()}
         >
           <Ionicons
             name="chevron-back"
             size={24}
-            color={canGoPrev() ? colors.white : colors.neutral200}
+            color={colors.textPrimary}
           />
         </TouchableOpacity>
         
@@ -138,13 +138,13 @@ export function SingleMonthCalendar({
         
         <TouchableOpacity
           onPress={handleNextMonth}
-          style={styles.arrowButton}
+          style={[styles.arrowButton, !canGoNext() && { opacity: 0.38 }]}
           disabled={!canGoNext()}
         >
           <Ionicons
             name="chevron-forward"
             size={24}
-            color={canGoNext() ? colors.white : colors.neutral200}
+            color={colors.textPrimary}
           />
         </TouchableOpacity>
       </View>

@@ -35,35 +35,35 @@ export function DayPicker({
   return (
     <View style={[styles.pickerContainer, disabled && styles.pickerDisabled]}>
       <TouchableOpacity
-        style={[styles.pickerButton, disabled && styles.buttonDisabled]}
+        style={styles.pickerButton}
         onPress={decrement}
         disabled={disabled}
       >
         <Ionicons
           name="remove"
           size={32}
-          color={disabled ? colors.textSecondary : colors.white}
+          color={colors.white}
         />
       </TouchableOpacity>
 
       <View style={styles.valueContainer}>
-        <Text style={[styles.valueText, disabled && styles.textDisabled]}>
+        <Text style={styles.valueText}>
           {value}
         </Text>
-        <Text style={[styles.labelText, disabled && styles.textDisabled]}>
+        <Text style={styles.labelText}>
           {t('time.days')}
         </Text>
       </View>
 
       <TouchableOpacity
-        style={[styles.pickerButton, disabled && styles.buttonDisabled]}
+        style={styles.pickerButton}
         onPress={increment}
         disabled={disabled}
       >
         <Ionicons
           name="add"
           size={32}
-          color={disabled ? colors.textSecondary : colors.white}
+          color={colors.white}
         />
       </TouchableOpacity>
     </View>
@@ -84,7 +84,7 @@ const createStyles = (colors: ColorScheme) =>
       borderRadius: 12,
     },
     pickerDisabled: {
-      opacity: 0.5,
+      opacity: 0.38,
     },
     pickerButton: {
       width: 54,
@@ -95,9 +95,6 @@ const createStyles = (colors: ColorScheme) =>
       alignItems: 'center',
       marginHorizontal: 20,
     },
-    buttonDisabled: {
-      backgroundColor: colors.panel,
-    },
     valueContainer: {
       alignItems: 'center',
       minWidth: 80,
@@ -106,9 +103,6 @@ const createStyles = (colors: ColorScheme) =>
       fontSize: 54,
       fontWeight: 'bold',
       color: colors.textPrimary,
-    },
-    textDisabled: {
-      color: colors.textSecondary,
     },
     labelText: {
       fontSize: 20,

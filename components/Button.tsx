@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   disabled: {
-    opacity: 0.3,
+    opacity: 0.38,
   },
   pressed: {
     opacity: 0.7,

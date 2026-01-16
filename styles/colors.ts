@@ -88,7 +88,7 @@ export const lightColors: ColorScheme = {
 
   //Neutrals
   neutral100: '#DADAE4',
-  neutral150: '#DDE0FF',
+  neutral150: '#E3E4F3',
   neutral200: '#8A86A9',
   neutral300: '#D8DAFF',
   neutral400: '#706D8C',

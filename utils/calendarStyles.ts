@@ -175,7 +175,7 @@ export function getEditDayCellStyles(colors: CalendarColors) {
       borderStyle: 'dotted',
     },
     disabledDayText: {
-      opacity: 0.3,
+      opacity: 0.38,
     },
   };
 }

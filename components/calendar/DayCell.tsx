@@ -60,7 +60,7 @@ export const DayCell = memo<DayCellProps>(
       styles.text,
       { color: colors.textPrimary },
       marking?.customStyles?.text,
-      isDisabled && { opacity: 0.3 },
+      isDisabled && { opacity: 0.38 },
     ];
 
     return (

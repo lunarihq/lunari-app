@@ -170,6 +170,6 @@ const getStyles = (colors: ColorScheme) =>
       overflow: 'hidden',
     },
     calendarDisabled: {
-      opacity: 0.5,
+      opacity: 0.38,
     },
   });
