@@ -292,11 +292,10 @@ export default function Reminders() {
 
   return (
     <ScrollView
-      style={[
-        commonStyles.scrollView,
-      ]}
-      contentContainerStyle={commonStyles.scrollContentContainer}
-    >
+    style={[commonStyles.scrollView]}
+    contentContainerStyle={[commonStyles.scrollContentContainer, { paddingTop: 8 }]}
+    showsVerticalScrollIndicator={false}
+  >
       {statusMessage && (
         <View
           style={[
@@ -412,7 +411,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   section: {
-    marginVertical: 16,
+    marginBottom: 24,
     borderRadius: 8,
     overflow: 'hidden',
   },

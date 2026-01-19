@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Switch, Alert, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, Switch, Alert, ActivityIndicator, ScrollView } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../contexts/AuthContext';
 import { useTheme } from '../../styles/theme';
@@ -31,7 +31,11 @@ export default function AppLockScreen() {
   };
 
   return (
-    <View style={[commonStyles.container]}>
+    <ScrollView
+      style={[commonStyles.scrollView]}
+      contentContainerStyle={[commonStyles.scrollContentContainer, { paddingTop: 8 }]}
+      showsVerticalScrollIndicator={false}
+    >
       <View style={[commonStyles.sectionContainer, { padding: 0 }]}>
         <View style={[styles.settingRow]}>
           <View style={styles.settingContent}>
@@ -60,7 +64,7 @@ export default function AppLockScreen() {
           )}
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 

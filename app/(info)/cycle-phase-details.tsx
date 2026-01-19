@@ -59,7 +59,7 @@ export default function CyclePhaseDetails() {
   return (
       <ScrollView
         style={commonStyles.scrollView}
-        contentContainerStyle={commonStyles.scrollContentContainer}
+        contentContainerStyle={[commonStyles.scrollContentContainer, { paddingTop: 24 }]}
         showsVerticalScrollIndicator={false}
       >
         <Text

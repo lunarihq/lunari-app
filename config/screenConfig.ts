@@ -33,14 +33,14 @@ export const dynamicScreens: ScreenConfig[] = [
     headerShown: true,
     titleKey: 'settings:screenTitles.about',
     headerShadowVisible: false,
-    backgroundColorKey: 'background',
+    backgroundColorKey: 'surfaceVariant',
   },
   {
     name: 'settings/privacy-policy',
     headerShown: true,
     titleKey: 'settings:screenTitles.privacyPolicy',
     headerShadowVisible: false,
-    backgroundColorKey: 'background',
+    backgroundColorKey: 'surfaceVariant',
   },
   {
     name: 'health-tracking',
