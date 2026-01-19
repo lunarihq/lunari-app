@@ -26,7 +26,8 @@ export default function About() {
         { backgroundColor: colors.surface },
       ]}
       contentContainerStyle={[
-        commonStyles.scrollContentContainer,
+        commonStyles.scrollContentContainer, 
+        { paddingTop: 16 },
       ]}
       showsVerticalScrollIndicator={false}
     >
