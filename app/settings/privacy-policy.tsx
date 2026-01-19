@@ -13,7 +13,8 @@ export default function PrivacyPolicy() {
   return (
     <ScrollView
       style={[
-        commonStyles.scrollView
+        commonStyles.scrollView,
+        { backgroundColor: colors.surface },
       ]}
       contentContainerStyle={commonStyles.scrollContentContainer}
       showsVerticalScrollIndicator={false}
@@ -125,7 +126,7 @@ export default function PrivacyPolicy() {
         </Text>
       </View>
 
-      <View style={[commonStyles.sectionContainer, { marginBottom: 32 }]}>
+      <View style={[commonStyles.sectionContainer, {backgroundColor: colors.background }]}>
         <Text
           style={[
             typography.body,
