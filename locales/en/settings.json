@@ -34,7 +34,7 @@
   },
   "appLockSettings": {
     "unlockApp": "Unlock app with biometric",
-    "unlockDescription": "Use your device's biometric authentication (e.g. fingerprint or face ID) to unlock Lunari",
+    "unlockDescription": "Use your device's biometric authentication (e.g. fingerprint or face ID) to unlock Flua",
     "noDeviceSecurityDescription": "You need to setup your device's biometric authentication first to enable this feature.",
 
     "error": {
@@ -44,7 +44,7 @@
     }
   },
   "lockScreen": {
-    "unlockApp": "Unlock Lunari",
+    "unlockApp": "Unlock Flua",
     "unlockButton": "Unlock"
   },
   "reminderSettings": {
@@ -63,17 +63,17 @@
     "updateError": "Failed to update notification settings",
     "permissionDialog": {
       "title": "Enable Notifications",
-      "message": "To receive period reminders, please enable notifications for Lunari in your device settings.",
+      "message": "To receive period reminders, please enable notifications for Flua in your device settings.",
       "cancel": "Cancel",
       "openSettings": "Open Settings"
     }
   },
   "aboutScreen": {
-    "title": "About Lunari",
+    "title": "About Flua",
     "version": "Version 1.0.0",
     "whatIs": {
-      "title": "What is Lunari?",
-      "description": "Lunari is a privacy-first period tracking app designed to help you understand and manage your menstrual cycle."
+      "title": "What is Flua?",
+      "description": "Flua is a privacy-first period tracking app designed to help you understand and manage your menstrual cycle."
     },
     "features": {
       "title": "Features",
@@ -87,7 +87,7 @@
     },
     "privacyFirst": {
       "title": "Privacy First",
-      "description": "Lunari is designed with a privacy-first approach:",
+      "description": "Flua is designed with a privacy-first approach:",
       "local": "All data is stored locally on your device",
       "noTransmission": "No data transmission to external servers",
       "noTracking": "No third-party analytics or tracking",
@@ -96,13 +96,13 @@
     },
     "openSource": {
       "title": "Open Source",
-      "description": "Lunari is open-source and licensed under the",
-      "warranty": "Lunari is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.",
+      "description": "Flua is open-source and licensed under the",
+      "warranty": "Flua is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.",
       "viewSource": "View the source on GitHub"
     },
     "technical": {
       "title": "Technical Details",
-      "description": "Lunari is built using modern technologies to ensure reliability and performance:",
+      "description": "Flua is built using modern technologies to ensure reliability and performance:",
       "framework": "Framework: React Native with Expo",
       "database": "Database: SQLite with Drizzle ORM",
       "language": "Language: TypeScript",
@@ -110,7 +110,7 @@
     },
     "footer": {
       "prefix": "For support or feedback, please contact us at: ",
-      "email": "lunari.appmail@gmail.app",
+      "email": "flua.appmail@gmail.app",
       "suffix": "."
     }
   },
@@ -118,12 +118,11 @@
     "title": "Privacy Policy",
     "lastUpdated": "Last updated:",
     "introduction": {
-      "title": "Introduction",
-      "description": "This Privacy Policy sets out how the app Lunari uses and protects your personal data that you generate and store within the app."
+      "description": "This Privacy Policy sets out how the app Flua uses and protects your personal data that you generate and store within the app."
     },
     "dataUse": {
       "title": "Data Use",
-      "descriptionPrefix": "Lunari respects and celebrates your privacy. There is no collection of usage data or personal information, no ads, no spyware. Lunari can store data related to your menstrual health",
+      "descriptionPrefix": "Flua respects and celebrates your privacy. There is no collection of usage data or personal information, no ads, no spyware. Flua can store data related to your menstrual health",
       "descriptionBold": "locally on your phone",
       "descriptionSuffix": ", and this includes:",
       "periodDates": "Period start and end dates",
@@ -136,7 +135,7 @@
     },
     "permissions": {
       "title": "Permissions",
-      "description": "Lunari may request the following permissions:",
+      "description": "Flua may request the following permissions:",
       "reminders": "",
       "remindersBold": "Reminders",
       "remindersSuffix": ": To send you period reminders and cycle predictions.",
@@ -157,7 +156,7 @@
     },
     "footer": {
       "prefix": "If you have any questions about this privacy policy or how we handle your data, please contact us at ",
-      "email": "lunari.appmail@gmail.app",
+      "email": "flua.appmail@gmail.app",
       "suffix": "."
     }
   }
