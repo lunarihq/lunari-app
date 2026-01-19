@@ -84,7 +84,11 @@ export const DayCell = memo<DayCellProps>(
           
           {hasHealthLogs && (
             <View
-              style={[styles.healthLogDot, { backgroundColor: colors.primary }]}
+              style={[
+                styles.healthLogDot,
+                { backgroundColor: colors.primary },
+                isToday && { bottom: -23 },
+              ]}
             />
           )}
         </View>
@@ -96,7 +100,7 @@ export const DayCell = memo<DayCellProps>(
         )}
 
         {isToday && (
-          <Text style={[typography.labelXs, { marginBottom: 7 }]}>
+          <Text style={[typography.labelXs, styles.todayLabel]}>
             {t('today')}
           </Text>
         )}
@@ -116,9 +120,9 @@ DayCell.displayName = 'DayCell';
 const styles = StyleSheet.create({
   dayContainer: {
     alignItems: 'center',
-    justifyContent: 'space-between',
     width: '14.28%',
     height: 64,
+    position: 'relative',
   },
   dayContent: {
     flexDirection: 'row',
@@ -154,6 +158,10 @@ const styles = StyleSheet.create({
     width: 7,
     height:7,
     borderRadius: 8,
+  },
+  todayLabel: {
+    position: 'absolute',
+    top: 36,
   },
 });
 
