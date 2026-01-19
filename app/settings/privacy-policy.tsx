@@ -1,17 +1,9 @@
 import React from 'react';
 import { Text, View, StyleSheet, ScrollView } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../../styles/theme';
 import { useAppStyles } from '../../hooks/useStyles';
 import * as Localization from 'expo-localization';
-
-const SECTION_ICON_SIZE = 24;
-
-function SectionIcon({ name, ...props }: { name: keyof typeof Ionicons.glyphMap } & Partial<React.ComponentProps<typeof Ionicons>>) {
-  const { colors } = useTheme();
-  return <Ionicons name={name} size={SECTION_ICON_SIZE} color={colors.accentPink} {...props} />;
-}
 
 export default function PrivacyPolicy() {
   const { colors } = useTheme();
@@ -26,35 +18,25 @@ export default function PrivacyPolicy() {
       contentContainerStyle={commonStyles.scrollContentContainer}
       showsVerticalScrollIndicator={false}
     >
-      <View style={[commonStyles.sectionContainer, { marginBottom: 32, alignItems: 'center' }]}>
-        <Text style={[typography.headingLg, { marginBottom: 8 }]}>
+      <View style={[styles.contentSection]}>
+        <Text style={[typography.headingLg]}>
           {t('privacyPolicyScreen.title')}
         </Text>
         <Text style={[typography.body, { color: colors.textSecondary }]}>
           {t('privacyPolicyScreen.lastUpdated')} {new Date().toLocaleDateString(Localization.getLocales()[0].languageTag)}
         </Text>
-      </View>
-
-      <View style={[styles.contentSection]}>
-        <View style={styles.sectionHeader}>
-          <SectionIcon name="information-circle-outline" />
-          <Text style={[typography.headingMd, { marginLeft: 12 }]}>
-            {t('privacyPolicyScreen.introduction.title')}
-          </Text>
-        </View>
-        <Text style={[typography.body, { marginBottom: 12 }]}>
+        <Text style={[typography.body]}>
           {t('privacyPolicyScreen.introduction.description')}
         </Text>
       </View>
 
       <View style={[styles.contentSection]}>
         <View style={styles.sectionHeader}>
-          <SectionIcon name="analytics-outline" />
-          <Text style={[typography.headingMd, { marginLeft: 12 }]}>
+          <Text style={[typography.headingMd]}>
             {t('privacyPolicyScreen.dataUse.title')}
           </Text>
         </View>
-        <Text style={[typography.body, { marginBottom: 12 }]}>
+        <Text style={[typography.body]}>
           {t('privacyPolicyScreen.dataUse.descriptionPrefix')}{' '}
           <Text style={typography.bodyBold}>{t('privacyPolicyScreen.dataUse.descriptionBold')}</Text>
           {t('privacyPolicyScreen.dataUse.descriptionSuffix')}
@@ -65,7 +47,7 @@ export default function PrivacyPolicy() {
             style={{
               flexDirection: 'row',
               alignItems: 'flex-start',
-              marginBottom: index === 4 ? 0 : 8,
+              marginBottom: index === 8 ? 0 : 0,
               marginLeft: 8,
             }}
           >
@@ -75,22 +57,21 @@ export default function PrivacyPolicy() {
             </Text>
           </View>
         ))}
-        <Text style={[typography.body, { marginVertical: 12 }]}>
+        <Text style={[typography.body]}>
           {t('privacyPolicyScreen.dataUse.usage')}
         </Text>
-        <Text style={[typography.body, { marginBottom: 12 }]}>
+        <Text style={[typography.body]}>
           {t('privacyPolicyScreen.dataUse.deletion')}
         </Text>
       </View>
 
       <View style={[styles.contentSection]}>
         <View style={styles.sectionHeader}>
-          <SectionIcon name="shield-checkmark-outline" />
-          <Text style={[typography.headingMd, { marginLeft: 12 }]}>
+          <Text style={[typography.headingMd]}>
             {t('privacyPolicyScreen.permissions.title')}
           </Text>
         </View>
-        <Text style={[typography.body, { marginBottom: 12 }]}>
+        <Text style={[typography.body]}>
           {t('privacyPolicyScreen.permissions.description')}
         </Text>
         {['reminders', 'biometric'].map((permission, index) => (
@@ -99,7 +80,6 @@ export default function PrivacyPolicy() {
             style={{
               flexDirection: 'row',
               alignItems: 'flex-start',
-              marginBottom: index === 1 ? 0 : 8,
               marginLeft: 8,
             }}
           >
@@ -111,19 +91,18 @@ export default function PrivacyPolicy() {
             </Text>
           </View>
         ))}
-        <Text style={[typography.body, { marginVertical: 12 }]}>
+        <Text style={[typography.body]}>
           {t('privacyPolicyScreen.permissions.revoke')}
         </Text>
       </View>
 
       <View style={[styles.contentSection]}>
         <View style={styles.sectionHeader}>
-          <SectionIcon name="eye-outline" />
-          <Text style={[typography.headingMd, { marginLeft: 12 }]}>
+          <Text style={[typography.headingMd]}>
             {t('privacyPolicyScreen.transparency.title')}
           </Text>
         </View>
-        <Text style={[typography.body, { marginBottom: 12 }]}>
+        <Text style={[typography.body]}>
           {t('privacyPolicyScreen.transparency.description')}
         </Text>
         {['localStorage', 'noTransmission', 'deleteAnytime', 'noAnalytics', 'noAds'].map((item, index) => (
@@ -132,7 +111,6 @@ export default function PrivacyPolicy() {
             style={{
               flexDirection: 'row',
               alignItems: 'flex-start',
-              marginBottom: index === 4 ? 0 : 8,
               marginLeft: 8,
             }}
           >
@@ -142,7 +120,7 @@ export default function PrivacyPolicy() {
             </Text>
           </View>
         ))}
-        <Text style={[typography.body, { marginVertical: 12 }]}>
+        <Text style={[typography.body]}>
           {t('privacyPolicyScreen.transparency.control')}
         </Text>
       </View>
@@ -170,9 +148,10 @@ const styles = StyleSheet.create({
 sectionHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 16,
   },
   contentSection: {
-    marginBottom: 32,
+    marginBottom: 24, 
+    gap: 8,
+
   },
 });
