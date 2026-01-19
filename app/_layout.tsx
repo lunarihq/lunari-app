@@ -100,6 +100,10 @@ function AppContent() {
                   lightColors
                 ),
               },
+              headerTitleStyle: {
+                fontSize: 18,
+                color: isDark ? darkColors.textPrimary : lightColors.textPrimary,
+              },
               headerTintColor: isDark ? darkColors.textPrimary : lightColors.textPrimary,
             }}
           />

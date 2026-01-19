@@ -24,7 +24,7 @@ export const createCommonStyles = (colors: ColorScheme) => StyleSheet.create({
 
   // For individual sections within a screen
   sectionContainer: {
-    borderRadius: 16,
+    borderRadius: 14,
     marginBottom: 16,
     padding: 16,
     backgroundColor: colors.surface,
