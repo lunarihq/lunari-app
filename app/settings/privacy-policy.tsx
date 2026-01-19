@@ -153,6 +153,5 @@ sectionHeader: {
   contentSection: {
     marginBottom: 24, 
     gap: 8,
-
   },
 });

@@ -121,7 +121,7 @@
       "description": "This Privacy Policy sets out how the app Flua uses and protects your personal data that you generate and store within the app."
     },
     "dataUse": {
-      "title": "Data Use",
+      "title": "1. Data Use",
       "descriptionPrefix": "Flua respects and celebrates your privacy. There is no collection of usage data or personal information, no ads, no spyware. Flua can store data related to your menstrual health",
       "descriptionBold": "locally on your phone",
       "descriptionSuffix": ", and this includes:",
@@ -134,7 +134,7 @@
       "deletion": "If you wish to delete all your app data, you can do so by going to the settings menu and selecting \"Delete all data\". This will permanently erase all tracking data, health logs, and app settings. You can also delete all data by uninstalling the app."
     },
     "permissions": {
-      "title": "Permissions",
+      "title": "2. Permissions",
       "description": "Flua may request the following permissions:",
       "reminders": "",
       "remindersBold": "Reminders",
@@ -145,7 +145,7 @@
       "revoke": "If you don't want to use any of these permissions, you can revoke them at any time through your device settings."
     },
     "transparency": {
-      "title": "Transparency",
+      "title": "3. Transparency",
       "description": "We believe in complete transparency about how your data is handled:",
       "localStorage": "All your data is stored locally on your device",
       "noTransmission": "No data is transmitted to external servers",

@@ -23,30 +23,21 @@ export default function About() {
     <ScrollView
       style={[
         commonStyles.scrollView,
-        { backgroundColor: colors.background },
+        { backgroundColor: colors.surface },
       ]}
       contentContainerStyle={[
         commonStyles.scrollContentContainer,
       ]}
       showsVerticalScrollIndicator={false}
     >
-      <View style={[commonStyles.sectionContainer, { marginBottom: 32, alignItems: 'center' }]}>
-        <Text style={[typography.headingLg, { marginBottom: 8 }]}>
+      <View style={[styles.contentSection]}>
+        <Text style={[typography.headingLg]}>
           {t('aboutScreen.title')}
         </Text>
         <Text style={[typography.body, { color: colors.textSecondary }]}>
           {t('aboutScreen.version')}
         </Text>
-      </View>
-
-      <View style={[styles.contentSection]}>
-        <View style={styles.sectionHeader}>
-          <SectionIcon name="heart-outline" />
-          <Text style={[typography.headingMd, { marginLeft: 12 }]}>
-            {t('aboutScreen.whatIs.title')}
-          </Text>
-        </View>
-        <Text style={[typography.body, { marginBottom: 12 }]}>
+        <Text style={[typography.body]}>
           {t('aboutScreen.whatIs.description')}
         </Text>
       </View>
@@ -64,7 +55,6 @@ export default function About() {
             style={{
               flexDirection: 'row',
               alignItems: 'flex-start',
-              marginBottom: index === 6 ? 0 : 8,
               marginLeft: 8,
             }}
           >
@@ -83,7 +73,7 @@ export default function About() {
             {t('aboutScreen.privacyFirst.title')}
           </Text>
         </View>
-        <Text style={[typography.body, { marginBottom: 12 }]}>
+        <Text style={[typography.body]}>
           {t('aboutScreen.privacyFirst.description')}
         </Text>
         {['local', 'noTransmission', 'noTracking', 'noAds', 'noAccount'].map((item, index) => (
@@ -92,7 +82,6 @@ export default function About() {
             style={{
               flexDirection: 'row',
               alignItems: 'flex-start',
-              marginBottom: index === 4 ? 0 : 8,
               marginLeft: 8,
             }}
           >
@@ -111,7 +100,7 @@ export default function About() {
             {t('aboutScreen.openSource.title')}
           </Text>
         </View>
-        <Text style={[typography.body, { marginBottom: 12 }]}>
+        <Text style={[typography.body]}>
           {t('aboutScreen.openSource.description')}{' '}
           <Text
             onPress={() => Linking.openURL(GPL_URL)}
@@ -125,7 +114,7 @@ export default function About() {
           </Text>
           .
         </Text>
-        <Text style={[typography.body, { marginBottom: 12 }]}>
+        <Text style={[typography.body]}>
           {t('aboutScreen.openSource.warranty')}
         </Text>
         <Text
@@ -147,7 +136,7 @@ export default function About() {
             {t('aboutScreen.technical.title')}
           </Text>
         </View>
-        <Text style={[typography.body, { marginBottom: 12 }]}>
+        <Text style={[typography.body]}>
           {t('aboutScreen.technical.description')}
         </Text>
         {['framework', 'database', 'language', 'platform'].map((item, index) => {
@@ -162,7 +151,6 @@ export default function About() {
               style={{
                 flexDirection: 'row',
                 alignItems: 'flex-start',
-                marginBottom: index === 3 ? 0 : 8,
                 marginLeft: 8,
               }}
             >
@@ -176,7 +164,7 @@ export default function About() {
         })}
       </View>
 
-      <View style={[commonStyles.sectionContainer, { marginBottom: 32 }]}>
+      <View style={[commonStyles.sectionContainer, { backgroundColor: colors.background }]}>
         <Text
           style={[
             typography.body,
@@ -199,9 +187,9 @@ const styles = StyleSheet.create({
   sectionHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 16,
   },
   contentSection: {
-    marginBottom: 32,
+    marginBottom: 24,
+    gap: 8,
   },
 });
