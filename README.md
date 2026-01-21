@@ -1,4 +1,4 @@
-# Lunari
+# Flua
 
 A private-first period tracking app designed to be a delight to use whilst preserving the users’ privacy by using local-only data storage.
 

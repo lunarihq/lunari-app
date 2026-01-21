@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "Lunari",
-    "slug": "lunari",
+    "name": "Flua",
+    "slug": "flua",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "lunari",
+    "scheme": "flua",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {

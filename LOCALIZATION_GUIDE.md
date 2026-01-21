@@ -33,7 +33,7 @@ The following screens have been fully localized:
 - "Calendar" (tab label)
 - "Stats" (tab label, header)
 - "Settings" (tab label, header)
-- "Lunari" (header title)
+- "Flua" (header title)
 
 **How to fix:**
 ```typescript
@@ -44,7 +44,7 @@ The following screens have been fully localized:
     "calendar": "Calendar",
     "stats": "Stats",
     "settings": "Settings",
-    "appName": "Lunari"
+    "appName": "Flua"
   }
 }
 

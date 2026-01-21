@@ -16,7 +16,7 @@ export default function About() {
   const { colors } = useTheme();
   const { typography, commonStyles } = useAppStyles();
   const { t } = useTranslation('settings');
-  const GITHUB_URL = 'https://github.com/lunari-app/lunari';
+  const GITHUB_URL = 'https://github.com/flua-app/flua';
   const GPL_URL = 'https://www.gnu.org/licenses/gpl-3.0.en.html';
 
   return (
