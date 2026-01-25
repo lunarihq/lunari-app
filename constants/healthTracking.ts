@@ -58,7 +58,6 @@ export const DISCHARGES: readonly HealthItem[] = [
   { id: 'sticky', icon: 'sticky' },
   { id: 'spotting', icon: 'spotting' },
   { id: 'unusual', icon: 'unusual' },
-  { id: 'clumpy-white', icon: 'clumpy-white' },
   { id: 'grey-discharge', icon: 'grey-discharge' },
 ] as const;
 

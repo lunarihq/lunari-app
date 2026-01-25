@@ -21,7 +21,7 @@ import { DiarheaIcon } from './symptoms/Diarhea';
 import { OkeyIcon } from './symptoms/Okey';
 import { FatigueIcon } from './symptoms/Fatigue';
 import { CravingsIcon } from './symptoms/Cravings';
-import { BloatedIcon } from './symptoms/Bloated';
+import { BloatingIcon } from './symptoms/Bloating';
 import { NauseaIcon } from './symptoms/Nausea';
 import { DischargeIcon } from './symptoms/VaginalDryness';
 import { UrinationIcon } from './symptoms/Urination';
@@ -36,7 +36,6 @@ import { InsomniaIcon } from './symptoms/Insomnia';
 import { AcneIcon } from './symptoms/Acne';
 import { TenderBreastsIcon } from './symptoms/TenderBreasts';
 import { BackacheIcon } from './symptoms/Backache';
-import { ClumpyWhiteIcon } from './discharge/ClumpyWhite';
 import { CreamyIcon } from './discharge/Creamy';
 import { EggWhiteIcon } from './discharge/EggWhite';
 import { GreyDischargeIcon } from './discharge/GreyDischarge';
@@ -89,7 +88,6 @@ export type IconName =
   | 'medium'
   | 'heavy'
   | 'blood-clots'
-  | 'clumpy-white'
   | 'creamy'
   | 'egg-white'
   | 'grey-discharge'
@@ -117,7 +115,7 @@ const iconMap: Record<IconName, React.FC<IconProps>> = {
   cramps: CrampsIcon,
   dizziness: DizzinessIcon,
   fatigue: FatigueIcon,
-  bloating: BloatedIcon,
+  bloating: BloatingIcon,
   bored: BoredIcon,
   constipation: ConstipationIcon,
   cravings: CravingsIcon,
@@ -137,7 +135,6 @@ const iconMap: Record<IconName, React.FC<IconProps>> = {
   medium: MediumFlowIcon,
   heavy: HeavyFlowIcon,
   'blood-clots': BloodClotsIcon,
-  'clumpy-white': ClumpyWhiteIcon,
   creamy: CreamyIcon,
   'egg-white': EggWhiteIcon,
   'grey-discharge': GreyDischargeIcon,

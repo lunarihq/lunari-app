@@ -63,7 +63,7 @@ export const HealthItemGrid = memo<HealthItemGridProps>(function HealthItemGrid(
                 </View>
               )}
             </View>
-            <Text style={[typography.caption, { fontSize: 12, textAlign: 'center' }]}>
+            <Text style={[typography.caption, { fontSize: 12, textAlign: 'center', lineHeight: 16 }]}>
               {t(`${translationKey}.${item.id}`)}
             </Text>
           </TouchableOpacity>
