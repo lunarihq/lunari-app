@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "Flua",
-    "slug": "flua",
+    "name": "Bluma",
+    "slug": "bluma",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "flua",
+    "scheme": "bluma",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
@@ -24,7 +24,7 @@
         "USE_FACE_ID",
         "VIBRATE"
       ],
-      "package": "com.mariandre.lunari"
+      "package": "health.bluma"
     },
     "plugins": [
       "expo-router",
