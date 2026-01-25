@@ -89,14 +89,14 @@
         "postpartum": "Posparto y lactancia"
       },
       "dataNoteBold": "Datos de periodo ingresados incorrectamente",
-      "dataNote": "pueden hacer que Flua indique una duración de ciclo anormal. Con mayor frecuencia, esto es el resultado de olvidar registrar el periodo. Rastrear tus ciclos durante al menos 3-6 meses ayudará a establecer un patrón."
+      "dataNote": "pueden hacer que Bluma indique una duración de ciclo anormal. Con mayor frecuencia, esto es el resultado de olvidar registrar el periodo. Rastrear tus ciclos durante al menos 3-6 meses ayudará a establecer un patrón."
     },
     "seeDoctor": {
       "title": "¿Cuándo consultar a un médico?",
       "description": "Si tus ciclos son frecuentemente anormales en duración, o/y están acompañados de otros síntomas preocupantes, es mejor hablar con tu proveedor de atención médica. Ellos pueden ayudarte a descubrir la causa y sugerir tratamiento, si es necesario."
     },
     "disclaimerBold": "¡IMPORTANTE!",
-    "disclaimer": "Flua no es una herramienta de diagnóstico. La información de Flua no reemplaza el consejo de un proveedor de atención médica. Siempre busca el consejo de tu médico u otro proveedor de salud calificado con cualquier pregunta que puedas tener sobre tu ciclo.",
+    "disclaimer": "Bluma no es una herramienta de diagnóstico. La información de Bluma no reemplaza el consejo de un proveedor de atención médica. Siempre busca el consejo de tu médico u otro proveedor de salud calificado con cualquier pregunta que puedas tener sobre tu ciclo.",
     "references": {
       "title": "Referencias",
       "acog": "1. Diagnosis of Abnormal Uterine Bleeding in Reproductive-Aged Women. Practice Bulletin. Number 128, July 2012. American College of Obstetricians and Gynecologists."
@@ -125,7 +125,7 @@
       "description": "Si la duración de tu periodo es frecuentemente anormal, o/y está acompañada de otros síntomas preocupantes, es mejor hablar con tu proveedor de atención médica. Ellos pueden ayudarte a descubrir la causa y sugerir tratamiento, si es necesario."
     },
     "disclaimerBold": "¡IMPORTANTE!",
-    "disclaimer": "Flua no es una herramienta de diagnóstico. La información de Flua no reemplaza el consejo de un proveedor de atención médica. Siempre busca el consejo de tu médico u otro proveedor de salud calificado con cualquier pregunta que puedas tener sobre tu ciclo.",
+    "disclaimer": "Bluma no es una herramienta de diagnóstico. La información de Bluma no reemplaza el consejo de un proveedor de atención médica. Siempre busca el consejo de tu médico u otro proveedor de salud calificado con cualquier pregunta que puedas tener sobre tu ciclo.",
     "references": {
       "title": "Referencias",
       "acog": "1. Your First Period. American College of Obstetricians and Gynecologists. FAQ for patients."
@@ -175,14 +175,14 @@
   },
   "prediction": {
     "title": "Cómo funcionan las predicciones",
-    "description": "Flua predice tu próximo periodo basándose en tu historial de ciclos. Cuantos más datos registres, más precisas serán las predicciones.",
+    "description": "Bluma predice tu próximo periodo basándose en tu historial de ciclos. Cuantos más datos registres, más precisas serán las predicciones.",
     "nextPeriod": {
       "title": "Predicción del próximo periodo",
       "description": "Tu próximo periodo se predice sumando tu duración promedio de ciclo a la fecha de inicio de tu periodo más reciente."
     },
     "cycleLengthCalc": {
       "title": "Cálculo de la duración del ciclo",
-      "description": "Flua calcula tu duración promedio de ciclo usando un promedio ponderado de tus últimos 6 ciclos, un enfoque comúnmente utilizado en el seguimiento de ciclos.",
+      "description": "Bluma calcula tu duración promedio de ciclo usando un promedio ponderado de tus últimos 6 ciclos, un enfoque comúnmente utilizado en el seguimiento de ciclos.",
       "weighting": "Los ciclos recientes tienen más influencia en las predicciones que los más antiguos. Por ejemplo, ciclo más reciente: 100%, segundo más reciente: 80%, tercer más reciente: 60%, y así sucesivamente."
     },
     "ovulation": {
@@ -192,7 +192,7 @@
     },
     "accuracy": {
       "title": "La precisión mejora con el tiempo",
-      "description": "Cuantos más periodos registres, más precisas serán las predicciones. Con 3+ ciclos, Flua puede proporcionar predicciones personalizadas basadas en tus patrones únicos."
+      "description": "Cuantos más periodos registres, más precisas serán las predicciones. Con 3+ ciclos, Bluma puede proporcionar predicciones personalizadas basadas en tus patrones únicos."
     },
     "privacy": {
       "title": "Privacidad primero",

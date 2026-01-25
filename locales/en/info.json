@@ -89,14 +89,14 @@
         "postpartum": "Postpartum and breastfeeding"
       },
       "dataNoteBold": "Incorrectly entered period data",
-      "dataNote": "can cause Flua to indicate an abnormal cycle length. Most often, this is the result of forget to log period. Tracking your cycles for at least 3-6 months will help establish a pattern."
+      "dataNote": "can cause Bluma to indicate an abnormal cycle length. Most often, this is the result of forget to log period. Tracking your cycles for at least 3-6 months will help establish a pattern."
     },
     "seeDoctor": {
       "title": "When to see a doctor?",
       "description": "If your cycles are frequently abnormal in length, or/and accompanied by other concerning symptoms, it's best to talk to your health care provider. They can help you figure out the cause and suggest treatment, if necessary."
     },
     "disclaimerBold": "IMPORTANT!",
-    "disclaimer": "Flua is not a diagnostic tool. The information from Flua does not replace advice from a health care provider. Always seek the advice of your doctor or other qualified health provider with any questions you may have regarding your cycle.",
+    "disclaimer": "Bluma is not a diagnostic tool. The information from Bluma does not replace advice from a health care provider. Always seek the advice of your doctor or other qualified health provider with any questions you may have regarding your cycle.",
     "references": {
       "title": "References",
       "acog": "1. Diagnosis of Abnormal Uterine Bleeding in Reproductive-Aged Women. Practice Bulletin. Number 128, July 2012. American College of Obstetricians and Gynecologists."
@@ -125,7 +125,7 @@
       "description": "If your period length is frequently abnormal in length, or/and accompanied by other concerning symptoms, it's best to talk to your health care provider. They can help you figure out the cause and suggest treatment, if necessary."
     },
     "disclaimerBold": "IMPORTANT!",
-    "disclaimer": "Flua is not a diagnostic tool. The information from Flua does not replace advice from a health care provider. Always seek the advice of your doctor or other qualified health provider with any questions you may have regarding your cycle.",
+    "disclaimer": "Bluma is not a diagnostic tool. The information from Bluma does not replace advice from a health care provider. Always seek the advice of your doctor or other qualified health provider with any questions you may have regarding your cycle.",
     "references": {
       "title": "References",
       "acog": "1. Your First Period. American College of Obstetricians and Gynecologists. FAQ for patients."
@@ -175,14 +175,14 @@
   },
   "prediction": {
     "title": "How predictions work",
-    "description": "Flua predicts your next period based on your cycle history. The more data you log, the more accurate the predictions become.",
+    "description": "Bluma predicts your next period based on your cycle history. The more data you log, the more accurate the predictions become.",
     "nextPeriod": {
       "title": "Next period prediction",
       "description": "Your next period is predicted by adding your average cycle length to the start date of your most recent period."
     },
     "cycleLengthCalc": {
       "title": "Cycle length calculation",
-      "description": "Flua calculates your average cycle length using a weighted average of your last 6 cycles, a commonly used approach in cycle tracking.",
+      "description": "Bluma calculates your average cycle length using a weighted average of your last 6 cycles, a commonly used approach in cycle tracking.",
       "weighting": "Recent cycles have more influence on predictions than older ones. For example, most recent cycle: 100%, second most recent: 80%, third most recent: 60%, and so on."
     },
     "ovulation": {
@@ -192,7 +192,7 @@
     },
     "accuracy": {
       "title": "Accuracy improves over time",
-      "description": "The more periods you track, the more accurate predictions become. With 3+ cycles, Flua can provide personalized predictions based on your unique patterns."
+      "description": "The more periods you track, the more accurate predictions become. With 3+ cycles, Bluma can provide personalized predictions based on your unique patterns."
     },
     "privacy": {
       "title": "Privacy first",

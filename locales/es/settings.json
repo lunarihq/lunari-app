@@ -34,7 +34,7 @@
   },
   "appLockSettings": {
     "unlockApp": "Desbloquear aplicación con biometría",
-    "unlockDescription": "Usa la autenticación biométrica de tu dispositivo (huella digital o reconocimiento facial) para desbloquear Flua.",
+    "unlockDescription": "Usa la autenticación biométrica de tu dispositivo (huella digital o reconocimiento facial) para desbloquear Bluma.",
     "noDeviceSecurityDescription": "Configura la autenticación biométrica en tu dispositivo para habilitar esta función.",
     "error": {
       "title": "Error",
@@ -43,7 +43,7 @@
     }
   },
   "lockScreen": {
-    "unlockApp": "Desbloquear Flua",
+    "unlockApp": "Desbloquear Bluma",
     "unlockButton": "Desbloquear"
   },
   "reminderSettings": {
@@ -62,16 +62,16 @@
     "updateError": "Error al actualizar la configuración de notificaciones",
     "permissionDialog": {
       "title": "Habilitar notificaciones",
-      "message": "Para recibir recordatorios de periodo, por favor habilita las notificaciones para Flua en la configuración de tu dispositivo.",
+      "message": "Para recibir recordatorios de periodo, por favor habilita las notificaciones para Bluma en la configuración de tu dispositivo.",
       "cancel": "Cancelar",
       "openSettings": "Abrir configuración"
     }
   },
   "aboutScreen": {
-    "title": "Acerca de Flua",
+    "title": "Acerca de Bluma",
     "version": "Versión 1.0.0",
     "whatIs": {
-      "description": "Flua es una aplicación de seguimiento de periodo con enfoque en la privacidad, diseñada para ayudarte a entender y gestionar tu ciclo menstrual."
+      "description": "Bluma es una aplicación de seguimiento de periodo con enfoque en la privacidad, diseñada para ayudarte a entender y gestionar tu ciclo menstrual."
     },
     "features": {
       "title": "Características",
@@ -85,7 +85,7 @@
     },
     "privacyFirst": {
       "title": "Privacidad Primero",
-      "description": "Flua está diseñada con un enfoque de privacidad primero:",
+      "description": "Bluma está diseñada con un enfoque de privacidad primero:",
       "local": "Todos los datos se almacenan localmente en tu dispositivo",
       "noTransmission": "No hay transmisión de datos a servidores externos",
       "noTracking": "Sin análisis o seguimiento de terceros",
@@ -94,13 +94,13 @@
     },
     "openSource": {
       "title": "Código Abierto",
-      "description": "Flua es de código abierto y tiene licencia bajo la",
-      "warranty": "Flua se distribuye con la esperanza de que sea útil, pero SIN NINGUNA GARANTÍA; sin siquiera la garantía implícita de COMERCIABILIDAD o IDONEIDAD PARA UN PROPÓSITO PARTICULAR.",
+      "description": "Bluma es de código abierto y tiene licencia bajo la",
+      "warranty": "Bluma se distribuye con la esperanza de que sea útil, pero SIN NINGUNA GARANTÍA; sin siquiera la garantía implícita de COMERCIABILIDAD o IDONEIDAD PARA UN PROPÓSITO PARTICULAR.",
       "viewSource": "Ver el código fuente en GitHub"
     },
     "technical": {
       "title": "Detalles Técnicos",
-      "description": "Flua está construida usando tecnologías modernas para garantizar confiabilidad y rendimiento:",
+      "description": "Bluma está construida usando tecnologías modernas para garantizar confiabilidad y rendimiento:",
       "framework": "Framework: React Native con Expo",
       "database": "Base de datos: SQLite con Drizzle ORM",
       "language": "Lenguaje: TypeScript",
@@ -108,7 +108,7 @@
     },
     "footer": {
       "prefix": "Para soporte o comentarios, por favor contáctanos en: ",
-      "email": "flua.appmail@gmail.app",
+      "email": "bluma.appmail@gmail.app",
       "suffix": "."
     }
   },
@@ -116,11 +116,11 @@
     "title": "Política de Privacidad",
     "lastUpdated": "Última actualización:",
     "introduction": {
-      "description": "Esta Política de Privacidad establece cómo la aplicación Flua usa y protege tus datos personales que generas y almacenas dentro de la aplicación."
+      "description": "Esta Política de Privacidad establece cómo la aplicación Bluma usa y protege tus datos personales que generas y almacenas dentro de la aplicación."
     },
     "dataUse": {
       "title": "1. Uso de Datos",
-      "descriptionPrefix": "Flua respeta y celebra tu privacidad. No hay recopilación de datos de uso o información personal, sin anuncios, sin spyware. Flua puede almacenar datos relacionados con tu salud menstrual",
+      "descriptionPrefix": "Bluma respeta y celebra tu privacidad. No hay recopilación de datos de uso o información personal, sin anuncios, sin spyware. Bluma puede almacenar datos relacionados con tu salud menstrual",
       "descriptionBold": "localmente en tu teléfono",
       "descriptionSuffix": ", y esto incluye:",
       "periodDates": "Fechas de inicio y fin del periodo",
@@ -133,7 +133,7 @@
     },
     "permissions": {
       "title": "2. Permisos",
-      "description": "Flua puede solicitar los siguientes permisos:",
+      "description": "Bluma puede solicitar los siguientes permisos:",
       "reminders": "",
       "remindersBold": "Recordatorios",
       "remindersSuffix": ": Para enviarte recordatorios de periodo y predicciones de ciclo.",
@@ -154,7 +154,7 @@
     },
     "footer": {
       "prefix": "Si tienes alguna pregunta sobre esta política de privacidad o cómo manejamos tus datos, por favor contáctanos en ",
-      "email": "flua.appmail@gmail.app",
+      "email": "bluma.appmail@gmail.app",
       "suffix": "."
     }
   }
