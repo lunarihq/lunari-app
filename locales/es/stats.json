@@ -2,7 +2,8 @@
   "title": "Estadísticas",
   "cycleStatistics": "Estadísticas del ciclo",
   "emptyState": {
-    "message": "Registra al menos 2 periodos para ver tus estadísticas personales del ciclo.",
+    "title": "Aún no hay datos del ciclo",
+    "subtitle": "Registra al menos 2 periodos para ver tus estadísticas personales del ciclo.",
     "logPeriodButton": "Registrar periodo"
   },
   "cycleHistory": {

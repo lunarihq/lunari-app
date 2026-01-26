@@ -37,6 +37,12 @@ export const createTypography = (colors: ColorScheme) =>
       fontWeight: '400',
       color: colors.textPrimary,
     },
+    bodyXl: {
+      fontSize: 20,
+      lineHeight: 24,
+      fontWeight: '400',
+      color: colors.textPrimary,
+    },
     caption: {
       fontSize: 14,
       lineHeight: 18,

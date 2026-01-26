@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, ScrollView, StyleSheet, Text } from 'react-native';
+import { View, ScrollView, StyleSheet, Text, Image } from 'react-native';
 import { Button } from '../../components/Button';
 import { useFocusEffect } from '@react-navigation/native';
 import { router } from 'expo-router';
@@ -176,21 +176,19 @@ export default function Stats() {
     loadUserSettings();
   }, []);
 
-  // Empty state component
   const renderEmptyState = () => (
-    <View
-      style={[commonStyles.sectionContainer, {padding: 32, marginTop: 24}]}
-    >
-      <Text
-        style={[
-          typography.headingMd,
-          {
-            textAlign: 'center',
-            marginBottom: 24,
-          },
-        ]}
-      >
-        {t('emptyState.message')}
+    <View style={styles.emptyStateContainer}>
+      <View style={styles.emptyStateIconContainer}>
+        <Image
+          source={require('../../assets/icons/stats-icon.png')}
+          style={styles.emptyStateIcon}
+        />
+      </View>
+      <Text style={[typography.headingLg, styles.emptyStateTitle]}>
+        {t('emptyState.title')}
+      </Text>
+      <Text style={[typography.bodyLg, styles.emptyStateSubtitle]}>
+        {t('emptyState.subtitle')}
       </Text>
       <Button
         title={t('emptyState.logPeriodButton')}
@@ -261,5 +259,28 @@ const styles = StyleSheet.create({
   },
   cardsContainer: {
     gap: 12,
+  },
+  emptyStateContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 24,
+    paddingTop: 120,
+  },
+  emptyStateIconContainer: {
+    marginBottom: 32,
+  },
+  emptyStateIcon: {
+    width: 130,
+    height: 130,
+  },
+  emptyStateTitle: {
+    textAlign: 'center',
+    marginBottom: 16,
+  },
+  emptyStateSubtitle: {
+    textAlign: 'center',
+    marginBottom: 32,
+    opacity: 0.7,
   },
 });

@@ -2,7 +2,8 @@
   "title": "Statistics",
   "cycleStatistics": "Cycle statistics",
   "emptyState": {
-    "message": "Log at least 2 periods to see your personal cycle statistics.",
+    "title": "No cycle data yet",
+    "subtitle": "Log at least 2 periods to see your personal cycle statistics.",
     "logPeriodButton": "Log period"
   },
   "cycleHistory": {
