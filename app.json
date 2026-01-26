@@ -14,7 +14,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#4B61C7"
+        "backgroundColor": "#FFFFFF"
       },
       "permissions": [
         "NOTIFICATIONS",
@@ -34,7 +34,7 @@
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#4B61C7"
+          "backgroundColor": "#FFFFFF"
         }
       ],
       [

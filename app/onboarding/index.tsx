@@ -46,7 +46,7 @@ export default function WelcomeScreen() {
         ]}
       >
         <Image
-          source={require('../../assets/icons/lunari-logo.png')}
+          source={require('../../assets/icons/bluma-logo-white-bg.png')}
           style={{ width: 120, height: 120, marginBottom: 32 }}
           resizeMode="contain"
         />
