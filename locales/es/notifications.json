@@ -1,15 +1,15 @@
 {
   "periodReminder": {
-    "title": "Recordatorio de Periodo",
+    "title": "Recordatorio de próximo periodo",
     "body": "Tu periodo debería comenzar en {{days}} días, el {{date}}"
   },
   "periodStarting": {
-    "title": "Periodo podría empezar hoy",
-    "body": "Tu periodo podría comenzar hoy según tu historial de ciclos"
+    "title": "Tu periodo podría empezar hoy",
+    "body": "Tu periodo podría comenzar hoy según tu historial de ciclos. Regístralo en la app!"
   },
   "periodLate": {
-    "title": "Periodo retrasado",
-    "body": "Tu periodo debería haber comenzado ayer. Has olvidado registrar tu periodo?"
+    "title": "Tu periodo está retrasado",
+    "body": "Tu periodo debería haber comenzado ayer. ¿Has olvidado registrar tu periodo?"
   }
 }
 
