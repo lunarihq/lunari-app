@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
   itemButton: {
     width: '23%',
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: 12,
   },
   itemIcon: {
     width: 60,
