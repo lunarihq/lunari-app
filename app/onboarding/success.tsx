@@ -50,7 +50,7 @@ export default function SuccessScreen() {
         <Animated.View
           style={[
             styles.checkmarkContainer,
-            { backgroundColor: colors.primary },
+            { backgroundColor: colors.accentPink },
             checkmarkStyle,
           ]}
         >
