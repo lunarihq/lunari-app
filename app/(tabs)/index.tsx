@@ -160,8 +160,8 @@ export default function Index() {
 
   return (
     <ScrollView
-      style={[commonStyles.scrollView]}
-      contentContainerStyle={commonStyles.scrollContentContainer}
+      style={[commonStyles.scrollView, { paddingTop: 0 }]}
+      contentContainerStyle={[commonStyles.scrollContentContainer, { paddingTop: 0 }]}
       showsVerticalScrollIndicator={false}
     >
       <CycleOverviewWidget
