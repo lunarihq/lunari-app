@@ -3,7 +3,7 @@
   "cycleStatistics": "Estadísticas del ciclo",
   "emptyState": {
     "title": "Aún no hay datos del ciclo",
-    "subtitle": "Registra al menos 2 periodos para ver tus estadísticas personales del ciclo.",
+    "subtitle": "Registra al menos 2 periodos para ver tus estadísticas personales del ciclo y su historial.",
     "logPeriodButton": "Registrar periodo"
   },
   "cycleHistory": {

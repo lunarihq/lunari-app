@@ -187,7 +187,7 @@ export default function Stats() {
       <Text style={[typography.headingLg, styles.emptyStateTitle]}>
         {t('emptyState.title')}
       </Text>
-      <Text style={[typography.bodyLg, styles.emptyStateSubtitle]}>
+      <Text style={[typography.bodyXl, styles.emptyStateSubtitle]}>
         {t('emptyState.subtitle')}
       </Text>
       <Button
@@ -271,8 +271,8 @@ const styles = StyleSheet.create({
     marginBottom: 32,
   },
   emptyStateIcon: {
-    width: 130,
-    height: 130,
+    width: 120,
+    height: 120,
   },
   emptyStateTitle: {
     textAlign: 'center',

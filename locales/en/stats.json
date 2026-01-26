@@ -3,7 +3,7 @@
   "cycleStatistics": "Cycle statistics",
   "emptyState": {
     "title": "No cycle data yet",
-    "subtitle": "Log at least 2 periods to see your personal cycle statistics.",
+    "subtitle": "Log at least 2 periods to see your personal cycle statistics and history.",
     "logPeriodButton": "Log period"
   },
   "cycleHistory": {

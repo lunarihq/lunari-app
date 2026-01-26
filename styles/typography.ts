@@ -38,7 +38,7 @@ export const createTypography = (colors: ColorScheme) =>
       color: colors.textPrimary,
     },
     bodyXl: {
-      fontSize: 20,
+      fontSize: 18,
       lineHeight: 24,
       fontWeight: '400',
       color: colors.textPrimary,
