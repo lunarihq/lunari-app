@@ -204,9 +204,9 @@ export function CycleOverviewWidget({
           )}
           <Button
             title={
-              Object.keys(selectedDates).length > 0
-                ? t('logOrEdit')
-                : t('logPeriod')
+              prediction?.days < 0 || !prediction
+                ? t('logPeriod')
+                : t('logOrEdit')
             }
             onPress={() => router.push('/edit-period')}
             style={{ marginVertical: 16 }}
