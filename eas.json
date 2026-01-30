@@ -7,13 +7,17 @@
       "developmentClient": true,
       "distribution": "internal",
       "android": {
-        "buildType": "apk"
+        "buildType": "apk",
+        "applicationId": "health.bluma.dev",
+        "appName": "Bluma Dev"
       }
     },
     "preview": {
       "distribution": "internal",
       "android": {
-        "buildType": "apk"
+        "buildType": "apk",
+        "applicationId": "health.bluma.preview",
+        "appName": "Bluma Preview"
       }
     },
     "production": {
