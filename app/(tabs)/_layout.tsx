@@ -48,6 +48,10 @@ export default function TabLayout() {
         tabBarItemStyle: {
           paddingTop: 6,
         },
+        tabBarLabelStyle: {
+          fontSize: 11.5,
+          letterSpacing: 0.2,
+        },
       }}
     >
       <Tabs.Screen

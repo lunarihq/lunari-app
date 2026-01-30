@@ -53,11 +53,11 @@ const createStyles = (colors: ColorScheme) =>
     container: {
       alignItems: 'center',
       marginBottom: 4,
+      gap: 4,
     },
     checkboxContainer: {
       flexDirection: 'row',
       alignItems: 'center',
-      marginBottom: 5,
     },
     checkbox: {
       width: 24,
