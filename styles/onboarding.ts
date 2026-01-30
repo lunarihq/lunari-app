@@ -36,7 +36,7 @@ export const createOnboardingStyles = (colors: ColorScheme) =>
     content: {
       flex: 1,
       paddingHorizontal: 20,
-      paddingTop: 8,
+      paddingTop: 6,
     },
     footer: {
       padding: 20,
