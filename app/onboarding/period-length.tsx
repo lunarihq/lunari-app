@@ -66,7 +66,7 @@ export default function PeriodLengthScreen() {
 
       <View style={onboardingStyles.content}>
         <Text
-          style={[typography.headingMd, { marginBottom: 20, textAlign: 'left' }]}
+          style={[typography.headingMd, { marginBottom: 24, textAlign: 'left' }]}
         >
           {t('periodLength.title')}
         </Text>

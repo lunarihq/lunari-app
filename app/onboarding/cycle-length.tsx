@@ -68,7 +68,7 @@ export default function CycleLengthScreen() {
 
       <View style={onboardingStyles.content}>
         <Text
-          style={[typography.headingMd, { marginBottom: 20, textAlign: 'left' }]}
+          style={[typography.headingMd, { marginBottom: 14, textAlign: 'left' }]}
         >
           {t('cycleLength.title')}
         </Text>
@@ -77,7 +77,7 @@ export default function CycleLengthScreen() {
             typography.body,
             {
               textAlign: 'left',
-              marginBottom: 40,
+              marginBottom: 32,
               color: colors.textSecondary,
             },
           ]}
