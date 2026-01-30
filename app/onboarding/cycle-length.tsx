@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../../components/Button';
 import { DayPicker } from '../../components/DayPicker';
@@ -66,7 +66,11 @@ export default function CycleLengthScreen() {
         <View style={onboardingStyles.headerSpacer} />
       </View>
 
-      <View style={onboardingStyles.content}>
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+      >
         <Text
           style={[typography.headingMd, { marginBottom: 14, textAlign: 'left' }]}
         >
@@ -99,7 +103,7 @@ export default function CycleLengthScreen() {
           text={t('cycleLength.checkboxText')}
           subText={t('cycleLength.checkboxSubtext')}
         />
-      </View>
+      </ScrollView>
 
       <View style={onboardingStyles.footer}>
         <Button title={t('continue')} onPress={handleGetStarted} fullWidth />
@@ -107,3 +111,14 @@ export default function CycleLengthScreen() {
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  scrollView: {
+    flex: 1,
+  },
+  scrollContent: {
+    paddingHorizontal: 20,
+    paddingTop: 6,
+    paddingBottom: 20,
+  },
+});

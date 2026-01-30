@@ -1,5 +1,5 @@
-import React, { useState, useMemo } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../../components/Button';
 import { Checkbox } from '../../components/Checkbox';
@@ -24,6 +24,15 @@ export default function LastPeriodDateScreen() {
   const styles = useMemo(() => getStyles(colors), [colors]);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [dontKnow, setDontKnow] = useState(false);
+  const scrollViewRef = useRef<ScrollView>(null);
+
+  useEffect(() => {
+    if (dontKnow) {
+      setTimeout(() => {
+        scrollViewRef.current?.scrollToEnd({ animated: true });
+      }, 100);
+    }
+  }, [dontKnow]);
 
   const handleNext = async () => {
     try {
@@ -101,7 +110,12 @@ export default function LastPeriodDateScreen() {
         <View style={onboardingStyles.headerSpacer} />
       </View>
 
-      <View style={onboardingStyles.content}>
+      <ScrollView
+        ref={scrollViewRef}
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+      >
         <Text
           style={[typography.headingMd, { marginBottom: 14, textAlign: 'left' }]}
         >
@@ -144,11 +158,11 @@ export default function LastPeriodDateScreen() {
           text={t('lastPeriod.checkboxText')}
         />
         {dontKnow && (
-          <Text style={[typography.caption, { textAlign: 'center' }]}>
+          <Text style={[typography.caption, { textAlign: 'center', marginTop: 12 }]}>
             {t('lastPeriod.checkboxSubtext')}
           </Text>
         )}
-      </View>
+      </ScrollView>
 
       <View style={onboardingStyles.footer}>
         <Button
@@ -164,6 +178,14 @@ export default function LastPeriodDateScreen() {
 
 const getStyles = (colors: ColorScheme) =>
   StyleSheet.create({
+    scrollView: {
+      flex: 1,
+    },
+    scrollContent: {
+      paddingHorizontal: 20,
+      paddingTop: 6,
+      paddingBottom: 20,
+    },
     calendarContainer: {
       marginBottom: 30,
       borderRadius: 12,

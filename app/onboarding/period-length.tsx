@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../../components/Button';
 import { DayPicker } from '../../components/DayPicker';
@@ -64,7 +64,11 @@ export default function PeriodLengthScreen() {
         <View style={onboardingStyles.headerSpacer} />
       </View>
 
-      <View style={onboardingStyles.content}>
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+      >
         <Text
           style={[typography.headingMd, { marginBottom: 24, textAlign: 'left' }]}
         >
@@ -85,7 +89,7 @@ export default function PeriodLengthScreen() {
           text={t('periodLength.checkboxText')}
           subText={t('periodLength.checkboxSubtext')}
         />
-      </View>
+      </ScrollView>
 
       <View style={onboardingStyles.footer}>
         <Button title={t('continue')} onPress={handleNext} fullWidth />
@@ -93,3 +97,14 @@ export default function PeriodLengthScreen() {
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  scrollView: {
+    flex: 1,
+  },
+  scrollContent: {
+    paddingHorizontal: 20,
+    paddingTop: 6,
+    paddingBottom: 20,
+  },
+});

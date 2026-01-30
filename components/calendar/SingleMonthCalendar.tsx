@@ -172,6 +172,7 @@ export function SingleMonthCalendar({
               disableFuture={disableFuture}
               showDayNames={false}
               showMonthHeader={false}
+              cellHeight={44}
             />
           </View>
         </View>
@@ -184,6 +185,7 @@ export function SingleMonthCalendar({
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'transparent',
+    paddingBottom: 20,
   },
   header: {
     flexDirection: 'row',

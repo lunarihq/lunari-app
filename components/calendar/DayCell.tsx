@@ -19,17 +19,18 @@ interface DayCellProps {
   };
   mode: 'view' | 'selection';
   disableFuture?: boolean;
+  cellHeight?: number;
 }
 
 export const DayCell = memo<DayCellProps>(
-  ({ day, marking, onPress, colors, mode, disableFuture }) => {
+  ({ day, marking, onPress, colors, mode, disableFuture, cellHeight = 64 }) => {
     const { dateString, day: dayNum, isCurrentMonth } = day;
     const typography = useTypography();
     const { t } = useTranslation('calendar');
 
     // Render empty cell for days not in current month to maintain grid layout
     if (!isCurrentMonth) {
-      return <View style={styles.dayContainer} />;
+      return <View style={[styles.dayContainer, { height: cellHeight }]} />;
     }
 
     const isFutureDate = new Date(dateString) > new Date();
@@ -64,7 +65,7 @@ export const DayCell = memo<DayCellProps>(
     ];
 
     return (
-      <View style={styles.dayContainer}>
+      <View style={[styles.dayContainer, { height: cellHeight }]}>
         <View style={styles.dayContent}>
           <TouchableOpacity
             style={containerStyle}
@@ -112,7 +113,8 @@ export const DayCell = memo<DayCellProps>(
     prev.marking === next.marking &&
     prev.colors === next.colors &&
     prev.mode === next.mode &&
-    prev.disableFuture === next.disableFuture
+    prev.disableFuture === next.disableFuture &&
+    prev.cellHeight === next.cellHeight
 );
 
 DayCell.displayName = 'DayCell';

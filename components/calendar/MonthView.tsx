@@ -18,6 +18,7 @@ interface MonthViewProps {
   showDayNames?: boolean;
   showMonthHeader?: boolean;
   renderDay?: (props: any) => React.ReactNode;
+  cellHeight?: number;
 }
 
 const DAY_NAMES = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
@@ -33,6 +34,7 @@ export const MonthView = memo<MonthViewProps>(
     showDayNames = false,
     showMonthHeader = true,
     renderDay,
+    cellHeight,
   }) => {
     const days = useMemo(
       () => generateDaysForMonth(monthData),
@@ -90,6 +92,7 @@ export const MonthView = memo<MonthViewProps>(
                 colors={colors}
                 mode={mode}
                 disableFuture={disableFuture}
+                cellHeight={cellHeight}
               />
             )
           )}
@@ -104,6 +107,7 @@ export const MonthView = memo<MonthViewProps>(
     if (prev.disableFuture !== next.disableFuture) return false;
     if (prev.showMonthHeader !== next.showMonthHeader) return false;
     if (prev.renderDay !== next.renderDay) return false;
+    if (prev.cellHeight !== next.cellHeight) return false;
     
     // Only check markedDates for dates in this month
     const days = generateDaysForMonth(prev.monthData);
