@@ -23,24 +23,28 @@ export const createTypography = (colors: ColorScheme) =>
       fontSize: 16,
       lineHeight: 22,
       fontWeight: '400',
+      letterSpacing: 0.25,
       color: colors.textPrimary,
     },
     bodyBold: {
       fontSize: 16,
       lineHeight: 22,
       fontWeight: '600',
+      letterSpacing: 0.25,
       color: colors.textPrimary,
     },
     bodyLg: {
       fontSize: 17,
       lineHeight: 23,
       fontWeight: '400',
+      letterSpacing: 0.3,
       color: colors.textPrimary,
     },
     bodyXl: {
       fontSize: 18,
       lineHeight: 24,
       fontWeight: '400',
+      letterSpacing: 0.35,
       color: colors.textPrimary,
     },
     caption: {
