@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../styles/theme';
@@ -28,6 +28,30 @@ export const HealthItemGrid = memo<HealthItemGridProps>(function HealthItemGrid(
   const { typography } = useAppStyles();
   const { t } = useTranslation();
 
+  const selectedItemStyle = useMemo(
+    () => ({
+      ...styles.selectedItemIcon,
+      borderColor: selectionColor,
+    }),
+    [selectionColor]
+  );
+
+  const checkmarkContainerStyle = useMemo(
+    () => [
+      styles.checkmarkContainer,
+      {
+        borderColor: colors.surface,
+        backgroundColor: selectionColor,
+      },
+    ],
+    [colors.surface, selectionColor]
+  );
+
+  const labelStyle = useMemo(
+    () => [typography.caption, { fontSize: 12, textAlign: 'center' as const, lineHeight: 16 }],
+    [typography.caption]
+  );
+
   return (
     <View style={styles.itemsGrid}>
       {items.map(item => {
@@ -42,28 +66,17 @@ export const HealthItemGrid = memo<HealthItemGridProps>(function HealthItemGrid(
             <View
               style={[
                 styles.itemIcon,
-                isSelected && {
-                  ...styles.selectedItemIcon,
-                  borderColor: selectionColor,
-                },
+                isSelected && selectedItemStyle,
               ]}
             >
               <CustomIcon name={item.icon as any} size={iconSize} />
               {isSelected && (
-                <View
-                  style={[
-                    styles.checkmarkContainer,
-                    {
-                      borderColor: colors.surface,
-                      backgroundColor: selectionColor,
-                    },
-                  ]}
-                >
+                <View style={checkmarkContainerStyle}>
                   <Ionicons name="checkmark" size={16} color={colors.white} />
                 </View>
               )}
             </View>
-            <Text style={[typography.caption, { fontSize: 12, textAlign: 'center', lineHeight: 16 }]}>
+            <Text style={labelStyle}>
               {t(`${translationKey}.${item.id}`)}
             </Text>
           </TouchableOpacity>

@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { DayData } from '../../utils/customCalendarHelpers';
@@ -28,9 +28,24 @@ export const DayCell = memo<DayCellProps>(
     const typography = useTypography();
     const { t } = useTranslation('calendar');
 
+    const dayContainerStyle = useMemo(
+      () => [styles.dayContainer, { height: cellHeight }],
+      [cellHeight]
+    );
+
+    const selectionIndicatorStyle = useMemo(
+      () => [styles.selectionIndicator, { borderColor: colors.primary }],
+      [colors.primary]
+    );
+
+    const healthLogDotStyle = useMemo(
+      () => [styles.healthLogDot, { backgroundColor: colors.primary }],
+      [colors.primary]
+    );
+
     // Render empty cell for days not in current month to maintain grid layout
     if (!isCurrentMonth) {
-      return <View style={[styles.dayContainer, { height: cellHeight }]} />;
+      return <View style={dayContainerStyle} />;
     }
 
     const isFutureDate = new Date(dateString) > new Date();
@@ -65,7 +80,7 @@ export const DayCell = memo<DayCellProps>(
     ];
 
     return (
-      <View style={[styles.dayContainer, { height: cellHeight }]}>
+      <View style={dayContainerStyle}>
         <View style={styles.dayContent}>
           <TouchableOpacity
             style={containerStyle}
@@ -84,9 +99,7 @@ export const DayCell = memo<DayCellProps>(
           </TouchableOpacity>
 
           {isSelected && mode === 'view' && (
-            <View
-              style={[styles.selectionIndicator, { borderColor: colors.primary }]}
-            />
+            <View style={selectionIndicatorStyle} />
           )}
         </View>
 
@@ -97,12 +110,7 @@ export const DayCell = memo<DayCellProps>(
         )}
 
         {hasHealthLogs && (
-          <View
-            style={[
-              styles.healthLogDot,
-              { backgroundColor: colors.primary },
-            ]}
-          />
+          <View style={healthLogDotStyle} />
         )}
       </View>
     );

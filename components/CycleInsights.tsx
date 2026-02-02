@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Text, View, StyleSheet, Pressable } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
@@ -23,15 +23,36 @@ export function CycleInsights({
   const { typography, commonStyles } = useAppStyles();
   const { t } = useTranslation('home');
 
-  const iconContainerStyle = {
-    ...styles.insightIconContainer,
-    backgroundColor: colors.surfaceVariant2,
-  };
+  const iconContainerStyle = useMemo(
+    () => ({
+      ...styles.insightIconContainer,
+      backgroundColor: colors.surfaceVariant2,
+    }),
+    [colors.surfaceVariant2]
+  );
 
-  const cardBorderStyle = {
-    borderColor: colors.insightCardBorder,
-    backgroundColor: colors.insightCardBackground,
-  };
+  const cardBorderStyle = useMemo(
+    () => ({
+      borderColor: colors.insightCardBorder,
+      backgroundColor: colors.insightCardBackground,
+    }),
+    [colors.insightCardBorder, colors.insightCardBackground]
+  );
+
+  const insightValueStyle = useMemo(
+    () => [styles.insightValueContainer, { backgroundColor: colors.surfaceVariant2 }],
+    [colors.surfaceVariant2]
+  );
+
+  const insightLabelStyle = useMemo(
+    () => [styles.insightLabel, { color: colors.textPrimary }],
+    [colors.textPrimary]
+  );
+
+  const insightTextStyle = useMemo(
+    () => [styles.insightValue, { color: colors.textPrimary }],
+    [colors.textPrimary]
+  );
 
   return (
     <View style={[commonStyles.sectionContainer]}>
@@ -74,21 +95,12 @@ export function CycleInsights({
               <View style={iconContainerStyle}>
                 <CalendarIcon size={28}/>
               </View>
-              <Text
-                style={[styles.insightLabel, { color: colors.textPrimary }]}
-              >
+              <Text style={insightLabelStyle}>
                 {t('cycleInsights.cycleDay')}
               </Text>
             </View>
-            <View
-              style={[
-                styles.insightValueContainer,
-                { backgroundColor: colors.surfaceVariant2 },
-              ]}
-            >
-              <Text
-                style={[styles.insightValue, { color: colors.textPrimary }]}
-              >
+            <View style={insightValueStyle}>
+              <Text style={insightTextStyle}>
                 {currentCycleDay || '-'}
               </Text>
             </View>
@@ -107,21 +119,12 @@ export function CycleInsights({
               <View style={iconContainerStyle}>
                 <CycleIcon size={28} />
               </View>
-              <Text
-                style={[styles.insightLabel, { color: colors.textPrimary }]}
-              >
+              <Text style={insightLabelStyle}>
                 {t('cycleInsights.cyclePhase')}
               </Text>
             </View>
-            <View
-              style={[
-                styles.insightValueContainer,
-                { backgroundColor: colors.surfaceVariant2 },
-              ]}
-            >
-              <Text
-                style={[styles.insightValue, { color: colors.textPrimary }]}
-              >
+            <View style={insightValueStyle}>
+              <Text style={insightTextStyle}>
                 {currentCycleDay
                   ? t(`cycleInsights.${PeriodPredictionService.getCyclePhase(
                       currentCycleDay,
@@ -145,21 +148,12 @@ export function CycleInsights({
               <View style={iconContainerStyle}>
                 <LeafIcon size={28} />
               </View>
-              <Text
-                style={[styles.insightLabel, { color: colors.textPrimary }]}
-              >
+              <Text style={insightLabelStyle}>
                 {t('cycleInsights.chanceToConceive')}
               </Text>
             </View>
-            <View
-              style={[
-                styles.insightValueContainer,
-                { backgroundColor: colors.surfaceVariant2 },
-              ]}
-            >
-              <Text
-                style={[styles.insightValue, { color: colors.textPrimary }]}
-              >
+            <View style={insightValueStyle}>
+              <Text style={insightTextStyle}>
                 {currentCycleDay
                   ? t(`cycleInsights.${PeriodPredictionService.getPregnancyChance(
                       currentCycleDay,
@@ -171,7 +165,7 @@ export function CycleInsights({
           </Pressable>
         </View>
       ) : (
-        <Text style={[styles.insightsText, { color: colors.textPrimary }]}>
+        <Text style={insightTextStyle}>
           {t('cycleInsights.emptyState')}
         </Text>
       )}

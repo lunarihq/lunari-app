@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Text, Pressable, StyleSheet } from 'react-native';
 import { useTheme } from '../styles/theme';
 import { useAppStyles } from '../hooks/useStyles';
@@ -25,7 +25,7 @@ export function Button({
   const { colors } = useTheme();
   const { typography } = useAppStyles();
 
-  const getButtonStyle = () => {
+  const buttonStyle = useMemo(() => {
     switch (variant) {
       case 'text':
         return { backgroundColor: 'transparent' };
@@ -39,9 +39,9 @@ export function Button({
       default:
         return { backgroundColor: colors.primary };
     }
-  };
+  }, [variant, colors.primary]);
 
-  const getTextColor = () => {
+  const textColor = useMemo(() => {
     switch (variant) {
       case 'text':
       case 'outlined':
@@ -50,7 +50,12 @@ export function Button({
       default:
         return colors.white;
     }
-  };
+  }, [variant, colors.primary, colors.white]);
+
+  const textStyle = useMemo(
+    () => [typography.body, { fontWeight: '500', color: textColor }],
+    [typography.body, textColor]
+  );
 
   return (
     <Pressable
@@ -58,16 +63,14 @@ export function Button({
       disabled={disabled}
       style={({ pressed }) => [
         styles.button,
-        getButtonStyle(),
+        buttonStyle,
         fullWidth && styles.fullWidth,
         disabled && styles.disabled,
         pressed && styles.pressed,
         style,
       ]}
     >
-      <Text
-        style={[typography.body, { fontWeight: '500', color: getTextColor() }]}
-      >
+      <Text style={textStyle}>
         {title}
       </Text>
     </Pressable>
