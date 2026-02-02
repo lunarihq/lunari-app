@@ -1,4 +1,4 @@
-import React, { useRef, useState, useCallback } from 'react';
+import React, { useRef, useCallback } from 'react';
 import { StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
@@ -12,6 +12,8 @@ import Animated, {
   useSharedValue,
   Extrapolation,
 } from 'react-native-reanimated';
+
+const DEFAULT_CONTENT_HEIGHT = 320;
 
 interface CalendarBottomSheetProps {
   selectedDate: string;
@@ -31,19 +33,8 @@ export function CalendarBottomSheet({
   const { colors } = useTheme();
   const { t } = useTranslation('calendar');
   const bottomSheetRef = useRef<any>(null);
-  const animatedIndex = useSharedValue(0);
-  const contentHeightSv = useSharedValue(0);
-  const [snapPoints, setSnapPoints] = useState<number[]>([1]);
-
-  const onSheetContentLayout = useCallback(
-    (e: any) => {
-      const height = e?.nativeEvent?.layout?.height ?? 0;
-      contentHeightSv.value = height;
-      const computed = Math.max(1, Math.ceil(height));
-      setSnapPoints([computed]);
-    },
-    [contentHeightSv]
-  );
+  const animatedIndex = useSharedValue(-1);
+  const contentHeightSv = useSharedValue(DEFAULT_CONTENT_HEIGHT);
 
   const closeDrawer = useCallback(() => {
     bottomSheetRef.current?.close?.();
@@ -66,7 +57,6 @@ export function CalendarBottomSheet({
 
   return (
     <>
-      {/* Floating Action Button */}
       <Animated.View
         style={[styles.floatingButton, fabAnimatedStyle]}
         pointerEvents="box-none"
@@ -80,8 +70,9 @@ export function CalendarBottomSheet({
       <BottomSheet
         ref={bottomSheetRef}
         index={isOpen ? 0 : -1}
-        snapPoints={snapPoints}
         animatedIndex={animatedIndex}
+        enableDynamicSizing
+        maxDynamicContentSize={500}
         enablePanDownToClose
         enableOverDrag={false}
         onChange={(i: number) => onOpenChange(i >= 0)}
@@ -98,7 +89,10 @@ export function CalendarBottomSheet({
         handleComponent={() => null}
       >
         <BottomSheetView
-          onLayout={onSheetContentLayout}
+          onLayout={(e: any) => {
+            const h = e?.nativeEvent?.layout?.height ?? 0;
+            if (h > 0) contentHeightSv.value = h;
+          }}
           style={styles.sheetContent}
         >
           <CycleDetails
