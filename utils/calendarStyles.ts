@@ -133,7 +133,6 @@ export function getEditDayCellStyles(colors: CalendarColors) {
   return {
     dayContainer: {
       alignItems: 'center' as const,
-      justifyContent: 'flex-start' as const,
       width: '14.28%' as const,
       height: 64,
     },
@@ -156,10 +155,7 @@ export function getEditDayCellStyles(colors: CalendarColors) {
       marginTop: 0,
     },
     todayLabel: {
-      position: 'absolute' as const,
-      bottom: 3,
-      alignSelf: 'center' as const,
-      textAlign: 'center' as const,
+      marginTop: 2,
     },
     selectedDayIndicator: {
       backgroundColor: colors.accentPink,

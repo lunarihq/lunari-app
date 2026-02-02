@@ -157,22 +157,30 @@ export default function CalendarView() {
           style={{
             width: 32,
             height: 32,
-            borderRadius: 32,
             alignItems: 'center',
             justifyContent: 'center',
           }}
         >
-          <Text style={[typography.body, { color: colors.textPrimary }]}>
-            1
-          </Text>
           <View
             style={{
-              position: 'absolute',
-              bottom: -4,
+              width: 32,
+              height: 32,
+              borderRadius: 32,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Text style={[typography.body, { color: colors.textPrimary }]}>
+              1
+            </Text>
+          </View>
+          <View
+            style={{
               width: 7,
               height: 7,
               borderRadius: 8,
               backgroundColor: colors.primary,
+              marginTop: 1,
             }}
           />
         </View>
