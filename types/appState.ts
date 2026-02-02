@@ -3,7 +3,7 @@ export type AppState =
   | { status: 'locked'; reason: 'auth_cancelled' | 'background_return' }
   | { status: 'db_error'; error: string }
   | { status: 'checking_onboarding' }
-  | { status: 'ready'; onboardingComplete: boolean };
+  | { status: 'ready'; onboardingComplete: boolean; isInitialRender: boolean };
 
 export const createInitialState = (): AppState => ({ status: 'initializing' });
 
@@ -20,8 +20,9 @@ export const createCheckingOnboardingState = (): AppState => ({
   status: 'checking_onboarding',
 });
 
-export const createReadyState = (onboardingComplete: boolean): AppState => ({
+export const createReadyState = (onboardingComplete: boolean, isInitialRender = true): AppState => ({
   status: 'ready',
   onboardingComplete,
+  isInitialRender,
 });
 

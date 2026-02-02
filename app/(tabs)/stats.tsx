@@ -33,6 +33,7 @@ export default function Stats() {
   const [cycleHistory, setCycleHistory] = useState<CycleData[]>([]);
   const [userCycleLength, setUserCycleLength] = useState<number>(28);
   const [hasNoPeriodData, setHasNoPeriodData] = useState<boolean>(false);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   const loadStatistics = useCallback(async () => {
     try {
@@ -156,7 +157,11 @@ export default function Stats() {
 
   useFocusEffect(
     useCallback(() => {
-      loadStatistics();
+      const load = async () => {
+        await loadStatistics();
+        setIsInitialLoad(false);
+      };
+      load();
       return () => {};
     }, [loadStatistics])
   );
@@ -196,6 +201,12 @@ export default function Stats() {
       />
     </View>
   );
+
+  if (isInitialLoad) {
+    return (
+      <View style={[commonStyles.container, { backgroundColor: colors.background }]} />
+    );
+  }
 
   // Show empty state if no period data
   if (hasNoPeriodData) {

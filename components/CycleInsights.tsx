@@ -56,7 +56,7 @@ export function CycleInsights({
 
   return (
     <View style={[commonStyles.sectionContainer]}>
-      <View style={[commonStyles.sectionTitleContainer]}>
+      <View style={[commonStyles.sectionTitleContainer, !currentCycleDay && { marginBottom: 10 }]}>
         <Text style={[typography.headingMd, {flex: 1}]}>
           {t('cycleInsights.todaysInsights')}
         </Text>
@@ -165,7 +165,7 @@ export function CycleInsights({
           </Pressable>
         </View>
       ) : (
-        <Text style={insightTextStyle}>
+        <Text style={[typography.body, { color: colors.textPrimary }]}>
           {t('cycleInsights.emptyState')}
         </Text>
       )}

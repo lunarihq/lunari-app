@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Stack, useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import { Platform } from 'react-native';
 import * as Notifications from 'expo-notifications';
 import { AuthProvider } from '../contexts/AuthContext';
 import { NotesProvider } from '../contexts/NotesContext';
@@ -76,14 +77,30 @@ function AppContent() {
     return <LoadingScreen />;
   }
 
+  if (appState.status === 'ready' && appState.isInitialRender) {
+    return <LoadingScreen />;
+  }
+
   const showLockOverlay = appState.status === 'locked' && appState.reason === 'background_return';
 
   return (
     <>
-      <Stack>
+      <Stack
+        screenOptions={{
+          animation: Platform.OS === 'ios' ? 'default' : 'slide_from_right',
+          animationDuration: 250,
+        }}
+      >
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="onboarding" options={{ headerShown: false }} />
-        <Stack.Screen name="edit-period" options={{ headerShown: false }} />
+        <Stack.Screen 
+          name="edit-period" 
+          options={{ 
+            headerShown: false,
+            presentation: 'modal',
+            animation: Platform.OS === 'ios' ? 'default' : 'slide_from_bottom',
+          }} 
+        />
         {dynamicScreens.map(screen => (
           <Stack.Screen
             key={screen.name}

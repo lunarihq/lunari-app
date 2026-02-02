@@ -115,7 +115,7 @@ export function useAppInitialization() {
       endAuthentication();
       authenticationStarted = false;
       previousReadyState.current = null;
-      setAppState(savedState);
+      setAppState({ ...savedState, isInitialRender: false });
     } catch (error) {
       if (authenticationStarted) {
         endAuthentication();
@@ -260,13 +260,17 @@ export function useAppInitialization() {
     if (appState.status !== 'ready') return;
 
     if (initialRender) {
-      setInitialRender(false);
-
       const inOnboardingPath = pathname.startsWith('/onboarding');
 
       if (!appState.onboardingComplete && !inOnboardingPath) {
         router.replace('/onboarding');
       }
+      
+      setTimeout(() => {
+        setAppState(prev => prev.status === 'ready' ? { ...prev, isInitialRender: false } : prev);
+      }, 50);
+      
+      setInitialRender(false);
     }
   }, [appState, pathname, router, initialRender]);
 
