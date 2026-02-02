@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { ColorScheme, Colors } from './colors';
+import { ColorScheme } from './colors';
 
 export const createCommonStyles = (colors: ColorScheme) => StyleSheet.create({
   // For non-scrollable screens or wrapper Views
@@ -50,8 +50,3 @@ export const createCommonStyles = (colors: ColorScheme) => StyleSheet.create({
     marginBottom: 8,
   },
 });
-
-// Legacy export for backward compatibility
-const commonStyles = createCommonStyles(Colors);
-export { commonStyles };
-export default commonStyles;

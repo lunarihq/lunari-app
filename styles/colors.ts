@@ -18,7 +18,7 @@ export interface ColorScheme {
   //UI components
   predictionCircleBackground: string;
   predictionCirclePeriodBackground: string;
-  predicitionCircleOuter: string;
+  predictionCircleOuter: string;
   predictionCirclePeriodOuter: string;
   insightCardBorder: string; // card borders
   insightCardBackground: string; // card borders
@@ -74,7 +74,7 @@ export const lightColors: ColorScheme = {
   predictionCircleBackground: '#FFFFFF',
   predictionCirclePeriodBackground: '#FFE4F2',
   predictionCirclePeriodOuter: '#FE6E97',
-  predicitionCircleOuter: '#CDCFEA',
+  predictionCircleOuter: '#CDCFEA',
   insightCardBorder: '#475FC3', // card borders
   insightCardBackground: '#DEE4FC', // card borders
 
@@ -129,7 +129,7 @@ export const darkColors: ColorScheme = {
   predictionCircleBackground: '#1C1B33',
   predictionCirclePeriodBackground: '#FFC3E0',
   predictionCirclePeriodOuter: '#FF9BC8',
-  predicitionCircleOuter: '#26253E',
+  predictionCircleOuter: '#26253E',
   insightCardBorder: '#47465F', // dark card borders
   insightCardBackground: '#26253E', // dark insight card borders
 
