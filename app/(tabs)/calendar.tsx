@@ -188,6 +188,17 @@ export default function CalendarScreen() {
     [calculateCycleDay, getMarkedDatesWithSelection, openDrawer, setCycleDay]
   );
 
+  const handleBottomSheetChange = useCallback(
+    (isOpen: boolean) => {
+      setIsDrawerOpen(isOpen);
+      if (!isOpen) {
+        setSelectedDate('');
+        setMarkedDates(getSelectionMarkedDates(''));
+      }
+    },
+    [getSelectionMarkedDates]
+  );
+
   const handleTodayPress = useCallback(() => {
     calendarRef.current?.scrollToToday();
   }, []);
@@ -239,7 +250,7 @@ export default function CalendarScreen() {
           cycleDay={cycleDay}
           averageCycleLength={averageCycleLength}
           isOpen={isDrawerOpen}
-          onOpenChange={setIsDrawerOpen}
+          onOpenChange={handleBottomSheetChange}
         />
       )}
     </View>
