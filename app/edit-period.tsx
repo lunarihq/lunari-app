@@ -6,6 +6,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { router } from 'expo-router';
 import Toast from 'react-native-toast-message';
 import { useTranslation } from 'react-i18next';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { CustomCalendar, CustomCalendarRef } from '../components/calendar/CustomCalendar';
 import { EditDayCell } from '../components/calendar/EditDayCell';
 import {
@@ -21,6 +22,7 @@ export default function PeriodCalendarScreen() {
   const { colors } = useTheme();
   const { typography } = useAppStyles();
   const { t } = useTranslation(['common', 'calendar']);
+  const insets = useSafeAreaInsets();
   const [tempDates, setTempDates] = useState<MarkedDates>({});
   const [userPeriodLength, setUserPeriodLength] = useState<number>(5);
   const [showTodayButton, setShowTodayButton] = useState(false);
@@ -199,7 +201,11 @@ export default function PeriodCalendarScreen() {
       <View
         style={[
           styles.footer,
-          { backgroundColor: colors.surface, borderTopColor: colors.border },
+          {
+            backgroundColor: colors.surface,
+            borderTopColor: colors.border,
+            paddingBottom: Math.max(insets.bottom, 16),
+          },
         ]}
       >
         <Button
@@ -240,7 +246,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingTop: 16,
-    paddingBottom: 20,
     paddingHorizontal: 16,
     borderTopWidth: 1,
   },

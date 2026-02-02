@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { Button } from '../components/Button';
 import { router, useLocalSearchParams } from 'expo-router';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../styles/theme';
 import { useAppStyles } from '../hooks/useStyles';
 import { useNotes } from '../contexts/NotesContext';
@@ -18,6 +19,7 @@ export default function NotesEditor() {
   const { colors } = useTheme();
   const { typography } = useAppStyles();
   const { t } = useTranslation(['common', 'health']);
+  const insets = useSafeAreaInsets();
   const params = useLocalSearchParams();
   const { notes, setNotes } = useNotes();
   const [localNotes, setLocalNotes] = useState<string>('');
@@ -100,7 +102,9 @@ export default function NotesEditor() {
           style={[
             isKeyboardVisible ? styles.keyboardToolbar : styles.bottomToolbar,
             { backgroundColor: colors.panel },
-            isKeyboardVisible ? { bottom: keyboardHeight } : {},
+            isKeyboardVisible
+              ? { bottom: keyboardHeight, paddingBottom: 40 }
+              : { paddingBottom: Math.max(insets.bottom + 20, 40) },
           ]}
         >
           <Button title={t('buttons.done')} onPress={handleSave} fullWidth />
@@ -131,7 +135,6 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     paddingHorizontal: 20,
-    paddingBottom: 40,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -142,7 +145,6 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     paddingHorizontal: 20,
-    paddingBottom: 40,
     paddingTop: 20,
     flexDirection: 'row',
     justifyContent: 'center',
