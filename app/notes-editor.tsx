@@ -5,7 +5,6 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Platform,
-  Keyboard,
 } from 'react-native';
 import { Button } from '../components/Button';
 import { router, useLocalSearchParams } from 'expo-router';
@@ -23,12 +22,8 @@ export default function NotesEditor() {
   const params = useLocalSearchParams();
   const { notes, setNotes } = useNotes();
   const [localNotes, setLocalNotes] = useState<string>('');
-
-  const [keyboardHeight, setKeyboardHeight] = useState<number>(0);
-  const [isKeyboardVisible, setIsKeyboardVisible] = useState<boolean>(false);
   const hasInitialized = useRef(false);
 
-  // Initialize notes from params or context, but only once
   useEffect(() => {
     if (!hasInitialized.current) {
       const initialNotes =
@@ -38,48 +33,18 @@ export default function NotesEditor() {
     }
   }, [params.notes, notes]);
 
-  // Keyboard event listeners
-  useEffect(() => {
-    const keyboardWillShowListener = Keyboard.addListener(
-      Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow',
-      event => {
-        setKeyboardHeight(event.endCoordinates.height);
-        setIsKeyboardVisible(true);
-      }
-    );
-
-    const keyboardWillHideListener = Keyboard.addListener(
-      Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide',
-      () => {
-        setKeyboardHeight(0);
-        setIsKeyboardVisible(false);
-      }
-    );
-
-    return () => {
-      keyboardWillShowListener.remove();
-      keyboardWillHideListener.remove();
-    };
-  }, []);
-
-  // Handle save
   const handleSave = () => {
     setNotes(localNotes);
     router.back();
   };
 
-  // Optional: confirm unsaved changes instead of auto-saving on unmount
-  // (Keeping UX simple here; remove if you want auto-save-on-unmount back.)
-
   return (
     <View style={[styles.container, { backgroundColor: colors.panel }]}>
-      {/* Main Content with KeyboardAvoidingView */}
       <KeyboardAvoidingView
         style={styles.keyboardAvoidingView}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 0}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
       >
-        {/* Notes Input */}
         <View style={styles.content}>
           <TextInput
             style={[typography.body, styles.notesInput]}
@@ -94,22 +59,21 @@ export default function NotesEditor() {
             blurOnSubmit={false}
           />
         </View>
-      </KeyboardAvoidingView>
 
-      {/* Done Button - positioned above keyboard or at bottom */}
-      {localNotes.trim() && (
-        <View
-          style={[
-            isKeyboardVisible ? styles.keyboardToolbar : styles.bottomToolbar,
-            { backgroundColor: colors.panel },
-            isKeyboardVisible
-              ? { bottom: keyboardHeight, paddingBottom: 40 }
-              : { paddingBottom: Math.max(insets.bottom + 20, 40) },
-          ]}
-        >
-          <Button title={t('buttons.done')} onPress={handleSave} fullWidth />
-        </View>
-      )}
+        {localNotes.trim() && (
+          <View
+            style={[
+              styles.buttonContainer,
+              {
+                backgroundColor: colors.panel,
+                paddingBottom: Math.max(insets.bottom, 120),
+              },
+            ]}
+          >
+            <Button title={t('buttons.done')} onPress={handleSave} fullWidth />
+          </View>
+        )}
+      </KeyboardAvoidingView>
     </View>
   );
 }
@@ -126,28 +90,12 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   notesInput: {
-    maxHeight: 300,
+    flex: 1,
     textAlignVertical: 'top',
     padding: 0,
   },
-  keyboardToolbar: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
+  buttonContainer: {
     paddingHorizontal: 20,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  bottomToolbar: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0,
-    paddingHorizontal: 20,
-    paddingTop: 20,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    paddingTop: 16,
   },
 });
