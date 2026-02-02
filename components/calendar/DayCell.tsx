@@ -82,28 +82,27 @@ export const DayCell = memo<DayCellProps>(
           >
             <Text style={textStyle}>{dayNum}</Text>
           </TouchableOpacity>
-          
-          {hasHealthLogs && (
+
+          {isSelected && mode === 'view' && (
             <View
-              style={[
-                styles.healthLogDot,
-                { backgroundColor: colors.primary },
-                isToday && { bottom: -23 },
-              ]}
+              style={[styles.selectionIndicator, { borderColor: colors.primary }]}
             />
           )}
         </View>
-
-        {isSelected && mode === 'view' && (
-          <View
-            style={[styles.selectionIndicator, { borderColor: colors.primary }]}
-          />
-        )}
 
         {isToday && (
           <Text style={[typography.labelXs, styles.todayLabel]}>
             {t('today')}
           </Text>
+        )}
+
+        {hasHealthLogs && (
+          <View
+            style={[
+              styles.healthLogDot,
+              { backgroundColor: colors.primary },
+            ]}
+          />
         )}
       </View>
     );
@@ -145,8 +144,7 @@ const styles = StyleSheet.create({
   },
   selectionIndicator: {
     position: 'absolute',
-    top: -3,
-    left: 7,
+    alignSelf: 'center',
     width: 40,
     height: 40,
     borderRadius: 40,
@@ -154,16 +152,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   healthLogDot: {
-    position: 'absolute',
-    bottom: -10,
     alignSelf: 'center',
     width: 7,
-    height:7,
+    height: 7,
     borderRadius: 8,
+    marginTop: 2,
   },
   todayLabel: {
-    position: 'absolute',
-    top: 36,
+    marginTop: 2,
   },
 });
 
