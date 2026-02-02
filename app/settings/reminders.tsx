@@ -22,7 +22,7 @@ import { useAuth } from '../../contexts/AuthContext';
 
 export default function Reminders() {
   const { colors } = useTheme();
-  const { typography, commonStyles } = useAppStyles();
+  const { typography, commonStyles, scrollContentContainerWithSafeArea } = useAppStyles();
   const { t } = useTranslation('settings');
   const { startPermissionRequest, endPermissionRequest } = useAuth();
   const [beforePeriodEnabled, setBeforePeriodEnabled] = useState(false);
@@ -293,7 +293,7 @@ export default function Reminders() {
   return (
     <ScrollView
     style={[commonStyles.scrollView]}
-    contentContainerStyle={[commonStyles.scrollContentContainer, { paddingTop: 8 }]}
+    contentContainerStyle={[scrollContentContainerWithSafeArea, { paddingTop: 8 }]}
     showsVerticalScrollIndicator={false}
   >
       {statusMessage && (

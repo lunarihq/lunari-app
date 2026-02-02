@@ -7,7 +7,7 @@ import * as Localization from 'expo-localization';
 
 export default function PrivacyPolicy() {
   const { colors } = useTheme();
-  const { typography, commonStyles } = useAppStyles();
+  const { typography, commonStyles, scrollContentContainerWithSafeArea } = useAppStyles();
   const { t } = useTranslation('settings');
 
   return (
@@ -16,7 +16,7 @@ export default function PrivacyPolicy() {
         commonStyles.scrollView,
         { backgroundColor: colors.surface },
       ]}
-      contentContainerStyle={[commonStyles.scrollContentContainer, { paddingTop: 16 }]}
+      contentContainerStyle={[scrollContentContainerWithSafeArea, { paddingTop: 16 }]}
       showsVerticalScrollIndicator={false}
     >
       <View style={[styles.contentSection]}>

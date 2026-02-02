@@ -6,13 +6,13 @@ import { useAppStyles } from '../../hooks/useStyles';
 
 export default function StatusInfo() {
   const { colors } = useTheme();
-  const { typography, commonStyles } = useAppStyles();
+  const { typography, commonStyles, scrollContentContainerWithSafeArea } = useAppStyles();
   const { t } = useTranslation('info');
 
   return (
     <ScrollView
       style={[commonStyles.scrollView, { backgroundColor: colors.panel }]}
-      contentContainerStyle={commonStyles.scrollContentContainer}
+      contentContainerStyle={scrollContentContainerWithSafeArea}
       showsVerticalScrollIndicator={false}
     >
       <Image

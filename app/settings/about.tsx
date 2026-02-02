@@ -14,7 +14,7 @@ function SectionIcon({ name, ...props }: { name: keyof typeof Ionicons.glyphMap 
 
 export default function About() {
   const { colors } = useTheme();
-  const { typography, commonStyles } = useAppStyles();
+  const { typography, commonStyles, scrollContentContainerWithSafeArea } = useAppStyles();
   const { t } = useTranslation('settings');
   const GITHUB_URL = 'https://github.com/bluma-app/bluma';
   const GPL_URL = 'https://www.gnu.org/licenses/gpl-3.0.en.html';
@@ -25,10 +25,7 @@ export default function About() {
         commonStyles.scrollView,
         { backgroundColor: colors.surface },
       ]}
-      contentContainerStyle={[
-        commonStyles.scrollContentContainer, 
-        { paddingTop: 16 },
-      ]}
+      contentContainerStyle={[scrollContentContainerWithSafeArea, { paddingTop: 16 }]}
       showsVerticalScrollIndicator={false}
     >
       <View style={[styles.contentSection]}>

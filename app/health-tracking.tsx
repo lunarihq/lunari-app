@@ -40,9 +40,8 @@ dayjs.extend(isoWeek);
 
 export default function HealthTracking() {
   const { colors } = useTheme();
-  const { typography, commonStyles } = useAppStyles();
+  const { typography, commonStyles, scrollContentContainerWithSafeArea, insets } = useAppStyles();
   const { t } = useTranslation(['common', 'health']);
-  const insets = useSafeAreaInsets();
   const params = useLocalSearchParams();
   const { notes, setNotes } = useNotes();
   const { isLocked } = useAuth();
@@ -382,7 +381,7 @@ export default function HealthTracking() {
       <ScrollView
         ref={scrollViewRef}
         style={commonStyles.scrollView}
-        contentContainerStyle={commonStyles.scrollContentContainer}
+        contentContainerStyle={scrollContentContainerWithSafeArea}
         showsVerticalScrollIndicator={false}
       >
         {isPeriodDate && (

@@ -16,7 +16,7 @@ import { useAppStyles } from '../../hooks/useStyles';
 
 export default function CalendarView() {
   const { colors } = useTheme();
-  const { typography, commonStyles } = useAppStyles();
+  const { typography, commonStyles, scrollContentContainerWithSafeArea } = useAppStyles();
   const { t } = useTranslation('calendar');
   const [showOvulation, setShowOvulation] = useState(true);
   const [showFuturePeriods, setShowFuturePeriods] = useState(true);
@@ -193,7 +193,7 @@ export default function CalendarView() {
       style={[
         commonStyles.container
       ]}
-      contentContainerStyle={commonStyles.scrollContentContainer}
+      contentContainerStyle={scrollContentContainerWithSafeArea}
     >
       <Text style={[commonStyles.sectionTitleContainer, typography.headingSm]}>
         {t('view.displayOptions')}

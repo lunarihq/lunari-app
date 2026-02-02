@@ -6,7 +6,7 @@ import { useAppStyles } from '../../hooks/useStyles';
 
 export default function PeriodLength() {
   const { colors } = useTheme();
-  const { typography, commonStyles } = useAppStyles();
+  const { typography, commonStyles, scrollContentContainerWithSafeArea } = useAppStyles();
   const { t } = useTranslation('info');
 
   return (
@@ -15,7 +15,7 @@ export default function PeriodLength() {
         commonStyles.scrollView,
         { backgroundColor: colors.panel },
       ]}
-      contentContainerStyle={commonStyles.scrollContentContainer}
+      contentContainerStyle={scrollContentContainerWithSafeArea}
       showsVerticalScrollIndicator={false}
     >
       <Image

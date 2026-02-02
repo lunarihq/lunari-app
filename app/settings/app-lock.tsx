@@ -7,7 +7,7 @@ import { useAppStyles } from '../../hooks/useStyles';
 
 export default function AppLockScreen() {
   const { colors } = useTheme();
-  const { commonStyles } = useAppStyles();
+  const { commonStyles, scrollContentContainerWithSafeArea } = useAppStyles();
   const { t } = useTranslation('settings');
   const {
     isLockEnabled,
@@ -33,7 +33,7 @@ export default function AppLockScreen() {
   return (
     <ScrollView
       style={[commonStyles.scrollView]}
-      contentContainerStyle={[commonStyles.scrollContentContainer, { paddingTop: 8 }]}
+      contentContainerStyle={[scrollContentContainerWithSafeArea, { paddingTop: 8 }]}
       showsVerticalScrollIndicator={false}
     >
       <View style={[commonStyles.sectionContainer, { padding: 0 }]}>

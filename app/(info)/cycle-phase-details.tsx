@@ -39,7 +39,7 @@ const getFormattedCycleStart = (cycleDay: number, t: any): string => {
 
 export default function CyclePhaseDetails() {
   const { colors } = useTheme();
-  const { typography, commonStyles } = useAppStyles();
+  const { typography, commonStyles, scrollContentContainerWithSafeArea } = useAppStyles();
   const { t } = useTranslation('info');
   const params = useLocalSearchParams();
   const cycleDay = parseInt(params.cycleDay as string) || 0;
@@ -59,7 +59,7 @@ export default function CyclePhaseDetails() {
   return (
       <ScrollView
         style={commonStyles.scrollView}
-        contentContainerStyle={[commonStyles.scrollContentContainer, { paddingTop: 24 }]}
+        contentContainerStyle={[scrollContentContainerWithSafeArea, { paddingTop: 24 }]}
         showsVerticalScrollIndicator={false}
       >
         <Text

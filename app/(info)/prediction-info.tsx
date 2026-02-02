@@ -5,7 +5,7 @@ import { useTheme } from '../../styles/theme';
 import { useAppStyles } from '../../hooks/useStyles';
 export default function PredictionInfo() {
   const { colors } = useTheme();
-  const { typography, commonStyles } = useAppStyles();
+  const { typography, commonStyles, scrollContentContainerWithSafeArea } = useAppStyles();
   const { t } = useTranslation('info');
 
   return (
@@ -14,7 +14,7 @@ export default function PredictionInfo() {
         commonStyles.scrollView,
         { backgroundColor: colors.panel },
       ]}
-      contentContainerStyle={commonStyles.scrollContentContainer}
+      contentContainerStyle={scrollContentContainerWithSafeArea}
       showsVerticalScrollIndicator={false}
     >
       <Image
