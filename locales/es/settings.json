@@ -109,7 +109,7 @@
       "framework": "Framework: React Native con Expo",
       "database": "Base de datos: SQLite con Drizzle ORM",
       "language": "Lenguaje: TypeScript",
-      "platform": "Plataforma: iOS y Android"
+      "platform": "Plataforma: Android"
     },
     "footer": {
       "prefix": "Para soporte o comentarios, por favor contáctanos en: ",
