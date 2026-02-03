@@ -16,7 +16,7 @@ export default function About() {
   const { colors } = useTheme();
   const { typography, commonStyles, scrollContentContainerWithSafeArea } = useAppStyles();
   const { t } = useTranslation('settings');
-  const GITHUB_URL = 'https://github.com/bluma-app/bluma';
+  const GITHUB_URL = 'https://github.com/blumaHQ/bluma-app';
   const GPL_URL = 'https://www.gnu.org/licenses/gpl-3.0.en.html';
 
   return (
@@ -74,7 +74,7 @@ export default function About() {
         <Text style={[typography.body]}>
           {t('aboutScreen.privacyFirst.description')}
         </Text>
-        {['local', 'noTransmission', 'noTracking', 'noAds', 'noAccount'].map((item, index) => (
+        {['local', 'encrypted', 'noTransmission', 'noTracking', 'noAds', 'noAccount'].map((item, index) => (
           <View
             key={item}
             style={{
@@ -124,6 +124,18 @@ export default function About() {
           ]}
         >
           {t('aboutScreen.openSource.viewSource')}
+        </Text>
+      </View>
+
+      <View style={[styles.contentSection]}>
+        <View style={styles.sectionHeader}>
+          <SectionIcon name="person-outline" />
+          <Text style={[typography.headingMd, { marginLeft: 12 }]}>
+            {t('aboutScreen.developer.title')}
+          </Text>
+        </View>
+        <Text style={[typography.body]}>
+          {t('aboutScreen.developer.description')}
         </Text>
       </View>
 

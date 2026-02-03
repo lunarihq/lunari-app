@@ -87,6 +87,7 @@
       "title": "Privacidad Primero",
       "description": "Bluma está diseñada con un enfoque de privacidad primero:",
       "local": "Todos los datos se almacenan localmente en tu dispositivo",
+      "encrypted": "Tu base de datos está encriptada",
       "noTransmission": "No hay transmisión de datos a servidores externos",
       "noTracking": "Sin análisis o seguimiento de terceros",
       "noAds": "Sin anuncios",
@@ -97,6 +98,10 @@
       "description": "Bluma es de código abierto y tiene licencia bajo la",
       "warranty": "Bluma se distribuye con la esperanza de que sea útil, pero SIN NINGUNA GARANTÍA; sin siquiera la garantía implícita de COMERCIABILIDAD o IDONEIDAD PARA UN PROPÓSITO PARTICULAR.",
       "viewSource": "Ver el código fuente en GitHub"
+    },
+    "developer": {
+      "title": "Acerca de la Desarrolladora",
+      "description": "Bluma fue creada por Maribel, una diseñadora de productos y desarrolladora indie apasionada por el software que respeta la privacidad. Construida para proporcionar una alternativa confiable a los rastreadores de periodo que recopilan y monetizan datos de salud personal."
     },
     "technical": {
       "title": "Detalles Técnicos",
@@ -120,8 +125,8 @@
     },
     "dataUse": {
       "title": "1. Uso de Datos",
-      "descriptionPrefix": "Bluma respeta y celebra tu privacidad. No hay recopilación de datos de uso o información personal, sin anuncios, sin spyware. Bluma puede almacenar datos relacionados con tu salud menstrual",
-      "descriptionBold": "localmente en tu teléfono",
+      "descriptionPrefix": "Bluma respeta tu privacidad. No hay recopilación de datos de uso o información personal. Bluma almacena datos relacionados con tu salud menstrual",
+      "descriptionBold": "localmente en tu dispositivo",
       "descriptionSuffix": ", y esto incluye:",
       "periodDates": "Fechas de inicio y fin del periodo",
       "cycleLength": "Duración del ciclo y periodo",
@@ -136,21 +141,21 @@
       "description": "Bluma puede solicitar los siguientes permisos:",
       "reminders": "",
       "remindersBold": "Recordatorios",
-      "remindersSuffix": ": Para enviarte recordatorios de periodo y predicciones de ciclo.",
+      "remindersSuffix": ": Para enviarte recordatorios de periodo.",
       "biometric": "",
       "biometricBold": "Autenticación biométrica",
-      "biometricSuffix": ": Para asegurar tu aplicación con huella digital o reconocimiento facial (opcional).",
+      "biometricSuffix": ": Para bloquear tu aplicación con huella digital o reconocimiento facial.",
       "revoke": "Si no deseas usar ninguno de estos permisos, puedes revocarlos en cualquier momento a través de la configuración de tu dispositivo."
     },
     "transparency": {
       "title": "3. Transparencia",
       "description": "Creemos en la completa transparencia sobre cómo se manejan tus datos:",
       "localStorage": "Todos tus datos se almacenan localmente en tu dispositivo",
+      "encrypted": "Tu base de datos está encriptada para proteger tu privacidad",
       "noTransmission": "No se transmiten datos a servidores externos",
-      "deleteAnytime": "Puedes eliminar todos tus datos en cualquier momento",
       "noAnalytics": "No usamos servicios de análisis o seguimiento",
       "noAds": "Sin publicidad o recopilación de datos de terceros",
-      "control": "Tienes control total sobre tus datos. Puedes eliminar todos los datos de seguimiento a través del menú de configuración, y la aplicación seguirá funcionando normalmente sin ninguna información almacenada."
+      "control": "Tienes control total sobre tus datos y puedes eliminarlos en cualquier momento a través del menú de configuración."
     },
     "footer": {
       "prefix": "Si tienes alguna pregunta sobre esta política de privacidad o cómo manejamos tus datos, por favor contáctanos en ",

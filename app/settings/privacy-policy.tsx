@@ -106,7 +106,7 @@ export default function PrivacyPolicy() {
         <Text style={[typography.body]}>
           {t('privacyPolicyScreen.transparency.description')}
         </Text>
-        {['localStorage', 'noTransmission', 'deleteAnytime', 'noAnalytics', 'noAds'].map((item, index) => (
+        {['localStorage', 'encrypted', 'noTransmission', 'noAnalytics', 'noAds'].map((item, index) => (
           <View
             key={item}
             style={{
