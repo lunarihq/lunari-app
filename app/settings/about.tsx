@@ -149,7 +149,7 @@ export default function About() {
         <Text style={[typography.body]}>
           {t('aboutScreen.technical.description')}
         </Text>
-        {['framework', 'database', 'language', 'platform'].map((item, index) => {
+        {['framework', 'database', 'encryption', 'architecture', 'language', 'platform'].map((item, index) => {
           const fullText = t(`aboutScreen.technical.${item}`);
           const colonIndex = fullText.indexOf(':');
           const label = fullText.substring(0, colonIndex + 1);

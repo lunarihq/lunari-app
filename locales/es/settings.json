@@ -108,6 +108,8 @@
       "description": "Bluma está construida usando tecnologías modernas para garantizar confiabilidad y rendimiento:",
       "framework": "Framework: React Native con Expo",
       "database": "Base de datos: SQLite con Drizzle ORM",
+      "encryption": "Encriptación: SQLCipher",
+      "architecture": "Arquitectura: Offline-first, sin servidor backend",
       "language": "Lenguaje: TypeScript",
       "platform": "Plataforma: Android"
     },
