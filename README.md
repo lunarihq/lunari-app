@@ -25,11 +25,11 @@ A private-first period tracking app designed to be a delight to use whilst prese
 
 **Core**
 
-- React Native 0.81.5 - Android and iOS
+- React Native - Android and iOS
 - Expo SDK 54 - Development and build (EAS)
 - Expo Router - File-based routing
 - Drizzle ORM (SQLite via expo-sqlite) - Local data storage
-- TypeScript 5.9 - Type-safe development
+- TypeScript - Type-safe development
 - i18next / react-i18next - Localization (en, es, pt-BR, pt-PT)
 
 **Development & quality**
