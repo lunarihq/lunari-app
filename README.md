@@ -2,7 +2,7 @@
 
 A private-first period tracking app designed to be a delight to use whilst preserving the users’ privacy by using local-only data storage.
 
-<img width="1024" height="500" alt="featured-graphic" src="https://github.com/user-attachments/assets/4ea1062d-e439-4053-b8b9-df9b8c414660" />
+<img width="1024" height="500" alt="featured-graphic" src="https://github.com/user-attachments/assets/93f5ab69-a223-4287-8440-00f3d8ca6427" />
 
 # ⚙️ Features
 
@@ -10,9 +10,8 @@ A private-first period tracking app designed to be a delight to use whilst prese
 - Symptoms, moods, flow & discharge tracking.
 - Cycle statistics & history.
 - Cycle phase insights.
-- Period notes (per-day notes).
 - Period reminders.
-- PIN/biometric app lock.
+- Biometric app lock.
 - Encrypted local database (SQLite with device-bound encryption key).
 - Dark & light themes (including system).
 - Completely offline - All data is stored locally on your device.
@@ -21,7 +20,6 @@ A private-first period tracking app designed to be a delight to use whilst prese
 - No ads ever.
 - No third‑party trackers.
 - Open-source code.
-- Localization - English, Spanish, Portuguese (BR & PT).
 
 # 👩🏻‍💻 Technologies used
 
@@ -32,7 +30,6 @@ A private-first period tracking app designed to be a delight to use whilst prese
 - Expo Router - File-based routing
 - Drizzle ORM (SQLite via expo-sqlite) - Local data storage
 - TypeScript 5.9 - Type-safe development
-- React 19 - UI
 - i18next / react-i18next - Localization (en, es, pt-BR, pt-PT)
 
 **Development & quality**
