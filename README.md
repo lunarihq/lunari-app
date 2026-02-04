@@ -7,45 +7,47 @@ A private-first period tracking app designed to be a delight to use whilst prese
 # ⚙️ Features
 
 - Period & ovulation predictions.
-- Symptoms and moods tracking.
+- Symptoms, moods, flow & discharge tracking.
 - Cycle statistics & history.
 - Cycle phase insights.
+- Period notes (per-day notes).
 - Period reminders.
-- PIN/biometric app lock
-- Dark & light themes
+- PIN/biometric app lock.
+- Encrypted local database (SQLite with device-bound encryption key).
+- Dark & light themes (including system).
 - Completely offline - All data is stored locally on your device.
+- Delete all data - One-tap full data deletion from settings.
 - No account required.
 - No ads ever.
 - No third‑party trackers.
 - Open-source code.
+- Localization - English, Spanish, Portuguese (BR & PT).
 
-# 👩🏻‍💻 Technologies used:
+# 👩🏻‍💻 Technologies used
 
-Core Technologies
+**Core**
 
-- React Native 0.79.5 - Supports both Android and iOS platforms
-- Drizzle ORM (SQLite) - Handles local data storage
-- Expo SDK 54 - Development platform and build tools
-- TypeScript 5.8 - Type-safe JavaScript development
-- React 19 - Latest React features and optimizations
+- React Native 0.81.5 - Android and iOS
+- Expo SDK 54 - Development and build (EAS)
+- Expo Router - File-based routing
+- Drizzle ORM (SQLite via expo-sqlite) - Local data storage
+- TypeScript 5.9 - Type-safe development
+- React 19 - UI
+- i18next / react-i18next - Localization (en, es, pt-BR, pt-PT)
 
-Development & Quality
+**Development & quality**
 
-- ESLint + Prettier - Code formatting and quality
-- Jest - Unit testing with 80%+ coverage requirement
-- GitHub Actions - CI/CD pipeline with automated testing
+- ESLint + Prettier - Linting and formatting
+- Jest (jest-expo) - Test setup (see `package.json` scripts)
 
-Accessibility & Compliance
+**Accessibility**
 
-- WCAG 2.1/2.2 AA - Web Content Accessibility Guidelines compliance
-- Custom WCAG Audit Tools - Automated accessibility testing
-- Color Vision Deficiency Support - Protanopia, Deuteranopia, Tritanopia
-- Multiple Indication Methods - Color + Icon + Text patterns
+- WCAG-oriented patterns - accessibilityRole, accessibilityLabel, accessibilityHint in key components
+- Multiple indication methods - Color + icon + text where status is shown (e.g. calendar)
 
 # 📄 License
 
 Copyright © 2025 Maribel Ferreira  
 This project is licensed under the [GNU General Public License v3.0](LICENSE).
 
-You are free to use, modify, and distribute this software under the terms of the GPL-3.0 license.  
-If you distribute a modified version, you must also make your source code available under the same license.
+You may use, modify, and distribute the software under the GPL-3.0 license. If you distribute a modified version, you must also make the corresponding source code available under the same license.

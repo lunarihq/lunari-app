@@ -107,11 +107,11 @@
     "technical": {
       "title": "Detalhes Técnicos",
       "description": "A Bluma é construída com tecnologias modernas para garantir fiabilidade e desempenho:",
-      "framework": "Framework: React Native com Expo",
+      "framework": "Framework: React Native com Expo SDK 54",
       "database": "Base de dados: SQLite com Drizzle ORM",
       "encryption": "Encriptação: SQLCipher",
       "architecture": "Arquitetura: Offline-first, sem servidor",
-      "language": "Linguagem: TypeScript",
+      "language": "Linguagem de programação: TypeScript",
       "platform": "Plataforma: Android"
     },
     "footer": {
