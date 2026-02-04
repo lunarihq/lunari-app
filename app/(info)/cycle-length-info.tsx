@@ -26,7 +26,7 @@ export default function StatusInfo() {
         }}
       />
       <View style={[styles.contentSection]}>
-        <Text style={[typography.headingMd, { marginBottom: 12 }]}>
+        <Text style={[typography.headingMd]}>
           {t('cycleLength.title')}
         </Text>
 
@@ -37,7 +37,7 @@ export default function StatusInfo() {
       </View>
 
       <View style={[styles.contentSection]}>
-        <Text style={[typography.headingMd, { marginBottom: 12 }]}>
+        <Text style={[typography.headingMd]}>
           {t('cycleLength.normalRange.title')}
         </Text>
         <Text style={[typography.body]}>
@@ -55,8 +55,8 @@ export default function StatusInfo() {
         </Text>
       </View>
 
-      <View style={[styles.contentSection]}>
-        <Text style={[typography.headingMd, { marginBottom: 12 }]}>
+      <View style={{gap: 16, marginBottom: 32 }}>
+        <Text style={[typography.headingMd]}>
           {t('cycleLength.irregular.title')}
         </Text>
         <Text style={[typography.body]}>
@@ -66,7 +66,8 @@ export default function StatusInfo() {
           </Text>{' '}
           {t('cycleLength.irregular.descriptionSuffix')}
         </Text>
-        <View style={{ marginTop: 12 }}>
+
+        <View>
           {['hormonal', 'stress', 'medical', 'pcos', 'weight', 'lifestage', 'postpartum'].map((cause, index) => (
             <View
               key={cause}
@@ -83,17 +84,20 @@ export default function StatusInfo() {
               </Text>
             </View>
           ))}
-          <Text style={[typography.body, { marginTop: 12 }]}>
-            <Text style={typography.bodyBold}>
+
+          <View style={{ marginTop: 16}}>
+          <Text style={[typography.body]}>
+            <Text style={[typography.bodyBold]}>
               {t('cycleLength.irregular.dataNoteBold')}
             </Text>{' '}
             {t('cycleLength.irregular.dataNote')}
           </Text>
+          </View>
         </View>
       </View>
 
       <View style={[styles.contentSection]}>
-        <Text style={[typography.headingMd, { marginBottom: 12 }]}>
+        <Text style={[typography.headingMd]}>
           {t('cycleLength.seeDoctor.title')}
         </Text>
         <Text style={[typography.body]}>
@@ -107,7 +111,7 @@ export default function StatusInfo() {
         </Text>
       </View>
       <View style={[styles.contentSection]}>
-        <Text style={[typography.headingSm, { marginBottom: 12 }]}>
+        <Text style={[typography.headingSm ]}>
           {t('cycleLength.references.title')}
         </Text>
         <Text style={[typography.caption]}>
@@ -121,5 +125,6 @@ export default function StatusInfo() {
 const styles = StyleSheet.create({
   contentSection: {
     marginBottom: 32,
+    gap: 16,
   },
 });
