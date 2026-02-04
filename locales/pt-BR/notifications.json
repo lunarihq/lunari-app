@@ -1,0 +1,14 @@
+{
+  "periodReminder": {
+    "title": "Sua menstruação deve começar em breve",
+    "body": "Sua menstruação está prevista para começar em {{days}} dias, em {{date}}"
+  },
+  "periodStarting": {
+    "title": "Sua menstruação pode começar hoje",
+    "body": "Sua menstruação pode começar hoje. Registre no app!"
+  },
+  "periodLate": {
+    "title": "Sua menstruação está atrasada",
+    "body": "Sua menstruação era esperada ontem. Você esqueceu de registrar?"
+  }
+}

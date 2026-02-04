@@ -1,0 +1,34 @@
+{
+  "title": "Estatísticas",
+  "cycleStatistics": "Estatísticas do ciclo",
+  "emptyState": {
+    "title": "Ainda sem dados do ciclo",
+    "subtitle": "Regista pelo menos 2 períodos para veres as tuas estatísticas e histórico pessoais.",
+    "logPeriodButton": "Registar período"
+  },
+  "cycleHistory": {
+    "title": "Histórico do ciclo",
+    "noCycles": "Ainda não há dados suficientes",
+    "cycleLength": "Duração do ciclo: {{days}} dias",
+    "periodLength": "Duração do período: {{days}} dias",
+    "days": "{{count}} dia",
+    "days_other": "{{count}} dias",
+    "inProgress": "Em curso",
+    "loggedCycles": "ciclos registados",
+    "currentCycle": "Ciclo atual",
+    "unknown": "Desconhecido"
+  },
+  "averages": {
+    "title": "Médias",
+    "cycleLength": "Duração média do ciclo",
+    "periodLength": "Duração média do período",
+    "days": "{{count}} dia",
+    "days_other": "{{count}} dias"
+  },
+  "predictions": {
+    "title": "Previsões",
+    "nextPeriod": "Próximo período",
+    "nextOvulation": "Próxima ovulação",
+    "fertileWindow": "Janela fértil"
+  }
+}

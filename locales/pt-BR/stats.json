@@ -1,0 +1,34 @@
+{
+  "title": "Estatísticas",
+  "cycleStatistics": "Estatísticas do ciclo",
+  "emptyState": {
+    "title": "Ainda sem dados do ciclo",
+    "subtitle": "Registre pelo menos 2 menstruações para ver suas estatísticas e histórico pessoais.",
+    "logPeriodButton": "Registrar menstruação"
+  },
+  "cycleHistory": {
+    "title": "Histórico do ciclo",
+    "noCycles": "Ainda não há dados suficientes",
+    "cycleLength": "Duração do ciclo: {{days}} dias",
+    "periodLength": "Duração da menstruação: {{days}} dias",
+    "days": "{{count}} dia",
+    "days_other": "{{count}} dias",
+    "inProgress": "Em andamento",
+    "loggedCycles": "ciclos registrados",
+    "currentCycle": "Ciclo atual",
+    "unknown": "Desconhecido"
+  },
+  "averages": {
+    "title": "Médias",
+    "cycleLength": "Duração média do ciclo",
+    "periodLength": "Duração média da menstruação",
+    "days": "{{count}} dia",
+    "days_other": "{{count}} dias"
+  },
+  "predictions": {
+    "title": "Previsões",
+    "nextPeriod": "Próxima menstruação",
+    "nextOvulation": "Próxima ovulação",
+    "fertileWindow": "Janela fértil"
+  }
+}

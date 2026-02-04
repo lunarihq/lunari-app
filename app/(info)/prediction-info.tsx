@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ScrollView, Text, Image } from 'react-native';
+import { View, ScrollView, Text, Image, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../../styles/theme';
 import { useAppStyles } from '../../hooks/useStyles';
@@ -27,32 +27,34 @@ export default function PredictionInfo() {
           borderRadius: 16,
         }}
       />
-      <View>
-        <View style={{ marginBottom: 32 }}>
-          <View style={{ marginBottom: 32 }}>
-            <Text style={[typography.headingMd, { marginBottom: 12 }]}>
+   
+        <View>
+          <View style={styles.contentSection}>
+            <Text style={[typography.headingMd]}>
               {t('prediction.nextPeriod.title')}
             </Text>
             <Text style={[typography.body]}>
               {t('prediction.nextPeriod.description')}
             </Text>
           </View>
-          <Text style={[typography.headingMd, { marginBottom: 12 }]}>
-            {t('prediction.cycleLengthCalc.title')}
-          </Text>
-          <Text style={[typography.body, { marginBottom: 16 }]}>
-            {t('prediction.cycleLengthCalc.description')}
-          </Text>
-          <Text style={[typography.body]}>
-            {t('prediction.cycleLengthCalc.weighting')}
-          </Text>
-        </View>
 
-        <View style={{ marginBottom: 32 }}>
-          <Text style={[typography.headingMd, { marginBottom: 12 }]}>
+          <View style={styles.contentSection}>
+            <Text style={[typography.headingMd]}>
+            {t('prediction.cycleLengthCalc.title')}
+            </Text>
+            <Text style={[typography.body]}>
+              {t('prediction.cycleLengthCalc.description')}
+            </Text>
+            <Text style={[typography.body]}>
+              {t('prediction.cycleLengthCalc.weighting')}
+            </Text>
+          </View>
+
+        <View style={styles.contentSection}>
+          <Text style={[typography.headingMd]}>
             {t('prediction.ovulation.title')}
           </Text>
-          <Text style={[typography.body, { marginBottom: 16 }]}>
+          <Text style={[typography.body]}>
             {t('prediction.ovulation.description')}
           </Text>
           <Text style={[typography.caption]}>
@@ -60,8 +62,8 @@ export default function PredictionInfo() {
           </Text>
         </View>
 
-        <View style={{ marginBottom: 32 }}>
-          <Text style={[typography.headingMd, { marginBottom: 12 }]}>
+        <View style={styles.contentSection}>
+          <Text style={[typography.headingMd]}>
             {t('prediction.accuracy.title')}
           </Text>
           <Text style={[typography.body]}>
@@ -69,15 +71,16 @@ export default function PredictionInfo() {
           </Text>
         </View>
 
-        <View style={{ marginBottom: 32 }}>
-          <Text style={[typography.headingMd, { marginBottom: 8 }]}>
+        <View style={styles.contentSection}>
+          <Text style={[typography.headingMd]}>
             {t('prediction.privacy.title')}
           </Text>
           <Text style={[typography.body]}>
             {t('prediction.privacy.description')}
           </Text>
         </View>
-        <View style={{ marginBottom: 32 }}>
+
+        <View style={styles.contentSection}>
           <Text
             style={[
               typography.caption,
@@ -97,3 +100,9 @@ export default function PredictionInfo() {
     </ScrollView>
   );
 }
+const styles = StyleSheet.create({
+  contentSection: {
+    marginBottom: 32,
+    gap: 16,
+  },
+});

@@ -1,0 +1,43 @@
+{
+  "title": "Calendário",
+  "selectDate": "Seleciona uma data",
+  "periodDates": "Datas do período",
+  "ovulationDay": "Dia da ovulação",
+  "fertileWindow": "Janela fértil",
+  "prediction": "Previsão",
+  "today": "Hoje",
+  "editPeriod": {
+    "title": "Editar Período",
+    "editPeriodDates": "Editar datas do período",
+    "selectDates": "Seleciona as datas do teu período",
+    "instructions": "Toca no calendário para selecionar ou desselecionar datas",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "successMessage": "Datas do período guardadas",
+    "errorMessage": "Erro. Por favor, tenta novamente.",
+    "delete": "Eliminar período",
+    "confirmDelete": "Tens a certeza de que queres eliminar este período?"
+  },
+  "view": {
+    "title": "Vista do calendário",
+    "displayOptions": "Opções de visualização",
+    "showOvulation": "Mostrar dia da ovulação e janela fértil no calendário",
+    "showFuturePeriods": "Mostrar previsão de períodos futuros no calendário",
+    "iconsShown": "Ícones mostrados no calendário",
+    "loadingSettings": "A carregar definições do calendário..."
+  },
+  "legend": {
+    "periodDays": "Dias de período",
+    "futurePrediction": "Previsão de período futuro",
+    "ovulationDay": "Dia da ovulação",
+    "fertileWindow": "Janela fértil",
+    "symptomsIndicator": "Indicador de registo de sintomas"
+  },
+  "accessibility": {
+    "tapToDeselect": "Toca para desselecionar",
+    "tapToSelectPeriod": "Toca para selecionar como dia de período",
+    "hasHealthLogs": "tem registos de saúde",
+    "selected": "selecionado",
+    "tapToView": "Toca para ver detalhes"
+  }
+}

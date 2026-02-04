@@ -1,0 +1,205 @@
+{
+  "screenTitles": {
+    "todaysInsights": "Informações de hoje",
+    "cycleLength": "Duração do ciclo",
+    "periodLength": "Duração do período",
+    "latePeriod": "Período atrasado",
+    "howPredictionsWork": "Como funcionam as previsões"
+  },
+  "cyclePhase": {
+    "title": "Fases do ciclo",
+    "cycleDay": "Dia do ciclo",
+    "cycleStartedToday": "O teu ciclo começou hoje",
+    "cycleStartedOn": "Este ciclo começou em",
+    "cyclePhaseTitle": "Fase do ciclo",
+    "chanceToConceive": "Probabilidade de conceber",
+    "possibleSymptoms": "Possíveis sintomas",
+    "phases": {
+      "menstrual": "Menstrual",
+      "follicular": "Folicular",
+      "ovulatory": "Ovulatória",
+      "luteal": "Lútea",
+      "extended": "Estendido"
+    },
+    "phaseDescriptions": {
+      "menstrual": "O período, ou menstruação, é quando o revestimento do útero se desprende e sai do corpo através de hemorragia vaginal. Normalmente dura 3–7 dias, mas pode variar bastante.\n\nDurante este tempo, o corpo prepara-se para uma possível gravidez espessando o revestimento uterino. Se não ocorrer fertilização, os níveis hormonais descem e a menstruação começa.",
+      "follicular": "A fase folicular é a primeira parte do ciclo menstrual, começando no primeiro dia do período e terminando na ovulação. Os níveis de energia começam a subir com o aumento de estrogénio. Bom momento para começar novos projetos e atividade física.",
+      "ovulatory": "A ovulação é a libertação de um óvulo do ovário. É a janela de pico de fertilidade e normalmente ocorre por volta do dia 14 do teu ciclo.",
+      "luteal": "A fase lútea é a segunda parte do ciclo menstrual, desde a ovulação até ao início do próximo período, e normalmente dura cerca de 12–14 dias.\n\nDurante este tempo, o corpo prepara-se para uma possível gravidez espessando o revestimento uterino. Se não ocorrer fertilização, os níveis hormonais descem e a menstruação começa.",
+      "extended": "O teu ciclo está a durar mais do que o habitual (além do dia 35). Isto pode ser normal ocasionalmente, mas se acontecer com frequência, considera acompanhar os padrões e falar com um profissional de saúde."
+    },
+    "pregnancyChance": {
+      "high": "Alta",
+      "medium": "Média",
+      "low": "Baixa"
+    },
+    "pregnancyChanceDescriptions": {
+      "high": "Esta é a tua janela fértil, quando a conceção é mais provável. A ovulação normalmente ocorre durante este período.",
+      "medium": "Há uma probabilidade moderada de conceção durante este período, à medida que te aproximas ou te afastas da tua janela fértil.",
+      "low": "A conceção é menos provável durante este período. Isto inclui os dias menstruais e a fase lútea mais avançada do teu ciclo."
+    },
+    "symptoms": {
+      "menstrual": "Cólicas, fadiga, alterações de humor, inchaço, dores de cabeça e dor lombar. A tua energia e humor podem estar mais baixos do que o habitual.",
+      "follicular": "Energia a subir, humor melhorado, pele mais limpa e maior motivação. Podes sentir-te mais sociável e confiante.",
+      "ovulatory": "Energia no pico, desejo sexual aumentado, maior confiança e possíveis cólicas ligeiras ou manchas. Podes sentir-te no teu melhor.",
+      "luteal": "Inchaço, alterações de humor, desejo por comida, fadiga, sensibilidade mamária e irritabilidade. Estes sintomas de TPM normalmente pioram à medida que o período se aproxima.",
+      "extended": ""
+    },
+    "menstrual": {
+      "title": "Fase menstrual",
+      "description": "O primeiro dia do teu período marca o início do teu ciclo menstrual."
+    },
+    "follicular": {
+      "title": "Fase folicular",
+      "description": "Esta fase começa no primeiro dia do teu período e dura até à ovulação."
+    },
+    "ovulation": {
+      "title": "Ovulação",
+      "description": "É quando um óvulo é libertado do teu ovário."
+    },
+    "luteal": {
+      "title": "Fase lútea",
+      "description": "Esta fase começa após a ovulação e termina quando o teu próximo período começa."
+    }
+  },
+  "cycleLength": {
+    "title": "Compreender o teu ciclo",
+    "definitionBold": "Duração do ciclo",
+    "definitionText": "é contada do primeiro dia de um período ao primeiro dia do seguinte.",
+    "normalRange": {
+      "title": "Intervalo normal",
+      "acogPrefix": "De acordo com o",
+      "acogName": "American College of Obstetricians and Gynecologists (ACOG)¹",
+      "acogSuffix": ", um ciclo menstrual normal tipicamente dura entre",
+      "daysRange": "21 e 35 dias",
+      "variation": "A maioria das pessoas tem ciclos que variam alguns dias cada mês, o que é completamente normal."
+    },
+    "irregular": {
+      "title": "Ciclos irregulares",
+      "descriptionPrefix": "Ciclos irregulares são",
+      "daysRange": "inferiores a 21 dias ou superiores a 35 dias",
+      "descriptionSuffix": "e podem ser causados por várias razões, como:",
+      "causes": {
+        "hormonal": "Alterações hormonais",
+        "stress": "Stress, viagens ou sono perturbado",
+        "medical": "Condições médicas",
+        "pcos": "Síndrome do ovário poliquístico (SOP)",
+        "weight": "Alteração significativa de peso ou exercício intenso",
+        "lifestage": "Puberdade ou perimenopausa",
+        "postpartum": "Pós-parto e amamentação"
+      },
+      "dataNoteBold": "Dados de período introduzidos incorretamente",
+      "dataNote": "podem fazer com que a Bluma indique uma duração de ciclo anormal. Na maioria das vezes, isto resulta de esquecer de registar o período. Acompanhar os teus ciclos durante pelo menos 3-6 meses ajudará a estabelecer um padrão."
+    },
+    "seeDoctor": {
+      "title": "Quando consultar um médico?",
+      "description": "Se os teus ciclos forem frequentemente anormais em duração, e/ou acompanhados de outros sintomas preocupantes, o melhor é falar com o teu profissional de saúde. Podem ajudar a perceber a causa e sugerir tratamento, se necessário."
+    },
+    "disclaimerBold": "IMPORTANTE!",
+    "disclaimer": "A Bluma não é uma ferramenta de diagnóstico. A informação da Bluma não substitui o aconselhamento de um profissional de saúde. Procura sempre o aconselhamento do teu médico ou outro profissional de saúde qualificado sobre qualquer dúvida que tenhas relativamente ao teu ciclo.",
+    "references": {
+      "title": "Referências",
+      "acog": "1. Diagnosis of Abnormal Uterine Bleeding in Reproductive-Aged Women. Practice Bulletin. Number 128, July 2012. American College of Obstetricians and Gynecologists."
+    }
+  },
+  "periodLength": {
+    "title": "Compreender o teu período",
+    "definitionBold": "Duração do período",
+    "definitionText": "é contada do primeiro ao último dia de hemorragia menstrual, de qualquer volume.",
+    "normal": {
+      "title": "Duração normal do período",
+      "acogPrefix": "De acordo com o",
+      "acogName": "American College of Obstetricians and Gynecologists (ACOG)¹",
+      "acogSuffix": ", uma duração normal do período tipicamente dura entre",
+      "daysRange": "2 e 7 dias",
+      "variation": "A duração do período pode variar de ciclo para ciclo, o que é completamente normal."
+    },
+    "irregular": {
+      "title": "Períodos irregulares",
+      "description": "Períodos irregulares (inferiores a 2 dias ou superiores a 7 dias) podem ser causados por alterações de estilo de vida, medicação, stress, viagens e outros fatores que podem afetar os níveis hormonais.",
+      "dataNoteBold": "Dados de período introduzidos incorretamente",
+      "dataNote": "podem ser a razão pela qual a duração do teu período é classificada como prolongada ou curta. Podes sempre corrigir qualquer evento do teu ciclo retrospetivamente no menu do calendário."
+    },
+    "seeDoctor": {
+      "title": "Quando consultar um médico?",
+      "description": "Se a duração do teu período for frequentemente anormal, e/ou acompanhada de outros sintomas preocupantes, o melhor é falar com o teu profissional de saúde. Podem ajudar a perceber a causa e sugerir tratamento, se necessário."
+    },
+    "disclaimerBold": "IMPORTANTE!",
+    "disclaimer": "A Bluma não é uma ferramenta de diagnóstico. A informação da Bluma não substitui o aconselhamento de um profissional de saúde. Procura sempre o aconselhamento do teu médico ou outro profissional de saúde qualificado sobre qualquer dúvida que tenhas relativamente ao teu ciclo.",
+    "references": {
+      "title": "Referências",
+      "acog": "1. Your First Period. American College of Obstetricians and Gynecologists. FAQ for patients."
+    }
+  },
+  "latePeriod": {
+    "title": "Período atrasado",
+    "description": "Um período atrasado pode ser causado por stress, alterações de peso ou alterações hormonais. Se o teu período estiver atrasado mais de uma semana, considera fazer um teste de gravidez ou consultar o teu profissional de saúde.",
+    "whatMeans": {
+      "title": "O que significa que o teu período está atrasado?",
+      "description": "Um período é geralmente considerado atrasado quando passa mais de 5-7 dias da data prevista. Os ciclos podem variar naturalmente alguns dias cada mês, por isso um atraso ocasional é normal."
+    },
+    "causes": {
+      "title": "Causas comuns",
+      "stressBold": "Stress:",
+      "stressSuffix": " O stress elevado afeta as hormonas que regulam o teu ciclo",
+      "weightBold": "Alterações de peso:",
+      "weightSuffix": " Ganho ou perda significativa podem atrasar os períodos",
+      "exerciseBold": "Exercício:",
+      "exerciseSuffix": " O treino intenso pode parar temporariamente a menstruação",
+      "sleepBold": "Perturbação do sono:",
+      "sleepSuffix": " Padrões de sono irregulares afetam as hormonas",
+      "illnessBold": "Doença:",
+      "illnessSuffix": " Estar doente pode desregular o timing do teu ciclo",
+      "medicationsBold": "Medicação:",
+      "medicationsSuffix": " Contracetivos, antibióticos e outros medicamentos",
+      "pcosBold": "SOP:",
+      "pcosSuffix": " A síndrome do ovário poliquístico causa ciclos irregulares",
+      "pregnancyBold": "Gravidez:",
+      "pregnancySuffix": " Obviamente, a razão mais comum",
+      "perimenopauseBold": "Perimenopausa:",
+      "perimenopauseSuffix": " Transição natural antes da menopausa"
+    },
+    "seeDoctor": {
+      "title": "Quando consultar um médico",
+      "description": "Consulta um profissional de saúde se o teu período estiver atrasado mais de 3 meses, se tiveres dores fortes ou se tiveres tido relações sexuais desprotegidas e puderes estar grávida. Alterações súbitas na regularidade do ciclo também justificam uma consulta."
+    },
+    "whatToDo": {
+      "title": "O que podes fazer",
+      "pregnancy": "Faz um teste de gravidez se houver qualquer possibilidade",
+      "stress": "Gere o stress através de meditação, exercício ou terapia",
+      "weight": "Mantém um peso saudável para o teu corpo",
+      "sleep": "Dorme de forma consistente e com qualidade",
+      "track": "Acompanha os teus ciclos para identificar padrões",
+      "patience": "Sê paciente, a irregularidade ocasional é normal"
+    }
+  },
+  "prediction": {
+    "title": "Como funcionam as previsões",
+    "description": "A Bluma prevê o teu próximo período com base no teu histórico de ciclos. Quanto mais dados registares, mais precisas serão as previsões.",
+    "nextPeriod": {
+      "title": "Previsão do próximo período",
+      "description": "O teu próximo período é previsto adicionando a duração média do teu ciclo à data de início do teu período mais recente."
+    },
+    "cycleLengthCalc": {
+      "title": "Cálculo da duração do ciclo",
+      "description": "A Bluma calcula a duração média do teu ciclo usando uma média ponderada dos teus últimos 6 ciclos, uma abordagem comum no acompanhamento de ciclos.",
+      "weighting": "Os ciclos recentes têm mais influência nas previsões do que os mais antigos. Por exemplo, ciclo mais recente: 100%, segundo mais recente: 80%, terceiro mais recente: 60%, e assim sucessivamente."
+    },
+    "ovulation": {
+      "title": "Ovulação e fertilidade",
+      "description": "A ovulação é prevista ocorrer 14 dias antes do teu próximo período esperado. A tua janela fértil inclui:",
+      "fertileWindow": "• 5 dias antes da ovulação • Dia da ovulação • 1 dia após a ovulação"
+    },
+    "accuracy": {
+      "title": "A precisão melhora com o tempo",
+      "description": "Quanto mais períodos acompanhares, mais precisas serão as previsões. Com 3+ ciclos, a Bluma pode fornecer previsões personalizadas com base nos teus padrões únicos."
+    },
+    "privacy": {
+      "title": "Privacidade em primeiro lugar",
+      "description": "Todos os cálculos são feitos localmente no teu dispositivo. Os teus dados de período nunca saem do teu telemóvel e nunca são partilhados com ninguém."
+    },
+    "disclaimerPrefix": "🛎️ ",
+    "disclaimerBold": "Lembra-te",
+    "disclaimerSuffix": ": Estas são previsões baseadas nos teus dados históricos. Cada corpo é diferente e os ciclos podem variar naturalmente."
+  }
+}

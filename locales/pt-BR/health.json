@@ -1,0 +1,81 @@
+{
+  "symptoms": {
+    "title": "Sintomas",
+    "im-okay": "Estou bem",
+    "headache": "Dor de cabeça",
+    "cramps": "Cólicas",
+    "bloating": "Inchaço",
+    "backache": "Dor nas costas",
+    "acne": "Acne",
+    "tender-breasts": "Seios sensíveis",
+    "nausea": "Náusea",
+    "fatigue": "Cansaço",
+    "insomnia": "Insônia",
+    "diarrhea": "Diarreia",
+    "constipation": "Prisão de ventre",
+    "hot-flashes": "Fogachos",
+    "night-sweats": "Suores noturnos",
+    "brain-fog": "Neblina mental",
+    "joint-pain": "Dor articular",
+    "dizziness": "Tontura",
+    "cravings": "Desejos",
+    "frequent-urination": "Micção frequente",
+    "vaginal-dryness": "Secura vaginal"
+  },
+  "moods": {
+    "title": "Humor",
+    "calm": "Calma",
+    "happy": "Feliz",
+    "energetic": "Energética",
+    "sad": "Triste",
+    "anxious": "Ansiosa",
+    "confused": "Confusa",
+    "irritated": "Irritada",
+    "angry": "Brava",
+    "mood-swings": "Alterações de humor",
+    "frisky": "Brincalhona",
+    "apathetic": "Apática",
+    "bored": "Entediada"
+  },
+  "flows": {
+    "title": "Fluxo",
+    "light": "Leve",
+    "medium": "Médio",
+    "heavy": "Forte",
+    "blood-clots": "Coágulos"
+  },
+  "discharge": {
+    "title": "Corrimento",
+    "no-discharge": "Sem corrimento",
+    "watery": "Aquoso",
+    "creamy": "Cremoso",
+    "egg-white": "Clara de ovo",
+    "sticky": "Pegajoso",
+    "spotting": "Manchas",
+    "unusual": "Incomum",
+    "grey-discharge": "Corrimento cinza"
+  },
+  "tracking": {
+    "title": "Registre sua saúde",
+    "screenTitle": "Registro de sintomas",
+    "selectAll": "Selecione todos os que se aplicam",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "flow": "Fluxo menstrual",
+    "symptoms": "Sintomas",
+    "moods": "Humores",
+    "discharge": "Corrimento vaginal",
+    "notes": "Notas",
+    "notesPlaceholder": "Adicione notas, outros sintomas, etc.",
+    "notesEditorPlaceholder": "Adicione notas, outros sintomas ou como você tem se sentido...",
+    "successMessage": "Dados de saúde salvos",
+    "errorMessage": "Erro. Por favor, tente novamente."
+  },
+  "quickHealthSelector": {
+    "title": "Como você se sente hoje?",
+    "add": "Adicionar",
+    "note": "Nota",
+    "noSymptomsToday": "Adicione seus sintomas e mais.",
+    "noSymptomsThisDate": "Adicione seus sintomas e mais."
+  }
+}

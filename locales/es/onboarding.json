@@ -5,13 +5,13 @@
   },
   "periodLength": {
     "title": "¿Cuánto dura normalmente tu periodo?",
-    "checkboxText": "No lo sé - dejar que la app aprenda",
+    "checkboxText": "No lo sé - que la app lo calcule",
     "checkboxSubtext": "La app usará 5 días como predeterminado y luego se ajustará a medida que registres ciclos."
   },
   "cycleLength": {
     "title": "¿Cuántos días dura tu ciclo en promedio?",
     "subtitle": "Este es el número de días desde el inicio de un periodo hasta el inicio del siguiente.",
-    "checkboxText": "No lo sé - dejar que la app aprenda",
+    "checkboxText": "No lo sé - que la app lo calcule",
     "checkboxSubtext": "La app usará 28 días como predeterminado y luego se ajustará a medida que registres ciclos."
   },
   "lastPeriod": {

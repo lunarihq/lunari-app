@@ -1,0 +1,30 @@
+{
+  "welcome": {
+    "title": "Seu período, seus dados.",
+    "subtitle": "Acompanhe seu ciclo menstrual sem abrir mão da sua privacidade."
+  },
+  "periodLength": {
+    "title": "Quanto tempo sua menstruação costuma durar?",
+    "checkboxText": "Não sei - que o app calcule",
+    "checkboxSubtext": "O app usará 5 dias como padrão e depois ajustará conforme você for registrando os ciclos."
+  },
+  "cycleLength": {
+    "title": "Quantos dias dura em média seu ciclo?",
+    "subtitle": "É o número de dias do início de uma menstruação ao início da próxima.",
+    "checkboxText": "Não sei - que o app calcule",
+    "checkboxSubtext": "O app usará 28 dias como padrão e depois ajustará conforme você for registrando os ciclos."
+  },
+  "lastPeriod": {
+    "title": "Quando começou sua última menstruação?",
+    "subtitle": "Isso ajudará a prever sua próxima menstruação.",
+    "checkboxText": "Não lembro",
+    "checkboxSubtext": "Tudo bem, você pode fazer isso depois dentro do app.",
+    "continue": "Continuar"
+  },
+  "success": {
+    "title": "Tudo pronto!",
+    "subtitle": "As previsões ficam mais precisas depois de registrar 3 a 6 ciclos. Continue acompanhando com regularidade para melhores resultados.",
+    "button": "Começar a acompanhar"
+  },
+  "continue": "Continuar"
+}

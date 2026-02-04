@@ -6,6 +6,7 @@ import 'dayjs/locale/fr';
 import 'dayjs/locale/de';
 import 'dayjs/locale/it';
 import 'dayjs/locale/pt';
+import 'dayjs/locale/pt-br';
 import 'dayjs/locale/ja';
 import 'dayjs/locale/ko';
 import 'dayjs/locale/zh';
@@ -19,8 +20,9 @@ export const getDeviceLocale = (): string => {
 
   const locales = Localization.getLocales();
   const primaryLocale = locales[0];
-
-  cachedLocale = primaryLocale.languageCode || 'en';
+  const tag = primaryLocale.languageTag;
+  const code = primaryLocale.languageCode || 'en';
+  cachedLocale = tag === 'pt-BR' ? 'pt-br' : tag === 'pt-PT' ? 'pt' : code;
 
   try {
     dayjs.locale(cachedLocale);

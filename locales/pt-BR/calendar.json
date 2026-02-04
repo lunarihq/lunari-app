@@ -1,0 +1,43 @@
+{
+  "title": "Calendário",
+  "selectDate": "Selecione uma data",
+  "periodDates": "Datas da menstruação",
+  "ovulationDay": "Dia da ovulação",
+  "fertileWindow": "Janela fértil",
+  "prediction": "Previsão",
+  "today": "Hoje",
+  "editPeriod": {
+    "title": "Editar Período",
+    "editPeriodDates": "Editar datas da menstruação",
+    "selectDates": "Selecione as datas da sua menstruação",
+    "instructions": "Toque no calendário para selecionar ou desmarcar datas",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "successMessage": "Datas da menstruação salvas",
+    "errorMessage": "Erro. Por favor, tente novamente.",
+    "delete": "Excluir período",
+    "confirmDelete": "Tem certeza de que deseja excluir este período?"
+  },
+  "view": {
+    "title": "Visualização do calendário",
+    "displayOptions": "Opções de exibição",
+    "showOvulation": "Mostrar dia da ovulação e janela fértil no calendário",
+    "showFuturePeriods": "Mostrar previsão de menstruações futuras no calendário",
+    "iconsShown": "Ícones exibidos no calendário",
+    "loadingSettings": "Carregando configurações do calendário..."
+  },
+  "legend": {
+    "periodDays": "Dias de menstruação",
+    "futurePrediction": "Previsão de menstruação futura",
+    "ovulationDay": "Dia da ovulação",
+    "fertileWindow": "Janela fértil",
+    "symptomsIndicator": "Indicador de registro de sintomas"
+  },
+  "accessibility": {
+    "tapToDeselect": "Toque para desmarcar",
+    "tapToSelectPeriod": "Toque para selecionar como dia de menstruação",
+    "hasHealthLogs": "tem registros de saúde",
+    "selected": "selecionado",
+    "tapToView": "Toque para ver detalhes"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "welcome": {
+    "title": "O teu período, os teus dados.",
+    "subtitle": "Acompanha o teu ciclo menstrual sem abdicar da tua privacidade."
+  },
+  "periodLength": {
+    "title": "Quanto tempo costuma durar o teu período?",
+    "checkboxText": "Não sei - que a aplicação calcule",
+    "checkboxSubtext": "A aplicação usará 5 dias como predefinição e depois ajustará conforme fores registando ciclos."
+  },
+  "cycleLength": {
+    "title": "Quantos dias dura em média o teu ciclo?",
+    "subtitle": "É o número de dias do início de um período ao início do seguinte.",
+    "checkboxText": "Não sei - que a aplicação calcule",
+    "checkboxSubtext": "A aplicação usará 28 dias como predefinição e depois ajustará conforme fores registando ciclos."
+  },
+  "lastPeriod": {
+    "title": "Quando começou o teu último período?",
+    "subtitle": "Isto ajudará a prever o teu próximo período.",
+    "checkboxText": "Não me lembro",
+    "checkboxSubtext": "Não há problema, podes fazê-lo mais tarde dentro da aplicação.",
+    "continue": "Continuar"
+  },
+  "success": {
+    "title": "Estás pronta!",
+    "subtitle": "As previsões tornam-se mais precisas após registares 3-6 ciclos. Continua a acompanhar regularmente para melhores resultados.",
+    "button": "Começar a acompanhar"
+  },
+  "continue": "Continuar"
+}

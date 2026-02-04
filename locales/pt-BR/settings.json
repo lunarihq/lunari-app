@@ -1,0 +1,168 @@
+{
+  "title": "Configurações",
+  "reminders": "Lembretes",
+  "appLock": "Bloqueio do app",
+  "privacyPolicy": "Política de privacidade",
+  "about": "Sobre",
+  "theme": "Tema",
+  "calendarView": "Visualização do calendário",
+  "deleteData": "Excluir todos os dados",
+  "screenTitles": {
+    "reminders": "Lembretes",
+    "appLock": "Bloqueio do App",
+    "about": "Sobre",
+    "privacyPolicy": "Política de privacidade",
+    "calendarView": "Visualização do calendário"
+  },
+  "deleteDataConfirm": {
+    "title": "Excluir todos os dados",
+    "message": "Todos os seus dados serão excluídos permanentemente: registro de menstruações, sintomas, registros de saúde, configurações do app, preferências de tema, configurações de notificações e bloqueio. Esta ação não pode ser desfeita.",
+    "delete": "Excluir todos os dados",
+    "cancel": "Cancelar",
+    "success": "Sucesso",
+    "successMessage": "Todos os seus dados foram excluídos. O app será reiniciado.",
+    "error": "Erro",
+    "errorMessage": "Falha ao excluir dados. Por favor, tente novamente."
+  },
+  "themeModal": {
+    "title": "Escolher tema"
+  },
+  "themeOptions": {
+    "system": "Padrão do sistema",
+    "light": "Claro",
+    "dark": "Escuro"
+  },
+  "appLockSettings": {
+    "unlockApp": "Desbloquear app com biometria",
+    "unlockDescription": "Use a autenticação biométrica do seu dispositivo (por exemplo, impressão digital ou Face ID) para desbloquear a Bluma",
+    "noDeviceSecurityDescription": "Você precisa configurar primeiro a autenticação biométrica do seu dispositivo para ativar este recurso.",
+
+    "error": {
+      "title": "Erro",
+      "message": "Falha ao atualizar configurações de bloqueio. Não foi possível concluir a atualização de segurança. Por favor, tente novamente.",
+      "rewrapFailed": "A configuração de segurança não pôde ser aplicada. Seus dados continuam seguros com as configurações anteriores."
+    }
+  },
+  "lockScreen": {
+    "unlockApp": "Desbloquear Bluma",
+    "unlockButton": "Desbloquear"
+  },
+  "reminderSettings": {
+    "title": "Lembretes",
+    "periodReminder": "Lembrete de menstruação",
+    "description": "Receba notificações antes da sua próxima menstruação",
+    "daysBeforePeriod": "Dias antes da menstruação",
+    "days": "{{count}} dia",
+    "days_other": "{{count}} dias",
+    "beforePeriod": "Lembre-me 3 dias antes do provável início da minha próxima menstruação.",
+    "dayOfPeriod": "Lembre-me no dia do início da minha menstruação.",
+    "latePeriod": "Lembre-me se minha menstruação estiver atrasada.",
+    "reminderTime": "Horário do lembrete",
+    "loading": "Carregando configurações de notificações...",
+    "loadError": "Não foi possível carregar as configurações de notificações",
+    "updateError": "Falha ao atualizar configurações de notificações",
+    "permissionDialog": {
+      "title": "Ativar notificações",
+      "message": "Para receber lembretes de menstruação, ative as notificações da Bluma nas configurações do seu dispositivo.",
+      "cancel": "Cancelar",
+      "openSettings": "Abrir configurações"
+    }
+  },
+  "aboutScreen": {
+    "title": "Sobre a Bluma",
+    "version": "Versão 1.0.0",
+    "whatIs": {
+      "description": "A Bluma é um app de registro de menstruação com foco em privacidade, feito para ajudar você a entender e gerenciar seu ciclo menstrual."
+    },
+    "features": {
+      "title": "Recursos",
+      "periodTracking": "Registro e acompanhamento de menstruações",
+      "predictions": "Previsões de ovulação e janela fértil",
+      "symptomsTracking": "Registro de sintomas e humor",
+      "statistics": "Estatísticas e histórico do ciclo",
+      "insights": "Informações sobre as fases do ciclo",
+      "reminders": "Lembretes de menstruação",
+      "lock": "Bloqueio biométrico do app",
+      "theme": "Suporte a tema escuro e claro"
+    },
+    "privacyFirst": {
+      "title": "Privacidade em primeiro lugar",
+      "description": "A Bluma foi feita com uma abordagem centrada em privacidade:",
+      "local": "Todos os dados são armazenados localmente e criptografados",
+      "noTransmission": "Sem transmissão de dados para servidores externos",
+      "noTracking": "Sem análises ou rastreamento de terceiros",
+      "noAds": "Sem publicidade",
+      "noAccount": "Sem necessidade de conta"
+    },
+    "openSource": {
+      "title": "Código aberto",
+      "description": "A Bluma é de código aberto e licenciada sob a",
+      "warranty": "A Bluma é distribuída na esperança de ser útil, mas SEM NENHUMA GARANTIA; sem mesmo a garantia implícita de COMERCIALIZAÇÃO ou ADEQUAÇÃO A UM PROPÓSITO ESPECÍFICO.",
+      "viewSource": "Ver o código no GitHub"
+    },
+    "developer": {
+      "title": "Sobre a desenvolvedora",
+      "description": "A Bluma foi criada pela Maribel, designer de produto e desenvolvedora apaixonada por software que respeita a privacidade. A Bluma foi feita para oferecer uma alternativa confiável aos apps de registro de menstruação que coletam e monetizam dados de saúde pessoais."
+    },
+    "technical": {
+      "title": "Detalhes técnicos",
+      "description": "A Bluma é feita com tecnologias modernas para garantir confiabilidade e desempenho:",
+      "framework": "Framework: React Native com Expo",
+      "database": "Banco de dados: SQLite com Drizzle ORM",
+      "encryption": "Criptografia: SQLCipher",
+      "architecture": "Arquitetura: Offline-first, sem servidor",
+      "language": "Linguagem: TypeScript",
+      "platform": "Plataforma: Android"
+    },
+    "footer": {
+      "prefix": "Para suporte ou feedback, entre em contato: ",
+      "email": "help.bluma@gmail.com",
+      "suffix": "."
+    }
+  },
+  "privacyPolicyScreen": {
+    "title": "Política de privacidade",
+    "lastUpdated": "Última atualização:",
+    "introduction": {
+      "description": "Esta Política de Privacidade descreve como o app Bluma usa e protege seus dados pessoais que você gera e armazena no app."
+    },
+    "dataUse": {
+      "title": "1. Uso de dados",
+      "descriptionPrefix": "A Bluma respeita sua privacidade. Não há coleta de dados de uso ou informações pessoais. A Bluma armazena dados relacionados à sua saúde menstrual",
+      "descriptionBold": "localmente no seu dispositivo",
+      "descriptionSuffix": ", e isso inclui:",
+      "periodDates": "Datas de início e fim da menstruação",
+      "cycleLength": "Duração do ciclo e da menstruação",
+      "symptoms": "Dados de sintomas e humor",
+      "notes": "Notas e observações pessoais",
+      "settings": "Preferências e configurações do app",
+      "usage": "Esses dados são usados apenas para fornecer previsões de menstruação, informações sobre o ciclo e recursos de acompanhamento personalizados. Não compartilhamos, vendemos nem transmitimos seus dados de saúde pessoais a terceiros.",
+      "deletion": "Se quiser excluir todos os dados do app, você pode fazer isso nas configurações, selecionando \"Excluir todos os dados\". Isso vai apagar permanentemente todos os dados de registro, registros de saúde e configurações do app. Você também pode excluir todos os dados desinstalando o app."
+    },
+    "permissions": {
+      "title": "2. Permissões",
+      "description": "A Bluma pode solicitar as seguintes permissões:",
+      "reminders": "",
+      "remindersBold": "Lembretes",
+      "remindersSuffix": ": Para enviar lembretes de menstruação.",
+      "biometric": "",
+      "biometricBold": "Autenticação biométrica",
+      "biometricSuffix": ": Para proteger o app com impressão digital ou reconhecimento facial.",
+      "revoke": "Se não quiser usar nenhuma dessas permissões, você pode revogá-las a qualquer momento nas configurações do seu dispositivo."
+    },
+    "transparency": {
+      "title": "3. Transparência",
+      "description": "Acreditamos em total transparência sobre como seus dados são tratados:",
+      "localStorage": "Todos os seus dados são armazenados localmente e criptografados",
+      "noTransmission": "Nenhum dado é transmitido para servidores externos",
+      "noAnalytics": "Não usamos serviços de análise ou rastreamento",
+      "noAds": "Sem publicidade ou coleta de dados de terceiros",
+      "control": "Você tem controle total sobre seus dados e pode excluí-los a qualquer momento nas configurações."
+    },
+    "footer": {
+      "prefix": "Se tiver dúvidas sobre esta política de privacidade ou sobre como tratamos seus dados, entre em contato em ",
+      "email": "help.bluma@gmail.com",
+      "suffix": "."
+    }
+  }
+}
