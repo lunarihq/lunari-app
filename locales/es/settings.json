@@ -75,8 +75,9 @@
     },
     "features": {
       "title": "Características",
-      "predictions": "Predicciones de periodo y ciclo",
-      "tracking": "Seguimiento de síntomas y estado de ánimo",
+      "periodTracking": "Registro y seguimiento del periodo",
+      "predictions": "Predicciones de ovulación y ventana fértil",
+      "symptomsTracking": "Seguimiento de síntomas y estado de ánimo",
       "statistics": "Estadísticas e historial de ciclos",
       "insights": "Información sobre fases del ciclo",
       "reminders": "Recordatorios de periodo",
@@ -86,8 +87,7 @@
     "privacyFirst": {
       "title": "Privacidad Primero",
       "description": "Bluma está diseñada con un enfoque de privacidad primero:",
-      "local": "Todos los datos se almacenan localmente en tu dispositivo",
-      "encrypted": "Tu base de datos está encriptada",
+      "local": "Todos los datos se almacenan localmente y se encriptan",
       "noTransmission": "No hay transmisión de datos a servidores externos",
       "noTracking": "Sin análisis o seguimiento de terceros",
       "noAds": "Sin anuncios",
@@ -101,7 +101,7 @@
     },
     "developer": {
       "title": "Acerca de la Desarrolladora",
-      "description": "Bluma fue creada por Maribel, una diseñadora de productos y desarrolladora indie apasionada por el software que respeta la privacidad. Construida para proporcionar una alternativa confiable a los rastreadores de periodo que recopilan y monetizan datos de salud personal."
+      "description": "Bluma fue creada por Maribel, una diseñadora y desarrolladora indie apasionada por el software que respeta la privacidad. Bluma está construida para proporcionar una alternativa confiable a los rastreadores de periodo que recopilan y monetizan datos de salud personal."
     },
     "technical": {
       "title": "Detalles Técnicos",
@@ -152,8 +152,7 @@
     "transparency": {
       "title": "3. Transparencia",
       "description": "Creemos en la completa transparencia sobre cómo se manejan tus datos:",
-      "localStorage": "Todos tus datos se almacenan localmente en tu dispositivo",
-      "encrypted": "Tu base de datos está encriptada para proteger tu privacidad",
+      "localStorage": "Todos los datos se almacenan localmente y se encriptan",
       "noTransmission": "No se transmiten datos a servidores externos",
       "noAnalytics": "No usamos servicios de análisis o seguimiento",
       "noAds": "Sin publicidad o recopilación de datos de terceros",

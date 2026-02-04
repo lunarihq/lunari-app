@@ -76,8 +76,9 @@
     },
     "features": {
       "title": "Features",
-      "predictions": "Period and cycle predictions",
-      "tracking": "Symptom and mood tracking",
+      "periodTracking": "Period log and tracking",
+      "predictions": "Ovulation day and fertile window predictions",
+      "symptomsTracking": "Symptom and mood tracking",
       "statistics": "Cycle statistics & history",
       "insights": "Cycle phase insights",
       "reminders": "Period reminders",
@@ -87,8 +88,7 @@
     "privacyFirst": {
       "title": "Privacy First",
       "description": "Bluma is designed with a privacy-first approach:",
-      "local": "All data is stored locally on your device",
-      "encrypted": "Your database is encrypted",
+      "local": "All data is stored locally and encrypted",
       "noTransmission": "No data transmission to external servers",
       "noTracking": "No third-party analytics or tracking",
       "noAds": "No ads",
@@ -102,7 +102,7 @@
     },
     "developer": {
       "title": "About the Developer",
-      "description": "Bluma was created by Maribel, a Product Designer and an indie Developer passionate about privacy-respecting software. Built to provide a trustworthy alternative to period trackers that collect and monetize personal health data."
+      "description": "Bluma was created by Maribel, a Product Designer and Developer passionate about privacy-respecting software. Bluma was built to provide a trustworthy alternative to period trackers that collect and monetize personal health data."
     },
     "technical": {
       "title": "Technical Details",
@@ -153,8 +153,7 @@
     "transparency": {
       "title": "3. Transparency",
       "description": "We believe in complete transparency about how your data is handled:",
-      "localStorage": "All your data is stored locally on your device",
-      "encrypted": "Your database is encrypted to protect your privacy",
+      "localStorage": "All your data is stored locally and encrypted",
       "noTransmission": "No data is transmitted to external servers",
       "noAnalytics": "We do not use analytics or tracking services",
       "noAds": "No third-party advertising or data collection",

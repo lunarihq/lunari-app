@@ -47,7 +47,7 @@ export default function About() {
             {t('aboutScreen.features.title')}
           </Text>
         </View>
-        {['predictions', 'tracking', 'statistics', 'insights', 'reminders', 'lock', 'theme'].map((feature, index) => (
+        {['periodTracking', 'predictions', 'symptomsTracking', 'statistics', 'insights', 'reminders', 'lock', 'theme'].map((feature, index) => (
           <View
             key={feature}
             style={{
@@ -74,7 +74,7 @@ export default function About() {
         <Text style={[typography.body]}>
           {t('aboutScreen.privacyFirst.description')}
         </Text>
-        {['local', 'encrypted', 'noTransmission', 'noTracking', 'noAds', 'noAccount'].map((item, index) => (
+        {['local', 'noTransmission', 'noTracking', 'noAds', 'noAccount'].map((item, index) => (
           <View
             key={item}
             style={{
