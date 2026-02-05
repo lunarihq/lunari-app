@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
 import { DayData } from '../../utils/customCalendarHelpers';
-import { CustomMarking } from '../../types/calendarTypes';
+import { CustomMarking, formatDateString } from '../../types/calendarTypes';
 import { getEditDayCellStyles } from '../../utils/calendarStyles';
 import { ColorScheme } from '../../styles/colors';
 import { Typography } from '../../styles/typography';
@@ -34,7 +34,7 @@ export const EditDayCell = memo<EditDayCellProps>(
 
     const isFuture = dayDate > today;
     const isDisabled = false;
-    const isToday = dateString === new Date().toISOString().split('T')[0];
+    const isToday = dateString === formatDateString(new Date());
 
     const isSelected = marking?.selected;
 

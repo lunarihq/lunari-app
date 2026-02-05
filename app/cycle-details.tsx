@@ -7,6 +7,7 @@ import { useTheme } from '../styles/theme';
 import { useAppStyles } from '../hooks/useStyles';
 import { formatDateShort } from '../utils/localeUtils';
 import { getCycleStatus, getPeriodStatus } from '../utils/cycleUtils';
+import { parseLocalDate } from '../utils/dateUtils';
 import { InfoIcon } from '../components/icons/general/info';
 
 const DayCircles = ({
@@ -52,10 +53,10 @@ export default function CycleDetails() {
   const cycleStatus = getCycleStatus(cycleLength);
   const periodStatus = getPeriodStatus(periodLength);
 
-  const formattedStartDate = formatDateShort(new Date(startDate));
-  const formattedEndDate = isCurrentCycle 
-    ? t('common:time.today') 
-    : formatDateShort(new Date(endDate));
+  const formattedStartDate = formatDateShort(parseLocalDate(startDate));
+  const formattedEndDate = isCurrentCycle
+    ? t('common:time.today')
+    : formatDateShort(parseLocalDate(endDate));
 
   const handleInfoPress = (type: 'cycle' | 'period') => {
     if (type === 'cycle') {

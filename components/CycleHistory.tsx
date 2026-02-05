@@ -6,6 +6,8 @@ import { router } from 'expo-router';
 import { useTheme } from '../styles/theme';
 import { useAppStyles } from '../hooks/useStyles';
 import { formatDateShort } from '../utils/localeUtils';
+import { formatDateString } from '../types/calendarTypes';
+import { parseLocalDate } from '../utils/dateUtils';
 
 interface CycleData {
   startDate: string; // ISO date string (YYYY-MM-DD)
@@ -134,19 +136,19 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
           }
 
           // Format dates for display
-          const formattedStartDate = formatDateShort(new Date(cycle.startDate));
+          const formattedStartDate = formatDateShort(parseLocalDate(cycle.startDate));
           const formattedEndDate = cycle.endDate
-            ? formatDateShort(new Date(cycle.endDate))
+            ? formatDateShort(parseLocalDate(cycle.endDate))
             : calculateEndDate(cycle.startDate, circleDays);
 
           const handlePress = () => {
             const endDateISO = isCurrentCycle 
-              ? new Date().toISOString().split('T')[0]
+              ? formatDateString(new Date())
               : cycle.endDate || (() => {
                   const start = new Date(cycle.startDate);
                   const end = new Date(start);
                   end.setDate(start.getDate() + circleDays - 1);
-                  return end.toISOString().split('T')[0];
+                  return formatDateString(end);
                 })();
 
             router.push({
