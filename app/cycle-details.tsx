@@ -108,7 +108,7 @@ export default function CycleDetails() {
             </View>
 
             <View style={styles.valueStatusRow}>
-              <Text style={[typography.headingLg]}>
+              <Text style={[typography.headingLg, { lineHeight: 32}]}>
                 {cycleLength} {t('common:time.days')}
               </Text>
               <View style={styles.statusContainer}>
@@ -149,7 +149,7 @@ export default function CycleDetails() {
         </View>
 
         <View style={styles.valueStatusRow}>
-          <Text style={[typography.headingLg]}>
+          <Text style={[typography.headingLg, { lineHeight: 32}]}>
             {periodLength} {t('common:time.days')}
           </Text>
           <View style={styles.statusContainer}>
@@ -191,6 +191,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginBottom: 6,
   },
   infoIcon: {
     width: 24,
@@ -202,7 +203,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 8,
+    marginBottom: 10,
   },
   statusContainer: {
     flexDirection: 'row',
