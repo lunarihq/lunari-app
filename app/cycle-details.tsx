@@ -110,7 +110,7 @@ export default function CycleDetails() {
 
             <View style={styles.valueStatusRow}>
               <Text style={[typography.headingLg, { lineHeight: 32}]}>
-                {cycleLength} {t('common:time.days')}
+                {cycleLength} {cycleLength === 1 ? t('common:time.day') : t('common:time.days')}
               </Text>
               <View style={styles.statusContainer}>
                 <Ionicons
@@ -151,7 +151,7 @@ export default function CycleDetails() {
 
         <View style={styles.valueStatusRow}>
           <Text style={[typography.headingLg, { lineHeight: 32}]}>
-            {periodLength} {t('common:time.days')}
+            {periodLength} {periodLength === 1 ? t('common:time.day') : t('common:time.days')}
           </Text>
           <View style={styles.statusContainer}>
             <Ionicons
