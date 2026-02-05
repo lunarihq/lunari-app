@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { MarkedDates } from '../types/calendarTypes';
+import { MarkedDates, formatDateString } from '../types/calendarTypes';
 import { useCalendarPredictions } from './useCalendarPredictions';
 import { useHealthLogDates } from './useHealthLogDates';
 import {
@@ -114,7 +114,7 @@ export function useCalendarMarkedDates({
       });
 
       // Apply today style to current date (but period style takes precedence)
-      const today = new Date().toISOString().split('T')[0];
+      const today = formatDateString(new Date());
       const isPeriodDate = periodDates.includes(today);
       
       if (!isPeriodDate) {

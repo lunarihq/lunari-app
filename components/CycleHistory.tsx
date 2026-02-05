@@ -1,9 +1,13 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { Ionicons } from '@expo/vector-icons';
+import { router } from 'expo-router';
 import { useTheme } from '../styles/theme';
 import { useAppStyles } from '../hooks/useStyles';
 import { formatDateShort } from '../utils/localeUtils';
+import { formatDateString } from '../types/calendarTypes';
+import { parseLocalDate } from '../utils/dateUtils';
 
 interface CycleData {
   startDate: string; // ISO date string (YYYY-MM-DD)
@@ -67,14 +71,14 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
 
   // Helper to calculate how many days have passed since start date
   const getDaysSoFar = (startDate: string): number => {
-    const start = new Date(startDate);
+    const start = parseLocalDate(startDate);
     const today = new Date();
     return Math.floor((today.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1;
   };
 
   // Helper to calculate end date from start date and cycle length
   const calculateEndDate = (startDate: string, cycleLength: number): string => {
-    const start = new Date(startDate);
+    const start = parseLocalDate(startDate);
     const end = new Date(start);
     end.setDate(start.getDate() + cycleLength - 1); // -1 because start date is included
     return formatDateShort(end);
@@ -132,44 +136,76 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
           }
 
           // Format dates for display
-          const formattedStartDate = formatDateShort(new Date(cycle.startDate));
+          const formattedStartDate = formatDateShort(parseLocalDate(cycle.startDate));
           const formattedEndDate = cycle.endDate
-            ? formatDateShort(new Date(cycle.endDate))
+            ? formatDateShort(parseLocalDate(cycle.endDate))
             : calculateEndDate(cycle.startDate, circleDays);
 
+          const handlePress = () => {
+            const endDateISO = isCurrentCycle 
+              ? formatDateString(new Date())
+              : cycle.endDate || (() => {
+                  const start = parseLocalDate(cycle.startDate);
+                  const end = new Date(start);
+                  end.setDate(start.getDate() + circleDays - 1);
+                  return formatDateString(end);
+                })();
+
+            router.push({
+              pathname: '/cycle-details',
+              params: {
+                startDate: cycle.startDate,
+                endDate: endDateISO,
+                cycleLength: typeof cycle.cycleLength === 'number' ? cycle.cycleLength : circleDays,
+                periodLength: cycle.periodLength,
+                isCurrentCycle: isCurrentCycle.toString(),
+              },
+            });
+          };
+
           return (
-            <View 
-              key={index} 
-              style={[
+            <Pressable 
+              key={index}
+              onPress={handlePress}
+              style={({ pressed }) => [
                 styles.cycleContainer,
                 { borderBottomColor: colors.border},
                 index === cycles.length - 1 && {
                   borderBottomWidth: 0,
                   marginBottom: 0,
-                }
+                },
+                pressed && { opacity: 0.7 },
               ]}
             >
-              <View style={styles.cycleInfoColumn}>
-                <Text style={[typography.headingSm, {marginBottom: 4}]}>
-                  {isCurrentCycle 
-                    ? `${t('stats:cycleHistory.currentCycle')}: ${displayCycleLength}`
-                    : displayCycleLength
-                  }
-                </Text>
-                <Text style={[typography.labelSm, { color: colors.textSecondary, fontSize: 15}]}>
-                  {isCurrentCycle 
-                    ? `${formattedStartDate} - ${t('common:time.today')}`
-                    : `${formattedStartDate} - ${formattedEndDate}`
-                  }
-                </Text>
+              <View style={styles.cycleContent}>
+                <View style={styles.cycleInfoColumn}>
+                  <Text style={[typography.headingSm, {marginBottom: 4}]}>
+                    {isCurrentCycle 
+                      ? `${t('stats:cycleHistory.currentCycle')}: ${displayCycleLength}`
+                      : displayCycleLength
+                    }
+                  </Text>
+                  <Text style={[typography.labelSm, { color: colors.textSecondary, fontSize: 15}]}>
+                    {isCurrentCycle 
+                      ? `${formattedStartDate} - ${t('common:time.today')}`
+                      : `${formattedStartDate} - ${formattedEndDate}`
+                    }
+                  </Text>
+                </View>
+
+                <DayCircles
+                  totalDays={circleDays}
+                  periodDays={cycle.periodLength}
+                  isLast={index === cycles.length - 1}
+                />
               </View>
 
-              <DayCircles
-                totalDays={circleDays}
-                periodDays={cycle.periodLength}
-                isLast={index === cycles.length - 1}
+              <Ionicons 
+                name="chevron-forward" 
+                size={18} 
+                color={colors.textSecondary}
               />
-            </View>
+            </Pressable>
           );
         })}
       </View>
@@ -194,8 +230,13 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   cycleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
     borderBottomWidth: 1,
     marginBottom: 16,
+  },
+  cycleContent: {
+    flex: 1,
   },
   cycleInfoColumn: {
     flexDirection: 'column',

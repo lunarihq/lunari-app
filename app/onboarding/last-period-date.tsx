@@ -52,7 +52,7 @@ export default function LastPeriodDateScreen() {
         for (let i = 1; i < periodLength; i++) {
           const nextDate = new Date(startDate);
           nextDate.setDate(startDate.getDate() + i);
-          const nextDateString = nextDate.toISOString().split('T')[0];
+          const nextDateString = formatDateString(nextDate);
           await db.insert(periodDates).values({ date: nextDateString });
         }
       }

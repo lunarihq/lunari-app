@@ -1,3 +1,5 @@
+import { parseLocalDate } from '../utils/dateUtils';
+
 interface PredictionResult {
   days: number;
   date: string;
@@ -166,8 +168,7 @@ export class PeriodPredictionService {
   ): FertilityWindow {
     const cycle = cycleLength || 28;
     const ovulationDay = this.getOvulationDay(startDate, cycle);
-    const [y, m, d] = ovulationDay.split('-').map(v => parseInt(v, 10));
-    const ovulationDate = new Date(y, m - 1, d, 12, 0, 0);
+    const ovulationDate = parseLocalDate(ovulationDay);
 
     const startWindow = new Date(ovulationDate);
     startWindow.setDate(ovulationDate.getDate() - 5); // Fertility typically starts 5 days before ovulation
@@ -282,12 +283,7 @@ export class PeriodPredictionService {
 
     periodStartDates.forEach(startDate => {
       // Calculate ovulation date (14 days before period start)
-      const startDateParts = startDate.split('-');
-      const year = parseInt(startDateParts[0]);
-      const month = parseInt(startDateParts[1]) - 1; // JS months are 0-indexed
-      const day = parseInt(startDateParts[2]);
-
-      const periodDate = new Date(year, month, day, 12, 0, 0);
+      const periodDate = parseLocalDate(startDate);
       const ovulationDate = new Date(periodDate);
       ovulationDate.setDate(ovulationDate.getDate() - 14);
       const ovulationDateString = `${ovulationDate.getFullYear()}-${(ovulationDate.getMonth() + 1).toString().padStart(2, '0')}-${ovulationDate.getDate().toString().padStart(2, '0')}`;
@@ -333,19 +329,9 @@ export class PeriodPredictionService {
 
     for (let i = 0; i < numCycles; i++) {
       // Calculate next period start date
-      const startDateParts = startDate.split('-');
-      const year = parseInt(startDateParts[0]);
-      const month = parseInt(startDateParts[1]) - 1; // JS months are 0-indexed
-      const day = parseInt(startDateParts[2]);
-
-      const nextPeriodDate = new Date(
-        year,
-        month,
-        day + userCycleLength * (i + 1),
-        12,
-        0,
-        0
-      );
+      const baseDate = parseLocalDate(startDate);
+      const nextPeriodDate = new Date(baseDate);
+      nextPeriodDate.setDate(baseDate.getDate() + userCycleLength * (i + 1));
 
       // Calculate ovulation date (14 days before period start)
       const ovulationDate = new Date(nextPeriodDate);

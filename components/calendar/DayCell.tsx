@@ -2,7 +2,7 @@ import React, { memo, useMemo } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { DayData } from '../../utils/customCalendarHelpers';
-import { CustomMarking } from '../../types/calendarTypes';
+import { CustomMarking, formatDateString } from '../../types/calendarTypes';
 import { useTypography } from '../../hooks/useStyles';
 
 interface DayCellProps {
@@ -52,7 +52,7 @@ export const DayCell = memo<DayCellProps>(
     const isDisabled = disableFuture && isFutureDate;
     const isSelected = marking?.selected;
     const hasHealthLogs = marking?.hasHealthLogs;
-    const isToday = dateString === new Date().toISOString().split('T')[0];
+    const isToday = dateString === formatDateString(new Date());
 
     const handlePress = () => {
       if (!isDisabled) {
