@@ -71,14 +71,14 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
 
   // Helper to calculate how many days have passed since start date
   const getDaysSoFar = (startDate: string): number => {
-    const start = new Date(startDate);
+    const start = parseLocalDate(startDate);
     const today = new Date();
     return Math.floor((today.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1;
   };
 
   // Helper to calculate end date from start date and cycle length
   const calculateEndDate = (startDate: string, cycleLength: number): string => {
-    const start = new Date(startDate);
+    const start = parseLocalDate(startDate);
     const end = new Date(start);
     end.setDate(start.getDate() + cycleLength - 1); // -1 because start date is included
     return formatDateShort(end);
@@ -145,7 +145,7 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
             const endDateISO = isCurrentCycle 
               ? formatDateString(new Date())
               : cycle.endDate || (() => {
-                  const start = new Date(cycle.startDate);
+                  const start = parseLocalDate(cycle.startDate);
                   const end = new Date(start);
                   end.setDate(start.getDate() + circleDays - 1);
                   return formatDateString(end);
