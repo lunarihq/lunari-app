@@ -1,6 +1,9 @@
 {
   "title": "Statistics",
   "cycleStatistics": "Cycle statistics",
+  "screenTitles": {
+    "cycleDetails": "Cycle details"
+  },
   "emptyState": {
     "title": "No cycle data yet",
     "subtitle": "Log at least 2 periods to see your personal cycle statistics and history.",
@@ -9,14 +12,20 @@
   "cycleHistory": {
     "title": "Cycle history",
     "noCycles": "Not enough data yet",
-    "cycleLength": "Cycle length: {{days}} days",
-    "periodLength": "Period length: {{days}} days",
+    "cycleLength": "Cycle length",
+    "periodLength": "Period length",
     "days": "{{count}} day",
     "days_other": "{{count}} days",
     "inProgress": "In progress",
     "loggedCycles": "logged cycles",
     "currentCycle": "Current cycle",
     "unknown": "Unknown"
+  },
+  "cycleDetails": {
+    "cycleNormalRange": "The length of this cycle was within the normal range (21-35 days)",
+    "cycleIrregularRange": "This cycle length is outside the normal range (21-35 days)",
+    "periodNormalRange": "The length of this period was within the normal range (2-7 days)",
+    "periodIrregularRange": "This period length is outside the normal range (2-7 days)"
   },
   "averages": {
     "title": "Averages",

@@ -1,6 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { Ionicons } from '@expo/vector-icons';
+import { router } from 'expo-router';
 import { useTheme } from '../styles/theme';
 import { useAppStyles } from '../hooks/useStyles';
 import { formatDateShort } from '../utils/localeUtils';
@@ -137,39 +139,71 @@ export function CycleHistory({ cycles }: CycleHistoryProps) {
             ? formatDateShort(new Date(cycle.endDate))
             : calculateEndDate(cycle.startDate, circleDays);
 
+          const handlePress = () => {
+            const endDateISO = isCurrentCycle 
+              ? new Date().toISOString().split('T')[0]
+              : cycle.endDate || (() => {
+                  const start = new Date(cycle.startDate);
+                  const end = new Date(start);
+                  end.setDate(start.getDate() + circleDays - 1);
+                  return end.toISOString().split('T')[0];
+                })();
+
+            router.push({
+              pathname: '/cycle-details',
+              params: {
+                startDate: cycle.startDate,
+                endDate: endDateISO,
+                cycleLength: typeof cycle.cycleLength === 'number' ? cycle.cycleLength : circleDays,
+                periodLength: cycle.periodLength,
+                isCurrentCycle: isCurrentCycle.toString(),
+              },
+            });
+          };
+
           return (
-            <View 
-              key={index} 
-              style={[
+            <Pressable 
+              key={index}
+              onPress={handlePress}
+              style={({ pressed }) => [
                 styles.cycleContainer,
                 { borderBottomColor: colors.border},
                 index === cycles.length - 1 && {
                   borderBottomWidth: 0,
                   marginBottom: 0,
-                }
+                },
+                pressed && { opacity: 0.7 },
               ]}
             >
-              <View style={styles.cycleInfoColumn}>
-                <Text style={[typography.headingSm, {marginBottom: 4}]}>
-                  {isCurrentCycle 
-                    ? `${t('stats:cycleHistory.currentCycle')}: ${displayCycleLength}`
-                    : displayCycleLength
-                  }
-                </Text>
-                <Text style={[typography.labelSm, { color: colors.textSecondary, fontSize: 15}]}>
-                  {isCurrentCycle 
-                    ? `${formattedStartDate} - ${t('common:time.today')}`
-                    : `${formattedStartDate} - ${formattedEndDate}`
-                  }
-                </Text>
+              <View style={styles.cycleContent}>
+                <View style={styles.cycleInfoColumn}>
+                  <Text style={[typography.headingSm, {marginBottom: 4}]}>
+                    {isCurrentCycle 
+                      ? `${t('stats:cycleHistory.currentCycle')}: ${displayCycleLength}`
+                      : displayCycleLength
+                    }
+                  </Text>
+                  <Text style={[typography.labelSm, { color: colors.textSecondary, fontSize: 15}]}>
+                    {isCurrentCycle 
+                      ? `${formattedStartDate} - ${t('common:time.today')}`
+                      : `${formattedStartDate} - ${formattedEndDate}`
+                    }
+                  </Text>
+                </View>
+
+                <DayCircles
+                  totalDays={circleDays}
+                  periodDays={cycle.periodLength}
+                  isLast={index === cycles.length - 1}
+                />
               </View>
 
-              <DayCircles
-                totalDays={circleDays}
-                periodDays={cycle.periodLength}
-                isLast={index === cycles.length - 1}
+              <Ionicons 
+                name="chevron-forward" 
+                size={18} 
+                color={colors.textSecondary}
               />
-            </View>
+            </Pressable>
           );
         })}
       </View>
@@ -194,8 +228,13 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   cycleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
     borderBottomWidth: 1,
     marginBottom: 16,
+  },
+  cycleContent: {
+    flex: 1,
   },
   cycleInfoColumn: {
     flexDirection: 'column',

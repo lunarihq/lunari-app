@@ -1,6 +1,9 @@
 {
   "title": "Estadísticas",
   "cycleStatistics": "Estadísticas del ciclo",
+  "screenTitles": {
+    "cycleDetails": "Detalles del ciclo"
+  },
   "emptyState": {
     "title": "Aún no hay datos del ciclo",
     "subtitle": "Registra al menos 2 periodos para ver tus estadísticas personales del ciclo y su historial.",
@@ -9,14 +12,20 @@
   "cycleHistory": {
     "title": "Historial de ciclos",
     "noCycles": "Aún no hay suficientes datos",
-    "cycleLength": "Duración del ciclo: {{days}} días",
-    "periodLength": "Duración del periodo: {{days}} días",
+    "cycleLength": "Duración del ciclo",
+    "periodLength": "Duración del periodo",
     "days": "{{count}} día",
     "days_other": "{{count}} días",
     "inProgress": "En progreso",
     "loggedCycles": "ciclos registrados",
     "currentCycle": "Ciclo actual",
     "unknown": "Desconocido"
+  },
+  "cycleDetails": {
+    "cycleNormalRange": "La duración de este ciclo estuvo dentro del rango normal (21-35 días)",
+    "cycleIrregularRange": "La duración de este ciclo está fuera del rango normal (21-35 días)",
+    "periodNormalRange": "La duración de este periodo estuvo dentro del rango normal (2-7 días)",
+    "periodIrregularRange": "La duración de este periodo está fuera del rango normal (2-7 días)"
   },
   "averages": {
     "title": "Promedios",
