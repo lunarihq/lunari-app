@@ -1,7 +1,9 @@
 {
   "welcome": {
-    "title": "Your period, your data.",
-    "subtitle": "Track your menstrual cycle without giving up your privacy."
+    "title": "Your period, your data",
+    "subtitle": "Track your cycle without compromising your privacy.",
+    "badgeStorage": "Locally stored and encrypted",
+    "badgeNoTracking": "No ads and no external tracking"
   },
   "periodLength": {
     "title": "How long does your period usually last?",

@@ -8,6 +8,7 @@ import { useRouter } from 'expo-router';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useAppStyles } from '../../hooks/useStyles';
 import { createOnboardingStyles } from '../../styles/onboarding';
+import { Ionicons } from '@expo/vector-icons';
 import { Shape1, Shape2 } from '../../components/illustrations';
 import { useFonts, BricolageGrotesque_700Bold } from '@expo-google-fonts/bricolage-grotesque';
 
@@ -46,16 +47,17 @@ export default function WelcomeScreen() {
         ]}
       >
         <Image
-          source={require('../../assets/icons/bluma-logo-white-bg.png')}
-          style={{ width: 120, height: 120, marginBottom: 32 }}
+          source={require('../../assets/icons/bluma-logo.png')}
+          style={{ width: 200, height: 55, marginBottom: 32}}
           resizeMode="contain"
         />
         <Text
           style={[
-            { color: colors.primary },
+            { color: colors.textPrimary },
             {
               fontSize: 33,
-              marginBottom: 20,
+              lineHeight: 40,
+              marginBottom: 8,
               textAlign: 'center',
               fontFamily: 'BricolageGrotesque_700Bold',
             },
@@ -66,16 +68,34 @@ export default function WelcomeScreen() {
         <Text
           style={[
             typography.body,
+            { color: colors.textSecondary },
+            { fontSize: 20, lineHeight: 28 },
             {
-              fontSize: 18,
-              marginBottom: 40,
+              marginBottom: 34,
               textAlign: 'center',
-              paddingHorizontal: 16,
             },
           ]}
         >
           {t('welcome.subtitle')}
         </Text>
+        <View style={styles.trustBadgesContainer}>
+          <View style={styles.badge}>
+            <View style={styles.badgeIconSlot}>
+              <Ionicons name="lock-closed-outline" size={24} color={colors.accentPink} />
+            </View>
+            <Text style={[typography.body, { color: colors.textSecondary, fontSize: 19, lineHeight: 24 }]}>
+              {t('welcome.badgeStorage')}
+            </Text>
+          </View>
+          <View style={styles.badge}>
+            <View style={styles.badgeIconSlot}>
+              <Ionicons name="ban-outline" size={24} color={colors.accentPink} />
+            </View>
+            <Text style={[typography.body, { color: colors.textSecondary, fontSize: 19, lineHeight: 24 }]}>
+              {t('welcome.badgeNoTracking')}
+            </Text>
+          </View>
+        </View>
       </View>
 
       <View style={onboardingStyles.footer}>
@@ -86,6 +106,21 @@ export default function WelcomeScreen() {
 }
 
 const styles = StyleSheet.create({
+  trustBadgesContainer: {
+    flexDirection: 'column',
+    gap: 10,
+    alignItems: 'flex-start',
+  },
+  badge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  badgeIconSlot: {
+    width: 32,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   shape1: {
     position: 'absolute',
     top: 0,
