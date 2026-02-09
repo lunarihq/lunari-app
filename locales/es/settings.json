@@ -69,7 +69,7 @@
   },
   "aboutScreen": {
     "title": "Acerca de Bluma",
-    "version": "Versión 1.0.0",
+    "versionLabel": "Versión",
     "whatIs": {
       "description": "Bluma es una aplicación de seguimiento de periodo con enfoque en la privacidad, diseñada para ayudarte a entender y gestionar tu ciclo menstrual."
     },

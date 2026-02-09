@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../../styles/theme';
 import { useAppStyles } from '../../hooks/useStyles';
+import Constants from 'expo-constants';
 
 const SECTION_ICON_SIZE = 24;
 
@@ -33,8 +34,8 @@ export default function About() {
           {t('aboutScreen.title')}
         </Text>
         <Text style={[typography.body, { color: colors.textSecondary }]}>
-          {t('aboutScreen.version')}
-        </Text>
+  {t('aboutScreen.versionLabel')} {Constants.expoConfig?.version}
+</Text>
         <Text style={[typography.body]}>
           {t('aboutScreen.whatIs.description')}
         </Text>

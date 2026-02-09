@@ -70,7 +70,7 @@
   },
   "aboutScreen": {
     "title": "About Bluma",
-    "version": "Version 1.0.0",
+    "versionLabel": "Version",
     "whatIs": {
       "description": "Bluma is a privacy-first period tracking app designed to help you understand and manage your menstrual cycle."
     },
