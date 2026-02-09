@@ -266,12 +266,15 @@ export class NotificationService {
 
       // Don't schedule if the notification date is in the past
       if (notificationDate > new Date()) {
+        const dayOfWeek = predictionDateLocal.toLocaleDateString(i18n.language, { weekday: 'long' });
+        const formattedDate = predictionDateLocal.toLocaleDateString(i18n.language, { month: 'short', day: 'numeric' });
+        
         await Notifications.scheduleNotificationAsync({
           content: {
             title: i18n.t('notifications:periodReminder.title'),
             body: i18n.t('notifications:periodReminder.body', {
-              days: daysBefore,
-              date: prediction.date,
+              dayOfWeek,
+              date: formattedDate,
             }),
             data: { type: 'period_reminder' },
             color: Colors.accentPink,

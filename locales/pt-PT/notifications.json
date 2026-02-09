@@ -1,7 +1,7 @@
 {
   "periodReminder": {
     "title": "O teu período deve começar em breve",
-    "body": "O teu período está previsto começar em {{days}} dias, a {{date}}"
+    "body": "O teu período está previsto para {{dayOfWeek}}, {{date}}"
   },
   "periodStarting": {
     "title": "O teu período pode começar hoje",

@@ -1,7 +1,7 @@
 {
   "periodReminder": {
     "title": "Sua menstruação deve começar em breve",
-    "body": "Sua menstruação está prevista para começar em {{days}} dias, em {{date}}"
+    "body": "Sua menstruação está prevista para {{dayOfWeek}}, {{date}}"
   },
   "periodStarting": {
     "title": "Sua menstruação pode começar hoje",
