@@ -70,7 +70,7 @@
   },
   "aboutScreen": {
     "title": "Sobre a Bluma",
-    "version": "Versão 1.0.0",
+    "versionLabel": "Versão",
     "whatIs": {
       "description": "A Bluma é um app de registro de menstruação com foco em privacidade, feito para ajudar você a entender e gerenciar seu ciclo menstrual."
     },
