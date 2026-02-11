@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useTheme } from '../styles/theme';
@@ -41,7 +41,7 @@ export function StatCard({ title, value, icon, status, type }: StatCardProps) {
     return colors.textSecondary;
   };
 
-  const handleInfoPress = () => {
+  const handlePress = () => {
     if (type) {
       const pathname =
         type === 'cycle'
@@ -52,7 +52,15 @@ export function StatCard({ title, value, icon, status, type }: StatCardProps) {
   };
 
   return (
-    <View style={[styles.card, { backgroundColor: colors.surfaceVariant }]}>
+    <Pressable
+      style={({ pressed }) => [
+        styles.card,
+        { backgroundColor: colors.surfaceVariant },
+        pressed && styles.cardPressed,
+      ]}
+      onPress={handlePress}
+      disabled={!type}
+    >
       <View
         style={[
           styles.iconContainer,
@@ -76,13 +84,9 @@ export function StatCard({ title, value, icon, status, type }: StatCardProps) {
       </View>
       <View style={styles.rightContainer}>
         {type && (
-          <TouchableOpacity
-            onPress={handleInfoPress}
-            style={styles.infoIcon}
-            activeOpacity={0.7}
-          >
+          <View style={styles.infoIcon}>
             <InfoIcon size={20} color={colors.textSecondary} />
-          </TouchableOpacity>
+          </View>
         )}
         {status && (
           <View style={styles.statusContainer}>
@@ -93,7 +97,7 @@ export function StatCard({ title, value, icon, status, type }: StatCardProps) {
           </View>
         )}
       </View>
-    </View>
+    </Pressable>
   );
 }
 
@@ -103,6 +107,10 @@ const styles = StyleSheet.create({
     padding: 16,
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  cardPressed: {
+    opacity: 0.7,
+    transform: [{ scale: 0.98 }],
   },
   iconContainer: {
     width: 54,
