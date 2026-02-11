@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     alignItems: 'center',
     marginBottom: 16,
-    gap: 4,
+    gap: 3,
   },
   circle: {
     width: 8,

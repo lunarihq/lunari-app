@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
 import { useLocalSearchParams, router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
@@ -77,7 +77,7 @@ export default function CycleDetails() {
           <Text style={[typography.headingSm, { marginBottom: 4 }]}>
             {t('stats:cycleHistory.currentCycle')}: {cycleLength} {cycleLength === 1 ? t('common:time.day') : t('common:time.days')}
           </Text>
-          <Text style={[typography.body, { color: colors.textSecondary, marginBottom: 12 }]}>
+          <Text style={[typography.body, { color: colors.textSecondary, marginBottom: 10 }]}>
             {formattedStartDate} - {formattedEndDate}
           </Text>
           <DayCircles totalDays={cycleLength} periodDays={periodLength} />
@@ -85,27 +85,27 @@ export default function CycleDetails() {
       ) : (
         <>
           <View style={[styles.headerCard, { backgroundColor: colors.surface }]}>
-            <Text style={[typography.headingSm, { marginBottom: 4 }]}>
-              {cycleLength} {cycleLength === 1 ? t('common:time.day') : t('common:time.days')}
-            </Text>
-            <Text style={[typography.body, { color: colors.textSecondary, marginBottom: 12 }]}>
+            <Text style={[typography.bodyBold, { color: colors.textSecondary, marginBottom: 12 }]}>
               {formattedStartDate} - {formattedEndDate}
             </Text>
             <DayCircles totalDays={cycleLength} periodDays={periodLength} />
           </View>
 
-          <View style={[styles.detailCard, { backgroundColor: colors.surface }]}>
+          <Pressable
+            style={({ pressed }) => [
+              styles.detailCard,
+              { backgroundColor: colors.surface },
+              pressed && styles.cardPressed,
+            ]}
+            onPress={() => handleInfoPress('cycle')}
+          >
             <View style={styles.cardHeader}>
-              <Text style={[typography.body, { color: colors.textSecondary }]}>
+              <Text style={[typography.body, { color: colors.textSecondary, fontWeight: '500' }]}>
                 {t('stats:cycleHistory.cycleLength')}
               </Text>
-              <TouchableOpacity
-                onPress={() => handleInfoPress('cycle')}
-                style={styles.infoIcon}
-                activeOpacity={0.7}
-              >
+              <View style={styles.infoIcon}>
                 <InfoIcon size={20} color={colors.textSecondary} />
-              </TouchableOpacity>
+              </View>
             </View>
 
             <View style={styles.valueStatusRow}>
@@ -131,22 +131,25 @@ export default function CycleDetails() {
                 ? t('stats:cycleDetails.cycleNormalRange')
                 : t('stats:cycleDetails.cycleIrregularRange')}
             </Text>
-          </View>
+          </Pressable>
         </>
       )}
 
-      <View style={[styles.detailCard, { backgroundColor: colors.surface }]}>
+      <Pressable
+        style={({ pressed }) => [
+          styles.detailCard,
+          { backgroundColor: colors.surface },
+          pressed && styles.cardPressed,
+        ]}
+        onPress={() => handleInfoPress('period')}
+      >
         <View style={styles.cardHeader}>
-          <Text style={[typography.body, { color: colors.textSecondary }]}>
+          <Text style={[typography.body, { color: colors.textSecondary, fontWeight: '500' }]}>
             {t('stats:cycleHistory.periodLength')}
           </Text>
-          <TouchableOpacity
-            onPress={() => handleInfoPress('period')}
-            style={styles.infoIcon}
-            activeOpacity={0.7}
-          >
+          <View style={styles.infoIcon}>
             <InfoIcon size={20} color={colors.textSecondary} />
-          </TouchableOpacity>
+          </View>
         </View>
 
         <View style={styles.valueStatusRow}>
@@ -172,7 +175,7 @@ export default function CycleDetails() {
             ? t('stats:cycleDetails.periodNormalRange')
             : t('stats:cycleDetails.periodIrregularRange')}
         </Text>
-      </View>
+      </Pressable>
     </ScrollView>
   );
 }
@@ -187,6 +190,10 @@ const styles = StyleSheet.create({
     padding: 16,
     borderRadius: 16,
     marginBottom: 16,
+  },
+  cardPressed: {
+    opacity: 0.7,
+    transform: [{ scale: 0.98 }],
   },
   cardHeader: {
     flexDirection: 'row',
@@ -204,7 +211,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 10,
+    marginBottom: 8,
   },
   statusContainer: {
     flexDirection: 'row',
@@ -215,7 +222,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'center',
-    gap: 4,
+    gap: 3,
   },
   circle: {
     width: 8,

@@ -70,7 +70,7 @@ export function StatCard({ title, value, icon, status, type }: StatCardProps) {
         {icon}
       </View>
       <View style={styles.contentContainer}>
-        <Text style={[typography.body, { color: colors.textSecondary }]}>
+        <Text style={[typography.body, { color: colors.textPrimary}]}>
           {title}
         </Text>
         <Text
