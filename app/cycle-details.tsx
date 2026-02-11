@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
 import { useLocalSearchParams, router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
@@ -10,10 +10,15 @@ import { getCycleStatus, getPeriodStatus } from '../utils/cycleUtils';
 import { parseLocalDate } from '../utils/dateUtils';
 import { InfoIcon } from '../components/icons/general/info';
 import { CycleIcon } from '../components/icons/general/Cycle';
+import { getDB } from '../db';
+import { healthLogs } from '../db/schema';
+import { and, gte, lte } from 'drizzle-orm';
+import { PeriodPredictionService } from '../services/periodPredictions';
+import { HealthLogsSummary, PhaseHealthLogs } from '../components/HealthLogsSummary';
 
 export default function CycleDetails() {
   const { colors } = useTheme();
-  const { typography, commonStyles } = useAppStyles();
+  const { typography, commonStyles, scrollContentContainerWithSafeArea } = useAppStyles();
   const { t } = useTranslation(['stats', 'common']);
   const params = useLocalSearchParams();
 
@@ -26,10 +31,84 @@ export default function CycleDetails() {
   const cycleStatus = getCycleStatus(cycleLength);
   const periodStatus = getPeriodStatus(periodLength);
 
+  const [phaseHealthLogs, setPhaseHealthLogs] = useState<PhaseHealthLogs>({});
+
   const formattedStartDate = formatDateShort(parseLocalDate(startDate));
   const formattedEndDate = isCurrentCycle
     ? t('common:time.today')
     : formatDateShort(parseLocalDate(endDate));
+
+  useEffect(() => {
+    const fetchHealthLogs = async () => {
+      try {
+        const db = getDB();
+        const logs = await db
+          .select()
+          .from(healthLogs)
+          .where(
+            and(
+              gte(healthLogs.date, startDate),
+              lte(healthLogs.date, endDate)
+            )
+          );
+
+        if (logs.length === 0) {
+          setPhaseHealthLogs({});
+          return;
+        }
+
+        const grouped: PhaseHealthLogs = {};
+
+        logs.forEach(log => {
+          if (log.type === 'notes') return;
+
+          const cycleDay = PeriodPredictionService.getCurrentCycleDay(startDate, log.date);
+          const phase = PeriodPredictionService.getCyclePhase(cycleDay, cycleLength);
+
+          if (!grouped[phase]) {
+            grouped[phase] = {
+              dayRange: '',
+              items: {},
+            };
+          }
+
+          if (!grouped[phase].items[log.item_id]) {
+            grouped[phase].items[log.item_id] = {
+              type: log.type,
+              count: 0,
+            };
+          }
+
+          grouped[phase].items[log.item_id].count += 1;
+        });
+
+        Object.keys(grouped).forEach(phase => {
+          const phaseLogs = logs.filter(log => {
+            const cycleDay = PeriodPredictionService.getCurrentCycleDay(startDate, log.date);
+            return PeriodPredictionService.getCyclePhase(cycleDay, cycleLength) === phase;
+          });
+
+          if (phaseLogs.length > 0) {
+            const days = phaseLogs.map(log =>
+              PeriodPredictionService.getCurrentCycleDay(startDate, log.date)
+            );
+            const minDay = Math.min(...days);
+            const maxDay = Math.max(...days);
+            grouped[phase].dayRange = minDay === maxDay
+              ? `Day ${minDay}`
+              : `Days ${minDay}-${maxDay}`;
+          }
+        });
+
+        setPhaseHealthLogs(grouped);
+      } catch (error) {
+        console.error('Error fetching health logs:', error);
+        setPhaseHealthLogs({});
+      }
+    };
+
+    fetchHealthLogs();
+  }, [startDate, endDate, cycleLength]);
 
   const handleInfoPress = (type: 'cycle' | 'period') => {
     if (type === 'cycle') {
@@ -42,7 +121,7 @@ export default function CycleDetails() {
   return (
     <ScrollView
       style={[commonStyles.scrollView]}
-      contentContainerStyle={commonStyles.scrollContentContainer}
+      contentContainerStyle={scrollContentContainerWithSafeArea}
       showsVerticalScrollIndicator={false}
     >
       {isCurrentCycle ? (
@@ -178,6 +257,10 @@ export default function CycleDetails() {
               : t('stats:cycleDetails.periodIrregularRange')}
           </Text>
         </Pressable>
+      )}
+
+      {Object.keys(phaseHealthLogs).length > 0 && (
+        <HealthLogsSummary phaseLogs={phaseHealthLogs} />
       )}
     </ScrollView>
   );

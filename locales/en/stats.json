@@ -33,7 +33,14 @@
     "learnAboutLatePeriod": "Learn why your period might be late",
     "cycleLasted": "Cycle lasted from {{startDate}} to {{endDate}}",
     "cycleLastedBefore": "Cycle lasted from ",
-    "cycleLastedMiddle": " to "
+    "cycleLastedMiddle": " to ",
+    "healthLogsSummary": "During this cycle you logged",
+    "menstrualPhase": "Menstrual",
+    "follicularPhase": "Follicular",
+    "ovulatoryPhase": "Ovulatory",
+    "lutealPhase": "Luteal",
+    "extendedPhase": "Extended",
+    "daysRange": "Days {{start}}-{{end}}"
   },
   "averages": {
     "title": "Averages",

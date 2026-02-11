@@ -33,7 +33,14 @@
     "learnAboutLatePeriod": "Descubre por qué tu periodo puede estar retrasado",
     "cycleLasted": "El ciclo duró desde el {{startDate}} hasta el {{endDate}}",
     "cycleLastedBefore": "El ciclo duró desde el ",
-    "cycleLastedMiddle": " hasta el "
+    "cycleLastedMiddle": " hasta el ",
+    "healthLogsSummary": "Durante este ciclo registraste",
+    "menstrualPhase": "Menstrual",
+    "follicularPhase": "Folicular",
+    "ovulatoryPhase": "Ovulatoria",
+    "lutealPhase": "Lútea",
+    "extendedPhase": "Extendida",
+    "daysRange": "Días {{start}}-{{end}}"
   },
   "averages": {
     "title": "Promedios",

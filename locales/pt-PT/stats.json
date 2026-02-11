@@ -33,7 +33,14 @@
     "learnAboutLatePeriod": "Descobre por que o teu período pode estar atrasado",
     "cycleLasted": "O ciclo durou de {{startDate}} a {{endDate}}",
     "cycleLastedBefore": "O ciclo durou de ",
-    "cycleLastedMiddle": " a "
+    "cycleLastedMiddle": " a ",
+    "healthLogsSummary": "Durante este ciclo registaste",
+    "menstrualPhase": "Menstrual",
+    "follicularPhase": "Folicular",
+    "ovulatoryPhase": "Ovulatória",
+    "lutealPhase": "Lútea",
+    "extendedPhase": "Estendida",
+    "daysRange": "Dias {{start}}-{{end}}"
   },
   "averages": {
     "title": "Médias",
