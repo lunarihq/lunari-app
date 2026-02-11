@@ -164,24 +164,30 @@ export const QuickHealthSelector = ({
 
   if (healthLogsForDate.length === 0) {
     return (
-      <View style={styles.container}>
-        <FAB
-          onPress={() =>
-            router.push(
-              selectedDate
-                ? `/health-tracking?date=${selectedDate}`
-                : '/health-tracking'
-            )
-          }
-          containerStyle={styles.fabContainer}
-          label={t('quickHealthSelector.add')}
-        />
+      <TouchableOpacity
+        style={styles.container}
+        onPress={() =>
+          router.push(
+            selectedDate
+              ? `/health-tracking?date=${selectedDate}`
+              : '/health-tracking'
+          )
+        }
+        activeOpacity={0.7}
+      >
+        <View pointerEvents="none">
+          <FAB
+            onPress={() => {}}
+            containerStyle={styles.fabContainer}
+            label={t('quickHealthSelector.add')}
+          />
+        </View>
         <Text style={[typography.caption, { color: colors.placeholder, flex: 1, alignSelf: 'center' }]}>
           {selectedDate && selectedDate !== dayjs().format('YYYY-MM-DD')
             ? t('quickHealthSelector.noSymptomsThisDate')
             : t('quickHealthSelector.noSymptomsToday')}
         </Text>
-      </View>
+      </TouchableOpacity>
     );
   }
 
