@@ -1,8 +1,13 @@
 import React from 'react';
-import { Text, View, TouchableOpacity, TextStyle, ViewStyle } from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  TextStyle,
+  ViewStyle,
+  StyleSheet,
+} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../styles/theme';
-import { useAppStyles } from '../hooks/useStyles';
 
 type FABProps = {
   onPress: () => void;
@@ -24,34 +29,32 @@ export const FAB = ({
   fabStyle,
 }: FABProps) => {
   const { colors } = useTheme();
-  const { commonStyles } = useAppStyles();
 
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={[{ alignItems: 'center' }, containerStyle]}
+      style={[styles.container, containerStyle]}
       activeOpacity={0.7}
     >
-      <View style={[commonStyles.fab, fabStyle]}>
+      <View style={[styles.fab, { backgroundColor: colors.primary }, fabStyle]}>
         <Ionicons name={icon} size={iconSize} color={colors.white} />
       </View>
-      {label && (
-        <Text
-          style={[
-            {
-              fontSize: 12,
-              fontWeight: '500',
-              textAlign: 'center',
-              color: colors.textSecondary,
-            },
-            labelStyle,
-          ]}
-        >
-          {label}
-        </Text>
-      )}
     </TouchableOpacity>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+  },
+  fab: {
+    width: 54,
+    height: 54,
+    borderRadius: 27,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 6,
+  },
+});
 
 export default FAB;

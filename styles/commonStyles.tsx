@@ -38,15 +38,4 @@ export const createCommonStyles = (colors: ColorScheme) => StyleSheet.create({
     alignItems: 'center',
     marginBottom: 16,
   },
-
-  // Floating action button
-  fab: {
-    width: 54,
-    height: 54,
-    borderRadius: 27,
-    backgroundColor: colors.primary,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 8,
-  },
 });

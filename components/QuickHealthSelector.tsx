@@ -162,13 +162,9 @@ export const QuickHealthSelector = ({
 
   HealthLogItem.displayName = 'HealthLogItem';
 
-  return (
-    <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        style={[styles.scrollContainer]}
-      >
-        {/* Add Button - Always visible */}
+  if (healthLogsForDate.length === 0) {
+    return (
+      <View style={styles.container}>
         <FAB
           onPress={() =>
             router.push(
@@ -180,30 +176,56 @@ export const QuickHealthSelector = ({
           containerStyle={styles.fabContainer}
           label={t('quickHealthSelector.add')}
         />
+        <Text style={[typography.caption, { color: colors.placeholder, flex: 1, alignSelf: 'center' }]}>
+          {selectedDate && selectedDate !== dayjs().format('YYYY-MM-DD')
+            ? t('quickHealthSelector.noSymptomsThisDate')
+            : t('quickHealthSelector.noSymptomsToday')}
+        </Text>
+      </View>
+    );
+  }
 
-        {/* Either show logged items or "No items" message */}
-        {healthLogsForDate.length > 0 ? (
-          // Map through logged items using memoized component
-          healthLogsForDate.map(log => (
-            <HealthLogItem key={`${log.type}_${log.item_id}`} log={log} selectedDate={selectedDate} />
-          ))
-        ) : (
-          // No items message
-          <View style={styles.noItemsContainer}>
-            <Text style={[typography.caption, { color: colors.textSecondary }]}>
-              {selectedDate && selectedDate !== dayjs().format('YYYY-MM-DD')
-                ? t('quickHealthSelector.noSymptomsThisDate')
-                : t('quickHealthSelector.noSymptomsToday')}
-            </Text>
-          </View>
-        )}
+  return (
+    <View style={styles.container}>
+      {/* Fixed FAB - always visible */}
+      <FAB
+        onPress={() =>
+          router.push(
+            selectedDate
+              ? `/health-tracking?date=${selectedDate}`
+              : '/health-tracking'
+          )
+        }
+        containerStyle={styles.fabContainer}
+        label={t('quickHealthSelector.add')}
+      />
+      
+      {/* Scrollable content */}
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={styles.scrollContainer}
+        contentContainerStyle={styles.scrollContent}
+      >
+        {healthLogsForDate.map(log => (
+          <HealthLogItem key={`${log.type}_${log.item_id}`} log={log} selectedDate={selectedDate} />
+        ))}
       </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  scrollContainer: {
+  container: {
     flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 12,
+  },
+  scrollContainer: {
+    flex: 1,
+  },
+  scrollContent: {
+    paddingRight: 16,
   },
   itemContainer: {
     alignItems: 'center',
@@ -211,20 +233,14 @@ const styles = StyleSheet.create({
   },
   fabContainer: {
     alignSelf: 'flex-start',
-    width: 60,
-    marginRight: 8,
+    width: 54,
   },
-
   itemIconContainer: {
     width: 54,
     height: 54,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 8,
-  },
-  noItemsContainer: {
-    justifyContent: 'center',
-    paddingLeft: 8,
+    marginBottom: 6,
   },
 });
 
