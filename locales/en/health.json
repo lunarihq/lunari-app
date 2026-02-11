@@ -75,8 +75,8 @@
     "title": "How do you feel today?",
     "add": "Add",
     "note": "Note",
-    "noSymptomsToday": "Track symptoms daily to discover your body's patterns",
-    "noSymptomsThisDate": "Track symptoms to discover your body's patterns"
+    "noSymptomsToday": "Track symptoms to discover patterns",
+    "noSymptomsThisDate": "Track symptoms to discover patterns"
   }
 }
 
