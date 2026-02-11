@@ -171,6 +171,12 @@
       "sleep": "Dorme de forma consistente e com qualidade",
       "track": "Acompanha os teus ciclos para identificar padrões",
       "patience": "Sê paciente, a irregularidade ocasional é normal"
+    },
+    "disclaimerBold": "IMPORTANTE!",
+    "disclaimer": "A Bluma não é uma ferramenta de diagnóstico. A informação da Bluma não substitui o aconselhamento de um profissional de saúde. Procura sempre o aconselhamento do teu médico ou outro profissional de saúde qualificado sobre qualquer dúvida que tenhas relativamente ao teu ciclo.",
+    "references": {
+      "title": "Referências",
+      "acog": "1. American College of Obstetricians and Gynecologists. Abnormal Uterine Bleeding in Reproductive-Aged Women. Practice Bulletin No. 128, julho 2012."
     }
   },
   "prediction": {

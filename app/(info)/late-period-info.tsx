@@ -94,6 +94,20 @@ export default function PeriodLength() {
           </View>
         ))}
       </View>
+      <View style={[styles.contentSection]}>
+        <Text style={[typography.body]}>
+          <Text style={typography.bodyBold}>{t('latePeriod.disclaimerBold')} </Text>
+          {t('latePeriod.disclaimer')}
+        </Text>
+      </View>
+      <View style={[styles.contentSection]}>
+        <Text style={[typography.headingSm]}>
+          {t('latePeriod.references.title')}
+        </Text>
+        <Text style={[typography.caption]}>
+          {t('latePeriod.references.acog')}
+        </Text>
+      </View>
     </ScrollView>
   );
 }

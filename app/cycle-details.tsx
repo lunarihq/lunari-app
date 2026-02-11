@@ -9,34 +9,7 @@ import { formatDateShort } from '../utils/localeUtils';
 import { getCycleStatus, getPeriodStatus } from '../utils/cycleUtils';
 import { parseLocalDate } from '../utils/dateUtils';
 import { InfoIcon } from '../components/icons/general/info';
-
-const DayCircles = ({
-  totalDays,
-  periodDays,
-}: {
-  totalDays: number;
-  periodDays: number;
-}) => {
-  const { colors } = useTheme();
-  const circles = [];
-
-  for (let i = 0; i < totalDays; i++) {
-    circles.push(
-      <View
-        key={i}
-        style={[
-          styles.circle,
-          {
-            backgroundColor:
-              i < periodDays ? colors.accentPink : colors.neutral100,
-          },
-        ]}
-      />
-    );
-  }
-
-  return <View style={styles.circleContainer}>{circles}</View>;
-};
+import { CycleIcon } from '../components/icons/general/Cycle';
 
 export default function CycleDetails() {
   const { colors } = useTheme();
@@ -77,18 +50,46 @@ export default function CycleDetails() {
           <Text style={[typography.headingSm, { marginBottom: 4 }]}>
             {t('stats:cycleHistory.currentCycle')}: {cycleLength} {cycleLength === 1 ? t('common:time.day') : t('common:time.days')}
           </Text>
-          <Text style={[typography.body, { color: colors.textSecondary, marginBottom: 10 }]}>
+          <Text style={[typography.body, { color: colors.textSecondary}]}>
             {formattedStartDate} - {formattedEndDate}
           </Text>
-          <DayCircles totalDays={cycleLength} periodDays={periodLength} />
+          {cycleLength > 35 && (
+            <View style={[styles.warningContainer, { backgroundColor: colors.warningLight }]}>
+              <Ionicons name="alert-circle-outline" size={20} color={colors.warning} />
+              <View style={{ flex: 1 }}>
+                <Text style={[typography.body, { color: colors.textPrimary, marginBottom: 8 }]}>
+                  {t('stats:cycleDetails.periodOverdueBefore')}
+                  <Text style={[typography.body, { color: colors.textPrimary, fontWeight: '600' }]}>
+                    {cycleLength - 35} {cycleLength - 35 === 1 ? t('common:time.day') : t('common:time.days')}
+                  </Text>
+                  {t('stats:cycleDetails.periodOverdueAfter')}
+                </Text>
+                <Pressable
+                  onPress={() => router.push('/(info)/late-period-info')}
+                  style={({ pressed }) => [
+                    { opacity: pressed ? 0.6 : 1 }
+                  ]}
+                >
+                  <Text style={[typography.body, { color: colors.primary, fontWeight: '600' }]}>
+                    {t('stats:cycleDetails.learnAboutLatePeriod')}
+                  </Text>
+                </Pressable>
+              </View>
+            </View>
+          )}
         </View>
       ) : (
         <>
           <View style={[styles.headerCard, { backgroundColor: colors.surface }]}>
-            <Text style={[typography.bodyBold, { color: colors.textSecondary, marginBottom: 12 }]}>
-              {formattedStartDate} - {formattedEndDate}
-            </Text>
-            <DayCircles totalDays={cycleLength} periodDays={periodLength} />
+            <View style={styles.cycleHeaderRow}>
+              <CycleIcon size={32} />
+              <Text style={[typography.body, { flex: 1, marginLeft: 10 }]}>
+                {t('stats:cycleDetails.cycleLastedBefore')}
+                <Text style={typography.bodyBold}>{formattedStartDate}</Text>
+                {t('stats:cycleDetails.cycleLastedMiddle')}
+                <Text style={typography.bodyBold}>{formattedEndDate}</Text>
+              </Text>
+            </View>
           </View>
 
           <Pressable
@@ -135,47 +136,49 @@ export default function CycleDetails() {
         </>
       )}
 
-      <Pressable
-        style={({ pressed }) => [
-          styles.detailCard,
-          { backgroundColor: colors.surface },
-          pressed && styles.cardPressed,
-        ]}
-        onPress={() => handleInfoPress('period')}
-      >
-        <View style={styles.cardHeader}>
-          <Text style={[typography.body, { color: colors.textSecondary, fontWeight: '500' }]}>
-            {t('stats:cycleHistory.periodLength')}
-          </Text>
-          <View style={styles.infoIcon}>
-            <InfoIcon size={20} color={colors.textSecondary} />
-          </View>
-        </View>
-
-        <View style={styles.valueStatusRow}>
-          <Text style={[typography.headingLg, { lineHeight: 32}]}>
-            {periodLength} {periodLength === 1 ? t('common:time.day') : t('common:time.days')}
-          </Text>
-          <View style={styles.statusContainer}>
-            <Ionicons
-              name={periodStatus.status === 'normal' ? 'checkmark-circle' : 'alert-circle'}
-              size={20}
-              color={periodStatus.status === 'normal' ? colors.success : colors.warning}
-            />
-            <Text style={[typography.body, { color: colors.textSecondary }]}>
-              {periodStatus.status === 'normal'
-                ? t('common:status.normal')
-                : t('common:status.irregular')}
+      {!isCurrentCycle && (
+        <Pressable
+          style={({ pressed }) => [
+            styles.detailCard,
+            { backgroundColor: colors.surface },
+            pressed && styles.cardPressed,
+          ]}
+          onPress={() => handleInfoPress('period')}
+        >
+          <View style={styles.cardHeader}>
+            <Text style={[typography.body, { color: colors.textSecondary, fontWeight: '500' }]}>
+              {t('stats:cycleHistory.periodLength')}
             </Text>
+            <View style={styles.infoIcon}>
+              <InfoIcon size={20} color={colors.textSecondary} />
+            </View>
           </View>
-        </View>
 
-        <Text style={[typography.body, { color: colors.textSecondary, marginTop: 8 }]}>
-          {periodStatus.status === 'normal'
-            ? t('stats:cycleDetails.periodNormalRange')
-            : t('stats:cycleDetails.periodIrregularRange')}
-        </Text>
-      </Pressable>
+          <View style={styles.valueStatusRow}>
+            <Text style={[typography.headingLg, { lineHeight: 32}]}>
+              {periodLength} {periodLength === 1 ? t('common:time.day') : t('common:time.days')}
+            </Text>
+            <View style={styles.statusContainer}>
+              <Ionicons
+                name={periodStatus.status === 'normal' ? 'checkmark-circle' : 'alert-circle'}
+                size={20}
+                color={periodStatus.status === 'normal' ? colors.success : colors.warning}
+              />
+              <Text style={[typography.body, { color: colors.textSecondary }]}>
+                {periodStatus.status === 'normal'
+                  ? t('common:status.normal')
+                  : t('common:status.irregular')}
+              </Text>
+            </View>
+          </View>
+
+          <Text style={[typography.body, { color: colors.textSecondary, marginTop: 8 }]}>
+            {periodStatus.status === 'normal'
+              ? t('stats:cycleDetails.periodNormalRange')
+              : t('stats:cycleDetails.periodIrregularRange')}
+          </Text>
+        </Pressable>
+      )}
     </ScrollView>
   );
 }
@@ -218,15 +221,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 4,
   },
-  circleContainer: {
+  warningContainer: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    alignItems: 'center',
-    gap: 3,
+    alignItems: 'flex-start',
+    gap: 8,
+    marginTop: 12,
+    padding: 12,
+    borderRadius: 8,
   },
-  circle: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
+  cycleHeaderRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });

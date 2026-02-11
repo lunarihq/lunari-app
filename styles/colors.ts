@@ -46,6 +46,7 @@ export interface ColorScheme {
   // semantic status colors
   success: string;
   warning: string;
+  warningLight: string;
   error: string;
   info: string;
 
@@ -101,6 +102,7 @@ export const lightColors: ColorScheme = {
   // semantic status colors
   success: '#10B981', // Green for success states
   warning: '#F59E0B', // Orange for warnings
+  warningLight: '#FEF3C7', // Light orange for warning backgrounds
   error: '#EF4444', // Red for errors/destructive actions
   info: '#3B82F6', // Blue for informational states
 
@@ -157,6 +159,7 @@ export const darkColors: ColorScheme = {
   // semantic status colors (lighter for dark mode contrast)
   success: '#34D399', // Lighter green for dark mode
   warning: '#FBBF24', // Lighter orange for dark mode
+  warningLight: '#422006', // Dark orange for warning backgrounds
   error: '#F87171', // Lighter red for dark mode
   info: '#60A5FA', // Lighter blue for dark mode
 
