@@ -204,7 +204,7 @@ export default function PeriodCalendarScreen() {
           {
             backgroundColor: colors.surface,
             borderTopColor: colors.border,
-            paddingBottom: Math.max(insets.bottom, 16),
+            paddingBottom: insets.bottom + 16,
           },
         ]}
       >
