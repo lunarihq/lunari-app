@@ -22,10 +22,10 @@
       "extended": "Estendido"
     },
     "phaseDescriptions": {
-      "menstrual": "O período, ou menstruação, é quando o revestimento do útero se desprende e sai do corpo através de sangramento vaginal. Normalmente dura de 3 a 7 dias, mas pode variar bastante.\n\nDurante esse tempo, o corpo se prepara para uma possível gravidez espessando o revestimento uterino. Se não ocorrer fertilização, os níveis hormonais caem e a menstruação começa.",
-      "follicular": "A fase folicular é a primeira parte do ciclo menstrual, começando no primeiro dia da menstruação e terminando na ovulação. Os níveis de energia começam a subir com o aumento de estrogênio. Bom momento para começar novos projetos e atividade física.",
-      "ovulatory": "A ovulação é a liberação de um óvulo do ovário. É a janela de pico de fertilidade e normalmente ocorre por volta do dia 14 do seu ciclo.",
-      "luteal": "A fase lútea é a segunda parte do ciclo menstrual, da ovulação até o início da próxima menstruação, e normalmente dura cerca de 12 a 14 dias.\n\nDurante esse tempo, o corpo se prepara para uma possível gravidez espessando o revestimento uterino. Se não ocorrer fertilização, os níveis hormonais caem e a menstruação começa.",
+      "menstrual": "O ciclo menstrual começa no primeiro dia da sua menstruação e termina no dia anterior ao início da próxima.\n\nA menstruação é quando o revestimento do útero se desprende e sai do corpo através do sangramento vaginal. A menstruação costuma durar de 3 a 7 dias.",
+      "follicular": "A fase folicular é a primeira parte do ciclo menstrual: começa no primeiro dia da menstruação (por isso há sobreposição com a fase menstrual) e termina na ovulação (quando um dos ovários libera um óvulo).",
+      "ovulatory": "A ovulação é a liberação de um óvulo do ovário. É a janela de pico de fertilidade e normalmente ocorre cerca de 12 a 16 dias antes da próxima menstruação. Em um ciclo médio de 28 dias, é por volta do dia 14.\n\nA chance de conceber é maior nesta fase. O óvulo pode viver cerca de 24 horas após ser liberado. Depois da ovulação começa a fase lútea.",
+      "luteal": "A fase lútea é o período entre a ovulação e o primeiro dia da menstruação. Normalmente dura cerca de 12–14 dias.\n\nDurante esse tempo o corpo se prepara para uma possível gravidez espessando o revestimento uterino. Se não houver fertilização, os níveis hormonais caem e a menstruação começa.",
       "extended": "Seu ciclo está durando mais do que o habitual (além do dia 35). Isso pode ser normal às vezes, mas se acontecer com frequência, considere acompanhar os padrões e falar com um profissional de saúde."
     },
     "pregnancyChance": {
@@ -39,10 +39,25 @@
       "low": "A concepção é menos provável durante esse período. Isso inclui os dias menstruais e a fase lútea mais avançada do seu ciclo."
     },
     "symptoms": {
-      "menstrual": "Cólicas, cansaço, alterações de humor, inchaço, dores de cabeça e dor lombar. Sua energia e humor podem estar mais baixos do que o habitual.",
-      "follicular": "Energia em alta, humor melhor, pele mais limpa e maior motivação. Você pode se sentir mais sociável e confiante.",
-      "ovulatory": "Energia no pico, desejo sexual aumentado, maior confiança e possíveis cólicas leves ou manchas. Você pode se sentir no seu melhor.",
-      "luteal": "Inchaço, alterações de humor, desejo por comida, cansaço, sensibilidade nos seios e irritabilidade. Esses sintomas de TPM normalmente pioram à medida que a menstruação se aproxima.",
+      "menstrual": {
+        "intro": "Os sintomas físicos e emocionais incluem:",
+        "items": ["Cólicas", "Cansaço", "Alterações de humor", "Inchaço", "Dores de cabeça", "Dor lombar", "Irritabilidade"],
+        "note": "Você provavelmente notará que, se tiver dores menstruais, elas serão piores no início do seu ciclo menstrual."
+      },
+      "follicular": {
+        "intro": "Como a fase folicular começa com a menstruação, é provável que você tenha sintomas típicos do período, como:",
+        "items": ["Cólicas", "Cansaço", "Alterações de humor", "Inchaço", "Dores de cabeça", "Dor lombar"],
+        "note": "Quando a menstruação termina e o estrogênio começa a subir, você pode se sentir mais disposta, motivada e confiante socialmente. O aumento de estrogênio também pode melhorar a aparência da pele em algumas pessoas."
+      },
+      "ovulatory": {
+        "intro": "Sintomas comuns de ovulação nesta fase:",
+        "items": ["Aumento da libido", "Muco cervical elástico, tipo clara de ovo", "Inchaço", "Seios sensíveis", "Dor pélvica leve em um lado", "Pode haver sangramento leve", "Pequeno aumento na temperatura corporal", "O olfato pode ficar mais aguçado"]
+      },
+      "luteal": {
+        "intro": "A mudança no nível de progesterona conforme você se aproxima da menstruação pode causar sintomas de TPM (tensão pré-menstrual), como:",
+        "items": ["Inchaço", "Sensibilidade nos seios", "Alterações de humor", "Desejo por certos alimentos", "Cansaço", "Dores de cabeça", "Surto de acne", "Mudanças no desejo sexual"],
+        "note": "Esses sintomas de TPM normalmente pioram quando a menstruação se aproxima."
+      },
       "extended": ""
     },
     "menstrual": {

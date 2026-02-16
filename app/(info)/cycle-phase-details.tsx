@@ -146,12 +146,36 @@ export default function CyclePhaseDetails() {
 
               <SymptomsIcon size={34}/>
               <Text style={[typography.headingMd, { marginLeft: 12 }]}>
-                {t('cyclePhase.possibleSymptoms')}
+                {t('cyclePhase.commonSymptoms')}
               </Text>
             </View>
-            <Text style={[typography.body]}>
-              {t(`cyclePhase.symptoms.${cyclePhaseKey}`)}
-            </Text>
+            {(() => {
+              const symptomsData = t(`cyclePhase.symptoms.${cyclePhaseKey}`, { returnObjects: true }) as 
+                string | { intro?: string; items?: string[]; note?: string };
+              
+              if (typeof symptomsData === 'string') {
+                return <Text style={[typography.body]}>{symptomsData}</Text>;
+              }
+              
+              return (
+                <>
+                  {symptomsData.intro && (
+                    <Text style={[typography.body]}>{symptomsData.intro}</Text>
+                  )}
+                  
+                  {symptomsData.items && symptomsData.items.map((symptom: string, i: number) => (
+                    <View key={i} style={{ flexDirection: 'row', alignItems: 'flex-start', marginTop: 8 }}>
+                      <Text style={[typography.body, { marginRight: 8 }]}>{'\u2022'}</Text>
+                      <Text style={[typography.body, { flex: 1 }]}>{symptom}</Text>
+                    </View>
+                  ))}
+                  
+                  {symptomsData.note && (
+                    <Text style={[typography.body, { marginTop: 16 }]}>{symptomsData.note}</Text>
+                  )}
+                </>
+              );
+            })()}
           </View>
         )}
       </ScrollView>
