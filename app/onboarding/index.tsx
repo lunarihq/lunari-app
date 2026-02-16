@@ -55,28 +55,15 @@ export default function WelcomeScreen() {
           style={[
             { color: colors.textPrimary },
             {
-              fontSize: 33,
-              lineHeight: 40,
-              marginBottom: 8,
+              fontSize: 28,
+              lineHeight: 36,
+              marginBottom: 36,
               textAlign: 'center',
               fontFamily: 'BricolageGrotesque_700Bold',
             },
           ]}
         >
           {t('welcome.title')}
-        </Text>
-        <Text
-          style={[
-            typography.body,
-            { color: colors.textSecondary },
-            { fontSize: 20, lineHeight: 28 },
-            {
-              marginBottom: 34,
-              textAlign: 'center',
-            },
-          ]}
-        >
-          {t('welcome.subtitle')}
         </Text>
         <View style={styles.trustBadgesContainer}>
           <View style={styles.badge}>
@@ -89,10 +76,18 @@ export default function WelcomeScreen() {
           </View>
           <View style={styles.badge}>
             <View style={styles.badgeIconSlot}>
-              <Ionicons name="ban-outline" size={24} color={colors.accentPink} />
+              <Ionicons name="shield-checkmark-outline" size={24} color={colors.accentPink} />
             </View>
             <Text style={[typography.body, { color: colors.textSecondary, fontSize: 19, lineHeight: 24 }]}>
               {t('welcome.badgeNoTracking')}
+            </Text>
+          </View>
+          <View style={styles.badge}>
+            <View style={styles.badgeIconSlot}>
+              <Ionicons name="ban-outline" size={24} color={colors.accentPink} />
+            </View>
+            <Text style={[typography.body, { color: colors.textSecondary, fontSize: 19, lineHeight: 24 }]}>
+              {t('welcome.badgeNoAds')}
             </Text>
           </View>
         </View>
@@ -108,8 +103,9 @@ export default function WelcomeScreen() {
 const styles = StyleSheet.create({
   trustBadgesContainer: {
     flexDirection: 'column',
-    gap: 10,
+    gap: 16,
     alignItems: 'flex-start',
+    paddingHorizontal: 16,
   },
   badge: {
     flexDirection: 'row',

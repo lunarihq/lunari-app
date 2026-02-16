@@ -76,8 +76,10 @@ const createStyles = (colors: ColorScheme) =>
     },
     subText: {
       fontSize: 14,
+      lineHeight: 20,
       color: colors.textSecondary,
       textAlign: 'center',
-      marginTop: 5,
+      marginTop: 6,
+      paddingHorizontal: 8,
     },
   });

@@ -1,9 +1,9 @@
 {
   "welcome": {
-    "title": "Tu periodo, tus datos",
-    "subtitle": "Rastrea tu ciclo menstrual sin renunciar a tu privacidad.",
-    "badgeStorage": "Almacenado localmente y cifrado",
-    "badgeNoTracking": "Sin anuncios ni rastreo externo"
+    "title": "Rastrea tu ciclo menstrual con privacidad",
+    "badgeStorage": "Datos almacenados y cifrados localmente",
+    "badgeNoTracking": "Sin rastreo de terceros",
+    "badgeNoAds": "Sin anuncios intrusivos"
   },
   "periodLength": {
     "title": "¿Cuánto dura normalmente tu periodo?",

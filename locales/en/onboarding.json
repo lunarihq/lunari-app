@@ -1,19 +1,19 @@
 {
   "welcome": {
-    "title": "Your period, your data",
-    "subtitle": "Track your cycle without compromising your privacy.",
-    "badgeStorage": "Locally stored and encrypted",
-    "badgeNoTracking": "No ads and no external tracking"
+    "title": "Track your cycle, privately",
+    "badgeStorage": "Data locally stored and encrypted",
+    "badgeNoTracking": "No third-party tracking",
+    "badgeNoAds": "No ads ever"
   },
   "periodLength": {
     "title": "How long does your period usually last?",
-    "checkboxText": "Don't know - let the app learn",
+    "checkboxText": "Don't know - let the app adjust",
     "checkboxSubtext": "The app will use 5 days as a default, and then adjust as you log cycles."
   },
   "cycleLength": {
     "title": "How many days does your cycle last on average?",
     "subtitle": "This is the number of days from the start of one period to the start of the next.",
-    "checkboxText": "Don't know - let the app learn",
+    "checkboxText": "Don't know - let the app adjust",
     "checkboxSubtext": "The app will use 28 days as a default, and then adjust as you log cycles."
   },
   "lastPeriod": {

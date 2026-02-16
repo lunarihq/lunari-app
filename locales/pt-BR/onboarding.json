@@ -1,9 +1,9 @@
 {
   "welcome": {
-    "title": "Seu período, seus dados",
-    "subtitle": "Acompanhe seu ciclo menstrual sem abrir mão da sua privacidade.",
-    "badgeStorage": "Armazenado localmente e criptografado",
-    "badgeNoTracking": "Sem anúncios nem rastreamento externo"
+    "title": "Acompanhe seu ciclo com privacidade",
+    "badgeStorage": "Dados armazenados e criptografados localmente",
+    "badgeNoTracking": "Sem rastreamento de terceiros",
+    "badgeNoAds": "Sem anúncios intrusivos"
   },
   "periodLength": {
     "title": "Quanto tempo sua menstruação costuma durar?",
