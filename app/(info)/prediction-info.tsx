@@ -57,7 +57,7 @@ export default function PredictionInfo() {
           <Text style={[typography.body]}>
             {t('prediction.ovulation.description')}
           </Text>
-          <Text style={[typography.caption]}>
+          <Text style={[typography.body, { lineHeight: 28 }]}>
             {t('prediction.ovulation.fertileWindow')}
           </Text>
         </View>

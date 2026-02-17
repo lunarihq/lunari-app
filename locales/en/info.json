@@ -207,13 +207,13 @@
       "weighting": "Recent cycles have more influence on predictions than older ones. For example, most recent cycle: 100%, second most recent: 80%, third most recent: 60%, and so on."
     },
     "ovulation": {
-      "title": "Ovulation & fertility",
-      "description": "Ovulation is predicted to occur 14 days before your next expected period. Your fertile window includes:",
-      "fertileWindow": "• 5 days before ovulation • Ovulation day • 1 day after ovulation"
+      "title": "Ovulation & fertility window",
+      "description": "Ovulation generally occurs around the 14th day of a 28-day menstrual cycle. The exact timing depends on cycle length, typically falling in the middle of the cycle, though it can vary for individuals with shorter or longer cycle. Your fertile window includes:",
+      "fertileWindow": "• 5 days before ovulation\n• Ovulation day\n• 1 day after ovulation\n\nTo predict ovulation and fertile window, Bluma relies on the cycle data you log, including your cycle length and your period dates.\n\nIf you logged your period in Bluma for the first time or have logged a few periods, the app will use average values to predict your fertile days during cycle. Because this is less accurate, you're likely to see more fertile days and a wider fertile window."
     },
     "accuracy": {
       "title": "Accuracy improves over time",
-      "description": "The more periods you track, the more accurate predictions become. With 3+ cycles, Bluma can provide personalized predictions based on your unique patterns."
+      "description": "The more you log your period dates, the more accurate the predictions become. With 3+ cycles, Bluma can provide better predictions based on your patterns."
     },
     "privacy": {
       "title": "Privacy first",

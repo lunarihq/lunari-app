@@ -207,13 +207,13 @@
       "weighting": "Os ciclos recentes têm mais influência nas previsões do que os mais antigos. Por exemplo, ciclo mais recente: 100%, segundo mais recente: 80%, terceiro mais recente: 60%, e assim sucessivamente."
     },
     "ovulation": {
-      "title": "Ovulação e fertilidade",
-      "description": "A ovulação é prevista ocorrer 14 dias antes do teu próximo período esperado. A tua janela fértil inclui:",
-      "fertileWindow": "• 5 dias antes da ovulação • Dia da ovulação • 1 dia após a ovulação"
+      "title": "Ovulação e janela fértil",
+      "description": "A ovulação geralmente ocorre por volta do 14.º dia de um ciclo menstrual de 28 dias. O momento exato depende da duração do ciclo, tipicamente a meio do ciclo, embora possa variar para pessoas com ciclos mais curtos ou longos. A tua janela fértil inclui:",
+      "fertileWindow": "• 5 dias antes da ovulação\n• Dia da ovulação\n• 1 dia após a ovulação\n\nPara prever a ovulação e a janela fértil, a Bluma baseia-se nos dados do ciclo que registas, incluindo a duração do ciclo e as datas do teu período.\n\nSe registaste o teu período na Bluma pela primeira vez ou registaste poucos períodos, a app usará valores médios para prever os teus dias férteis durante o ciclo. Por ser menos preciso, é provável que vejas mais dias férteis e uma janela fértil mais ampla."
     },
     "accuracy": {
       "title": "A precisão melhora com o tempo",
-      "description": "Quanto mais períodos acompanhares, mais precisas serão as previsões. Com 3+ ciclos, a Bluma pode fornecer previsões personalizadas com base nos teus padrões únicos."
+      "description": "Quanto mais registares as datas do teu período, mais precisas serão as previsões. Com 3 ou mais ciclos, a Bluma pode fornecer previsões melhores com base nos teus padrões."
     },
     "privacy": {
       "title": "Privacidade em primeiro lugar",
