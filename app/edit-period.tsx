@@ -82,6 +82,15 @@ export default function PeriodCalendarScreen() {
 
       if (isAlreadySelected) {
         delete updatedDates[dateString];
+        
+        if (dateString === today) {
+          Object.keys(updatedDates).forEach(date => {
+            if (new Date(date) > todayDate) {
+              delete updatedDates[date];
+            }
+          });
+        }
+        
         return updatedDates;
       }
 
