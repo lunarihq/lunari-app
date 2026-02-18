@@ -13,11 +13,13 @@ import { useAppStyles } from '../hooks/useStyles';
 interface CycleInsightsProps {
   currentCycleDay: number | null;
   averageCycleLength: number;
+  isOvulationDay?: boolean;
 }
 
 export function CycleInsights({
   currentCycleDay,
   averageCycleLength,
+  isOvulationDay = false,
 }: CycleInsightsProps) {
   const { colors } = useTheme();
   const { typography, commonStyles } = useAppStyles();
@@ -64,7 +66,7 @@ export function CycleInsights({
           onPress={() =>
             currentCycleDay &&
             router.push(
-              `/(info)/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}`
+              `/(info)/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}&isOvulationDay=${isOvulationDay}`
             )
           }
           disabled={!currentCycleDay}
@@ -87,7 +89,7 @@ export function CycleInsights({
             onPress={() =>
               currentCycleDay &&
               router.push(
-                `/(info)/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}`
+                `/(info)/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}&isOvulationDay=${isOvulationDay}`
               )
             }
           >
@@ -111,7 +113,7 @@ export function CycleInsights({
             onPress={() =>
               currentCycleDay &&
               router.push(
-                `/(info)/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}`
+                `/(info)/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}&isOvulationDay=${isOvulationDay}`
               )
             }
           >
@@ -120,16 +122,20 @@ export function CycleInsights({
                 <CycleIcon size={28} />
               </View>
               <Text style={insightLabelStyle}>
-                {t('cycleInsights.cyclePhase')}
+                {isOvulationDay
+                  ? t('cycleInsights.cycleEvent')
+                  : t('cycleInsights.cyclePhase')}
               </Text>
             </View>
             <View style={insightValueStyle}>
               <Text style={insightTextStyle}>
                 {currentCycleDay
-                  ? t(`cycleInsights.${PeriodPredictionService.getCyclePhase(
-                      currentCycleDay,
-                      averageCycleLength
-                    )}`)
+                  ? isOvulationDay
+                    ? t('cycleInsights.ovulationDay')
+                    : t(`cycleInsights.${PeriodPredictionService.getCyclePhase(
+                        currentCycleDay,
+                        averageCycleLength
+                      )}`)
                   : '-'}
               </Text>
             </View>
@@ -140,7 +146,7 @@ export function CycleInsights({
             onPress={() =>
               currentCycleDay &&
               router.push(
-                `/(info)/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}`
+                `/(info)/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}&isOvulationDay=${isOvulationDay}`
               )
             }
           >

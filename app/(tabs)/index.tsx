@@ -158,6 +158,17 @@ export default function Index() {
         )
       : userCycleLength;
 
+  const isOvulationDay = (() => {
+    if (!firstPeriodDate) return false;
+    const ovulationDate = PeriodPredictionService.getOvulationDay(
+      firstPeriodDate,
+      averageCycleLength
+    );
+    const today = new Date();
+    const todayString = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+    return ovulationDate === todayString;
+  })();
+
   return (
     <ScrollView
       style={[commonStyles.scrollView, { paddingTop: 0 }]}
@@ -177,6 +188,7 @@ export default function Index() {
       <CycleInsights
         currentCycleDay={currentCycleDay}
         averageCycleLength={averageCycleLength}
+        isOvulationDay={isOvulationDay}
       />
 
       <View style={[commonStyles.sectionContainer]}>

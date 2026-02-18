@@ -12,19 +12,20 @@
     "cycleStartedToday": "Your cycle started today",
     "cycleStartedOn": "This cycle started on",
     "cyclePhaseTitle": "Cycle phase",
+    "cycleEventTitle": "Cycle event",
     "chanceToConceive": "Chance to conceive",
     "commonSymptoms": "Common symptoms",
     "phases": {
       "menstrual": "Menstrual",
       "follicular": "Follicular",
-      "ovulatory": "Ovulatory",
+      "ovulatory": "Ovulation",
       "luteal": "Luteal",
       "extended": "Extended"
     },
     "phaseDescriptions": {
       "menstrual": "The menstrual cycle starts on the first day of your period and ends the day before your next period begins.\n\nThe period is when the lining of the uterus sheds and leaves the body through vaginal bleeding.The period usually lasts from 3 to 7 days.",
       "follicular": "The follicular phase is the first part of the menstrual cycle, and stats on the first day of your period (so there is some overlap with the menstrual phase) and ends with ovulation (when one of your ovaries releases an egg).",
-      "ovulatory": "Ovulation is the release of an egg from your ovary. This is the peak fertility window, and it typically occurs about 12 to 16 days before the next menstrual period beginse. For an average 28-day cycle, this is around day 14.\n\nThe chance to conceive is highest during this phase. The egg can live for about 24 hours oce released. After ovulation, the luteal phase begins.",
+      "ovulatory": "Ovulation is the release of an egg from your ovary. This is the peak fertility window, and it typically occurs about 12 to 16 days before the next menstrual period begins. For an average 28-day cycle, this is around day 14.\n\nThe chance to conceive is highest during this phase. The egg can live for about 24 hours oce released.",
       "luteal": "The luteal phase is the time between ovulation and the first day of your period. It typically lasts about 12–14 days.\n\nDuring this time, the body prepares for a potential pregnancy by thickening the uterine lining. If fertilization does not occur, hormone levels drop, and menstruation begins.",
       "extended": "Your cycle is running longer than usual (past day 35). This can be normal occasionally, but if it happens often, consider tracking patterns and chatting with a healthcare provider."
     },
@@ -50,7 +51,7 @@
         "note": "As your period ends and estrogen begins rising, you may feel more energized, motivated and socially confident. Rising estrogen can also improve skin appearance for some people."
       },
       "ovulatory": {
-        "intro": "Common ovulation symptoms during this phase:",
+        "intro": "Common ovulation symptoms include:",
         "items": ["Increased libido", "Stretchy, egg-white cervical mucus", "Bloating", "Sensitive breasts", "Mild, one-sided pelvic pain", "Spotting may occur", "Slight increase in body temperature", "Your sense of smell may become sharper"]
       },
       "luteal": {
