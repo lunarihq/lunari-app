@@ -7,6 +7,7 @@ import { CycleInsights } from '../../components/CycleInsights';
 import { QuickHealthSelector } from '../../components/QuickHealthSelector';
 import { getDB, getSetting } from '../../db';
 import { PeriodDate, periodDates } from '../../db/schema';
+import { formatDateString } from '../../types/calendarTypes';
 import { PeriodPredictionService } from '../../services/periodPredictions';
 import { NotificationService } from '../../services/notificationService';
 import { useAppStyles } from '../../hooks/useStyles';
@@ -158,16 +159,13 @@ export default function Index() {
         )
       : userCycleLength;
 
-  const isOvulationDay = (() => {
-    if (!firstPeriodDate) return false;
-    const ovulationDate = PeriodPredictionService.getOvulationDay(
+  const todayString = formatDateString(currentDate);
+  const isOvulationDay =
+    !!firstPeriodDate &&
+    PeriodPredictionService.getOvulationDay(
       firstPeriodDate,
       averageCycleLength
-    );
-    const today = new Date();
-    const todayString = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
-    return ovulationDate === todayString;
-  })();
+    ) === todayString;
 
   return (
     <ScrollView
