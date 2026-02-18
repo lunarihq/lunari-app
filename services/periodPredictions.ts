@@ -150,12 +150,18 @@ export class PeriodPredictionService {
     return dayDiff + 1; // Add 1 because the first day of period is day 1
   }
 
+  static getOvulationCycleDay(cycleLength: number = 28): number {
+    // Ovulation is 14 days before next period (offset from start), and
+    // cycle days are 1-based, so: (cycleLength - 14) + 1 = cycleLength - 13
+    return cycleLength - 13;
+  }
+
   static getOvulationDay(startDate: string, cycleLength?: number): string {
     const start = new Date(startDate);
     const length = cycleLength || 28;
 
-    // Ovulation typically occurs 14 days before the next period
-    const ovulationDayOffset = length - 14;
+    // Ovulation day offset is 0-based: cycleDay - 1
+    const ovulationDayOffset = this.getOvulationCycleDay(length) - 1;
     const ovulationDate = new Date(start);
     ovulationDate.setDate(ovulationDate.getDate() + ovulationDayOffset);
 
@@ -215,7 +221,7 @@ export class PeriodPredictionService {
     cycleDay: number,
     averageCycleLength: number = 28
   ): string {
-    const ovulationDay = averageCycleLength - 14; // Ovulation typically 14 days before next period
+    const ovulationDay = this.getOvulationCycleDay(averageCycleLength);
     const fertilityStart = ovulationDay - 5;
     const fertilityEnd = ovulationDay + 1;
 
