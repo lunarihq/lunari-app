@@ -6,15 +6,8 @@ interface PredictionResult {
   cycleLength: number;
 }
 
-interface FertilityWindow {
-  start: string;
-  end: string;
-  ovulationDay: string;
-}
-
 interface CycleInfo {
   phase: string;
-  description: string;
   cycleDay: number;
   pregnancyChance: string;
 }
@@ -168,21 +161,6 @@ export class PeriodPredictionService {
     return `${ovulationDate.getFullYear()}-${(ovulationDate.getMonth() + 1).toString().padStart(2, '0')}-${ovulationDate.getDate().toString().padStart(2, '0')}`;
   }
 
-  static getFertilityWindow(
-    startDate: string,
-    cycleLength?: number
-  ): FertilityWindow {
-    const cycle = cycleLength || 28;
-    const ovulationDay = this.getOvulationDay(startDate, cycle);
-    const ovulationDate = parseLocalDate(ovulationDay);
-
-    const startWindow = new Date(ovulationDate);
-    startWindow.setDate(ovulationDate.getDate() - 5); // Fertility typically starts 5 days before ovulation
-
-    const startStr = `${startWindow.getFullYear()}-${(startWindow.getMonth() + 1).toString().padStart(2, '0')}-${startWindow.getDate().toString().padStart(2, '0')}`;
-    return { start: startStr, end: ovulationDay, ovulationDay };
-  }
-
   static getCyclePhase(
     cycleDay: number,
     averageCycleLength: number = 28
@@ -194,21 +172,6 @@ export class PeriodPredictionService {
     if (cycleDay < ovulationCycleDay) return 'follicular';
     if (cycleDay <= averageCycleLength) return 'luteal';
     return 'extended';
-  }
-
-  static getPhaseDescription(phase: string): string {
-    switch (phase.toLowerCase()) {
-      case 'menstrual':
-        return 'The period, or menstruation, is when the lining of the uterus sheds and leaves the body through vaginal bleeding. It typically lasts 3–7 days, but can vary widely. \n\nDuring this time, the body prepares for a potential pregnancy by thickening the uterine lining. If fertilization does not occur, hormone levels drop, and menstruation begins.';
-      case 'follicular':
-        return 'The follicular phase is the first part of the menstrual cycle, starting with the first day of your period and ending with ovulation. Energy levels start to rise with increasing estrogen. Good time for starting new projects and physical activity.';
-      case 'luteal':
-        return 'The luteal phase is the second part of the menstrual cycle, lasting from ovulation until the start of your next period, and typically lasts about 12–14 days.\n\nDuring this time, the body prepares for a potential pregnancy by thickening the uterine lining. If fertilization does not occur, hormone levels drop, and menstruation begins.';
-      case 'extended':
-        return 'Your cycle is running longer than usual (past day 35). This can be normal occasionally, but if it happens often, consider tracking patterns and chatting with a healthcare provider.';
-      default:
-        return '';
-    }
   }
 
   static getPregnancyChance(
@@ -225,34 +188,6 @@ export class PeriodPredictionService {
     return 'low';
   }
 
-  static getPregnancyChanceDescription(chance: string): string {
-    switch (chance.toLowerCase()) {
-      case 'high':
-        return 'This is your fertile window when conception is most likely to occur. Ovulation typically happens during this time.';
-      case 'medium':
-        return 'There is a moderate chance of conception during this time as you approach or move away from your fertile window.';
-      case 'low':
-        return 'Conception is less likely during this time. This includes menstrual days and the later luteal phase of your cycle.';
-      default:
-        return '';
-    }
-  }
-
-  static getPossibleSymptoms(phase: string): string {
-    switch (phase.toLowerCase()) {
-      case 'menstrual':
-        return 'Cramps, fatigue, mood swings, bloating, headaches, and lower back pain. Your energy and mood may be lower than usual.';
-      case 'follicular':
-        return 'Rising energy, improved mood, clearer skin, and increased motivation. You may feel more social and confident.';
-      case 'luteal':
-        return 'Bloating, mood swings, food cravings, fatigue, breast tenderness, and irritability. These PMS symptoms typically worsen as your period approaches.';
-      case 'extended':
-        return '';
-      default:
-        return '';
-    }
-  }
-
   static getCycleInfo(
     startDate: string,
     currentDate?: string,
@@ -264,7 +199,6 @@ export class PeriodPredictionService {
 
     return {
       phase,
-      description: this.getPhaseDescription(phase),
       cycleDay,
       pregnancyChance: this.getPregnancyChance(cycleDay, avgCycleLength),
     };
