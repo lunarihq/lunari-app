@@ -126,8 +126,8 @@ export function useCalendarMarkedDates({
             ...existingMarking,
             customStyles: {
               container: {
-                ...todayStyle.customStyles.container,
                 ...existingMarking.customStyles?.container,
+                ...todayStyle.customStyles.container,
               },
               text: existingMarking.customStyles?.text ?? todayStyle.customStyles.text,
             },
