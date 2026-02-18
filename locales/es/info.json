@@ -14,7 +14,7 @@
     "cyclePhaseTitle": "Fase del ciclo",
     "cycleEventTitle": "Evento del ciclo",
     "chanceToConceive": "Probabilidad de concebir",
-    "possibleSymptoms": "Posibles síntomas",
+    "commonSymptoms": "Posibles síntomas",
     "phases": {
       "menstrual": "Menstrual",
       "follicular": "Folicular",
