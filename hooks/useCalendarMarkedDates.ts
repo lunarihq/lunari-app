@@ -122,10 +122,15 @@ export function useCalendarMarkedDates({
         const todayStyle = getTodayDateStyle(colors);
         
         if (existingMarking) {
-          // Merge today style with existing marking
           allMarkedDates[today] = {
             ...existingMarking,
-            customStyles: todayStyle.customStyles,
+            customStyles: {
+              container: {
+                ...existingMarking.customStyles?.container,
+                ...todayStyle.customStyles.container,
+              },
+              text: existingMarking.customStyles?.text ?? todayStyle.customStyles.text,
+            },
           };
         } else {
           // Apply today style to unmarked date

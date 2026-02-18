@@ -12,19 +12,20 @@
     "cycleStartedToday": "Tu ciclo comenzó hoy",
     "cycleStartedOn": "Este ciclo comenzó el",
     "cyclePhaseTitle": "Fase del ciclo",
+    "cycleEventTitle": "Evento del ciclo",
     "chanceToConceive": "Probabilidad de concebir",
-    "possibleSymptoms": "Posibles síntomas",
+    "commonSymptoms": "Síntomas comunes",
     "phases": {
       "menstrual": "Menstrual",
       "follicular": "Folicular",
-      "ovulatory": "Ovulatoria",
+      "ovulatory": "Ovulación",
       "luteal": "Lútea",
       "extended": "Extendido"
     },
     "phaseDescriptions": {
       "menstrual": "El ciclo menstrual comienza el primer día de tu periodo y termina el día antes de que comience la siguiente.\n\nEl periodo es cuando el revestimiento del útero se desprende y sale del cuerpo mediante sangrado vaginal. El periodo suele durar entre 3 y 7 días.",
       "follicular": "La fase folicular es la primera parte del ciclo menstrual: comienza el primer día de tu periodo (por tanto se solapa con la fase menstrual) y termina con la ovulación (cuando uno de tus ovarios libera un óvulo).",
-      "ovulatory": "La ovulación es la liberación de un óvulo del ovario. Es la ventana de máxima fertilidad y suele ocurrir entre 12 y 16 días antes del inicio del siguiente periodo. En un ciclo medio de 28 días, suele ser alrededor del día 14.\n\nLa probabilidad de concebir es máxima en esta fase. El óvulo puede vivir unas 24 horas una vez liberado. Después de la ovulación comienza la fase lútea.",
+      "ovulatory": "La ovulación es la liberación de un óvulo del ovario. Es la ventana de máxima fertilidad y suele ocurrir entre 12 y 16 días antes del inicio del siguiente periodo. En un ciclo medio de 28 días, suele ser alrededor del día 14.\n\nLa probabilidad de concebir es máxima en esta fase. El óvulo puede vivir unas 24 horas una vez liberado.",
       "luteal": "La fase lútea es el tiempo entre la ovulación y el primer día de tu periodo. Suele durar unos 12–14 días.\n\nDurante este tiempo el cuerpo se prepara para un posible embarazo engrosando el revestimiento uterino. Si no hay fertilización, bajan los niveles hormonales y comienza la menstruación.",
       "extended": "Tu ciclo se está alargando más de lo habitual (más allá del día 35). Puede ser normal a veces, pero si ocurre a menudo, conviene registrar los patrones y comentarlo con un profesional de salud."
     },
@@ -50,7 +51,7 @@
         "note": "Cuando termina tu periodo y sube el estrógeno, puedes sentirte con más energía, motivación y seguridad social. El aumento de estrógeno también puede mejorar el aspecto de la piel en algunas personas."
       },
       "ovulatory": {
-        "intro": "Síntomas habituales de ovulación en esta fase:",
+        "intro": "Síntomas habituales de ovulación incluyen:",
         "items": ["Aumento de la libido", "Moco cervical elástico, tipo clara de huevo", "Hinchazón", "Pechos sensibles", "Dolor pélvico leve en un lado", "Puede haber manchado", "Ligero aumento de la temperatura corporal", "El olfato puede volverse más agudo"]
       },
       "luteal": {

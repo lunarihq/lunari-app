@@ -25,6 +25,8 @@
     "Luteal": "Luteal",
     "Menstrual": "Menstrual",
     "Extended": "Extended",
+    "ovulationDay": "Ovulation day",
+    "cycleEvent": "Cycle event",
     "follicular": "Follicular",
     "ovulatory": "Ovulatory",
     "luteal": "Luteal",

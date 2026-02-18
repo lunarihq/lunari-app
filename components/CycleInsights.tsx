@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { Text, View, StyleSheet, Pressable } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { router } from 'expo-router';
+import { router, Href } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { CalendarIcon } from './icons/general/Calendar';
 import { CycleIcon } from './icons/general/Cycle';
@@ -13,11 +13,13 @@ import { useAppStyles } from '../hooks/useStyles';
 interface CycleInsightsProps {
   currentCycleDay: number | null;
   averageCycleLength: number;
+  isOvulationDay?: boolean;
 }
 
 export function CycleInsights({
   currentCycleDay,
   averageCycleLength,
+  isOvulationDay = false,
 }: CycleInsightsProps) {
   const { colors } = useTheme();
   const { typography, commonStyles } = useAppStyles();
@@ -54,6 +56,10 @@ export function CycleInsights({
     [colors.textPrimary]
   );
 
+  const detailsUrl = currentCycleDay
+    ? `/(info)/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}&isOvulationDay=${isOvulationDay}`
+    : null;
+
   return (
     <View style={[commonStyles.sectionContainer]}>
       <View style={[commonStyles.sectionTitleContainer, !currentCycleDay && { marginBottom: 10 }]}>
@@ -61,12 +67,7 @@ export function CycleInsights({
           {t('cycleInsights.todaysInsights')}
         </Text>
         <Pressable
-          onPress={() =>
-            currentCycleDay &&
-            router.push(
-              `/(info)/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}`
-            )
-          }
+          onPress={() => detailsUrl && router.push(detailsUrl as Href)}
           disabled={!currentCycleDay}
           style={[
             styles.chevronButton,
@@ -84,12 +85,7 @@ export function CycleInsights({
         <View style={styles.insightsRow}>
           <Pressable
             style={[styles.insightCard, cardBorderStyle]}
-            onPress={() =>
-              currentCycleDay &&
-              router.push(
-                `/(info)/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}`
-              )
-            }
+            onPress={() => detailsUrl && router.push(detailsUrl as Href)}
           >
             <View style={styles.insightTop}>
               <View style={iconContainerStyle}>
@@ -108,28 +104,27 @@ export function CycleInsights({
 
           <Pressable
             style={[styles.insightCard, cardBorderStyle]}
-            onPress={() =>
-              currentCycleDay &&
-              router.push(
-                `/(info)/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}`
-              )
-            }
+            onPress={() => detailsUrl && router.push(detailsUrl as Href)}
           >
             <View style={styles.insightTop}>
               <View style={iconContainerStyle}>
                 <CycleIcon size={28} />
               </View>
               <Text style={insightLabelStyle}>
-                {t('cycleInsights.cyclePhase')}
+                {isOvulationDay
+                  ? t('cycleInsights.cycleEvent')
+                  : t('cycleInsights.cyclePhase')}
               </Text>
             </View>
             <View style={insightValueStyle}>
               <Text style={insightTextStyle}>
                 {currentCycleDay
-                  ? t(`cycleInsights.${PeriodPredictionService.getCyclePhase(
-                      currentCycleDay,
-                      averageCycleLength
-                    )}`)
+                  ? isOvulationDay
+                    ? t('cycleInsights.ovulationDay')
+                    : t(`cycleInsights.${PeriodPredictionService.getCyclePhase(
+                        currentCycleDay,
+                        averageCycleLength
+                      )}`)
                   : '-'}
               </Text>
             </View>
@@ -137,12 +132,7 @@ export function CycleInsights({
 
           <Pressable
             style={[styles.insightCard, cardBorderStyle]}
-            onPress={() =>
-              currentCycleDay &&
-              router.push(
-                `/(info)/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}`
-              )
-            }
+            onPress={() => detailsUrl && router.push(detailsUrl as Href)}
           >
             <View style={styles.insightTop}>
               <View style={iconContainerStyle}>
