@@ -189,14 +189,10 @@ export class PeriodPredictionService {
   ): string {
     if (cycleDay <= 5) return 'menstrual';
 
-    // Scale phases based on actual cycle length
-    const follicularEnd = Math.round(10 * (averageCycleLength / 28));
-    const ovulatoryEnd = Math.round(14 * (averageCycleLength / 28));
+    const ovulationCycleDay = this.getOvulationCycleDay(averageCycleLength);
 
-    if (cycleDay <= follicularEnd) return 'follicular';
-    if (cycleDay <= ovulatoryEnd) return 'ovulatory';
-    // Normal cycles can be 21-35 days, so only show "Extended" after day 35
-    if (cycleDay <= 35) return 'luteal';
+    if (cycleDay < ovulationCycleDay) return 'follicular';
+    if (cycleDay <= averageCycleLength) return 'luteal';
     return 'extended';
   }
 
@@ -206,8 +202,6 @@ export class PeriodPredictionService {
         return 'The period, or menstruation, is when the lining of the uterus sheds and leaves the body through vaginal bleeding. It typically lasts 3–7 days, but can vary widely. \n\nDuring this time, the body prepares for a potential pregnancy by thickening the uterine lining. If fertilization does not occur, hormone levels drop, and menstruation begins.';
       case 'follicular':
         return 'The follicular phase is the first part of the menstrual cycle, starting with the first day of your period and ending with ovulation. Energy levels start to rise with increasing estrogen. Good time for starting new projects and physical activity.';
-      case 'ovulatory':
-        return 'Ovulation is the release of an egg from the ovary. This is the peak fertility window, and it typically occurs around day 14 of your cycle.';
       case 'luteal':
         return 'The luteal phase is the second part of the menstrual cycle, lasting from ovulation until the start of your next period, and typically lasts about 12–14 days.\n\nDuring this time, the body prepares for a potential pregnancy by thickening the uterine lining. If fertilization does not occur, hormone levels drop, and menstruation begins.';
       case 'extended':
@@ -250,8 +244,6 @@ export class PeriodPredictionService {
         return 'Cramps, fatigue, mood swings, bloating, headaches, and lower back pain. Your energy and mood may be lower than usual.';
       case 'follicular':
         return 'Rising energy, improved mood, clearer skin, and increased motivation. You may feel more social and confident.';
-      case 'ovulatory':
-        return 'Peak energy, heightened sex drive, increased confidence, and possible mild cramping or spotting. You may feel your most attractive.';
       case 'luteal':
         return 'Bloating, mood swings, food cravings, fatigue, breast tenderness, and irritability. These PMS symptoms typically worsen as your period approaches.';
       case 'extended':
