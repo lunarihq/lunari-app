@@ -226,7 +226,7 @@ export class PeriodPredictionService {
     const fertilityEnd = ovulationDay + 1;
 
     if (cycleDay >= fertilityStart && cycleDay <= fertilityEnd) return 'high';
-    if (cycleDay >= fertilityStart - 2 && cycleDay <= fertilityEnd + 2)
+    if (cycleDay >= fertilityStart - 2 && cycleDay < fertilityStart)
       return 'medium';
     return 'low';
   }
