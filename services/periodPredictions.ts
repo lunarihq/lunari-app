@@ -281,7 +281,17 @@ export class PeriodPredictionService {
       [date: string]: { type: 'fertile' | 'ovulation' };
     } = {};
 
-    periodStartDates.forEach(startDate => {
+     // Skip the first (earliest) period since we have no data about the cycle before it
+     if (periodStartDates.length === 0) return fertilityDates;
+    
+     const sortedDates = [...periodStartDates].sort((a, b) => 
+       new Date(a).getTime() - new Date(b).getTime()
+     );
+     
+     // Skip the first period and only calculate fertility for subsequent periods
+     const datesWithPreviousCycle = sortedDates.slice(1);
+ 
+     datesWithPreviousCycle.forEach(startDate => {
       // Calculate ovulation date (14 days before period start)
       const periodDate = parseLocalDate(startDate);
       const ovulationDate = new Date(periodDate);
