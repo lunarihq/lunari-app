@@ -170,6 +170,7 @@ export class PeriodPredictionService {
     const ovulationCycleDay = this.getOvulationCycleDay(averageCycleLength);
 
     if (cycleDay < ovulationCycleDay) return 'follicular';
+    if (cycleDay === ovulationCycleDay) return 'ovulatory';
     if (cycleDay <= averageCycleLength) return 'luteal';
     return 'extended';
   }

@@ -45,12 +45,9 @@ export default function CyclePhaseDetails() {
   const cycleDay = parseInt(params.cycleDay as string) || 0;
   const averageCycleLength =
     parseInt(params.averageCycleLength as string) || 28;
-  const isOvulationDay = params.isOvulationDay === 'true';
   const currentDate = new Date();
 
-  const cyclePhaseKey = isOvulationDay
-    ? 'ovulatory'
-    : PeriodPredictionService.getCyclePhase(cycleDay, averageCycleLength);
+  const cyclePhaseKey = PeriodPredictionService.getCyclePhase(cycleDay, averageCycleLength);
   const pregnancyChanceKey = PeriodPredictionService.getPregnancyChance(
     cycleDay,
     averageCycleLength
@@ -98,9 +95,7 @@ export default function CyclePhaseDetails() {
           <View style={styles.phaseHeader}>
               <CycleIcon size={32} />
             <Text style={[typography.headingMd, { marginLeft: 12 }]}>
-              {isOvulationDay
-                ? t('cyclePhase.cycleEventTitle')
-                : t('cyclePhase.cyclePhaseTitle')}
+              {t('cyclePhase.cyclePhaseTitle')}
             </Text>
           </View>
 

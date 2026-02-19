@@ -42,8 +42,7 @@ export function CycleDetails({
     return t(`cycleDetails.conceptionChance.${chance}`);
   };
 
-  const ovulationCycleDay = PeriodPredictionService.getOvulationCycleDay(averageCycleLength);
-  const isOvulationDay = cycleDay !== null && cycleDay === ovulationCycleDay;
+  const isOvulationDay = cycleDay !== null && PeriodPredictionService.getCyclePhase(cycleDay, averageCycleLength) === 'ovulatory';
 
   const isDateInPastOrToday = () => {
     const today = formatDateString(new Date());

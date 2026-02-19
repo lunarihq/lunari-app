@@ -13,13 +13,11 @@ import { useAppStyles } from '../hooks/useStyles';
 interface CycleInsightsProps {
   currentCycleDay: number | null;
   averageCycleLength: number;
-  isOvulationDay?: boolean;
 }
 
 export function CycleInsights({
   currentCycleDay,
   averageCycleLength,
-  isOvulationDay = false,
 }: CycleInsightsProps) {
   const { colors } = useTheme();
   const { typography, commonStyles } = useAppStyles();
@@ -57,7 +55,7 @@ export function CycleInsights({
   );
 
   const detailsUrl = currentCycleDay
-    ? `/(info)/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}&isOvulationDay=${isOvulationDay}`
+    ? `/(info)/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}`
     : null;
 
   return (
@@ -111,20 +109,16 @@ export function CycleInsights({
                 <CycleIcon size={28} />
               </View>
               <Text style={insightLabelStyle}>
-                {isOvulationDay
-                  ? t('cycleInsights.cycleEvent')
-                  : t('cycleInsights.cyclePhase')}
+                {t('cycleInsights.cyclePhase')}
               </Text>
             </View>
             <View style={insightValueStyle}>
               <Text style={insightTextStyle}>
                 {currentCycleDay
-                  ? isOvulationDay
-                    ? t('cycleInsights.ovulationDay')
-                    : t(`cycleInsights.${PeriodPredictionService.getCyclePhase(
-                        currentCycleDay,
-                        averageCycleLength
-                      )}`)
+                  ? t(`cycleInsights.${PeriodPredictionService.getCyclePhase(
+                      currentCycleDay,
+                      averageCycleLength
+                    )}`)
                   : '-'}
               </Text>
             </View>
