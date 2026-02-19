@@ -4,8 +4,7 @@ export type CyclePhase =
   | 'menstrual'
   | 'follicular'
   | 'ovulatory'
-  | 'luteal'
-  | 'extended';
+  | 'luteal';
 
 export type PregnancyChanceLevel = 'high' | 'medium' | 'low';
 
@@ -193,8 +192,7 @@ export class PeriodPredictionService {
 
     if (cycleDay < ovulationCycleDay) return 'follicular';
     if (cycleDay === ovulationCycleDay) return 'ovulatory';
-    if (cycleDay <= averageCycleLength) return 'luteal';
-    return 'extended';
+    return 'luteal';
   }
 
   static getPregnancyChance(
