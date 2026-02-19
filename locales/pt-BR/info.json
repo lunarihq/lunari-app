@@ -17,7 +17,7 @@
     "phases": {
       "menstrual": "Menstrual",
       "follicular": "Folicular",
-      "ovulatory": "Dia de ovulação",
+      "ovulatory": "Ovulação",
       "luteal": "Lútea",
       "extended": "Estendido"
     },
