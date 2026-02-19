@@ -63,11 +63,16 @@ export function useCalendarPredictions({
           cycleLength
         );
 
+      const periodLength = PeriodPredictionService.getAveragePeriodLength(
+        allPeriods,
+        userPeriodLength
+      );
+
       // Get predicted dates for future cycles
       const predictedDates = PeriodPredictionService.generatePredictedDates(
         startDate,
         cycleLength,
-        userPeriodLength,
+        periodLength,
         12
       );
 

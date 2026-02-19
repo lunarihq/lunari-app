@@ -40,6 +40,18 @@ export class PeriodPredictionService {
     return periods;
   }
 
+  static getAveragePeriodLength(
+    periods: string[][],
+    userPeriodLength?: number
+  ): number {
+    if (periods.length === 0) return userPeriodLength || 5;
+
+    const recentPeriods = periods.slice(0, 6);
+    const avg =
+      recentPeriods.reduce((sum, p) => sum + p.length, 0) / recentPeriods.length;
+    return Math.round(avg);
+  }
+
   static getAverageCycleLength(
     dates: string[],
     userCycleLength?: number
