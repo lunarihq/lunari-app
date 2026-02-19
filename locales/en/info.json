@@ -18,15 +18,13 @@
       "menstrual": "Menstrual",
       "follicular": "Follicular",
       "ovulatory": "Ovulation",
-      "luteal": "Luteal",
-      "extended": "Extended"
+      "luteal": "Luteal"
     },
     "phaseDescriptions": {
       "menstrual": "The menstrual cycle starts on the first day of your period and ends the day before your next period begins.\n\nThe period is when the lining of the uterus sheds and leaves the body through vaginal bleeding.The period usually lasts from 3 to 7 days.",
       "follicular": "The follicular phase is the first part of the menstrual cycle, and stats on the first day of your period (so there is some overlap with the menstrual phase) and ends with ovulation (when one of your ovaries releases an egg).",
       "ovulatory": "Ovulation is the release of an egg from your ovary. This is the peak fertility window, and it typically occurs about 12 to 16 days before the next menstrual period begins. For an average 28-day cycle, this is around day 14.\n\nThe chance to conceive is highest during this phase. The egg can live for about 24 hours once released.",
-      "luteal": "The luteal phase begins just after ovulation and continues through the day before your next period starts. It typically lasts about 12–14 days.\n\nDuring this time, the body prepares for a potential pregnancy by thickening the uterine lining. If fertilization does not occur, hormone levels drop and menstruation begins.\n\nIf your expected period date has passed and bleeding hasn't started yet, your luteal phase is simply continuing beyond its usual length. This can happen occasionally and is not always a cause for concern.",
-      "extended": "Your cycle is running longer than usual (past day 35). This can be normal occasionally, but if it happens often, consider tracking patterns and chatting with a healthcare provider."
+      "luteal": "The luteal phase begins just after ovulation and continues through the day before your next period starts. It typically lasts about 12–14 days.\n\nDuring this time, the body prepares for a potential pregnancy by thickening the uterine lining. If fertilization does not occur, hormone levels drop and menstruation begins.\n\nIf your expected period date has passed and bleeding hasn't started yet, your luteal phase is simply continuing beyond its usual length. This can happen occasionally and is not always a cause for concern."
     },
     "pregnancyChance": {
       "high": "High",
@@ -57,8 +55,7 @@
         "intro": "The change in the level of progesterone as you approach your period may cause symptoms of PMS (pre-menstrual syndrome), such as:",
         "items": ["Bloating", "Breast tenderness", "Mood swings", "Food cravings", "Fatigue", "Headaches", "Acne breakouts", "Changes in sex drive"],
         "note": "These PMS symptoms typically worsen as your period approaches."
-      },
-      "extended": ""
+      }
     },
     "menstrual": {
       "title": "Menstrual phase",

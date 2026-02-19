@@ -18,15 +18,13 @@
       "menstrual": "Menstrual",
       "follicular": "Folicular",
       "ovulatory": "Ovulação",
-      "luteal": "Lútea",
-      "extended": "Estendido"
+      "luteal": "Lútea"
     },
     "phaseDescriptions": {
       "menstrual": "O ciclo menstrual começa no primeiro dia da sua menstruação e termina no dia anterior ao início da próxima.\n\nA menstruação é quando o revestimento do útero se desprende e sai do corpo através do sangramento vaginal. A menstruação costuma durar de 3 a 7 dias.",
       "follicular": "A fase folicular é a primeira parte do ciclo menstrual: começa no primeiro dia da menstruação (por isso há sobreposição com a fase menstrual) e termina na ovulação (quando um dos ovários libera um óvulo).",
       "ovulatory": "A ovulação é a liberação de um óvulo do ovário. É a janela de pico de fertilidade e normalmente ocorre cerca de 12 a 16 dias antes da próxima menstruação. Em um ciclo médio de 28 dias, é por volta do dia 14.\n\nA chance de conceber é maior nesta fase. O óvulo pode viver cerca de 24 horas após ser liberado.",
       "luteal": "A fase lútea começa logo após a ovulação e continua até o dia anterior ao início da próxima menstruação. Normalmente dura cerca de 12–14 dias.\n\nDurante esse tempo o corpo se prepara para uma possível gravidez espessando o revestimento uterino. Se não houver fertilização, os níveis hormonais caem e a menstruação começa.\n\nSe a data prevista da sua menstruação já passou e o sangramento ainda não começou, a fase lútea está simplesmente se prolongando além da sua duração habitual. Isso pode acontecer ocasionalmente e nem sempre é motivo de preocupação.",
-      "extended": "Seu ciclo está durando mais do que o habitual (além do dia 35). Isso pode ser normal às vezes, mas se acontecer com frequência, considere acompanhar os padrões e falar com um profissional de saúde."
     },
     "pregnancyChance": {
       "high": "Alta",
@@ -57,8 +55,7 @@
         "intro": "A mudança no nível de progesterona conforme você se aproxima da menstruação pode causar sintomas de TPM (tensão pré-menstrual), como:",
         "items": ["Inchaço", "Sensibilidade nos seios", "Alterações de humor", "Desejo por certos alimentos", "Cansaço", "Dores de cabeça", "Surto de acne", "Mudanças no desejo sexual"],
         "note": "Esses sintomas de TPM normalmente pioram quando a menstruação se aproxima."
-      },
-      "extended": ""
+      }
     },
     "menstrual": {
       "title": "Fase menstrual",
