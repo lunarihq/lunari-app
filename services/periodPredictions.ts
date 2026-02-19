@@ -1,5 +1,14 @@
 import { parseLocalDate } from '../utils/dateUtils';
 
+export type CyclePhase =
+  | 'menstrual'
+  | 'follicular'
+  | 'ovulatory'
+  | 'luteal'
+  | 'extended';
+
+export type PregnancyChanceLevel = 'high' | 'medium' | 'low';
+
 interface PredictionResult {
   days: number;
   date: string;
@@ -7,9 +16,9 @@ interface PredictionResult {
 }
 
 interface CycleInfo {
-  phase: string;
+  phase: CyclePhase;
   cycleDay: number;
-  pregnancyChance: string;
+  pregnancyChance: PregnancyChanceLevel;
 }
 
 export class PeriodPredictionService {
@@ -176,7 +185,7 @@ export class PeriodPredictionService {
   static getCyclePhase(
     cycleDay: number,
     averageCycleLength: number = 28
-  ): string {
+  ): CyclePhase {
     if (cycleDay <= 5) return 'menstrual';
 
     const ovulationCycleDay = this.getOvulationCycleDay(averageCycleLength);
@@ -190,7 +199,7 @@ export class PeriodPredictionService {
   static getPregnancyChance(
     cycleDay: number,
     averageCycleLength: number = 28
-  ): string {
+  ): PregnancyChanceLevel {
     const ovulationDay = this.getOvulationCycleDay(averageCycleLength);
     const fertilityStart = ovulationDay - 5;
     const fertilityEnd = ovulationDay + 1;
