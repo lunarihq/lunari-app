@@ -184,9 +184,10 @@ export class PeriodPredictionService {
 
   static getCyclePhase(
     cycleDay: number,
-    averageCycleLength: number = 28
+    averageCycleLength: number = 28,
+    averagePeriodLength: number = 5
   ): CyclePhase {
-    if (cycleDay <= 5) return 'menstrual';
+    if (cycleDay <= averagePeriodLength) return 'menstrual';
 
     const ovulationCycleDay = this.getOvulationCycleDay(averageCycleLength);
 
@@ -213,11 +214,12 @@ export class PeriodPredictionService {
   static getCycleInfo(
     startDate: string,
     currentDate?: string,
-    cycleLength?: number
+    cycleLength?: number,
+    periodLength?: number
   ): CycleInfo {
     const cycleDay = this.getCurrentCycleDay(startDate, currentDate);
     const avgCycleLength = cycleLength || 28;
-    const phase = this.getCyclePhase(cycleDay, avgCycleLength);
+    const phase = this.getCyclePhase(cycleDay, avgCycleLength, periodLength);
 
     return {
       phase,

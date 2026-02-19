@@ -128,6 +128,7 @@ export default function Index() {
   }, [currentDate, selectedDates]);
 
   const [userCycleLength, setUserCycleLength] = useState<number>(28);
+  const [userPeriodLength, setUserPeriodLength] = useState<number>(5);
 
   const prediction = firstPeriodDate
     ? PeriodPredictionService.getPrediction(
@@ -145,6 +146,10 @@ export default function Index() {
         if (cycleLength) {
           setUserCycleLength(parseInt(cycleLength, 10));
         }
+        const periodLength = await getSetting('userPeriodLength');
+        if (periodLength) {
+          setUserPeriodLength(parseInt(periodLength, 10));
+        }
       } catch {}
     };
     loadUserSettings();
@@ -157,6 +162,13 @@ export default function Index() {
           userCycleLength
         )
       : userCycleLength;
+
+  const averagePeriodLength = Object.keys(selectedDates).length > 0
+    ? PeriodPredictionService.getAveragePeriodLength(
+        PeriodPredictionService.groupDateIntoPeriods(Object.keys(selectedDates)),
+        userPeriodLength
+      )
+    : userPeriodLength;
 
   return (
     <ScrollView
@@ -177,6 +189,7 @@ export default function Index() {
       <CycleInsights
         currentCycleDay={currentCycleDay}
         averageCycleLength={averageCycleLength}
+        averagePeriodLength={averagePeriodLength}
       />
 
       <View style={[commonStyles.sectionContainer]}>

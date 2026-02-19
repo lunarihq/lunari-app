@@ -13,11 +13,13 @@ import { useAppStyles } from '../hooks/useStyles';
 interface CycleInsightsProps {
   currentCycleDay: number | null;
   averageCycleLength: number;
+  averagePeriodLength: number;
 }
 
 export function CycleInsights({
   currentCycleDay,
   averageCycleLength,
+  averagePeriodLength,
 }: CycleInsightsProps) {
   const { colors } = useTheme();
   const { typography, commonStyles } = useAppStyles();
@@ -55,7 +57,7 @@ export function CycleInsights({
   );
 
   const detailsUrl = currentCycleDay
-    ? `/(info)/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}`
+    ? `/(info)/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}&averagePeriodLength=${averagePeriodLength}`
     : null;
 
   return (
@@ -117,7 +119,8 @@ export function CycleInsights({
                 {currentCycleDay
                   ? t(`cycleInsights.${PeriodPredictionService.getCyclePhase(
                       currentCycleDay,
-                      averageCycleLength
+                      averageCycleLength,
+                      averagePeriodLength
                     )}`)
                   : '-'}
               </Text>

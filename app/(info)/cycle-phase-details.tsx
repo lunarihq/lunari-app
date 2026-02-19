@@ -45,9 +45,11 @@ export default function CyclePhaseDetails() {
   const cycleDay = parseInt(params.cycleDay as string) || 0;
   const averageCycleLength =
     parseInt(params.averageCycleLength as string) || 28;
+  const averagePeriodLength =
+    parseInt(params.averagePeriodLength as string) || 5;
   const currentDate = new Date();
 
-  const cyclePhaseKey = PeriodPredictionService.getCyclePhase(cycleDay, averageCycleLength);
+  const cyclePhaseKey = PeriodPredictionService.getCyclePhase(cycleDay, averageCycleLength, averagePeriodLength);
   const pregnancyChanceKey = PeriodPredictionService.getPregnancyChance(
     cycleDay,
     averageCycleLength
