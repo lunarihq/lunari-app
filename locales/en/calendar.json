@@ -5,7 +5,8 @@
   "ovulationDay": "Ovulation day",
   "fertileWindow": "Fertile window",
   "prediction": "Prediction",
-  "today": "Back to today",
+  "today": "Today",
+  "todayButton": "Back to today",
   "editPeriod": {
     "title": "Edit Period",
     "editPeriodDates": "Edit period dates",

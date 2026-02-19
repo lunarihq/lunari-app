@@ -223,7 +223,7 @@ export default function CalendarScreen() {
               style={{ marginRight: 16 }}
             >
               <Text style={{ color: colors.primary, fontSize: 16, fontWeight: '500' }}>
-                {t('today')}
+                {t('todayButton')}
               </Text>
             </TouchableOpacity>
           )

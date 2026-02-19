@@ -5,7 +5,8 @@
   "ovulationDay": "Dia da ovulação",
   "fertileWindow": "Janela fértil",
   "prediction": "Previsão",
-  "today": "Voltar para hoje",
+  "today": "Hoje",
+  "todayButton": "Voltar para hoje",
   "editPeriod": {
     "title": "Editar Período",
     "editPeriodDates": "Editar datas do período",

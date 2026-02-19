@@ -185,7 +185,7 @@ export default function PeriodCalendarScreen() {
             style={[styles.todayButton, { paddingTop: 63 }]}
           >
             <Text style={[typography.body, { color: colors.primary, fontWeight: '500' }]}>
-              {t('calendar:today')}
+              {t('calendar:todayButton')}
             </Text>
           </TouchableOpacity>
         )}
