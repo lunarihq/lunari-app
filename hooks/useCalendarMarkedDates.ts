@@ -50,6 +50,8 @@ export function useCalendarMarkedDates({
       const allMarkedDates: MarkedDates = {};
 
       if (startDate && periodDates.length > 0) {
+        const periodDateSet = new Set(periodDates);
+
         // Apply styling to actual period dates
         periodDates.forEach(dateString => {
           allMarkedDates[dateString] = getPeriodDateStyle(colors);
@@ -65,8 +67,7 @@ export function useCalendarMarkedDates({
         // Apply styling to fertility dates (past and present cycles) - only if ovulation is enabled
         if (showOvulation) {
           Object.entries(fertilityDates).forEach(([dateString, prediction]) => {
-            // Only apply fertility style if this is not an actual period date
-            if (!allMarkedDates[dateString]?.selected) {
+            if (!periodDateSet.has(dateString)) {
               allMarkedDates[dateString] = getCalendarDateStyle(
                 prediction.type,
                 colors
@@ -77,7 +78,6 @@ export function useCalendarMarkedDates({
 
         // Apply styling to predicted dates (future cycles only) - filter based on settings
         Object.entries(predictedDates).forEach(([dateString, prediction]) => {
-          // Skip ovulation/fertile dates if ovulation is disabled
           if (
             !showOvulation &&
             (prediction.type === 'ovulation' || prediction.type === 'fertile')
@@ -85,13 +85,11 @@ export function useCalendarMarkedDates({
             return;
           }
 
-          // Skip future period dates if future periods is disabled
           if (!showFuturePeriods && prediction.type === 'period') {
             return;
           }
 
-          // Only apply prediction style if this is not an actual period date and not already a fertility date
-          if (!allMarkedDates[dateString]?.selected) {
+          if (!periodDateSet.has(dateString) && !allMarkedDates[dateString]) {
             allMarkedDates[dateString] = getCalendarDateStyle(
               prediction.type,
               colors
