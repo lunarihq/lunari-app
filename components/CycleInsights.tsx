@@ -56,9 +56,11 @@ export function CycleInsights({
     [colors.textPrimary]
   );
 
-  const detailsUrl = currentCycleDay
-    ? `/(info)/cycle-phase-details?cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}&averagePeriodLength=${averagePeriodLength}`
-    : null;
+  const baseParams = `cycleDay=${currentCycleDay}&averageCycleLength=${averageCycleLength}&averagePeriodLength=${averagePeriodLength}`;
+  const detailsUrl = (scrollTo?: string) =>
+    currentCycleDay
+      ? `/(info)/cycle-phase-details?${baseParams}${scrollTo ? `&scrollTo=${scrollTo}` : ''}`
+      : null;
 
   return (
     <View style={[commonStyles.sectionContainer]}>
@@ -67,7 +69,7 @@ export function CycleInsights({
           {t('cycleInsights.todaysInsights')}
         </Text>
         <Pressable
-          onPress={() => detailsUrl && router.push(detailsUrl as Href)}
+          onPress={() => detailsUrl() && router.push(detailsUrl() as Href)}
           disabled={!currentCycleDay}
           style={[
             styles.chevronButton,
@@ -85,7 +87,7 @@ export function CycleInsights({
         <View style={styles.insightsRow}>
           <Pressable
             style={[styles.insightCard, cardBorderStyle]}
-            onPress={() => detailsUrl && router.push(detailsUrl as Href)}
+            onPress={() => detailsUrl() && router.push(detailsUrl() as Href)}
           >
             <View style={styles.insightTop}>
               <View style={iconContainerStyle}>
@@ -104,7 +106,7 @@ export function CycleInsights({
 
           <Pressable
             style={[styles.insightCard, cardBorderStyle]}
-            onPress={() => detailsUrl && router.push(detailsUrl as Href)}
+            onPress={() => detailsUrl('cyclePhase') && router.push(detailsUrl('cyclePhase') as Href)}
           >
             <View style={styles.insightTop}>
               <View style={iconContainerStyle}>
@@ -129,7 +131,7 @@ export function CycleInsights({
 
           <Pressable
             style={[styles.insightCard, cardBorderStyle]}
-            onPress={() => detailsUrl && router.push(detailsUrl as Href)}
+            onPress={() => detailsUrl('chanceToConceive') && router.push(detailsUrl('chanceToConceive') as Href)}
           >
             <View style={styles.insightTop}>
               <View style={iconContainerStyle}>

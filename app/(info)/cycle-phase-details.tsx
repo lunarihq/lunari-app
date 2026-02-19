@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Text, View, StyleSheet, ScrollView } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { PeriodPredictionService } from '../../services/periodPredictions';
@@ -55,8 +55,37 @@ export default function CyclePhaseDetails() {
     averageCycleLength
   );
 
+  const scrollViewRef = useRef<ScrollView>(null);
+  const cyclePhaseSectionRef = useRef<View>(null);
+  const chanceToConceiveSectionRef = useRef<View>(null);
+  const symptomsSectionRef = useRef<View>(null);
+
+  useEffect(() => {
+    const scrollTo = params.scrollTo as string | undefined;
+    if (!scrollTo || !scrollViewRef.current) return;
+
+    const sectionRefs: Record<string, React.RefObject<View | null>> = {
+      cyclePhase: cyclePhaseSectionRef,
+      chanceToConceive: chanceToConceiveSectionRef,
+      symptoms: symptomsSectionRef,
+    };
+    const targetRef = sectionRefs[scrollTo];
+    if (!targetRef?.current) return;
+
+    setTimeout(() => {
+      targetRef.current?.measureLayout(
+        scrollViewRef.current as any,
+        (x, y) => {
+          scrollViewRef.current?.scrollTo({ y, animated: true });
+        },
+        () => {}
+      );
+    }, 100);
+  }, [params.scrollTo]);
+
   return (
       <ScrollView
+        ref={scrollViewRef}
         style={commonStyles.scrollView}
         contentContainerStyle={[scrollContentContainerWithSafeArea, { paddingTop: 24 }]}
         showsVerticalScrollIndicator={false}
@@ -93,7 +122,7 @@ export default function CyclePhaseDetails() {
           {getFormattedCycleStart(cycleDay, t)}
         </Text>
 
-        <View style={[commonStyles.sectionContainer]}>
+        <View ref={cyclePhaseSectionRef} style={[commonStyles.sectionContainer]}>
           <View style={styles.phaseHeader}>
               <CycleIcon size={32} />
             <Text style={[typography.headingMd, { marginLeft: 12 }]}>
@@ -116,7 +145,7 @@ export default function CyclePhaseDetails() {
           </Text>
         </View>
 
-        <View style={[commonStyles.sectionContainer]}>
+        <View ref={chanceToConceiveSectionRef} style={[commonStyles.sectionContainer]}>
           <View style={styles.phaseHeader}>
               <LeafIcon size={34}/>
             <Text style={[typography.headingMd, { marginLeft: 12 }]}>
@@ -140,7 +169,7 @@ export default function CyclePhaseDetails() {
         </View>
 
         {t(`cyclePhase.symptoms.${cyclePhaseKey}`) && (
-          <View style={[commonStyles.sectionContainer]}>
+          <View ref={symptomsSectionRef} style={[commonStyles.sectionContainer]}>
             <View style={styles.phaseHeader}>
 
               <SymptomsIcon size={34}/>
