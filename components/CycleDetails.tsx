@@ -25,6 +25,7 @@ export function CycleDetails({
   const { colors } = useTheme();
   const { typography } = useAppStyles();
   const { t } = useTranslation('common');
+  const { t: tCalendar } = useTranslation('calendar');
   const { t: tHealth } = useTranslation('health');
   const selectedDateFormatted = selectedDate
     ? formatDateShort(selectedDate)
@@ -41,7 +42,8 @@ export function CycleDetails({
     return t(`cycleDetails.conceptionChance.${chance}`);
   };
 
-  // Check if selected date is today or in the past
+  const isOvulationDay = cycleDay !== null && PeriodPredictionService.getCyclePhase(cycleDay, averageCycleLength) === 'ovulatory';
+
   const isDateInPastOrToday = () => {
     const today = formatDateString(new Date());
     return selectedDate <= today;
@@ -64,6 +66,7 @@ export function CycleDetails({
             {cycleDay && (
               <Text style={[typography.body, { color: colors.textSecondary }]}>
                 {getConceptionChance()}
+                {isOvulationDay ? ` • ${tCalendar('ovulationDay')}` : ''}
               </Text>
             )}
           </View>
