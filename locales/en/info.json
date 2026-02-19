@@ -34,7 +34,7 @@
     "pregnancyChanceDescriptions": {
       "high": "This is your fertile window when conception is most likely to occur. Ovulation typically happens during this time.",
       "medium": "There is a moderate chance of conception during this time as you approach or move away from your fertile window.",
-      "low": "Conception is less likely during this time. This includes menstrual days and the later luteal phase of your cycle."
+      "low": "Conception is less likely during this time. The chance of getting pregnant increase during ovulation and the fertile days around it.\n\nWhile chances may vary, you can conceive on any day of your cycle. If you don't want to get pregnant, it's best to use contraception every time you have sex."
     },
     "symptoms": {
       "menstrual": {

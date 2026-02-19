@@ -34,7 +34,7 @@
     "pregnancyChanceDescriptions": {
       "high": "Esta é a tua janela fértil, quando a conceção é mais provável. A ovulação normalmente ocorre durante este período.",
       "medium": "Há uma probabilidade moderada de conceção durante este período, à medida que te aproximas ou te afastas da tua janela fértil.",
-      "low": "A conceção é menos provável durante este período. Isto inclui os dias menstruais e a fase lútea mais avançada do teu ciclo."
+      "low": "A conceção é menos provável durante este período. A probabilidade de engravidares aumenta durante a ovulação e nos dias férteis à sua volta.\n\nEmbora as probabilidades possam variar, podes conceber em qualquer dia do teu ciclo. Se não quiseres engravidar, o melhor é usar contraceção sempre que tiveres relações sexuais."
     },
     "symptoms": {
       "menstrual": {

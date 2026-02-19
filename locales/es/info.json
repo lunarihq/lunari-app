@@ -34,7 +34,7 @@
     "pregnancyChanceDescriptions": {
       "high": "Esta es tu ventana fértil cuando la concepción es más probable. La ovulación típicamente ocurre durante este tiempo.",
       "medium": "Hay una probabilidad moderada de concepción durante este tiempo mientras te acercas o te alejas de tu ventana fértil.",
-      "low": "La concepción es menos probable durante este tiempo. Esto incluye los días menstruales y la fase lútea tardía de tu ciclo."
+      "low": "La concepción es menos probable durante este tiempo. La probabilidad de quedarte embarazada aumenta durante la ovulación y los días fértiles alrededor de esta.\n\nAunque las probabilidades pueden variar, puedes concebir cualquier día de tu ciclo. Si no quieres quedarte embarazada, lo mejor es usar anticonceptivos cada vez que tengas relaciones sexuales."
     },
     "symptoms": {
       "menstrual": {
