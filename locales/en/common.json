@@ -2,22 +2,12 @@
   "buttons": {
     "save": "Save",
     "cancel": "Cancel",
-    "delete": "Delete",
     "getStarted": "Get started",
-    "next": "Next",
-    "back": "Back",
     "done": "Done",
-    "edit": "Edit",
-    "close": "Close",
-    "confirm": "Confirm",
     "continue": "Continue",
     "resetAllData": "Reset All Data"
   },
   "errors": {
-    "generic": "Something went wrong. Please try again.",
-    "loadFailed": "Failed to load data",
-    "saveFailed": "Failed to save",
-    "deleteFailed": "Failed to delete",
     "database": {
       "title": "Unable to Start App",
       "generic": "We encountered an issue starting the app. Please try restarting.",
@@ -36,9 +26,7 @@
   "time": {
     "today": "Today",
     "day": "day",
-    "days": "days",
-    "daysCount": "{{count}} day",
-    "daysCount_other": "{{count}} days"
+    "days": "days"
   },
   "status": {
     "normal": "Normal",
@@ -59,7 +47,6 @@
       "medium": "Medium chance to conceive",
       "high": "High chance to conceive"
     }
-  },
-  "loading": "Loading..."
+  }
 }
 

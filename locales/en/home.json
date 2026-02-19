@@ -2,8 +2,6 @@
   "period": "Period",
   "periodDay": "Day {{number}}",
   "nextPeriodIn": "Next period in",
-  "day": "day",
-  "days": "days",
   "daysCount": "{{count}} day",
   "daysCount_other": "{{count}} days",
   "expectedToday": "Your period is expected today",
@@ -13,7 +11,6 @@
   "noDataPrompt": "Log the first day of your last period for next prediction.",
   "learnAboutLatePeriods": "Learn about late periods",
   "cycleInsights": {
-    "title": "Cycle insights",
     "todaysInsights": "Today's insights",
     "cycleDay": "Cycle day",
     "cyclePhase": "Cycle phase",
@@ -26,10 +23,7 @@
     "extended": "Extended",
     "high": "High",
     "medium": "Medium",
-    "low": "Low",
-    "dayOfCycle": "Day {{day}} of {{total}}",
-    "averageCycle": "Average cycle: {{days}} days",
-    "nextPeriod": "Next period: {{date}}"
+    "low": "Low"
   }
 }
 

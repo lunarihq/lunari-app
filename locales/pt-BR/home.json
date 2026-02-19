@@ -2,8 +2,6 @@
   "period": "Período",
   "periodDay": "Dia {{number}}",
   "nextPeriodIn": "Próxima menstruação em",
-  "day": "dia",
-  "days": "dias",
   "daysCount": "{{count}} dia",
   "daysCount_other": "{{count}} dias",
   "expectedToday": "Sua menstruação está prevista para hoje",
@@ -13,8 +11,7 @@
   "noDataPrompt": "Registre o primeiro dia da sua última menstruação para a próxima previsão.",
   "learnAboutLatePeriods": "Saiba mais",
   "cycleInsights": {
-    "title": "Informações do ciclo",
-    "todaysInsights": "Informações de hoje",
+    "todaysInsights": "Informações do ciclo",
     "cycleDay": "Dia do ciclo",
     "cyclePhase": "Fase do ciclo",
     "chanceToConceive": "Chance de conceber",
@@ -26,9 +23,6 @@
     "extended": "Estendido",
     "high": "Alta",
     "medium": "Média",
-    "low": "Baixa",
-    "dayOfCycle": "Dia {{day}} de {{total}}",
-    "averageCycle": "Ciclo médio: {{days}} dias",
-    "nextPeriod": "Próxima menstruação: {{date}}"
+    "low": "Baixa"
   }
 }

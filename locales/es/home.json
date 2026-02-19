@@ -2,8 +2,6 @@
   "period": "Periodo",
   "periodDay": "Día {{number}}",
   "nextPeriodIn": "Próximo periodo en",
-  "day": "día",
-  "days": "días",
   "daysCount": "{{count}} día",
   "daysCount_other": "{{count}} días",
   "expectedToday": "El periodo podría empezar hoy",
@@ -13,7 +11,6 @@
   "noDataPrompt": "Registra el primer día de tu último periodo para obtener predicciones.",
   "learnAboutLatePeriods": "Saber más",
   "cycleInsights": {
-    "title": "Información del ciclo",
     "todaysInsights": "Información de hoy",
     "cycleDay": "Día del ciclo",
     "cyclePhase": "Fase del ciclo",
@@ -26,10 +23,7 @@
     "extended": "Extendido",
     "high": "Alta",
     "medium": "Media",
-    "low": "Baja",
-    "dayOfCycle": "Día {{day}} de {{total}}",
-    "averageCycle": "Ciclo promedio: {{days}} días",
-    "nextPeriod": "Próximo periodo: {{date}}"
+    "low": "Baja"
   }
 }
 

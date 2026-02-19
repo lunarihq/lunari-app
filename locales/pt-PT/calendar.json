@@ -1,26 +1,13 @@
 {
-  "title": "Calendário",
-  "selectDate": "Seleciona uma data",
-  "periodDates": "Datas do período",
-  "ovulationDay": "Dia da ovulação",
-  "fertileWindow": "Janela fértil",
-  "prediction": "Previsão",
   "today": "Hoje",
   "todayButton": "Voltar para hoje",
   "editPeriod": {
     "title": "Editar Período",
     "editPeriodDates": "Editar datas do período",
-    "selectDates": "Seleciona as datas do teu período",
-    "instructions": "Toca no calendário para selecionar ou desselecionar datas",
-    "save": "Guardar",
-    "cancel": "Cancelar",
     "successMessage": "Datas do período guardadas",
-    "errorMessage": "Erro. Por favor, tenta novamente.",
-    "delete": "Eliminar período",
-    "confirmDelete": "Tens a certeza de que queres eliminar este período?"
+    "errorMessage": "Erro. Por favor, tenta novamente."
   },
   "view": {
-    "title": "Vista do calendário",
     "displayOptions": "Opções de visualização",
     "showOvulation": "Mostrar dia da ovulação e janela fértil no calendário",
     "showFuturePeriods": "Mostrar previsão de períodos futuros no calendário",

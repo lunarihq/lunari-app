@@ -2,22 +2,12 @@
   "buttons": {
     "save": "Guardar",
     "cancel": "Cancelar",
-    "delete": "Eliminar",
     "getStarted": "Começar",
-    "next": "Seguinte",
-    "back": "Voltar",
     "done": "Concluído",
-    "edit": "Editar",
-    "close": "Fechar",
-    "confirm": "Confirmar",
     "continue": "Continuar",
     "resetAllData": "Repor Todos os Dados"
   },
   "errors": {
-    "generic": "Algo correu mal. Por favor, tenta novamente.",
-    "loadFailed": "Falha ao carregar dados",
-    "saveFailed": "Falha ao guardar",
-    "deleteFailed": "Falha ao eliminar",
     "database": {
       "title": "Não foi possível iniciar a aplicação",
       "generic": "Encontrámos um problema ao iniciar a aplicação. Por favor, tenta reiniciar.",
@@ -36,9 +26,7 @@
   "time": {
     "today": "Hoje",
     "day": "dia",
-    "days": "dias",
-    "daysCount": "{{count}} dia",
-    "daysCount_other": "{{count}} dias"
+    "days": "dias"
   },
   "status": {
     "normal": "Normal",
@@ -59,6 +47,5 @@
       "medium": "Probabilidade média de conceber",
       "high": "Alta probabilidade de conceber"
     }
-  },
-  "loading": "A carregar..."
+  }
 }

@@ -2,22 +2,12 @@
   "buttons": {
     "save": "Salvar",
     "cancel": "Cancelar",
-    "delete": "Excluir",
     "getStarted": "Começar",
-    "next": "Próximo",
-    "back": "Voltar",
     "done": "Concluído",
-    "edit": "Editar",
-    "close": "Fechar",
-    "confirm": "Confirmar",
     "continue": "Continuar",
     "resetAllData": "Redefinir Todos os Dados"
   },
   "errors": {
-    "generic": "Algo deu errado. Por favor, tente novamente.",
-    "loadFailed": "Falha ao carregar dados",
-    "saveFailed": "Falha ao salvar",
-    "deleteFailed": "Falha ao excluir",
     "database": {
       "title": "Não foi possível iniciar o app",
       "generic": "Encontramos um problema ao iniciar o app. Por favor, tente reiniciar.",
@@ -36,9 +26,7 @@
   "time": {
     "today": "Hoje",
     "day": "dia",
-    "days": "dias",
-    "daysCount": "{{count}} dia",
-    "daysCount_other": "{{count}} dias"
+    "days": "dias"
   },
   "status": {
     "normal": "Normal",
@@ -59,6 +47,5 @@
       "medium": "Chance média de conceber",
       "high": "Alta chance de conceber"
     }
-  },
-  "loading": "Carregando..."
+  }
 }
