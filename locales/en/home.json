@@ -4,7 +4,7 @@
   "nextPeriodIn": "Next period in",
   "daysCount": "{{count}} day",
   "daysCount_other": "{{count}} days",
-  "expectedToday": "Your period is expected today",
+  "expectedToday": "Period may start today",
   "lateFor": "Late for",
   "logPeriod": "Log period",
   "logOrEdit": "Edit period dates",

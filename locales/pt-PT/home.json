@@ -4,7 +4,7 @@
   "nextPeriodIn": "Próximo período em",
   "daysCount": "{{count}} dia",
   "daysCount_other": "{{count}} dias",
-  "expectedToday": "O teu período está previsto para hoje",
+  "expectedToday": "O período pode começar hoje",
   "lateFor": "Atrasado há",
   "logPeriod": "Registar período",
   "logOrEdit": "Editar datas do período",
