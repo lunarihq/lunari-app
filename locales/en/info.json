@@ -7,7 +7,6 @@
     "howPredictionsWork": "How predictions work"
   },
   "cyclePhase": {
-    "title": "Cycle phases",
     "cycleDay": "Cycle day",
     "cycleStartedToday": "Your cycle started today",
     "cycleStartedOn": "This cycle started on",
@@ -56,22 +55,6 @@
         "items": ["Bloating", "Breast tenderness", "Mood swings", "Food cravings", "Fatigue", "Headaches", "Acne breakouts", "Changes in sex drive"],
         "note": "These PMS symptoms typically worsen as your period approaches."
       }
-    },
-    "menstrual": {
-      "title": "Menstrual phase",
-      "description": "The first day of your period marks the beginning of your menstrual cycle."
-    },
-    "follicular": {
-      "title": "Follicular phase",
-      "description": "This phase starts on the first day of your period and lasts until ovulation."
-    },
-    "ovulation": {
-      "title": "Ovulation",
-      "description": "This is when an egg is released from your ovary."
-    },
-    "luteal": {
-      "title": "Luteal phase",
-      "description": "This phase begins after ovulation and ends when your next period starts."
     }
   },
   "cycleLength": {
@@ -144,8 +127,6 @@
     }
   },
   "latePeriod": {
-    "title": "Late period",
-    "description": "A late period can be caused by stress, changes in weight, or hormonal changes. If your period is more than a week late, consider taking a pregnancy test or consulting your healthcare provider.",
     "whatMeans": {
       "title": "What does a late period mean?",
       "description": "A period is generally considered late when it's more than 7 days past your expected date. Going 6 weeks without a period is called a missed period.\n\nThis can and does happen, and there are many possible reasons beyond pregnancy:"
@@ -185,8 +166,6 @@
     }
   },
   "prediction": {
-    "title": "How predictions work",
-    "description": "Bluma predicts your next period based on your cycle history. The more data you log, the more accurate the predictions become.",
     "nextPeriod": {
       "title": "Next period prediction",
       "description": "Your next period is predicted by adding your average cycle length to the start date of your most recent period."

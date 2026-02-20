@@ -7,7 +7,6 @@
     "howPredictionsWork": "Como funcionam as previsões"
   },
   "cyclePhase": {
-    "title": "Fases do ciclo",
     "cycleDay": "Dia do ciclo",
     "cycleStartedToday": "Seu ciclo começou hoje",
     "cycleStartedOn": "Este ciclo começou em",
@@ -56,22 +55,6 @@
         "items": ["Inchaço", "Sensibilidade nos seios", "Alterações de humor", "Desejo por certos alimentos", "Cansaço", "Dores de cabeça", "Surto de acne", "Mudanças no desejo sexual"],
         "note": "Esses sintomas de TPM normalmente pioram quando a menstruação se aproxima."
       }
-    },
-    "menstrual": {
-      "title": "Fase menstrual",
-      "description": "O primeiro dia da sua menstruação marca o início do seu ciclo menstrual."
-    },
-    "follicular": {
-      "title": "Fase folicular",
-      "description": "Esta fase começa no primeiro dia da sua menstruação e dura até a ovulação."
-    },
-    "ovulation": {
-      "title": "Ovulação",
-      "description": "É quando um óvulo é liberado do seu ovário."
-    },
-    "luteal": {
-      "title": "Fase lútea",
-      "description": "Esta fase começa após a ovulação e termina quando sua próxima menstruação começa."
     }
   },
   "cycleLength": {
@@ -144,8 +127,6 @@
     }
   },
   "latePeriod": {
-    "title": "Menstruação atrasada",
-    "description": "Uma menstruação atrasada pode ser causada por estresse, mudanças de peso ou alterações hormonais. Se sua menstruação estiver atrasada mais de uma semana, considere fazer um teste de gravidez ou consultar seu profissional de saúde.",
     "whatMeans": {
       "title": "O que significa que sua menstruação está atrasada?",
       "description": "Uma menstruação é geralmente considerada atrasada quando passa mais de 5 a 7 dias da data prevista. Os ciclos podem variar naturalmente alguns dias por mês, então um atraso ocasional é normal."
@@ -185,8 +166,6 @@
     }
   },
   "prediction": {
-    "title": "Como funcionam as previsões",
-    "description": "A Bluma prevê sua próxima menstruação com base no seu histórico de ciclos. Quanto mais dados você registrar, mais precisas serão as previsões.",
     "nextPeriod": {
       "title": "Previsão da próxima menstruação",
       "description": "Sua próxima menstruação é prevista somando a duração média do seu ciclo à data de início da sua menstruação mais recente."

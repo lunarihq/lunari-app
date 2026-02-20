@@ -7,7 +7,6 @@
     "howPredictionsWork": "Como funcionam as previsões"
   },
   "cyclePhase": {
-    "title": "Fases do ciclo",
     "cycleDay": "Dia do ciclo",
     "cycleStartedToday": "O teu ciclo começou hoje",
     "cycleStartedOn": "Este ciclo começou em",
@@ -56,22 +55,6 @@
         "items": ["Inchaço", "Sensibilidade mamária", "Alterações de humor", "Desejo por certos alimentos", "Fadiga", "Dores de cabeça", "Surto de acne", "Mudanças no desejo sexual"],
         "note": "Estes sintomas de SPM normalmente pioram quando o período se aproxima."
       }
-    },
-    "menstrual": {
-      "title": "Fase menstrual",
-      "description": "O primeiro dia do teu período marca o início do teu ciclo menstrual."
-    },
-    "follicular": {
-      "title": "Fase folicular",
-      "description": "Esta fase começa no primeiro dia do teu período e dura até à ovulação."
-    },
-    "ovulation": {
-      "title": "Ovulação",
-      "description": "É quando um óvulo é libertado do teu ovário."
-    },
-    "luteal": {
-      "title": "Fase lútea",
-      "description": "Esta fase começa após a ovulação e termina quando o teu próximo período começa."
     }
   },
   "cycleLength": {
@@ -144,8 +127,6 @@
     }
   },
   "latePeriod": {
-    "title": "Período atrasado",
-    "description": "Um período atrasado pode ser causado por stress, alterações de peso ou alterações hormonais. Se o teu período estiver atrasado mais de uma semana, considera fazer um teste de gravidez ou consultar o teu profissional de saúde.",
     "whatMeans": {
       "title": "O que significa que o teu período está atrasado?",
       "description": "Um período é geralmente considerado atrasado quando passa mais de 5-7 dias da data prevista. Os ciclos podem variar naturalmente alguns dias cada mês, por isso um atraso ocasional é normal."
@@ -185,8 +166,6 @@
     }
   },
   "prediction": {
-    "title": "Como funcionam as previsões",
-    "description": "A Bluma prevê o teu próximo período com base no teu histórico de ciclos. Quanto mais dados registares, mais precisas serão as previsões.",
     "nextPeriod": {
       "title": "Previsão do próximo período",
       "description": "O teu próximo período é previsto adicionando a duração média do teu ciclo à data de início do teu período mais recente."

@@ -7,7 +7,6 @@
     "howPredictionsWork": "Cómo funcionan las predicciones"
   },
   "cyclePhase": {
-    "title": "Fases del ciclo",
     "cycleDay": "Día del ciclo",
     "cycleStartedToday": "Tu ciclo comenzó hoy",
     "cycleStartedOn": "Este ciclo comenzó el",
@@ -56,22 +55,6 @@
         "items": ["Hinchazón", "Sensibilidad en los pechos", "Cambios de humor", "Antojos de comida", "Fatiga", "Dolores de cabeza", "Brotes de acné", "Cambios en el deseo sexual"],
         "note": "Estos síntomas del SPM suelen empeorar cuando se acerca tu periodo."
       }
-    },
-    "menstrual": {
-      "title": "Fase menstrual",
-      "description": "El primer día de tu periodo marca el inicio de tu ciclo menstrual."
-    },
-    "follicular": {
-      "title": "Fase folicular",
-      "description": "Esta fase comienza el primer día de tu periodo y dura hasta la ovulación."
-    },
-    "ovulation": {
-      "title": "Ovulación",
-      "description": "Es cuando se libera un óvulo del ovario."
-    },
-    "luteal": {
-      "title": "Fase lútea",
-      "description": "Esta fase comienza después de la ovulación y termina cuando comienza tu próximo periodo."
     }
   },
   "cycleLength": {
@@ -144,8 +127,6 @@
     }
   },
   "latePeriod": {
-    "title": "Periodo retrasado",
-    "description": "Un periodo retrasado puede ser causado por estrés, cambios de peso o cambios hormonales. Si tu periodo se retrasa más de una semana, considera hacerte una prueba de embarazo o consultar a tu médico.",
     "whatMeans": {
       "title": "¿Qué significa que tu periodo esté retrasado?",
       "description": "Un periodo generalmente se considera retrasado cuando pasan más de 5-7 días de tu fecha esperada. Los ciclos pueden variar naturalmente unos días cada mes, por lo que el retraso ocasional es normal."
@@ -185,8 +166,6 @@
     }
   },
   "prediction": {
-    "title": "Cómo funcionan las predicciones",
-    "description": "Bluma predice tu próximo periodo basándose en tu historial de ciclos. Cuantos más datos registres, más precisas serán las predicciones.",
     "nextPeriod": {
       "title": "Predicción del próximo periodo",
       "description": "Tu próximo periodo se predice sumando tu duración promedio de ciclo a la fecha de inicio de tu periodo más reciente."
