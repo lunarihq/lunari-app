@@ -24,7 +24,7 @@
       "menstrual": "The menstrual cycle starts on the first day of your period and ends the day before your next period begins.\n\nThe period is when the lining of the uterus sheds and leaves the body through vaginal bleeding.The period usually lasts from 3 to 7 days.",
       "follicular": "The follicular phase is the first part of the menstrual cycle, and stats on the first day of your period (so there is some overlap with the menstrual phase) and ends with ovulation (when one of your ovaries releases an egg).",
       "ovulatory": "Ovulation is the release of an egg from your ovary. This is the peak fertility window, and it typically occurs about 12 to 16 days before the next menstrual period begins. For an average 28-day cycle, this is around day 14.\n\nThe chance to conceive is highest during this phase. The egg can live for about 24 hours once released.",
-      "luteal": "The luteal phase begins just after ovulation and continues through the day before your next period starts. It typically lasts about 12–14 days.\n\nDuring this time, the body prepares for a potential pregnancy by thickening the uterine lining. If fertilization does not occur, hormone levels drop and menstruation begins.\n\nIf your expected period date has passed and bleeding hasn't started yet, your luteal phase is simply continuing beyond its usual length. This can happen occasionally and is not always a cause for concern."
+      "luteal": "The luteal phase begins just after ovulation and continues through the day before your next period starts. It typically lasts about 12–14 days.\n\nDuring this time, the body prepares for a potential pregnancy by thickening the uterine lining. If fertilization does not occur, hormone levels drop and menstruation begins.\n\nIf your expected period date has passed and bleeding hasn't started yet, your luteal phase is simply continuing beyond its usual length."
     },
     "pregnancyChance": {
       "high": "High",
@@ -147,33 +147,25 @@
     "title": "Late period",
     "description": "A late period can be caused by stress, changes in weight, or hormonal changes. If your period is more than a week late, consider taking a pregnancy test or consulting your healthcare provider.",
     "whatMeans": {
-      "title": "What means that your period is late?",
-      "description": "A period is generally considered late when it's more than 5-7 days past your expected date. Cycles can naturally vary by a few days each month, so occasional lateness is normal."
+      "title": "What does a late period mean?",
+      "description": "A period is generally considered late when it's more than 7 days past your expected date. Going 6 weeks without a period is called a missed period.\n\nThis can and does happen, and there are many possible reasons beyond pregnancy:"
     },
-    "causes": {
-      "title": "Common causes",
-      "stressBold": "Stress:",
-      "stressSuffix": " High stress affects hormones that regulate your cycle",
-      "weightBold": "Weight changes:",
-      "weightSuffix": " Significant gain or loss can delay periods",
-      "exerciseBold": "Exercise:",
-      "exerciseSuffix": " Intense training can temporarily stop menstruation",
-      "sleepBold": "Sleep disruption:",
-      "sleepSuffix": " Irregular sleep patterns affect hormones",
-      "illnessBold": "Illness:",
-      "illnessSuffix": " Being sick can throw off your cycle timing",
-      "medicationsBold": "Medications:",
-      "medicationsSuffix": " Birth control, antibiotics, and other drugs",
-      "pcosBold": "PCOS:",
-      "pcosSuffix": " Polycystic ovary syndrome causes irregular cycles",
-      "pregnancyBold": "Pregnancy:",
-      "pregnancySuffix": " Obviously, the most common reason",
-      "perimenopauseBold": "Perimenopause:",
-      "perimenopauseSuffix": " Natural transition before menopause"
-    },
+    "causes": [
+      "Stress (mental or physical)",
+      "Weight changes and low energy intake",
+      "Excessive exercise",
+      "Hormonal contraception (pills, injections, implants, hormonal IUDs, and some emergency contraception)",
+      "Polycystic ovary syndrome (PCOS)",
+      "Thyroid disorders",
+      "Perimenopause (the years leading up to menopause)",
+      "Sudden changes in routine or sleep (shift work, jet lag)",
+      "Significant diet changes or poor nutrition",
+      "Chronic illnesses",
+      "Medications (e.g. antipsychotics, antidepressants, anti-epileptics, chemotherapy drugs)"
+    ],
     "seeDoctor": {
       "title": "When to see a doctor",
-      "description": "Consult a healthcare provider if your period is more than 3 months late, if you experience severe pain, or if you've had unprotected sex and could be pregnant. Sudden changes in cycle regularity also warrant a check-up."
+      "description": "If your period is repeatedly more than about a week late, or you have missed two or three in a row (and pregnancy is ruled out), it is important to see a healthcare professional so they can check for these underlying causes and tailor advice to you."
     },
     "whatToDo": {
       "title": "What you can do",
@@ -182,13 +174,14 @@
       "weight": "Maintain a healthy weight for your body",
       "sleep": "Get consistent, quality sleep",
       "track": "Track your cycles to identify patterns",
-      "patience": "Be patient, occasional irregularity is normal"
+      "patience": "Be patient, cycles can naturally vary by a few days each month, so occasional lateness is normal."
     },
     "disclaimerBold": "IMPORTANT!",
     "disclaimer": "Bluma is not a diagnostic tool. The information from Bluma does not replace advice from a health care provider. Always seek the advice of your doctor or other qualified health provider with any questions you may have regarding your cycle.",
     "references": {
       "title": "References",
-      "acog": "1. American College of Obstetricians and Gynecologists. Abnormal Uterine Bleeding in Reproductive-Aged Women. Practice Bulletin No. 128, July 2012."
+      "nhs": "1. Missed or late periods. NHS. https://www.nhs.uk/symptoms/missed-or-late-periods/",
+      "ucla": "2. Missed your period but not pregnant? 7 possible causes. UCLA Health. January 3, 2024. https://www.uclahealth.org/news/article/missed-your-period-not-pregnant-7-possible-causes-2"
     }
   },
   "prediction": {

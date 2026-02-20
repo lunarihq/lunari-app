@@ -24,7 +24,7 @@
       "menstrual": "El ciclo menstrual comienza el primer día de tu periodo y termina el día antes de que comience la siguiente.\n\nEl periodo es cuando el revestimiento del útero se desprende y sale del cuerpo mediante sangrado vaginal. El periodo suele durar entre 3 y 7 días.",
       "follicular": "La fase folicular es la primera parte del ciclo menstrual: comienza el primer día de tu periodo (por tanto se solapa con la fase menstrual) y termina con la ovulación (cuando uno de tus ovarios libera un óvulo).",
       "ovulatory": "La ovulación es la liberación de un óvulo del ovario. Es la ventana de máxima fertilidad y suele ocurrir entre 12 y 16 días antes del inicio del siguiente periodo. En un ciclo medio de 28 días, suele ser alrededor del día 14.\n\nLa probabilidad de concebir es máxima en esta fase. El óvulo puede vivir unas 24 horas una vez liberado.",
-      "luteal": "La fase lútea comienza justo después de la ovulación y continúa hasta el día anterior al inicio de tu próximo periodo. Suele durar unos 12–14 días.\n\nDurante este tiempo el cuerpo se prepara para un posible embarazo engrosando el revestimiento uterino. Si no hay fertilización, bajan los niveles hormonales y comienza la menstruación.\n\nSi la fecha prevista de tu periodo ya ha pasado y el sangrado aún no ha comenzado, tu fase lútea simplemente se está prolongando más de lo habitual. Esto puede ocurrir ocasionalmente y no siempre es motivo de preocupación.",
+      "luteal": "La fase lútea comienza justo después de la ovulación y continúa hasta el día anterior al inicio de tu próximo periodo. Suele durar unos 12–14 días.\n\nDurante este tiempo el cuerpo se prepara para un posible embarazo engrosando el revestimiento uterino. Si no hay fertilización, bajan los niveles hormonales y comienza la menstruación.\n\nSi la fecha prevista de tu periodo ya ha pasado y el sangrado aún no ha comenzado, tu fase lútea simplemente se está prolongando más de lo habitual."
     },
     "pregnancyChance": {
       "high": "Alta",
@@ -150,30 +150,22 @@
       "title": "¿Qué significa que tu periodo esté retrasado?",
       "description": "Un periodo generalmente se considera retrasado cuando pasan más de 5-7 días de tu fecha esperada. Los ciclos pueden variar naturalmente unos días cada mes, por lo que el retraso ocasional es normal."
     },
-    "causes": {
-      "title": "Causas comunes",
-      "stressBold": "Estrés:",
-      "stressSuffix": " El alto estrés afecta las hormonas que regulan tu ciclo",
-      "weightBold": "Cambios de peso:",
-      "weightSuffix": " Aumento o pérdida significativa pueden retrasar los periodos",
-      "exerciseBold": "Ejercicio:",
-      "exerciseSuffix": " El entrenamiento intenso puede detener temporalmente la menstruación",
-      "sleepBold": "Interrupción del sueño:",
-      "sleepSuffix": " Los patrones de sueño irregulares afectan las hormonas",
-      "illnessBold": "Enfermedad:",
-      "illnessSuffix": " Estar enfermo puede alterar el momento de tu ciclo",
-      "medicationsBold": "Medicamentos:",
-      "medicationsSuffix": " Anticonceptivos, antibióticos y otros medicamentos",
-      "pcosBold": "SOP:",
-      "pcosSuffix": " El síndrome de ovario poliquístico causa ciclos irregulares",
-      "pregnancyBold": "Embarazo:",
-      "pregnancySuffix": " Obviamente, la razón más común",
-      "perimenopauseBold": "Perimenopausia:",
-      "perimenopauseSuffix": " Transición natural antes de la menopausia"
-    },
+    "causes": [
+      "Estrés (mental o físico)",
+      "Cambios de peso e ingesta baja en calorías",
+      "Ejercicio excesivo",
+      "Anticonceptivos hormonales (pastillas, inyecciones, implantes, DIU hormonales y anticonceptivos de emergencia)",
+      "Síndrome de ovario poliquístico (SOP)",
+      "Trastornos de la tiroides",
+      "Perimenopausia (los años previos a la menopausia)",
+      "Cambios bruscos de rutina o sueño (trabajo por turnos, jet lag)",
+      "Cambios importantes en la dieta o mala nutrición",
+      "Enfermedades crónicas",
+      "Medicamentos (p. ej. antipsicóticos, antidepresivos, antiepilépticos, quimioterapia)"
+    ],
     "seeDoctor": {
       "title": "Cuándo consultar a un médico",
-      "description": "Consulta a un proveedor de atención médica si tu periodo se retrasa más de 3 meses, si experimentas dolor severo, o si has tenido relaciones sexuales sin protección y podrías estar embarazada. Los cambios repentinos en la regularidad del ciclo también justifican una consulta."
+      "description": "Si tu periodo se retrasa de forma repetida más de una semana, o has dejado de tener dos o tres seguidos (y se ha descartado embarazo), es importante que consultes a un profesional de salud para que pueda revisar estas causas y darte un consejo adaptado a ti."
     },
     "whatToDo": {
       "title": "Qué puedes hacer",
@@ -188,7 +180,8 @@
     "disclaimer": "Bluma no es una herramienta de diagnóstico. La información de Bluma no reemplaza el consejo de un proveedor de atención médica. Siempre busca el consejo de tu médico u otro proveedor de salud calificado con cualquier pregunta que puedas tener sobre tu ciclo.",
     "references": {
       "title": "Referencias",
-      "acog": "1. American College of Obstetricians and Gynecologists. Abnormal Uterine Bleeding in Reproductive-Aged Women. Practice Bulletin No. 128, julio 2012."
+      "nhs": "1. Missed or late periods. NHS. https://www.nhs.uk/symptoms/missed-or-late-periods/",
+      "ucla": "2. Missed your period but not pregnant? 7 possible causes. UCLA Health. 3 de enero de 2024. https://www.uclahealth.org/news/article/missed-your-period-not-pregnant-7-possible-causes-2"
     }
   },
   "prediction": {

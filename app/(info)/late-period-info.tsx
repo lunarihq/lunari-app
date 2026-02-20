@@ -39,27 +39,18 @@ export default function PeriodLength() {
       </View>
 
       <View style={[styles.contentSection]}>
-        <Text style={[typography.headingMd, { marginBottom: 12 }]}>
-          {t('latePeriod.causes.title')}
-        </Text>
-        {[
-          'stress', 'weight', 'exercise', 'sleep', 
-          'illness', 'medications', 'pcos', 'pregnancy', 'perimenopause'
-        ].map((cause, index) => (
+        {(t('latePeriod.causes', { returnObjects: true }) as string[]).map((cause, index) => (
           <View
-            key={cause}
+            key={index}
             style={{
               flexDirection: 'row',
               alignItems: 'flex-start',
-              marginBottom: index === 8 ? 0 : 8,
+              marginBottom: index === 10 ? 0 : 8,
               marginLeft: 8,
             }}
           >
             <Text style={{ marginRight: 8, color: colors.textPrimary, fontSize: 18 }}>{'\u2022'}</Text>
-            <Text style={[typography.body, { flex: 1 }]}>
-              <Text style={typography.bodyBold}>{t(`latePeriod.causes.${cause}Bold`)}</Text>
-              {t(`latePeriod.causes.${cause}Suffix`)}
-            </Text>
+            <Text style={[typography.body, { flex: 1 }]}>{cause}</Text>
           </View>
         ))}
       </View>
@@ -100,13 +91,21 @@ export default function PeriodLength() {
           {t('latePeriod.disclaimer')}
         </Text>
       </View>
+
       <View style={[styles.contentSection]}>
+        <View style={[styles.referencesSection]}>
         <Text style={[typography.headingSm]}>
           {t('latePeriod.references.title')}
         </Text>
+
         <Text style={[typography.caption]}>
-          {t('latePeriod.references.acog')}
+          {t('latePeriod.references.nhs')}
         </Text>
+
+        <Text style={[typography.caption]}>
+            {t('latePeriod.references.ucla')}
+        </Text>
+        </View>
       </View>
     </ScrollView>
   );
@@ -114,5 +113,8 @@ export default function PeriodLength() {
 const styles = StyleSheet.create({
   contentSection: {
     marginBottom: 32,
+  },
+  referencesSection: {
+    gap: 16,
   },
 });
