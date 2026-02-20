@@ -21,8 +21,8 @@
       "luteal": "Luteal"
     },
     "phaseDescriptions": {
-      "menstrual": "The menstrual cycle starts on the first day of your period and ends the day before your next period begins.\n\nThe period is when the lining of the uterus sheds and leaves the body through vaginal bleeding.The period usually lasts from 3 to 7 days.",
-      "follicular": "The follicular phase is the first part of the menstrual cycle, and stats on the first day of your period (so there is some overlap with the menstrual phase) and ends with ovulation (when one of your ovaries releases an egg).",
+      "menstrual": "The menstrual cycle starts on the first day of your period and ends the day before your next period begins.\n\nThe period is when the lining of the uterus sheds and leaves the body through vaginal bleeding. The period usually lasts from 3 to 7 days.",
+      "follicular": "The follicular phase is the first part of the menstrual cycle, and starts on the first day of your period (so there is some overlap with the menstrual phase) and ends with ovulation (when one of your ovaries releases an egg).",
       "ovulatory": "Ovulation is the release of an egg from your ovary. This is the peak fertility window, and it typically occurs about 12 to 16 days before the next menstrual period begins. For an average 28-day cycle, this is around day 14.\n\nThe chance to conceive is highest during this phase. The egg can live for about 24 hours once released.",
       "luteal": "The luteal phase begins just after ovulation and continues through the day before your next period starts. It typically lasts about 12–14 days.\n\nDuring this time, the body prepares for a potential pregnancy by thickening the uterine lining. If fertilization does not occur, hormone levels drop and menstruation begins.\n\nIf your expected period date has passed and bleeding hasn't started yet, your luteal phase is simply continuing beyond its usual length."
     },
@@ -34,7 +34,7 @@
     "pregnancyChanceDescriptions": {
       "high": "This is your fertile window when conception is most likely to occur. Ovulation typically happens during this time.",
       "medium": "There is a moderate chance of conception during this time as you approach or move away from your fertile window.",
-      "low": "Conception is less likely during this time. The chance of getting pregnant increase during ovulation and the fertile days around it.\n\nWhile chances may vary, you can conceive on any day of your cycle. If you don't want to get pregnant, it's best to use contraception every time you have sex."
+      "low": "Conception is less likely during this time. The chance of getting pregnant increases during ovulation and the fertile days around it.\n\nWhile chances may vary, you can conceive on any day of your cycle. If you don't want to get pregnant, it's best to use contraception every time you have sex."
     },
     "symptoms": {
       "menstrual": {
@@ -130,7 +130,7 @@
       "title": "Irregular periods",
       "description": "Irregular periods (shorter than 2 days or longer than 7 days) might be caused by lifestyle changes, medication, stress, travel, and a few other factors that can affect hormone levels.",
       "dataNoteBold": "Incorrectly entered period data",
-      "dataNote": "could be the reason your period length is labeled prolonged or shortened. You can always correct any event of you cycle retrospectively on the calendar menu."
+      "dataNote": "could be the reason your period length is labeled prolonged or shortened. You can always correct any event of your cycle retrospectively on the calendar menu."
     },
     "seeDoctor": {
       "title": "When to see a doctor?",
@@ -198,7 +198,7 @@
     },
     "ovulation": {
       "title": "Ovulation & fertility window",
-      "description": "Ovulation generally occurs around the 14th day of a 28-day menstrual cycle. The exact timing depends on cycle length, typically falling in the middle of the cycle, though it can vary for individuals with shorter or longer cycle. Your fertile window includes:",
+      "description": "Ovulation generally occurs around the 14th day of a 28-day menstrual cycle. The exact timing depends on cycle length, typically falling in the middle of the cycle, though it can vary for individuals with shorter or longer cycles. Your fertile window includes:",
       "fertileWindow": "• 5 days before ovulation\n• Ovulation day\n• 1 day after ovulation\n\nTo predict ovulation and fertile window, Bluma relies on the cycle data you log, including your cycle length and your period dates.\n\nIf you logged your period in Bluma for the first time or have logged a few periods, the app will use average values to predict your fertile days during cycle. Because this is less accurate, you're likely to see more fertile days and a wider fertile window."
     },
     "accuracy": {

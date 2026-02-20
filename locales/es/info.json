@@ -39,13 +39,13 @@
     "symptoms": {
       "menstrual": {
         "intro": "Los síntomas físicos y emocionales incluyen:",
-        "items": ["Cólicos", "Fatiga", "Cambios de humor", "Hinchazón", "Dolores de cabeza", "Dolor de vientre", "Irritabilidad"],
+        "items": ["Cólicos", "Fatiga", "Cambios de humor", "Hinchazón", "Dolores de cabeza", "Dolor lumbar", "Irritabilidad"],
         "note": "Es probable que si tienes dolor menstrual, sea más intenso al inicio de tu ciclo menstrual."
       },
       "follicular": {
         "intro": "Como la fase folicular comienza con la menstruación, es probable que tengas síntomas típicos del periodo como:",
         "items": ["Cólicos", "Fatiga", "Cambios de humor", "Hinchazón", "Dolores de cabeza", "Dolor lumbar"],
-        "note": "Cuando termina tu periodo y sube el estrógeno, puedes sentirte con más energía, motivación y seguridad social. El aumento de estrógeno también puede mejorar el aspecto de la piel en algunas personas."
+        "note": "Cuando termina tu periodo y sube el estrógeno, puedes sentirte con más energía, motivación y confianza en situaciones sociales. El aumento de estrógeno también puede mejorar el aspecto de la piel en algunas personas."
       },
       "ovulatory": {
         "intro": "Síntomas habituales de ovulación incluyen:",
@@ -105,7 +105,7 @@
     },
     "seeDoctor": {
       "title": "¿Cuándo consultar a un médico?",
-      "description": "Si tus ciclos son frecuentemente anormales en duración, o/y están acompañados de otros síntomas preocupantes, es mejor hablar con tu proveedor de atención médica. Ellos pueden ayudarte a descubrir la causa y sugerir tratamiento, si es necesario."
+      "description": "Si tus ciclos son frecuentemente anormales en duración, y/o están acompañados de otros síntomas preocupantes, es mejor hablar con tu proveedor de atención médica. Ellos pueden ayudarte a descubrir la causa y sugerir tratamiento, si es necesario."
     },
     "disclaimerBold": "¡IMPORTANTE!",
     "disclaimer": "Bluma no es una herramienta de diagnóstico. La información de Bluma no reemplaza el consejo de un proveedor de atención médica. Siempre busca el consejo de tu médico u otro proveedor de salud calificado con cualquier pregunta que puedas tener sobre tu ciclo.",
@@ -134,7 +134,7 @@
     },
     "seeDoctor": {
       "title": "¿Cuándo consultar a un médico?",
-      "description": "Si la duración de tu periodo es frecuentemente anormal, o/y está acompañada de otros síntomas preocupantes, es mejor hablar con tu proveedor de atención médica. Ellos pueden ayudarte a descubrir la causa y sugerir tratamiento, si es necesario."
+      "description": "Si la duración de tu periodo es frecuentemente anormal, y/o está acompañada de otros síntomas preocupantes, es mejor hablar con tu proveedor de atención médica. Ellos pueden ayudarte a descubrir la causa y sugerir tratamiento, si es necesario."
     },
     "disclaimerBold": "¡IMPORTANTE!",
     "disclaimer": "Bluma no es una herramienta de diagnóstico. La información de Bluma no reemplaza el consejo de un proveedor de atención médica. Siempre busca el consejo de tu médico u otro proveedor de salud calificado con cualquier pregunta que puedas tener sobre tu ciclo.",
