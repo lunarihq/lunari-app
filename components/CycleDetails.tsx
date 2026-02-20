@@ -66,7 +66,7 @@ export function CycleDetails({
             {cycleDay && (
               <Text style={[typography.body, { color: colors.textSecondary }]}>
                 {getConceptionChance()}
-                {isOvulationDay ? ` • ${tCalendar('ovulationDay')}` : ''}
+                {isOvulationDay ? ` • ${tCalendar('legend.ovulationDay')}` : ''}
               </Text>
             )}
           </View>
