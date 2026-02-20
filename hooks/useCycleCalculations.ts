@@ -23,11 +23,26 @@ export function useCycleCalculations({
       const selectedDateObj = new Date(date);
       const startDateObj = new Date(firstPeriodDate);
 
-      // If the selected date is in the current cycle or future, use the current cycle start
       if (selectedDateObj >= startDateObj) {
+        const cycleLength = PeriodPredictionService.getAverageCycleLength(
+          allPeriodDates,
+          userCycleLength
+        );
+
+        // Walk forward by cycleLength to find which predicted cycle contains this date
+        let cycleStartDate = firstPeriodDate;
+        const nextCycleStart = new Date(startDateObj);
+        nextCycleStart.setDate(nextCycleStart.getDate() + cycleLength);
+
+        while (selectedDateObj >= nextCycleStart) {
+          cycleStartDate = formatDateString(new Date(nextCycleStart));
+          nextCycleStart.setDate(nextCycleStart.getDate() + cycleLength);
+        }
+
         const cycleInfo = PeriodPredictionService.getCycleInfo(
-          firstPeriodDate,
-          date
+          cycleStartDate,
+          date,
+          cycleLength
         );
         return cycleInfo.cycleDay;
       }
