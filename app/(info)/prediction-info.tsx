@@ -18,7 +18,7 @@ export default function PredictionInfo() {
       showsVerticalScrollIndicator={false}
     >
       <Image
-        source={require('../../assets/images/prediction.png')}
+        source={require('../../assets/images/period-predictions.png')}
         style={{
           width: '100%',
           height: 200,

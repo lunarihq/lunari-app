@@ -19,7 +19,7 @@ export default function PeriodLength() {
       showsVerticalScrollIndicator={false}
     >
       <Image
-        source={require('../../assets/images/period-info.png')}
+        source={require('../../assets/images/period-length.png')}
         style={{
           width: '100%',
           height: 200,

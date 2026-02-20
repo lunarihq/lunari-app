@@ -19,7 +19,7 @@ export default function PeriodLength() {
       showsVerticalScrollIndicator={false}
     >
       <Image
-        source={require('../../assets/images/prediction.png')}
+        source={require('../../assets/images/late-period.png')}
         style={{
           width: '100%',
           height: 200,
