@@ -3,7 +3,8 @@
     "title": "Acompanhe seu ciclo com privacidade",
     "badgeStorage": "Dados armazenados e criptografados localmente",
     "badgeNoTracking": "Sem rastreamento de terceiros",
-    "badgeNoAds": "Sem anúncios intrusivos"
+    "badgeNoAds": "Sem anúncios intrusivos",
+    "badgeOpenSource": "Código aberto"
   },
   "periodLength": {
     "title": "Quanto tempo sua menstruação costuma durar?",

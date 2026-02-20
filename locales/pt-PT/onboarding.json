@@ -3,7 +3,8 @@
     "title": "Acompanha o teu ciclo em privado",
     "badgeStorage": "Dados armazenados e encriptados localmente",
     "badgeNoTracking": "Sem rastreio de terceiros",
-    "badgeNoAds": "Sem anúncios intrusivos"
+    "badgeNoAds": "Sem anúncios intrusivos",
+    "badgeOpenSource": "Código aberto"
   },
   "periodLength": {
     "title": "Quanto tempo costuma durar o teu período?",

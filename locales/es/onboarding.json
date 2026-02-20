@@ -3,7 +3,8 @@
     "title": "Rastrea tu ciclo menstrual con privacidad",
     "badgeStorage": "Datos almacenados y cifrados localmente",
     "badgeNoTracking": "Sin rastreo de terceros",
-    "badgeNoAds": "Sin anuncios intrusivos"
+    "badgeNoAds": "Sin anuncios intrusivos",
+    "badgeOpenSource": "Código abierto"
   },
   "periodLength": {
     "title": "¿Cuánto dura normalmente tu periodo?",

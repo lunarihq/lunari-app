@@ -90,6 +90,14 @@ export default function WelcomeScreen() {
               {t('welcome.badgeNoAds')}
             </Text>
           </View>
+          <View style={styles.badge}>
+            <View style={styles.badgeIconSlot}>
+              <Ionicons name="code-slash-outline" size={24} color={colors.accentPink} />
+            </View>
+            <Text style={[typography.body, { color: colors.textSecondary, fontSize: 19, lineHeight: 24 }]}>
+              {t('welcome.badgeOpenSource')}
+            </Text>
+          </View>
         </View>
       </View>
 
