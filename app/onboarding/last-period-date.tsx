@@ -12,6 +12,7 @@ import { createOnboardingStyles } from '../../styles/onboarding';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useAppStyles } from '../../hooks/useStyles';
 import { formatDateString } from '../../types/calendarTypes';
+import { parseLocalDate } from '../../utils/dateUtils';
 import { ColorScheme } from '../../styles/colors';
 import { SingleMonthCalendar } from '../../components/calendar/SingleMonthCalendar';
 
@@ -48,7 +49,7 @@ export default function LastPeriodDateScreen() {
           ? parseInt(periodLengthSetting, 10)
           : 5;
 
-        const startDate = new Date(selectedDate);
+        const startDate = parseLocalDate(selectedDate);
         for (let i = 1; i < periodLength; i++) {
           const nextDate = new Date(startDate);
           nextDate.setDate(startDate.getDate() + i);

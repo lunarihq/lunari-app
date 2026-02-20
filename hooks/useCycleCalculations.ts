@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import { PeriodPredictionService } from '../services/periodPredictions';
 import { formatDateString } from '../types/calendarTypes';
+import { parseLocalDate } from '../utils/dateUtils';
 
 interface UseCycleCalculationsProps {
   firstPeriodDate: string | null;
@@ -31,7 +32,7 @@ export function useCycleCalculations({
 
         // Walk forward by cycleLength to find which predicted cycle contains this date
         let cycleStartDate = firstPeriodDate;
-        const nextCycleStart = new Date(startDateObj);
+        const nextCycleStart = parseLocalDate(firstPeriodDate);
         nextCycleStart.setDate(nextCycleStart.getDate() + cycleLength);
 
         while (selectedDateObj >= nextCycleStart) {
@@ -73,7 +74,7 @@ export function useCycleCalculations({
         // If target date is before this period, check if it's in the previous cycle
         if (date < periodStart) {
           // Calculate the previous cycle start date
-          const prevCycleStart = new Date(periodStart);
+          const prevCycleStart = parseLocalDate(periodStart);
           prevCycleStart.setDate(prevCycleStart.getDate() - cycleLength);
           const prevCycleStartStr = formatDateString(prevCycleStart);
 

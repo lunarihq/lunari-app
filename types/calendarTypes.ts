@@ -37,7 +37,8 @@ export function formatDateString(date: Date): string {
 // Helper function to generate a range of dates
 export function generateDateRange(startDate: string, days: number): string[] {
   const dates: string[] = [];
-  const start = new Date(startDate);
+  const [y, m, d] = startDate.split('-').map(Number);
+  const start = new Date(y, m - 1, d, 12, 0, 0);
 
   for (let i = 0; i < days; i++) {
     const date = new Date(start);

@@ -139,12 +139,13 @@ export class PeriodPredictionService {
     userCycleLength?: number
   ): PredictionResult {
     const cycleLength = this.getAverageCycleLength(allDates, userCycleLength);
-    const today = new Date();
-    const nextPeriod = new Date(startDate);
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12, 0, 0);
+    const nextPeriod = parseLocalDate(startDate);
 
     nextPeriod.setDate(nextPeriod.getDate() + cycleLength);
 
-    const daysUntil = Math.ceil(
+    const daysUntil = Math.round(
       (nextPeriod.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
     );
 
@@ -153,14 +154,20 @@ export class PeriodPredictionService {
   }
 
   static getCurrentCycleDay(startDate: string, currentDate?: string): number {
-    const start = new Date(startDate);
-    const current = currentDate ? new Date(currentDate) : new Date();
+    const start = parseLocalDate(startDate);
+    let current: Date;
+    if (currentDate) {
+      current = parseLocalDate(currentDate);
+    } else {
+      const now = new Date();
+      current = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12, 0, 0);
+    }
 
-    const dayDiff = Math.floor(
+    const dayDiff = Math.round(
       (current.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)
     );
 
-    return dayDiff + 1; // Add 1 because the first day of period is day 1
+    return dayDiff + 1;
   }
 
   static getOvulationCycleDay(cycleLength: number = 28): number {
@@ -170,7 +177,7 @@ export class PeriodPredictionService {
   }
 
   static getOvulationDay(startDate: string, cycleLength?: number): string {
-    const start = new Date(startDate);
+    const start = parseLocalDate(startDate);
     const length = cycleLength || 28;
 
     // Ovulation day offset is 0-based: cycleDay - 1

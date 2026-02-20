@@ -1,6 +1,7 @@
 import * as Localization from 'expo-localization';
 import dayjs from 'dayjs';
 import i18n from '../i18n/config';
+import { parseLocalDate } from './dateUtils';
 import 'dayjs/locale/es';
 import 'dayjs/locale/fr';
 import 'dayjs/locale/de';
@@ -48,7 +49,7 @@ export const getLocaleInfo = () => {
 
 export const formatDateLong = (date: Date | string): string => {
   getDeviceLocale();
-  const dateObj = typeof date === 'string' ? new Date(date) : date;
+  const dateObj = typeof date === 'string' ? parseLocalDate(date) : date;
   
   return dateObj.toLocaleDateString(Localization.getLocales()[0].languageTag, {
     day: 'numeric',
@@ -58,7 +59,7 @@ export const formatDateLong = (date: Date | string): string => {
 
 export const formatDateShort = (date: Date | string): string => {
   getDeviceLocale();
-  const dateObj = typeof date === 'string' ? new Date(date) : date;
+  const dateObj = typeof date === 'string' ? parseLocalDate(date) : date;
   
   return dateObj.toLocaleDateString(Localization.getLocales()[0].languageTag, {
     month: 'short',
@@ -68,7 +69,7 @@ export const formatDateShort = (date: Date | string): string => {
 
 export const formatDateWithDay = (date: Date | string): string => {
   getDeviceLocale();
-  const dateObj = typeof date === 'string' ? new Date(date) : date;
+  const dateObj = typeof date === 'string' ? parseLocalDate(date) : date;
   
   return dateObj.toLocaleDateString(Localization.getLocales()[0].languageTag, {
     weekday: 'long',
@@ -99,7 +100,7 @@ export const formatDayjsDate = (dateString: string, format?: string): string => 
 export const formatTodayOrDate = (dateString: string): string => {
   getDeviceLocale();
   const localeTag = Localization.getLocales()[0].languageTag;
-  const dateObj = new Date(dateString);
+  const dateObj = parseLocalDate(dateString);
   const isToday = dateString === dayjs().format('YYYY-MM-DD');
   
   if (isToday) {
