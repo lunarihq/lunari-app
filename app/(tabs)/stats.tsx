@@ -250,7 +250,7 @@ export default function Stats() {
           <StatCard
             title={t('averages.periodLength')}
             value={`${averagePeriodLength} ${t('common:time.days')}`}
-            icon={<DropIcon size={48} color={colors.icon} />}
+            icon={<DropIcon size={50}/>}
             status={getPeriodStatus(averagePeriodLength).status}
             type="period"
           />
