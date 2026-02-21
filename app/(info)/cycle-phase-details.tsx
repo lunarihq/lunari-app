@@ -5,7 +5,7 @@ import { PeriodPredictionService } from '../../services/periodPredictions';
 import { useTheme } from '../../styles/theme';
 import { useAppStyles } from '../../hooks/useStyles';
 import { CycleIcon } from '../../components/icons/general/Cycle';
-import { LeafIcon } from '../../components/icons/general/Leaf';
+import { LeafIcon } from '../../components/icons/general/fertility';
 import { SymptomsIcon } from '../../components/icons/general/Symptoms';
 import { formatTodayShort, formatDateShort } from '../../utils/localeUtils';
 import { useTranslation } from 'react-i18next';

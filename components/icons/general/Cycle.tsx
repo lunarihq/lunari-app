@@ -14,7 +14,7 @@ export const CycleIcon: React.FC<IconProps> = ({
   ...props
 }) => {
   const { isDark } = useTheme();
-  const iconColor = color || (isDark ? '#7087F3' : '#4B61C7');
+  const iconColor = color || (isDark ? '#7087F3' : '#5473E4');
   
   return <CycleSvg width={size} height={size} color={iconColor} {...props} />;
 };

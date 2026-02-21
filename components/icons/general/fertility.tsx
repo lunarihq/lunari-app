@@ -1,6 +1,6 @@
 import React from 'react';
 import { SvgProps } from 'react-native-svg';
-import LeafSvg from './leaf.svg';
+import FertilitySvg from './fertility.svg';
 import { useTheme } from '../../../contexts/ThemeContext';
 
 interface IconProps extends SvgProps {
@@ -16,5 +16,5 @@ export const LeafIcon: React.FC<IconProps> = ({
   const { isDark } = useTheme();
   const iconColor = color || (isDark ? '#7087F3' : '#4B61C7');
   
-  return <LeafSvg width={size} height={size} color={iconColor} {...props} />;
+  return <FertilitySvg width={size} height={size} color={iconColor} {...props} />;
 };
