@@ -14,7 +14,7 @@ export const CalendarIcon: React.FC<IconProps> = ({
   ...props
 }) => {
   const { isDark } = useTheme();
-  const iconColor = color || (isDark ? '#7087F3' : '#5473E4');
+  const iconColor = color || (isDark ? '#5F7CFF' : '#4B61C7');
   
   return <CalendarSvg width={size} height={size} color={iconColor} {...props} />;
 };

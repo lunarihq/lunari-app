@@ -14,7 +14,7 @@ export const SymptomsIcon: React.FC<IconProps> = ({
   ...props
 }) => {
   const { isDark } = useTheme();
-  const iconColor = color || (isDark ? '#7087F3' : '#4B61C7');
+  const iconColor = color || (isDark ? '#5F7CFF' : '#4B61C7');
   
   return <SymptomsSvg width={size} height={size} color={iconColor} {...props} />;
 };

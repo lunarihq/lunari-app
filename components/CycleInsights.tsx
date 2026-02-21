@@ -5,7 +5,7 @@ import { router, Href } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { CalendarIcon } from './icons/general/Calendar';
 import { CycleIcon } from './icons/general/Cycle';
-import { LeafIcon } from './icons/general/fertility';
+import { FertilityIcon } from './icons/general/fertility';
 import { PeriodPredictionService } from '../services/periodPredictions';
 import { useTheme } from '../styles/theme';
 import { useAppStyles } from '../hooks/useStyles';
@@ -135,7 +135,7 @@ export function CycleInsights({
           >
             <View style={styles.insightTop}>
               <View style={iconContainerStyle}>
-                <LeafIcon size={28} />
+                <FertilityIcon size={28} />
               </View>
               <Text style={insightLabelStyle}>
                 {t('cycleInsights.chanceToConceive')}

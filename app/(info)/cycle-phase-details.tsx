@@ -5,7 +5,7 @@ import { PeriodPredictionService } from '../../services/periodPredictions';
 import { useTheme } from '../../styles/theme';
 import { useAppStyles } from '../../hooks/useStyles';
 import { CycleIcon } from '../../components/icons/general/Cycle';
-import { LeafIcon } from '../../components/icons/general/fertility';
+import { FertilityIcon } from '../../components/icons/general/fertility';
 import { SymptomsIcon } from '../../components/icons/general/Symptoms';
 import { formatTodayShort, formatDateShort } from '../../utils/localeUtils';
 import { useTranslation } from 'react-i18next';
@@ -147,7 +147,7 @@ export default function CyclePhaseDetails() {
 
         <View ref={chanceToConceiveSectionRef} style={[commonStyles.sectionContainer]}>
           <View style={styles.phaseHeader}>
-              <LeafIcon size={34}/>
+              <FertilityIcon size={34}/>
             <Text style={[typography.headingMd, { marginLeft: 12 }]}>
               {t('cyclePhase.chanceToConceive')}
             </Text>

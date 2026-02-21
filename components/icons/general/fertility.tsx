@@ -8,13 +8,13 @@ interface IconProps extends SvgProps {
   color?: string;
 }
 
-export const LeafIcon: React.FC<IconProps> = ({
+export const FertilityIcon: React.FC<IconProps> = ({
   size = 24,
   color,
   ...props
 }) => {
   const { isDark } = useTheme();
-  const iconColor = color || (isDark ? '#7087F3' : '#4B61C7');
+  const iconColor = color || (isDark ? '#5F7CFF' : '#4B61C7');
   
   return <FertilitySvg width={size} height={size} color={iconColor} {...props} />;
 };
