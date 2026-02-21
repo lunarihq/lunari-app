@@ -132,9 +132,8 @@ export default function CyclePhaseDetails() {
 
           <Text
             style={[
-              typography.body,
-              typography.bodyBold,
-              { marginBottom: 8 },
+              typography.bodyXl,     
+                       { marginBottom: 8, fontWeight: '600',},
             ]}
           >
             {t(`cyclePhase.phases.${cyclePhaseKey}`)}
@@ -155,8 +154,8 @@ export default function CyclePhaseDetails() {
 
           <Text
             style={[
-              typography.body,
-              typography.bodyBold,
+              typography.bodyXl,
+              { fontWeight: '600' },
               { marginBottom: 8 },
             ]}
           >
