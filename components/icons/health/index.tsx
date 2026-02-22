@@ -12,6 +12,10 @@ import { MoodSwingsIcon } from './moods/MoodSwings';
 import { IrritatedIcon } from './moods/Irritated';
 import { CalmIcon } from './moods/Calm';
 import { BoredIcon } from './moods/Bored';
+import { GrumpyIcon } from './moods/Grumpy';
+import { SleepyIcon } from './moods/Sleepy';
+import { StressedIcon } from './moods/Stressed';
+import { RelaxedIcon } from './moods/Relaxed';
 import { LightFlowIcon } from './flows/LightFlow';
 import { MediumFlowIcon } from './flows/MediumFlow';
 import { HeavyFlowIcon } from './flows/HeavyFlow';
@@ -82,6 +86,10 @@ export type IconName =
   | 'confused'
   | 'irritated'
   | 'angry'
+  | 'grumpy'
+  | 'sleepy'
+  | 'stressed'
+  | 'relaxed'
   | 'mood-swings'
   | 'frisky'
   | 'light'
@@ -127,6 +135,10 @@ const iconMap: Record<IconName, React.FC<IconProps>> = {
   confused: ConfusedIcon,
   irritated: IrritatedIcon,
   angry: AngryIcon,
+  grumpy: GrumpyIcon,
+  sleepy: SleepyIcon,
+  stressed: StressedIcon,
+  relaxed: RelaxedIcon,
   'mood-swings': MoodSwingsIcon,
   frisky: FriskyIcon,
   diarrhea: DiarheaIcon,
