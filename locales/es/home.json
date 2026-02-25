@@ -7,7 +7,7 @@
   "expectedToday": "El periodo podría empezar hoy",
   "lateFor": "Periodo retrasado por",
   "logPeriod": "Registrar periodo",
-  "logOrEdit": "Editar fechas del periodo",
+  "editPeriod": "Editar fechas del periodo",
   "noDataPrompt": "Registra el primer día de tu último periodo para obtener predicciones.",
   "learnAboutLatePeriods": "Saber más",
   "cycleInsights": {
