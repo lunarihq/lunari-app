@@ -110,14 +110,6 @@ export default function StatusInfo() {
           {t('cycleLength.disclaimer')}
         </Text>
       </View>
-      <View style={[styles.contentSection]}>
-        <Text style={[typography.headingSm ]}>
-          {t('cycleLength.references.title')}
-        </Text>
-        <Text style={[typography.caption]}>
-          {t('cycleLength.references.acog')}
-        </Text>
-      </View>
     </ScrollView>
   );
 }

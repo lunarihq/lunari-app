@@ -33,7 +33,7 @@
     "pregnancyChanceDescriptions": {
       "high": "This is your fertile window when conception is most likely to occur. Ovulation typically happens during this time.",
       "medium": "There is a moderate chance of conception during this time as you approach or move away from your fertile window.",
-      "low": "Conception is less likely during this time. The chance of getting pregnant increases during ovulation and the fertile days around it.\n\nWhile chances may vary, you can conceive on any day of your cycle. If you don't want to get pregnant, it's best to use contraception every time you have sex."
+      "low": "Conception is less likely during this time. The chance of getting pregnant increases during ovulation and the fertile days around it."
     },
     "symptoms": {
       "menstrual": {
@@ -63,9 +63,9 @@
     "definitionText": "is counted from the first day of one period to the first day of the next period.",
     "normalRange": {
       "title": "Normal range",
-      "acogPrefix": "According to the",
-      "acogName": "American College of Obstetricians and Gynecologists (ACOG)¹",
-      "acogSuffix": ", a normal menstrual cycle typically lasts between",
+      "acogPrefix": "A normal menstrual cycle typically lasts between",
+      "acogName": "",
+      "acogSuffix": "",
       "daysRange": "21 and 35 days",
       "variation": "Most people have cycles that vary by a few days each month, which is completely normal."
     },
@@ -87,15 +87,11 @@
       "dataNote": "can cause Bluma to indicate an abnormal cycle length. Most often, this is the result of forget to log period. Tracking your cycles for at least 3-6 months will help establish a pattern."
     },
     "seeDoctor": {
-      "title": "When to see a doctor?",
+      "title": "When to see a doctor",
       "description": "If your cycles are frequently abnormal in length, or/and accompanied by other concerning symptoms, it's best to talk to your health care provider. They can help you figure out the cause and suggest treatment, if necessary."
     },
     "disclaimerBold": "IMPORTANT!",
-    "disclaimer": "Bluma is not a diagnostic tool. The information from Bluma does not replace advice from a health care provider. Always seek the advice of your doctor or other qualified health provider with any questions you may have regarding your cycle.",
-    "references": {
-      "title": "References",
-      "acog": "1. Diagnosis of Abnormal Uterine Bleeding in Reproductive-Aged Women. Practice Bulletin. Number 128, July 2012. American College of Obstetricians and Gynecologists."
-    }
+    "disclaimer": "Bluma is not a diagnostic tool. The information from Bluma does not replace advice from a health care provider. Always seek the advice of your doctor or other qualified health provider with any questions you may have regarding your cycle."
   },
   "periodLength": {
     "title": "Understanding your period",
@@ -103,9 +99,9 @@
     "definitionText": "is counted from the first until the last day of menstrual bleeding of any volume.",
     "normal": {
       "title": "Normal period length",
-      "acogPrefix": "According to the",
-      "acogName": "American College of Obstetricians and Gynecologists (ACOG)¹",
-      "acogSuffix": ", a normal period length typically lasts between",
+      "acogPrefix": "A normal period typically lasts between",
+      "acogName": "",
+      "acogSuffix": "",
       "daysRange": "2 and 7 days",
       "variation": "Period length can vary from cycle to cycle, which is completely normal."
     },
@@ -116,15 +112,11 @@
       "dataNote": "could be the reason your period length is labeled prolonged or shortened. You can always correct any event of your cycle retrospectively on the calendar menu."
     },
     "seeDoctor": {
-      "title": "When to see a doctor?",
+      "title": "When to see a doctor",
       "description": "If your period length is frequently abnormal in length, or/and accompanied by other concerning symptoms, it's best to talk to your health care provider. They can help you figure out the cause and suggest treatment, if necessary."
     },
     "disclaimerBold": "IMPORTANT!",
-    "disclaimer": "Bluma is not a diagnostic tool. The information from Bluma does not replace advice from a health care provider. Always seek the advice of your doctor or other qualified health provider with any questions you may have regarding your cycle.",
-    "references": {
-      "title": "References",
-      "acog": "1. Your First Period. American College of Obstetricians and Gynecologists. FAQ for patients."
-    }
+    "disclaimer": "Bluma is not a diagnostic tool. The information from Bluma does not replace advice from a health care provider. Always seek the advice of your doctor or other qualified health provider with any questions you may have regarding your cycle."
   },
   "latePeriod": {
     "whatMeans": {
@@ -151,19 +143,14 @@
     "whatToDo": {
       "title": "What you can do",
       "pregnancy": "Take a pregnancy test if there's any possibility",
-      "stress": "Manage stress through meditation, exercise, or therapy",
+      "stress": "Stress can affect your cycle — give your body time to recover",
       "weight": "Maintain a healthy weight for your body",
       "sleep": "Get consistent, quality sleep",
       "track": "Track your cycles to identify patterns",
       "patience": "Be patient, cycles can naturally vary by a few days each month, so occasional lateness is normal."
     },
     "disclaimerBold": "IMPORTANT!",
-    "disclaimer": "Bluma is not a diagnostic tool. The information from Bluma does not replace advice from a health care provider. Always seek the advice of your doctor or other qualified health provider with any questions you may have regarding your cycle.",
-    "references": {
-      "title": "References",
-      "nhs": "1. Missed or late periods. NHS. https://www.nhs.uk/symptoms/missed-or-late-periods/",
-      "ucla": "2. Missed your period but not pregnant? 7 possible causes. UCLA Health. January 3, 2024. https://www.uclahealth.org/news/article/missed-your-period-not-pregnant-7-possible-causes-2"
-    }
+    "disclaimer": "Bluma is not a diagnostic tool. The information from Bluma does not replace advice from a health care provider. Always seek the advice of your doctor or other qualified health provider with any questions you may have regarding your cycle."
   },
   "prediction": {
     "nextPeriod": {

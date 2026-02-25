@@ -86,14 +86,6 @@ export default function PeriodLength() {
           {t('periodLength.disclaimer')}
         </Text>
       </View>
-      <View style={[styles.contentSection]}>
-        <Text style={[typography.headingSm, { marginBottom: 12 }]}>
-          {t('periodLength.references.title')}
-        </Text>
-        <Text style={[typography.caption]}>
-          {t('periodLength.references.acog')}
-        </Text>
-      </View>
     </ScrollView>
   );
 }

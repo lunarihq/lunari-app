@@ -33,7 +33,7 @@
     "pregnancyChanceDescriptions": {
       "high": "Esta es tu ventana fértil cuando la concepción es más probable. La ovulación típicamente ocurre durante este tiempo.",
       "medium": "Hay una probabilidad moderada de concepción durante este tiempo mientras te acercas o te alejas de tu ventana fértil.",
-      "low": "La concepción es menos probable durante este tiempo. La probabilidad de quedarte embarazada aumenta durante la ovulación y los días fértiles alrededor de esta.\n\nAunque las probabilidades pueden variar, puedes concebir cualquier día de tu ciclo. Si no quieres quedarte embarazada, lo mejor es usar anticonceptivos cada vez que tengas relaciones sexuales."
+      "low": "La concepción es menos probable durante este tiempo. La probabilidad de quedarte embarazada aumenta durante la ovulación y los días fértiles alrededor de esta."
     },
     "symptoms": {
       "menstrual": {
@@ -63,9 +63,9 @@
     "definitionText": "se cuenta desde el primer día de un periodo hasta el primer día del siguiente periodo.",
     "normalRange": {
       "title": "Rango normal",
-      "acogPrefix": "Según el",
-      "acogName": "Colegio Americano de Obstetras y Ginecólogos (ACOG)¹",
-      "acogSuffix": ", un ciclo menstrual normal generalmente dura entre",
+      "acogPrefix": "Un ciclo menstrual normal generalmente dura entre",
+      "acogName": "",
+      "acogSuffix": "",
       "daysRange": "21 y 35 días",
       "variation": "La mayoría de las personas tienen ciclos que varían unos días cada mes, lo cual es completamente normal."
     },
@@ -92,10 +92,6 @@
     },
     "disclaimerBold": "¡IMPORTANTE!",
     "disclaimer": "Bluma no es una herramienta de diagnóstico. La información de Bluma no reemplaza el consejo de un proveedor de atención médica. Siempre busca el consejo de tu médico u otro proveedor de salud calificado con cualquier pregunta que puedas tener sobre tu ciclo.",
-    "references": {
-      "title": "Referencias",
-      "acog": "1. Diagnosis of Abnormal Uterine Bleeding in Reproductive-Aged Women. Practice Bulletin. Number 128, July 2012. American College of Obstetricians and Gynecologists."
-    }
   },
   "periodLength": {
     "title": "Entendiendo tu periodo",
@@ -103,9 +99,9 @@
     "definitionText": "se cuenta desde el primer hasta el último día de sangrado menstrual de cualquier volumen.",
     "normal": {
       "title": "Duración normal del periodo",
-      "acogPrefix": "Según el",
-      "acogName": "Colegio Americano de Obstetras y Ginecólogos (ACOG)¹",
-      "acogSuffix": ", una duración normal del periodo generalmente dura entre",
+      "acogPrefix": "Un periodo normal generalmente dura entre",
+      "acogName": "",
+      "acogSuffix": "",
       "daysRange": "2 y 7 días",
       "variation": "La duración del periodo puede variar de ciclo a ciclo, lo cual es completamente normal."
     },
@@ -121,10 +117,6 @@
     },
     "disclaimerBold": "¡IMPORTANTE!",
     "disclaimer": "Bluma no es una herramienta de diagnóstico. La información de Bluma no reemplaza el consejo de un proveedor de atención médica. Siempre busca el consejo de tu médico u otro proveedor de salud calificado con cualquier pregunta que puedas tener sobre tu ciclo.",
-    "references": {
-      "title": "Referencias",
-      "acog": "1. Your First Period. American College of Obstetricians and Gynecologists. FAQ for patients."
-    }
   },
   "latePeriod": {
     "whatMeans": {
@@ -151,7 +143,7 @@
     "whatToDo": {
       "title": "Qué puedes hacer",
       "pregnancy": "Hazte una prueba de embarazo si hay alguna posibilidad",
-      "stress": "Maneja el estrés mediante meditación, ejercicio o terapia",
+      "stress": "El estrés puede afectar tu ciclo — dale tiempo a tu cuerpo para recuperarse",
       "weight": "Mantén un peso saludable para tu cuerpo",
       "sleep": "Duerme de manera consistente y de calidad",
       "track": "Rastrea tus ciclos para identificar patrones",
@@ -159,11 +151,6 @@
     },
     "disclaimerBold": "¡IMPORTANTE!",
     "disclaimer": "Bluma no es una herramienta de diagnóstico. La información de Bluma no reemplaza el consejo de un proveedor de atención médica. Siempre busca el consejo de tu médico u otro proveedor de salud calificado con cualquier pregunta que puedas tener sobre tu ciclo.",
-    "references": {
-      "title": "Referencias",
-      "nhs": "1. Missed or late periods. NHS. https://www.nhs.uk/symptoms/missed-or-late-periods/",
-      "ucla": "2. Missed your period but not pregnant? 7 possible causes. UCLA Health. 3 de enero de 2024. https://www.uclahealth.org/news/article/missed-your-period-not-pregnant-7-possible-causes-2"
-    }
   },
   "prediction": {
     "nextPeriod": {

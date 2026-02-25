@@ -92,29 +92,11 @@ export default function PeriodLength() {
         </Text>
       </View>
 
-      <View style={[styles.contentSection]}>
-        <View style={[styles.referencesSection]}>
-        <Text style={[typography.headingSm]}>
-          {t('latePeriod.references.title')}
-        </Text>
-
-        <Text style={[typography.caption]}>
-          {t('latePeriod.references.nhs')}
-        </Text>
-
-        <Text style={[typography.caption]}>
-            {t('latePeriod.references.ucla')}
-        </Text>
-        </View>
-      </View>
     </ScrollView>
   );
 }
 const styles = StyleSheet.create({
   contentSection: {
     marginBottom: 32,
-  },
-  referencesSection: {
-    gap: 16,
   },
 });
