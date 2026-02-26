@@ -39,13 +39,13 @@ export default function PeriodLength() {
       </View>
 
       <View style={[styles.contentSection]}>
-        {(t('latePeriod.causes', { returnObjects: true }) as string[]).map((cause, index) => (
+        {(t('latePeriod.causes', { returnObjects: true }) as string[]).map((cause, index, arr) => (
           <View
             key={index}
             style={{
               flexDirection: 'row',
               alignItems: 'flex-start',
-              marginBottom: index === 10 ? 0 : 8,
+              marginBottom: index === arr.length - 1 ? 0 : 8,
               marginLeft: 8,
             }}
           >
@@ -53,15 +53,6 @@ export default function PeriodLength() {
             <Text style={[typography.body, { flex: 1 }]}>{cause}</Text>
           </View>
         ))}
-      </View>
-
-      <View style={[styles.contentSection]}>
-        <Text style={[typography.headingMd, { marginBottom: 12 }]}>
-          {t('latePeriod.seeDoctor.title')}
-        </Text>
-        <Text style={[typography.body]}>
-          {t('latePeriod.seeDoctor.description')}
-        </Text>
       </View>
 
       <View style={[styles.contentSection]}>

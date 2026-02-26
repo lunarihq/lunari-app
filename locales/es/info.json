@@ -77,18 +77,12 @@
       "causes": {
         "hormonal": "Cambios hormonales",
         "stress": "Estrés, viajes o sueño interrumpido",
-        "medical": "Condiciones médicas",
-        "pcos": "Síndrome de ovario poliquístico (SOP)",
         "weight": "Cambio significativo de peso o ejercicio intenso",
         "lifestage": "Pubertad o perimenopausia",
         "postpartum": "Posparto y lactancia"
       },
       "dataNoteBold": "Datos de periodo ingresados incorrectamente",
       "dataNote": "pueden hacer que Bluma indique una duración de ciclo anormal. Con mayor frecuencia, esto es el resultado de olvidar registrar el periodo. Rastrear tus ciclos durante al menos 3-6 meses ayudará a establecer un patrón."
-    },
-    "seeDoctor": {
-      "title": "¿Cuándo consultar a un médico?",
-      "description": "Si tus ciclos son frecuentemente anormales en duración, y/o están acompañados de otros síntomas preocupantes, es mejor hablar con tu proveedor de atención médica. Ellos pueden ayudarte a descubrir la causa y sugerir tratamiento, si es necesario."
     },
     "disclaimerBold": "¡IMPORTANTE!",
     "disclaimer": "Bluma no es una herramienta de diagnóstico. La información de Bluma no reemplaza el consejo de un proveedor de atención médica. Siempre busca el consejo de tu médico u otro proveedor de salud calificado con cualquier pregunta que puedas tener sobre tu ciclo.",
@@ -111,10 +105,6 @@
       "dataNoteBold": "Datos de periodo ingresados incorrectamente",
       "dataNote": "podrían ser la razón por la que tu duración de periodo está etiquetada como prolongada o acortada. Siempre puedes corregir cualquier evento de tu ciclo retrospectivamente en el menú del calendario."
     },
-    "seeDoctor": {
-      "title": "¿Cuándo consultar a un médico?",
-      "description": "Si la duración de tu periodo es frecuentemente anormal, y/o está acompañada de otros síntomas preocupantes, es mejor hablar con tu proveedor de atención médica. Ellos pueden ayudarte a descubrir la causa y sugerir tratamiento, si es necesario."
-    },
     "disclaimerBold": "¡IMPORTANTE!",
     "disclaimer": "Bluma no es una herramienta de diagnóstico. La información de Bluma no reemplaza el consejo de un proveedor de atención médica. Siempre busca el consejo de tu médico u otro proveedor de salud calificado con cualquier pregunta que puedas tener sobre tu ciclo.",
   },
@@ -128,18 +118,11 @@
       "Cambios de peso e ingesta baja en calorías",
       "Ejercicio excesivo",
       "Anticonceptivos hormonales (pastillas, inyecciones, implantes, DIU hormonales y anticonceptivos de emergencia)",
-      "Síndrome de ovario poliquístico (SOP)",
-      "Trastornos de la tiroides",
       "Perimenopausia (los años previos a la menopausia)",
       "Cambios bruscos de rutina o sueño (trabajo por turnos, jet lag)",
       "Cambios importantes en la dieta o mala nutrición",
-      "Enfermedades crónicas",
-      "Medicamentos (p. ej. antipsicóticos, antidepresivos, antiepilépticos, quimioterapia)"
+      "Ciertos medicamentos"
     ],
-    "seeDoctor": {
-      "title": "Cuándo consultar a un médico",
-      "description": "Si tu periodo se retrasa de forma repetida más de una semana, o has dejado de tener dos o tres seguidos (y se ha descartado embarazo), es importante que consultes a un profesional de salud para que pueda revisar estas causas y darte un consejo adaptado a ti."
-    },
     "whatToDo": {
       "title": "Qué puedes hacer",
       "pregnancy": "Hazte una prueba de embarazo si hay alguna posibilidad",

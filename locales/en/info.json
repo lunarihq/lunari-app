@@ -77,18 +77,12 @@
       "causes": {
         "hormonal": "Hormonal changes",
         "stress": "Stress, travel, or disrupted sleep",
-        "medical": "Medical conditions",
-        "pcos": "Polycystic ovary syndrome (PCOS)",
         "weight": "Significant weight change or intense exercise",
         "lifestage": "Puberty or perimenopause",
         "postpartum": "Postpartum and breastfeeding"
       },
       "dataNoteBold": "Incorrectly entered period data",
       "dataNote": "can cause Bluma to indicate an abnormal cycle length. Most often, this is the result of forget to log period. Tracking your cycles for at least 3-6 months will help establish a pattern."
-    },
-    "seeDoctor": {
-      "title": "When to see a doctor",
-      "description": "If your cycles are frequently abnormal in length, or/and accompanied by other concerning symptoms, it's best to talk to your health care provider. They can help you figure out the cause and suggest treatment, if necessary."
     },
     "disclaimerBold": "IMPORTANT!",
     "disclaimer": "Bluma is not a diagnostic tool. The information from Bluma does not replace advice from a health care provider. Always seek the advice of your doctor or other qualified health provider with any questions you may have regarding your cycle."
@@ -111,10 +105,6 @@
       "dataNoteBold": "Incorrectly entered period data",
       "dataNote": "could be the reason your period length is labeled prolonged or shortened. You can always correct any event of your cycle retrospectively on the calendar menu."
     },
-    "seeDoctor": {
-      "title": "When to see a doctor",
-      "description": "If your period length is frequently abnormal in length, or/and accompanied by other concerning symptoms, it's best to talk to your health care provider. They can help you figure out the cause and suggest treatment, if necessary."
-    },
     "disclaimerBold": "IMPORTANT!",
     "disclaimer": "Bluma is not a diagnostic tool. The information from Bluma does not replace advice from a health care provider. Always seek the advice of your doctor or other qualified health provider with any questions you may have regarding your cycle."
   },
@@ -128,18 +118,11 @@
       "Weight changes and low energy intake",
       "Excessive exercise",
       "Hormonal contraception (pills, injections, implants, hormonal IUDs, and some emergency contraception)",
-      "Polycystic ovary syndrome (PCOS)",
-      "Thyroid disorders",
       "Perimenopause (the years leading up to menopause)",
       "Sudden changes in routine or sleep (shift work, jet lag)",
       "Significant diet changes or poor nutrition",
-      "Chronic illnesses",
-      "Medications (e.g. antipsychotics, antidepressants, anti-epileptics, chemotherapy drugs)"
+      "Certain medications"
     ],
-    "seeDoctor": {
-      "title": "When to see a doctor",
-      "description": "If your period is repeatedly more than about a week late, or you have missed two or three in a row (and pregnancy is ruled out), it is important to see a healthcare professional so they can check for these underlying causes and tailor advice to you."
-    },
     "whatToDo": {
       "title": "What you can do",
       "pregnancy": "Take a pregnancy test if there's any possibility",

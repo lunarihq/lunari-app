@@ -68,13 +68,13 @@ export default function StatusInfo() {
         </Text>
 
         <View>
-          {['hormonal', 'stress', 'medical', 'pcos', 'weight', 'lifestage', 'postpartum'].map((cause, index) => (
+          {['hormonal', 'stress', 'weight', 'lifestage', 'postpartum'].map((cause, index) => (
             <View
               key={cause}
               style={{
                 flexDirection: 'row',
                 alignItems: 'flex-start',
-                marginBottom: index === 6 ? 0 : 8,
+                marginBottom: index === 4 ? 0 : 8,
                 marginLeft: 8,
               }}
             >
@@ -96,14 +96,6 @@ export default function StatusInfo() {
         </View>
       </View>
 
-      <View style={[styles.contentSection]}>
-        <Text style={[typography.headingMd]}>
-          {t('cycleLength.seeDoctor.title')}
-        </Text>
-        <Text style={[typography.body]}>
-          {t('cycleLength.seeDoctor.description')}
-        </Text>
-      </View>
       <View style={[styles.contentSection]}>
         <Text style={[typography.body]}>
           <Text style={typography.bodyBold}>{t('cycleLength.disclaimerBold')} </Text>

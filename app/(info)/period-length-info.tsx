@@ -73,14 +73,6 @@ export default function PeriodLength() {
         </Text>
       </View>
       <View style={[styles.contentSection]}>
-        <Text style={[typography.headingMd, { marginBottom: 12 }]}>
-          {t('periodLength.seeDoctor.title')}
-        </Text>
-        <Text style={[typography.body]}>
-          {t('periodLength.seeDoctor.description')}
-        </Text>
-      </View>
-      <View style={[styles.contentSection]}>
         <Text style={[typography.body]}>
           <Text style={typography.bodyBold}>{t('periodLength.disclaimerBold')} </Text>
           {t('periodLength.disclaimer')}
